@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>式と演算子</title>
+  <title>ファイル入出力</title>
   <meta name="description" content="椙山女学園大学 向研究室のブログです。日常の記録に加えて、授業資料などを公開しています。">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://naoto-github.github.io//class/applied_programming/chapter2.html">
+  <link rel="canonical" href="http://naoto-github.github.io//class/applied_programming/chapter6.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab." href="http://naoto-github.github.io//feed.xml">
 
   <!-- Faviconの実装 -->
@@ -147,159 +147,131 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">式と演算子</h1>
-    <div class="fb-like" data-href="http://naoto-github.github.io//class/applied_programming/chapter2.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+    <h1 class="post-title">ファイル入出力</h1>
+    <div class="fb-like" data-href="http://naoto-github.github.io//class/applied_programming/chapter6.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
   </header>
   </header>
 
   <div class="post-content">
-    <p><a href="https://gyazo.com/80c3e1fe23d96f89ed12fa91b96f78c3"><img src="https://i.gyazo.com/80c3e1fe23d96f89ed12fa91b96f78c3.png" alt="https://gyazo.com/80c3e1fe23d96f89ed12fa91b96f78c3" /></a></p>
+    <p><a href="https://gyazo.com/e3649524c7926db63267e4b9a60fb113"><img src="https://i.gyazo.com/e3649524c7926db63267e4b9a60fb113.png" alt="https://gyazo.com/e3649524c7926db63267e4b9a60fb113" /></a></p>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />プロジェクトの準備</h1>
 
 <p>Eclipseで新規にプロジェクトを作成しましょう。
 メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして、「新規Javaプロジェクトの作成」を開きます。
-ここでは、プロジェクト名に”Project2”を入力して、[完了]をクリックしましょう。
+ここでは、プロジェクト名に”Project6”を入力して、[完了]をクリックしましょう。
 パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください。</p>
 
-<p><a href="https://gyazo.com/a0b6e0ff1e827ae18acc98aaa4d35167"><img src="https://i.gyazo.com/a0b6e0ff1e827ae18acc98aaa4d35167.png" alt="https://gyazo.com/a0b6e0ff1e827ae18acc98aaa4d35167" /></a></p>
+<p><a href="https://gyazo.com/8b3ed6e20885121941e7c8e17cb06a81"><img src="https://i.gyazo.com/8b3ed6e20885121941e7c8e17cb06a81.png" alt="https://gyazo.com/8b3ed6e20885121941e7c8e17cb06a81" /></a></p>
 
 <p>続いてソースファイルを作成しましょう。
 メニューから[ファイル]-[新規]-[クラス]をクリックして、「新規Javaクラス」を開きます。
 ここでは、名前に”MyClass”を入力し、public static void main(String[] args)(V)にチェックを入れ、[完了]をクリックしましょう。
 パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください。</p>
 
-<p><a href="https://gyazo.com/aaeea969033eedc9eb5abbdb98dd1df7"><img src="https://i.gyazo.com/aaeea969033eedc9eb5abbdb98dd1df7.png" alt="https://gyazo.com/aaeea969033eedc9eb5abbdb98dd1df7" /></a></p>
+<p><a href="https://gyazo.com/a164f3c6c1da7bc9b5047e2c0b9a431a"><img src="https://i.gyazo.com/a164f3c6c1da7bc9b5047e2c0b9a431a.png" alt="https://gyazo.com/a164f3c6c1da7bc9b5047e2c0b9a431a" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />リテラルとは</h1>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />ストリーム</h1>
 
-<p>Javaに限らず一般的なプログラム言語では、「1」や「2」などの<strong>数値</strong>、「ABC」や「あいう」などの<strong>文字列</strong>をデータとして扱うことが可能です。
-ソースコードにおいて使用されるこれらの数値や文字列のデータを<strong>リテラル</strong>と呼びます。
-Javaでは、<strong>整数</strong>や<strong>小数</strong>など、リテラルの種類を表す<strong>データ型</strong>が存在します。
-例えば、「1」や「2」などの整数は、<strong>int</strong>というデータ型に該当します。
-下記表に利用頻度の高いデータ型をまとめるので確認してください。</p>
+<p>プログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます。
+ファイルに何かしらの操作を行う場合は、<strong>ストリーム</strong>という仕組みを利用します。
+ストリームとは、「データの流れ」を意味しており、水道管の中を水が流れる様子に似ています。
+ファイルに蛇口を取り付けて、その蛇口を捻ると、ファイルに保存されているデータが少しずつ流れてくるイメージです。
+ここでは、10人の身長と体重が保存された<a href="measure.csv">ファイル</a>からデータを読み込んでみましょう。
+データは氏名、身長[m]、体重[kg]で構成され、それぞれ「,（カンマ）」で区切られていることに注意してください。
+このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます。
+<a href="measure.csv">ファイル</a>をダウンロードしたら、Eclipseのプロジェクトの中にコピーしておいてください。</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>リテラルの種類</th>
-      <th>データ型</th>
-      <th>例</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>整数</td>
-      <td>int</td>
-      <td>1, 2, 3</td>
-    </tr>
-    <tr>
-      <td>小数</td>
-      <td>double</td>
-      <td>0.1, 1.1, 10.1</td>
-    </tr>
-    <tr>
-      <td>真理値</td>
-      <td>boolean</td>
-      <td>true, false</td>
-    </tr>
-    <tr>
-      <td>文字列</td>
-      <td>String</td>
-      <td>“ABC”, “あいう”</td>
-    </tr>
-  </tbody>
-</table>
+<script src="https://gist.github.com/naoto-github/aeebc1a9011f4f07e007.js"> </script>
 
-<p>この他にも、64ビットの大きさの整数を表す<strong>long</strong>や、32ビットの大きさの小数を表す<strong>float</strong>などのデータ型がありますが、
-取り敢えずは表中の<strong>int</strong>、<strong>double</strong>、<strong>boolean</strong>、<strong>String</strong>だけはしっかりと覚えておきましょう（正確にはStringはクラスでありデータ型ではない）。
-文字列データを表記する際は、対象となる文字列を「<strong>“（ダブルクォート）</strong>」で囲む必要がありますので注意が必要です。</p>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />ファイルの読み込み</h1>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />変数とは</h1>
+<p><strong>measure.csv</strong>から文字列データを読み込むには下記のように記述します。
+ファイルの読み込みには<strong>FileReader</strong>クラスと<strong>BufferedReader</strong>クラスを利用しますが、
+ここではファイルに取り付ける蛇口が<strong>FileReader</strong>、
+蛇口から流れてくるホースの役割が<strong>BufferedReader</strong>クラスと考えてください。
+<code class="highlighter-rouge">line=br.readLine()</code>でファイルから1行ずつ読み込み、<code class="highlighter-rouge">SYstem.out.println(line)</code>でコンソール出力しています。
+ファイルの終端に到達すると、<code class="highlighter-rouge">readLine()</code>は<strong>null</strong>という値を返すため、
+while文でlineが<strong>null</strong>になるまで、ファイルからの読み込みを繰り返しています。</p>
 
-<p>リテラルなどのデータを記憶するための箱が<strong>変数</strong>です。
-数値や文字列などのデータを記憶するだけでなく取り出すことも可能です。
-プログラムで変数を使用するには、事前に<strong>変数宣言</strong>が必要です。
-変数宣言は<code class="highlighter-rouge">データ型 変数名;</code>と記述します。
-データ型は前節で述べた<strong>int</strong>や<strong>double</strong>などのことです。
-また、変数名は「変数に付ける名前」のことで、自由に設定することが可能ですが、
-「小文字で始まるわかりやすい名前」を設定することが望ましいとされています。</p>
+<script src="https://gist.github.com/naoto-github/b9b8b615cfb89b1564c2.js"> </script>
 
-<p>下記のコードを参考にint型の変数<em>x</em>を宣言して<strong>10</strong>を代入してみましょう（変数にデータを記憶させることを<strong>代入</strong>と呼びます）。
-変数にデータを代入するには<code class="highlighter-rouge">変数=代入するデータ;</code>と記述します。
+<p>実は上記のコードだけではエラーが残ったままです。
+このエラーを取り除くには<strong>例外処理</strong>が必要です。
+<strong>例外</strong>とはプログラムの実行中に発生する想定外の事態を意味しており、
+例えば「対象のファイルが存在しない」「空っぽ（null）の変数を利用しようとした」などの状態が該当します。
+ファイル読込に利用する<strong>FileReader</strong>クラスと<strong>BufferedReader</strong>はこの例外処理が必要なクラスです。
+例外処理は下記のように、例外の発生の可能性のある命令を<code class="highlighter-rouge">try{}</code>で囲み、例外発生時の命令を<code class="highlighter-rouge">catch(例外の種類){}</code>に記述します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>try{
+	実行する命令
+}catch(例外の種類){
+	例外発生時に実行する命令
+}
+</code></pre>
+</div>
+
+<p>下記のコードを参考に例外処理を施して<strong>measure.csv</strong>から文字列データを読み込んでみましょう。
+ここで、<code class="highlighter-rouge">e.printStackTrace();</code>は例外の原因を突き止めるために、例外に関する情報を遡って表示する命令です。
+また、<code class="highlighter-rouge">IOException e</code>は入出力に関する例外を意味しています。
 プログラムの実行後に、コンソールの出力結果を確認してください。</p>
 
-<script src="https://gist.github.com/naoto-github/0e85d432122f5279e1bd.js"> </script>
+<script src="https://gist.github.com/naoto-github/7c696252d8f6a1a8d2c9.js"> </script>
 
-<p>変数宣言と同時にデータを代入することも可能です。
-この場合は<code class="highlighter-rouge">データ型 変数名=代入するデータ;</code>と記述します。
-下記のコードを参考にdouble型の変数<em>y</em>を宣言して<strong>0.1</strong>を代入してみましょう。
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25pngcsv"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />CSV形式の処理</h1>
+
+<p>前述したようにCSV形式のファイルは「,（カンマ）」で区切られています。
+カンマで区切られた文字列（トークン）を取り出すには<strong>StringTokenizer</strong>というクラスを利用します。
+下記のコードを参考にトークン毎に取り出して、コンソールに出力してみましょう。
+ここで、<code class="highlighter-rouge">new StringTokenizer(line, ",")</code>は、
+変数lineに代入されている文字列を「,（カンマ）」で分割して取得することを表しています。
+また、身長と体重は整数のため、<code class="highlighter-rouge">Integer.parseInt(st.nextToken())</code>を用いて、
+String型からint型に変換しています。
 プログラムの実行後に、コンソールの出力結果を確認してください。</p>
 
-<script src="https://gist.github.com/naoto-github/74247c40185c48a637f4.js"> </script>
+<script src="https://gist.github.com/naoto-github/5d813f7cbb04d34b6989.js"> </script>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />演算子</h1>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />ファイルの書き込み</h1>
 
-<p>加算を表す「<strong>+</strong>」や減算を表す「<strong>-</strong>」などの記号を<strong>演算子</strong>と呼びます。
-四則計算を行うための演算子を確認しておきましょう。
-整数同士を対象とした「<strong>/</strong>」の演算結果は<strong>商</strong>となることに注意してください。
-また、複数の文字列リテラルを連結する場合も「<strong>+</strong>」の記号を使うため、意識して使い分けて下さい。</p>
+<p>読み込んだ身長と体重を基にBMI指数を計算して、<strong>bmi.csv</strong>に書き込んでみましょう。
+BMI指数は<script type="math/tex">BMI=体重[kg]/身長[m]^2</script>で求めることができます。
+下記のコードを参考に、<strong>bmi.csv</strong>に文字列データを書き込んでみましょう。
+ファイルの書き込みには<strong>FileWriter</strong>クラスと<strong>BufferedWriter</strong>クラスを利用します。
+<code class="highlighter-rouge">br.write(name + "," + bmi + "\n")</code>で名前と求めたBMI指数をCSV形式で書き込んでいます。
+ここで、<code class="highlighter-rouge">(double)height</code>はint型の変数<em>height</em>をdouble型に変換することを意味しています。
+プログラムの実行後に、コンソールの出力結果と、
+作成された<strong>bmi.csv</strong>にBMI指数が記録されていることを確認してください。</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>演算子</th>
-      <th>意味</th>
-      <th>例</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>+</td>
-      <td>加算</td>
-      <td>5+2 -&gt; 7</td>
-    </tr>
-    <tr>
-      <td>-</td>
-      <td>減算</td>
-      <td>5-2 -&gt; 3</td>
-    </tr>
-    <tr>
-      <td>*</td>
-      <td>乗算</td>
-      <td>5*2 -&gt; 10</td>
-    </tr>
-    <tr>
-      <td>/</td>
-      <td>除算</td>
-      <td>5/2 -&gt; 2</td>
-    </tr>
-    <tr>
-      <td>%</td>
-      <td>剰余</td>
-      <td>5/2 -&gt; 1</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>下記のコードを参考に、新たにint型の変数<em>z</em>を宣言し、上記の演算を行なってみましょう。
-プログラムの実行後に、コンソールの出力結果を確認してください。
-整数同士の演算のため、除算の結果は整数部のみの<strong>商</strong>となっていることが確認できるはずです。</p>
-
-<script src="https://gist.github.com/naoto-github/dd4a69dbdeff37bb87f2.js"> </script>
-
-<p>次に1からnまでの整数の総和を求めてみましょう。
-総和の公式は<script type="math/tex">\frac{n(n+1)}{2}</script>です。
-下記のコードを参考に、n=10までの総和を計算して、int型の変数<em>sum</em>に代入してみましょう。
-「()（丸括弧）」を入れることで、演算の優先順位を上げることができます。
-プログラムの実行後に、コンソールの出力結果を確認してください。</p>
-
-<script src="https://gist.github.com/naoto-github/93f4f283996ca6b42061.js"> </script>
+<script src="https://gist.github.com/naoto-github/ecf0559a101ad48753c2.js"> </script>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-4"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
 
-<p>半径が8の円の「<strong>円周の長さ</strong>」と「<strong>面積</strong>」を計算して、コンソールに出力させてください。
+<p>下記の表を参考に、BMI指数から「低体重」「普通体重」「肥満」のいずれかを判定し、、<strong>bmi.csv</strong>に書き込んでください。
+ファイルにはカンマ区切りで、<strong>名前</strong>、<strong>BMI指数</strong>、<strong>判定</strong>の順番に出力してください。
 課題が完成したら、作成したプロジェクトを<strong>実行可能JARファイル</strong>の形式でファイルに保存（エクスポート）してください。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>BMI指数</th>
+      <th>判定</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>18.5未満</td>
+      <td>低体重</td>
+    </tr>
+    <tr>
+      <td>18.5以上、25未満</td>
+      <td>普通体重</td>
+    </tr>
+    <tr>
+      <td>25以上</td>
+      <td>肥満</td>
+    </tr>
+  </tbody>
+</table>
 
 <h3>参考文献</h3>
 
