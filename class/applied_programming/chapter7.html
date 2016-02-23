@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>クラスとメソッド</title>
+  <title>オブジェクト指向①クラスとメソッド</title>
   <meta name="description" content="椙山女学園大学 向研究室のブログです。日常の記録に加えて、授業資料などを公開しています。">
 
   <link rel="stylesheet" href="/css/main.css">
@@ -40,7 +40,7 @@
 
   <!-- OGP -->
   
-  <meta property="og:image" content="https://i.gyazo.com/ac56caad0b3dd031d0f2e470a58e4ba1.png">
+  <meta property="og:image" content="https://i.gyazo.com/0c234740f4a9eba657d27aaa4eb9982f.png">
   
 </head>
 
@@ -156,13 +156,13 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">クラスとメソッド</h1>
+    <h1 class="post-title">オブジェクト指向①クラスとメソッド</h1>
     <div class="fb-like" data-href="http://naoto-github.github.io//class/applied_programming/chapter7.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
   </header>
   </header>
 
   <div class="post-content">
-    <p><a href="https://gyazo.com/ac56caad0b3dd031d0f2e470a58e4ba1"><img src="https://i.gyazo.com/ac56caad0b3dd031d0f2e470a58e4ba1.png" alt="https://gyazo.com/ac56caad0b3dd031d0f2e470a58e4ba1" /></a></p>
+    <p><a href="https://gyazo.com/0c234740f4a9eba657d27aaa4eb9982f"><img src="https://i.gyazo.com/0c234740f4a9eba657d27aaa4eb9982f.png" alt="https://gyazo.com/0c234740f4a9eba657d27aaa4eb9982f" /></a></p>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />プロジェクトの準備</h1>
 
@@ -181,6 +181,146 @@
 <p><a href="https://gyazo.com/54882311408742cdb538a002ade499e4"><img src="https://i.gyazo.com/54882311408742cdb538a002ade499e4.png" alt="https://gyazo.com/54882311408742cdb538a002ade499e4" /></a></p>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />オブジェクト指向</h1>
+
+<p>今回はJavaの本質とも言える<strong>オブジェクト指向</strong>について学びます。
+オブジェクト指向は、大規模なプログラムを作成する際の開発者の負担を減らすための<strong>コンセプト</strong>であり、
+オブジェクト指向に沿ってプログラミングすることでプログラムの「柔軟性」「保守性」「再利用性」の向上が期待できます。
+しかし、オブジェクト指向はあくまでコンセプトであり、たとえ経験豊かなエンジニアであっても、
+一言で「オブジェクト指向が何か」を言い表すことは難しく、
+Javaプログラミング初心者にとっては大きな障壁となりがちです。</p>
+
+<p>極論すれば、オブジェクト指向とは「現実世界の<strong>オブジェクト（もの）</strong>を、
+そのままプログラムの世界の<strong>オブジェクト（もの）</strong>に置き換えること」と言えます。
+例えば、<strong>サッカー選手</strong>をプログラムの世界に置き換えることを考えてみます
+（<a href="http://www.konami.jp/we/">ウイニングイレブン</a>などのサッカーゲームを想像してください）。
+サッカー選手をプログラムの世界で表現するには、サッカー選手の特徴を数値化したり、それぞれの役割や操作を定義する必要があります。
+例えばサッカーゲームの本田圭佑選手は、<strong>キック力</strong>は80、<strong>ドリブルスピード</strong>は76などのように、個々の特徴を数値で特徴化していますね。
+他にも、<strong>ポジション</strong>はフォワードやミッドフィールダー、<strong>操作</strong>はドリブルやシュートなどを設定する必要がありそうです。</p>
+
+<p>オブジェクト指向では、オブジェクト（サッカー選手）を表現する型のことを<strong>クラス</strong>、そして、
+型を実体化したもの（本田圭佑選手）を<strong>インスタンス</strong>と呼びます。
+また、個々の特徴を<strong>フィールド</strong>、操作を<strong>メソッド</strong>と呼びます。
+一方、<strong>オブジェクト</strong>は実は曖昧な表現で、クラスとインスタンスの両方の意味で用いられることがあるので注意が必要です。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />クラスの定義</h1>
+
+<p>ここでは、現実世界の「色画用紙」をクラスで表現することを考えてみましょう。
+画用紙に必要な特徴は何でしょうか。
+ここでは、<strong>幅（width）</strong>、<strong>高さ（height）</strong>、<strong>色（color）</strong>を色画用紙を表す特徴として考えていきましょう。</p>
+
+<p><a href="https://gyazo.com/8d24e80f1da1c1017dfe8f92d7bf2a30"><img src="https://i.gyazo.com/8d24e80f1da1c1017dfe8f92d7bf2a30.png" alt="https://gyazo.com/8d24e80f1da1c1017dfe8f92d7bf2a30" /></a></p>
+
+<p>クラスはファイルに１つだけ定義するのが基本です。
+まずは、色画用紙を表す<strong>Paper</strong>クラスを新規に作成しましょう。
+メニューから[ファイル]-[新規]-[クラス]をクリックして、「新規Javaクラス」を開きます。
+ここでは、名前に”Paper”を入力し、[完了]をクリックしましょう。</p>
+
+<p><a href="https://gyazo.com/7c0a3985dacfff047c2acc43c833ef8c"><img src="https://i.gyazo.com/7c0a3985dacfff047c2acc43c833ef8c.png" alt="https://gyazo.com/7c0a3985dacfff047c2acc43c833ef8c" /></a></p>
+
+<p>クラスの宣言部に当たる<code class="highlighter-rouge">public class クラス名{}</code>は既に記述されています。
+この宣言の<code class="highlighter-rouge"><span class="p">{}</span></code>内に、画用紙の特徴を表すフィールドを定義します。
+ここでは、<strong>width</strong>、<strong>height</strong>、<strong>color</strong>の3つのフィールドです。
+下記のコードを参考に、色画用紙を表すクラス<strong>Paper</strong>のフィールドを宣言してみましょう。</p>
+
+<script src="https://gist.github.com/naoto-github/f81eea61b00dd8eaa305.js"> </script>
+
+<p>次に、下記のコードを参考にPaperクラスをインスタンス化してみましょう。
+ここでは、幅182[mm]、高さ257[mm]、赤色の画用紙を想定しています。
+インスタンス化は<code class="highlighter-rouge">クラス名 変数名 = new クラス名()</code>と記述します。
+また、フィールドに値を代入したり、保存されている値を取り出すには<code class="highlighter-rouge">変数名.フィールド名</code>と記述します。
+このコードはMyClassクラスに記述していることに注意してください。
+プログラムの実行後にコンソール出力を確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/53c7bc35f81c8e2cf972.js"> </script>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />メソッドの定義</h1>
+
+<p>Paperクラスのメソッドを定義してみましょう。
+ここでは、画用紙の<strong>面積</strong>を計算するメソッドを考えてみます。
+メソッドは下記のように記述します。
+<strong>返値</strong>とは、メソッド実行後に、呼び出し元に返す値のことを指します。
+この場合、<strong>返値の型</strong>はint、<strong>返値</strong>は面積となります。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public 返値の型 メソッド名(){
+	実行する命令
+    return 返値;
+}
+</code></pre>
+</div>
+
+<p>下記のコードを参考に、Paperクラスに面積を計算する<strong>getArea</strong>メソッドを定義しましょう。
+int型の変数<em>area</em>に計算した値を一旦代入して、<code class="highlighter-rouge">return area;</code>で呼び出し元に面積を返しています。
+ここで、<code class="highlighter-rouge">this.width</code>や<code class="highlighter-rouge">this.height</code>などの表記は、
+変数<em>width</em>と<em>height</em>がPaperクラスのフィールドであることを明示するために用いています。</p>
+
+<script src="https://gist.github.com/naoto-github/e6045d8380f5b7a5bf43.js"> </script>
+
+<p>下記のコードを参考に、呼び出し元であるMyClassクラスで、
+<strong>getArea</strong>メソッドの返値を受け取り、コンソールに出力してみましょう。
+プログラムの実行後にコンソール出力を確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/7431d52103f6db5b30e4.js"> </script>
+
+<p>メソッドには呼び出し元から<strong>引数</strong>を渡すことができます。
+引数は「呼び出し元」から「呼び出し先」へ渡される変数と理解してください。
+1つの引数を渡すメソッドは下記のように記述します。
+引数を複数列挙して、一度に複数の値を渡すことも可能です。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public 返値の型 メソッド名(引数の型 引数){
+    実行する命令
+    return 返値;
+}
+</code></pre>
+</div>
+
+<p>下記のコードを参考に、画用紙の大きさを指定倍する<strong>expand</strong>メソッドを定義しましょう。
+int型の変数<em>scale</em>を引数として、画用紙の幅と高さを拡大しています。
+ここで、<strong>void</strong>は、このメソッドは返値がないことを意味しています（<strong>return</strong>もない）。</p>
+
+<script src="https://gist.github.com/naoto-github/c5e3853d3fd45c9f255a.js"> </script>
+
+<p>下記のコードを参考に、呼び出し元であるMyClassクラスで、
+<strong>expand</strong>メソッドを呼び出し、幅と高さの値をコンソールに出力してみましょう。
+ここでは、int型の変数<em>scale</em>に2を代入し、引数として<strong>expand</strong>メソッドに渡しています。
+プログラムの実行後にコンソール出力を確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/13be255404ddcb0fb985.js"> </script>
+
+<p>勘の良い人は気づいていると思いますが、MyClassクラスのmainメソッドは特殊なメソッドで、
+プログラムを実行するときに最初に呼び出されるメソッドです。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-4"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />コンストラクタ</h1>
+
+<p>コンストラクタは特殊なメソッドで、クラスのインスタンス化と同時に呼び出されるという特徴があります。
+このため、コンストラクタはフィールドの初期化に利用されます。
+下記のコードを参考に、Paperクラスのコンストラクタを定義しましょう。
+コンストラクタはクラス名と同一のメソッド名です。
+左の<code class="highlighter-rouge">this.width</code>はフィールド、右の<code class="highlighter-rouge">width</code>は引数であることに注意してください。</p>
+
+<script src="https://gist.github.com/naoto-github/b317d219b64002c73cf1.js"> </script>
+
+<p>下記のコードを参考に、呼び出し元であるMyClassクラスで、
+コンストラクタを利用して、幅（width）、高さ（height）、色（color）のフィールドを初期化しましょう。
+プログラムの実行後にコンソール出力を確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/2d8bbd9ff31268997988.js"> </script>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-5"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+
+<p>円形の色画用紙を表す<strong>RoundPaper</strong>クラスを新規に定義してください。
+また、直径182[mm]、青色でインスタンス化し、直径、色、面積の値をコンソールに出力してください。
+課題が完成したら、作成したプロジェクトを<strong>実行可能JARファイル</strong>の形式でファイルに保存（エクスポート）してください。</p>
+
+<p><a href="https://gyazo.com/bac87ca29f3c87bae18371d71bbd09a2"><img src="https://i.gyazo.com/bac87ca29f3c87bae18371d71bbd09a2.png" alt="https://gyazo.com/bac87ca29f3c87bae18371d71bbd09a2" /></a></p>
+
+<h3>参考文献</h3>
+
+<ul>
+    <li>中山清喬(2014)『スッキリわかるJava入門 入門編 第2版』インプレス </li>
+    <li>中山清喬(2014)『スッキリわかるJava入門 実践編 第2版』インプレス </li>
+    <li>日向俊二(2015)『JavaFX &amp; Java8 プログラミング Javaによる新しいGUI プログラミング入門』カットシステム
+
+</li></ul>
 
   </div>
 
