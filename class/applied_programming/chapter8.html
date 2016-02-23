@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Jekyllでオープン・グラフ・プロトコル（OGP）の設定</title>
-  <meta name="description" content="フェイスブックでシェアされたときに表示される画像は、オープン・グラフ・プロトコル（OGP）で制御されています。OGPの設定がなければ、自動で適当な画像が選択されますが、意図しない画像が選択されることも多いです。そこで、Jekyllで採用されている「YAML Front Matter」を利用してOGPを設定する方法...">
+  <title>オブジェクト指向②継承とインターフェイス</title>
+  <meta name="description" content="椙山女学園大学 向研究室のブログです。日常の記録に加えて、授業資料などを公開しています。">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://naoto-github.github.io//tech/2016/02/23/ogp.html">
+  <link rel="canonical" href="http://naoto-github.github.io//class/applied_programming/chapter8.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab." href="http://naoto-github.github.io//feed.xml">
 
   <!-- Faviconの実装 -->
@@ -39,6 +39,8 @@
   <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   <!-- OGP -->
+  
+  <meta property="og:image" content="https://i.gyazo.com/ac56caad0b3dd031d0f2e470a58e4ba1.png">
   
 </head>
 
@@ -155,39 +157,48 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Jekyllでオープン・グラフ・プロトコル（OGP）の設定</h1>
-    <p class="post-meta"><time datetime="2016-02-23T00:27:33+00:00" itemprop="datePublished">Feb 23, 2016</time></p>
-    <div class="fb-like" data-href="http://naoto-github.github.io//tech/2016/02/23/ogp.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+    <h1 class="post-title">オブジェクト指向②継承とインターフェイス</h1>
+    <div class="fb-like" data-href="http://naoto-github.github.io//class/applied_programming/chapter8.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+  </header>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
-    <p>フェイスブックでシェアされたときに表示される画像は、オープン・グラフ・プロトコル（OGP）で制御されています。
-OGPの設定がなければ、自動で適当な画像が選択されますが、意図しない画像が選択されることも多いです。
-そこで、Jekyllで採用されている「YAML Front Matter」を利用してOGPを設定する方法をメモしておきます。</p>
+  <div class="post-content">
+    <p><a href="https://gyazo.com/ac56caad0b3dd031d0f2e470a58e4ba1"><img src="https://i.gyazo.com/ac56caad0b3dd031d0f2e470a58e4ba1.png" alt="https://gyazo.com/ac56caad0b3dd031d0f2e470a58e4ba1" /></a></p>
 
-<p>まずは、ブログ記事などのファイルの先頭に、
-下記のように<em>image</em>という変数を用意して、参照する画像を設定しておきます。</p>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />プロジェクトの準備</h1>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>---
-layout: default
-image: "https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png"
----
-</code></pre>
-</div>
+<p>Eclipseで新規にプロジェクトを作成しましょう。
+メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして、「新規Javaプロジェクトの作成」を開きます。
+ここでは、プロジェクト名に”Project8”を入力して、[完了]をクリックしましょう。
+パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください。</p>
 
-<p>これで<em>page.image</em>という記述で設定された値を取得することができるようになります。
-次に、”_includes/head.html”に下記のように<em>page.image</em>を利用してOGPの設定をします。
-このとき、条件文を利用することで<em>page.image</em>が設定されている場合に限ってOGPの設定を有効にしています。
-OGPは<code class="highlighter-rouge">&lt;meta property="og:image" content="参照画像"&gt;</code>と記述します。</p>
+<p><a href="https://gyazo.com/aed71e52d207f93bcc80b18f00f54710"><img src="https://i.gyazo.com/aed71e52d207f93bcc80b18f00f54710.png" alt="https://gyazo.com/aed71e52d207f93bcc80b18f00f54710" /></a></p>
 
-<script src="https://gist.github.com/naoto-github/2d722aa297bd3acaeeac.js"> </script>
+<p>続いてソースファイルを作成しましょう。
+メニューから[ファイル]-[新規]-[クラス]をクリックして、「新規Javaクラス」を開きます。
+ここでは、名前に”MyClass”を入力し、public static void main(String[] args)(V)にチェックを入れ、[完了]をクリックしましょう。
+パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください。</p>
 
-<p>これで、フェイスブックでシェアされたときの画像が設定されます。
-もし画像が反映されない場合は、フェイスブックのキャッシュが原因かもしれません。
-この場合は、<a href="https://developers.facebook.com/tools/debug/og/object/">Open Graph Object Debugger</a>でキャッシュを削除してみましょう。</p>
+<p><a href="https://gyazo.com/6997418967567ab61292b06ecf566aa4"><img src="https://i.gyazo.com/6997418967567ab61292b06ecf566aa4.png" alt="https://gyazo.com/6997418967567ab61292b06ecf566aa4" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />継承とは</h1>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />インターフェイスとは</h1>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+
+<h3>参考文献</h3>
+
+<ul>
+    <li>中山清喬(2014)『スッキリわかるJava入門 入門編 第2版』インプレス </li>
+    <li>中山清喬(2014)『スッキリわかるJava入門 実践編 第2版』インプレス </li>
+    <li>日向俊二(2015)『JavaFX &amp; Java8 プログラミング Javaによる新しいGUI プログラミング入門』カットシステム
+
+
+</li></ul>
 
   </div>
 
