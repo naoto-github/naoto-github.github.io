@@ -186,9 +186,105 @@
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />継承とは</h1>
 
+<p>前回は<strong>オブジェクト指向</strong>について学習しました。
+オブジェクト指向とは「現実世界の<strong>オブジェクト（もの）</strong>を、そのままプログラムの世界の<strong>オブジェクト（もの）</strong>に置き換えること」を意味しているんでしたね。
+そして、オブジェクトの型を<strong>クラス</strong>で表現することも理解したかと思います。
+今回は、オブジェクト指向における重要な機能の１つクラスの<strong>継承</strong>について学びます。
+クラスの<strong>継承</strong>とは、「クラスの持つフィールドやメソッドを引き継ぎながら新しいクラスを作成すること」を意味しています。
+この<strong>継承</strong>という機能を利用することで、コードの冗長性を排除し、スッキリとした表現で記述することが可能になります。</p>
+
+<p>ここでは、<strong>会話が出来るロボット</strong>を表す<strong>Robotクラス</strong>を作成してみましょう。
+メニューから[ファイル]-[新規]-[クラス]をクリックして、「新規Javaクラス」を開きます。 ここでは、名前に”Robot”を入力し、[完了]をクリックしましょう。</p>
+
+<p><a href="https://gyazo.com/38cfeab5c7516c7921da141b572f75a0"><img src="https://i.gyazo.com/38cfeab5c7516c7921da141b572f75a0.png" alt="https://gyazo.com/38cfeab5c7516c7921da141b572f75a0" /></a></p>
+
+<p>下記のコードを参考に、<strong>name</strong>フィールドと、<strong>speakメソッド</strong>を定義してください。
+コンストラクタでnameフィールドを初期化していることに注意してください。</p>
+
+<script src="https://gist.github.com/naoto-github/08030d2ff5f1fd35b0bd.js"> </script>
+
+<p>下記のコード参考にRobotクラスをインスタンス化してみましょう。
+ここでは、ロボットの名前を<strong>ロボット1号</strong>とします。
+プログラムの実行後にコンソール出力を確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/c462fe47eecf682ba2b0.js"> </script>
+
+<p>上記で作成したロボット１号は一方的に話すだけで面白くありません。
+そこで、次に<strong>対話が可能なロボット</strong>に改良してみましょう。
+このようなときに利用すると便利な機能が<strong>継承</strong>です。
+<strong>Robotクラス</strong>を継承して<strong>TalkRobot</strong>を作成してみます。</p>
+
+<p>メニューから[ファイル]-[新規]-[クラス]をクリックして、「新規Javaクラス」を開きます。 ここでは、名前に”TalkRobot”、スーパクラスに”Robot”を入力し、[完了]をクリックしましょう。
+この<strong>スーパークラス</strong>とは、継承元となるクラスを意味し、「スーパークラス」の他にも「親クラス」などと呼びます。
+一方、継承したクラスは、「サブクラス」や「子クラス」と呼びます。</p>
+
+<p><a href="https://gyazo.com/9b0ac23357e6cc4450ead3aa936ad38f"><img src="https://i.gyazo.com/9b0ac23357e6cc4450ead3aa936ad38f.png" alt="https://gyazo.com/9b0ac23357e6cc4450ead3aa936ad38f" /></a></p>
+
+<p>継承するとクラス宣言部の<strong>extends</strong>の後に継承元のクラス名が記述されます。
+下記のコードを参考に、<strong>talkメソッド</strong>を定義してください。
+talkメソッドでは、キーボードから名前を入力すると、ロボットが入力された名前を話します。
+コンストラクタ内の<code class="highlighter-rouge">super(name)</code>は、スーパークラスであるRobotクラスのコンストラクタと同じ処理をします。</p>
+
+<script src="https://gist.github.com/naoto-github/b9958f1078d2b02d43b8.js"> </script>
+
+<p>下記のコードを参考にTalkRobotクラスをインスタンス化してみましょう。
+ここでは、ロボットの名前を<strong>ロボット2号</strong>とします。
+プログラムの実行後にコンソール出力を確認してください。
+Robotクラスを継承することで、Robotクラスのnameフィールドやspeakメソッドを、
+TalkRobotでも利用できることが分かります。</p>
+
+<script src="https://gist.github.com/naoto-github/8cb9694bb39be140b29e.js"> </script>
+
+<p>TalkRobotクラスで、speakメソッドを修正することもできます。
+これを<strong>オーバーライド</strong>と呼びます。
+ここでは、下記のコードを参考にspeakメソッドをオーバライドして、
+男らしい話し方をするロボットに修正しましょう。
+プログラムの実行後にコンソール出力を確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/05e394e700efa4d8c878.js"> </script>
+
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />インターフェイスとは</h1>
 
+<p>継承する際に<strong>スーパークラス</strong>は1つしか指定することはできません。
+複数の継承元の機能を引き継ぎたい場合はどうすれば良いでしょうか（<strong>多重継承</strong>と呼びます）。
+このような場合に利用するのが<strong>インターフェイス</strong>です。
+インターフェイスは下記の点がクラスとは異なります。</p>
+
+<ul>
+  <li>すべてのメソッドは<strong>抽象メソッド</strong></li>
+  <li>フィールドは持てない（例外有）</li>
+</ul>
+
+<p>ここで、抽象メソッドとは「メソッド名はあるけど内容は未定義」という特徴を持ちます。
+このため、インターフェイスで定義されているメソッドは、継承したクラスで必ずオーバーライドする必要があります。
+また、インターフェイスを継承することを<strong>実装</strong>と呼ぶことが多いので注意が必要です。</p>
+
+<p>ここでは、ロボットに<strong>飛行機能</strong>を付与する<strong>FlightUnitインターフェィス</strong>を作成してみましょう。
+メニューから[ファイル]-[新規]-[インターフェイス]をクリックして、「新規Javaインターフェイス」を開きます。 ここでは、名前に”FlightUnit”を入力し、[完了]をクリックしましょう。</p>
+
+<p><a href="https://gyazo.com/562b2b2e94838602ab863cbcefede76a"><img src="https://i.gyazo.com/562b2b2e94838602ab863cbcefede76a.png" alt="https://gyazo.com/562b2b2e94838602ab863cbcefede76a" /></a></p>
+
+<p>下記のコードを参考に、<strong>fly</strong>メソッドを定義してください。
+このflyメソッドは抽象メソッドのため<code class="highlighter-rouge">public void fly();</code>と記述します。</p>
+
+<script src="https://gist.github.com/naoto-github/a55a5cd5029e4054ba46.js"> </script>
+
+<p>下記のコードを参考にTalkRobotクラスにFlightUnitインターフェイスを実装してみましょう。
+インターフェイスを実装するにはクラス宣言部の<strong>implements</strong>の後にインターフェイス名を記述します。
+また、flyメソッドもオーバーライドしておきます。</p>
+
+<script src="https://gist.github.com/naoto-github/18fb489c055b57b4ec52.js"> </script>
+
+<p>最後に、下記のコードを参考に、TalkRobotのインスタンスからflyメソッドを呼び出してみましょう。
+プログラムの実行後にコンソール出力を確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/1397f116bc1c39840a41.js"> </script>
+
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+
+<p>ロボットに<strong>歌唱機能</strong>を付与する<strong>SingUnitインターフェイス</strong>を作成してください。
+メソッド名は<strong>sing</strong>とし、TalkRobotに実装したうえで、singメソッドを呼び出してください。
+課題が完成したら、作成したプロジェクトを実行可能JARファイルの形式でファイルに保存（エクスポート）してください。</p>
 
 <h3>参考文献</h3>
 
