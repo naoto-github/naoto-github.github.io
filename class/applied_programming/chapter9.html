@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>JavaFX①入力フィールドとボタン</title>
+  <meta name="description" content="椙山女学園大学 向研究室のブログです。日常の記録に加えて、授業資料などを公開しています。">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- <link rel="stylesheet" href="/css/style.css"> -->
+  <link rel="canonical" href="http://naoto-github.github.io//class/applied_programming/chapter9.html">
+  <link rel="alternate" type="application/rss+xml" title="M's Lab." href="http://naoto-github.github.io//feed.xml">
+
+  <!-- Faviconの実装 -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/favicon/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/favicon/favicon-48x48.png" sizes="48x48">
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32">
+  <link rel="manifest" href="favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#2d88ef">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+  <!-- Mathjax -->
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  <!-- OGP -->
+  
+  <meta property="og:image" content="https://i.gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d.png">
+  
+</head>
+
+<!-- Facebookいいねボタンの実装 -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Twitterボタンの実装 -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <!-- <a class="site-title" href="/">M's Lab.</a> -->
+    <a class="site-title" href="/">
+        <img src="/favicon/favicon.png" height="50px" style="margin-bottom:10px;margin-right:2px">
+        <span style="color:#00606D;font-weight:bold">M</span>'s Lab.
+        <!-- <img src="/img/Top.png" style="margin-bottom:10px;margin-left:10px"> -->
+    </a>
+
+    <nav class="site-nav">
+
+      <!-- <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a> -->
+
+      <div class="trigger">
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+                <a class="page-link" href="/class.html">担当科目</a>
+            
+          
+        
+          
+        
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+            
+                <a class="page-link" href="/profile.html">登場人物</a>
+            
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">JavaFX①入力フィールドとボタン</h1>
+    <div class="fb-like" data-href="http://naoto-github.github.io//class/applied_programming/chapter9.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+  </header>
+  </header>
+
+  <div class="post-content">
+    <p><a href="https://gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d"><img src="https://i.gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d.png" alt="https://gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />プロジェクトの準備</h1>
+
+<p>Eclipseで新規にプロジェクトを作成しましょう。
+メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして、「新規Javaプロジェクトの作成」を開きます。
+ここでは、プロジェクト名に”Project9”を入力して、[完了]をクリックしましょう。
+パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください。</p>
+
+<p><a href="https://gyazo.com/755c69e202b26b04368d53b8ae935ae9"><img src="https://i.gyazo.com/755c69e202b26b04368d53b8ae935ae9.png" alt="https://gyazo.com/755c69e202b26b04368d53b8ae935ae9" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25pngjavafx"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />JavaFXとは</h1>
+
+<p>従来、Javaにおける<strong>GUI（Graphical User Interface）</strong>は、
+<strong>AWT（Abstract Window Toolkit）</strong>や<strong>Swing</strong>と呼ばれるGUIツールキットを利用するのが標準でした。
+一方、<a href="http://www.oracle.com/technetwork/jp/java/javafx/overview/index.html">JavaFX</a>は2014年にリリースされたJava 8に統合された新しいGUIツールキットです。
+AWTやSwingに比べ、より洗練されたGUIアプリケーションの制作が可能です。
+それでは、このJavaFXを利用したGUIプログラミングを学習していきましょう。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />ウィンドウの表示</h1>
+
+<p>JavaFXを利用したGUIアプリケーションを作成するには、
+<strong>javafx.applicationパッケージ</strong>に含まれる<strong>Applicationクラス</strong>を継承することから始めます。
+<strong>パッケージ</strong>とはクラスをグループ分けして管理するためのフォルダのようなものです。
+パッケージ名も含めたクラス名は<strong>javafx.application.Application</strong>と表記します。</p>
+
+<p>まずは、<strong>Application</strong>クラスを継承した<strong>MyApplication</strong>クラスを作成しましょう。
+メニューから[ファイル]-[新規]-[クラス]をクリックして、「新規Javaクラス」を開きます。 ここでは、名前に”MyApplication”を入力し、[完了]をクリックしましょう。</p>
+
+<p><a href="https://gyazo.com/f32562d4fcfbb8c0aa6a88a89eb5e931"><img src="https://i.gyazo.com/f32562d4fcfbb8c0aa6a88a89eb5e931.png" alt="https://gyazo.com/f32562d4fcfbb8c0aa6a88a89eb5e931" /></a></p>
+
+<p>次に、下記のコードを参考にApplicationクラスを継承します。
+MyApplicationクラスでは、Applicationクラスの抽象メソッドである
+<strong>startメソッド</strong>をオーバーライドする必要があります。
+また、他のパッケージのクラスを利用するには、<code class="highlighter-rouge">import javafx.application.Application;</code>のように、
+ソースコードの先頭に記述します（Eclipseが自動的に補完してくれない場合）。</p>
+
+<script src="https://gist.github.com/naoto-github/9f9ec4e730fc1d2c1821.js"> </script>
+
+<p>startメソッドの引数である<strong>Stageクラス</strong>がウィンドウを表しています。
+下記コードを参考にStageクラスの<strong>setTitleメソッド</strong>、<strong>setWidthメソッド</strong>、<strong>setHeightメソッド</strong>を利用して、タイトルを<strong>Hello JavaFX!</strong>、幅を<strong>320px</strong>、高さを<strong>240px</strong>に設定しましょう。
+また、作成したウィンドウを表示するには<strong>showメソッド</strong>を利用します。</p>
+
+<script src="https://gist.github.com/naoto-github/38daf4808cc3d042e97c.js"> </script>
+
+<p>JavaFXはmainメソッドが不要という特徴があるため、
+このプログラムを実行するには<strong>実行の構成</strong>の設定が必要です。
+プロジェクトで右クリックして[実行]-[実行の構成]をクリックして、「実行の構成」を開きます。
+ここで、<strong>メイン・クラス</strong>にMyApplicationを入力します。
+プログラムの実行後にウィンドウが表示されることを確認してください。</p>
+
+<p><a href="https://gyazo.com/cdb59291518f232c459d75114220c8fe"><img src="https://i.gyazo.com/cdb59291518f232c459d75114220c8fe.png" alt="https://gyazo.com/cdb59291518f232c459d75114220c8fe" /></a></p>
+
+<p><a href="https://gyazo.com/730d7b193d03f58880588f5d5d45f35b"><img src="https://i.gyazo.com/730d7b193d03f58880588f5d5d45f35b.png" alt="https://gyazo.com/730d7b193d03f58880588f5d5d45f35b" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />テキストフィールド</h1>
+
+<p><strong>テキストフィールド</strong>をウィンドウに設置してみましょう。
+テキストフィールドとは、ユーザが数値や文字列を入力できる1行のフィールドのことです。
+テキストフィールドや後述するボタンなど、ウィンドウに配置可能な部品を<strong>コントロール</strong>と呼びます。</p>
+
+<p>入力が空のテキストフィールドを作成するには、
+下記のように<strong>TextField</strong>クラスをインスタンス化します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>TextField tf = new TextField();
+</code></pre>
+</div>
+
+<p>作成したテキストフィールド<em>tf</em>のウィンドウ内での設置位置を決めるためには、
+<strong>レイアウトペイン</strong>を利用します。
+レイアウトペインにはVBox、HBoxなど様々な種類があり、
+それぞれレイアウト方法が異なります。
+ここでは、コントロールを垂直方向に並べて配置する<strong>VBox</strong>を利用します。
+下記のように<strong>VBoxクラス</strong>をインスタンス化し、
+<strong>getChildren().add()</strong>メソッドでコントロールを追加します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>VBox vbox = new VBox();
+vbox.getChildren().add(tf);
+</code></pre>
+</div>
+
+<p>作成したレイアウトペイン<em>vbox</em>をウィンドウに追加するには、
+<em>vbox</em>を引数に<strong>Sceneクラス</strong>のインスタンスを作成します。
+さらに、Stageクラスの<strong>setScene()</strong>メソッドに、
+<strong>Sceneクラス</strong>のインスタンスを引数として渡します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Scene scene = new Scene(vbox);
+stage.setScene(scene);
+</code></pre>
+</div>
+
+<p>下記のコードを参考にウィンドウにテキストフィールドを追加してみましょう。
+<em>tf</em>、<em>vbox</em>、<em>scene</em>はフィールドとして宣言していることに注意してください。
+プログラムの実行後に表示されるウィンドウを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/d6280c4b00733aa86c73.js"> </script>
+
+<p><a href="https://gyazo.com/52099fddfbeaae9a8fb57781ed39b1e8"><img src="https://i.gyazo.com/52099fddfbeaae9a8fb57781ed39b1e8.png" alt="https://gyazo.com/52099fddfbeaae9a8fb57781ed39b1e8" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />ボタン</h1>
+
+<p><strong>ボタン</strong>をウィンドウに設置してみましょう。
+ユーザがボタンをクリックしたタイミングで、何らかの処理を行うことが可能です。
+ここではボタンを押すとテキストフィールドに入力されている数値を2倍にしてみます。</p>
+
+<p>ボタンを作成するには、
+下記のように<strong>Button</strong>クラスをインスタンス化します。
+ボタンに表示する文字列を”2倍する”に設定しています。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Button button = new Button("2倍する");
+</code></pre>
+</div>
+
+<p>作成したボタン<em>button</em>をレイアウトペイン<em>vbox</em>に追加します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>vbox.getChildren().add(button);
+</code></pre>
+</div>
+
+<p>下記のコードを参考にウィンドウにボタンを追加してみましょう。
+プログラムの実行後に表示されるウィンドウを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/52b99c188c19e279f792.js"> </script>
+
+<p><a href="https://gyazo.com/c3784f30f05a2e49e321d0ba7e65dcce"><img src="https://i.gyazo.com/c3784f30f05a2e49e321d0ba7e65dcce.png" alt="https://gyazo.com/c3784f30f05a2e49e321d0ba7e65dcce" /></a></p>
+
+<p>次に、ボタンがクリックされたときの動作を定義します。
+Buttonクラスの<strong>setOnAction()メソッド</strong>に対して、<strong>ラムダ式</strong>という記法を用いて、
+下記のように引数を記述します（ラムダ式の詳細に関しては割愛します。）。
+これで、ボタンがクリックされたタイミングで<strong>x2メソッド</strong>が呼びだされます。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>button.setOnMouseClicked(event -&gt; x2());
+</code></pre>
+</div>
+
+<p>最後に、テキストフィールドに入力されている数値を2倍にする<strong>x2メソッド</strong>を定義します。
+テキストフィールドに入力されている文字列を取得するには<strong>getText()メソッド</strong>、
+一方、テキストフィールドに文字列を設定するには<strong>setText()メソッド</strong>を利用します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public void x2(){
+    int value = Integer.parseInt(tf.getText());
+    tf.setText(Integer.toString(value * 2));
+}
+</code></pre>
+</div>
+
+<p>下記のコードを参考にボタンがクリックされたときの処理を記述してください。
+プログラムの実行後に表示されるウィンドウを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/e48f9fcfd44df9de6310.js"> </script>
+
+<p><a href="https://gyazo.com/07aa2ad3c7984a8b28af5bfbba1486f7"><img src="https://i.gyazo.com/07aa2ad3c7984a8b28af5bfbba1486f7.png" alt="https://gyazo.com/07aa2ad3c7984a8b28af5bfbba1486f7" /></a></p>
+
+<p><a href="https://gyazo.com/0330a7079f9d06afaf2f97b964371e97"><img src="https://i.gyazo.com/0330a7079f9d06afaf2f97b964371e97.png" alt="https://gyazo.com/0330a7079f9d06afaf2f97b964371e97" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-4"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+
+<p>テキストフィールドに入力されている数値を3倍にするボタンを作成してください。
+数値を3倍にするメソッドは<strong>x3()</strong>としてください。
+課題が完成したら、作成したプロジェクトを実行可能JARファイルの形式でファイルに保存（エクスポート）してください。</p>
+
+<h3>参考文献</h3>
+
+<ul>
+    <li>中山清喬(2014)『スッキリわかるJava入門 入門編 第2版』インプレス </li>
+    <li>中山清喬(2014)『スッキリわかるJava入門 実践編 第2版』インプレス </li>
+    <li>日向俊二(2015)『JavaFX &amp; Java8 プログラミング Javaによる新しいGUI プログラミング入門』カットシステム
+
+</li></ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">
+        <!-- <div style="margin-bottom:0px"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></div>
+        <div class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+    </h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <!-- <li>M's Lab.</li> -->
+          <!-- <li><a href="mailto:nmukai@sugiyama-u.ac.jp">nmukai@sugiyama-u.ac.jp</a></li> -->
+          <li style="margin-bottom:5px"><div class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
+          <li><div><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></div></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/naoto-github"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">naoto-github</span></a>
+
+          </li>
+          
+
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/nmukai1978"><span class="icon icon--facebook"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300px" height="300px" viewBox="0 0 300 300">
+	<defs>
+		<style>
+			.fill {fill: #3b5998;}
+		</style>
+	</defs>
+	<path class="fill" d="M283.000,-0.000 C283.000,-0.000 17.000,-0.000 17.000,-0.000 C7.853,-0.000 -0.000,7.854 -0.000,17.000 C-0.000,17.000 -0.000,283.000 -0.000,283.000 
+			 C-0.000,292.144 7.853,300.000 17.000,300.000 C17.000,300.000 161.000,300.000 161.000,300.000 C161.000,300.000 161.000,183.000 161.000,183.000 
+			 C161.000,183.000 121.000,183.000 121.000,183.000 C121.000,183.000 121.000,139.000 121.000,139.000 C121.000,139.000 161.000,139.000 161.000,139.000 
+			 C161.000,139.000 161.000,105.000 161.000,105.000 C161.000,66.251 183.432,45.000 218.000,45.000 C234.558,45.000 249.852,46.449 254.000,47.000 
+			 C254.000,47.000 254.000,88.000 254.000,88.000 C254.000,88.000 229.000,88.000 229.000,88.000 C210.201,88.000 207.000,96.891 207.000,110.000 
+			 C207.000,110.000 207.000,139.000 207.000,139.000 C207.000,139.000 252.000,139.000 252.000,139.000 C252.000,139.000 246.000,183.000 246.000,183.000 
+			 C246.000,183.000 207.000,183.000 207.000,183.000 C207.000,183.000 207.000,300.000 207.000,300.000 C207.000,300.000 283.000,300.000 283.000,300.000 
+			 C292.144,300.000 300.000,292.144 300.000,283.000 C300.000,283.000 300.000,17.000 300.000,17.000 C300.000,7.854 292.144,-0.000 283.000,-0.000 Z"/>
+</svg>
+</span><span class="username">nmukai1978</span></a>
+
+          </li>
+          
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>椙山女学園大学 向研究室のブログです。日常の記録に加えて、授業資料などを公開しています。</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
