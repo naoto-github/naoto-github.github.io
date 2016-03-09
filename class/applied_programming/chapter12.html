@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>JavaFX①入力フィールドとボタン</title>
+  <title>アニメーション</title>
   <meta name="description" content="椙山女学園大学 向研究室のブログです。日常の記録に加えて、授業資料などを公開しています。">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://naoto-github.github.io//class/applied_programming/chapter9.html">
+  <link rel="canonical" href="http://naoto-github.github.io//class/applied_programming/chapter12.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab." href="http://naoto-github.github.io//feed.xml">
 
   <!-- Faviconの実装 -->
@@ -40,7 +40,7 @@
 
   <!-- OGP -->
   
-  <meta property="og:image" content="https://i.gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d.png">
+  <meta property="og:image" content="https://i.gyazo.com/70fa4078af19d2acf8f5a62eddac321a.png">
   
 </head>
 
@@ -176,175 +176,126 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">JavaFX①入力フィールドとボタン</h1>
-    <div class="fb-like" data-href="http://naoto-github.github.io//class/applied_programming/chapter9.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+    <h1 class="post-title">アニメーション</h1>
+    <div class="fb-like" data-href="http://naoto-github.github.io//class/applied_programming/chapter12.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
   </header>
   </header>
 
   <div class="post-content">
-    <p><a href="https://gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d"><img src="https://i.gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d.png" alt="https://gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d" /></a></p>
+    <p><a href="https://gyazo.com/70fa4078af19d2acf8f5a62eddac321a"><img src="https://i.gyazo.com/70fa4078af19d2acf8f5a62eddac321a.png" alt="https://gyazo.com/70fa4078af19d2acf8f5a62eddac321a" /></a></p>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />プロジェクトの準備</h1>
 
 <p>Eclipseで新規にプロジェクトを作成しましょう。
 メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして、「新規Javaプロジェクトの作成」を開きます。
-ここでは、プロジェクト名に”Project9”を入力して、[完了]をクリックしましょう。
+ここでは、プロジェクト名に”Project12”を入力して、[完了]をクリックしましょう。
 パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください。</p>
 
-<p><a href="https://gyazo.com/755c69e202b26b04368d53b8ae935ae9"><img src="https://i.gyazo.com/755c69e202b26b04368d53b8ae935ae9.png" alt="https://gyazo.com/755c69e202b26b04368d53b8ae935ae9" /></a></p>
+<p><a href="https://gyazo.com/93f2cadc9148cb6b30d45c22302345cf"><img src="https://i.gyazo.com/93f2cadc9148cb6b30d45c22302345cf.png" alt="https://gyazo.com/93f2cadc9148cb6b30d45c22302345cf" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25pngjavafx"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />JavaFXとは</h1>
-
-<p>従来、Javaにおける<strong>GUI（Graphical User Interface）</strong>は、
-<strong>AWT（Abstract Window Toolkit）</strong>や<strong>Swing</strong>と呼ばれるGUIツールキットを利用するのが標準でした。
-一方、<a href="http://www.oracle.com/technetwork/jp/java/javafx/overview/index.html">JavaFX</a>は2014年にリリースされたJava 8に統合された新しいGUIツールキットです。
-AWTやSwingに比べ、より洗練されたGUIアプリケーションの制作が可能です。
-それでは、このJavaFXを利用したGUIプログラミングを学習していきましょう。</p>
-
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />ウィンドウの表示</h1>
-
-<p>JavaFXを利用したGUIアプリケーションを作成するには、
-<strong>javafx.applicationパッケージ</strong>に含まれる<strong>Applicationクラス</strong>を継承することから始めます。
-<strong>パッケージ</strong>とはクラスをグループ分けして管理するためのフォルダのようなものです。
-パッケージ名も含めたクラス名は<strong>javafx.application.Application</strong>と表記します。</p>
-
-<p>まずは、<strong>Application</strong>クラスを継承した<strong>MyApplication</strong>クラスを作成しましょう。
+<p><strong>Application</strong>クラスを継承した<strong>MyApplication</strong>クラスを作成しましょう。
 メニューから[ファイル]-[新規]-[クラス]をクリックして、「新規Javaクラス」を開きます。 まず、名前に”MyApplication”を入力します。
 次に<strong>スーパークラス</strong>を設定するために、[参照]ボタンから「スーパークラスの選択」を開き、
 一致する項目から<strong>javafx.application.Application</strong>を選択して、[OK]をクリックします。
 最後に[完了]をクリックしましょう。</p>
 
-<p><a href="https://gyazo.com/4c10ac55931f4dca7915c595c682c4a5"><img src="https://i.gyazo.com/4c10ac55931f4dca7915c595c682c4a5.png" alt="https://gyazo.com/4c10ac55931f4dca7915c595c682c4a5" /></a></p>
+<p><a href="https://gyazo.com/9bae89257cfbf390807eb9ee034e965f"><img src="https://i.gyazo.com/9bae89257cfbf390807eb9ee034e965f.png" alt="https://gyazo.com/9bae89257cfbf390807eb9ee034e965f" /></a></p>
 
-<p><a href="https://gyazo.com/2a63060685a24d743bb5b36de88083d3"><img src="https://i.gyazo.com/2a63060685a24d743bb5b36de88083d3.png" alt="https://gyazo.com/2a63060685a24d743bb5b36de88083d3" /></a></p>
-
-<p>MyApplicationクラスでは、Applicationクラスの抽象メソッドである
-<strong>startメソッド</strong>をオーバーライドする必要があります。
-また、他のパッケージのクラスを利用する場合は、ソースコードの先頭に<strong>import</strong>という表記を用いて、<code class="highlighter-rouge">import javafx.application.Application;</code>のように記述します（Eclipseが自動的に補完してくれるはず）。</p>
-
-<script src="https://gist.github.com/naoto-github/9f9ec4e730fc1d2c1821.js"> </script>
-
-<p>startメソッドの引数である<strong>Stageクラス</strong>がウィンドウを表しています。
-下記コードを参考にStageクラスの<strong>setTitleメソッド</strong>、<strong>setWidthメソッド</strong>、<strong>setHeightメソッド</strong>を利用して、タイトルを<strong>Project 9</strong>、幅を<strong>320px</strong>、高さを<strong>240px</strong>に設定しましょう。
-また、作成したウィンドウを表示するには<strong>showメソッド</strong>を利用します。</p>
-
-<script src="https://gist.github.com/naoto-github/38daf4808cc3d042e97c.js"> </script>
-
-<p>JavaFXはmainメソッドが不要という特徴があるため、
-このプログラムを実行するには<strong>実行の構成</strong>の設定が必要です。
-プロジェクトで右クリックして[実行]-[実行の構成]をクリックして、「実行の構成」を開きます。
-ここで、<strong>メイン・クラス</strong>にMyApplicationを入力します。
+<p>Applicationクラスの抽象メソッドである<strong>startメソッド</strong>をオーバーライドしておきます。
+下記コードを参考に、タイトルを<strong>Project 12</strong>、幅を<strong>800px</strong>、高さを<strong>500px</strong>に設定しましょう。
 プログラムの実行後にウィンドウが表示されることを確認してください。</p>
 
-<p><a href="https://gyazo.com/cdb59291518f232c459d75114220c8fe"><img src="https://i.gyazo.com/cdb59291518f232c459d75114220c8fe.png" alt="https://gyazo.com/cdb59291518f232c459d75114220c8fe" /></a></p>
+<script src="https://gist.github.com/naoto-github/30675ef88d165d47bd2b.js"> </script>
 
-<p><a href="https://gyazo.com/2f7607d6c08c3bf8615117eac4051ffc"><img src="https://i.gyazo.com/2f7607d6c08c3bf8615117eac4051ffc.png" alt="https://gyazo.com/2f7607d6c08c3bf8615117eac4051ffc" /></a></p>
+<p><a href="https://gyazo.com/7347594439ac7f995ccac0434fd06666"><img src="https://i.gyazo.com/7347594439ac7f995ccac0434fd06666.png" alt="https://gyazo.com/7347594439ac7f995ccac0434fd06666" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />テキストフィールド</h1>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />イメージの描画</h1>
 
-<p><strong>テキストフィールド</strong>をウィンドウに設置してみましょう。
-テキストフィールドとは、ユーザが数値や文字列を入力できる1行のフィールドのことです。
-テキストフィールドや後述するボタンなど、ウィンドウに配置可能な部品を<strong>コントロール</strong>と呼びます。</p>
+<p>今回はイメージをキャンバスに描画し、パラパラ漫画の要領でアニメーションさせることに挑戦していきましょう。
+前準備として、下記のコードを参考に<strong>Canvasクラス</strong>をウィンドウに配置してください。 
+レイアウトペインとして<strong>VBoxクラス</strong>を利用しています。 プログラムの実行後に表示されるウィンドウを確認してください。</p>
 
-<p>入力が空のテキストフィールドを作成するには、
-下記のように<strong>TextField</strong>クラスをインスタンス化します。</p>
+<script src="https://gist.github.com/naoto-github/773637d0466296b26c62.js"> </script>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>TextField tf = new TextField();
+<p><a href="https://gyazo.com/42657f7d3817d0230814105a05b36408"><img src="https://i.gyazo.com/42657f7d3817d0230814105a05b36408.png" alt="https://gyazo.com/42657f7d3817d0230814105a05b36408" /></a></p>
+
+<p>まずは、下記の「歩いている女性のイメージ（png画像）」をキャンバスに表示してみます。
+この２つのイメージを交互に表示することで歩いている様子の表現が可能です。
+<a href="walking1.png">walking1.png</a>と<a href="walking2.png">walking2.png</a>をダウンロードしたら、
+Eclipseのプロジェクトの中にコピーしてください。</p>
+
+<p><a href="https://gyazo.com/7ffff99915b604b6ec050953c76c20a9"><img src="https://i.gyazo.com/7ffff99915b604b6ec050953c76c20a9.png" alt="https://gyazo.com/7ffff99915b604b6ec050953c76c20a9" /></a>
+<a href="https://gyazo.com/1f35ae1f421c9c84f6e8dcf22af42756"><img src="https://i.gyazo.com/1f35ae1f421c9c84f6e8dcf22af42756.png" alt="https://gyazo.com/1f35ae1f421c9c84f6e8dcf22af42756" /></a></p>
+
+<p>保存したイメージを読み込むには、下記のように<strong>Imageクラス</strong>を利用します。
+ここでは、２つのイメージを利用するため、Imageクラスの配列<em>walking</em>を宣言して、
+<em>walking[0]</em>に<strong>walking1.png</strong>、<em>walking[1]</em>に<strong>walking2.png</strong>をそれぞれ読み込みます。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Image walking[] = new Image[2];
+walking[0] = new Image(Paths.get("walking1.png").toUri().toString());
+walking[1] = new Image(Paths.get("walking2.png").toUri().toString());
 </code></pre>
 </div>
 
-<p>作成したテキストフィールド<em>tf</em>のウィンドウ内での設置位置を決めるためには、
-<strong>レイアウトペイン</strong>を利用します。
-レイアウトペインにはVBox、HBoxなど様々な種類があり、
-それぞれレイアウト方法が異なります。
-ここでは、コントロールを垂直方向に並べて配置する<strong>VBox</strong>を利用します。
-下記のように<strong>VBoxクラス</strong>をインスタンス化し、
-<strong>getChildren().add()</strong>メソッドでコントロールを追加します。</p>
+<p>キャンバスにイメージを表示するには、<strong>GraphicsContext</strong>クラスの<code class="highlighter-rouge">drawImage()</code>メソッドを利用します。
+<code class="highlighter-rouge">drawImage()</code>メソッドの３つの引数は、<strong>表示するイメージ</strong>、<strong>X座標</strong>、<strong>Y座標</strong>を表しています。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>VBox vbox = new VBox();
-vbox.getChildren().add(tf);
+<div class="highlighter-rouge"><pre class="highlight"><code>gc.drawImage(walking[0], 0, 0);
 </code></pre>
 </div>
 
-<p>作成したレイアウトペイン<em>vbox</em>をウィンドウに追加するには、
-<em>vbox</em>を引数に<strong>Sceneクラス</strong>のインスタンスを作成します。
-さらに、Stageクラスの<strong>setScene()</strong>メソッドに、
-<strong>Sceneクラス</strong>のインスタンスを引数として渡します。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>Scene scene = new Scene(vbox);
-primaryStage.setScene(scene);
-</code></pre>
-</div>
-
-<p>下記のコードを参考にウィンドウにテキストフィールドを追加してみましょう。
-<em>tf</em>、<em>vbox</em>、<em>scene</em>はフィールドとして宣言していることに注意してください。
+<p>下記のコードを参考に、新たに<code class="highlighter-rouge">paint()</code>メソッドを定義して、<strong>walking1.png</strong>の画像を表示してください。
 プログラムの実行後に表示されるウィンドウを確認してください。</p>
 
-<script src="https://gist.github.com/naoto-github/d6280c4b00733aa86c73.js"> </script>
+<script src="https://gist.github.com/naoto-github/8792d000d30b2c9fe303.js"> </script>
 
-<p><a href="https://gyazo.com/7b130c7c5ed47fd4913cfba740fcfaa3"><img src="https://i.gyazo.com/7b130c7c5ed47fd4913cfba740fcfaa3.png" alt="https://gyazo.com/7b130c7c5ed47fd4913cfba740fcfaa3" /></a></p>
+<p><a href="https://gyazo.com/a372744616de3780b82ddad8794a8ece"><img src="https://i.gyazo.com/a372744616de3780b82ddad8794a8ece.png" alt="https://gyazo.com/a372744616de3780b82ddad8794a8ece" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />ボタン</h1>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />アニメーションの描画</h1>
 
-<p><strong>ボタン</strong>をウィンドウに設置してみましょう。
-ユーザがボタンをクリックしたタイミングで、何らかの処理を行うことが可能です。
-ここではボタンを押すとテキストフィールドに入力されている数値を2倍にしてみます。</p>
+<p>時間軸に沿ってイメージをアニメーションするには<strong>Timeline</strong>クラスを利用します。
+まずは、<strong>Timeline</strong>クラスのコンストラクタの引数に<strong>KeyFram</strong>クラスを渡します。
+この<strong>KeyFram</strong>クラスには、アニメーションの1サイクルの時間(ミリ秒)と、
+<strong>ラムダ式</strong>を利用してサイクル毎に実行するメソッド（<strong>handle()</strong>メソッド）を指定します。
+次に、<strong>setCycleCount()</strong>メソッドで「実行するサイクル数」を指定します。
+引数に<strong>Timeline.INDEFINITE</strong>を指定すると無限に繰り返すことを意味します。
+最後に、<strong>play()</strong>メソッドでアニメーションが開始されます。</p>
 
-<p>ボタンを作成するには、
-下記のように<strong>Button</strong>クラスをインスタンス化します。
-ボタンに表示する文字列を”2倍する”に設定しています。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>Button button = new Button("2倍する");
+<div class="highlighter-rouge"><pre class="highlight"><code>Timer timer = new Timeline(new KeyFrame(Duration.millis(500), event -&gt; handle(event)));
+timer.setCycleCount(Timeline.INDEFINITE);
+timer.play();
 </code></pre>
 </div>
 
-<p>作成したボタン<em>button</em>をレイアウトペイン<em>vbox</em>に追加します。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>vbox.getChildren().add(button);
-</code></pre>
-</div>
-
-<p>下記のコードを参考にウィンドウにボタンを追加してみましょう。
+<p>下記のコードを参考に、<strong>walking1.png</strong>と<strong>walking2.png</strong>を交互に表示するアニメーションを作成してください。
+アニメーションのサイクル数を把握するために、int型の変数<em>time</em>を宣言しています。
+この<em>time</em>を２で割った余りを配列番号に指定することで、0、1、0、1という繰り返しを実現していることに注意してください。
 プログラムの実行後に表示されるウィンドウを確認してください。</p>
 
-<script src="https://gist.github.com/naoto-github/52b99c188c19e279f792.js"> </script>
+<script src="https://gist.github.com/naoto-github/9ff43f87d61ae46fe5eb.js"> </script>
 
-<p><a href="https://gyazo.com/641a97939249db02cbb704a1cd6f3013"><img src="https://i.gyazo.com/641a97939249db02cbb704a1cd6f3013.png" alt="https://gyazo.com/641a97939249db02cbb704a1cd6f3013" /></a></p>
-
-<p>次に、ボタンがクリックされたときの動作を定義します。
-Buttonクラスの<strong>setOnAction()メソッド</strong>に対して、<strong>ラムダ式</strong>という記法を用いて、
-下記のように引数を記述します（ラムダ式の詳細に関しては割愛します。）。
-これで、ボタンがクリックされたタイミングで<strong>x2メソッド</strong>が呼びだされます。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>button.setOnMouseClicked(event -&gt; x2());
-</code></pre>
-</div>
-
-<p>最後に、テキストフィールドに入力されている数値を2倍にする<strong>x2メソッド</strong>を定義します。
-テキストフィールドに入力されている文字列を取得するには<strong>getText()メソッド</strong>、
-一方、テキストフィールドに文字列を設定するには<strong>setText()メソッド</strong>を利用します。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>public void x2(){
-    int value = Integer.parseInt(tf.getText());
-    tf.setText(Integer.toString(value * 2));
-}
-</code></pre>
-</div>
-
-<p>下記のコードを参考にボタンがクリックされたときの処理を記述してください。
+<p>下記のコードを参考に、イメージが右に移動するアニメーションを作成してください。
+イメージのX座標を表すint型の変数<em>x</em>を宣言し、サイクル毎に50ずつ値を増加させています。
 プログラムの実行後に表示されるウィンドウを確認してください。</p>
 
-<script src="https://gist.github.com/naoto-github/e48f9fcfd44df9de6310.js"> </script>
+<p><a href="https://gyazo.com/6931a5d5e06b914e114417e980d31980"><img src="https://i.gyazo.com/6931a5d5e06b914e114417e980d31980.gif" alt="https://gyazo.com/6931a5d5e06b914e114417e980d31980" /></a></p>
 
-<p><a href="https://gyazo.com/50da434d6d52f7b704d91fa2f5f695fd"><img src="https://i.gyazo.com/50da434d6d52f7b704d91fa2f5f695fd.gif" alt="https://gyazo.com/50da434d6d52f7b704d91fa2f5f695fd" /></a></p>
+<script src="https://gist.github.com/naoto-github/b093c7f4b22ba0ce4684.js"> </script>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-4"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+<p><a href="https://gyazo.com/97a14bcaa5211b200c47a0fd28ed0a3b"><img src="https://i.gyazo.com/97a14bcaa5211b200c47a0fd28ed0a3b.gif" alt="https://gyazo.com/97a14bcaa5211b200c47a0fd28ed0a3b" /></a></p>
 
-<p>テキストフィールドに入力されている数値を3倍にするボタンを作成してください。
-数値を3倍にするメソッドは<strong>x3()</strong>としてください。
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+
+<p>下記の「走っている男性のイメージ（png画像）」をキャンバスに表示させてください。
+イメージは右から表示し、歩いている女性よりも速く移動させましょう。
+<a href="running1.png">running1.png</a>と<a href="running2.png">running2.png</a>をダウンロードしたら、
+Eclipseのプロジェクトの中にコピーしてください。
 課題が完成したら、作成したプロジェクトを実行可能JARファイルの形式でファイルに保存（エクスポート）してください。</p>
 
-<p><a href="https://gyazo.com/dc5d80c38023e5d28ab7f3125dd3b963"><img src="https://i.gyazo.com/dc5d80c38023e5d28ab7f3125dd3b963.gif" alt="https://gyazo.com/dc5d80c38023e5d28ab7f3125dd3b963" /></a></p>
+<p><a href="https://gyazo.com/ec41bbd7f3ab1f428d60e6c8bfcaf3dd"><img src="https://i.gyazo.com/ec41bbd7f3ab1f428d60e6c8bfcaf3dd.png" alt="https://gyazo.com/ec41bbd7f3ab1f428d60e6c8bfcaf3dd" /></a>
+<a href="https://gyazo.com/144f28d86601e53ca9e833082c02f865"><img src="https://i.gyazo.com/144f28d86601e53ca9e833082c02f865.png" alt="https://gyazo.com/144f28d86601e53ca9e833082c02f865" /></a></p>
+
+<p><a href="https://gyazo.com/ded0672060682642fbc4b1769441e34f"><img src="https://i.gyazo.com/ded0672060682642fbc4b1769441e34f.gif" alt="https://gyazo.com/ded0672060682642fbc4b1769441e34f" /></a></p>
 
 <h3>参考文献</h3>
 
