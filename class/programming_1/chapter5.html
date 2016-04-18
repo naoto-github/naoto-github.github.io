@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>条件分岐</title>
+  <title>アニメーションの表示</title>
   <meta name="description" content="椙山女学園大学 向研究室のブログです。日常の記録に加えて、授業資料などを公開しています。">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://mukai-lab.info//class/programming_1/chapter4.html">
+  <link rel="canonical" href="http://mukai-lab.info//class/programming_1/chapter5.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab." href="http://mukai-lab.info//feed.xml">
 
   <!-- Faviconの実装 -->
@@ -40,7 +40,7 @@
 
   <!-- OGP -->
   
-  <meta property="og:image" content="https://i.gyazo.com/48e88fbfa14b13656dcdd4d580dfbc14.png">
+  <meta property="og:image" content="https://i.gyazo.com/01cd25d187d03257cc85be5a3150916f.png">
   
 </head>
 
@@ -216,147 +216,124 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">条件分岐</h1>
-    <div class="fb-like" data-href="http://naoto-github.github.io//class/programming_1/chapter4.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+    <h1 class="post-title">アニメーションの表示</h1>
+    <div class="fb-like" data-href="http://naoto-github.github.io//class/programming_1/chapter5.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
   </header>
   </header>
 
   <div class="post-content">
-    <p><a href="https://gyazo.com/48e88fbfa14b13656dcdd4d580dfbc14"><img src="https://i.gyazo.com/48e88fbfa14b13656dcdd4d580dfbc14.png" alt="https://gyazo.com/48e88fbfa14b13656dcdd4d580dfbc14" /></a></p>
+    <p><a href="https://gyazo.com/01cd25d187d03257cc85be5a3150916f"><img src="https://i.gyazo.com/01cd25d187d03257cc85be5a3150916f.png" alt="https://gyazo.com/01cd25d187d03257cc85be5a3150916f" /></a></p>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />スケッチの作成</h1>
 
 <p>Processingを起動して、新規にスケッチを保存しましょう。
 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。
-ファイル名に「Project4」を入力し、[保存]をクリックしましょう。
-保存先に「Project4」という名前のフォルダが作成されていることを確認してください。</p>
+ファイル名に「Project5」を入力し、[保存]をクリックしましょう。
+保存先に「Project5」という名前のフォルダが作成されていることを確認してください。</p>
 
-<p><a href="https://gyazo.com/84d3ef687db2743b82ede8560db353dd"><img src="https://i.gyazo.com/84d3ef687db2743b82ede8560db353dd.png" alt="https://gyazo.com/84d3ef687db2743b82ede8560db353dd" /></a></p>
+<p><a href="https://gyazo.com/0164542679637926cc8339ce165b4a5e"><img src="https://i.gyazo.com/0164542679637926cc8339ce165b4a5e.png" alt="https://gyazo.com/0164542679637926cc8339ce165b4a5e" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />乱数の生成</h1>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25pngsetupdraw"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />setupとdraw</h1>
 
-<p>規則性がないランダムな値のことを<strong>乱数</strong>と呼びます。
-コンピュータは完全な乱数を生成することは出来ないため、
-アルゴリズムに従って疑似的な乱数を生成します（<strong>疑似乱数</strong>と呼ばれます）。
-コンピュータゲームにおける「トランプを配る」「サイコロを振る」などはこの疑似乱数を利用しています。
-Processingで疑似乱数を先生するには<code class="highlighter-rouge">random()</code>関数を利用します。
-<code class="highlighter-rouge">random()</code>関数の引数には、生成する乱数の<strong>下限（low）</strong>と<strong>上限（high）</strong>を指定します。
-また、生成された乱数はfloat型のデータとなることに注意が必要です。</p>
+<p>アニメーションを制御するには<code class="highlighter-rouge">setu()</code>関数と<code class="highlighter-rouge">draw関数()</code>が必要になります。
+<code class="highlighter-rouge">setup()</code>関数には、変数の初期化など、プログラムを実行したときに<strong>1回だけ</strong>実行する処理を記述します。
+一方、<code class="highlighter-rouge">draw()</code>関数は、プログラムの実行中に<strong>繰り返し</strong>実行され、アニメーションなど何かを変化させるための処理を記述します。
+また、<code class="highlighter-rouge">setup()</code>関数と<code class="highlighter-rouge">draw()</code>関数の外部で宣言された変数は両方の関数内で利用できます（<strong>グローバル変数</strong>と呼びます）。
+<code class="highlighter-rouge">setu()</code>関数と<code class="highlighter-rouge">draw関数()</code>は下記のように記述します（<strong>void</strong>は「この関数は返値をもたない」という意味です）。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>random(low, high);
-</code></pre>
-</div>
+<div class="highlighter-rouge"><pre class="highlight"><code>void setup(){
+	1回だけ実行する処理;
+}
 
-<p>ここでは、for文を利用して、半径10の円を10箇所に描きましょう。
-各円は、<code class="highlighter-rouge">random()</code>関数を利用して、ランダムな位置に配置します。
-下記を参考にコードを入力したら、Runボタンをクリックしてください。
-実行毎に配置が変わる円が描かれていることを確認してください。</p>
-
-<script src="https://gist.github.com/naoto-github/0f6133b891e7b98dc9c0b2e2cace3dd8.js"> </script>
-
-<p><a href="https://gyazo.com/0ab205a62aab1382cee40b2b9d5c5a02"><img src="https://i.gyazo.com/0ab205a62aab1382cee40b2b9d5c5a02.png" alt="https://gyazo.com/0ab205a62aab1382cee40b2b9d5c5a02" /></a></p>
-
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />比較演算子</h1>
-
-<p>for文の<strong>繰り返し条件</strong>に記述される<code class="highlighter-rouge">i&lt;10</code>などは<strong>条件式</strong>と呼ばれます。
-また、「<strong>&lt;</strong>」は<strong>比較演算子</strong>と呼ばれ、左辺と右辺を比較した結果、
-<strong>真（true）</strong>または<strong>偽（false）</strong>のどちらかを返す論理演算の一つです。
-この真（true）や偽（false）は<strong>boolean型</strong>であることに注意してください。
-例えば、変数<em>a</em>の値が5であるとき「a &lt; 3」の結果は<strong>false</strong>となります。
-比較演算子を下記表にまとめます。</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>比較演算子</th>
-      <th>意味</th>
-      <th>例</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>A==B</td>
-      <td>AとBは等しい</td>
-      <td>x==3</td>
-    </tr>
-    <tr>
-      <td>A!=B</td>
-      <td>AとBは等しくない</td>
-      <td>x!=3</td>
-    </tr>
-    <tr>
-      <td>A&gt;B</td>
-      <td>AはBより大きい</td>
-      <td>x&gt;3</td>
-    </tr>
-    <tr>
-      <td>A&gt;=B</td>
-      <td>AはBと等しいか大きい</td>
-      <td>x&gt;=3</td>
-    </tr>
-    <tr>
-      <td>A&lt;B</td>
-      <td>AはBより小さい</td>
-      <td>x&lt;3</td>
-    </tr>
-    <tr>
-      <td>A&lt;=B</td>
-      <td>AはBと等しいか小さい</td>
-      <td>A&lt;=3</td>
-    </tr>
-  </tbody>
-</table>
-
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25pngif"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />if文</h1>
-
-<p>条件式の結果に応じて実行する処理を分けることを<strong>条件分岐</strong>と呼びます。
-条件分岐を表現するには<strong>if文</strong>を利用します。
-if文は下記のように記述し、「()」内で指定されている条件式が真（true）となるときに、「{}」内の命令文を実行します。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>if(条件式){
-	実行する命令
+void draw(){
+	繰り返し実行する処理;
 }
 </code></pre>
 </div>
 
-<p>ここでは、ランダムに生成された<em>x</em>が150より小さいときにだけ円を描きましょう。
+<p>ここでは、ウィンドウの中央に半径10の円を描いてみましょう。
+変数の初期化は<code class="highlighter-rouge">setup()</code>関数、円の描画は<code class="highlighter-rouge">draw()</code>関数に記述していることに注意してください。
 下記を参考にコードを入力したら、Runボタンをクリックしてください。
-ウィンドウの左側にだけ円が描画されていることを確認してください。</p>
+ウィンドウの中央に円が描かれていることを確認してください。</p>
 
-<script src="https://gist.github.com/naoto-github/42b6112c93a70b1c293e6018f91a4629.js"> </script>
+<script src="https://gist.github.com/naoto-github/a3ec0fa860b68798b0fb749a79bb9292.js"> </script>
 
-<p><a href="https://gyazo.com/2cde9fe9d71b75f2280114e5ea727237"><img src="https://i.gyazo.com/2cde9fe9d71b75f2280114e5ea727237.png" alt="https://gyazo.com/2cde9fe9d71b75f2280114e5ea727237" /></a></p>
+<p><a href="https://gyazo.com/acc31709869b190e55ef6c6a4179b396"><img src="https://i.gyazo.com/acc31709869b190e55ef6c6a4179b396.png" alt="https://gyazo.com/acc31709869b190e55ef6c6a4179b396" /></a></p>
 
-<p>下記のように<strong>else</strong>を用いることで、条件式が偽（false）となるときの命令も記述することができます。</p>
+<h3 id="section">直線運動</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>if(条件式){
-	真のときに実行する命令
-}
-else{
-	偽のときに実行する命令
-}
-</code></pre>
-</div>
-
-<p>ランダムに生成された<em>x</em>が150以上のときには正方形を描きましょう。
+<p>円が右方向に直線的に動くアニメーションを設定してみましょう。
+右方向へのアニメーションは、<code class="highlighter-rouge">draw()</code>関数において、変数<em>x</em>の値を増加させることで表現できます。
 下記を参考にコードを入力したら、Runボタンをクリックしてください。
-ウィンドウの左側は円、右側には正方形が描画されていることを確認してください。</p>
+複数の円が右方向に描画されることを確認してください。</p>
 
-<script src="https://gist.github.com/naoto-github/c4ce0a2df2cc2c25ba343cd454f59233.js"> </script>
+<script src="https://gist.github.com/naoto-github/46ecff4e866f144c0ece31f30d0f75a9.js"> </script>
 
-<p><a href="https://gyazo.com/6953593ef35c30aeb10baa50be72f533"><img src="https://i.gyazo.com/6953593ef35c30aeb10baa50be72f533.png" alt="https://gyazo.com/6953593ef35c30aeb10baa50be72f533" /></a></p>
+<p><a href="https://gyazo.com/5a2299a60de12f4a0a18a1734532dae1"><img src="https://i.gyazo.com/5a2299a60de12f4a0a18a1734532dae1.gif" alt="https://gyazo.com/5a2299a60de12f4a0a18a1734532dae1" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+<p>しかし、上記のコードでは円が複数描画されてしまい、アニメーションしているように見えません。
+そこで、<code class="highlighter-rouge">draw()</code>関数の最初で、背景を灰色（#cccccc）で塗りつぶすことで、常に円が1つだけ描画されるように変更します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+1つの円が右方向に移動することを確認してください。</p>
 
-<p>ランダムに生成された<em>y</em>が150より小さいときには<strong>赤色</strong>、
-150以上のときは<strong>青色</strong>で、
-円と正方形を塗りつぶして下さい。
+<script src="https://gist.github.com/naoto-github/f169257e50d580b1830bf11896368831.js"> </script>
+
+<p><a href="https://gyazo.com/dad4f4fb1d0feb6da75b4e754a7c3d69"><img src="https://i.gyazo.com/dad4f4fb1d0feb6da75b4e754a7c3d69.gif" alt="https://gyazo.com/dad4f4fb1d0feb6da75b4e754a7c3d69" /></a></p>
+
+<p>円がウィンドウの端に到達したら、跳ね返って逆方向に進むように修正しましょう。
+まずは、右端に到達したら、左方向に進むようにします。
+円の速度を表す変数<em>speed</em>を宣言し、if文を利用して<em>x</em>の値が右端に到達したら<em>speed</em>の正負を反転します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+円が右端に到達すると跳ね返ることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/c23338eee2221d35a9d02a0ca930b997.js"> </script>
+
+<p><a href="https://gyazo.com/611d2d56fd57a1cc8d3ac506275f5cf3"><img src="https://i.gyazo.com/611d2d56fd57a1cc8d3ac506275f5cf3.gif" alt="https://gyazo.com/611d2d56fd57a1cc8d3ac506275f5cf3" /></a></p>
+
+<p>同様に、左端に到達したら、右方向に進むようにします。
+if文を利用して<em>x</em>の値が左端に到達したら<em>speed</em>の正負を反転します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+円が左端に到達すると跳ね返ることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/9e70813f9a4678de3c355cc35d38ac41.js"> </script>
+
+<p><a href="https://gyazo.com/cd23307cf8fa36b1d03d2c6f48e4c1d0"><img src="https://i.gyazo.com/cd23307cf8fa36b1d03d2c6f48e4c1d0.gif" alt="https://gyazo.com/cd23307cf8fa36b1d03d2c6f48e4c1d0" /></a></p>
+
+<h3 id="section-1">円運動</h3>
+
+<p>次は、円運動するアニメーションを設定してみましょう。
+円運動を表現するには<code class="highlighter-rouge">sin()</code>関数と<code class="highlighter-rouge">cos()</code>関数を利用します。
+<code class="highlighter-rouge">sin()</code>関数と<code class="highlighter-rouge">cos()</code>関数の引数には<strong>角度</strong>を指定しますが、
+<strong>ラジアン角</strong>を用いることに注意が必要です（ラジアン角は<strong>0</strong>から<strong>2π</strong>）。</p>
+
+<p>円運動の半径を表す変数<em>l</em>とラジアン角を表す変数<em>angle</em>を宣言します。
+また、座標を表す<em>x</em>と<em>y</em>はfloat型に変更します。
+<code class="highlighter-rouge">sin()</code>関数と<code class="highlighter-rouge">cos()</code>関数を利用して、座標（x,y）を更新することで円運動を表現します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+円が円運動していることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/79ec23d093b9a432abaf8735633c18fe.js"> </script>
+
+<p><a href="https://gyazo.com/4682360aab6f62b78117d9f185f3f7e2"><img src="https://i.gyazo.com/4682360aab6f62b78117d9f185f3f7e2.gif" alt="https://gyazo.com/4682360aab6f62b78117d9f185f3f7e2" /></a></p>
+
+<p>上記のコードを少し修正して、螺旋運動のアニメーションを設定してみましょう。
+円運動の半径を表す変数<em>l</em>の値を徐々に大きくします。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+円が螺旋運動していることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/ee03c8909bea1c66e315fd2db9c395b3.js"> </script>
+
+<p><a href="https://gyazo.com/7a7ffd91ca5301f77ef8c279cd28f6c1"><img src="https://i.gyazo.com/7a7ffd91ca5301f77ef8c279cd28f6c1.gif" alt="https://gyazo.com/7a7ffd91ca5301f77ef8c279cd28f6c1" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+
+<p>螺旋運動と共に描画される円の大きさが徐々に大きくなるアニメーションを設定してください。
 課題が完成したら、作成したスケッチを<strong>ZIPアーカイブ</strong>形式で保存します。
 ZIPアーカイブを作成するには、メニューから[ツール]-[スケッチをアーカイブ]をクリックして、「スケッチを名前を付けてアーカイブする」を開きます。
 保存するファイル名を確認した上で、[保存]をクリックします。
-保存先に「Project4-日付a.zip」というファイルが作成されていることを確認してください。</p>
+保存先に「Project5-日付a.zip」というファイルが作成されていることを確認してください。</p>
 
-<p><a href="https://gyazo.com/3f92f95b186d25911a4c1aa6890e7097"><img src="https://i.gyazo.com/3f92f95b186d25911a4c1aa6890e7097.png" alt="https://gyazo.com/3f92f95b186d25911a4c1aa6890e7097" /></a></p>
+<p><a href="https://gyazo.com/93c3471ed12ea69506fddf180f5b95b7"><img src="https://i.gyazo.com/93c3471ed12ea69506fddf180f5b95b7.gif" alt="https://gyazo.com/93c3471ed12ea69506fddf180f5b95b7" /></a></p>
 
 <h3>参考文献</h3>
 
