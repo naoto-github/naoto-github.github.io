@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>画像処理</title>
+  <title>3Dグラフィックス</title>
   <meta name="description" content="椙山女学園大学 向研究室のブログです。日常の記録に加えて、授業資料などを公開しています。">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://mukai-lab.info//class/programming_1/chapter7.html">
+  <link rel="canonical" href="http://mukai-lab.info//class/programming_1/chapter9.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab." href="http://mukai-lab.info//feed.xml">
 
   <!-- Faviconの実装 -->
@@ -40,7 +40,7 @@
 
   <!-- OGP -->
   
-  <meta property="og:image" content="https://i.gyazo.com/dbed671c7cda602db7d92745ac04b7c8.png">
+  <meta property="og:image" content="https://i.gyazo.com/d0b1414b74f9d3f51ab8ac0e3eec4768.png">
   
 </head>
 
@@ -228,148 +228,150 @@
         <article class="post">
 
   <header class="post-header">
-    <h1 class="post-title">画像処理</h1>
-    <div class="fb-like" data-href="http://naoto-github.github.io//class/programming_1/chapter7.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+    <h1 class="post-title">3Dグラフィックス</h1>
+    <div class="fb-like" data-href="http://naoto-github.github.io//class/programming_1/chapter9.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
   </header>
   </header>
 
   <div class="post-content">
-    <p><a href="https://gyazo.com/dbed671c7cda602db7d92745ac04b7c8"><img src="https://i.gyazo.com/dbed671c7cda602db7d92745ac04b7c8.png" alt="https://gyazo.com/dbed671c7cda602db7d92745ac04b7c8" /></a></p>
+    <p><a href="https://gyazo.com/d0b1414b74f9d3f51ab8ac0e3eec4768"><img src="https://i.gyazo.com/d0b1414b74f9d3f51ab8ac0e3eec4768.png" alt="https://gyazo.com/d0b1414b74f9d3f51ab8ac0e3eec4768" /></a></p>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />スケッチの作成</h1>
 
 <p>Processingを起動して、新規にスケッチを保存しましょう。
 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。
-ファイル名に「Project7」を入力し、[保存]をクリックしましょう。
-保存先に「Project7」という名前のフォルダが作成されていることを確認してください。</p>
+ファイル名に「Project9」を入力し、[保存]をクリックしましょう。
+保存先に「Project9」という名前のフォルダが作成されていることを確認してください。</p>
 
-<p><a href="https://gyazo.com/59c3141b523273199a9ebf444cb64948"><img src="https://i.gyazo.com/59c3141b523273199a9ebf444cb64948.png" alt="https://gyazo.com/59c3141b523273199a9ebf444cb64948" /></a></p>
+<p><a href="https://gyazo.com/7810b7309c73d90d82f24ed94c334a84"><img src="https://i.gyazo.com/7810b7309c73d90d82f24ed94c334a84.png" alt="https://gyazo.com/7810b7309c73d90d82f24ed94c334a84" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />画像の準備</h1>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />3次元グラフィックス</h1>
 
-<p>Processingは<strong>JPG形式</strong>や<strong>PNG形式</strong>などの画像ファイルを取り込んで表示することができます。
-下記の三種類の画像（<a href="hana.jpg">hana.jpg</a>、<a href="night.jpg">night.jpg</a>、<a href="umi.jpg">umi.jpg</a>）の内から一つを選び、画像をダウンロードしてください（画像提供：<a href="http://www.futta.net/">フリー写真素材 Futta.NET</a>）。
-いずれの画像もサイズは640×480ピクセルです。
-また、ダウンロードした画像は「スケッチフォルダ（Project7）」の中に配置しましょう。
-これ以降、本資料では<a href="hana.jpg">hana.jpg</a>を例に取り説明していきます。</p>
+<p>Processingは、これまで学んできた<strong>2Dグラフィックス</strong>だけでなく、<strong>3Dグラフィックス</strong>の描画も可能です。
+3Dグラフィックスを描画するには、「<strong>P3D(Processing 3D)</strong>」または「<strong>OpenGL</strong>」の
+いずれかの<strong>レンダラ</strong>を指定しますが、ここでは標準の<strong>P3D</strong>を採用することにします。
+<strong>P3D</strong>を指定すると、2次元の座標系（x,y）が、３次元の座標系（x,y,z）に変更されます（z軸は<strong>奥行き</strong>を表します）。</p>
 
-<p><img alt="hana.jpg" src="hana.jpg" width="300px" /></p>
-<p><img alt="night.jpg" src="night.jpg" width="300px" /></p>
-<p><img alt="umi.jpg" src="umi.jpg" width="300px" /></p>
+<p>まずは、下記のコードを参考に、<code class="highlighter-rouge">size()</code>関数で<strong>P3D</strong>を指定しましょう。
+また、<code class="highlighter-rouge">rect()</code>関数で、1辺の長さが200の正方形を描きまます。
+ここで、<code class="highlighter-rouge">translate()</code>関数を利用して、<strong>原点</strong>をウィンドウ中央に変更していることに注意してください。
+Runボタンをクリックしたら、正方形が画面中央に描かれることを確認してください。</p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />画像の表示</h1>
+<script src="https://gist.github.com/naoto-github/2ec5bd452bf580e2797ba1aeaeb3270d.js"> </script>
 
-<p>画像ファイルを読み込むには、<strong>PImage</strong>という型（本当はクラス）で変数を宣言し、
-<code class="highlighter-rouge">loadIMage()</code>関数を利用して、変数に画像データを代入します。</p>
+<p><a href="https://gyazo.com/83a70fd123b2f0ebc923bc59ecae8929"><img src="https://i.gyazo.com/83a70fd123b2f0ebc923bc59ecae8929.png" alt="https://gyazo.com/83a70fd123b2f0ebc923bc59ecae8929" /></a></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>PImage img;
-img = loadImage(ファイル名);
+<p>このままでは、座標系が３次元に変更されているか確認出来ません。
+そこで、マウスの動きに合わせて正方形を、X軸とY軸を中心に回転させてみましょう。
+X軸まわりに回転させるには<code class="highlighter-rouge">rotateX()</code>関数、Y軸まわりに回転させるには<code class="highlighter-rouge">rotateY()</code>関数を利用します。
+いずれも引数には回転する角度を<strong>ラジアン角</strong> **で指定します。</p>
+
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ドラッグしたままマウスを動かすと、正方形が回転することを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/b9fd820e819563f9bd3e966fba7186eb.js"> </script>
+
+<p><a href="https://gyazo.com/1123ca80c8fc17b47d3461510bd4699a"><img src="https://i.gyazo.com/1123ca80c8fc17b47d3461510bd4699a.png" alt="https://gyazo.com/1123ca80c8fc17b47d3461510bd4699a" /></a></p>
+
+<p><a href="https://gyazo.com/c9ba324e73068c5d8f0a770ddde57df9"><img src="https://i.gyazo.com/c9ba324e73068c5d8f0a770ddde57df9.png" alt="https://gyazo.com/c9ba324e73068c5d8f0a770ddde57df9" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />立体的な図形の描画</h1>
+
+<p>立体的な図形を描画してみましょう。
+直方体を描画するには<code class="highlighter-rouge">box()</code>関数を利用します。
+<code class="highlighter-rouge">box()</code>関数の引数には、直方体の幅（width）、高さ（height）、奥行き（depth）を指定します。
+<code class="highlighter-rouge">box()</code>関数で描かれた直方体は原点を中心に描かれることに注意してください。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>box(width, height, depth);
 </code></pre>
 </div>
 
-<p>また、ウィンドウに画像を表示するには<code class="highlighter-rouge">image()</code>関数を用います。
-<code class="highlighter-rouge">image()</code>関数の引数には、<strong>PImage</strong>型の変数に加え、表示する位置<strong>(x,y)</strong>を指定します。
-初期設定では、画像の表示位置は、画像の左上隅の座標が基準となることに注意してください。</p>
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ドラッグしたままマウスを動かすと、直方体が回転することを確認してください。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>image(img, x, y);
+<script src="https://gist.github.com/naoto-github/820b57dc8e40d41d90c03063b5b6f06c.js"> </script>
+
+<p><a href="https://gyazo.com/b38f29c403eb34cf3216ce6c69b55359"><img src="https://i.gyazo.com/b38f29c403eb34cf3216ce6c69b55359.png" alt="https://gyazo.com/b38f29c403eb34cf3216ce6c69b55359" /></a></p>
+
+<p>球を描画するには<code class="highlighter-rouge">sphere()</code>関数を利用します。
+<code class="highlighter-rouge">sphere()</code>関数の引数には、半径（radius）を指定します。
+<code class="highlighter-rouge">sphere()</code>関数で描かれた球は原点を中心に描かれることに注意してください。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sphere(radius);
 </code></pre>
 </div>
 
-<p>下記を参考にコードを入力したら、Runボタンをクリックしてくだい。
-ウィンドウに指定した画像が表示されることを確認してください（ウィンドウのサイズは画像サイズと同じ640&amp;times480ピクセルとします）。</p>
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ドラッグしたままマウスを動かすと、球が回転することを確認してください。</p>
 
-<script src="https://gist.github.com/naoto-github/4e714869775b858184937e29f88f722b.js"> </script>
+<script src="https://gist.github.com/naoto-github/f2b22b8fd642e76e435a474cc90ba8dc.js"> </script>
 
-<p><a href="https://gyazo.com/78edb226ca7a39702f94c7e0630ba462"><img src="https://i.gyazo.com/78edb226ca7a39702f94c7e0630ba462.png" alt="https://gyazo.com/78edb226ca7a39702f94c7e0630ba462" /></a></p>
+<p><a href="https://gyazo.com/835c7d239acb17b8b8deb3af96369fe3"><img src="https://i.gyazo.com/835c7d239acb17b8b8deb3af96369fe3.png" alt="https://gyazo.com/835c7d239acb17b8b8deb3af96369fe3" /></a></p>
 
-<p>画像をクリッピング（画像の一部を切り取ること）するには、<code class="highlighter-rouge">copy()</code>関数を利用します。
-例えば、画像の左上の1/4の領域を切り取り、幅・高さを2倍にするには下記のように記述します。
-(0,0)は元画像の左上隅の座標、(320,480)は元画像の幅と高さを意味しており、これらの値で指定された領域が切り取られます。
-また、2度目の(0,0)は切り取った画像を表示する位置、(640, 480)は切り取った画像の幅と高さ（この場合は<strong>拡大</strong>）を意味しています。</p>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />光源の設置</h1>
 
-<p><a href="https://gyazo.com/64a1a41190becbc91e2ea9591d695cf0"><img src="https://i.gyazo.com/64a1a41190becbc91e2ea9591d695cf0.jpg" alt="https://gyazo.com/64a1a41190becbc91e2ea9591d695cf0" /></a></p>
+<p>立体的な図形に陰影をつけるには空間に光源を設置します。
+光源には<strong>環境光</strong>、<strong>拡散光</strong>、<strong>点光源</strong>などの種類があります。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>copy(img, 0, 0, 320, 240, 0, 0, 640, 480);
+<p>環境光は、全方向から図形に対して均一の光を照らします。
+全方向から照らすため影は出来ないことから、他の光源と組み合わせて用いるのが一般的です。
+環境光を設置するには、<code class="highlighter-rouge">ambientLight()</code>関数を用います。
+引数には三原色（R、G、B）の光の強度を0～255の範囲で設定します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>ambientLight(R, G, B);
 </code></pre>
 </div>
 
-<p>下記を参考にコードを入力したら、Runボタンをクリックしてくだい。
-ウィンドウに切り取られた画像が拡大して表示されることを確認してください。</p>
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+直方体全体の色が変化していることを確認してください。</p>
 
-<script src="https://gist.github.com/naoto-github/a3a198ba7c2230273456e2e85660fc43.js"> </script>
+<script src="https://gist.github.com/naoto-github/e809c61b6fbef121f851d59f084be281.js"> </script>
 
-<p><a href="https://gyazo.com/1cd3a099184e9bb5e12d73a754269220"><img src="https://i.gyazo.com/1cd3a099184e9bb5e12d73a754269220.png" alt="https://gyazo.com/1cd3a099184e9bb5e12d73a754269220" /></a></p>
+<p><a href="https://gyazo.com/092c6fb953d18c591f5f2c7fe63a810e"><img src="https://i.gyazo.com/092c6fb953d18c591f5f2c7fe63a810e.png" alt="https://gyazo.com/092c6fb953d18c591f5f2c7fe63a810e" /></a></p>
 
-<p>クリッピング機能を利用して<strong>虫眼鏡</strong>を実現してみましょう。
-マウスをドラッグすると、マウス位置にある画像部分だけがズームして表示されます。
-<code class="highlighter-rouge">mouseDragged()</code>関数では、<code class="highlighter-rouge">image()</code>関数で画像を表示した後に、
-<code class="highlighter-rouge">copy()</code>関数を利用して100&amp;times100;ピクセルの領域を切り取り、
-200&amp;times200;ピクセル（2倍）に拡大して表示しています。
-また、<code class="highlighter-rouge">mouseReleased()</code>関数では、<code class="highlighter-rouge">image()</code>関数を実行し、元の画像を表示しています。
-下記を参考にコードを入力したら、Runボタンをクリックしてくだい。
-ドラッグすると画像が拡大して表示されることを確認してください。</p>
+<p>拡散光は、特定の方向に向かって進む光です。
+光が垂直な面に当たったときに、もっとも明るくなります。
+拡散光を設置するには、<code class="highlighter-rouge">directionalLight()</code>関数を用います。
+引数には三原色（R、G、B）の光の強度に加え、光の進む方向をX軸、Y軸、Z軸それぞれに0～1の範囲で設定します。</p>
 
-<script src="https://gist.github.com/naoto-github/f904c0ad511ab75cca1684b1aecb88e6.js"> </script>
-
-<p><a href="https://gyazo.com/cc2c12703271eceaa0b5e7392cb0cfb8"><img src="https://i.gyazo.com/cc2c12703271eceaa0b5e7392cb0cfb8.gif" alt="https://gyazo.com/cc2c12703271eceaa0b5e7392cb0cfb8" /></a></p>
-
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />配列と画像の色情報</h1>
-
-<p><code class="highlighter-rouge">loadPixels()</code>関数を実行することで、
-画像データを構成する各ピクセルの色情報を取得することができます。
-取得された色情報は<strong>pixels[]</strong>という名前の<strong>配列</strong>に記録されます。
-<strong>配列</strong>は1つの名前で<strong>複数のデータ</strong>を記録することが可能な特殊な変数と言えます。
-例えば、<strong>pixels[0]</strong>、<strong>pixels[1]</strong>のように、配列名の後ろに<strong>[要素番号]</strong>を指定することで、
-記録されている値を参照したり、新しい値を代入することができます（要素番号は<strong>0</strong>から始まることに注意してください）。
-ここでは、640×480ピクセルの画像を対象としているため、要素番号は<strong>0～307199</strong>(＝640×480-1)となります。
-また、配列の長さは<code class="highlighter-rouge">配列名.length</code>で参照することができます。
-下記を参考にコードを入力したら、Runボタンをクリックしてくだい。
-配列の長さである<strong>307200</strong>がコンソールに表示されることを確認してください。</p>
-
-<script src="https://gist.github.com/naoto-github/ec4510597e4837f5bbba18d27ca4c9e0.js"> </script>
-
-<p>各ピクセルの色成分は、<code class="highlighter-rouge">red()</code>関数、<code class="highlighter-rouge">green()</code>関数、<code class="highlighter-rouge">blue()</code>関数で取り出すことができます。
-取り出した各色の成分は<strong>0</strong>から<strong>255</strong>の範囲の値となりますが、<strong>float型</strong>を用いることに注意してください。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>float r = red(img.pixels[要素番号]);
-float g = green(img.pixels[要素番号]);
-float b = blue(img.pixels[要素番号]);
+<div class="highlighter-rouge"><pre class="highlight"><code>directionalLight(R, G, B, NX, NY, NZ);
 </code></pre>
 </div>
 
-<p>ここでは、赤色（<strong>R</strong>）の成分を残し、緑色（<strong>G</strong>）と青色（<strong>B</strong>）の成分は0にします。
-<strong>pixels[]</strong>に色情報を代入するときは<code class="highlighter-rouge">color()</code>関数を用います。
-<code class="highlighter-rouge">color()</code>関数は引数として、赤色成分、緑色成分、青色成分を指定します。
-<strong>pixels[]</strong>に代入した色情報を反映させるには、
-<code class="highlighter-rouge">updatePixels()</code>関数を実行する必要があることに注意してください。</p>
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ここでは、X軸の正方向に光を照らしています。
+光が当たる面の色が変化していることを確認してください。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>img.pixels[要素番号] = color(赤色成分, 緑色成分, 青色成分);
+<script src="https://gist.github.com/naoto-github/32c970f7815787c9c6e9feddffe5d183.js"> </script>
+
+<p><a href="https://gyazo.com/b5bc5bdf46a0591bea665b629a167051"><img src="https://i.gyazo.com/b5bc5bdf46a0591bea665b629a167051.png" alt="https://gyazo.com/b5bc5bdf46a0591bea665b629a167051" /></a></p>
+
+<p>点光源は、指定した位置から全方向に放射される光です。
+拡散光と同様に、光が垂直な面に当たったときに、もっとも明るくなります。
+点光源を設置するには、<code class="highlighter-rouge">pointLight()</code>関数を用います。
+引数には三原色（R、G、B）の光の強度に加え、光源の位置（x、y、z）を設定します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>pointLight(R, G, B, X, Y, Z);
 </code></pre>
 </div>
 
-<p>下記を参考にコードを入力したら、Runボタンをクリックしてくだい。
-赤色成分のみの画像が表示されることを確認してください。</p>
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ここでは、座標（-320, 0, 0）から光を照らしています。
+光が当たる面の色が変化していることを確認してください。</p>
 
-<script src="https://gist.github.com/naoto-github/337c30aab1788a911a5fac48da1549f3.js"> </script>
+<script src="https://gist.github.com/naoto-github/8074878d0dabbfed29a35ad215b9e229.js"> </script>
 
-<p><a href="https://gyazo.com/18a3230f7dc9b4362434b4f210baaee0"><img src="https://i.gyazo.com/18a3230f7dc9b4362434b4f210baaee0.png" alt="https://gyazo.com/18a3230f7dc9b4362434b4f210baaee0" /></a></p>
+<p><a href="https://gyazo.com/ef8efe22af4fbf1af78112324b850554"><img src="https://i.gyazo.com/ef8efe22af4fbf1af78112324b850554.png" alt="https://gyazo.com/ef8efe22af4fbf1af78112324b850554" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-4"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
 
-<p>画像を<strong>モノクロ</strong>に変換してください。
-<strong>モノクロ成分Y</strong>は<script type="math/tex">Y = 0.299 \times R + 0.587 \times G + 0.114 \times B</script>で求めることができます。
-求めた<strong>モノクロ成分Y</strong>を下記のようにして<strong>pixels[]</strong>に代入します。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>img.pixels[要素番号] = color(モノクロ成分);
-</code></pre>
-</div>
-
-<p>課題が完成したら、作成したスケッチを<strong>ZIPアーカイブ</strong>形式で保存します。
+<p>拡散光を３方向に配置し、立方体の面を３色に塗り分けてください。
+課題が完成したら、作成したスケッチを<strong>ZIPアーカイブ</strong>形式で保存します。
 ZIPアーカイブを作成するには、メニューから[ツール]-[スケッチをアーカイブ]をクリックして、「スケッチを名前を付けてアーカイブする」を開きます。
 保存するファイル名を確認した上で、[保存]をクリックします。
-保存先に「Project7-日付a.zip」というファイルが作成されていることを確認してください。</p>
+保存先に「Project9-日付a.zip」というファイルが作成されていることを確認してください。</p>
 
-<p><a href="https://gyazo.com/dda936096b74fc32a6f9afdb08139a3d"><img src="https://i.gyazo.com/dda936096b74fc32a6f9afdb08139a3d.png" alt="https://gyazo.com/dda936096b74fc32a6f9afdb08139a3d" /></a></p>
+<p><a href="https://gyazo.com/6535851018db9c980ab931b5b14afd70"><img src="https://i.gyazo.com/6535851018db9c980ab931b5b14afd70.png" alt="https://gyazo.com/6535851018db9c980ab931b5b14afd70" /></a></p>
 
 <h3>参考文献</h3>
 
