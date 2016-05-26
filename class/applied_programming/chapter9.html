@@ -280,10 +280,23 @@
 
 <p>Eclipseで新規にプロジェクトを作成しましょう。
 メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして、「新規Javaプロジェクトの作成」を開きます。
-ここでは、プロジェクト名に”Project9”を入力して、[完了]をクリックしましょう。
+ここでは、プロジェクト名に”Project9”を入力します。
+また、JREは”<strong>プロジェクト固有のJREを使用</strong>“を選択します。
+最後に、[完了]をクリックしましょう。
 パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください。</p>
 
-<p><a href="https://gyazo.com/755c69e202b26b04368d53b8ae935ae9"><img src="https://i.gyazo.com/755c69e202b26b04368d53b8ae935ae9.png" alt="https://gyazo.com/755c69e202b26b04368d53b8ae935ae9" /></a></p>
+<!--[![https://gyazo.com/755c69e202b26b04368d53b8ae935ae9](https://i.gyazo.com/755c69e202b26b04368d53b8ae935ae9.png)](https://gyazo.com/755c69e202b26b04368d53b8ae935ae9)-->
+
+<p><a href="https://gyazo.com/d33e69582bbb382b7ce8bd738842e80a"><img src="https://i.gyazo.com/d33e69582bbb382b7ce8bd738842e80a.png" alt="https://gyazo.com/d33e69582bbb382b7ce8bd738842e80a" /></a></p>
+
+<p>本日取り上げるの<strong>JavaFX</strong>は、Eclipseの現バージョン（Mars）では、
+「<strong>使用すべきではない制限されたAPI</strong>」に指定されているため、
+事前に、<strong>JavaFX</strong>の利用を許可する必要があります（将来的には指定から取り除かれると思います）。
+メニューから[Window]-[設定]をクリックして、「設定」のダイアログを開きます。
+さらに、ダイアログから[Java]-[コンパイラー]-[エラー/警告]を選択します。
+ここで、「使用すべきではないAPI」、「禁止された参照」、「阻止された参照」の３カ所を<strong>無視</strong>に設定してください。</p>
+
+<p><a href="https://gyazo.com/545efc79168eb636288567424290a32a"><img src="https://i.gyazo.com/545efc79168eb636288567424290a32a.png" alt="https://gyazo.com/545efc79168eb636288567424290a32a" /></a></p>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25pngjavafx"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />JavaFXとは</h1>
 
@@ -318,19 +331,38 @@ AWTやSwingに比べ、より洗練されたGUIアプリケーションの制作
 
 <p>startメソッドの引数である<strong>Stageクラス</strong>がウィンドウを表しています。
 下記コードを参考にStageクラスの<strong>setTitleメソッド</strong>、<strong>setWidthメソッド</strong>、<strong>setHeightメソッド</strong>を利用して、タイトルを<strong>Project 9</strong>、幅を<strong>320px</strong>、高さを<strong>240px</strong>に設定しましょう。
-また、作成したウィンドウを表示するには<strong>showメソッド</strong>を利用します。</p>
+また、作成したウィンドウを表示するには<strong>showメソッド</strong>を利用します。
+プログラムの実行後にウィンドウが表示されることを確認してください。</p>
 
 <script src="https://gist.github.com/naoto-github/38daf4808cc3d042e97c.js"> </script>
 
-<p>JavaFXはmainメソッドが不要という特徴があるため、
-このプログラムを実行するには<strong>実行の構成</strong>の設定が必要です。
+<!--JavaFXはmainメソッドが不要という特徴があるため、
+このプログラムを実行するには**実行の構成**の設定が必要です。
 プロジェクトで右クリックして[実行]-[実行の構成]をクリックして、「実行の構成」を開きます。
-ここで、<strong>メイン・クラス</strong>にMyApplicationを入力します。
-プログラムの実行後にウィンドウが表示されることを確認してください。</p>
+ここで、**メイン・クラス**にMyApplicationを入力します。
+プログラムの実行後にウィンドウが表示されることを確認してください。-->
 
-<p><a href="https://gyazo.com/cdb59291518f232c459d75114220c8fe"><img src="https://i.gyazo.com/cdb59291518f232c459d75114220c8fe.png" alt="https://gyazo.com/cdb59291518f232c459d75114220c8fe" /></a></p>
+<!--[![https://gyazo.com/cdb59291518f232c459d75114220c8fe](https://i.gyazo.com/cdb59291518f232c459d75114220c8fe.png)](https://gyazo.com/cdb59291518f232c459d75114220c8fe)-->
 
 <p><a href="https://gyazo.com/2f7607d6c08c3bf8615117eac4051ffc"><img src="https://i.gyazo.com/2f7607d6c08c3bf8615117eac4051ffc.png" alt="https://gyazo.com/2f7607d6c08c3bf8615117eac4051ffc" /></a></p>
+
+<!-- <h3>エクスポートの注意</h3>
+
+<p>
+    JavaFXを利用したGUIアプリケーションを実行可能JARファイル形式でエクスポートする前に、
+    下記のコードをMyApplicationクラスに記述してください。
+    このコードがないと正常にエクスポートできない可能性があります。
+</p> -->
+
+<h3><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />プログラム実行時の注意</h3>
+
+<p>
+    JavaFXは<b>mainメソッド</b>がなくともプログラムの実行が可能という特徴を持っています。
+    しかし、Eclipseの現バージョンでは未対応のため、下記のコードをMyApplicationクラスに記述する必要があります。
+    プログラム実行の前に、必ず下記のコードをソースコードに挿入してください。
+</p>
+
+<script src="https://gist.github.com/naoto-github/d88625751b695e660adb.js"> </script>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />テキストフィールド</h1>
 
@@ -437,16 +469,6 @@ Buttonクラスの<strong>setOnAction()メソッド</strong>に対して、<stro
 課題が完成したら、作成したプロジェクトを実行可能JARファイルの形式でファイルに保存（エクスポート）してください。</p>
 
 <p><a href="https://gyazo.com/dc5d80c38023e5d28ab7f3125dd3b963"><img src="https://i.gyazo.com/dc5d80c38023e5d28ab7f3125dd3b963.gif" alt="https://gyazo.com/dc5d80c38023e5d28ab7f3125dd3b963" /></a></p>
-
-<h3>エクスポートの注意</h3>
-
-<p>
-    JavaFXを利用したGUIアプリケーションを実行可能JARファイル形式でエクスポートする前に、
-    下記のコードをMyApplicationクラスに記述してください。
-    このコードがないと正常にエクスポートできない可能性があります。
-</p>
-
-<script src="https://gist.github.com/naoto-github/d88625751b695e660adb.js"> </script>
 
 <h3>参考文献</h3>
 
