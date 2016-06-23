@@ -345,7 +345,7 @@
 <p><a href="https://gyazo.com/c2df521649531c9264d5454d0a12f90c"><img src="https://i.gyazo.com/c2df521649531c9264d5454d0a12f90c.png" alt="https://gyazo.com/c2df521649531c9264d5454d0a12f90c" /></a></p>
 
 <p>キャンバス上でのマウスのクリックを検知するには、
-<code class="highlighter-rouge">setOnMouseClicked)</code>メソッドを利用します。
+<code class="highlighter-rouge">setOnMouseClicked()</code>メソッドを利用します。
 このメソッドの引数には<strong>ラムダ式</strong>を利用して下記のように記述します。
 ラムダ式の左側の<em>event</em>は<strong>MouseEvent</strong>クラスのインスタンスで、
 マウスの状態や位置などの情報を保持しています。
@@ -355,14 +355,16 @@
 </code></pre>
 </div>
 
-<p>下記のコードを参考に、マウスがクリックされると、クリックされた位置に緑色の円を描いてみましょう。
+<p>下記のコードを参考に、マウスがクリックされると、クリックされた位置に塗りつぶしの円を描いてみましょう（色はデフォルトの黒）。
 円を描くコードは<code class="highlighter-rouge">paint(event)</code>メソッドとして定義していることに注意してください。
 マウスの位置はMouseEventクラスの<code class="highlighter-rouge">getX()</code>メソッドと<code class="highlighter-rouge">getY()</code>メソッドで取得しています。
 プログラムの実行後に、キャンバスをクリックすると、円が描かれることに確認してください。</p>
 
 <script src="https://gist.github.com/naoto-github/ee392067c12d24493433.js"> </script>
 
-<p><a href="https://gyazo.com/1d3a628d1aa9264f0abcdee6d631d204"><img src="https://i.gyazo.com/1d3a628d1aa9264f0abcdee6d631d204.gif" alt="https://gyazo.com/1d3a628d1aa9264f0abcdee6d631d204" /></a></p>
+<!--[![https://gyazo.com/1d3a628d1aa9264f0abcdee6d631d204](https://i.gyazo.com/1d3a628d1aa9264f0abcdee6d631d204.gif)](https://gyazo.com/1d3a628d1aa9264f0abcdee6d631d204)-->
+
+<p><a href="https://gyazo.com/61dc300fd33ee30213c075a48c552d3d"><img src="https://i.gyazo.com/61dc300fd33ee30213c075a48c552d3d.gif" alt="https://gyazo.com/61dc300fd33ee30213c075a48c552d3d" /></a></p>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />キーボード・イベント</h1>
 
@@ -370,30 +372,31 @@
 このメソッドの引数には<strong>ラムダ式</strong>を利用して下記のように記述します。
 ラムダ式の左側の<em>event</em>は<strong>KeyEvent</strong>クラスのインスタンスで、
 押されたキーの状態や種類などの情報を保持しています。
-一方、ラムダ式の右側の<code class="highlighter-rouge">change(event);</code>はキーが押されたときに呼び出されるメソッドです。</p>
+一方、ラムダ式の右側の<code class="highlighter-rouge">change(event)</code>はキーが押されたときに呼び出されるメソッドです。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>scene.setOnKeyPressed(event -&gt; change(event));
 </code></pre>
 </div>
 
-<p>下記のコードを参考に、<strong>F1キー</strong>または<strong>F2キー</strong>を押すと、
-描く図形を<strong>円</strong>と<strong>矩形</strong>に切り替えられるようにしましょう。
-押されたキーの種類は<code class="highlighter-rouge">getCode()</code>メソッドで取得しています。
-キーがF1のときに、変数<em>type</em>に0を代入し、F2のときに1を代入します。
-<code class="highlighter-rouge">paint()</code>メソッドで、この変数<em>type</em>に応じて、円を描く<code class="highlighter-rouge">fillOval()</code>メソッドと
-矩形を描く<code class="highlighter-rouge">fillRect()</code>メソッドを切り替えています。
-プログラムの実行後に、円と矩形を切り替えられることを確認してください。</p>
+<p>下記のコードを参考に、塗りつぶしの色を、F1を押すと<strong>赤</strong>、F2を押すと<strong>青</strong>、F3を押すと<strong>黒</strong>に切り替えられるようにしましょう。
+押されたキーの種類は列挙型<strong>KeyCode</strong>で表され、<code class="highlighter-rouge">getCode()</code>メソッドで取得することができます（例、F1キーは<strong>F1</strong>という表記になる）。
+<code class="highlighter-rouge">setFill()</code>メソッドを利用して、キーがF1のとき<strong>Color.RED</strong>、F2のとき<strong>Color.BLUE</strong>、F3のとき<strong>Color.BLACK</strong>を設定します。
+プログラムの実行後に、塗りつぶしの色を切り替えられることを確認してください。</p>
 
 <script src="https://gist.github.com/naoto-github/fe377f53f5b397e20d14.js"> </script>
 
-<p><a href="https://gyazo.com/0528631ecff5c67e071ef51c18a87e08"><img src="https://i.gyazo.com/0528631ecff5c67e071ef51c18a87e08.gif" alt="https://gyazo.com/0528631ecff5c67e071ef51c18a87e08" /></a></p>
+<!--[![https://gyazo.com/0528631ecff5c67e071ef51c18a87e08](https://i.gyazo.com/0528631ecff5c67e071ef51c18a87e08.gif)](https://gyazo.com/0528631ecff5c67e071ef51c18a87e08)-->
+
+<p><a href="https://gyazo.com/0f82fc6d0f1c1f9d7bf09c98beac236b"><img src="https://i.gyazo.com/0f82fc6d0f1c1f9d7bf09c98beac236b.gif" alt="https://gyazo.com/0f82fc6d0f1c1f9d7bf09c98beac236b" /></a></p>
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
 
-<p>塗りつぶしの色を、F3を押すと<strong>赤</strong>、F4を押すと<strong>青</strong>、F5を押すと<strong>緑</strong>に、切り替えられるようにしましょう。
+<p>描く図形の形を、F4を押すと<strong>正方形</strong>、F5を押すと<strong>円</strong>に、切り替えられるようにしましょう（F1、F2、F3の色の切り替えも有効のまま）。
 課題が完成したら、作成したプロジェクトを実行可能JARファイルの形式でファイルに保存（エクスポート）してください。</p>
 
-<p><a href="https://gyazo.com/45e2e3b936116e60abb65889e0c6129c"><img src="https://i.gyazo.com/45e2e3b936116e60abb65889e0c6129c.gif" alt="https://gyazo.com/45e2e3b936116e60abb65889e0c6129c" /></a></p>
+<!--[![https://gyazo.com/45e2e3b936116e60abb65889e0c6129c](https://i.gyazo.com/45e2e3b936116e60abb65889e0c6129c.gif)](https://gyazo.com/45e2e3b936116e60abb65889e0c6129c)-->
+
+<p><a href="https://gyazo.com/c20401ccdf46eb69dde74d8ca37f12f8"><img src="https://i.gyazo.com/c20401ccdf46eb69dde74d8ca37f12f8.gif" alt="https://gyazo.com/c20401ccdf46eb69dde74d8ca37f12f8" /></a></p>
 
 <h3>参考文献</h3>
 
