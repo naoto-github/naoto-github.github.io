@@ -345,18 +345,19 @@
 <p>まずは、下記の「歩いている女性のイメージ（png画像）」をキャンバスに表示してみます。
 この２つのイメージを交互に表示することで歩いている様子の表現が可能です。
 <a href="walking1.png">walking1.png</a>と<a href="walking2.png">walking2.png</a>をダウンロードしたら、
-Eclipseのプロジェクトの中にコピーしてください。</p>
+プロジェクトの<strong>srcフォルダ</strong>にコピーしてください。</p>
 
 <p><a href="https://gyazo.com/7ffff99915b604b6ec050953c76c20a9"><img src="https://i.gyazo.com/7ffff99915b604b6ec050953c76c20a9.png" alt="https://gyazo.com/7ffff99915b604b6ec050953c76c20a9" /></a>
 <a href="https://gyazo.com/1f35ae1f421c9c84f6e8dcf22af42756"><img src="https://i.gyazo.com/1f35ae1f421c9c84f6e8dcf22af42756.png" alt="https://gyazo.com/1f35ae1f421c9c84f6e8dcf22af42756" /></a></p>
 
-<p>保存したイメージを読み込むには、下記のように<strong>Imageクラス</strong>を利用します。
+<p>保存したイメージを読み込むには、下記のように<strong>Imageクラス</strong>を利用します
+（<strong>Imageクラス</strong>のコンストラクタの引数には、画像ファイルの位置を表す<strong>URL</strong>を指定します）。
 ここでは、２つのイメージを利用するため、Imageクラスの配列<em>walking</em>を宣言して、
 <em>walking[0]</em>に<strong>walking1.png</strong>、<em>walking[1]</em>に<strong>walking2.png</strong>をそれぞれ読み込みます。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>Image walking[] = new Image[2];
-walking[0] = new Image(Paths.get("walking1.png").toUri().toString());
-walking[1] = new Image(Paths.get("walking2.png").toUri().toString());
+walking[0] = new Image(this.getClass().getResource("walking1.png").toString());
+walking[1] = new Image(this.getClass().getResource("walking2.png").toString());
 </code></pre>
 </div>
 
@@ -384,7 +385,7 @@ walking[1] = new Image(Paths.get("walking2.png").toUri().toString());
 引数に<strong>Timeline.INDEFINITE</strong>を指定すると無限に繰り返すことを意味します。
 最後に、<strong>play()</strong>メソッドでアニメーションが開始されます。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Timer timer = new Timeline(new KeyFrame(Duration.millis(500), event -&gt; handle(event)));
+<div class="highlighter-rouge"><pre class="highlight"><code>Timer timer = new Timeline(new KeyFrame(Duration.millis(500), event -&gt; handle()));
 timer.setCycleCount(Timeline.INDEFINITE);
 timer.play();
 </code></pre>
