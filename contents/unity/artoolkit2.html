@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>M&#39;s Lab.</title>
+  <title>NyARToolkit for Unityで画像を表示</title>
   <meta name="description" content="椙山女学園大学 向研究室のブログです。日常の記録に加えて、授業資料などを公開しています。">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://mukai-lab.info//page6/">
+  <link rel="canonical" href="http://mukai-lab.info//contents/unity/artoolkit2.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab." href="http://mukai-lab.info//feed.xml">
 
   <!-- Faviconの実装 -->
@@ -47,7 +47,7 @@
 
   <!-- OGP -->
   
-  <meta property="og:image" content="https://i.gyazo.com/710ec895a5ccc7170e2c9dcde1c9f58c.png">
+  <meta property="og:image" content="https://i.gyazo.com/f6c58bee65721d185c566a05eaa41920.png">
   
 </head>
 
@@ -292,148 +292,93 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home">
+        <article class="post">
 
-  <!-- タイトルイメージ -->
-  <!-- <img src="https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png" alt="https://gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a"/> -->
-  <!-- <img src="https://i.gyazo.com/710ec895a5ccc7170e2c9dcde1c9f58c.png" alt="https://gyazo.com/710ec895a5ccc7170e2c9dcde1c9f58c"/> -->
+  <header class="post-header">
+    <h1 class="post-title">NyARToolkit for Unityで画像を表示</h1>
+    <div class="fb-like" data-href="http://naoto-github.github.io//contents/unity/artoolkit2.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+  </header>
 
-  <div style="display:none" class="slider">
-      <div><img src="https://i.gyazo.com/710ec895a5ccc7170e2c9dcde1c9f58c.png" alt="https://gyazo.com/710ec895a5ccc7170e2c9dcde1c9f58c"/></div>
-      <div><img src="https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png" alt="https://gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a"/></div>
+  <div class="post-content">
+    <p><a href="https://gyazo.com/f6c58bee65721d185c566a05eaa41920"><img src="https://i.gyazo.com/f6c58bee65721d185c566a05eaa41920.png" alt="https://gyazo.com/f6c58bee65721d185c566a05eaa41920" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />画像の準備</h1>
+
+<p><strong><a href="http://nyatla.jp/nyartoolkit/wp/">NyARToolkit</a></strong>のパッケージに含まれる
+サンプル<strong>SimpleLite</strong>はマーカーを検出すると赤色の立方体（Cube）を表示するプログラムです。
+この<strong>SimpleLite</strong>を修正し、一般的なJPGやPNGなどの画像を立体的に表示できるよう改良します。</p>
+
+<p><strong>SimpleLite</strong>フォルダをコピーし、フォルダに含まれるC#スクリプトを<strong>ARPictureCamera</strong>、
+シーンを<strong>ARPictureScene</strong>にファイル名を変更した状態を前提とします
+（詳細は<a href="artoolkit.html">NyARToolkit for Unityの導入</a>を参照）。</p>
+
+<p>立方体の代わりに表示する犬の画像（<a href="https://i.gyazo.com/ea8d174fc70bc754fa32fb9b5391b6d8.png">001.png</a>）は下記です。
+この画像は、<a href="http://www.templatebank.com/index.htm">テンプレートBANK</a>を参考に、本学の学生が作成しました。
+画像サイズは<strong>300x300</strong>ピクセル、画像フォーマットは透過背景のPNGです。</p>
+
+<p><a href="https://gyazo.com/ea8d174fc70bc754fa32fb9b5391b6d8"><img src="https://i.gyazo.com/ea8d174fc70bc754fa32fb9b5391b6d8.png" alt="https://gyazo.com/ea8d174fc70bc754fa32fb9b5391b6d8" /></a></p>
+
+<p>まずは、新規にanimalsフォルダを作成し、上記の画像をコピーしておきます。
+対象のフォルダには、C#スクリプトの<strong>ARPictureCamera</strong>、シーンの<strong>ARPictureScene</strong>、
+画像フォルダの<strong>animals</strong>が含まれる状態になっていることを確認してください。</p>
+
+<p><a href="https://gyazo.com/9a1f482995720f6a71cbf20c9df892af"><img src="https://i.gyazo.com/9a1f482995720f6a71cbf20c9df892af.png" alt="https://gyazo.com/9a1f482995720f6a71cbf20c9df892af" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />テクスチャの利用</h1>
+
+<p>立方体（Cube）に犬の画像（<a href="https://i.gyazo.com/ea8d174fc70bc754fa32fb9b5391b6d8.png">001.png</a>）をテクスチャとして貼り付けることで、
+マーカーを検出すると<strong>犬の画像</strong>を立体的（マーカーから少し浮いた状態）に表示してみます。</p>
+
+<p>まずは、Assetsフォルダで[Create]-[Materials]を選択し、新規にマテリアルを作成します。
+マテリアルの名前は<strong>Dog</strong>に変更しておきます。
+画像フォーマットが透過背景であることから、Inspectorで<strong>Shader</strong>を<strong>Unit/Transparent</strong>に設定します。
+<strong>Unit/Transparent</strong>はテクスチャ画像のアルファ値を反映して透過にすることが可能なシェーダーです。
+次に、Textureを<strong>犬の画像</strong>に変更します
+これで、オブジェクトに設定するマテリアルが準備できました。</p>
+
+<p><a href="https://gyazo.com/955b8afe1acafd49199da3e6419b2454"><img src="https://i.gyazo.com/955b8afe1acafd49199da3e6419b2454.png" alt="https://gyazo.com/955b8afe1acafd49199da3e6419b2454" /></a></p>
+
+<p><a href="https://gyazo.com/8803d04b407a6981c3581f6186332bc6"><img src="https://i.gyazo.com/8803d04b407a6981c3581f6186332bc6.png" alt="https://gyazo.com/8803d04b407a6981c3581f6186332bc6" /></a></p>
+
+<p>次に、シーンの<strong>ARPictureScene</strong>をダブルクリックします。
+ここで、Hierarchyから[Create]-[3D Object]-[Cube]を選択し、新規に立方体（Cube）のオブジェクトを作成します。
+オブジェクトの名前は<strong>DogObject</strong>に変更しておきます。
+このDogObjectをドラッグして、MarkerObjectの直下に配置します。
+このとき、デフォルトで設定されている、Cubeオブジェクトは削除しておきます。</p>
+
+<p>DogObjectのInspectorから、オブジェクトの<strong>位置（Position）</strong>や<strong>サイズ（Scale）</strong>を修正します。
+位置はX=0、Y=0、Z=20とし、サイズはX=80、Y=80、Z=0とします（Z=0とすることで幅がなくなり平面となります）。</p>
+
+<p><a href="https://gyazo.com/fd5d0e973bb745a680b5a478e4a67ebc"><img src="https://i.gyazo.com/fd5d0e973bb745a680b5a478e4a67ebc.png" alt="https://gyazo.com/fd5d0e973bb745a680b5a478e4a67ebc" /></a></p>
+
+<p>最後に、DogObjectのMaterialsをクリックして、作成した<strong>Dog</strong>を選択しておきます。
+<strong>再生ボタン</strong>をクリックすると、犬の画像（<a href="https://i.gyazo.com/ea8d174fc70bc754fa32fb9b5391b6d8.png">001.png</a>）が表示されることを確認してください。
+テクスチャ画像が上下反対に張り付けられる場合は、
+<strong>Tiling</strong>のYの値を<strong>-1</strong>に変更します（Direct3DかOpenGLで振る舞いが異なるようです）。</p>
+
+<p><a href="https://gyazo.com/18bd19ecb1af79004b6e0a631bf3abf4"><img src="https://i.gyazo.com/18bd19ecb1af79004b6e0a631bf3abf4.png" alt="https://gyazo.com/18bd19ecb1af79004b6e0a631bf3abf4" /></a></p>
+
+<p><a href="https://gyazo.com/4279257efa34be9c112afbb3b7d26549"><img src="https://i.gyazo.com/4279257efa34be9c112afbb3b7d26549.png" alt="https://gyazo.com/4279257efa34be9c112afbb3b7d26549" /></a></p>
+
+<p>次回は画像の代わりに<strong>3Dオブジェクト</strong>を表示することにに挑戦してみます。</p>
+
+<h3>参考書籍</h3>
+
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=F8F8F8&amp;IS2=1&amp;nou=1&amp;bg1=F8F8F8&amp;fc1=000000&amp;lc1=0000FF&amp;t=naotoassociat-22&amp;o=9&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;ref=tf_til&amp;asins=4797384433" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=F8F8F8&amp;IS2=1&amp;nou=1&amp;bg1=F8F8F8&amp;fc1=000000&amp;lc1=0000FF&amp;t=naotoassociat-22&amp;o=9&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;ref=tf_til&amp;asins=4797384255" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=F8F8F8&amp;IS2=1&amp;nou=1&amp;bg1=F8F8F8&amp;fc1=000000&amp;lc1=0000FF&amp;t=naotoassociat-22&amp;o=9&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;ref=tf_til&amp;asins=B01E51LA4Y" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<!--
+<ul>
+    <li>中山清喬(2014)『スッキリわかるJava入門 入門編 第2版』インプレス </li>
+    <li>中山清喬(2014)『スッキリわかるJava入門 実践編 第2版』インプレス </li>
+    <li>日向俊二(2015)『JavaFX & Java8 プログラミング Javaによる新しいGUI プログラミング入門』カットシステム</li>
+</ul>
+-->
+
   </div>
 
-  <script>
-    $(function(){
-        $(".slider").slick({
-            accessibility: true,
-            autoplay: true,
-            fade: true,
-            arrows: false
-        });
-
-        $(".slider").show(100);
-    });
-  </script>
-
-  <h1 class="page-heading">投稿一覧</h1>
-
-  <!-- ページ分割されたpostsに対してループ -->
-  
-    <span class="post-meta">Apr 19, 2016</span>
-    <span style="margin-top:0px; font-size:smaller">[Comic]</span>
-
-    <h2 style="margin-bottom:0px">
-        <a class="post-link" href="/comic/2016/04/19/comic_009.html">文情においでよ</a>
-    </h2>
-
-    <p style="margin-bottom:10px">
-        <p><a href="https://gyazo.com/041e59b8d761720f035cc761e913ac7b"><img src="https://i.gyazo.com/041e59b8d761720f035cc761e913ac7b.png" alt="https://gyazo.com/041e59b8d761720f035cc761e913ac7b" /></a></p>
-
-    </p>
-  
-    <span class="post-meta">Apr 18, 2016</span>
-    <span style="margin-top:0px; font-size:smaller">[Comic]</span>
-
-    <h2 style="margin-bottom:0px">
-        <a class="post-link" href="/comic/2016/04/18/comic_008.html">桜舞い散る季節</a>
-    </h2>
-
-    <p style="margin-bottom:10px">
-        <p><a href="https://gyazo.com/234a36dec47c25c627fbff20d7a08ad1"><img src="https://i.gyazo.com/234a36dec47c25c627fbff20d7a08ad1.png" alt="https://gyazo.com/234a36dec47c25c627fbff20d7a08ad1" /></a></p>
-
-    </p>
-  
-    <span class="post-meta">Apr 16, 2016</span>
-    <span style="margin-top:0px; font-size:smaller">[Comic]</span>
-
-    <h2 style="margin-bottom:0px">
-        <a class="post-link" href="/comic/2016/04/16/comic_007.html">ボイトレ</a>
-    </h2>
-
-    <p style="margin-bottom:10px">
-        <p><a href="https://gyazo.com/4b10a5683add644831b257d348838034"><img src="https://i.gyazo.com/4b10a5683add644831b257d348838034.png" alt="https://gyazo.com/4b10a5683add644831b257d348838034" /></a></p>
-
-    </p>
-  
-    <span class="post-meta">Mar 26, 2016</span>
-    <span style="margin-top:0px; font-size:smaller">[Comic]</span>
-
-    <h2 style="margin-bottom:0px">
-        <a class="post-link" href="/comic/2016/03/26/comic_006.html">女子大着任！ミッチー先生</a>
-    </h2>
-
-    <p style="margin-bottom:10px">
-        <p><a href="https://gyazo.com/3bb07839805416ebea7559ea97f81afd"><img src="https://i.gyazo.com/3bb07839805416ebea7559ea97f81afd.png" alt="https://gyazo.com/3bb07839805416ebea7559ea97f81afd" /></a></p>
-
-    </p>
-  
-    <span class="post-meta">Mar 23, 2016</span>
-    <span style="margin-top:0px; font-size:smaller">[Comic]</span>
-
-    <h2 style="margin-bottom:0px">
-        <a class="post-link" href="/comic/2016/03/23/comic_005.html">先生ですけども</a>
-    </h2>
-
-    <p style="margin-bottom:10px">
-        <p><a href="https://gyazo.com/6570802e5be1652ea930d260451c3565"><img src="https://i.gyazo.com/6570802e5be1652ea930d260451c3565.png" alt="https://gyazo.com/6570802e5be1652ea930d260451c3565" /></a></p>
-
-    </p>
-  
-
-  <!-- ページネーションリンク -->
-  
-    <div class="pagination">
-    
-        <a href="/page5">&laquo; Prev</a>
-    
-
-    
-        
-            <a href="/index.html">1</a>
-        
-    
-        
-            <a href="/page2">2</a>
-        
-    
-        
-            <a href="/page3">3</a>
-        
-    
-        
-            <a href="/page4">4</a>
-        
-    
-        
-            <a href="/page5">5</a>
-        
-    
-        
-            <em>6</em>
-        
-    
-        
-            <a href="/page7">7</a>
-        
-    
-        
-            <a href="/page8">8</a>
-        
-    
-        
-            <a href="/page9">9</a>
-        
-    
-
-    
-        <a href="/page7">Next &raquo;</a>
-    
-  
-
-  <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
-
-</div>
+</article>
 
       </div>
     </div>
