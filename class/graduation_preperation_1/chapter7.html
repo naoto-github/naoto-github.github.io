@@ -418,6 +418,109 @@
 
 <h1 id="img-srchttpsigyazocom261ba098b5b016e01a3dfb36abec79bbpng"><img src="https://i.gyazo.com/261ba098b5b016e01a3dfb36abec79bb.png" />地図の表示</h1>
 
+<p>今回は地図サービスとして有名な<a href="https://www.google.co.jp/maps">Google Maps</a>のウェブAPIである<a href="https://developers.google.com/maps/?hl=ja">Google Maps Javascript API</a>を利用して地図アプリを制作してみましょう。
+現在のAPIのバージョンは3.27であり、APIを利用するには、Googleアカウントにログインした状態で、<a href="https://console.developers.google.com">Google API Console</a>で認証情報を登録する必要があります（2017年1月7日時点）。
+まずは、<a href="https://console.developers.google.com">Google API Console</a>にアクセスし、ライブラリのリンクをクリックし、 <strong>Google Maps JavaScript API</strong> を有効にします</p>
+
+<p><a href="https://gyazo.com/9eb437c5aab8c2c44df9ee21f619a741"><img src="https://i.gyazo.com/9eb437c5aab8c2c44df9ee21f619a741.png" alt="https://gyazo.com/9eb437c5aab8c2c44df9ee21f619a741" /></a></p>
+
+<p>次にAPIを利用するための認証情報である <strong>APIキー</strong> を作成します。
+認証情報のリンクをクリックし、<strong>APIキー</strong> を選択します。</p>
+
+<p><a href="https://gyazo.com/5a20b64ebef18d6fda782c2a63437e81"><img src="https://i.gyazo.com/5a20b64ebef18d6fda782c2a63437e81.png" alt="https://gyazo.com/5a20b64ebef18d6fda782c2a63437e81" /></a></p>
+
+<p>生成された <strong>APIキー</strong> をコピーしておきましょう。
+後でウェブページに埋め込みます。</p>
+
+<h1 id="img-srchttpsigyazocom261ba098b5b016e01a3dfb36abec79bbpng-"><img src="https://i.gyazo.com/261ba098b5b016e01a3dfb36abec79bb.png" /> プロジェクトの作成</h1>
+
+<p>今回も日進市の<a href="http://www.city.nisshin.lg.jp/seisaku/toukei/18979/index.html">オープンデータミュージアム</a>を利用して世帯数のデータを地図上に表示するアプリを作成しましょう。
+ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Minimum】を選択します。
+プロジェクト名を <strong>地図アプリ</strong> 、説明を <strong>Google Maps APIを利用した日進市の世帯数の地図</strong> とします。
+プロジェクトを作成したら <strong>MonacaクラウドIDE</strong> の画面を開きましょう。</p>
+
+<p><a href="https://gyazo.com/5c0f84ef607f54cb51b6728c07bc4808"><img src="https://i.gyazo.com/5c0f84ef607f54cb51b6728c07bc4808.png" alt="https://gyazo.com/5c0f84ef607f54cb51b6728c07bc4808" /></a></p>
+
+<h1 id="img-srchttpsigyazocom261ba098b5b016e01a3dfb36abec79bbpng-google-maps-api"><img src="https://i.gyazo.com/261ba098b5b016e01a3dfb36abec79bb.png" /> Google Maps APIを利用した地図の表示</h1>
+
+<p>それでは、<a href="https://developers.google.com/maps/?hl=ja">Google Maps Javascript API</a>を利用して地図を表示させましょう。
+まずは地図を表示するための <strong>div要素</strong> を作成します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;div id="map"&gt;&lt;/div&gt;
+</code></pre>
+</div>
+
+<p>上記のdiv要素に加え、html要素、body要素のサイズを明確に指定しておく必要があります。
+そこで、 <strong>style.css</strong> に下記のように記述しておきます。</p>
+
+<script src="https://gist.github.com/naoto-github/dea2d3ffc52585f2e8557a13756471df.js"> </script>
+
+<p>日進市役所を中心に地図を表示してみます。
+日進市役所の緯度・経度は <strong>35.132015, 137.039412</strong> です。
+地図を表示するには下記のようにコードを記述します。
+<strong>initMap</strong> というメソッドは、Google Maps APIが読み込まれた後に自動で呼び出される <strong>コールバック・メソッド</strong> です。
+緯度・軽度は <strong>LatLng</strong> というクラスに保持させています。
+また、 地図の中心を表す <strong>center</strong> に星丘キャンパスの緯度・軽度、 地図の倍率を表す <strong>zoom</strong> に <strong>14</strong> を設定しています。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var map;
+function initMap(){
+
+    var latlng = new google.maps.LatLng(35.132015, 137.039412);
+    map = new google.maps.Map(document.getElementById("map"),{
+        center: latlng,
+        zoom: 14
+    });
+}
+</code></pre>
+</div>
+
+<p>最後に、ウェブAPIを読み込み、APIのクラスやメソッドを利用できる状態にします。
+ウェブAPIを読み込むには下記のコードを記述します。
+このとき、先ほど作成したAPIキーは <strong>key=</strong> の後に挿入することに注意してください。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&amp;callback=initMap"&gt;&lt;/script&gt;
+</code></pre>
+</div>
+
+<p>上記をまとめるとコードは下記のようになります。
+日進市役所の地図が表示されることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/7a92e2ef226b70c72d89cac0be04a945.js"> </script>
+
+<p><a href="https://gyazo.com/c1e1e5b57118ba6e45c51cbf2de50cba"><img src="https://i.gyazo.com/c1e1e5b57118ba6e45c51cbf2de50cba.png" alt="https://gyazo.com/c1e1e5b57118ba6e45c51cbf2de50cba" /></a></p>
+
+<h1 id="img-srchttpsigyazocom261ba098b5b016e01a3dfb36abec79bbpng--1"><img src="https://i.gyazo.com/261ba098b5b016e01a3dfb36abec79bb.png" /> 日進市のマーカーの表示</h1>
+
+<p>前回と同様に日進市の世帯数のJSONデータを生成します。
+今回は町名、人口に加え、緯度・軽度も加えていることに注意してください。
+下記のようにコードを記述します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var json = `[
+    { "city": "赤池町",  "population": "1195", "lat": "35.111109", "lng": "137.020564"},
+    { "city": "浅田町",  "population": "1899", "lat": "35.122047", "lng": "137.032907"},
+    { "city": "梅森町",  "population": "804", "lat": "35.135565", "lng": "137.0192"},
+    { "city": "野方町",  "population": "133", "lat": "35.129474", "lng": "137.033243"},
+    { "city": "蟹甲町", "population": "158", "lat": "35.132043", "lng": "137.040695"}
+]`;
+
+var cities = JSON.parse(json);
+</code></pre>
+</div>
+
+<p>次に <strong>marker</strong> クラスを利用して地図上にマーカーを表示します。
+マーカーのオプションには、地図オブジェクトを表す <strong>map</strong> にmap、緯度経度を表す <strong>position</strong> に各町の緯度・経度、マウスをホバーしたときに表示される文字列 <strong>title</strong> に町名と人口を設定します。</p>
+
+<p>コードは下記のようになります。
+上記の５つの町にマーカーが表示されることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/43aaea546b04469e9a4e81544df43bb2.js"> </script>
+
+<p><a href="https://gyazo.com/6d19f956c1892fe2977bea16bb781f8d"><img src="https://i.gyazo.com/6d19f956c1892fe2977bea16bb781f8d.png" alt="https://gyazo.com/6d19f956c1892fe2977bea16bb781f8d" /></a></p>
+
+<h1 id="img-srchttpsigyazocom261ba098b5b016e01a3dfb36abec79bbpng--2"><img src="https://i.gyazo.com/261ba098b5b016e01a3dfb36abec79bb.png" /> 課題</h1>
+
+<p>日進市の<a href="http://www.city.nisshin.lg.jp/seisaku/toukei/18979/index.html">オープンデータミュージアム</a>から自由にデータを選択し、異なる種類の地図を作成しなさい。</p>
+
 <h3>参考書籍</h3>
 
 <!-- <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4873115159" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe> -->
