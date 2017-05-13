@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>式と演算子</title>
+  <title>標準正規分布を用いた検定</title>
   <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://mukai-lab.info//class/applied_programming/chapter2.html">
+  <link rel="canonical" href="http://mukai-lab.info//class/advanced_studies_seminar_2/chapter9.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://mukai-lab.info//feed.xml">
 
   <!-- Faviconの実装 -->
@@ -51,7 +51,7 @@
 
   <!-- OGP -->
   
-  <meta property="og:image" content="https://i.gyazo.com/80c3e1fe23d96f89ed12fa91b96f78c3.png">
+  <meta property="og:image" content="https://i.gyazo.com/bd7321b2a514a99661b8d6b725d59671.png">
   
 </head>
 
@@ -428,11 +428,11 @@
 <meta name="twitter:creator" content="@creator_username">
 
 
-  <meta name="twitter:title" content="式と演算子">
+  <meta name="twitter:title" content="標準正規分布を用いた検定">
 
 
 
-  <meta name="twitter:url" content="http://mukai-lab.info//class/applied_programming/chapter2.html">
+  <meta name="twitter:url" content="http://mukai-lab.info//class/advanced_studies_seminar_2/chapter9.html">
 
 
 
@@ -440,15 +440,15 @@
 
 
 
-  <meta name="twitter:image:src" content="https://i.gyazo.com/80c3e1fe23d96f89ed12fa91b96f78c3.png">
+  <meta name="twitter:image:src" content="https://i.gyazo.com/bd7321b2a514a99661b8d6b725d59671.png">
 
 
 
   <header class="post-header">
-    <h1 class="post-title">式と演算子</h1>
+    <h1 class="post-title">標準正規分布を用いた検定</h1>
     <!-- Facebook Button -->
 <!-- <div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
-<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/applied_programming/chapter2.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/advanced_studies_seminar_2/chapter9.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <!-- Twitter Button -->
 <div>
@@ -456,164 +456,209 @@
     <a href="https://twitter.com/nmukai1978" class="twitter-follow-button" data-show-count="false">Follow @nmukai1978</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 </div>
 
-    <!-- <div class="fb-like" data-href="http://naoto-github.github.io//class/applied_programming/chapter2.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+    <!-- <div class="fb-like" data-href="http://naoto-github.github.io//class/advanced_studies_seminar_2/chapter9.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
   </header>
 
   <div class="post-content">
-    <p><a href="https://gyazo.com/80c3e1fe23d96f89ed12fa91b96f78c3"><img src="https://i.gyazo.com/80c3e1fe23d96f89ed12fa91b96f78c3.png" alt="https://gyazo.com/80c3e1fe23d96f89ed12fa91b96f78c3" /></a></p>
+    <p><a href="https://gyazo.com/bd7321b2a514a99661b8d6b725d59671"><img src="https://i.gyazo.com/bd7321b2a514a99661b8d6b725d59671.png" alt="https://gyazo.com/bd7321b2a514a99661b8d6b725d59671" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />プロジェクトの準備</h1>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />検定とは</h1>
 
-<p>Eclipseで新規にプロジェクトを作成しましょう。
-メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして、「新規Javaプロジェクトの作成」を開きます。
-ここでは、プロジェクト名に”Project2”を入力して、[完了]をクリックしましょう。
-パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください。</p>
+<p><strong>検定</strong>とは「標本から推定された母数が、確率的に正しいかどうか」を判断することを意味します。
+検定は、<strong>統計的仮説検定</strong>とも呼ばれ、推測統計でも利用頻度の高い重要なテクニックです。
+検定を行うための手順は下記のようになります。</p>
 
-<p><a href="https://gyazo.com/a0b6e0ff1e827ae18acc98aaa4d35167"><img src="https://i.gyazo.com/a0b6e0ff1e827ae18acc98aaa4d35167.png" alt="https://gyazo.com/a0b6e0ff1e827ae18acc98aaa4d35167" /></a></p>
+<p>1．母数に関する<strong>帰無仮説</strong>と<strong>対立仮説</strong>を立てる。<br />
+2. <strong>検定統計量</strong>を選択する。<br />
+3. <strong>信頼区間（棄却域）</strong>を決める。<br />
+4. 標本から検定統計量を計算する。<br />
+5. 検定統計量が棄却域に含まれれば、帰無仮説を<strong>棄却</strong>して、対立仮説を<strong>採用</strong>する。棄却域に含まれなければ、帰無仮説を<strong>採択</strong>する。</p>
 
-<p>続いてソースファイルを作成しましょう。
-メニューから[ファイル]-[新規]-[クラス]をクリックして、「新規Javaクラス」を開きます。
-ここでは、名前に”MyClass”を入力し、public static void main(String[] args)(V)にチェックを入れ、[完了]をクリックしましょう。
-パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください。</p>
+<p>難しい単語がたくさん出てきましたが、これは追々説明していきます。
+ここでは、母集団が正規分布であり、母平均、母分散が既知であるときに適用可能な<strong>標準正規分布を用いた検定</strong>を考えます。
+この、<strong>標準正規分布を用いた検定</strong> は <strong>Z検定</strong> とも呼ばれます。</p>
 
-<p><a href="https://gyazo.com/aaeea969033eedc9eb5abbdb98dd1df7"><img src="https://i.gyazo.com/aaeea969033eedc9eb5abbdb98dd1df7.png" alt="https://gyazo.com/aaeea969033eedc9eb5abbdb98dd1df7" /></a></p>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />スクリプトの作成</h1>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />リテラルとは</h1>
+<p>コードを入力し保存するための<strong>スクリプト</strong>を作成しましょう。
+[ファイル]-[新しいスクリプト]をクリックし、<strong>Rエディタ</strong>を表示します。
+次に、[ファイル]-[保存]をクリックして、スクリプトを保存します。
+このとき、ファイル名は<strong>chapter9</strong>としてください。
+また、ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます。</p>
 
-<p>Javaに限らず一般的なプログラム言語では、「1」や「2」などの<strong>数値</strong>、「ABC」や「あいう」などの<strong>文字列</strong>をデータとして扱うことが可能です。
-ソースコードにおいて使用されるこれらの数値や文字列のデータを<strong>リテラル</strong>と呼びます。
-Javaでは、<strong>整数</strong>や<strong>小数</strong>など、リテラルの種類を表す<strong>データ型</strong>が存在します。
-例えば、「1」や「2」などの整数は、<strong>int</strong>というデータ型に該当します。
-下記表に利用頻度の高いデータ型をまとめるので確認してください。</p>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />検定の目的</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>リテラルの種類</th>
-      <th>データ型</th>
-      <th>例</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>整数</td>
-      <td>int</td>
-      <td>1, 2, 3</td>
-    </tr>
-    <tr>
-      <td>小数</td>
-      <td>double</td>
-      <td>0.1, 1.1, 10.1</td>
-    </tr>
-    <tr>
-      <td>真理値</td>
-      <td>boolean</td>
-      <td>true, false</td>
-    </tr>
-    <tr>
-      <td>文字列</td>
-      <td>String</td>
-      <td>“ABC”, “あいう”</td>
-    </tr>
-  </tbody>
-</table>
+<p>まずは下記の具体例を考えていきましょう。</p>
 
-<p>この他にも、64ビットの大きさの整数を表す<strong>long</strong>や、32ビットの大きさの小数を表す<strong>float</strong>などのデータ型がありますが、
-取り敢えずは表中の<strong>int</strong>、<strong>double</strong>、<strong>boolean</strong>、<strong>String</strong>だけはしっかりと覚えておきましょう（正確にはStringはクラスでありデータ型ではない）。
-文字列データを表記する際は、対象となる文字列を「<strong>“（ダブルクォート）</strong>」で囲む必要がありますので注意が必要です。</p>
+<div style="border:1px solid black;margin-bottom:5px">
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />変数とは</h1>
+文化情報学部の学生<script type="math/tex">X</script>に情報数学に関するテストを行ったところ、
+その得点の平均<script type="math/tex">\hat{\mu}</script>は60、
+分散<script type="math/tex">\hat{\sigma}^2</script>は100であった。
+このうち、向研究室に所属する5人の学生<script type="math/tex">x</script>の得点は下記であった。
+向研究室に所属する学生<script type="math/tex">x</script>は、
+文化情報学部の学生<script type="math/tex">X</script>と、
+同様の傾向があるでしょうか（母集団からランダムサンプリングした学生でしょうか）。
+    
+<p style="text-align:center;">
+    <script type="math/tex">
+        x = \{63,75,72,67,71\}
+    </script>
+</p>
 
-<p>リテラルなどのデータを記憶するための箱が<strong>変数</strong>です。
-数値や文字列などのデータを記憶するだけでなく取り出すことも可能です。
-プログラムで変数を使用するには、事前に<strong>変数宣言</strong>が必要です。
-変数宣言は<code class="highlighter-rouge">データ型 変数名;</code>と記述します。
-データ型は前節で述べた<strong>int</strong>や<strong>double</strong>などのことです。
-また、変数名は「変数に付ける名前」のことで、自由に設定することが可能ですが、
-「小文字で始まるわかりやすい名前」を設定することが望ましいとされています。</p>
+</div>
 
-<p>下記のコードを参考にint型の変数<em>x</em>を宣言して<strong>10</strong>を代入してみましょう（変数にデータを記憶させることを<strong>代入</strong>と呼びます）。
-変数にデータを代入するには<code class="highlighter-rouge">変数=代入するデータ;</code>と記述します。
-プログラムの実行後に、コンソールの出力結果を確認してください。</p>
+<p>母集団は「文化情報学部の学生<script type="math/tex">X</script>」、
+標本は「向研究室に所属する学生<script type="math/tex">x</script>」と考えることができます。
+いずれも正規分布に従うと仮定すると、母集団の分布と、標本平均の分布は下記のようになります。</p>
 
-<script src="https://gist.github.com/naoto-github/0e85d432122f5279e1bd.js"> </script>
+<p style="text-align:center">
+    <script type="math/tex">
+    X \sim N(60,100)
+    </script>
+</p>
 
-<p>変数宣言と同時にデータを代入することも可能です。
-この場合は<code class="highlighter-rouge">データ型 変数名=代入するデータ;</code>と記述します。
-下記のコードを参考にdouble型の変数<em>y</em>を宣言して<strong>0.1</strong>を代入してみましょう。
-プログラムの実行後に、コンソールの出力結果を確認してください。</p>
+<p style="text-align:center">
+    <script type="math/tex">
+    x \sim N(60,100/5) = N(60,20)
+    </script>
+</p>
 
-<script src="https://gist.github.com/naoto-github/74247c40185c48a637f4.js"> </script>
+<p>ここで、標本の平均を求めてみましょう。</p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />演算子</h1>
+<div class="highlighter-rouge"><pre class="highlight"><code>x &lt;- c(63,75,72,67,71)
+&gt; mean(x)
+[1] 69.6
+</code></pre>
+</div>
 
-<p>加算を表す「<strong>+</strong>」や減算を表す「<strong>-</strong>」などの記号を<strong>演算子</strong>と呼びます。
-四則計算を行うための演算子を確認しておきましょう。
-整数同士を対象とした「<strong>/</strong>」の演算結果は<strong>商</strong>となることに注意してください。
-また、複数の文字列リテラルを連結する場合も「<strong>+</strong>」の記号を使うため、意識して使い分けて下さい。</p>
+<p>標本平均は69.6点とかなり高得点です。
+これは、どのくらい珍しいことなのでしょうか。
+標本平均の分布のグラフで確認してみましょう。</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>演算子</th>
-      <th>意味</th>
-      <th>例</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>+</td>
-      <td>加算</td>
-      <td>5+2 -&gt; 7</td>
-    </tr>
-    <tr>
-      <td>-</td>
-      <td>減算</td>
-      <td>5-2 -&gt; 3</td>
-    </tr>
-    <tr>
-      <td>*</td>
-      <td>乗算</td>
-      <td>5*2 -&gt; 10</td>
-    </tr>
-    <tr>
-      <td>/</td>
-      <td>除算</td>
-      <td>5/2 -&gt; 2</td>
-    </tr>
-    <tr>
-      <td>%</td>
-      <td>剰余</td>
-      <td>5%2 -&gt; 1</td>
-    </tr>
-  </tbody>
-</table>
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; curve(dnorm(x,60,sqrt(20)),from=30,to=90) 
+</code></pre>
+</div>
 
-<p>下記のコードを参考に、新たにint型の変数<em>z</em>を宣言し、上記の演算を行なってみましょう。
-プログラムの実行後に、コンソールの出力結果を確認してください。
-整数同士の演算のため、除算の結果は整数部のみの<strong>商</strong>となっていることが確認できるはずです。</p>
+<p><a href="https://gyazo.com/2b42b5e10118f35bd5188e237eaca866"><img src="https://i.gyazo.com/2b42b5e10118f35bd5188e237eaca866.png" alt="https://gyazo.com/2b42b5e10118f35bd5188e237eaca866" /></a></p>
 
-<script src="https://gist.github.com/naoto-github/dd4a69dbdeff37bb87f2.js"> </script>
+<p>グラフを確認すると、69.6点以上になる確率は、非常に低いことが分かります。
+<strong>pnorm</strong>関数を利用して、69.6点以上になる確率を計算してみましょう。</p>
 
-<p>次に1からnまでの整数の総和を求めてみましょう。
-総和の公式は<script type="math/tex">\frac{n(n+1)}{2}</script>です。
-下記のコードを参考に、n=10までの総和を計算して、int型の変数<em>sum</em>に代入してみましょう。
-「()（丸括弧）」を入れることで、演算の優先順位を上げることができます。
-プログラムの実行後に、コンソールの出力結果を確認してください。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; 1-pnorm(69.6,60,sqrt(20))
+[1] 0.01591156
+</code></pre>
+</div>
 
-<script src="https://gist.github.com/naoto-github/93f4f283996ca6b42061.js"> </script>
+<p>よって、母集団からランダムサンプリングで抽出した標本の
+平均が69.6点以上になる確率は <strong>約1.6%</strong> という結果になりました。
+これは、「向研究室の学生は母集団とは異なる傾向を持っている」ということを意味します。
+ようするに凄く優秀な学生が向研究室に集まっているということです（本当にこうなるといいなぁ）。</p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-4"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+<p>上記が検定の基本的な考え方です。
+ここでは、検定に平均60、分散20の正規分布を利用しましたが、
+平均0、分散1の標準正規分布を用いるのが <strong>Z検定</strong> です。</p>
 
-<p>半径が8の円の「<strong>円周の長さ</strong>」と「<strong>面積</strong>」を計算して、コンソールに出力させてください。
-課題が完成したら、作成したプロジェクトを<strong>実行可能JARファイル</strong>の形式でファイルに保存（エクスポート）してください。</p>
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25pngz"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />Z検定</h1>
+
+<p>上記の問題を <strong>Z検定</strong> で考えていきましょう。
+まずは、<strong>帰無仮説</strong> と <strong>対立仮説</strong> を立てます。</p>
+
+<ul>
+  <li>帰無仮説：標本（向研究室に所属する学生）の母平均<script type="math/tex">\hat{\mu}</script>は60である</li>
+  <li>対立仮説：標本（向研究室に所属する学生）の母平均<script type="math/tex">\hat{\mu}</script>は60ではない</li>
+</ul>
+
+<p>対立仮説が証明したい仮説であり、帰無仮説は本来証明したいことと逆の仮説になります。
+ここで、帰無仮説を正しいとすると、ありえない事象が起こっているとすれば、
+帰無仮説は<strong>棄却</strong>され、対立仮説が<strong>採択</strong>されることになります。</p>
+
+<p>次に、<strong>検定統計量</strong> を選択しますが、
+ここではZ検定の検定統計量である<strong>Zスコア</strong>を利用します。
+Zスコアに関しては、後程、詳しく説明します。</p>
+
+<p>次に、<strong>信頼区間(棄却域)</strong> を定めます。
+これは、どの程度低い確率で事象が起こっていれば、帰無仮説を棄却するかを示す値です。
+一般的には、「<strong>95%信頼区間（5%棄却域）</strong>」、「<strong>99%信頼区間（1%棄却域）</strong>」が用いられます。
+ここでは、「95%信頼区間（5%棄却域）」を用いることにしましょう。</p>
+
+<p>それでは、検定統計量であるZスコアを計算してみましょう。
+Zスコアは下記の式で求めます。</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        Z = \frac{\mu - \hat{\mu}}{\sigma}
+    </script>
+</p>
+
+<ul>
+  <li>標本平均<script type="math/tex">\mu=69.6</script></li>
+  <li>標本平均の標準偏差<script type="math/tex">\sigma=\sqrt{20}</script></li>
+  <li>母集団の平均<script type="math/tex">\hat{\mu}=60</script></li>
+</ul>
+
+<p>このとき、標本平均の標準偏差は下記の式で求められることに注意してください。</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        \sigma = \sqrt{ \hat{\sigma}^2 / n }
+    </script>
+</p>
+
+<ul>
+  <li>母集団の標準偏差<script type="math/tex">\hat{\sigma}=10</script></li>
+  <li>標本のサンプル数<script type="math/tex">n=5</script></li>
+</ul>
+
+<p>上記の式を基にZスコアを計算します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; z &lt;- (69.6 - 60)/ sqrt(20)
+&gt; z
+[1] 2.146625
+</code></pre>
+</div>
+
+<p>Zスコアは<strong>2.14</strong>という結果になりました。
+標準正規分布を利用して、このZスコアが棄却域に含まれるかを確認しましょう。
+ここでは、5%棄却域を採用するため、<strong>下側確率</strong> が<strong>0.025</strong>、
+<strong>上側確率</strong> が <strong>0.975</strong>となるZ値を探します。
+Z値を求めるには<strong>qnorm</strong>関数を利用します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; qnorm(0.025,0,1)
+[1] -1.959964
+&gt; qnorm(0.975,0,1)
+[1] 1.959964
+</code></pre>
+</div>
+
+<p>上記より、<strong>z&lt;-1.95</strong>、また、<strong>z&gt;1.95</strong> となる確率は5%ということが分かります。
+これは、下図の左端と右端のグレーの範囲を表しています。</p>
+
+<p><a href="https://gyazo.com/6291dddb4d5a907e64949ff532440735"><img src="https://i.gyazo.com/6291dddb4d5a907e64949ff532440735.png" alt="https://gyazo.com/6291dddb4d5a907e64949ff532440735" /></a></p>
+
+<p>今回の標本のZ値は<strong>2.14</strong>だったため、棄却域に含まれ、その確率は5%以下であるということが分かります。
+よって、帰無仮説（向研究室に所属する学生の母平均は60である）は棄却され、
+対立仮説（向研究室に所属する学生の母平均は60ではない）が採択されます。
+結果として、先程と同様に、「向研究室の学生は母集団とは異なる傾向を持っている（母集団からランダムサンプリングした標本ではない）」という結論が導かれます。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+
+<p>向研究室の学生の得点が{65,55,52,45,51}だったときのZ値を求めなさい。
+また、このとき「95%信頼区間（5%棄却域）」で、
+「帰無仮説：標本の母平均<script type="math/tex">\hat{\mu}</script>は60である」は棄却されるか調べなさい。
+ソースは<strong>chapter9.R</strong>に記述して提出すること。</p>
 
 <h3>参考書籍</h3>
 
-<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=F8F8F8&amp;IS2=1&amp;nou=1&amp;bg1=F8F8F8&amp;fc1=000000&amp;lc1=0000FF&amp;t=naotoassociat-22&amp;o=9&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;ref=tf_til&amp;asins=484433638X" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=F8F8F8&amp;IS2=1&amp;nou=1&amp;bg1=F8F8F8&amp;fc1=000000&amp;lc1=0000FF&amp;t=naotoassociat-22&amp;o=9&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;ref=tf_til&amp;asins=4844336770" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=F8F8F8&amp;IS2=1&amp;nou=1&amp;bg1=F8F8F8&amp;fc1=000000&amp;lc1=0000FF&amp;t=naotoassociat-22&amp;o=9&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;ref=tf_til&amp;asins=4877833765" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=F8F8F8&amp;IS2=1&amp;nou=1&amp;bg1=F8F8F8&amp;fc1=000000&amp;lc1=0000FF&amp;t=naotoassociat-22&amp;o=9&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;ref=tf_til&amp;asins=4877833889" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<!--
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=484433638X" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4844336770" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877833765" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877833889" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+-->
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&amp;t=naotoassociat-22&amp;m=amazon&amp;o=9&amp;p=8&amp;l=as1&amp;IS2=1&amp;detail=1&amp;asins=4274067106&amp;linkId=93d694711dbe1bcddf54d4dbceaa6634&amp;bc1=F8F8F8&amp;lt1=_blank&amp;fc1=333333&amp;lc1=0066C0&amp;bg1=F8F8F8&amp;f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&amp;t=naotoassociat-22&amp;m=amazon&amp;o=9&amp;p=8&amp;l=as1&amp;IS2=1&amp;detail=1&amp;asins=4863542011&amp;linkId=92f9b82cf210ae3681f8c607eae4ac8a&amp;bc1=F8F8F8&amp;lt1=_blank&amp;fc1=333333&amp;lc1=0066c0&amp;bg1=F8F8F8&amp;f=ifr"></iframe>
 
 <!--
 <ul>
@@ -665,7 +710,7 @@ Javaでは、<strong>整数</strong>や<strong>小数</strong>など、リテラ
           <li style="margin-bottom:5px">
               <!-- Facebook Button -->
 <!-- <div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
-<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/applied_programming/chapter2.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/advanced_studies_seminar_2/chapter9.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <!-- Twitter Button -->
 <div>
