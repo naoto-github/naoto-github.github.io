@@ -514,6 +514,86 @@ Cardboard向けVRを開発可能な「<a href="https://developers.google.com/vr/
 
 <h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />プロジェクトの作成</h1>
 
+<p><strong>Unity</strong>でプロジェクトを作成します。
+Unityのバージョンは<strong>5.6.0</strong>です。
+ここでは、プロジェクト名を「<strong>Panorama Viewer</strong>」としています。
+また、ゲーム環境は「<strong>3D</strong>」を選択しておきます。</p>
+
+<p><a href="https://gyazo.com/a9246420ada1b88940bb67477bc0b5f4"><img src="https://i.gyazo.com/a9246420ada1b88940bb67477bc0b5f4.png" alt="https://gyazo.com/a9246420ada1b88940bb67477bc0b5f4" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25pngsphere"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />Sphereオブジェクトの設定</h1>
+
+<p>360°画像を投影するためのSphereオブジェクトを導入します。
+ここでは、UnityのデフォルトのSphereオブジェクトではなく、<a href="http://warapuri.com/post/131599525953/unity%E3%81%A8oculus%E3%81%A7360%E5%BA%A6%E3%83%91%E3%83%8E%E3%83%A9%E3%83%9E%E5%85%A8%E5%A4%A9%E5%91%A8%E5%8B%95%E7%94%BB%E3%82%92%E8%A6%8B%E3%82%8B%E6%96%B9%E6%B3%95%E7%84%A1%E6%96%99%E7%B7%A8">@warapuri</a>氏が提供している天球モデル「<a href="Sphere100.fbx">Sphere100.fbx</a>」を利用させてもらいます。
+Unityで<strong>Sphere100.fbx</strong>を利用するには、[Assets]-[Import New Asset]をクリックし、該当の3Dモデルファイルを選択します。</p>
+
+<p>導入されたShere100オブジェクトのマテリアルが<strong>phong1</strong>です。
+このマテリアルに撮影した360°画像を貼り付けます。
+まずは、対象の360°画像をアセットとして読み込みます。
+手順は、<strong>Sphere100.fbx</strong>のときと同じで、
+【Assets】-【Import Net Asset】をクリックし、
+該当の画像ファイル（<strong>sample-4096x2048.jpg</strong>）を選択します。
+次に、phong1のインスペクターから、<strong>Shader</strong> を「<strong>Unit/Texture</strong>」に変更します。
+このとき、テクスチャー画像を、先ほど読み込んだ<strong>sample-4096x2048.jpg</strong>に設定します。</p>
+
+<p><a href="https://gyazo.com/7af89d1e12deb896aadfe2e7d3c1bbbc"><img src="https://i.gyazo.com/7af89d1e12deb896aadfe2e7d3c1bbbc.png" alt="https://gyazo.com/7af89d1e12deb896aadfe2e7d3c1bbbc" /></a></p>
+
+<p>それでは、Sphere100オブジェクトをシーンに加えます。
+AssetsにあるSphere100オブジェクトをヒエラルキーにドラッグ＆ドロップします。
+ここで、Sphere100オブジェクトのインスペクターから、<strong>Scale</strong> の値を、 <strong>x=-100</strong>、<strong>y=100</strong>、<strong>z=100</strong> に設定しておきます。
+すると、360°画像をテクスチャーとした、球状の3Dオブジェクトが表示されます。</p>
+
+<p><a href="https://gyazo.com/2e64e90a3480e37749c2e920cfe5bc64"><img src="https://i.gyazo.com/2e64e90a3480e37749c2e920cfe5bc64.png" alt="https://gyazo.com/2e64e90a3480e37749c2e920cfe5bc64" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />カメラの設定</h1>
+
+<p><strong>Google VR SDK for Unity</strong>を利用して、カメラをVRに対応させます。
+まずは、<a href="https://developers.google.com/vr/">Google VR</a>のサイトから、
+Unity用のパッケージである<strong>GoogleVRForUnity.unitypackage</strong>をダウンロードします。
+Unityで<strong>GoogleVRForUnity.unitypackage</strong>を利用するには、
+[Assets]-[Inport New Package]をクリックし、該当のパッケージファイルを選択します。
+パッケージに含まれるファイルがAssetsに展開されます。</p>
+
+<p>次に、ヒエラルキーで右クリックして、<strong>Create Empty</strong> を選択し、<strong>空のオブジェクト</strong> を作成します。
+ここで、 <strong>空のオブジェクト</strong> の名前を <strong>VR Camera</strong> に変更しておきます。
+この<strong>VR Camera</strong>の直下に、<strong>Main Camera</strong> と <strong>GvrEditorEmulator</strong> を配置します。
+<strong>GvrEditorEmulator</strong>は、[Assets]-[GoogleVR]-[Prefabs]にあり、これをヒエラルキーにドラッグ＆ドロップします（以前は<strong>GvrViewerMain</strong>でした）。
+オブジェクトの配置関係は下記のようになります。</p>
+
+<p><a href="https://gyazo.com/abdaf9ec6e61907fac2641181e52d0c6"><img src="https://i.gyazo.com/abdaf9ec6e61907fac2641181e52d0c6.png" alt="https://gyazo.com/abdaf9ec6e61907fac2641181e52d0c6" /></a></p>
+
+<p>それでは、シーンを再生してみましょう。
+このとき、キーボードの<strong>Altキー</strong>を押しながら、マウスカーソルを動かすことで、
+ヘッドマウントディスプレイの上下左右の動きをシミュレートすることができます。
+（傾きをシミュレートするには<strong>Ctrlキー</strong>を押します）</p>
+
+<p><a href="https://gyazo.com/17a3b4995be75262e1bea164fcc796a2"><img src="https://i.gyazo.com/17a3b4995be75262e1bea164fcc796a2.gif" alt="https://gyazo.com/17a3b4995be75262e1bea164fcc796a2" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />アプリのビルド</h1>
+
+<p>構築したシーンをアプリとしてビルドしましょう。
+ここでは、Android端末向けにビルドすることを前提とします。
+まずは、[File]-[Build Setting]を選択して、Platformを<strong>Android</strong>に変更します。</p>
+
+<p><a href="https://gyazo.com/792c59a4ee9232739043be5b637d2df6"><img src="https://i.gyazo.com/792c59a4ee9232739043be5b637d2df6.png" alt="https://gyazo.com/792c59a4ee9232739043be5b637d2df6" /></a></p>
+
+<p>続けて、<strong>Player Setting</strong>をクリックして、インスペクターを開きます。
+ここで、<strong>Virtual Reality Supprted</strong> にチェックを入れ、<strong>Virtual Reality SDKs</strong> に <strong>Cardboard</strong> を指定しておきます。
+Cardboardの動作を保証するために、<strong>Minimum API Level</strong>も調整しておきます（ここでは <strong>Android 6.0</strong> としました）。
+このほか、<strong>Company Name</strong>、<strong>Product Name</strong>、<strong>Package Name</strong> などを入力しておきます。</p>
+
+<p><a href="https://gyazo.com/d1900ce8c0b38ba48301f2ff70cdfddc"><img src="https://i.gyazo.com/d1900ce8c0b38ba48301f2ff70cdfddc.png" alt="https://gyazo.com/d1900ce8c0b38ba48301f2ff70cdfddc" /></a></p>
+
+<p>これで、全ての準備が整いました。
+<strong>Build and Run</strong>をクリックして、Android端末でアプリを実行してみましょう。
+成功すれば下記のように左右の画面に分かれてシーンが表示されます。
+Android端末の向きに追従して、360°画像が表示されるはずです。</p>
+
+<p><a href="https://gyazo.com/1c689c2b597e8d9264907f6b9c01d47d"><img src="https://i.gyazo.com/1c689c2b597e8d9264907f6b9c01d47d.jpg" alt="https://gyazo.com/1c689c2b597e8d9264907f6b9c01d47d" /></a></p>
+
+<p>この状態でAndroid端末を<strong>VR SHINECON</strong>に設置すれば、
+360°画像のビューアーの完成です。</p>
+
 <h3>参考書籍</h3>
 
 <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=F8F8F8&amp;IS2=1&amp;nou=1&amp;bg1=F8F8F8&amp;fc1=000000&amp;lc1=0000FF&amp;t=naotoassociat-22&amp;o=9&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;ref=tf_til&amp;asins=4797384433" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
