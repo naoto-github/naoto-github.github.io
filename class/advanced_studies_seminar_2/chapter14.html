@@ -605,7 +605,7 @@ attr(,"scaled:scale")
 
 <p>最初に抽出する <strong>因子数</strong> を決める必要があります。
 原理的には変数と同じだけ<strong>因子</strong>の抽出が可能ですが（後述する回転をしない場合）、
-主成分分析のように意味（説明力）のある <strong>因子</strong> のみを抽出します。
+主成分分析のように説明力（分散の大きさ）のある <strong>因子</strong> のみを抽出します。
 <strong>因子数</strong> を決めるには対象のデータの <strong>相関行列</strong> の<strong>固有値</strong>と<strong>固有ベクトル</strong>を計算します。</p>
 
 <p><strong>相関行列</strong> は、各科目間の相関係数を行列で表現したもので、<strong>cor</strong>関数で求めることができます。
@@ -695,7 +695,8 @@ attr(,"scaled:scale")
 ここで、ポイントとなるのは独自因子<script type="math/tex">e</script>です。
 この独自因子の平均を<strong>0</strong>、分散を<script type="math/tex">d^2</script>と仮定します。
 また、因子得点の平均を<strong>0</strong>、分散を<strong>1</strong>とし、因子間の相関は<strong>0</strong>と仮定します。
-すると、相関行列は下記のように表すことができます（この計算は非常に難解なので割愛）。
+相関行列が<strong>対称行列</strong>であることを利用すると、
+相関行列は下記のように表すことができます（この計算は非常に難解なので割愛）。
 ここで、<script type="math/tex">r</script>は独自因子を考慮しないときの相関係数です。</p>
 
 <p style="text-align:center;">
@@ -852,11 +853,33 @@ The p-value is 0.39
 
 <p>最後に因子得点<script type="math/tex">f(X)</script>を推定します。
 因子得点は上記で意味付けをした<strong>理系因子</strong>と<strong>文系因子</strong>の得点を表します。
-因子得点を求めるには<strong>回帰法</strong>、<strong>バートレット法</strong>、<strong>アンダーソン・ルビン法</strong>などがありますが、
+因子得点を求めるには<strong>回帰法</strong>、 <strong>バートレット法</strong> 、 <strong>アンダーソン・ルビン法</strong> などがありますが、
 いずれも推定値であり、正確な値を求めることはできません。
-ここでは<strong>回帰法</strong>を採用しています。
-下記が因子得点です。
-得点は標準化されていることに注意してください。</p>
+ここでは<strong>回帰法</strong>を採用し、データ、相関行列の逆行列、因子負荷行列を掛けて因子得点を算出します。
+因子得点は平均0、分散1で標準化されていることに注意してください。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; data %*% solve(correlation) %*% result2$loadings
+          Factor1    Factor2
+ [1,]  0.41451018 -0.9142532
+ [2,]  1.05474389 -0.5843555
+ [3,]  0.22592718  2.1020917
+ [4,]  0.09254249 -1.1557858
+ [5,]  1.05882559 -1.0257496
+ [6,] -1.43614656 -0.7290921
+ [7,] -0.90884192  1.2319116
+ [8,]  0.96771712 -0.8236710
+ [9,] -1.09443243  0.2522387
+[10,] -0.10346988  0.1067041
+[11,] -0.41795516  0.2682362
+[12,] -1.34922263 -0.1318741
+[13,] -0.01703708  1.0186440
+[14,] -0.35255045 -0.6608092
+[15,]  1.86538968  1.0457642
+</code></pre>
+</div>
+
+<p><strong>factanal</strong>関数と同時に求められた因子得点（result2$scores）と比較してみましょう。
+値が一致していることが確認できます。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&gt; result2$scores
       Factor1 Factor2
