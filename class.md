@@ -7,7 +7,7 @@ top_link: true
 #### 椙山女学園大学
 
 * [基礎演習](class/seminar_core_areas_learning/index.html)
-* [基幹演習](class/seminar_fundamental_areas/index.html)
+* 基幹演習
 * [展開演習2](class/advanced_studies_seminar_2/index.html)
 * [プログラミング1](class/programming_1/index.html)
 * [プログラミング応用](class/applied_programming/index.html)
