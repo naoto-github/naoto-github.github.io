@@ -1,0 +1,196 @@
+---
+layout: page
+title: "基本図形の描画"
+permalink: /class/programming_1/chapter2.html
+top_link: false
+image: "https://i.gyazo.com/00d84b241725f9c4f20b93a925847693.png"
+---
+
+[![https://gyazo.com/00d84b241725f9c4f20b93a925847693](https://i.gyazo.com/00d84b241725f9c4f20b93a925847693.png)](https://gyazo.com/00d84b241725f9c4f20b93a925847693)
+
+# <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スケッチの作成
+
+Processingを起動して、新規にスケッチを保存しましょう。
+メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。
+ファイル名に「Project2」を入力し、[保存]をクリックしましょう。
+保存先に「Project2」という名前のフォルダが作成されていることを確認してください。
+
+[![https://gyazo.com/4ecb6217c879b7ca1621c823ad1b35e0](https://i.gyazo.com/4ecb6217c879b7ca1621c823ad1b35e0.png)](https://gyazo.com/4ecb6217c879b7ca1621c823ad1b35e0)
+
+# <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">ウィンドウのサイズ
+
+図形はウィンドウ内の**ピクセル**に描画します。
+各ピクセルは座標で示され、Processingではウィンドウの左上が原点となります。
+左端からの距離が**X座標**、上端からの距離が**Y座標**を表します。
+まずは、`size()`という命令文を用いて、ウィンドウのサイズを決めましょう。
+ここでは、300×300ピクセルを指定します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+指定したサイズのウィンドウが表示されることを確認してください。
+
+{% gist naoto-github/944777e500e05b973ee4 %}
+
+[![https://gyazo.com/70053e673c723cf63ace0628cb21cd30](https://i.gyazo.com/70053e673c723cf63ace0628cb21cd30.png)](https://gyazo.com/70053e673c723cf63ace0628cb21cd30)
+
+# <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">基本図形の描画
+
+Proceessingには基本的な図形を描く命令文が用意されています。
+図形の描画など一連の処理をひとまとめにして、名前を付けたものを**関数**と呼びます（`println()`や`size()`も関数です）。
+
+### 点の描画
+
+指定した座標に点を描くには`point()`関数を利用します。
+`point()`関数の括弧の内側には、点を描くX座標とY座標を指定します。
+このように、関数の括弧の内側で指定する値のことを、**引数**と言います。
+ここでは、X座標が50、Y座標が50の位置に点を描いてみましょう。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+指定した位置に点が描かれていることを確認してください。
+
+    point(x,y);
+
+{% gist naoto-github/11a2c3a6908000eb69ea %}
+
+[![https://gyazo.com/9da77c8c04b0f2bdcc0b93f02df4050a](https://i.gyazo.com/9da77c8c04b0f2bdcc0b93f02df4050a.png)](https://gyazo.com/9da77c8c04b0f2bdcc0b93f02df4050a)
+
+### 線の描画
+
+２つの座標を結ぶ線を描くには`line()`関数を利用します。
+引数には２つの座標を指定します。
+ここでは、座標(50,100)から座標(50,200)に線を描いてみましょう。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+指定した位置に線が描かれていることを確認してください。
+
+    line(x1, y1, x2, y2);
+
+{% gist naoto-github/dc736e0e70cb67268eb0 %}
+
+[![https://gyazo.com/540096bada52e4763b930d41cce60262](https://i.gyazo.com/540096bada52e4763b930d41cce60262.png)](https://gyazo.com/540096bada52e4763b930d41cce60262)
+
+### 長方形の描画
+
+長方形を描くには`rect()`関数を利用します。
+引数には基準となる左上の座標と幅、高さを指定します。
+ここでは、座標(100,50)を基準に、幅100、高さ100の長方形を描いてみましょう。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+指定した位置に長方形が描かれていることを確認してください。
+
+    rect(x, y, width, height);
+
+{% gist naoto-github/c148e4b3d9ff75838785 %}
+
+[![https://gyazo.com/1a3cde5de52d32f2b29ed260651e8c1c](https://i.gyazo.com/1a3cde5de52d32f2b29ed260651e8c1c.png)](https://gyazo.com/1a3cde5de52d32f2b29ed260651e8c1c)
+
+### 円の描画
+
+円を描くには`ellipse()`関数を利用します。
+引数には基準となる中心の座標と幅、高さを指定します（幅、高さを同じ値にすると正円になる）。
+ここでは、座標(150,200)を中心に、半径40の円を描いてみましょう。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+指定した位置に円が描かれていることを確認してください。
+
+    ellipse(x, y, width, height);
+
+{% gist naoto-github/dcddd06cde9d189149ea %}
+
+[![https://gyazo.com/8fcbfd76e1514372fa7d35afcb1cc7a2](https://i.gyazo.com/8fcbfd76e1514372fa7d35afcb1cc7a2.png)](https://gyazo.com/8fcbfd76e1514372fa7d35afcb1cc7a2)
+
+### その他の図形の描画
+
+上記の他にも、指定した３点を結ぶ三角形を描画する`triangle()`、
+指定した４点を結ぶ四角形を描画する`quad()`、
+円弧を描画する`arc()`関数があります。
+`arc()`関数の引数の*start*と*stop*は始まりと終わりの角度を表し、
+単位はラジアンであることに注意してください。
+
+    triangle(x1, y1, x2, y2, x3, y3);
+    quad(x1, y1, x2, y2, x3, y3, x4, y4);
+    arc(x, y, width, height, start, stop);
+
+# <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">色の指定
+
+Processingで色を指定するには「色の三原色」である**RGB**を利用します。
+**RGB**では、赤（Red）、緑（Green）、青（Blue）の割合で色を表します。
+各色は**0**から**255**の範囲で指定します。
+例えば、赤を表すには(255, 0, 0)、黄色を表すには(255, 255, 0)、
+白を表すには(255, 255, 255)と指定します。
+また、”#”を頭に付けて**16進数**で色を指定することもできます。
+例えば、赤を表すには#ff0000、黄色を表すには#ffff00、
+白を表すには#ffffffと指定します。
+使用する色を決めるときは[原色大辞典](http://www.colordic.org/)を利用すると便利です。
+
+### 背景色の指定
+
+初期設定では背景色は薄いグレーに設定されています。
+これを変更するには`background()`関数を利用します。
+ここでは、背景色を薄い黄色（#ffffe0）に変更してみましょう。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+背景色が変更されていることを確認してください。
+
+{% gist naoto-github/47abd27315c1d8f0b7b8 %}
+
+[![https://gyazo.com/1b51f83668a1d120a4cf1f7aad5d8eb7](https://i.gyazo.com/1b51f83668a1d120a4cf1f7aad5d8eb7.png)](https://gyazo.com/1b51f83668a1d120a4cf1f7aad5d8eb7)
+
+### 図形の輪郭線の指定
+
+初期設定では図形の輪郭線は黒色に設定されています。
+これを変更するには`stroke()`関数を利用します。
+ここでは、上記で描いた長方形の輪郭線を赤（#ff0000）、円の輪郭線を緑（#00ff00）に変更してみましょう。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+輪郭線の色が変更されていることを確認してください。
+
+{% gist naoto-github/47640ca99a463e326788 %}
+
+[![https://gyazo.com/0c37a3aab527b234b556e4072373bb45](https://i.gyazo.com/0c37a3aab527b234b556e4072373bb45.png)](https://gyazo.com/0c37a3aab527b234b556e4072373bb45)
+
+### 図形の塗りつぶしの指定
+
+初期設定では図形の塗りつぶしは白色に設定されています。
+これを変更するには`fill()`関数を利用します。
+ここでは、上記で描いた長方形の塗りつぶしを青（#0000ff）、円の塗りつぶしをピンク（#ffc0cb）に変更してみましょう。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+塗りつぶしの色が変更されていることを確認してください。
+
+{% gist naoto-github/d631e166543497d3910c %}
+
+[![https://gyazo.com/8956230702b61096dc6d0becdd9ca677](https://i.gyazo.com/8956230702b61096dc6d0becdd9ca677.png)](https://gyazo.com/8956230702b61096dc6d0becdd9ca677)
+
+# <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">その他の関数
+
+### 輪郭線の太さ
+
+初期設定では図形の輪郭線の太さは１ピクセルに設定されています。
+これを変更するには`strokeWeight()`関数を利用します。
+引数には輪郭線の太さをピクセル単位で指定します。
+ここでは、上記で描いた長方形の輪郭線の太さを5px、円の輪郭線の太さを10pxに変更してみましょう。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+輪郭線の太さが変更されていることを確認してください。
+
+{% gist naoto-github/cc659c3c587a6036a50b %}
+
+[![https://gyazo.com/9b87078a80f36f6ef2e9a32524376e36](https://i.gyazo.com/9b87078a80f36f6ef2e9a32524376e36.png)](https://gyazo.com/9b87078a80f36f6ef2e9a32524376e36)
+
+### 輪郭線と塗りつぶしの非表示
+
+輪郭線を描画したくない場合は`noStroke()`関数、塗りつぶしを描画したくない場合は`noFill`関数を利用します。
+ここでは、上記で描いた長方形の輪郭線と、円の塗りつぶしを消してみましょう。
+`stroke()`関数や`fill()`関数を実行すれば、再び描画されるようになります。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+行頭に「**//**」がある行は**コメント**とみなされ、実行されることはありません。
+また、「**/\***」と「**\*/**」で括み、複数行を**コメント**とすることも可能です。
+これを利用して、ソースコードに説明文などを記述することもできます。
+輪郭線や塗りつぶしが描画されないことを確認してください。
+
+{% gist naoto-github/ba378d776b2bd23ff024 %}
+
+[![https://gyazo.com/aa8ed9177ae6f36de34fc1536743025c](https://i.gyazo.com/aa8ed9177ae6f36de34fc1536743025c.png)](https://gyazo.com/aa8ed9177ae6f36de34fc1536743025c)
+
+# <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題
+
+図形描画の関数を利用して「おでん」を描いてください。
+課題が完成したら、作成したスケッチを**ZIPアーカイブ**形式で保存します。
+ZIPアーカイブを作成するには、メニューから[ツール]-[スケッチをアーカイブ]をクリックして、「スケッチを名前を付けてアーカイブする」を開きます。
+保存するファイル名を確認した上で、[保存]をクリックします。
+保存先に「Project2-日付a.zip」というファイルが作成されていることを確認してください。
+
+[![https://gyazo.com/b6636a0e0127cc185e8334e62a88de14](https://i.gyazo.com/b6636a0e0127cc185e8334e62a88de14.png)](https://gyazo.com/b6636a0e0127cc185e8334e62a88de14)
+
+{% include programming_1/reference.html %}

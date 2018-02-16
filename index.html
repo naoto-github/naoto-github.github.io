@@ -1,22 +1,79 @@
 ---
 layout: default
+image: "https://i.gyazo.com/c0cc1b0ae3ce564dcf221ff61d1833c7.png"
 ---
 
 <div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+  <!-- タイトルイメージ -->
+  <!-- <img src="https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png" alt="https://gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a"/> -->
+  <!-- <img src="https://i.gyazo.com/710ec895a5ccc7170e2c9dcde1c9f58c.png" alt="https://gyazo.com/710ec895a5ccc7170e2c9dcde1c9f58c"/> -->
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+  <div class="slider">
+      <div><img src="https://i.gyazo.com/d1cbe47855dd35f62a170371eb244575.png" alt="https://gyazo.com/d1cbe47855dd35f62a170371eb244575" /></div>
+      <div><img style="display:none" src="https://i.gyazo.com/c0cc1b0ae3ce564dcf221ff61d1833c7.png" alt="https://gyazo.com/c0cc1b0ae3ce564dcf221ff61d1833c7" /></div>
+      <div><img style="display:none" src="https://i.gyazo.com/38311f2460178da4ac9c99675b7e0862.png" alt="https://i.gyazo.com/38311f2460178da4ac9c99675b7e0862"/></div>
+      <div><img style="display:none" src="https://i.gyazo.com/710ec895a5ccc7170e2c9dcde1c9f58c.png" alt="https://gyazo.com/710ec895a5ccc7170e2c9dcde1c9f58c"/></div>
+      <div><img style="display:none" src="https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png" alt="https://gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a"/></div>
+  </div>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
+  <script>
+    $(function(){
+        $(".slider").slick({
+            accessibility: true,
+            autoplay: false,
+            pauseOnFocus: false,
+            pauseOnHover: false,
+            fade: true,
+            arrows: true,
+            dots: true
+        });
+
+        $(".slider img").show(1);
+    });
+  </script>
+
+  <h1 class="page-heading">投稿一覧</h1>
+
+  <!-- ページ分割されたpostsに対してループ -->
+  {% for post in paginator.posts %}
+    <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+    <span style="margin-top:0px; font-size:smaller">[{{ post.categories }}]</span>
+
+    <h2 style="margin-bottom:0px">
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    </h2>
+
+    <p style="margin-bottom:10px">
+        {{ post.excerpt }}
+    </p>
+  {% endfor %}
+
+  <!-- ページネーションリンク -->
+  {% if paginator.total_pages > 1 %}
+    <div class="pagination">
+    {% if paginator.previous_page %}
+        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; Prev</a>
+    {% else %}
+        <span>&laquo; Prev</span>
+    {% endif %}
+
+    {% for page in (1..paginator.total_pages) %}
+        {% if page == paginator.page %}
+            <em>{{ page }}</em>
+        {% elsif page == 1 %}
+            <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+        {% else %}
+            <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+        {% endif %}
     {% endfor %}
-  </ul>
+
+    {% if paginator.next_page %}
+        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a>
+    {% else %}
+        <span>Next &raquo;</span>
+    {% endif %}
+  {% endif %}
 
   <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 

@@ -1,0 +1,29 @@
+---
+layout: post
+title: "Jekyllでオープン・グラフ・プロトコル（OGP）の設定"
+date: 2016-02-23T00:27:33+00:00
+categories: ["Tech"]
+---
+
+フェイスブックでシェアされたときに表示される画像は、オープン・グラフ・プロトコル（OGP）で制御されています。
+OGPの設定がなければ、自動で適当な画像が選択されますが、意図しない画像が選択されることも多いです。
+そこで、Jekyllで採用されている「YAML Front Matter」を利用してOGPを設定する方法をメモしておきます。
+
+まずは、ブログ記事などのファイルの先頭に、
+下記のように*image*という変数を用意して、参照する画像を設定しておきます。
+
+    ---
+    layout: default
+    image: "https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png"
+    ---
+
+これで*page.image*という記述で設定された値を取得することができるようになります。
+次に、"_includes/head.html"に下記のように*page.image*を利用してOGPの設定をします。
+このとき、条件文を利用することで*page.image*が設定されている場合に限ってOGPの設定を有効にしています。
+OGPは`<meta property="og:image" content="参照画像">`と記述します。
+
+{% gist naoto-github/2d722aa297bd3acaeeac %}
+
+これで、フェイスブックでシェアされたときの画像が設定されます。
+もし画像が反映されない場合は、フェイスブックのキャッシュが原因かもしれません。
+この場合は、[Open Graph Object Debugger](https://developers.facebook.com/tools/debug/og/object/)でキャッシュを削除してみましょう。
