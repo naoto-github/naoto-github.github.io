@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>カメラ映像の表示</title>
+  <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- <link rel="stylesheet" href="/css/style.css"> -->
+  <link rel="canonical" href="http://mukai-lab.info//class/programming_1/chapter10.html">
+  <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://mukai-lab.info//feed.xml">
+
+  <!-- Faviconの実装 -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/favicon/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/favicon/favicon-48x48.png" sizes="48x48">
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32">
+  <link rel="manifest" href="favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#2d88ef">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+  <!-- Mathjax -->
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+
+  <!-- Slick.js -->
+  <link rel="stylesheet" href="/css/slick.css">
+  <link rel="stylesheet" href="/css/slick-theme.css">
+  <script src="/js/slick.min.js"></script>
+
+  <!-- My Style -->
+  <link rel="stylesheet" href="/css/mystyle.css">
+
+  <!-- OGP -->
+  
+  <meta property="og:image" content="https://i.gyazo.com/edffebcb2d7e3c361509dab7b6f2b8bb.png">
+  
+</head>
+
+<!-- Facebookいいねボタンの実装 -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Twitterボタンの実装 -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<!-- Google Adsense ページ単位の広告 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1652300955422837",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <!-- <a class="site-title" href="/">M's Lab. （えむらぼ）</a> -->
+    <a class="site-title" href="/">
+        <img src="/favicon/favicon.png" height="50px" style="margin-bottom:10px;margin-right:2px">
+        <span style="color:#00606D;font-weight:bold">M</span>'s Lab.
+        <!-- <img src="/img/Top.png" style="margin-bottom:10px;margin-left:10px"> -->
+    </a>
+
+    <nav class="site-nav">
+
+      <!-- <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a> -->
+
+      <div class="trigger">
+        <a class="page-link" href="/">Top</a>
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+                <a class="page-link" href="/class.html">担当科目</a>
+            
+          
+        
+          
+            
+          
+        
+          
+            
+                <a class="page-link" href="/contents.html">コンテンツ</a>
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+                <a class="page-link" href="/profile.html">登場キャラ</a>
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-77390013-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post">
+
+  <meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@site_username">
+<meta name="twitter:creator" content="@creator_username">
+
+
+  <meta name="twitter:title" content="カメラ映像の表示">
+
+
+
+  <meta name="twitter:url" content="http://mukai-lab.info//class/programming_1/chapter10.html">
+
+
+
+  <meta name="twitter:description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
+
+
+
+  <meta name="twitter:image:src" content="https://i.gyazo.com/edffebcb2d7e3c361509dab7b6f2b8bb.png">
+
+
+
+  <header class="post-header">
+    <h1 class="post-title">カメラ映像の表示</h1>
+    <!-- Facebook Button -->
+<!-- <div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/programming_1/chapter10.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+
+<!-- Twitter Button -->
+<div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    <a href="https://twitter.com/nmukai1978" class="twitter-follow-button" data-show-count="false">Follow @nmukai1978</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</div>
+
+    <!-- <div class="fb-like" data-href="http://naoto-github.github.io//class/programming_1/chapter10.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+  </header>
+
+  <div class="post-content">
+    <p><a href="https://gyazo.com/edffebcb2d7e3c361509dab7b6f2b8bb"><img src="https://i.gyazo.com/edffebcb2d7e3c361509dab7b6f2b8bb.png" alt="https://gyazo.com/edffebcb2d7e3c361509dab7b6f2b8bb" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />スケッチの作成</h1>
+
+<p>Processingを起動して、新規にスケッチを保存しましょう。
+メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。
+ファイル名に「Project10」を入力し、[保存]をクリックしましょう。
+保存先に「Project10」という名前のフォルダが作成されていることを確認してください。</p>
+
+<p><a href="https://gyazo.com/a998688ddfc325db6e1d20982c4c1b36"><img src="https://i.gyazo.com/a998688ddfc325db6e1d20982c4c1b36.png" alt="https://gyazo.com/a998688ddfc325db6e1d20982c4c1b36" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25pngvideo"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />Videoライブラリの導入</h1>
+
+<p>Processingでは<strong>Videoライブラリ</strong>を導入することで、
+カメラからの映像をウィンドウに表示することができるようになります。
+まずは、メニューから[スケッチ]-[ライブラリをインポート]-[ライブラリを追加]をクリックして、
+「Contribution Manager」を開きます。
+ここで、<strong>video</strong>をキーワードに検索すると、
+「<strong>Video|GStreamer-based video library for Processing</strong>」が表示されるので、
+このライブラリを選択してインストールしましょう。</p>
+
+<p><a href="https://gyazo.com/5ea11e24d42f92a343a2d51499018eeb"><img src="https://i.gyazo.com/5ea11e24d42f92a343a2d51499018eeb.png" alt="https://gyazo.com/5ea11e24d42f92a343a2d51499018eeb" /></a></p>
+
+<p>次に、[スケッチ]-[ライブラリをインポート]-[Video]をクリックして、
+Videoライブラリをインポート（プログラムで利用可能な状態にすること）します。
+ソースコードの１行目に「<strong>import processing.video.*;</strong>」と表示されていることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/461200e7f5f3d08be8b0a4a30ba6daeb.js"> </script>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />カメラ映像の表示</h1>
+
+<p>カメラから入力した映像は<strong>Capture</strong>クラスを利用します。
+まずは、<strong>setup()</strong>関数において、<strong>Capture</strong>クラスの<strong>list()</strong>関数を呼び出し、
+利用可能なカメラの一覧を<strong>String</strong>型の配列で取得します。
+これをコンソールに出力し、利用可能なカメラの種類を確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/92ba7be251dc415f8268bfae16a1538b.js"> </script>
+
+<p>例えば、コンソールには下記のような一覧が表示されます。
+この中から、<strong>サイズ（size）</strong>が<strong>320x240</strong>となっているカメラ番号を覚えておいてください。
+この例では、<strong>3</strong>番が該当します。
+ウィンドウのサイズも<strong>320x240</strong>に合わせます。
+ちなみに、<strong>フレームレート（fps）</strong>は、1秒間に更新される画像（フレーム）数を意味しています。
+つまり、フレームレートが高いほど、滑らかな動画となります。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[0] name=FULL HD 1080P Webcam,size=640x480,fps=30
+[1] name=FULL HD 1080P Webcam,size=160x120,fps=30
+[2] name=FULL HD 1080P Webcam,size=176x144,fps=30
+[3] name=FULL HD 1080P Webcam,size=320x240,fps=30
+[4] name=FULL HD 1080P Webcam,size=352x288,fps=30
+[5] name=FULL HD 1080P Webcam,size=640x360,fps=30
+[6] name=FULL HD 1080P Webcam,size=800x600,fps=30
+[7] name=FULL HD 1080P Webcam,size=960x720,fps=30
+[8] name=FULL HD 1080P Webcam,size=1024x576,fps=30
+[9] name=FULL HD 1080P Webcam,size=1280x720,fps=30
+</code></pre>
+</div>
+
+<p>次に、<strong>Capture</strong>クラスのインスタンス<em>cam</em>を下記のように初期化します。
+引数には先程確認したカメラ番号を指定することに注意してください。
+<code class="highlighter-rouge">start()</code>関数を呼び出すことで、カメラ映像の取得を開始します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cam = new Capture(this, cameras[3]);
+cam.start();
+</code></pre>
+</div>
+
+<p>下記のコードを参考に、カメラ映像をウィンドウに表示してみましょう。
+<code class="highlighter-rouge">draw()</code>関数では、カメラが利用可能な状態であることを確認してから、
+<code class="highlighter-rouge">read()</code>関数で現在のフレーム（画像）を取得しています。
+Runボタンをクリックすると、ウィンドウにカメラ映像が表示されることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/098a6e59500c3836ffbc083680f2ef0b.js"> </script>
+
+<p><a href="https://gyazo.com/ced8da66a6be46e25b6120a8d3067902"><img src="https://i.gyazo.com/ced8da66a6be46e25b6120a8d3067902.gif" alt="https://gyazo.com/ced8da66a6be46e25b6120a8d3067902" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />リアルタイム画像処理</h1>
+
+<p><code class="highlighter-rouge">draw())</code>関数で<code class="highlighter-rouge">filter()</code>関数を呼び出して、
+表示されている映像に様々な効果を与えてみましょう。
+ここでは、<strong>２値化（THRESHOLD）</strong>、<strong>グレースケール（GRAY）</strong>、
+<strong>ネガポジ反転（INVERT）</strong>を試してみます。</p>
+
+<p><strong>２値化（THRESHOLD）</strong>を適用してみましょう。
+２値化とは黒または白の２色で画像を表示する方法です。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+映像が２値化されていることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/5ce77161999c7c730cc08c4642c47eef.js"> </script>
+
+<p><a href="https://gyazo.com/55a440c86f305b76dedd266a1fac1067"><img src="https://i.gyazo.com/55a440c86f305b76dedd266a1fac1067.gif" alt="https://gyazo.com/55a440c86f305b76dedd266a1fac1067" /></a></p>
+
+<p><strong>グレースケール（GRAY）</strong>を適用してみましょう。
+グレースケールとはモノクロで画像を表示する方法です。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+映像がグレースケールになっていることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/9d511d3874b0047652f069a9a0f4c10d.js"> </script>
+
+<p><a href="https://gyazo.com/71cc062732ba08a84e51f4851231d1d6"><img src="https://i.gyazo.com/71cc062732ba08a84e51f4851231d1d6.gif" alt="https://gyazo.com/71cc062732ba08a84e51f4851231d1d6" /></a></p>
+
+<p><strong>ネガポジ反転（INVERT）</strong>を適用してみましょう。
+ネガポジ反転とは色相が正反対の補色で画像を表示する方法です。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+映像がネガポジ反転になっていることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/ca56f6fc969d3e511adadd238191fa15.js"> </script>
+
+<p><a href="https://gyazo.com/c7e70a238362f8bb11518f7ddc3d91c1"><img src="https://i.gyazo.com/c7e70a238362f8bb11518f7ddc3d91c1.gif" alt="https://gyazo.com/c7e70a238362f8bb11518f7ddc3d91c1" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+
+<p>下記コードを参考に<strong>背景差分</strong>に挑戦しましょう。
+背景差分とは、「事前に取得しておいた画像」と「現在の画像」を比較することで、
+「事前に取得した画像」とは異なる画素を抽出する処理のことです。
+まず、ウィンドウ内でマウスをクリックしたときに背景用の画像を取得し、変数<em>bg</em>に代入します。
+変数<em>bg</em>が空（null）でなければ、カメラ映像と背景画像の<strong>モノクロ成分（輝度）の差</strong>を計算し、
+その差が<strong>閾値30</strong>を超える場合は、画素を赤色に設定します。</p>
+
+<p>課題が完成したら、作成したスケッチを<strong>ZIPアーカイブ</strong>形式で保存します。
+ZIPアーカイブを作成するには、メニューから[ツール]-[スケッチをアーカイブ]をクリックして、「スケッチを名前を付けてアーカイブする」を開きます。
+保存するファイル名を確認した上で、[保存]をクリックします。
+保存先に「Project10-日付a.zip」というファイルが作成されていることを確認してください。</p>
+
+<script src="https://gist.github.com/naoto-github/c42a1c7a563b8a70f9706bf6f01626fc.js"> </script>
+
+<p><a href="https://gyazo.com/2f4b6156a8f70a7c41c114c003999b9c"><img src="https://i.gyazo.com/2f4b6156a8f70a7c41c114c003999b9c.gif" alt="https://gyazo.com/2f4b6156a8f70a7c41c114c003999b9c" /></a></p>
+
+<h3>参考書籍</h3>
+
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=F8F8F8&amp;IS2=1&amp;nou=1&amp;bg1=F8F8F8&amp;fc1=000000&amp;lc1=0000FF&amp;t=naotoassociat-22&amp;o=9&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;ref=tf_til&amp;asins=4873115159" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&amp;bc1=F8F8F8&amp;IS2=1&amp;nou=1&amp;bg1=F8F8F8&amp;fc1=000000&amp;lc1=0000FF&amp;t=naotoassociat-22&amp;o=9&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;ref=tf_til&amp;asins=4877832939" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+<!-- <ul>
+    <li>Casey Reas、Ben Fry(2011)『Processingをはじめよう』オライリー・ジャパン </li>
+    <li>谷尻かおり(2012)『Processingによる画像処理とグラフィックス』カットシステム </li>
+</ul> -->
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <!-- Google Adsence -->
+<div style="border-top: 2px solid black">
+    <div class="wrapper">
+        <h3>スポンサーリンク</h3>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- フッター（モバイル） -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:320px;height:100px"
+             data-ad-client="ca-pub-1652300955422837"
+             data-ad-slot="6854507108"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</div>
+
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">
+        <!-- <div style="margin-bottom:0px"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></div>
+        <div class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+    </h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <!-- <li>M's Lab. （えむらぼ）</li> -->
+          <!-- <li><a href="mailto:nmukai@sugiyama-u.ac.jp">nmukai@sugiyama-u.ac.jp</a></li> -->
+          <li style="margin-bottom:5px">
+              <!-- Facebook Button -->
+<!-- <div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/programming_1/chapter10.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+
+<!-- Twitter Button -->
+<div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    <a href="https://twitter.com/nmukai1978" class="twitter-follow-button" data-show-count="false">Follow @nmukai1978</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</div>
+
+              <!-- <div class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+              <div><a href="https://twitter.com/share" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div> -->
+          </li>
+          <!-- <li><div><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></div></li> -->
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/naoto-github"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">naoto-github</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/nmukai1978"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">nmukai1978</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/nmukai1978"><span class="icon icon--facebook"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300px" height="300px" viewBox="0 0 300 300">
+	<defs>
+		<style>
+			.fill {fill: #3b5998;}
+		</style>
+	</defs>
+	<path class="fill" d="M283.000,-0.000 C283.000,-0.000 17.000,-0.000 17.000,-0.000 C7.853,-0.000 -0.000,7.854 -0.000,17.000 C-0.000,17.000 -0.000,283.000 -0.000,283.000 
+			 C-0.000,292.144 7.853,300.000 17.000,300.000 C17.000,300.000 161.000,300.000 161.000,300.000 C161.000,300.000 161.000,183.000 161.000,183.000 
+			 C161.000,183.000 121.000,183.000 121.000,183.000 C121.000,183.000 121.000,139.000 121.000,139.000 C121.000,139.000 161.000,139.000 161.000,139.000 
+			 C161.000,139.000 161.000,105.000 161.000,105.000 C161.000,66.251 183.432,45.000 218.000,45.000 C234.558,45.000 249.852,46.449 254.000,47.000 
+			 C254.000,47.000 254.000,88.000 254.000,88.000 C254.000,88.000 229.000,88.000 229.000,88.000 C210.201,88.000 207.000,96.891 207.000,110.000 
+			 C207.000,110.000 207.000,139.000 207.000,139.000 C207.000,139.000 252.000,139.000 252.000,139.000 C252.000,139.000 246.000,183.000 246.000,183.000 
+			 C246.000,183.000 207.000,183.000 207.000,183.000 C207.000,183.000 207.000,300.000 207.000,300.000 C207.000,300.000 283.000,300.000 283.000,300.000 
+			 C292.144,300.000 300.000,292.144 300.000,283.000 C300.000,283.000 300.000,17.000 300.000,17.000 C300.000,7.854 292.144,-0.000 283.000,-0.000 Z"/>
+</svg>
+</span><span class="username">nmukai1978</span></a>
+
+          </li>
+          
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

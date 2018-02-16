@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>平均と分散</title>
+  <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- <link rel="stylesheet" href="/css/style.css"> -->
+  <link rel="canonical" href="http://mukai-lab.info//class/advanced_studies_seminar_2/chapter4.html">
+  <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://mukai-lab.info//feed.xml">
+
+  <!-- Faviconの実装 -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/favicon/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/favicon/favicon-48x48.png" sizes="48x48">
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32">
+  <link rel="manifest" href="favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#2d88ef">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+  <!-- Mathjax -->
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+
+  <!-- Slick.js -->
+  <link rel="stylesheet" href="/css/slick.css">
+  <link rel="stylesheet" href="/css/slick-theme.css">
+  <script src="/js/slick.min.js"></script>
+
+  <!-- My Style -->
+  <link rel="stylesheet" href="/css/mystyle.css">
+
+  <!-- OGP -->
+  
+  <meta property="og:image" content="https://i.gyazo.com/ed7170a7db899f62befa0559d7d8f834.png">
+  
+</head>
+
+<!-- Facebookいいねボタンの実装 -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Twitterボタンの実装 -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<!-- Google Adsense ページ単位の広告 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1652300955422837",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <!-- <a class="site-title" href="/">M's Lab. （えむらぼ）</a> -->
+    <a class="site-title" href="/">
+        <img src="/favicon/favicon.png" height="50px" style="margin-bottom:10px;margin-right:2px">
+        <span style="color:#00606D;font-weight:bold">M</span>'s Lab.
+        <!-- <img src="/img/Top.png" style="margin-bottom:10px;margin-left:10px"> -->
+    </a>
+
+    <nav class="site-nav">
+
+      <!-- <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a> -->
+
+      <div class="trigger">
+        <a class="page-link" href="/">Top</a>
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+                <a class="page-link" href="/class.html">担当科目</a>
+            
+          
+        
+          
+            
+          
+        
+          
+            
+                <a class="page-link" href="/contents.html">コンテンツ</a>
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+                <a class="page-link" href="/profile.html">登場キャラ</a>
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-77390013-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post">
+
+  <meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@site_username">
+<meta name="twitter:creator" content="@creator_username">
+
+
+  <meta name="twitter:title" content="平均と分散">
+
+
+
+  <meta name="twitter:url" content="http://mukai-lab.info//class/advanced_studies_seminar_2/chapter4.html">
+
+
+
+  <meta name="twitter:description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
+
+
+
+  <meta name="twitter:image:src" content="https://i.gyazo.com/ed7170a7db899f62befa0559d7d8f834.png">
+
+
+
+  <header class="post-header">
+    <h1 class="post-title">平均と分散</h1>
+    <!-- Facebook Button -->
+<!-- <div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/advanced_studies_seminar_2/chapter4.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+
+<!-- Twitter Button -->
+<div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    <a href="https://twitter.com/nmukai1978" class="twitter-follow-button" data-show-count="false">Follow @nmukai1978</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</div>
+
+    <!-- <div class="fb-like" data-href="http://naoto-github.github.io//class/advanced_studies_seminar_2/chapter4.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+  </header>
+
+  <div class="post-content">
+    <p><a href="https://gyazo.com/ed7170a7db899f62befa0559d7d8f834"><img src="https://i.gyazo.com/ed7170a7db899f62befa0559d7d8f834.png" alt="https://gyazo.com/ed7170a7db899f62befa0559d7d8f834" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />基本統計量</h1>
+
+<p><strong>統計量</strong>とは、観測したデータそのものではなく、それらのデータの特徴を代表的に表す値のことを表します。
+そのなかでも、<strong>基本統計量</strong> は、<strong>平均</strong>、<strong>中央値</strong>、<strong>分散</strong>、<strong>標準偏差</strong> などを指し、
+データの特徴を把握するための基本的な指標となります。
+今回は、これら基本統計量を、公式や関数を利用して計算してみましょう。
+対象のデータとして<a href="score.csv">成績のデータ（CSV形式）</a>を使用します。
+このデータは15人の生徒の国語、算数、理科、英語、社会の得点で構成されています。</p>
+
+<script src="https://gist.github.com/naoto-github/74c0bb69025aaa3afb44b8ef53df0c6b.js"> </script>
+
+<p>ファイルをダウンロードしたら、<strong>read.csv</strong>関数を利用して、
+変数scoreにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>score &lt;- read.csv("score.csv")
+</code></pre>
+</div>
+
+<p>変数scoreの出力は下記のようになります。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; score
+        氏名 国語 算数 理科 英語 社会
+1  青木 達也   60   68   72   39   71
+2  石井 健二   65   78   82   37   75
+3  北村 真子   84   59   85   87   84
+4  河野 尚子   50   65   65   39   78
+5    高木 健   72   74   83   30   83
+6  西川 知里   50   29   67   62   72
+7  福島 萌子   84   40   65   86   66
+8  古川 翔太   78   71   82   34   88
+9  山内 香菜   77   33   65   73   88
+10 渡辺 太郎   76   53   75   60   71
+11   浅野 渉   68   46   77   66   86
+12   星野 弘   61   27   74   70   67
+13   中谷 章   86   57   72   73   65
+14 小泉 美沙   68   48   73   51   68
+15 木下 萌子   78   90  100   53   79
+</code></pre>
+</div>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />スクリプトの作成</h1>
+
+<p>コードを入力し保存するための<strong>スクリプト</strong>を作成しましょう。
+[ファイル]-[新しいスクリプト]をクリックし、<strong>Rエディタ</strong>を表示します。
+次に、[ファイル]-[保存]をクリックして、スクリプトを保存します。
+このとき、ファイル名は<strong>chapter4</strong>としてください。
+また、ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />合計</h1>
+
+<p>基本統計量の前に<strong>合計</strong>を計算してみましょう。
+例えば、国語の合計は、演算子<strong>+</strong>を利用して、次のように記述することができます。
+ここで、nは要素の数を表しています。</p>
+
+<p style="text-align:center">
+    <script type="math/tex">x_1 + x_2 + \cdots + x_n = 60 + 65 + \cdots + 78</script>
+</p>
+
+<p>R言語では、もっと簡単に、<strong>sum</strong>という関数で合計を求めることができます。
+国語の得点はデータフレームの2列目にあるため<strong>score[,2]</strong>と表記します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; score[,2]
+ [1] 60 65 84 50 72 50 84 78 77 76 68 61 86 68 78
+&gt; sum(score[,2])
+[1] 1057
+</code></pre>
+</div>
+
+<p>国語の合計は1057になることが分かります。
+同様に、算数の合計も計算してみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; score[,3]
+ [1] 68 78 59 65 74 29 40 71 33 53 46 27 57 48 90
+&gt; sum(score[,3])
+[1] 838
+</code></pre>
+</div>
+
+<p>算数の合計は838になります。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />平均</h1>
+
+<p>それでは、最も有名な基本統計量である<strong>平均</strong>を計算してみましょう。
+例えば、国語の平均を求めるには、次のように記述することができます。</p>
+
+<p style="text-align:center">
+    <script type="math/tex">\mu = \frac{x_1 + x_2 + \cdots + x_n}{n} =\frac{ 60 + 65 + \cdots + 78}{15}</script>
+</p>
+
+<p>まずは、先ほどの<strong>sum</strong>関数を利用して、国語の平均を計算してみましょう。
+ここで、<strong>length</strong>関数はベクトルの長さを表します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; sum(score[,2])/length(score[,2])
+[1] 70.46667
+</code></pre>
+</div>
+
+<p>国語の平均は約70.5になることが分かります。
+R言語では、<strong>mean</strong>という関数で平均を求めることができます。
+ちなみに、Excelでは<strong>average</strong>という関数が利用されます。
+今度は関数を利用して計算してみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; mean(score[,2])
+[1] 70.46667
+</code></pre>
+</div>
+
+<p>先程、求めた値と同じであることが確認できます。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-4"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />中央値</h1>
+
+<p>平均とよく似た基本統計量として、<strong>中央値</strong>があります。
+中央値は、データを小さい順（大きい順でも構わない）から並べたときに、ちょうど中央にある値のことを指します。
+例えば、[1,2,3,4,5]の中央値は、<strong>3</strong>になります。
+また、[1,2,3,4,5,6]など値が偶数個の場合は、<strong>(3+4/2)=3.5</strong>が中央値です。</p>
+
+<p>R言語では、<strong>median</strong>という関数で中央値を求めることができます。
+国語の中央値を計算してみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; median(score[,2])
+[1] 72
+</code></pre>
+</div>
+
+<p>国語の中央値は72であることが分かります。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-5"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />分散</h1>
+
+<p>平均や中央値は、データの代表値であり、分布の中心位置を示しています（中心の考え方によるけど）。
+データの傾向を把握するには、上記に加えて<strong>散布度</strong>を知る必要があります。
+<strong>散布度</strong>とは、データの散らばり度合のことを意味しており、
+平均値や中央値からどれだけ離れているかを示した値です。</p>
+
+<p>まずは、<strong>分散</strong>を考えましょう。
+分散は、各データの値から平均を引いた値（<strong>偏差</strong>）の2乗の和であり、下記のように記述することができます。
+分散は<strong>2乗の和</strong>であるため、常に正の値となることに注意してください。</p>
+
+<p style="text-align:center">
+    <script type="math/tex">\sigma^2 = \frac{(x_1 - \mu)^2 + (x_2 - \mu)^2 + \cdots + (x_n - \mu)^2}{n} =\frac{ (60 - 70.5)^2 + (65 - 70.5)^2 + \cdots + (78 - 70.5)^2}{15}</script>
+</p>
+
+<p>まずは、これまでに学習した<strong>sum</strong>関数と<strong>mean</strong>関数を利用して、国語の分散を計算してみましょう。
+スクリプトに下記を入力して、スクリプトを読み込み実行してください。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#スコアの読込
+score &lt;- read.csv("score.csv")
+
+#偏差を計算
+hensa &lt;- score[,2] - mean(score[,2])
+
+#分散を計算
+bunsan &lt;- sum(hensa^2 / length(score[,2]))
+</code></pre>
+</div>
+
+<p>では、偏差と分散の値を確認してみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; source("chapter4.R")
+&gt; hensa
+ [1] -10.466667  -5.466667  13.533333 -20.466667   1.533333 -20.466667
+ [7]  13.533333   7.533333   6.533333   5.533333  -2.466667  -9.466667
+[13]  15.533333  -2.466667   7.533333
+&gt; bunsan
+[1] 125.0489
+</code></pre>
+</div>
+
+<p>国語の分散は約125になりました。</p>
+
+<p>R言語では、<strong>var</strong>という関数で分散を求めることができます。
+今度は、<strong>var</strong>関数で国語の分散を計算してみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; var(score[,2])
+[1] 133.981
+</code></pre>
+</div>
+
+<p>同じ値になると思いきや、なんと先程とは異なる結果となりました。
+実は、先に計算した値は<strong>標本分散</strong>と呼ばれ、
+データの全ての値が（もしくは、ほぼ全て）分かっているときに用いられ、
+データの一部（サンプル）しか分からない場合は、真の分散より小さな値となります。
+そこで、用いられるのが<strong>不偏分散</strong>であり、下記のように分母を<strong>n-1</strong>で割って求めます。</p>
+
+<p style="text-align:center">
+    <script type="math/tex">\sigma^2 = \frac{(x_1 - \mu)^2 + (x_2 - \mu)^2 + \cdots + (x_n - \mu)^2}{n-1} =\frac{ (60 - 70.5)^2 + (65 - 70.5)^2 + \cdots + (78 - 70.5)^2}{14}</script>
+</p>
+
+<p>では、スクリプトを修正して、再度、分散を計算してみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#分散を計算
+bunsan &lt;- sum(hensa^2 / (length(score[,2])-1))
+
+&gt; bunsan
+[1] 133.981
+</code></pre>
+</div>
+
+<p>国語の分散は約134となり、<strong>var</strong>関数の値と一致しました。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-6"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />標準偏差</h1>
+
+<p>最後に、<strong>標準偏差</strong>を計算しましょう。
+<strong>標準偏差</strong>は、分散の値の平方根をとった値です。</p>
+
+<p style="text-align:center">
+    <script type="math/tex">\sigma = \sqrt{\frac{(x_1 - \mu)^2 + (x_2 - \mu)^2 + \cdots + (x_n - \mu)^2}{n-1}} =\sqrt{\frac{ (60 - 70.5)^2 + (65 - 70.5)^2 + \cdots + (78 - 70.5)^2}{14}}</script>
+</p>
+
+<p>国語の<strong>標準偏差</strong>を計算するために、
+スクリプトに下記を入力して、スクリプトを読み込み実行してください。
+平方根を取るには<strong>sqrt</strong>関数を利用します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#標準偏差
+hyojyun_hensa &lt;- sqrt(bunsan)
+</code></pre>
+</div>
+
+<p>では、標準偏差を確認してみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; hyojyun_hensa
+[1] 11.57501
+</code></pre>
+</div>
+
+<p>標準偏差は約11.6になりますね。
+R言語では、<strong>sd</strong>という関数で、標準偏差を計算できます。
+今度は、<strong>sd</strong>関数で標準偏差を計算してみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; sd(score[,2])
+[1] 11.57501
+</code></pre>
+</div>
+
+<p>先程の値と一致することが分かります。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-7"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+
+<p>関数を利用して、数学の<strong>合計</strong>、<strong>平均</strong>、<strong>中央値</strong>、<strong>分散</strong>、<strong>標準偏差</strong>を計算して出力してください。
+ソースは<strong>chapter4.R</strong>に記述し、<strong>chapter4.R</strong> を提出すること。</p>
+
+<h3>参考書籍</h3>
+
+<!--
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=484433638X" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4844336770" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877833765" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877833889" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+-->
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&amp;t=naotoassociat-22&amp;m=amazon&amp;o=9&amp;p=8&amp;l=as1&amp;IS2=1&amp;detail=1&amp;asins=4274067106&amp;linkId=93d694711dbe1bcddf54d4dbceaa6634&amp;bc1=F8F8F8&amp;lt1=_blank&amp;fc1=333333&amp;lc1=0066C0&amp;bg1=F8F8F8&amp;f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&amp;t=naotoassociat-22&amp;m=amazon&amp;o=9&amp;p=8&amp;l=as1&amp;IS2=1&amp;detail=1&amp;asins=4863542011&amp;linkId=92f9b82cf210ae3681f8c607eae4ac8a&amp;bc1=F8F8F8&amp;lt1=_blank&amp;fc1=333333&amp;lc1=0066c0&amp;bg1=F8F8F8&amp;f=ifr"></iframe>
+
+<!--
+<ul>
+    <li>中山清喬(2014)『スッキリわかるJava入門 入門編 第2版』インプレス </li>
+    <li>中山清喬(2014)『スッキリわかるJava入門 実践編 第2版』インプレス </li>
+    <li>日向俊二(2015)『JavaFX & Java8 プログラミング Javaによる新しいGUI プログラミング入門』カットシステム</li>
+</ul>
+-->
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <!-- Google Adsence -->
+<div style="border-top: 2px solid black">
+    <div class="wrapper">
+        <h3>スポンサーリンク</h3>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- フッター（モバイル） -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:320px;height:100px"
+             data-ad-client="ca-pub-1652300955422837"
+             data-ad-slot="6854507108"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</div>
+
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">
+        <!-- <div style="margin-bottom:0px"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></div>
+        <div class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+    </h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <!-- <li>M's Lab. （えむらぼ）</li> -->
+          <!-- <li><a href="mailto:nmukai@sugiyama-u.ac.jp">nmukai@sugiyama-u.ac.jp</a></li> -->
+          <li style="margin-bottom:5px">
+              <!-- Facebook Button -->
+<!-- <div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/advanced_studies_seminar_2/chapter4.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+
+<!-- Twitter Button -->
+<div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    <a href="https://twitter.com/nmukai1978" class="twitter-follow-button" data-show-count="false">Follow @nmukai1978</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</div>
+
+              <!-- <div class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+              <div><a href="https://twitter.com/share" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div> -->
+          </li>
+          <!-- <li><div><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></div></li> -->
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/naoto-github"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">naoto-github</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/nmukai1978"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">nmukai1978</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/nmukai1978"><span class="icon icon--facebook"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300px" height="300px" viewBox="0 0 300 300">
+	<defs>
+		<style>
+			.fill {fill: #3b5998;}
+		</style>
+	</defs>
+	<path class="fill" d="M283.000,-0.000 C283.000,-0.000 17.000,-0.000 17.000,-0.000 C7.853,-0.000 -0.000,7.854 -0.000,17.000 C-0.000,17.000 -0.000,283.000 -0.000,283.000 
+			 C-0.000,292.144 7.853,300.000 17.000,300.000 C17.000,300.000 161.000,300.000 161.000,300.000 C161.000,300.000 161.000,183.000 161.000,183.000 
+			 C161.000,183.000 121.000,183.000 121.000,183.000 C121.000,183.000 121.000,139.000 121.000,139.000 C121.000,139.000 161.000,139.000 161.000,139.000 
+			 C161.000,139.000 161.000,105.000 161.000,105.000 C161.000,66.251 183.432,45.000 218.000,45.000 C234.558,45.000 249.852,46.449 254.000,47.000 
+			 C254.000,47.000 254.000,88.000 254.000,88.000 C254.000,88.000 229.000,88.000 229.000,88.000 C210.201,88.000 207.000,96.891 207.000,110.000 
+			 C207.000,110.000 207.000,139.000 207.000,139.000 C207.000,139.000 252.000,139.000 252.000,139.000 C252.000,139.000 246.000,183.000 246.000,183.000 
+			 C246.000,183.000 207.000,183.000 207.000,183.000 C207.000,183.000 207.000,300.000 207.000,300.000 C207.000,300.000 283.000,300.000 283.000,300.000 
+			 C292.144,300.000 300.000,292.144 300.000,283.000 C300.000,283.000 300.000,17.000 300.000,17.000 C300.000,7.854 292.144,-0.000 283.000,-0.000 Z"/>
+</svg>
+</span><span class="username">nmukai1978</span></a>
+
+          </li>
+          
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

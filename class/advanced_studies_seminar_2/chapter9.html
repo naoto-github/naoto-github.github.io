@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>標準正規分布を用いた検定</title>
+  <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <!-- <link rel="stylesheet" href="/css/style.css"> -->
+  <link rel="canonical" href="http://mukai-lab.info//class/advanced_studies_seminar_2/chapter9.html">
+  <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://mukai-lab.info//feed.xml">
+
+  <!-- Faviconの実装 -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/favicon/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/favicon/favicon-48x48.png" sizes="48x48">
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/favicon/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/favicon/favicon-32x32.png" sizes="32x32">
+  <link rel="manifest" href="favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#2d88ef">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+  <!-- Mathjax -->
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+
+  <!-- Slick.js -->
+  <link rel="stylesheet" href="/css/slick.css">
+  <link rel="stylesheet" href="/css/slick-theme.css">
+  <script src="/js/slick.min.js"></script>
+
+  <!-- My Style -->
+  <link rel="stylesheet" href="/css/mystyle.css">
+
+  <!-- OGP -->
+  
+  <meta property="og:image" content="https://i.gyazo.com/bd7321b2a514a99661b8d6b725d59671.png">
+  
+</head>
+
+<!-- Facebookいいねボタンの実装 -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Twitterボタンの実装 -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<!-- Google Adsense ページ単位の広告 -->
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-1652300955422837",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <!-- <a class="site-title" href="/">M's Lab. （えむらぼ）</a> -->
+    <a class="site-title" href="/">
+        <img src="/favicon/favicon.png" height="50px" style="margin-bottom:10px;margin-right:2px">
+        <span style="color:#00606D;font-weight:bold">M</span>'s Lab.
+        <!-- <img src="/img/Top.png" style="margin-bottom:10px;margin-left:10px"> -->
+    </a>
+
+    <nav class="site-nav">
+
+      <!-- <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a> -->
+
+      <div class="trigger">
+        <a class="page-link" href="/">Top</a>
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+                <a class="page-link" href="/class.html">担当科目</a>
+            
+          
+        
+          
+            
+          
+        
+          
+            
+                <a class="page-link" href="/contents.html">コンテンツ</a>
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+                <a class="page-link" href="/profile.html">登場キャラ</a>
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-77390013-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post">
+
+  <meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@site_username">
+<meta name="twitter:creator" content="@creator_username">
+
+
+  <meta name="twitter:title" content="標準正規分布を用いた検定">
+
+
+
+  <meta name="twitter:url" content="http://mukai-lab.info//class/advanced_studies_seminar_2/chapter9.html">
+
+
+
+  <meta name="twitter:description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
+
+
+
+  <meta name="twitter:image:src" content="https://i.gyazo.com/bd7321b2a514a99661b8d6b725d59671.png">
+
+
+
+  <header class="post-header">
+    <h1 class="post-title">標準正規分布を用いた検定</h1>
+    <!-- Facebook Button -->
+<!-- <div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/advanced_studies_seminar_2/chapter9.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+
+<!-- Twitter Button -->
+<div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    <a href="https://twitter.com/nmukai1978" class="twitter-follow-button" data-show-count="false">Follow @nmukai1978</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</div>
+
+    <!-- <div class="fb-like" data-href="http://naoto-github.github.io//class/advanced_studies_seminar_2/chapter9.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+  </header>
+
+  <div class="post-content">
+    <p><a href="https://gyazo.com/bd7321b2a514a99661b8d6b725d59671"><img src="https://i.gyazo.com/bd7321b2a514a99661b8d6b725d59671.png" alt="https://gyazo.com/bd7321b2a514a99661b8d6b725d59671" /></a></p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />検定とは</h1>
+
+<p><strong>検定</strong>とは「標本から推定された母数が、確率的に正しいかどうか」を判断することを意味します。
+検定は、<strong>統計的仮説検定</strong>とも呼ばれ、推測統計でも利用頻度の高い重要なテクニックです。
+検定を行うための手順は下記のようになります。</p>
+
+<p>1．母数に関する<strong>帰無仮説</strong>と<strong>対立仮説</strong>を立てる。<br />
+2. <strong>検定統計量</strong>を選択する。<br />
+3. <strong>信頼区間（棄却域）</strong>を決める。<br />
+4. 標本から検定統計量を計算する。<br />
+5. 検定統計量が棄却域に含まれれば、帰無仮説を<strong>棄却</strong>して、対立仮説を<strong>採用</strong>する。棄却域に含まれなければ、帰無仮説を<strong>採択</strong>する。</p>
+
+<p>難しい単語がたくさん出てきましたが、これは追々説明していきます。
+ここでは、母集団が正規分布であり、母平均、母分散が既知であるときに適用可能な<strong>標準正規分布を用いた検定</strong>を考えます。
+この、<strong>標準正規分布を用いた検定</strong> は <strong>Z検定</strong> とも呼ばれます。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />スクリプトの作成</h1>
+
+<p>コードを入力し保存するための<strong>スクリプト</strong>を作成しましょう。
+[ファイル]-[新しいスクリプト]をクリックし、<strong>Rエディタ</strong>を表示します。
+次に、[ファイル]-[保存]をクリックして、スクリプトを保存します。
+このとき、ファイル名は<strong>chapter9</strong>としてください。
+また、ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />検定の目的</h1>
+
+<p>まずは下記の具体例を考えていきましょう。</p>
+
+<div style="border:1px solid black;margin-bottom:5px">
+
+文化情報学部の学生<script type="math/tex">X</script>に情報数学に関するテストを行ったところ、
+その得点の平均<script type="math/tex">\hat{\mu}</script>は60、
+分散<script type="math/tex">\hat{\sigma}^2</script>は100であった。
+このうち、向研究室に所属する5人の学生<script type="math/tex">x</script>の得点は下記であった。
+向研究室に所属する学生<script type="math/tex">x</script>は、
+文化情報学部の学生<script type="math/tex">X</script>と、
+同様の傾向があるか（母集団からランダムサンプリングした学生だろうか）。
+    
+<p style="text-align:center;">
+    <script type="math/tex">
+        x = \{63,75,72,67,71\}
+    </script>
+</p>
+
+</div>
+
+<p>母集団は「文化情報学部の学生<script type="math/tex">X</script>」、
+標本は「向研究室に所属する学生<script type="math/tex">x</script>」と考えることができます。
+また、「標本平均の分布」を<script type="math/tex">m</script>とします。
+いずれも正規分布に従うと仮定すると、母集団の分布と、標本平均の分布は下記のようになります。</p>
+
+<p style="text-align:center">
+    <script type="math/tex">
+    X \sim N(60,100)
+    </script>
+</p>
+
+<p style="text-align:center">
+    <script type="math/tex">
+    m \sim N(60,100/5) = N(60,20)
+    </script>
+</p>
+
+<p>ここで、標本の平均を求めてみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>x &lt;- c(63,75,72,67,71)
+&gt; mean(x)
+[1] 69.6
+</code></pre>
+</div>
+
+<p>標本平均は69.6点とかなり高得点です。
+これは、どのくらい珍しいことなのでしょうか。
+標本平均の分布のグラフで確認してみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; curve(dnorm(x,60,sqrt(20)),from=30,to=90) 
+</code></pre>
+</div>
+
+<p><a href="https://gyazo.com/2b42b5e10118f35bd5188e237eaca866"><img src="https://i.gyazo.com/2b42b5e10118f35bd5188e237eaca866.png" alt="https://gyazo.com/2b42b5e10118f35bd5188e237eaca866" /></a></p>
+
+<p>グラフを確認すると、標本平均が69.6点以上になる確率は、非常に低いことが分かります。
+<strong>pnorm</strong>関数を利用して、標本平均が69.6点以上になる確率を計算してみましょう。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; 1-pnorm(69.6,60,sqrt(20))
+[1] 0.01591156
+</code></pre>
+</div>
+
+<p>よって、母集団からランダムサンプリングで抽出した標本の
+平均が69.6点以上になる確率は <strong>約1.6%</strong> という結果になりました。
+これは、「向研究室の学生は母集団とは異なる傾向を持っている」ということを意味します。
+ようするに凄く優秀な学生が向研究室に集まっているということです（本当にこうなるといいなぁ）。</p>
+
+<p>上記が検定の基本的な考え方です。
+ここでは、検定に平均60、分散20の正規分布を利用しましたが、
+平均0、分散1の標準正規分布を用いるのが <strong>Z検定</strong> です。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25pngz"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />Z検定</h1>
+
+<p>上記の問題を <strong>Z検定</strong> で考えていきましょう。
+まずは、<strong>帰無仮説</strong> と <strong>対立仮説</strong> を立てます。</p>
+
+<ul>
+  <li>帰無仮説：標本（向研究室に所属する学生）の母平均<script type="math/tex">\hat{\mu}</script>は60である</li>
+  <li>対立仮説：標本（向研究室に所属する学生）の母平均<script type="math/tex">\hat{\mu}</script>は60ではない</li>
+</ul>
+
+<p>対立仮説が証明したい仮説であり、帰無仮説は本来証明したいことと逆の仮説になります。
+ここで、帰無仮説を正しいとすると、ありえない事象が起こっているとすれば、
+帰無仮説は<strong>棄却</strong>され、対立仮説が<strong>採択</strong>されることになります。</p>
+
+<p>次に、<strong>検定統計量</strong> を選択しますが、
+ここではZ検定の検定統計量である<strong>Zスコア</strong>を利用します。
+Zスコアに関しては、後程、詳しく説明します。</p>
+
+<p>次に、<strong>信頼度(棄却域)</strong> を定めます。
+これは、どの程度低い確率で事象が起こっていれば、帰無仮説を棄却するかを示す値です。
+一般的には、「<strong>95%信頼度（5%棄却域）</strong>」、「<strong>99%信頼度（1%棄却域）</strong>」が用いられます。
+ここでは、「95%信頼度（5%棄却域）」を用いることにしましょう。</p>
+
+<p>それでは、検定統計量であるZスコアを計算してみましょう。
+Zスコアは下記の式で求めます。
+この式は対象の分布を標準化しているにすぎません。
+標準化とは<strong>平均を0</strong>、<strong>分散（標準偏差）を1</strong>にすることを意味します。</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        Z = \frac{\mu - \hat{\mu}}{\sigma}
+    </script>
+</p>
+
+<ul>
+  <li>標本平均<script type="math/tex">\mu=69.6</script></li>
+  <li>標本平均の標準偏差<script type="math/tex">\sigma=\sqrt{20}</script></li>
+  <li>母集団の平均<script type="math/tex">\hat{\mu}=60</script></li>
+</ul>
+
+<p>このとき、標本平均の標準偏差<script type="math/tex">\sigma</script>は
+下記の式で求められることに注意してください。</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        \sigma = \sqrt{ \hat{\sigma}^2 / n }
+    </script>
+</p>
+
+<ul>
+  <li>母集団の標準偏差<script type="math/tex">\hat{\sigma}=10</script></li>
+  <li>標本のサンプル数<script type="math/tex">n=5</script></li>
+</ul>
+
+<p>上記の式を基にZスコアを計算します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; z &lt;- (69.6 - 60)/ sqrt(20)
+&gt; z
+[1] 2.146625
+</code></pre>
+</div>
+
+<p>Zスコアは<strong>2.14</strong>という結果になりました。
+標準正規分布を利用して、このZスコアが棄却域に含まれるかを確認しましょう。
+ここでは、5%棄却域を採用するため、<strong>下側確率</strong> が<strong>0.025</strong>、
+<strong>上側確率</strong> が <strong>0.975</strong>となるZスコアを探します。
+Zスコア（標準正規分布のパーセント点）を求めるには<strong>qnorm</strong>関数を利用します。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt; qnorm(0.025,0,1)
+[1] -1.959964
+&gt; qnorm(0.975,0,1)
+[1] 1.959964
+</code></pre>
+</div>
+
+<p>上記より、<strong>z&lt;-1.96</strong>、また、<strong>z&gt;1.96</strong> となる確率は5%ということが分かります。
+これは、下図の左端と右端のグレーの範囲を表しています。</p>
+
+<p><a href="https://gyazo.com/6291dddb4d5a907e64949ff532440735"><img src="https://i.gyazo.com/6291dddb4d5a907e64949ff532440735.png" alt="https://gyazo.com/6291dddb4d5a907e64949ff532440735" /></a></p>
+
+<p>今回の標本のZスコアは<strong>2.14</strong>だったため、棄却域に含まれ、その確率は5%以下であるということが分かります。
+よって、帰無仮説（向研究室に所属する学生の母平均は60である）は棄却され、
+対立仮説（向研究室に所属する学生の母平均は60ではない）が採択されます。
+結果として、先程と同様に、「向研究室の学生は母集団とは異なる傾向を持っている（母集団からランダムサンプリングした標本ではない）」という結論が導かれます。
+また、このときの母平均<script type="math/tex">\mu</script>の95％信頼度の信頼区間は、下記のように求めることができます。</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        -1.96 < \frac{69.6 - \mu}{\sqrt{20}} < 1.96 = 60.83 < \mu < 78.36 
+    </script>
+</p>
+
+<p>これは、「真の母集団から標本を抽出すると、95%の確率で信頼区間（今回は63.81～75.38）に、<strong>真の母平均</strong> が含まれる」ということを意味しています。
+帰無仮説が棄却されたことから、標本は<script type="math/tex">\hat{\mu} \neq 60</script>の真の母集団から抽出されたはずです。
+つまり、「この真の母集団の平均（母平均）が、この信頼区間にあるだろう」という意味です。
+よく分かりませんよね。
+詳しくは滋賀大学の<a href="http://www.biwako.shiga-u.ac.jp/sensei/mnaka/ut/confidenceinterval.html">中川雅央先生の解説</a>を確認しましょう。</p>
+
+<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+
+<p>向研究室の学生の得点が{65,55,52,45,51}だったときの<strong>Zスコア</strong>を求めなさい。
+また、<strong>検定</strong>を用いて、「95%信頼度（5%棄却域）」のときに、
+「帰無仮説：標本の母平均<script type="math/tex">\hat{\mu}</script>は60である」は棄却されるか調べ、そのときの母平均の信頼区間も求めなさい。
+ソースは<strong>chapter9.R</strong>に記述して提出すること。</p>
+
+<h3>参考書籍</h3>
+
+<!--
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=484433638X" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4844336770" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877833765" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877833889" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+-->
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&amp;t=naotoassociat-22&amp;m=amazon&amp;o=9&amp;p=8&amp;l=as1&amp;IS2=1&amp;detail=1&amp;asins=4274067106&amp;linkId=93d694711dbe1bcddf54d4dbceaa6634&amp;bc1=F8F8F8&amp;lt1=_blank&amp;fc1=333333&amp;lc1=0066C0&amp;bg1=F8F8F8&amp;f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&amp;t=naotoassociat-22&amp;m=amazon&amp;o=9&amp;p=8&amp;l=as1&amp;IS2=1&amp;detail=1&amp;asins=4863542011&amp;linkId=92f9b82cf210ae3681f8c607eae4ac8a&amp;bc1=F8F8F8&amp;lt1=_blank&amp;fc1=333333&amp;lc1=0066c0&amp;bg1=F8F8F8&amp;f=ifr"></iframe>
+
+<!--
+<ul>
+    <li>中山清喬(2014)『スッキリわかるJava入門 入門編 第2版』インプレス </li>
+    <li>中山清喬(2014)『スッキリわかるJava入門 実践編 第2版』インプレス </li>
+    <li>日向俊二(2015)『JavaFX & Java8 プログラミング Javaによる新しいGUI プログラミング入門』カットシステム</li>
+</ul>
+-->
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <!-- Google Adsence -->
+<div style="border-top: 2px solid black">
+    <div class="wrapper">
+        <h3>スポンサーリンク</h3>
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- フッター（モバイル） -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:320px;height:100px"
+             data-ad-client="ca-pub-1652300955422837"
+             data-ad-slot="6854507108"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</div>
+
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">
+        <!-- <div style="margin-bottom:0px"><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></div>
+        <div class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+    </h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <!-- <li>M's Lab. （えむらぼ）</li> -->
+          <!-- <li><a href="mailto:nmukai@sugiyama-u.ac.jp">nmukai@sugiyama-u.ac.jp</a></li> -->
+          <li style="margin-bottom:5px">
+              <!-- Facebook Button -->
+<!-- <div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/advanced_studies_seminar_2/chapter9.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+
+<!-- Twitter Button -->
+<div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    <a href="https://twitter.com/nmukai1978" class="twitter-follow-button" data-show-count="false">Follow @nmukai1978</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</div>
+
+              <!-- <div class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+              <div><a href="https://twitter.com/share" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div> -->
+          </li>
+          <!-- <li><div><a href="https://twitter.com/share" class="twitter-share-button">Tweet</a></div></li> -->
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/naoto-github"><span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">naoto-github</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/nmukai1978"><span class="icon icon--twitter"><svg viewBox="0 0 16 16"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">nmukai1978</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://www.facebook.com/nmukai1978"><span class="icon icon--facebook"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300px" height="300px" viewBox="0 0 300 300">
+	<defs>
+		<style>
+			.fill {fill: #3b5998;}
+		</style>
+	</defs>
+	<path class="fill" d="M283.000,-0.000 C283.000,-0.000 17.000,-0.000 17.000,-0.000 C7.853,-0.000 -0.000,7.854 -0.000,17.000 C-0.000,17.000 -0.000,283.000 -0.000,283.000 
+			 C-0.000,292.144 7.853,300.000 17.000,300.000 C17.000,300.000 161.000,300.000 161.000,300.000 C161.000,300.000 161.000,183.000 161.000,183.000 
+			 C161.000,183.000 121.000,183.000 121.000,183.000 C121.000,183.000 121.000,139.000 121.000,139.000 C121.000,139.000 161.000,139.000 161.000,139.000 
+			 C161.000,139.000 161.000,105.000 161.000,105.000 C161.000,66.251 183.432,45.000 218.000,45.000 C234.558,45.000 249.852,46.449 254.000,47.000 
+			 C254.000,47.000 254.000,88.000 254.000,88.000 C254.000,88.000 229.000,88.000 229.000,88.000 C210.201,88.000 207.000,96.891 207.000,110.000 
+			 C207.000,110.000 207.000,139.000 207.000,139.000 C207.000,139.000 252.000,139.000 252.000,139.000 C252.000,139.000 246.000,183.000 246.000,183.000 
+			 C246.000,183.000 207.000,183.000 207.000,183.000 C207.000,183.000 207.000,300.000 207.000,300.000 C207.000,300.000 283.000,300.000 283.000,300.000 
+			 C292.144,300.000 300.000,292.144 300.000,283.000 C300.000,283.000 300.000,17.000 300.000,17.000 C300.000,7.854 292.144,-0.000 283.000,-0.000 Z"/>
+</svg>
+</span><span class="username">nmukai1978</span></a>
+
+          </li>
+          
+
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
