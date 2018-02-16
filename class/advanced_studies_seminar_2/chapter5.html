@@ -7,12 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>相関係数</title>
-  <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
+  <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです．授業資料など技術的な情報の他，女子大教員の日常を４コマ漫画形式で公開しています．">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://mukai-lab.info//class/advanced_studies_seminar_2/chapter5.html">
-  <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://mukai-lab.info//feed.xml">
+  <link rel="canonical" href="http://localhost:4000/class/advanced_studies_seminar_2/chapter5.html">
+  <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://localhost:4000/feed.xml">
 
   <!-- Faviconの実装 -->
   <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
@@ -365,8 +365,6 @@
           
         
           
-        
-          
             
           
         
@@ -506,11 +504,11 @@
 
 
 
-  <meta name="twitter:url" content="http://mukai-lab.info//class/advanced_studies_seminar_2/chapter5.html">
+  <meta name="twitter:url" content="http://localhost:4000/class/advanced_studies_seminar_2/chapter5.html">
 
 
 
-  <meta name="twitter:description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
+  <meta name="twitter:description" content="椙山女学園大学 文化情報学部 向研究室のブログです．授業資料など技術的な情報の他，女子大教員の日常を４コマ漫画形式で公開しています．">
 
 
 
@@ -536,7 +534,7 @@
   <div class="post-content">
     <p><a href="https://gyazo.com/ed1e1e1171cb317826ed9b4ed01e75e3"><img src="https://i.gyazo.com/ed1e1e1171cb317826ed9b4ed01e75e3.png" alt="https://gyazo.com/ed1e1e1171cb317826ed9b4ed01e75e3" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />相関分析</h1>
+<h1 id="相関分析"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />相関分析</h1>
 
 <p><strong>相関分析</strong>とは、2種類のデータの関係性を測るための方法を指します。
 例えば、夏の熱い日には、アイスクリームがよく売れるとします。
@@ -550,13 +548,12 @@
 <p>ファイルをダウンロードしたら、<strong>read.csv</strong>関数を利用して、
 変数scoreにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>score &lt;- read.csv("score.csv")
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>score &lt;- read.csv("score.csv")
+</code></pre></div></div>
 
 <p>変数scoreの出力は下記のようになります。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; score
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; score
         氏名 国語 算数 理科 英語 社会
 1  青木 達也   60   68   72   39   71
 2  石井 健二   65   78   82   37   75
@@ -573,10 +570,9 @@
 13   中谷 章   86   57   72   73   65
 14 小泉 美沙   68   48   73   51   68
 15 木下 萌子   78   90  100   53   79
-</code></pre>
-</div>
+</code></pre></div></div>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-1"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />スクリプトの作成</h1>
+<h1 id="スクリプトの作成"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />スクリプトの作成</h1>
 
 <p>コードを入力し保存するための<strong>スクリプト</strong>を作成しましょう。
 [ファイル]-[新しいスクリプト]をクリックし、<strong>Rエディタ</strong>を表示します。
@@ -584,21 +580,19 @@
 このとき、ファイル名は<strong>chapter5</strong>としてください。
 また、ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます。</p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-2"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />散布図</h1>
+<h1 id="散布図"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />散布図</h1>
 
 <p>データの相関を視覚的に確認するには<strong>散布図</strong>を利用するのが最も簡単です。
 X軸に算数、Y軸に理科として、散布図を描いてみましょう。
 まずは、グラフ描画のためのライブラリである<strong>ggplot2</strong>を読み込みます。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>library(ggplot2)
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library(ggplot2)
+</code></pre></div></div>
 
 <p>次に、プロンプトで<strong>qplot</strong>関数を利用して散布図を描きます。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; qplot(算数,理科,data=score)
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; qplot(算数,理科,data=score)
+</code></pre></div></div>
 
 <p>すると下記のような散布図がプロットされます。
 算数と理科にはどのような関係があるでしょうか。
@@ -611,9 +605,8 @@ X軸に算数、Y軸に理科として、散布図を描いてみましょう。
 <p>次に、X軸に算数、Y軸に英語として、散布図を描いてみましょう。 <br />
 プロンプトで<strong>qplot</strong>関数を利用して散布図を描きます。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; qplot(算数,英語,data=score)
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; qplot(算数,英語,data=score)
+</code></pre></div></div>
 
 <p>こんどは、数学が高得点であるほど、英語は低い得点となっており、
 <strong>右下がりの傾向</strong>がありそうではないでしょうか。
@@ -624,16 +617,15 @@ X軸に算数、Y軸に理科として、散布図を描いてみましょう。
 <p>最後に、X軸に算数、Y軸に国語として、散布図を描いてみましょう。 <br />
 プロンプトで<strong>qplot</strong>関数を利用して散布図を描きます。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; qplot(算数,国語,data=score)
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; qplot(算数,国語,data=score)
+</code></pre></div></div>
 
 <p>先程と比べると、特に傾向が見当たりませんね。
 このような関係を<strong>無相関</strong>といいます。</p>
 
 <p><a href="https://gyazo.com/01d505423580138a7e3ea04d5cf6e111"><img src="https://i.gyazo.com/01d505423580138a7e3ea04d5cf6e111.png" alt="https://gyazo.com/01d505423580138a7e3ea04d5cf6e111" /></a></p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-3"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />共分散</h1>
+<h1 id="共分散"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />共分散</h1>
 
 <p>次に、データの相関を定量的に計算して求めてみましょう。
 まずは<strong>共分散</strong>という指標を用います。
@@ -654,7 +646,7 @@ X軸に算数、Y軸に理科として、散布図を描いてみましょう。
 
 <p>まずは、この式に忠実に、下記のようにスクリプトを記述して計算してみましょう。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>#算数の偏差
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#算数の偏差
 hensa_sansu = score[,3] - mean(score[,3])
 
 #理科の偏差
@@ -662,25 +654,22 @@ hensa_rika = score[,4] - mean(score[,4])
 
 #共分散
 kyo_bunsan &lt;-  sum(hensa_sansu * hensa_rika) / length(score[,3])
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>プロンプトで共分散の値を確認してみましょう。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; source("chapter5.R")
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; source("chapter5.R")
 &gt; kyo_bunsan
 [1] 119.1067
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>共分散の値は約119.1になりました。
 R言語では、<strong>cov</strong>という関数で共分散を求めることができます。
 今度は、<strong>cov</strong>関数で共分散を計算してみましょう。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; cov(score[,3],score[,4])
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; cov(score[,3],score[,4])
 [1] 127.6143
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>先程とは異なる結果になりました。
 これは、前回と同じように、<strong>標本分散</strong>と<strong>不偏分散</strong>の違いが原因です
@@ -692,27 +681,24 @@ R言語では、<strong>cov</strong>という関数で共分散を求めるこ�
     </script>
 </p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>#共分散
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#共分散
 kyo_bunsan &lt;-  sum(hensa_sansu * hensa_rika) / (length(score[,3]) - 1)
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>プロンプトで共分散の値を確認してみましょう。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; kyo_bunsan
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; kyo_bunsan
 [1] 127.6143
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>今度は共分散が約127.6となり、<strong>cov</strong>関数で求めた値と一致しました。
 同様に、算数と英語、算数と国語の共分散を計算してみましょう。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; cov(score[,3],score[,5])
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; cov(score[,3],score[,5])
 [1] -219.5238
 &gt; cov(score[,3],score[,2])
 [1] 36.49524
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>まとめると、共分散は下記のようになります。</p>
 
@@ -750,7 +736,7 @@ kyo_bunsan &lt;-  sum(hensa_sansu * hensa_rika) / (length(score[,3]) - 1)
 例えば、100点満点と200点満点の試験では、相関を比較することができません。
 そこで、次節で説明する<strong>相関係数</strong>が登場します。</p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-4"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />相関係数</h1>
+<h1 id="相関係数"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />相関係数</h1>
 
 <p>スケールに依存しない相関を計算するには、まずは<strong>相関係数</strong>を用います。
 相関係数は、先に求めた共分散を、2変数の<strong>標準偏差の積</strong>で割って求めます。
@@ -770,36 +756,32 @@ kyo_bunsan &lt;-  sum(hensa_sansu * hensa_rika) / (length(score[,3]) - 1)
 
 <p>下記のようにスクリプトを記述して計算してみましょう。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>#相関係数
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#相関係数
 soukan &lt;- kyo_bunsan / (sd(score[,3]) * sd(score[,4]))
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>プロンプトで相関係数の値を確認してみましょう。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; soukan
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; soukan
 [1] 0.7128868
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>相関係数は約0.71になります。
 R言語では、<strong>cor</strong>という関数で相関係数を求めることができます。
 今度は、<strong>cor</strong>関数で共分散を計算してみましょう。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; cor(score[,3],score[,4])
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; cor(score[,3],score[,4])
 [1] 0.7128868
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>先程の値と一致しました。
 同様に、算数と英語、算数と国語の共分散を計算してみましょう。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&gt; cor(score[,3],score[,5])
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; cor(score[,3],score[,5])
 [1] -0.6243508
 &gt; cor(score[,3],score[,2])
 [1] 0.1676487
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>まとめると、相関係数は下記のようになります。</p>
 
@@ -834,7 +816,7 @@ R言語では、<strong>cor</strong>という関数で相関係数を求める�
 算数と理科は1に近く<strong>強い正の相関</strong>、算数と英語は-1に近く<strong>負の相関</strong>、
 算数と国語は0に近く<strong>無相関</strong>ということが読み取れます。</p>
 
-<h1 id="img-stylemargin-right5pxmargin-bottom7px-srcfaviconfavicon-25x25png-5"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
+<h1 id="課題"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />課題</h1>
 
 <p>2016年度の<a href="doragons.csv">中日ドラゴンズの打撃成績のデータ（CSV形式）</a>から、
 <strong>盗塁</strong>と強い相関（相関係数が0.7以上）を示す項目を探してください
@@ -964,7 +946,7 @@ R言語では、<strong>cor</strong>という関数で相関係数を求める�
       </div>
 
       <div class="footer-col footer-col-3">
-        <p>椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。</p>
+        <p>椙山女学園大学 文化情報学部 向研究室のブログです．授業資料など技術的な情報の他，女子大教員の日常を４コマ漫画形式で公開しています．</p>
       </div>
     </div>
 

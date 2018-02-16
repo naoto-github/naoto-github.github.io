@@ -7,12 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>M&#39;s Lab. （えむらぼ）</title>
-  <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
+  <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです．授業資料など技術的な情報の他，女子大教員の日常を４コマ漫画形式で公開しています．">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://mukai-lab.info//page24/">
-  <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://mukai-lab.info//feed.xml">
+  <link rel="canonical" href="http://localhost:4000/page24/">
+  <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://localhost:4000/feed.xml">
 
   <!-- Faviconの実装 -->
   <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
@@ -365,8 +365,6 @@
           
         
           
-        
-          
             
           
         
@@ -542,6 +540,23 @@
 １年間の契約でなんと「269円（手数料込）」！
 メジャーなトップレベルドメインではないとはいえ、この安さに驚きました（普段、ドメイン取得することないからなぁ）。</p>
 
+<p>さて、ホスティングしているGithub Pagesを独自ドメインで公開する方法ですが、
+様々なサイトで詳しく情報が公開されており、検索すれば容易に発見できると思います。
+他と重複する情報とはなりますが、念のためメモしておきたいと思います。</p>
+
+<p>まずは、<a href="http://www.onamae.com/">お名前.com</a>の設定ですが、
+ドメインNaviでGithub PagesのDNSレコードの登録が必要です。
+具体的には、下記のようにAレコードとして、<strong>192.30.252.153</strong>と<strong>192.30.252.154</strong>を登録するだけです。
+（参考：<a href="https://help.github.com/articles/tips-for-configuring-an-a-record-with-your-dns-provider/">Github Help</a>）</p>
+
+<p><a href="https://gyazo.com/5e28dbf519e0300b47c3a96a6fa6d085"><img src="https://i.gyazo.com/5e28dbf519e0300b47c3a96a6fa6d085.png" alt="https://gyazo.com/5e28dbf519e0300b47c3a96a6fa6d085" /></a></p>
+
+<p>次に、自身のレポジトリの設定ですが、<strong>CNAME</strong>という名前をファイルを作成し、
+転送先の独自ドメイン（ここでは<code class="highlighter-rouge">muka-lab.info</code>）を入力します。
+後は、このファイルを他のHTMLファイルなどと一緒にデプロイするだけです。
+これらの変更の適用には時間がかかるようなので、
+少し時間を空けてから転送が成功するか確認しましょう。</p>
+
 
     </p>
   
@@ -557,6 +572,24 @@
 シンタックスハイライトには<a href="https://github.com/jneen/rouge"><strong>rouge</strong></a>や<a href="http://pygments.org/"><strong>pygments</strong></a>が利用されるようですが、ここでは<a href="https://github.com/jneen/rouge"><strong>rouge</strong></a>を適用してみたいと思います。
 まずは、下記のコマンドで<a href="https://github.com/jneen/rouge"><strong>rouge</strong></a>をインストールします。</p>
 
+<p><code class="highlighter-rouge">gem install rouge</code></p>
+
+<p>次に、”_config.yml”でシンタックスハイライトに<a href="https://github.com/jneen/rouge"><strong>rouge</strong></a>を指定しておきます。</p>
+
+<p><code class="highlighter-rouge">highlighter: rouge</code></p>
+
+<p>ここまでは、何てことないのですが、ここからつまずきました。
+シンタックスハイライトのスタイルは”_syntax-highlighting.scss”で設定されているようです。
+色などを変更したい場合は、このファイルを修正すれば良いはずですが、何故か変更が適用されません。</p>
+
+<p>マークダウンでハイライトするときは、ソースコードを``で囲みます。
+変換後のhtmlを確認すると、該当箇所は下記のように、クラス属性に<em>highlighter-rouge</em>が設定されています。</p>
+
+<p><code class="highlighter-rouge">&lt;code class="highlighter-rouge"&gt;&lt;/code&gt;</code></p>
+
+<p>再度、”_syntax-highlighting.scss”を確認すると、クラス属性は<em>highlight</em>として設定されています。
+そこで、ファイル内のクラス属性を<em>highlighter-rouge</em>に置換することで、シンタックスハイライトが適用されました。
+試行錯誤の末、シンタックスハイライトの適用までこぎつけましたが、この辺り十分に理解できていないかもしれません。</p>
 
     </p>
   
@@ -572,6 +605,18 @@
 トップページのヘッダ部の右にサイトに含まれるページのリンクを自動的に追加してくれます。
 これはとても便利な機能ではあるのですが、ページ数が増えてくると、特定のページは除いて欲しいというケースが発生します。</p>
 
+<p>そこで、「<a href="http://jekyllrb.com/docs/frontmatter/"><strong>YAML Front Matter</strong></a>」を利用して解決します。
+まずは、”_templates/page”に、<em>top_link</em>という名前の変数を下記のように用意します。
+これで、新規に作成するページには、<em>top_link</em>の行が自動的に追加されます。</p>
+
+<script src="https://gist.github.com/naoto-github/1f4a322ec552139c7d83.js"> </script>
+
+<p>トップページに自動的にリンクを追加する場合は、ページを作成した後で、この<em>top_link</em>の値を”true”に設定しておきましょう。
+次に、”_includes/header.html”に下記のように<em>top_link</em>に関する条件文を追加します。</p>
+
+<script src="https://gist.github.com/naoto-github/74111e3c2e89884170e1.js"> </script>
+
+<p>これで、トップページの自動リンクを<em>top_link</em>という変数で制御できるようになります。</p>
 
     </p>
   
@@ -587,6 +632,10 @@
 基本的には自分用のメモとしての意味合いが強いですが、
 気になった事柄などを、ここにまとめていければ良いかなと思ってます。</p>
 
+<p>大学の授業資料なども、このサイトで公開したいと思っていますので、
+履修している学生の皆さんには定期的にチェックしてもらえれば嬉しいです。</p>
+
+<p>では、よろしく！</p>
 
     </p>
   
@@ -595,7 +644,7 @@
   
     <div class="pagination">
     
-        <a href="/page23">&laquo; Prev</a>
+        <a href="/page23/">&laquo; Prev</a>
     
 
     
@@ -604,91 +653,91 @@
         
     
         
-            <a href="/page2">2</a>
+            <a href="page2/">2</a>
         
     
         
-            <a href="/page3">3</a>
+            <a href="page3/">3</a>
         
     
         
-            <a href="/page4">4</a>
+            <a href="page4/">4</a>
         
     
         
-            <a href="/page5">5</a>
+            <a href="page5/">5</a>
         
     
         
-            <a href="/page6">6</a>
+            <a href="page6/">6</a>
         
     
         
-            <a href="/page7">7</a>
+            <a href="page7/">7</a>
         
     
         
-            <a href="/page8">8</a>
+            <a href="page8/">8</a>
         
     
         
-            <a href="/page9">9</a>
+            <a href="page9/">9</a>
         
     
         
-            <a href="/page10">10</a>
+            <a href="page10/">10</a>
         
     
         
-            <a href="/page11">11</a>
+            <a href="page11/">11</a>
         
     
         
-            <a href="/page12">12</a>
+            <a href="page12/">12</a>
         
     
         
-            <a href="/page13">13</a>
+            <a href="page13/">13</a>
         
     
         
-            <a href="/page14">14</a>
+            <a href="page14/">14</a>
         
     
         
-            <a href="/page15">15</a>
+            <a href="page15/">15</a>
         
     
         
-            <a href="/page16">16</a>
+            <a href="page16/">16</a>
         
     
         
-            <a href="/page17">17</a>
+            <a href="page17/">17</a>
         
     
         
-            <a href="/page18">18</a>
+            <a href="page18/">18</a>
         
     
         
-            <a href="/page19">19</a>
+            <a href="page19/">19</a>
         
     
         
-            <a href="/page20">20</a>
+            <a href="page20/">20</a>
         
     
         
-            <a href="/page21">21</a>
+            <a href="page21/">21</a>
         
     
         
-            <a href="/page22">22</a>
+            <a href="page22/">22</a>
         
     
         
-            <a href="/page23">23</a>
+            <a href="page23/">23</a>
         
     
         
@@ -802,7 +851,7 @@
       </div>
 
       <div class="footer-col footer-col-3">
-        <p>椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。</p>
+        <p>椙山女学園大学 文化情報学部 向研究室のブログです．授業資料など技術的な情報の他，女子大教員の日常を４コマ漫画形式で公開しています．</p>
       </div>
     </div>
 
