@@ -7,12 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>M&#39;s Lab. （えむらぼ）</title>
-  <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。">
+  <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです．授業資料など技術的な情報の他，女子大教員の日常を４コマ漫画形式で公開しています．">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://mukai-lab.info//page23/">
-  <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://mukai-lab.info//feed.xml">
+  <link rel="canonical" href="http://localhost:4000/page23/">
+  <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://localhost:4000/feed.xml">
 
   <!-- Faviconの実装 -->
   <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
@@ -342,6 +342,10 @@
         
           
             
+          
+        
+          
+            
                 <a class="page-link" href="/class.html">担当科目</a>
             
           
@@ -365,8 +369,6 @@
           
         
           
-        
-          
             
           
         
@@ -374,6 +376,10 @@
             
           
         
+          
+        
+          
+            
           
         
           
@@ -542,6 +548,12 @@
 JavaFXはJava 8では標準のGUIライブラリとして統合されたはずなのに、
 <strong>なんでだー</strong>となったので回避方法を調べてみました。</p>
 
+<p>Eclipseのツールバーから[ウィンドウ]-[設定]-[Java]-[コンパイラー]-[エラー/警告]を選択します。
+ここで下記のように「使用すべきではない制限されたAPI」の「禁止された参照」を<strong>無視</strong>に設定します。
+これで問題なくインポートできるはずです。</p>
+
+<p><a href="https://gyazo.com/b0d1d728ba365fc184a7cb0621d9653d"><img src="https://i.gyazo.com/b0d1d728ba365fc184a7cb0621d9653d.png" alt="https://gyazo.com/b0d1d728ba365fc184a7cb0621d9653d" /></a></p>
+
 
     </p>
   
@@ -557,6 +569,25 @@ JavaFXはJava 8では標準のGUIライブラリとして統合されたはず�
 OGPの設定がなければ、自動で適当な画像が選択されますが、意図しない画像が選択されることも多いです。
 そこで、Jekyllで採用されている「YAML Front Matter」を利用してOGPを設定する方法をメモしておきます。</p>
 
+<p>まずは、ブログ記事などのファイルの先頭に、
+下記のように<em>image</em>という変数を用意して、参照する画像を設定しておきます。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+layout: default
+image: "https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png"
+---
+</code></pre></div></div>
+
+<p>これで<em>page.image</em>という記述で設定された値を取得することができるようになります。
+次に、”_includes/head.html”に下記のように<em>page.image</em>を利用してOGPの設定をします。
+このとき、条件文を利用することで<em>page.image</em>が設定されている場合に限ってOGPの設定を有効にしています。
+OGPは<code class="highlighter-rouge">&lt;meta property="og:image" content="参照画像"&gt;</code>と記述します。</p>
+
+<script src="https://gist.github.com/naoto-github/2d722aa297bd3acaeeac.js"> </script>
+
+<p>これで、フェイスブックでシェアされたときの画像が設定されます。
+もし画像が反映されない場合は、フェイスブックのキャッシュが原因かもしれません。
+この場合は、<a href="https://developers.facebook.com/tools/debug/og/object/">Open Graph Object Debugger</a>でキャッシュを削除してみましょう。</p>
 
     </p>
   
@@ -587,6 +618,25 @@ OGPの設定がなければ、自動で適当な画像が選択されますが�
         <p>WindowsでGit環境を構築するとお世話になるであろう<strong>Git Bash</strong>のホームディレクトリの変更に関してメモします。
 GitHubのレポジトリは<em>Z:\GitHub</em>に設置しているため、この<em>Z:\GitHub</em>をホームディレクトリに設定することを目指します。</p>
 
+<p>まずは、Windowsとはいえ<strong>Bash</strong>であることに変わりはないので、<em>C:\Users\Naoto.bashrc</em>を作成して、環境変数<em>$HOME</em>の設定を変更してみます。</p>
+
+<p><code class="highlighter-rouge">HOME=/z/GitHub/</code></p>
+
+<p>これで問題解決と思いきや、<strong>Git Bash</strong>を実行してみると下記のように、起動時のディレクトリは<em>/c/Users/Naoto</em>のままです。
+ちなみに、環境変数$HOME自体は設定されていて、cdコマンドを実行すると<em>/z/GitHub/</em>に移動します。</p>
+
+<p><a href="https://gyazo.com/7df1980fbafa2c56129834def138d344"><img src="https://i.gyazo.com/7df1980fbafa2c56129834def138d344.png" alt="https://gyazo.com/7df1980fbafa2c56129834def138d344" /></a></p>
+
+<p>そこで、アプローチを変更して、<strong>Git Bash</strong>のショートカットアイコンのプロパティを変更してみます。
+プロパティには<strong>作業フォルダ</strong>という項目があり、ここに<em>Z:\GitHub</em>設定します。
+また、リンク先には<strong>–cd-to-home</strong>という引数が設定されているので削除しておきます。</p>
+
+<p><a href="https://gyazo.com/f15142fbd59f99d4f7a3ac3aec8b9b64"><img src="https://i.gyazo.com/f15142fbd59f99d4f7a3ac3aec8b9b64.png" alt="https://gyazo.com/f15142fbd59f99d4f7a3ac3aec8b9b64" /></a></p>
+
+<p>これで<strong>Git Bash</strong>のショートカットアイコンから起動してみると、
+下記のように無事にホームディレクトリを変更することができました。</p>
+
+<p><a href="https://gyazo.com/1b141e357e770ab203084f6980afeb0d"><img src="https://i.gyazo.com/1b141e357e770ab203084f6980afeb0d.png" alt="https://gyazo.com/1b141e357e770ab203084f6980afeb0d" /></a></p>
 
     </p>
   
@@ -602,6 +652,22 @@ GitHubのレポジトリは<em>Z:\GitHub</em>に設置しているため、こ�
 この<a href="https://github.com/Shopify/liquid/wiki">Liquid</a>では<strong>タグ</strong>や<strong>フィルタ</strong>という機能を利用して、
 ウェブページ制作における”めんどうだなぁ”と感じることを減らすことが可能です。</p>
 
+<p>ここでは、複数のページに共通で利用されるコードの断片を他のファイルから読み込んで埋め込む方法を紹介します。
+埋め込むコードを<em>common.html</em>として作成し、<em>_includes</em>ディレクトリに配置します。
+後はMDファイルやHTMLファイルに下記のように記述するだけです。</p>
+
+<script src="https://gist.github.com/naoto-github/bf18e295f1e9af8438bd.js"> </script>
+
+<p>その他、<a href="https://gist.github.com/">Gist</a>で公開しているソースコードも下記の方法で公開可能です。</p>
+
+<script src="https://gist.github.com/naoto-github/8af89f7c7dfec393dfc0.js"> </script>
+
+<p>ただし、<a href="https://github.com/jekyll/jekyll-gist">jekyll-gist</a>を事前にインストールし、
+さらに、<em>_config.yml</em>に下記の設定を加えておく必要があるようです。
+この<em>_config.yml</em>の設定は忘れがちになるので特に注意が必要です。</p>
+
+<script src="https://gist.github.com/naoto-github/f68f97641149963bacde.js"> </script>
+
 
     </p>
   
@@ -610,7 +676,7 @@ GitHubのレポジトリは<em>Z:\GitHub</em>に設置しているため、こ�
   
     <div class="pagination">
     
-        <a href="/page22">&laquo; Prev</a>
+        <a href="/page22/">&laquo; Prev</a>
     
 
     
@@ -619,87 +685,87 @@ GitHubのレポジトリは<em>Z:\GitHub</em>に設置しているため、こ�
         
     
         
-            <a href="/page2">2</a>
+            <a href="page2/">2</a>
         
     
         
-            <a href="/page3">3</a>
+            <a href="page3/">3</a>
         
     
         
-            <a href="/page4">4</a>
+            <a href="page4/">4</a>
         
     
         
-            <a href="/page5">5</a>
+            <a href="page5/">5</a>
         
     
         
-            <a href="/page6">6</a>
+            <a href="page6/">6</a>
         
     
         
-            <a href="/page7">7</a>
+            <a href="page7/">7</a>
         
     
         
-            <a href="/page8">8</a>
+            <a href="page8/">8</a>
         
     
         
-            <a href="/page9">9</a>
+            <a href="page9/">9</a>
         
     
         
-            <a href="/page10">10</a>
+            <a href="page10/">10</a>
         
     
         
-            <a href="/page11">11</a>
+            <a href="page11/">11</a>
         
     
         
-            <a href="/page12">12</a>
+            <a href="page12/">12</a>
         
     
         
-            <a href="/page13">13</a>
+            <a href="page13/">13</a>
         
     
         
-            <a href="/page14">14</a>
+            <a href="page14/">14</a>
         
     
         
-            <a href="/page15">15</a>
+            <a href="page15/">15</a>
         
     
         
-            <a href="/page16">16</a>
+            <a href="page16/">16</a>
         
     
         
-            <a href="/page17">17</a>
+            <a href="page17/">17</a>
         
     
         
-            <a href="/page18">18</a>
+            <a href="page18/">18</a>
         
     
         
-            <a href="/page19">19</a>
+            <a href="page19/">19</a>
         
     
         
-            <a href="/page20">20</a>
+            <a href="page20/">20</a>
         
     
         
-            <a href="/page21">21</a>
+            <a href="page21/">21</a>
         
     
         
-            <a href="/page22">22</a>
+            <a href="page22/">22</a>
         
     
         
@@ -707,12 +773,12 @@ GitHubのレポジトリは<em>Z:\GitHub</em>に設置しているため、こ�
         
     
         
-            <a href="/page24">24</a>
+            <a href="page24/">24</a>
         
     
 
     
-        <a href="/page24">Next &raquo;</a>
+        <a href="/page24/">Next &raquo;</a>
     
   
 
@@ -817,7 +883,7 @@ GitHubのレポジトリは<em>Z:\GitHub</em>に設置しているため、こ�
       </div>
 
       <div class="footer-col footer-col-3">
-        <p>椙山女学園大学 文化情報学部 向研究室のブログです。授業資料など技術的な情報の他、女子大教員の日常を４コマ漫画形式で公開しています。</p>
+        <p>椙山女学園大学 文化情報学部 向研究室のブログです．授業資料など技術的な情報の他，女子大教員の日常を４コマ漫画形式で公開しています．</p>
       </div>
     </div>
 
