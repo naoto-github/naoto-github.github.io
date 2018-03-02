@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>日進市 観光マップ</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+</head>
+
+<body>
+  <div id="mapid" style="width:500px; height:500px"></div>
+
+  <script>
+    var mymap = L.map('mapid').setView([35.130621, 137.037568], 13);
+    L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' }
+    ).addTo(mymap);
+
+    data = {
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"geometry": 
+				{
+					"type": "Point",
+					"coordinates": [137.0420547,35.1455654]
+				},
+			"properties":
+				{
+					"名称": "岩崎城址公園",
+					"画像": "iwasaki.jpg"
+				}
+		},
+		{
+			"type": "Feature",
+			"geometry": 
+				{
+					"type": "Point",
+					"coordinates": [137.0876883,35.1306941]
+				},
+			"properties":
+				{
+					"名称": "愛知牧場",
+					"画像": "bokujyou.jpg"
+				}
+		},
+		{
+			"type": "Feature",
+			"geometry": 
+				{
+					"type": "Point",
+					"coordinates": [137.0682229,35.1557573]
+				},
+			"properties":
+				{
+					"名称": "五色園",
+					"画像": "goshikien.jpg"
+				}
+		},
+		{
+			"type": "Feature",
+			"geometry": 
+				{
+					"type": "Point",
+					"coordinates": [137.0221455,35.1228602]
+				},
+			"properties":
+				{
+					"名称": "レトロでんしゃ",
+					"画像": "retro.jpg"
+				}
+		},	
+		{
+			"type": "Feature",
+			"geometry": 
+				{
+					"type": "Point",
+					"coordinates": [137.033636,35.12896]
+				},
+			"properties":
+				{
+					"名称": "旧市川家住宅",
+					"画像": "ichikawa.jpg"
+				}
+		}			
+	]
+    }
+
+
+    L.geoJSON(data,{
+        onEachFeature: function(feature, layer){
+            layer.bindPopup(
+                "<p style='width:150px'>" + feature.properties.名称 + "</p>" +
+                "<p><img src=" + feature.properties.画像 + " /></p>"
+            )
+        }
+    }).addTo(mymap);
+    
+  </script>
+</body>
+
+</html>
