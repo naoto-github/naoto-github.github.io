@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Excelを利用した7市町オープンデータの分析②・相関分析</title>
+  <title>オープンストリートマップを利用したオープンデータの可視化①・uMap</title>
   <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです．授業で使用する技術的な資料に加え，女子大教員の日常を４コマ漫画形式で公開しています．">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://localhost:4000/class/seminar_fundamental_areas/chapter2.html">
+  <link rel="canonical" href="http://localhost:4000/class/seminar_fundamental_areas/chapter3.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://localhost:4000/feed.xml">
 
   <!-- Faviconの実装 -->
@@ -51,7 +51,7 @@
 
   <!-- OGP -->
   
-  <meta property="og:image" content="https://i.gyazo.com/57ebbf9ae868dcc94896df1ecec4e24f.png">
+  <meta property="og:image" content="https://i.gyazo.com/0cc18d7ba4f7db56959e985acc851378.png">
   
 </head>
 
@@ -122,11 +122,11 @@
 <meta name="twitter:creator" content="@creator_username">
 
 
-  <meta name="twitter:title" content="Excelを利用した7市町オープンデータの分析②・相関分析">
+  <meta name="twitter:title" content="オープンストリートマップを利用したオープンデータの可視化①・uMap">
 
 
 
-  <meta name="twitter:url" content="http://localhost:4000/class/seminar_fundamental_areas/chapter2.html">
+  <meta name="twitter:url" content="http://localhost:4000/class/seminar_fundamental_areas/chapter3.html">
 
 
 
@@ -134,15 +134,15 @@
 
 
 
-  <meta name="twitter:image:src" content="https://i.gyazo.com/57ebbf9ae868dcc94896df1ecec4e24f.png">
+  <meta name="twitter:image:src" content="https://i.gyazo.com/0cc18d7ba4f7db56959e985acc851378.png">
 
 
 
   <header class="post-header">
-    <h1 class="post-title">Excelを利用した7市町オープンデータの分析②・相関分析</h1>
+    <h1 class="post-title">オープンストリートマップを利用したオープンデータの可視化①・uMap</h1>
     <!-- Facebook Button -->
 <!-- <div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
-<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/seminar_fundamental_areas/chapter2.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/seminar_fundamental_areas/chapter3.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <!-- Twitter Button -->
 <div>
@@ -150,164 +150,182 @@
     <a href="https://twitter.com/nmukai1978" class="twitter-follow-button" data-show-count="false">Follow @nmukai1978</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 </div>
 
-    <!-- <div class="fb-like" data-href="http://naoto-github.github.io//class/seminar_fundamental_areas/chapter2.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
+    <!-- <div class="fb-like" data-href="http://naoto-github.github.io//class/seminar_fundamental_areas/chapter3.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
   </header>
 
   <div class="post-content">
-    <p><a href="https://gyazo.com/57ebbf9ae868dcc94896df1ecec4e24f"><img src="https://i.gyazo.com/57ebbf9ae868dcc94896df1ecec4e24f.png" alt="https://gyazo.com/57ebbf9ae868dcc94896df1ecec4e24f" /></a></p>
+    <p><a href="https://gyazo.com/0cc18d7ba4f7db56959e985acc851378"><img src="https://i.gyazo.com/0cc18d7ba4f7db56959e985acc851378.png" alt="https://gyazo.com/0cc18d7ba4f7db56959e985acc851378" /></a></p>
 
-<h1 id="-相関分析とは"><img src="/favicon/favicon-25x25.png" alt="Logo" class="section" /> 相関分析とは</h1>
+<h1 id="-オープンストリートマップとは"><img src="/favicon/favicon-25x25.png" alt="Logo" class="section" /> オープンストリートマップとは</h1>
 
-<p>相関分析とは，2つの変数XとYの関係性を分析する方法です．
-例えば，暑い日にはアイスクリームの売上数が増加すると考えられます．
-このとき，「X:温度」と「Y:アイスクリームの売上数」には関係がありそうです．
-一般に，相関分析には<strong>相関係数</strong>と呼ばれる評価指標が用いられます（正確には<strong>ピアソンの積率相関係数</strong>と呼ばれる）．
-相関係数は-1から1の範囲で与えられ，1に近いほど<strong>正の相関</strong>，-1に近いほど<strong>負の相関</strong>を示します．</p>
+<p>行政が公開しているオープンデータには，
+施設の位置を表す<strong>緯度</strong>，<strong>経度</strong>の情報が含まれることが多くあります．
+前回利用した日進市の子育て支援施設のオープンデータにも，施設の名称や住所に加えて，緯度・経度の情報が含まれていました．
+オンライン地図を利用して，これらの位置情報を可視化することで，新たな気付きを得ることが可能です．</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>相関係数</th>
-      <th>相関の強さ</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>0.7～1</td>
-      <td>強い正の相関</td>
-    </tr>
-    <tr>
-      <td>0.4～0.7</td>
-      <td>正の相関</td>
-    </tr>
-    <tr>
-      <td>0.2～0.4</td>
-      <td>弱い正の相関</td>
-    </tr>
-    <tr>
-      <td>-0.2～0.2</td>
-      <td>相関なし</td>
-    </tr>
-    <tr>
-      <td>-0.4～0.2</td>
-      <td>弱い負の相関</td>
-    </tr>
-    <tr>
-      <td>-0.7～-0.4</td>
-      <td>負の相関</td>
-    </tr>
-    <tr>
-      <td>-1～-0.7</td>
-      <td>強い負の相関</td>
-    </tr>
-  </tbody>
-</table>
+<p>オンライン地図として最も有名なサービスはGoogleが提供している<a href="https://www.google.co.jp/maps/">Google Maps</a>でしょう．
+Google Mapsは，滑らかな地図の表示はもちろん，ストリートビュー，ジオコーディング，ルート検索などの機能も充実しています．
+ここで，ジオコーディングとは住所や地名などを緯度・経度に変換する技術を指しています．
+例えば，椙山女学園大学の地図をGoogle Mapで表示してみます．
+ウェブページにGoogle Mapsを埋め込むには，<strong>共有</strong>をクリックし，
+<strong>地図を埋め込む</strong>のタブに表示されているソースコードをコピペするだけで完成です．</p>
 
-<p>正の相関は，Xが増加するとYも増加する関係を表し，負の相関は，Xが増加するとYが減少する関係性を表します．
-先の「温度」と「アイスクリームの売上数」の例では，温度が増加すると，売上数も増加するので正の相関となります．
-<strong>相関係数</strong>はアンケートの分析などでも用いられるメジャーな分析手法の一つです．
-ここでは，日進市のオープンデータを対象に相関分析を適用してみましょう．</p>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3261.8931131937625!2d136.98512531556443!3d35.159286366026095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600364495cbb50c3%3A0x10d8b5b9f62e6a31!2z5qSZ5bGx5aWz5a2m5ZyS5aSn5a2mIOaYn-OBjOS4mOOCreODo-ODs-ODkeOCuQ!5e0!3m2!1sja!2sjp!4v1519897606539" width="600" height="450" frameborder="0" style="border:0" allowfullscreen=""></iframe>
 
-<h1 id="-データの準備"><img src="/favicon/favicon-25x25.png" alt="Logo" class="section" /> データの準備</h1>
+<p>Google Mapsはとても便利なのですが，<a href="https://www.google.co.jp/permissions/geoguidelines.html">利用規約</a>が厳しいことが知られています．
+クレジット表示が必要なことは当然ですが，非営利であっても<strong>印刷物</strong>での使用には大きな制限があります．
+新聞，雑誌，レポートなどの目的では問題ありませんが，ガイドブックや印刷広告には使用することができません．
+これは，行政にとっては致命的であり，自治体を紹介する印刷広告を作成しようとしても，Google Mapsを掲載することができません．
+そこで，代わりに用いられるのが<a href="https://openstreetmap.jp/">オープンストリートマップ(OpenStreetMap: OSM)</a>です．
+オープストリートマップは<a href="https://creativecommons.org/licenses/by-sa/2.0/deed.ja">クリエイティブ・コモンズ CC-BY-SA 2.0</a>と呼ばれる
+ライセンスで提供されており，適切にクレジットを表示すれば，営利目的の使用も含め，複製・再配布・改変が認められています．
+例えば，椙山女学園大学の地図をオープンストリートマップで表示してみます．
+上記のGoogle Mapsと比較しても，遜色ないことが分かるでしょう．</p>
 
-<p>前回の授業で日進市の人口ピラミッドを作成しました．
-グラフから，日進市には子育て世帯が多く，幼稚園や保育園などが充実した地区が人気であることが予想されます．
-そこで，<strong>町別人口・世帯数</strong>と<strong>子育て支援施設</strong>のデータを対象に，相関関係があるかを調べてみましょう．</p>
+<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=136.976455450058%2C35.15610008340124%2C136.9943726062775%2C35.1639416495691&amp;layer=mapnik" style="border: 1px solid black"></iframe>
 
-<p>それでは，<a href="http://www.city.nisshin.lg.jp/seisaku/opendata/">日進市のオープンデータミュージアム</a>から
-上記の2種類のデータをダウンロードしましょう．
-まずは，オープンデータミュージアムで公開されている行政活動情報の<strong>町別人口・世帯数</strong>のデータをダウンロードします．
-<a href="http://www.city.nisshin.lg.jp/seisaku/opendata/gyouseikatudou.html">行政活動情報のページ</a>にアクセスし，
-<strong>平成30年1月1日のCSV形式のデータ</strong>をダウンロードしてください．
-このデータには，日進市内の各町（赤池町，浅田町など）の<strong>人口</strong>や<strong>世帯数</strong>が含まれています．</p>
+<p>加えて，オープンストリートマップの最も大きな特徴は，オープンストリートマップのアカウント登録さえすれば，
+誰しもが自由に地図を編集することができるという点です．
+つまり，オープンストリートマップは，オンライン地図のサービスであることに加え，無料地図の共同作成プロジェクトでもあるわけです．
+オープンストリートマップを編集する人のことを<strong>マッパー</strong>と呼び，
+複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントを<strong>マッピングパーティ</strong>と呼びます．
+全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします．
+日進市においては，平成29年12月9日に「<a href="https://machimiru-haku.com/events/34">ブラニッシン〜いまのにっしん，世界に発信！〜</a>」という
+マッピングパーティが開催され，向も参加しました．</p>
 
-<p><a href="https://gyazo.com/30f9e9b41e91b8aa362683cd20b0968e"><img src="https://i.gyazo.com/30f9e9b41e91b8aa362683cd20b0968e.png" alt="https://gyazo.com/30f9e9b41e91b8aa362683cd20b0968e" /></a></p>
+<p>今回は日進市のオープンデータとオープンストリートマップを組み合わせ，
+独自のオンライン地図を作成する方法について学習していきましょう．</p>
 
-<p>次に7市町オープンデータのフォーマットに従った<strong>子育て支援施設</strong>のデータをダウンロードします．
-<a href="http://www.city.nisshin.lg.jp/seisaku/opendata/7kyoutuu-opendata.html">7市町オープンデータ共通整備項目</a>にアクセスし，
-<strong>CSV形式のデータ</strong>をダウンロードしてください．
-このデータには，日進市内にある幼稚園や保育園などの子育て支援施設の<strong>名称</strong>や<strong>住所</strong>が含まれています．</p>
+<h1 id="-geojson"><img src="/favicon/favicon-25x25.png" alt="Logo" class="section" /> GeoJSON</h1>
 
-<p><a href="https://gyazo.com/b38a11c6720d50f68fd6dd8279d3d9c4"><img src="https://i.gyazo.com/b38a11c6720d50f68fd6dd8279d3d9c4.png" alt="https://gyazo.com/b38a11c6720d50f68fd6dd8279d3d9c4" /></a></p>
+<p>ここで，オープンデータの条件である「機械判読に適したデータ形式」について考えてみます．
+オンライン地図にオープンデータを表示するには，当然，コンピュータが読み取ることが出来る形式を用いる必要があります．
+これまでに，xlsx形式，csv形式を紹介しましたが，よりウェブに相性が良いデータ形式があります．
+それが，<strong>JSON形式（.json）</strong>です．
+<a href="http://www.json.org/">JSON</a>は，「じぇいそん」と読み，ブラウザで動作するプログラミング言語のJavaScriptで用いられるデータ形式です
+（JavaScript以外のプログラミング言語でも対応していることが多い）．</p>
 
-<h1 id="-相関係数の算出"><img src="/favicon/favicon-25x25.png" alt="Logo" class="section" /> 相関係数の算出</h1>
+<p>下記のCSV形式のデータを例に考えてみましょう．</p>
 
-<p>それでは，ダウンロードしたデータをエクセルで読み込み相関係数を算出してみましょう．
-まずはエクセルを起動して，<strong>空白のブック</strong>を選択します．
-セル<strong>A1</strong>をアクティブにした状態で，データ・タブの<strong>テキストまたはCSVから</strong>をクリックします．
-ダイアログが表示されたら，ダウンロードした<strong>町別人口・世帯数</strong>のファイルを選択し，<strong>インポート</strong>をクリックします．
-プレビュー画面で，<strong>編集</strong>をクリックし，クエリエディタを開きます．
-ここでは，1行目から3行目の不要なデータを削除してしまいます．
-削除後に，<strong>1行目をヘッダーとして使用</strong>をクリックして，最後に，<strong>閉じて読み込む</strong>をクリックします．
-読み込み後に，下記のように表示されていることを確認してください．</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>町名,男,女,総数,世帯数
+赤池町,1693,1647,3340,1315
+浅田町,2593,2431,5024,2086
+</code></pre></div></div>
 
-<p><a href="https://gyazo.com/0138909a479da64e3e4190b54e12337d"><img src="https://i.gyazo.com/0138909a479da64e3e4190b54e12337d.png" alt="https://gyazo.com/0138909a479da64e3e4190b54e12337d" /></a></p>
+<p>上記のデータをJSON形式に変換すると下記になります．
+JSON形式では，データは<strong>string（文字列）</strong>と<strong>value（値）</strong>の組で表現されます．
+例えば，”町名”という文字列と，”赤池町”という値が組になっていることがわかります．
+また，<strong>[ ]</strong>は配列を表しており，0番目の要素に赤池町のデータ，1番目の要素に浅田町のデータが格納されます．
+要素は「,（カンマ）」で区切られますが，最後の要素には必要ありません（間違えやすいので要注意）．</p>
 
-<p>同様の手順で<strong>子育て支援施設</strong>のデータを読み込みます．
-プレビュー画面で，<strong>編集</strong>をクリックし，クエリエディタを開きます．
-ここでは，<strong>名称</strong>と<strong>住所表記</strong>の列だけを残し，その他の列は削除してしまいましょう．
-削除後に，<strong>1行目をヘッダーとして使用</strong>をクリックして，最後に，<strong>閉じて読み込む</strong>をクリックします．
-読み込み後に，下記のように表示されていることを確認してください．</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[
+	{
+		"町名": "赤池町",
+		"男": 1693,
+		"女": 1647,
+		"総数": 3340,
+		"世帯数": 1315
+	},
+	{
+		"町名": "浅田町",
+		"男": 2593,
+		"女": 2431,
+		"総数": 5042,
+		"世帯数": 2086
+	}		
+]
+</code></pre></div></div>
 
-<p><a href="https://gyazo.com/952435ea0344b7fbc42a3c6bfc6b7f65"><img src="https://i.gyazo.com/952435ea0344b7fbc42a3c6bfc6b7f65.png" alt="https://gyazo.com/952435ea0344b7fbc42a3c6bfc6b7f65" /></a></p>
+<p>このJSON形式を基本として，点，線，多角形などの空間データを表現するために用いられるのが，
+<strong>GeoJSON</strong>形式です．
+<a href="http://geojson.org/geojson-spec.html">GeoJSON</a>は，「じおじぇいそん」と読み，
+<a href="http://umap.openstreetmap.fr/ja/">uMap</a>，<a href="http://leafletjs.com/">Leeflet</a>，
+<a href="http://openlayers.org/">OpenLayers</a>などの様々な地図サービスで利用可能です．</p>
 
-<p>次に，各町に存在する子育て支援施設の数を数えます．
-<strong>町別人口・世帯数</strong>のシートのF列に，<strong>countif関数</strong>を用いて施設数をカウントします．
-セル<strong>F2</strong>をアクティブにした状態で，関数の挿入をクリックし，countif関数を選択します．</p>
+<p>下記のCSV形式のデータを例に考えてみましょう．
+緯度・経度の情報が含まれており，オンライン地図では<strong>点</strong>として扱われます．</p>
 
-<p><a href="https://gyazo.com/2c747260111fa0770b692f85b3df5246"><img src="https://i.gyazo.com/2c747260111fa0770b692f85b3df5246.png" alt="https://gyazo.com/2c747260111fa0770b692f85b3df5246" /></a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>名称,緯度,経度,説明
+休日急病診療所,35.132795,137.042009,日進市中央福祉センター内にある休日急病診療所です．
+西部福祉会館,35.12599221,137.0147748,乳幼児室，学習室があります．
+</code></pre></div></div>
 
-<p>countif関数は条件を満たすセルの数をカウントするために用いられます．
-ここでは，「町名が住所表記に含まれる」という条件を満たすセルをカウントします．
-下図を参考に範囲，検索条件を入力してください．
-ここで，範囲は子育て支援施設のシートの<strong>B2:B73</strong>を指定しています．
-また，検索条件の「*(アスタリスク)」は<strong>ワイルドカード</strong>と呼ばれ，
-任意の文字列を表しています．</p>
+<p>上記のデータをGeoJSON形式に変換すると下記になります．
+少し複雑に見えますが，JSON形式に従っていることを確認してください．
+ここでは，空間データの種類を表す<strong>type</strong>に<strong>Point（点）</strong>を設定しています．
+Pointの他にも，<strong>LineString（線）</strong>，<strong>Polygon（多角形）</strong>などを指定することもできます．
+また，座標は<strong>coordinates</strong>で指定していますが，経度・緯度の順番であることに注意してください．
+その他，名称，説明などの情報は，<strong>properties</strong>に記載します．</p>
 
-<p><a href="https://gyazo.com/03404c2f90544e91ce525445d221e57b"><img src="https://i.gyazo.com/03404c2f90544e91ce525445d221e57b.png" alt="https://gyazo.com/03404c2f90544e91ce525445d221e57b" /></a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"geometry": 
+				{
+					"type": "Point",
+					"coordinates": [137.042009,35.132795]
+				},
+			"properties":
+				{
+					"名称": "休日急病診療所",
+					"説明": "日進市中央福祉センター内にある休日急病診療所です．"
+				}
+		},
+		{
+			"type": "Feature",
+			"geometry": 
+				{
+					"type": "Point",
+					"coordinates": [137.0147748,35.12599221]
+				},
+			"properties":
+				{
+					"名称": "西部福祉会館",
+					"説明": "日進市中央福祉センター内にある休日急病診療所です．"
+				}
+		}
+	]
+}
+</code></pre></div></div>
 
-<p>カウントした結果が下図と一致することを確認してください．
-赤池町は3，浅田町は5となっています．</p>
+<h1 id="-umap"><img src="/favicon/favicon-25x25.png" alt="Logo" class="section" /> uMap</h1>
 
-<p><a href="https://gyazo.com/7f00adbd3e7ec63c21f11ab29aa4708c"><img src="https://i.gyazo.com/7f00adbd3e7ec63c21f11ab29aa4708c.png" alt="https://gyazo.com/7f00adbd3e7ec63c21f11ab29aa4708c" /></a></p>
+<p>GeoJSON形式のデータをオープンストリートマップに重ねて表示することに挑戦してみましょう．
+今回は<a href="http://umap.openstreetmap.fr/ja/">uMap</a>という地図サービスを利用します．
+uMapはオープンストリートマップを加工して，ウェブページに埋め込むためのオリジナル地図を作成することができます．
+<a href="http://umap.openstreetmap.fr/ja/">uMap</a>のウェブサイトを開き，<strong>マップを作成</strong>をクリックしましょう．</p>
 
-<p>まずは，散布図を作成して，全体の傾向を可視化しましょう．
-E列の世帯数とF列の子育て支援施設数を選択して，挿入タブから散布図を選択してください．
-このとき，合計の行を含めないように注意してください．
-作成した散布図が下記と一致することを確認してください．</p>
+<p><a href="https://gyazo.com/2379f6b09819cc69e17c37ec071b70db"><img src="https://i.gyazo.com/2379f6b09819cc69e17c37ec071b70db.png" alt="https://gyazo.com/2379f6b09819cc69e17c37ec071b70db" /></a></p>
 
-<p><a href="https://gyazo.com/d040e9315d4ee41938dce42c53371bfc"><img src="https://i.gyazo.com/d040e9315d4ee41938dce42c53371bfc.png" alt="https://gyazo.com/d040e9315d4ee41938dce42c53371bfc" /></a></p>
+<p>オープンストリートマップを利用した地図が表示されます．
+次に，画面右に並んでいるアイコンから<strong>データインポート</strong>をクリックします．
+ここで，上記のGeoJSON形式のデータを貼り付けください．
+また，インポートデータ形式には<strong>geojson</strong>を選択してください．
+最後に<strong>インポート</strong>をクリックします．</p>
 
-<p>ここで，近似曲線を追加します．
-データ系列を選択して，右クリックし，<strong>近似曲線の追加（線形近似）</strong>を選択します．
-近似直線が右上がりであることから，<strong>世帯数</strong>と<strong>子育て支援施設数</strong>には，正の相関があることが読み取れます．</p>
+<p><a href="https://gyazo.com/b21099d764b26e3c24944f9c192a9292"><img src="https://i.gyazo.com/b21099d764b26e3c24944f9c192a9292.png" alt="https://gyazo.com/b21099d764b26e3c24944f9c192a9292" /></a></p>
 
-<p><a href="https://gyazo.com/c6bc89092a1215f1b2f642b4bdb1250e"><img src="https://i.gyazo.com/c6bc89092a1215f1b2f642b4bdb1250e.png" alt="https://gyazo.com/c6bc89092a1215f1b2f642b4bdb1250e" /></a></p>
+<p>するとGeoJSONで読み込んだエリアの地図に遷移し，
+休日急病診療所と西部福祉会館のマーカーが表示されます．
+また，キーボードのシフトキーを押しながらマーカーをクリックすると，
+マーカーの編集モードを表示することができます．
+ここでは，マーカーの色，形状，シンボルに加え，
+ポップアップ表示したときの名称や概要を設定することができます．
+作成した地図を公開する場合には，<strong>サイトへのマップ埋め込みと共有</strong>をクリックし，
+表示されたソースコードを貼り付けるだけでウェブページに埋め込みが可能です．
+このとき，<strong>iframeエクスポートオプション</strong>で，
+「フルスクリーンのリンクを含める？」を<strong>OFF</strong>，また，
+「デフォルトのマップ表示から現在の表示に切り替えますか？」と
+「現在表示しているレイヤを保持」を<strong>ON</strong>に設定しておきましょう．</p>
 
-<p>最後に分析ツールを用いて相関係数を算出しましょう．
-データ・タブの<strong>データ分析</strong>をクリックし，<strong>相関</strong>を選択します．
-<strong>データ分析</strong>が表示されていない場合は，
-【ファイル】-【オプション】-【アドイン】-【Excelアドイン】の設定をクリックし，
-分析ツールのチェックボックスにチェックを入れてください．
-入力範囲は<strong>E1:F28</strong>，先頭行をラベルとして使用にチェックを入れ，
-出力先をH2に設定して，OKをクリックします．</p>
-
-<p><a href="https://gyazo.com/64a64f94923af3707fe5892c1fe1508a"><img src="https://i.gyazo.com/64a64f94923af3707fe5892c1fe1508a.png" alt="https://gyazo.com/64a64f94923af3707fe5892c1fe1508a" /></a></p>
-
-<p>この結果，<strong>世帯数</strong>と<strong>子育て支援施設数</strong>の相関係数は0.41と算出されました．
-この値は<strong>正の相関</strong>であることを意味しています．
-つまり，<strong>子育て支援施設</strong>が多い地区は，その地区に住む<strong>世帯数</strong>も多いということが示されました．
-しかし，このルールに該当しない例外的な地区もあるようです．
-例えば，折戸町は1073世帯と決して多くはありませんが，12の子育て支援施設が存在しています．
-このように統計において他の値から大きく外れた値は<strong>外れ値</strong>と呼ばれます．
-外れ値が大きな意味合いを持つケースも存在するので，この理由を調査してみるのも面白いと思います．</p>
-
-<p><a href="https://gyazo.com/de6228f08840c96af1c8d733cf71a192"><img src="https://i.gyazo.com/de6228f08840c96af1c8d733cf71a192.png" alt="https://gyazo.com/de6228f08840c96af1c8d733cf71a192" /></a></p>
+<iframe width="100%" height="500px" frameborder="0" src="http://umap.openstreetmap.fr/ja/map/map_202304?scaleControl=false&amp;miniMap=false&amp;scrollWheelZoom=false&amp;zoomControl=true&amp;allowEdit=false&amp;moreControl=true&amp;searchControl=null&amp;tilelayersControl=null&amp;embedControl=null&amp;datalayersControl=true&amp;onLoadPanel=undefined&amp;captionBar=false&amp;datalayers=505797#15/35.1301/137.0302"></iframe>
 
 <h1 id="-課題"><img src="/favicon/favicon-25x25.png" alt="Logo" class="section" /> 課題</h1>
 
-<p>日進市のオープンデータから任意の2種類のデータを選択し，<strong>散布図</strong>と<strong>相関係数</strong>を求めなさい．
-また，完成したエクセルファイルを保存し，Glexaから提出しなさい（ファイル名は任意で構わない）．</p>
+<p>日進市のオープンデータから任意の施設を選び，GeoJSON形式のデータを作成しなさい．
+また，uMAPで作成したGeoJSON形式のデータをインポートし，マップ埋め込み用のソースコードをGlexaから提出しなさい．</p>
 
 <h3>参考書籍</h3>
 
@@ -358,7 +376,7 @@ E列の世帯数とF列の子育て支援施設数を選択して，挿入タブ
           <li style="margin-bottom:5px">
               <!-- Facebook Button -->
 <!-- <div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div> -->
-<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/seminar_fundamental_areas/chapter2.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<div style="margin-bottom:2px" class="fb-like" data-href="http://naoto-github.github.io//class/seminar_fundamental_areas/chapter3.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <!-- Twitter Button -->
 <div>
