@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>コンテンツ</title>
+  <title>Emotivで脳波データの取得</title>
   <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです．授業で使用する技術的な資料に加え，女子大教員の日常を４コマ漫画形式で公開しています．">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://localhost:4000/contents.html">
+  <link rel="canonical" href="http://localhost:4000/contents/emotiv/emotiv.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://localhost:4000/feed.xml">
 
   <!-- Faviconの実装 -->
@@ -50,6 +50,8 @@
   <link rel="stylesheet" href="/css/mystyle.css">
 
   <!-- OGP -->
+  
+  <meta property="og:image" content="https://i.gyazo.com/7ccfb248a92d7521fe8851edaab45742.png">
   
 </head>
 
@@ -121,11 +123,11 @@
 <meta name="twitter:creator" content="@creator_username">
 
 
-  <meta name="twitter:title" content="コンテンツ">
+  <meta name="twitter:title" content="Emotivで脳波データの取得">
 
 
 
-  <meta name="twitter:url" content="http://localhost:4000/contents.html">
+  <meta name="twitter:url" content="http://localhost:4000/contents/emotiv/emotiv.html">
 
 
 
@@ -133,12 +135,14 @@
 
 
 
+  <meta name="twitter:image:src" content="https://i.gyazo.com/7ccfb248a92d7521fe8851edaab45742.png">
+
 
 
   <header class="post-header">
-    <h1 class="post-title">コンテンツ</h1>
+    <h1 class="post-title">Emotivで脳波データの取得</h1>
     <!-- Facebook Button -->
-<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//contents.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//contents/emotiv/emotiv.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <!-- Twitter Button -->
 <div>
@@ -152,56 +156,98 @@
   </header>
 
   <div class="post-content">
-    <h3 id="ロボホン">ロボホン</h3>
+    <p><a href="https://gyazo.com/7ccfb248a92d7521fe8851edaab45742"><img src="https://i.gyazo.com/7ccfb248a92d7521fe8851edaab45742.png" alt="Image from Gyazo" /></a></p>
 
+<h1 id="emotivとは"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />Emotivとは</h1>
+
+<p><a href="https://www.emotiv.com">Emotiv</a>は<a href="http://www.innovatec.co.jp">株式会社イノバテック</a>が提供している小型の脳波計です．
+<strong>Epoc+</strong>，<strong>INSIGHT</strong>，<strong>EPOC flex</strong>など複数の種類がありますが，
+ここでは，14チャネルの電極が装着された<strong>EMOTIV EPOC+</strong>を対象に開発することを目的とします．
+この装置は，他の脳波計と比べ，スタイリッシュなデザインが特徴です．
+頭に装着するだけで，未来感がビシビシ伝わってきます．
+専用のアプリケーションである<a href="https://www.emotiv.com/emotivpro/">EmotivPRO</a>で，
+脳波データを取得・可視化するだけなら<strong>無料のラインセンス</strong>で利用可能です．
+しかし，脳波の生データをAPI（<strong>Cortex</strong>）を経由して取得するなど，
+研究を目的として利用するためには，別途ライセンスの購入が必要です．
+月額99ドルと決して安くはないため注意が必要です（年払いで割引されますが）．</p>
+
+<p><a href="https://gyazo.com/71499fbf173b4487cbc7cbe056c8bc41"><img src="https://i.gyazo.com/71499fbf173b4487cbc7cbe056c8bc41.png" alt="Image from Gyazo" /></a></p>
+
+<h1 id="emotivproを使ってみよう"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />EmotivPROを使ってみよう</h1>
+
+<p>最初に，専用のアプリケーションである<a href="https://www.emotiv.com/emotivpro/">EmotivPRO</a>を利用して，
+脳波データを取得・可視化してみましょう．
+まずは，電極のフェルドパッドを生理食塩水で水和させます．
+この生理食塩水はコンタクトレンズなどにも用いられているものです．
+ここで，しっかりと水和させておかないと，センサーの感度が悪くなる可能性があります．
+電極を時計回りに回すと取り外すことができますが，
+力を入れ過ぎるとフェルト部分がはずれてしまうので要注意です．</p>
+
+<p><a href="https://gyazo.com/2d48ec98bcecee18d4f3e5d0b68b5117"><img src="https://i.gyazo.com/2d48ec98bcecee18d4f3e5d0b68b5117.png" alt="Image from Gyazo" /></a></p>
+
+<p>それでは，ヘッドセットを頭に装着します．
+ヘッドセットを両手で持ち，頭上から下に向かってスライドさせます．
+このとき，左右の参照電極を，ちょうど耳たぶの裏の骨部分に配置します．
+参照電極を用いた方法は<strong>単極導出</strong>と呼ばれ，この参照電極と他の電極との電位差が記録されます．
+この参照電極は，他の電極にも影響するため，正確な設置が必要です．
+また，前方の左右の電極は，眉毛から指３本だけ上にあるように配置します．</p>
+
+<p><a href="https://gyazo.com/e191533e6ee5b057293b7eaf2e7fff96"><img src="https://i.gyazo.com/e191533e6ee5b057293b7eaf2e7fff96.png" alt="Image from Gyazo" /></a></p>
+
+<p>この電極の設置の質（コンタクト・クオリティ）はEmotivProの下記の画面で確認できますが，・・・，非常に難しい．
+<strong>緑色</strong>の電極はコンタクト・クオリティが高いことを示しています．
+電極の位置を微調整しても，コンタクト・クオリティは全体で<strong>28%</strong>がやっとでした．
+このあたりのコツをご存知でしたら，お教えください．</p>
+
+<p><a href="https://gyazo.com/2fdd8f8c5b802407399663905a3b0e7b"><img src="https://i.gyazo.com/2fdd8f8c5b802407399663905a3b0e7b.png" alt="Image from Gyazo" /></a></p>
+
+<h1 id="脳波を可視化しよう"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />脳波を可視化しよう</h1>
+
+<p>次は脳波を可視化してみましょう．
+ここで，脳波のサンプリングレートとA/D変換の分解能を確認しておきます．
+サンプリングレートは<strong>128Hz</strong>，また，分解能は<strong>16ビット（65536階調）</strong>です．
+図中に<strong>EEG</strong>と表記がありますが，これはElectroencephalographの略で<strong>脳波（図）</strong>を意味しています
+（単に脳波を<strong>EEG</strong>と呼ぶことも多い）．</p>
+
+<p><a href="https://gyazo.com/75593375d5e29860e686faf840ca02a5"><img src="https://i.gyazo.com/75593375d5e29860e686faf840ca02a5.png" alt="Image from Gyazo" /></a></p>
+
+<p>次に電極の位置番号を確認しておきます．
+上述したようにEpoc+では，14チャネルの電極があり，
+それぞれ，<strong>AF3</strong>，<strong>AF4</strong>，<strong>F3</strong>，<strong>F4</strong>，<strong>F7</strong>，<strong>F8</strong>，<strong>FC5</strong>，<strong>FC6</strong>，<strong>T7</strong>，<strong>T8</strong>，<strong>P7</strong>，<strong>P8</strong>，<strong>O1</strong>，<strong>O2</strong>です．
+図中の赤い丸で表現されている電極は，耳たぶの裏にある参照電極です．
+ここでは，コンタクト・クオリティの高い<strong>AF4</strong>，<strong>F3</strong>，<strong>P8</strong>の３箇所に注目します．</p>
+
+<p><a href="https://gyazo.com/856dbe31f676fc0120b610f1e93f06f1"><img src="https://i.gyazo.com/856dbe31f676fc0120b610f1e93f06f1.png" alt="Image from Gyazo" /></a></p>
+
+<p><strong>AF4</strong>，<strong>F3</strong>，<strong>P8</strong>の３箇所の電極の生データは下記です．
+横軸は時間で単位は<strong>10[ms]</strong>，また，縦軸は電位を表し<strong>-100µV</strong>〜<strong>100µV</strong>の範囲を取ります．
+一般的にローデータから，脳波の意味を読み取ることは困難なため，高速フーリエ変換をして周波数成分を取り出します．</p>
+
+<p><a href="https://gyazo.com/b4e699e6fc9626167784238d7000148c"><img src="https://i.gyazo.com/b4e699e6fc9626167784238d7000148c.png" alt="Image from Gyazo" /></a></p>
+
+<p>EmotivProはフーリエ変換した周波数スペクトルの表示も可能です．
+<strong>P8</strong>にフーリエ変換をした結果は下記のようになります．
+周波数に応じて脳波は分類され，4〜8Hzは<strong>シータ波</strong>，8〜12Hzは<strong>アルファ波</strong>，13Hz以上は<strong>ベータ波</strong>と呼ばれます．
+この結果では，若干ですが<strong>シータ波</strong>が有意なように見えます．
+<strong>シータ波</strong>は眠い状態で発生する波とされ，いかに寝不足かが分かる結果となりました（笑）．</p>
+
+<p><a href="https://gyazo.com/474b1eaca562d3486e0d9eb159671ed9"><img src="https://i.gyazo.com/474b1eaca562d3486e0d9eb159671ed9.png" alt="Image from Gyazo" /></a></p>
+
+<p>今回はEmotivの基本的な使い方を解説しました．
+次回は<strong>Cortex</strong>と呼ばれるAPIを利用して，<strong>Python</strong>で脳波データを取得することに挑戦します．</p>
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&amp;t=naotoassociat-22&amp;m=amazon&amp;o=9&amp;p=8&amp;l=as1&amp;IS2=1&amp;detail=1&amp;asins=4791105990&amp;linkId=f9c1eb1531853c5ddd4830bd3d49d294&amp;bc1=f8f8f8&amp;lt1=_blank&amp;fc1=333333&amp;lc1=0066c0&amp;bg1=f8f8f8&amp;f=ifr"></iframe>
+
+<!--
 <ul>
-  <li><a href="contents/robohon/robohon1.html">ロボホンの開発環境の構築</a></li>
-  <li><a href="contents/robohon/robohon2.html">アプリトリガとユーザトリガによる発話</a></li>
-  <li><a href="contents/robohon/robohon3.html">QRコードの読み取り</a></li>
+    <li>中山清喬(2014)『スッキリわかるJava入門 入門編 第2版』インプレス </li>
+    <li>中山清喬(2014)『スッキリわかるJava入門 実践編 第2版』インプレス </li>
+    <li>日向俊二(2015)『JavaFX & Java8 プログラミング Javaによる新しいGUI プログラミング入門』カットシステム</li>
 </ul>
+-->
 
-<h3 id="tobii-eye-tracker">Tobii Eye Tracker</h3>
-
-<ul>
-  <li><a href="contents/eyetracker/eyetracker1.html">Tobii Eye Trackerを利用した視線の認識</a></li>
-  <li><a href="contents/eyetracker/eyetracker2.html">OpenCVを利用した視線位置の描画</a></li>
-</ul>
-
-<h4 id="unity">Unity</h4>
-
-<ul>
-  <li><a href="contents/unity/artoolkit.html">NyARToolkit for Unityの導入</a></li>
-  <li><a href="contents/unity/artoolkit2.html">NyARToolkit for Unityで画像を表示</a></li>
-  <li><a href="contents/unity/artoolkit3.html">NyARToolkit for Unityで3Dモデルを表示</a></li>
-  <li><a href="contents/unity/artoolkit4.html">NyARToolkit for Unityで3Dモデルのアニメーション</a></li>
-  <li><a href="contents/unity/artoolkit5.html">NyARToolkit for UnityでNFTを利用したマーカーの認識</a></li>
-  <li><a href="contents/unity/google_vr">Google VR SDKを利用した360°画像ビューアー</a></li>
-  <li><a href="contents/unity/google_vr2">Google VR SDKで視線の検知</a></li>
-</ul>
-
-<h4 id="enchantjs">enchant.js</h4>
-
-<ul>
-  <li><a href="contents/enchant_js/moonblock.html">MOONBlockでゲームプログラミング</a></li>
-</ul>
-
-<h4 id="processing">Processing</h4>
-
-<ul>
-  <li><a href="contents/processing/processing.html">Processingではじめての画像処理　～3Dオブジェクトを描こう～</a></li>
-</ul>
-
-<h4 id="codecombat">CodeCombat</h4>
-
-<ul>
-  <li><a href="contents/codecombat/codecombat.html">CodeCombatでプログラミング学習</a></li>
-</ul>
-
-<h4 id="emotiv">Emotiv</h4>
-
-<ul>
-  <li><a href="contents/emotiv/emotiv.html">Emotivで脳波データの取得</a></li>
-</ul>
 
   </div>
 
@@ -228,7 +274,7 @@
           <!-- <li><a href="mailto:nmukai@sugiyama-u.ac.jp">nmukai@sugiyama-u.ac.jp</a></li> -->
           <li style="margin-bottom:5px">
               <!-- Facebook Button -->
-<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//contents.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//contents/emotiv/emotiv.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <!-- Twitter Button -->
 <div>
