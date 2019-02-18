@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Emotivで脳波を可視化</title>
+  <title>Cortexで脳波データの取得</title>
   <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです．授業で使用する技術的な資料に加え，女子大教員の日常を４コマ漫画形式で公開しています．">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://localhost:4000/contents/emotiv/emotiv.html">
+  <link rel="canonical" href="http://localhost:4000/contents/emotiv/emotiv2.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://localhost:4000/feed.xml">
 
   <!-- Faviconの実装 -->
@@ -51,7 +51,7 @@
 
   <!-- OGP -->
   
-  <meta property="og:image" content="https://i.gyazo.com/7ccfb248a92d7521fe8851edaab45742.png">
+  <meta property="og:image" content="https://i.gyazo.com/a097e50f64142dd6cf07b41f3b8ee1ea.png">
   
 </head>
 
@@ -123,11 +123,11 @@
 <meta name="twitter:creator" content="@creator_username">
 
 
-  <meta name="twitter:title" content="Emotivで脳波を可視化">
+  <meta name="twitter:title" content="Cortexで脳波データの取得">
 
 
 
-  <meta name="twitter:url" content="http://localhost:4000/contents/emotiv/emotiv.html">
+  <meta name="twitter:url" content="http://localhost:4000/contents/emotiv/emotiv2.html">
 
 
 
@@ -135,14 +135,14 @@
 
 
 
-  <meta name="twitter:image:src" content="https://i.gyazo.com/7ccfb248a92d7521fe8851edaab45742.png">
+  <meta name="twitter:image:src" content="https://i.gyazo.com/a097e50f64142dd6cf07b41f3b8ee1ea.png">
 
 
 
   <header class="post-header">
-    <h1 class="post-title">Emotivで脳波を可視化</h1>
+    <h1 class="post-title">Cortexで脳波データの取得</h1>
     <!-- Facebook Button -->
-<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//contents/emotiv/emotiv.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//contents/emotiv/emotiv2.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <!-- Twitter Button -->
 <div>
@@ -156,85 +156,134 @@
   </header>
 
   <div class="post-content">
-    <p><a href="https://gyazo.com/7ccfb248a92d7521fe8851edaab45742"><img src="https://i.gyazo.com/7ccfb248a92d7521fe8851edaab45742.png" alt="Image from Gyazo" /></a></p>
+    <p><a href="https://gyazo.com/a097e50f64142dd6cf07b41f3b8ee1ea"><img src="https://i.gyazo.com/a097e50f64142dd6cf07b41f3b8ee1ea.png" alt="Image from Gyazo" /></a></p>
 
-<h1 id="emotivとは"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />Emotivとは</h1>
+<h1 id="cortexとは"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />Cortexとは</h1>
 
-<p><a href="https://www.emotiv.com">Emotiv</a>は<a href="http://www.innovatec.co.jp">株式会社イノバテック</a>が提供している小型の脳波計です．
-<strong>Epoc+</strong>，<strong>INSIGHT</strong>，<strong>EPOC flex</strong>など複数の種類がありますが，
-ここでは，14チャネルの電極が装着された<strong>EMOTIV EPOC+</strong>を対象に開発することを目的とします．
-この装置は，他の脳波計と比べ，スタイリッシュなデザインが特徴です．
-頭に装着するだけで，未来感がビシビシ伝わってきます．
-専用のアプリケーションである<a href="https://www.emotiv.com/emotivpro/">EmotivPRO</a>で，
-脳波データを取得・可視化するだけなら<strong>無料のラインセンス</strong>で利用可能です．
-しかし，脳波の生データをAPI（<strong>Cortex</strong>）を経由して取得するなど，
-研究を目的として利用するためには，別途ライセンスの購入が必要です．
-月額99ドルと決して安くはないため注意が必要です（年払いで割引されますが）．</p>
+<p><strong>Python</strong> を経由して，<strong>Emotiv Epoc+</strong> で計測したデータを取得してみましょう．
+データを取得するには，Emotivの標準APIである<a href="https://emotiv.github.io/cortex-docs/#introduction">Cortex</a>を利用します．
+今回はPythonを利用しますが，このCortexは <strong>JSON</strong> と <strong>WebSockets</strong> で実装されているため，
+Python以外のプログラミング言語でも利用可能です．
+また，Cortexは，EmotivProと一緒にインストールされますが，
+<strong>Cortex UI</strong>というソフトウェアで動作確認が可能です．
+下図のように対象のデバイスが検出されていればOKです．
+コンタクト・クオリティは今回も35%とパッとしません（笑）．</p>
 
-<p><a href="https://gyazo.com/71499fbf173b4487cbc7cbe056c8bc41"><img src="https://i.gyazo.com/71499fbf173b4487cbc7cbe056c8bc41.png" alt="Image from Gyazo" /></a></p>
+<p><a href="https://gyazo.com/b503cc5a10e9e494df271e1b35c71c9d"><img src="https://i.gyazo.com/b503cc5a10e9e494df271e1b35c71c9d.png" alt="Image from Gyazo" /></a></p>
 
-<h1 id="emotivproを使ってみよう"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />EmotivPROを使ってみよう</h1>
+<h1 id="ライブラリの導入"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />ライブラリの導入</h1>
 
-<p>最初に，専用のアプリケーションである<a href="https://www.emotiv.com/emotivpro/">EmotivPRO</a>を利用して，
-脳波データを取得・可視化してみましょう．
-まずは，電極のフェルドパッドを生理食塩水で水和させます．
-この生理食塩水はコンタクトレンズなどにも用いられているものです．
-ここで，しっかりと水和させておかないと，センサーの感度が悪くなる可能性があります．
-電極を時計回りに回すと取り外すことができますが，
-力を入れ過ぎるとフェルト部分がはずれてしまうので要注意です．</p>
+<p>Pythonはウィンドウズ版のバージョン3.7.2を用いることにします．
+Cortexでは，データの送受信には <strong>WebSockets</strong> という技術を用います．
+ここでは，<strong>WebSockets</strong> のクライアント（データ受信側）として実装するため，
+<strong>websocket-client</strong> ライブラリをインストールしておきます．</p>
 
-<p><a href="https://gyazo.com/2d48ec98bcecee18d4f3e5d0b68b5117"><img src="https://i.gyazo.com/2d48ec98bcecee18d4f3e5d0b68b5117.png" alt="Image from Gyazo" /></a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install websocket-client
+</code></pre></div></div>
 
-<p>それでは，ヘッドセットを頭に装着します．
-ヘッドセットを両手で持ち，頭上から下に向かってスライドさせます．
-このとき，左右の参照電極を，ちょうど耳たぶの裏の骨部分に配置します．
-参照電極を用いた方法は<strong>単極導出</strong>と呼ばれ，この参照電極と他の電極との電位差が記録されます．
-この参照電極は，他の電極にも影響するため，正確な設置が必要です．
-また，前方の左右の電極は，眉毛から指３本だけ上にあるように配置します．</p>
+<p>また，WebSocketsのポート番号は <strong>54231</strong> です．
+URLには <strong>wss://localhost:54321</strong> を指定します．
+ここで，<strong>wss</strong> はWebSocketsのプロトコルを表しています．</p>
 
-<p><a href="https://gyazo.com/e191533e6ee5b057293b7eaf2e7fff96"><img src="https://i.gyazo.com/e191533e6ee5b057293b7eaf2e7fff96.png" alt="Image from Gyazo" /></a></p>
+<h1 id="手順１認証"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />手順１：認証</h1>
 
-<p>この電極の設置の質（コンタクト・クオリティ）はEmotivProの下記の画面で確認できますが，・・・，非常に難しい．
-<strong>緑色</strong>の電極はコンタクト・クオリティが高いことを示しています．
-電極の位置を微調整しても，コンタクト・クオリティは全体で<strong>28%</strong>がやっとでした．
-このあたりのコツをご存知でしたら，お教えください．</p>
+<p>Cortexから脳波の生データを取得するには，<strong>クライアントID</strong>と<strong>シークレット</strong>で認証が必要です．
+この，クライアントIDとシークレットは，EMOTIVのユーザページで事前に取得しておきましょう（<strong>ライセンス番号</strong>も必要）．</p>
 
-<p><a href="https://gyazo.com/2fdd8f8c5b802407399663905a3b0e7b"><img src="https://i.gyazo.com/2fdd8f8c5b802407399663905a3b0e7b.png" alt="Image from Gyazo" /></a></p>
+<p>まずは，CORTEXで用いられる<strong>JSON-RPC</strong>について簡単に説明します．
+上述したように，サーバとクライアント間のデータのやりとりをJSON形式で行うという仕組みです．
+クライアントが送信する<strong>リクエスト</strong>の基本フォーマットは下記です．
+ここで，プロトコルバージョンの <strong>jsonrpc</strong> は常に <strong>2.0</strong> を指定します．
+メソッドやパラメータには，認証（authorize）やデータ取得（subscribe）などの文字列を指定します．</p>
 
-<h1 id="脳波を可視化しよう"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />脳波を可視化しよう</h1>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+	"jsonrpc": "2.0",
+	"method": メソッド,
+	"params":{
+		パラメータ: 値
+	},
+	"id": ID番号
+}
+</code></pre></div></div>
 
-<p>次は脳波を可視化してみましょう．
-ここで，脳波のサンプリングレートとA/D変換の分解能を確認しておきます．
-サンプリングレートは<strong>128Hz</strong>，また，分解能は<strong>16ビット（65536階調）</strong>です．
-図中に<strong>EEG</strong>と表記がありますが，これはElectroencephalographの略で<strong>脳波（図）</strong>を意味しています
-（単に脳波を<strong>EEG</strong>と呼ぶことも多い）．</p>
+<p>また，クライアントが受信する<strong>レスポンス</strong>の基本フォーマットは下記となります．
+サーバーからの応答結果は <strong>result</strong> に格納されています．
+また，リクエストと同じID番号が付与されています．</p>
 
-<p><a href="https://gyazo.com/75593375d5e29860e686faf840ca02a5"><img src="https://i.gyazo.com/75593375d5e29860e686faf840ca02a5.png" alt="Image from Gyazo" /></a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+	"jsonrpc": "2.0",
+	"result": 結果,
+	"id": ID番号
+}
+</code></pre></div></div>
 
-<p>次に電極の位置番号を確認しておきます．
-上述したようにEpoc+では，14チャネルの電極があり，
-それぞれ，<strong>AF3</strong>，<strong>AF4</strong>，<strong>F3</strong>，<strong>F4</strong>，<strong>F7</strong>，<strong>F8</strong>，<strong>FC5</strong>，<strong>FC6</strong>，<strong>T7</strong>，<strong>T8</strong>，<strong>P7</strong>，<strong>P8</strong>，<strong>O1</strong>，<strong>O2</strong>です．
-図中の赤い丸で表現されている電極は，耳たぶの裏にある参照電極です．
-ここでは，コンタクト・クオリティの高い<strong>AF4</strong>，<strong>F3</strong>，<strong>P8</strong>の３箇所に注目します．</p>
+<p><strong>JSON-RPC</strong>を用いた認証のためのコードは次のようになります．
+認証は <strong>authorize</strong> メソッドを用います．
+パラメータとして，事前に取得したクライアントID（<strong>client_id</strong>），
+シークレット（<strong>client_secret</strong>），ライセンス番号（<strong>license</strong>）を指定しています．
+また，<strong>debit</strong>はEmotivが接続可能なクライアントの数を表しています．</p>
 
-<p><a href="https://gyazo.com/856dbe31f676fc0120b610f1e93f06f1"><img src="https://i.gyazo.com/856dbe31f676fc0120b610f1e93f06f1.png" alt="Image from Gyazo" /></a></p>
+<script src="https://gist.github.com/naoto-github/deae39488c58ac8c3ac13d92bd0471d9.js"> </script>
 
-<p><strong>AF4</strong>，<strong>F3</strong>，<strong>P8</strong>の３箇所の電極の生データは下記です．
-横軸は時間で単位は<strong>10[ms]</strong>，また，縦軸は電位を表し<strong>-100µV</strong>〜<strong>100µV</strong>の範囲を取ります．
-一般的にローデータから，脳波の意味を読み取ることは困難なため，高速フーリエ変換をして周波数成分を取り出します．</p>
+<p>サーバーからの応用は<strong>response</strong>に代入され，それを出力すると下記のようになります．</p>
 
-<p><a href="https://gyazo.com/b4e699e6fc9626167784238d7000148c"><img src="https://i.gyazo.com/b4e699e6fc9626167784238d7000148c.png" alt="Image from Gyazo" /></a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[PyCortex]
+{'id': 1, 'jsonrpc': '2.0', 'result': {'_auth': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImNvbS5uYW90by1lbW90aXZlLnRlc3QiLCJleHAiOjE1NTA2NTkyNTIsImZpcnN0TmFtZSI6Ik5hb3RvIiwibGFzdE5hbWUiOiJNdWthaSIsImxpY2Vuc2UiOnsiaXNfY29tbWVyY2lhbCI6ZmFsc2UsImxpY2Vuc2VJZCI6IjI0YzliYmYyLThjYTYtNDVmOS04NjFhLTVmNDM2NDE1Y2QxNSIsImxpY2Vuc2VTY29wZSI6MiwibGljZW5zZV9leHBpcmUiOjE1ODA2MDE1OTksImxpY2Vuc2VfaGFyZExpbWl0IjoxNTUyMDg5NTk5LCJsaWNlbnNlX3NvZnRMaW1pdCI6MTU1MTQ4NDc5OX0sImxpY2Vuc2VJZCI6IjI0YzliYmYyLThjYTYtNDVmOS04NjFhLTVmNDM2NDE1Y2QxNSIsImxpY2Vuc2VTY29wZSI6MiwibGljZW5zZV9hZ3JlZW1lbnQiOnsiYWNjZXB0ZWQiOnRydWUsImxpY2Vuc2VfdXJsIjoiaHR0cHM6Ly93d3cuZW1vdGl2Y2xvdWQuY29tL2RiYXBpL3ByaXZhY3kvZG9jL2V1bGEvIn0sImxpY2Vuc2VfZXhwaXJlIjoxNTgwNjAxNTk5LCJsaWNlbnNlX2hhcmRMaW1pdCI6MTU1MjA4OTU5OSwibGljZW5zZV9zb2Z0TGltaXQiOjE1NTE0ODQ3OTksIm5iZiI6MTU1MDQwMDA1MiwidXNlckNsb3VkSWQiOjUzMjM4LCJ1c2VybmFtZSI6Im5hb3RvLWVtb3RpdmUifQ.Ziydg2az9HKjBdlXwR2ggcd21NLhoK6mwtfwN0sY2mg'}}
+</code></pre></div></div>
 
-<p>EmotivProはフーリエ変換した周波数スペクトルの表示も可能です．
-<strong>P8</strong>にフーリエ変換をした結果は下記のようになります．
-周波数に応じて脳波は分類され，4〜8Hzは<strong>シータ波</strong>，8〜12Hzは<strong>アルファ波</strong>，13Hz以上は<strong>ベータ波</strong>と呼ばれます．
-この結果では，若干ですが<strong>シータ波</strong>が有意なように見えます．
-<strong>シータ波</strong>は眠い状態で発生する波とされ，いかに寝不足かが分かる結果となりました（笑）．</p>
+<p>取得したデータには，これ以降の送受信で用いる認証トークン <strong>_auth</strong> が含まれています．
+これを，<strong>auth_token</strong> という変数に代入しておきます．</p>
 
-<p><a href="https://gyazo.com/474b1eaca562d3486e0d9eb159671ed9"><img src="https://i.gyazo.com/474b1eaca562d3486e0d9eb159671ed9.png" alt="Image from Gyazo" /></a></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>auth_token = response["result"]["_auth"]
+</code></pre></div></div>
 
-<p>今回はEmotivの基本的な使い方を解説しました．
-次回は<strong>Cortex</strong>と呼ばれるAPIを利用して，<strong>Python</strong>で脳波データを取得することに挑戦します．</p>
+<h1 id="手順２セッションの確立"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />手順２：セッションの確立</h1>
+
+<p>デバイスとのセッションを確立します．
+セッションの確立は <strong>createSession</strong> メソッドを用います．
+パラメータとして，認証トークン（<strong>_auth</strong>），セッションの状態（<strong>status</strong>）を指定しています．
+セッションの状態には，<strong>open</strong>（セッションの開始），<strong>active</strong>（データ送受信），
+<strong>close</strong>（セッションを閉じる）などが指定できます(いきなり<strong>active</strong>で問題なさそうですが)．</p>
+
+<script src="https://gist.github.com/naoto-github/ee1b6121471e9fa3f61c6694c2f4e2ed.js"> </script>
+
+<p>次に，デバイスにデータの記録を指示します．
+データの記録には，<strong>updateSession</strong> メソッドを用います．
+パラメータとして，認証トークン（<strong>_auth</strong>），セッションの状態（<strong>status</strong>）を指定しています．
+ここでは，セッションの状態として <strong>startRecord</strong> を指定します．
+この他，<strong>recordingName</strong>，<strong>recordingNote</strong>，<strong>recordingSubject</strong>の指定も必要なようです（ここのところは，イマイチわかりません）．</p>
+
+<script src="https://gist.github.com/naoto-github/90a3bfe48d82b7d3a0f1c9793566d0bb.js"> </script>
+
+<p>サーバーからの応答は下記のようになります．
+電極の位置番号である<strong>AF3</strong>，<strong>F7</strong>などが確認できます．</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'id': 3, 'jsonrpc': '2.0', 'result': {'appId': 'com.naoto-emotive.test', 'headset': {'connectedBy': 'dongle', 'dongle': '6ff', 'firmware': '633', 'id': 'EPOCPLUS-4A2C01C0', 'label': '', 'motionSensors': ['Q0', 'Q1', 'Q2', 'Q3', 'ACCX', 'ACCY', 'ACCZ', 'MAGX', 'MAGY', 'MAGZ'], 'sensors': ['AF3', 'F7', 'F3', 'FC5', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'FC6', 'F4', 'F8', 'AF4'], 'settings': {'eegRate': 128, 'eegRes': 16, 'memsRate': 0, 'memsRes': 16, 'mode': 'EPOCPLUS'}, 'status': 'connected'}, 'id': 'a1755548-ec7b-41bf-bbdb-a6ee2174a472', 'license': '24c9bbf2-8ca6-45f9-861a-5f436415cd15', 'logs': {'recordInfos': [{'name': 'test', 'notes': 'note1', 'recordId': 'b9b0a5c0-4a79-4137-aafb-12c8b7d865ea', 'sampleMarkerAFF': [0], 'sampleMarkerEEG': [0], 'startMarkerRecording': '2019-02-18T21:12:29.601887+09:00', 'stopMarkerRecording': '', 'subject': 'subject1'}]}, 'markers': [{'code': 1, 'enums': ['record-1'], 'events': [['2019-02-18T21:12:29.601887+09:00', 1]], 'label': 'test', 'port': 'EmotivProRecording'}], 'owner': 'naoto-emotive', 'profile': '', 'project': '', 'recording': True, 'started': '2019-02-18T21:12:29.585930+09:00', 'status': 'activated', 'stopped': '', 'streams': None, 'subject': 0, 'tags': [], 'title': ''}}
+</code></pre></div></div>
+
+<h1 id="手順３データの取得"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />手順３：データの取得</h1>
+
+<p>最後に脳波の生データを取得します．
+データを取得するには，<strong>subscribe</strong> メソッドを用います．
+パラメータには，認証トークン（<strong>_auth</strong>），対象のデータストリーム（<strong>streams</strong>）を指定しています．
+ここでは，データストリームとして，脳波を表す<strong>eeg</strong>を指定します．</p>
+
+<script src="https://gist.github.com/naoto-github/0edbf7f98a697f8ec1234137e428baaa.js"> </script>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'id': 4, 'jsonrpc': '2.0', 'result': [{'eeg': {'cols': ['COUNTER', 'INTERPOLATED', 'RAW_CQ', 'AF3', 'F7', 'F3', 'FC5', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'FC6', 'F4', 'F8', 'AF4', 'MARKER_HARDWARE', 'MARKER']}, 'sid': 'a1755548-ec7b-41bf-bbdb-a6ee2174a472'}]}
+</code></pre></div></div>
+
+<p>これで，準備は完了です．
+あとは，WebSocketからデータを取得すると，脳波の生データが連続して取得できます（サーバーへの送信は不要）．</p>
+
+<script src="https://gist.github.com/naoto-github/2aff99d29ffc62bdfe4dbd942f1e4755.js"> </script>
+
+<p>取得されたデータは下記です．
+例えば，AF3は<strong>4171.026</strong>，F7は<strong>4155.513</strong>のように，正規化された値が取得できていることがわかります（コンタクト・クオリティが低いので値は信用できませんが・・）．
+データの詳細は<a href="https://emotiv.github.io/cortex-docs/#eeg-event">ドキュメント</a>を参照してください．</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'eeg': [33.0, 0.0, 0.0, 4171.026, 4143.718, 4155.513, 4156.41, 4164.103, 3978.205, 4057.564, 4166.026, 4152.564, 4168.59, 4138.333, 4140.385, 4164.744, 4163.205, 0.0, 0.0], 'sid': '00ce38aa-8ce2-4e86-87ff-5ab689385ad9', 'time': 22909.26}
+</code></pre></div></div>
 
 <h3>参考書籍</h3>
 
@@ -274,7 +323,7 @@
           <!-- <li><a href="mailto:nmukai@sugiyama-u.ac.jp">nmukai@sugiyama-u.ac.jp</a></li> -->
           <li style="margin-bottom:5px">
               <!-- Facebook Button -->
-<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//contents/emotiv/emotiv.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//contents/emotiv/emotiv2.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <!-- Twitter Button -->
 <div>
