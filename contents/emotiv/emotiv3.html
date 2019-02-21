@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>ミシンの形</title>
-  <meta name="description" content="">
+  <title>脳波データをフーリエ解析</title>
+  <meta name="description" content="椙山女学園大学 文化情報学部 向研究室のブログです．授業で使用する技術的な資料に加え，女子大教員の日常を４コマ漫画形式で公開しています．">
 
   <link rel="stylesheet" href="/css/main.css">
   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-  <link rel="canonical" href="http://localhost:4000/comic/2016/07/29/comic_050.html">
+  <link rel="canonical" href="http://localhost:4000/contents/emotiv/emotiv3.html">
   <link rel="alternate" type="application/rss+xml" title="M's Lab. （えむらぼ）" href="http://localhost:4000/feed.xml">
 
   <!-- Faviconの実装 -->
@@ -51,7 +51,7 @@
 
   <!-- OGP -->
   
-  <meta property="og:image" content="https://i.gyazo.com/48520c8c03a0e23055d6e06b32d093d7.png">
+  <meta property="og:image" content="https://i.gyazo.com/46bdd4888ca253d334c2d14292b7df84.png">
   
 </head>
 
@@ -116,18 +116,18 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post">
 
   <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@site_username">
 <meta name="twitter:creator" content="@creator_username">
 
 
-  <meta name="twitter:title" content="ミシンの形">
+  <meta name="twitter:title" content="脳波データをフーリエ解析">
 
 
 
-  <meta name="twitter:url" content="http://localhost:4000/comic/2016/07/29/comic_050.html">
+  <meta name="twitter:url" content="http://localhost:4000/contents/emotiv/emotiv3.html">
 
 
 
@@ -135,15 +135,14 @@
 
 
 
-  <meta name="twitter:image:src" content="https://i.gyazo.com/48520c8c03a0e23055d6e06b32d093d7.png">
+  <meta name="twitter:image:src" content="https://i.gyazo.com/46bdd4888ca253d334c2d14292b7df84.png">
 
 
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">ミシンの形</h1>
-    <p class="post-meta"><time datetime="2016-07-29T15:27:35+09:00" itemprop="datePublished">Jul 29, 2016</time></p>
+    <h1 class="post-title">脳波データをフーリエ解析</h1>
     <!-- Facebook Button -->
-<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//comic/2016/07/29/comic_050.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//contents/emotiv/emotiv3.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <!-- Twitter Button -->
 <div>
@@ -154,12 +153,121 @@
 
 
 
-    <!-- <div class="fb-like" data-href="http://naoto-github.github.io//comic/2016/07/29/comic_050.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-    <div><a href="https://twitter.com/share" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div> -->
   </header>
 
-  <div class="post-content" itemprop="articleBody">
-    <p><a href="https://gyazo.com/48520c8c03a0e23055d6e06b32d093d7"><img src="https://i.gyazo.com/48520c8c03a0e23055d6e06b32d093d7.png" alt="https://gyazo.com/48520c8c03a0e23055d6e06b32d093d7" /></a></p>
+  <div class="post-content">
+    <p><a href="https://gyazo.com/46bdd4888ca253d334c2d14292b7df84"><img src="https://i.gyazo.com/46bdd4888ca253d334c2d14292b7df84.png" alt="Image from Gyazo" /></a></p>
+
+<h1 id="フーリエ変換とは"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />フーリエ変換とは</h1>
+
+<p>前回までに<strong>Cortex</strong>を利用してEmotiv Epoc+で計測したデータをPythonから取得する方法を説明しました．
+一般に，脳波の生データから情報を読み取ることは困難であり，周波数成分に変換することが必要になります．
+この周波数成分の変換に必要な技術が鬼門の<strong>フーリエ変換（Fourier Transform: FT）</strong> です．
+大学の工学部ではカリキュラムの１つとなっているフーリエ変換（フーリエ級数）に躓いた人も多いのではないでしょうか（何を隠そう向もその一人です）．
+ここでは，あまり深く考えず，フーリエ変換は <strong>時間領域</strong> から <strong>周波数領域</strong> に変換する仕組みだと理解しておけば十分です．</p>
+
+<p>例を挙げて考えてみましょう．
+Emotivのサンプリングレートは <strong>128Hz</strong> であることから，1秒間に <strong>128</strong>個の信号が計測されることに注意してください．
+仮に計測された脳波が，下記のグラフのような信号だったとします．
+この信号には，1秒間に <strong>3周期分</strong> のSin関数が含まれています．
+グラフの横軸が <strong>時間</strong> であることから，このデータは <strong>時間領域</strong> に存在しています．</p>
+
+<p><a href="https://gyazo.com/146d289cba8fbafd7d3647fba2baf264"><img src="https://i.gyazo.com/146d289cba8fbafd7d3647fba2baf264.png" alt="Image from Gyazo" /></a></p>
+
+<p>これを，フーリエ変換（高速フーリエ変換）すると下記のグラフになります．
+このグラフの横軸は <strong>周波数</strong> であり，このデータは <strong>周波数領域</strong> に存在しています．
+<strong>周波数</strong> が <strong>3</strong> のところに，縦棒がありますよね．
+この結果は，先のグラフには <strong>周期3</strong> の信号が含まれていることを表しています．</p>
+
+<p><a href="https://gyazo.com/584ad2e441dce7293b1941e46d8fc58b"><img src="https://i.gyazo.com/584ad2e441dce7293b1941e46d8fc58b.png" alt="Image from Gyazo" /></a></p>
+
+<p>フーリエ変換の凄いところは，異なる周期の信号が混ざっていても，それぞれの周波数成分の強さが取得できることです．
+次に，下記のグラフの信号を考えます
+この信号には，1秒間に <strong>5周期分</strong> のSin関数が含まれています．
+また，その振幅は先の信号と比べて <strong>1/2</strong> の大きさです．</p>
+
+<p><a href="https://gyazo.com/b316cdf6bbbd065ae7722120bfa2ba14"><img src="https://i.gyazo.com/b316cdf6bbbd065ae7722120bfa2ba14.png" alt="Image from Gyazo" /></a></p>
+
+<p>この信号を，先の周期3の信号に加えます（本当に足し算するだけ）．
+すると，下図のようなグラフになります．
+これだけで，複雑なグラフになり，人間には理解できないレベルに到達します．</p>
+
+<p><a href="https://gyazo.com/2b1b411336ab64d3bf5f7b5b5b925073"><img src="https://i.gyazo.com/2b1b411336ab64d3bf5f7b5b5b925073.png" alt="Image from Gyazo" /></a></p>
+
+<p>さぁ，フーリエ変換の出番です．
+上の周期3と周期5のグラフを加えた信号を変換すると，下記のグラフになります．
+<strong>周期3</strong> の振幅は <strong>1</strong>，また，<strong>周期5</strong> の振幅が <strong>0.5</strong> となっていることが読み取れますね．
+フーリエ級数を発明した<a href="https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A7%E3%82%BC%E3%83%95%E3%83%BB%E3%83%95%E3%83%BC%E3%83%AA%E3%82%A8">ジョゼフ・フーリエ</a>は本当に天才だと思います（真面目）．</p>
+
+<p><a href="https://gyazo.com/bc8ad03fb513371a0bb874d92be8b669"><img src="https://i.gyazo.com/bc8ad03fb513371a0bb874d92be8b669.png" alt="Image from Gyazo" /></a></p>
+
+<h1 id="脳波データの記録"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />脳波データの記録</h1>
+
+<p>それでは，<a href="emotiv2.html">前回</a>までに実装したプログラムを利用して脳波データを取得しましょう．
+準備として，数値計算ライブラリの<strong>Numpy</strong>と，描画ライブラリの<strong>matplotlib.pyplot</strong>を導入しておきます．</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install numpy
+pip install matplotlib
+</code></pre></div></div>
+
+<p><strong>Cortex</strong>からデータを取得するためのコードは下記です．
+ここでは，サンプリングレートが<strong>128Hz</strong>，サンプリング時間は<strong>1秒</strong>とするため，取得されるデータ数は<strong>128</strong>になります．
+取得されたデータは<em>signals</em>というリストに追加されます．
+また，コード中の<strong>EEGData</strong>は独自に実装したクラスであり，14箇所の電極の脳波データを保持するために用いています．</p>
+
+<script src="https://gist.github.com/naoto-github/22ebbb5ba9d5c5340661ea42f80887e9.js"> </script>
+
+<script src="https://gist.github.com/naoto-github/1636ccaabe9a798baf5f1c201c12da41.js"> </script>
+
+<p>上記で取得したデータをグラフで可視化してみましょう．
+可視化するためのコードは下記です．
+ここでは，後頭部の電極<strong>P8</strong>に注目しています．
+平均値を減算することで正規化していることに注意してください．
+自分の脳波を見られて恥ずかしい・・・とは特に思わないですね（笑）</p>
+
+<script src="https://gist.github.com/naoto-github/2b81a401a0ac908185b4f154cb694cde.js"> </script>
+
+<p><a href="https://gyazo.com/cd3b398dd532e07dc244a1459e108073"><img src="https://i.gyazo.com/cd3b398dd532e07dc244a1459e108073.png" alt="Image from Gyazo" /></a></p>
+
+<h1 id="フーリエ変換"><img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png" />フーリエ変換</h1>
+
+<p>最後に，フーリエ変換を適用します．
+準備として，数値解析ライブラリの<strong>SciPy</strong>を導入しておきます．</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install scipy
+</code></pre></div></div>
+
+<p>上記で取得した脳波の生データに直接フーリエ変換しても構わないのですが，
+より特徴的な周波数成分を抽出するには <strong>窓関数</strong> を事前に適用することが一般的です
+（窓関数の詳細はロジカルアーツ研究所の<a href="https://www.logical-arts.jp/archives/124">窓関数を用いる理由</a>を参照してください）．
+ここでは，周波数分解に向いているとされる <strong>ハミング窓</strong> を用います．
+このハミング窓を取得した脳波の生データに掛ければOKです．
+<strong>SciPy</strong>ライブラリを用いればフーリエ変換は至極簡単です．
+フーリエ変換の結果は複素数となるため，絶対値に変換しています．
+また，振幅も最大値で割ることで，0から1の範囲に正規化しています．
+グラフを確認すると，どうやら10Hz付近の振幅が大きいようですね．
+リラックスした状態で発生する<strong>アルファ波</strong>が有意であると言えそうです．</p>
+
+<script src="https://gist.github.com/naoto-github/f37db96e8e2fc331829a37f50cf93522.js"> </script>
+
+<p><a href="https://gyazo.com/69e503e9c796d8c82a7f0403ccd767f9"><img src="https://i.gyazo.com/69e503e9c796d8c82a7f0403ccd767f9.png" alt="Image from Gyazo" /></a></p>
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&amp;t=naotoassociat-22&amp;m=amazon&amp;o=9&amp;p=8&amp;l=as1&amp;IS2=1&amp;detail=1&amp;asins=4791105990&amp;linkId=f9c1eb1531853c5ddd4830bd3d49d294&amp;bc1=f8f8f8&amp;lt1=_blank&amp;fc1=333333&amp;lc1=0066c0&amp;bg1=f8f8f8&amp;f=ifr"></iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&amp;t=naotoassociat-22&amp;m=amazon&amp;o=9&amp;p=8&amp;l=as1&amp;IS2=1&amp;detail=1&amp;asins=4274066177&amp;linkId=9af75bd60e11590af6fb19ec55e49359&amp;bc1=f8f8f8&amp;lt1=_blank&amp;fc1=333333&amp;lc1=0066c0&amp;bg1=f8f8f8&amp;f=ifr"></iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&amp;t=naotoassociat-22&amp;m=amazon&amp;o=9&amp;p=8&amp;l=as1&amp;IS2=1&amp;detail=1&amp;asins=4534052154&amp;linkId=e50cd1018da7eefd349868d057e2ae7f&amp;bc1=f8f8f8&amp;lt1=_blank&amp;fc1=333333&amp;lc1=0066c0&amp;bg1=f8f8f8&amp;f=ifr"></iframe>
+
+<!--
+<ul>
+    <li>中山清喬(2014)『スッキリわかるJava入門 入門編 第2版』インプレス </li>
+    <li>中山清喬(2014)『スッキリわかるJava入門 実践編 第2版』インプレス </li>
+    <li>日向俊二(2015)『JavaFX & Java8 プログラミング Javaによる新しいGUI プログラミング入門』カットシステム</li>
+</ul>
+-->
+
 
   </div>
 
@@ -168,26 +276,6 @@
       </div>
     </div>
 
-    
-      
-        <!-- Google Adsence -->
-<div style="border-top: 2px solid black">
-    <div class="wrapper">
-        <h3>スポンサーリンク</h3>
-
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- フッター（モバイル） -->
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:320px;height:100px"
-             data-ad-client="ca-pub-1652300955422837"
-             data-ad-slot="6854507108"></ins>
-        <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
-</div>
-
-      
     
 
     <footer class="site-footer">
@@ -206,7 +294,7 @@
           <!-- <li><a href="mailto:nmukai@sugiyama-u.ac.jp">nmukai@sugiyama-u.ac.jp</a></li> -->
           <li style="margin-bottom:5px">
               <!-- Facebook Button -->
-<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//comic/2016/07/29/comic_050.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+<div style="margin-bottom:2px" class="fb-like" data-href="http://mukai-lab.info//contents/emotiv/emotiv3.html" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <!-- Twitter Button -->
 <div>
