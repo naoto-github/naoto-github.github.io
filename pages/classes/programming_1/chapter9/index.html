@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    3Dグラフィックス | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="3Dグラフィックス" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/programming_1/chapter9/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/d0b1414b74f9d3f51ab8ac0e3eec4768.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="スケッチの作成Processingを起動して、新規にスケッチを保存しましょう。 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。 ファイル名に「Project9」を入力し、[保存]をクリックしましょう。 保存先に「Project9」という名前のフォルダが作成されていることを確認してください。
+
+3次元グラフィックスProcessingは、これまで学んできた2Dグラフィックスだけでなく、3Dグラフィックスの描画も可能です。 3Dグラフィックスを描画するには、「P3D(Processing 3D)」または「OpenGL」の いずれかのレンダラを指定しますが、ここでは標準のP3Dを採用することにします。 P3Dを指定すると、2次元の座標系（x,y）が、３次元の座標系（x,y,z）に変更されます（z軸は奥行きを表します）。
+まずは、下記のコードを参考に、size()関数でP3Dを指定しましょう。 また、rect()関数で、1辺の長さが200の正方形を描きまます。 ここで、translate()関数を利用して、原点をウィンドウ中央に変更していることに注意してください。 Runボタンをクリックしたら、正方形が画面中央に描かれることを確認してください。
+ 
+このままでは、座標系が３次元に変更されているか確認出来ません。 そこで、マウスの動きに合わせて正方形を、X軸とY軸を中心に回転させてみましょう。 X軸まわりに回転させるにはrotateX()関数、Y軸まわりに回転させるにはrotateY()関数を利用します。 いずれも引数には回転する角度をラジアン角で指定します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。 ドラッグしたままマウスを動かすと、正方形が回転することを確認してください。
+ 
+
+立体的な図形の描画立体的な図形を描画してみましょう。 直方体を描画するにはbox()関数を利用します。 box()関数の引数には、直方体の幅（width）、高さ（height）、奥行き（depth）を指定します。 box()関数で描かれた直方体は原点を中心に描かれることに注意してください。
+box(width, height, depth); 下記を参考にコードを入力したら、Runボタンをクリックしてください。 ドラッグしたままマウスを動かすと、直方体が回転することを確認してください。
+ 
+球を描画するにはsphere()関数を利用します。 sphere()関数の引数には、半径（radius）を指定します。 sphere()関数で描かれた球は原点を中心に描かれることに注意してください。
+sphere(radius); 下記を参考にコードを入力したら、Runボタンをクリックしてください。 ドラッグしたままマウスを動かすと、球が回転することを確認してください。
+ 
+光源の設置立体的な図形に陰影をつけるには空間に光源を設置します。 光源には環境光、拡散光、点光源などの種類があります。
+環境光は、全方向から図形に対して均一の光を照らします。 全方向から照らすため影は出来ないことから、他の光源と組み合わせて用いるのが一般的です。 環境光を設置するには、ambientLight()関数を用います。 引数には三原色（R、G、B）の光の強度を0～255の範囲で設定します。
+ambientLight(R, G, B); 下記を参考にコードを入力したら、Runボタンをクリックしてください。 直方体全体の色が変化していることを確認してください。" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="3Dグラフィックス" />
+
+
+
+  <meta name="twitter:description" content="スケッチの作成Processingを起動して、新規にスケッチを保存しましょう。 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。 ファイル名に「Project9」を入力し、[保存]をクリックしましょう。 保存先に「Project9」という名前のフォルダが作成されていることを確認してください。
+
+3次元グラフィックスProcessingは、これまで学んできた2Dグラフィックスだけでなく、3Dグラフィックスの描画も可能です。 3Dグラフィックスを描画するには、「P3D(Processing 3D)」または「OpenGL」の いずれかのレンダラを指定しますが、ここでは標準のP3Dを採用することにします。 P3Dを指定すると、2次元の座標系（x,y）が、３次元の座標系（x,y,z）に変更されます（z軸は奥行きを表します）。
+まずは、下記のコードを参考に、size()関数でP3Dを指定しましょう。 また、rect()関数で、1辺の長さが200の正方形を描きまます。 ここで、translate()関数を利用して、原点をウィンドウ中央に変更していることに注意してください。 Runボタンをクリックしたら、正方形が画面中央に描かれることを確認してください。
+ 
+このままでは、座標系が３次元に変更されているか確認出来ません。 そこで、マウスの動きに合わせて正方形を、X軸とY軸を中心に回転させてみましょう。 X軸まわりに回転させるにはrotateX()関数、Y軸まわりに回転させるにはrotateY()関数を利用します。 いずれも引数には回転する角度をラジアン角で指定します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。 ドラッグしたままマウスを動かすと、正方形が回転することを確認してください。
+ 
+
+立体的な図形の描画立体的な図形を描画してみましょう。 直方体を描画するにはbox()関数を利用します。 box()関数の引数には、直方体の幅（width）、高さ（height）、奥行き（depth）を指定します。 box()関数で描かれた直方体は原点を中心に描かれることに注意してください。
+box(width, height, depth); 下記を参考にコードを入力したら、Runボタンをクリックしてください。 ドラッグしたままマウスを動かすと、直方体が回転することを確認してください。
+ 
+球を描画するにはsphere()関数を利用します。 sphere()関数の引数には、半径（radius）を指定します。 sphere()関数で描かれた球は原点を中心に描かれることに注意してください。
+sphere(radius); 下記を参考にコードを入力したら、Runボタンをクリックしてください。 ドラッグしたままマウスを動かすと、球が回転することを確認してください。
+ 
+光源の設置立体的な図形に陰影をつけるには空間に光源を設置します。 光源には環境光、拡散光、点光源などの種類があります。
+環境光は、全方向から図形に対して均一の光を照らします。 全方向から照らすため影は出来ないことから、他の光源と組み合わせて用いるのが一般的です。 環境光を設置するには、ambientLight()関数を用います。 引数には三原色（R、G、B）の光の強度を0～255の範囲で設定します。
+ambientLight(R, G, B); 下記を参考にコードを入力したら、Runボタンをクリックしてください。 直方体全体の色が変化していることを確認してください。" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/d0b1414b74f9d3f51ab8ac0e3eec4768.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">3Dグラフィックス</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/d0b1414b74f9d3f51ab8ac0e3eec4768"><img src="https://i.gyazo.com/d0b1414b74f9d3f51ab8ac0e3eec4768.png" alt="https://gyazo.com/d0b1414b74f9d3f51ab8ac0e3eec4768" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  スケッチの作成
+</h1>
+
+
+<p>Processingを起動して、新規にスケッチを保存しましょう。
+メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。
+ファイル名に「Project9」を入力し、[保存]をクリックしましょう。
+保存先に「Project9」という名前のフォルダが作成されていることを確認してください。</p>
+
+<p><a href="https://gyazo.com/7810b7309c73d90d82f24ed94c334a84"><img src="https://i.gyazo.com/7810b7309c73d90d82f24ed94c334a84.png" alt="https://gyazo.com/7810b7309c73d90d82f24ed94c334a84" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  3次元グラフィックス
+</h1>
+
+
+<p>Processingは、これまで学んできた<strong>2Dグラフィックス</strong>だけでなく、<strong>3Dグラフィックス</strong>の描画も可能です。
+3Dグラフィックスを描画するには、「<strong>P3D(Processing 3D)</strong>」または「<strong>OpenGL</strong>」の
+いずれかの<strong>レンダラ</strong>を指定しますが、ここでは標準の<strong>P3D</strong>を採用することにします。
+<strong>P3D</strong>を指定すると、2次元の座標系（x,y）が、３次元の座標系（x,y,z）に変更されます（z軸は<strong>奥行き</strong>を表します）。</p>
+
+<p>まずは、下記のコードを参考に、<code>size()</code>関数で<strong>P3D</strong>を指定しましょう。
+また、<code>rect()</code>関数で、1辺の長さが200の正方形を描きまます。
+ここで、<code>translate()</code>関数を利用して、<strong>原点</strong>をウィンドウ中央に変更していることに注意してください。
+Runボタンをクリックしたら、正方形が画面中央に描かれることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/2ec5bd452bf580e2797ba1aeaeb3270d.js"></script>
+
+<p><a href="https://gyazo.com/83a70fd123b2f0ebc923bc59ecae8929"><img src="https://i.gyazo.com/83a70fd123b2f0ebc923bc59ecae8929.png" alt="https://gyazo.com/83a70fd123b2f0ebc923bc59ecae8929" /></a></p>
+
+<p>このままでは、座標系が３次元に変更されているか確認出来ません。
+そこで、マウスの動きに合わせて正方形を、X軸とY軸を中心に回転させてみましょう。
+X軸まわりに回転させるには<code>rotateX()</code>関数、Y軸まわりに回転させるには<code>rotateY()</code>関数を利用します。
+いずれも引数には回転する角度を<strong>ラジアン角</strong>で指定します。</p>
+
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ドラッグしたままマウスを動かすと、正方形が回転することを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/b9fd820e819563f9bd3e966fba7186eb.js"></script>
+
+<p><a href="https://gyazo.com/1123ca80c8fc17b47d3461510bd4699a"><img src="https://i.gyazo.com/1123ca80c8fc17b47d3461510bd4699a.png" alt="https://gyazo.com/1123ca80c8fc17b47d3461510bd4699a" /></a></p>
+
+<p><a href="https://gyazo.com/c9ba324e73068c5d8f0a770ddde57df9"><img src="https://i.gyazo.com/c9ba324e73068c5d8f0a770ddde57df9.png" alt="https://gyazo.com/c9ba324e73068c5d8f0a770ddde57df9" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  立体的な図形の描画
+</h1>
+
+
+<p>立体的な図形を描画してみましょう。
+直方体を描画するには<code>box()</code>関数を利用します。
+<code>box()</code>関数の引数には、直方体の幅（width）、高さ（height）、奥行き（depth）を指定します。
+<code>box()</code>関数で描かれた直方体は原点を中心に描かれることに注意してください。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">box<span style="color:#f92672">(</span>width<span style="color:#f92672">,</span> height<span style="color:#f92672">,</span> depth<span style="color:#f92672">);</span></code></pre></div>
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ドラッグしたままマウスを動かすと、直方体が回転することを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/820b57dc8e40d41d90c03063b5b6f06c.js"></script>
+
+<p><a href="https://gyazo.com/b38f29c403eb34cf3216ce6c69b55359"><img src="https://i.gyazo.com/b38f29c403eb34cf3216ce6c69b55359.png" alt="https://gyazo.com/b38f29c403eb34cf3216ce6c69b55359" /></a></p>
+
+<p>球を描画するには<code>sphere()</code>関数を利用します。
+<code>sphere()</code>関数の引数には、半径（radius）を指定します。
+<code>sphere()</code>関数で描かれた球は原点を中心に描かれることに注意してください。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">sphere<span style="color:#f92672">(</span>radius<span style="color:#f92672">);</span></code></pre></div>
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ドラッグしたままマウスを動かすと、球が回転することを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/f2b22b8fd642e76e435a474cc90ba8dc.js"></script>
+
+<p><a href="https://gyazo.com/835c7d239acb17b8b8deb3af96369fe3"><img src="https://i.gyazo.com/835c7d239acb17b8b8deb3af96369fe3.png" alt="https://gyazo.com/835c7d239acb17b8b8deb3af96369fe3" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  光源の設置
+</h1>
+
+
+<p>立体的な図形に陰影をつけるには空間に光源を設置します。
+光源には<strong>環境光</strong>、<strong>拡散光</strong>、<strong>点光源</strong>などの種類があります。</p>
+
+<p>環境光は、全方向から図形に対して均一の光を照らします。
+全方向から照らすため影は出来ないことから、他の光源と組み合わせて用いるのが一般的です。
+環境光を設置するには、<code>ambientLight()</code>関数を用います。
+引数には三原色（R、G、B）の光の強度を0～255の範囲で設定します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ambientLight<span style="color:#f92672">(</span>R<span style="color:#f92672">,</span> G<span style="color:#f92672">,</span> B<span style="color:#f92672">);</span></code></pre></div>
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+直方体全体の色が変化していることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/e809c61b6fbef121f851d59f084be281.js"></script>
+
+<p><a href="https://gyazo.com/092c6fb953d18c591f5f2c7fe63a810e"><img src="https://i.gyazo.com/092c6fb953d18c591f5f2c7fe63a810e.png" alt="https://gyazo.com/092c6fb953d18c591f5f2c7fe63a810e" /></a></p>
+
+<p>拡散光は、特定の方向に向かって進む光です。
+光が垂直な面に当たったときに、もっとも明るくなります。
+拡散光を設置するには、<code>directionalLight()</code>関数を用います。
+引数には三原色（R、G、B）の光の強度に加え、光の進む方向をX軸、Y軸、Z軸それぞれに0～1の範囲で設定します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">directionalLight<span style="color:#f92672">(</span>R<span style="color:#f92672">,</span> G<span style="color:#f92672">,</span> B<span style="color:#f92672">,</span> NX<span style="color:#f92672">,</span> NY<span style="color:#f92672">,</span> NZ<span style="color:#f92672">);</span></code></pre></div>
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ここでは、X軸の正方向に光を照らしています。
+光が当たる面の色が変化していることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/32c970f7815787c9c6e9feddffe5d183.js"></script>
+
+<p><a href="https://gyazo.com/b5bc5bdf46a0591bea665b629a167051"><img src="https://i.gyazo.com/b5bc5bdf46a0591bea665b629a167051.png" alt="https://gyazo.com/b5bc5bdf46a0591bea665b629a167051" /></a></p>
+
+<p>点光源は、指定した位置から全方向に放射される光です。
+拡散光と同様に、光が垂直な面に当たったときに、もっとも明るくなります。
+点光源を設置するには、<code>pointLight()</code>関数を用います。
+引数には三原色（R、G、B）の光の強度に加え、光源の位置（x、y、z）を設定します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">pointLight<span style="color:#f92672">(</span>R<span style="color:#f92672">,</span> G<span style="color:#f92672">,</span> B<span style="color:#f92672">,</span> X<span style="color:#f92672">,</span> Y<span style="color:#f92672">,</span> Z<span style="color:#f92672">);</span></code></pre></div>
+<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ここでは、座標（-320, 0, 0）から光を照らしています。
+光が当たる面の色が変化していることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/8074878d0dabbfed29a35ad215b9e229.js"></script>
+
+<p><a href="https://gyazo.com/ef8efe22af4fbf1af78112324b850554"><img src="https://i.gyazo.com/ef8efe22af4fbf1af78112324b850554.png" alt="https://gyazo.com/ef8efe22af4fbf1af78112324b850554" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>拡散光を３方向に配置し、立方体の面を３色に塗り分けてください。
+課題が完成したら、作成したスケッチを<strong>ZIPアーカイブ</strong>形式で保存します。
+ZIPアーカイブを作成するには、メニューから[ツール]-[スケッチをアーカイブ]をクリックして、「スケッチを名前を付けてアーカイブする」を開きます。
+保存するファイル名を確認した上で、[保存]をクリックします。
+保存先に「Project9-日付a.zip」というファイルが作成されていることを確認してください。</p>
+
+<p><a href="https://gyazo.com/6535851018db9c980ab931b5b14afd70"><img src="https://i.gyazo.com/6535851018db9c980ab931b5b14afd70.png" alt="https://gyazo.com/6535851018db9c980ab931b5b14afd70" /></a></p>
+
+<h3>参考書籍</h3>
+
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4873115159" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877832939" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/programming_1/chapter9/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.2544001 &#43;0900 JST m=&#43;2.465397301">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

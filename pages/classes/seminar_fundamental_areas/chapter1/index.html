@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Excelを利用した7市町オープンデータの分析①・グラフ作成 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="Excelを利用した7市町オープンデータの分析①・グラフ作成" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/seminar_fundamental_areas/chapter1/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/5290ab846530f560720b7bff58a37bd4.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="オープンデータとは平成２４年，日本において公共データの活用促進を目的として電子行政オープンデータ戦略が策定されました． この戦略では，「公共データ活用の推進」「公共データ活用のための環境整備」が具体的な施策とされており， これらの施策の鍵となるのがオープンデータです．
+オープンデータは下記に従うことを条件としています．
+ 機械判読に適したデータ形式 二次利用が可能な利用ルールで公開  つまり，行政（地方自治体）が保持している統計データや施設データなどを， 誰もが再利用や再頒布ができることを条件に，コンピュータに扱いやすい形式で公開されたデータをオープンデータと呼びます． 企業や個人のデータでも上記に従えばオープンデータですが，ここでは，行政のデータにターゲットを絞ります（オープンガバメントデータと呼ぶこともあります）． 一般に，再利用や再頒布が可能なソフトウェアのことはオープンソースと呼ばれることも合わせて覚えておきましょう．
+ここで，ポイントとなるのは，「機械判読に適したデータとは何か？」ということです． 一般に小規模のデータを管理するときには，エクセル を採用することが多いです． 文化情報学部では，１年後期に開講されている「コンピュータと情報 Ⅱ」において，エクセルの使い方を学習します． たしかに，エクセルは，デザイン（書式）や関数など様々な機能を提供しており，人間にとってはとても便利なソフトウェアです． しかし，これらのデータをコンピュータで処理しようとするとき，これらの機能が却って冗長となり，コンピュータによる判読が難しい状況が起こります．
+具体例をみてみましょう． まずは，エクセル形式（.xlsx）で表現された日進市の人口のデータ（jinkou.xlsx）です． タイトル部分に太字，表部分に罫線などのデザイン（書式）が設定されていることが分かります． これらは，エクセルを利用している人間が見るためのデザインであり，データの本質ではありません． また，エクセル形式（.xlsx）の実態は，XMLや画像などで構成されるZIPファイルであり， 専用のソフトウェア（エクセル，OpenOfficeなど）でしか開くことはできません．
+
+次に，CSV形式（.csv）で表現された日進市の人口のデータ（jinkou.csv）です． CSVは「しーえすぶい」と読み，オープンデータで頻繁に採用されるデータ形式です． データが「,（カンマ）」で区切られて表現されるだけで，エクセルのようなデザイン（書式）は含みません． このため，一般的なエディタ（メモ帳）でも開くことができます（エクセルでも開けます）． エクセル形式（.xlsx）に比べると，人間にとっては理解しにくいですが，コンピュータの判読には優れています．
+﻿町名,男,女,総数,世帯数 赤池町,1693,1647,3340,1315 浅田町,2593,2431,5024,2086 梅森町,1017,1034,2051,876 野方町,171,173,344,143 蟹甲町,171,200,371,152 折戸町,1404,1381,2785,1073  今回の授業では，日進市のオープンデータミュージアムで公開されている CSV形式のデータをエクセルで可視化することを目的とします． エクセル以外の方法でオープンデータを扱う方法は第３回以降に解説します．
+公開されているオープンデータオープンデータはウェブで公開されるのが一般的であり， 総務省が運用するData.go.jpがオープンデータのカタログサイトとして知られています． このサイトでは，国土交通省，経済産業省などの組織別のデータセット，また，行財政や観光などのトピックに関するデータ・セットが提供されています． 例えば，観光 というキーワードで検索すると，「平成28年度 国際経済調査事業報告書」，「平成28年度 商店街インバウンド・空き店舗実態調査」などのデータセットがヒットします（平成30年2月28日現在）． しかし，残念ながら，これらの多くはPDF形式での提供であり，「機械判読に適したデータ」ではありません． 現状では，まだまだオープンデータの整備は不十分と言えるでしょう．
+この他，内閣府のまち・ひと・しごと創生本部が提供している地域経済分析システム（RESAS）が注目されています． RESAS（りーさす）は，総務省が提供している統計情報 e-Statのオープンデータなどを可視化するためのシステムです． 地方自治体の現状や課題を発見することを目的としており，情報を直感的にわかりやすく見える化することができます． 例えば，2015年の愛知県名古屋市の 人口マップ を下記のように可視化することができます． マウスで各市区町村をホバーすると人口が表示され，名古屋市千種区は164,696人であることが分かります． また，人口推移や人口ピラミッドなどのグラフも簡単に描画することができます． このようにデータを可視化して，分かりやすく伝えることも，オープンデータの活用に必要な要素です．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Excelを利用した7市町オープンデータの分析①・グラフ作成" />
+
+
+
+  <meta name="twitter:description" content="オープンデータとは平成２４年，日本において公共データの活用促進を目的として電子行政オープンデータ戦略が策定されました． この戦略では，「公共データ活用の推進」「公共データ活用のための環境整備」が具体的な施策とされており， これらの施策の鍵となるのがオープンデータです．
+オープンデータは下記に従うことを条件としています．
+ 機械判読に適したデータ形式 二次利用が可能な利用ルールで公開  つまり，行政（地方自治体）が保持している統計データや施設データなどを， 誰もが再利用や再頒布ができることを条件に，コンピュータに扱いやすい形式で公開されたデータをオープンデータと呼びます． 企業や個人のデータでも上記に従えばオープンデータですが，ここでは，行政のデータにターゲットを絞ります（オープンガバメントデータと呼ぶこともあります）． 一般に，再利用や再頒布が可能なソフトウェアのことはオープンソースと呼ばれることも合わせて覚えておきましょう．
+ここで，ポイントとなるのは，「機械判読に適したデータとは何か？」ということです． 一般に小規模のデータを管理するときには，エクセル を採用することが多いです． 文化情報学部では，１年後期に開講されている「コンピュータと情報 Ⅱ」において，エクセルの使い方を学習します． たしかに，エクセルは，デザイン（書式）や関数など様々な機能を提供しており，人間にとってはとても便利なソフトウェアです． しかし，これらのデータをコンピュータで処理しようとするとき，これらの機能が却って冗長となり，コンピュータによる判読が難しい状況が起こります．
+具体例をみてみましょう． まずは，エクセル形式（.xlsx）で表現された日進市の人口のデータ（jinkou.xlsx）です． タイトル部分に太字，表部分に罫線などのデザイン（書式）が設定されていることが分かります． これらは，エクセルを利用している人間が見るためのデザインであり，データの本質ではありません． また，エクセル形式（.xlsx）の実態は，XMLや画像などで構成されるZIPファイルであり， 専用のソフトウェア（エクセル，OpenOfficeなど）でしか開くことはできません．
+
+次に，CSV形式（.csv）で表現された日進市の人口のデータ（jinkou.csv）です． CSVは「しーえすぶい」と読み，オープンデータで頻繁に採用されるデータ形式です． データが「,（カンマ）」で区切られて表現されるだけで，エクセルのようなデザイン（書式）は含みません． このため，一般的なエディタ（メモ帳）でも開くことができます（エクセルでも開けます）． エクセル形式（.xlsx）に比べると，人間にとっては理解しにくいですが，コンピュータの判読には優れています．
+﻿町名,男,女,総数,世帯数 赤池町,1693,1647,3340,1315 浅田町,2593,2431,5024,2086 梅森町,1017,1034,2051,876 野方町,171,173,344,143 蟹甲町,171,200,371,152 折戸町,1404,1381,2785,1073  今回の授業では，日進市のオープンデータミュージアムで公開されている CSV形式のデータをエクセルで可視化することを目的とします． エクセル以外の方法でオープンデータを扱う方法は第３回以降に解説します．
+公開されているオープンデータオープンデータはウェブで公開されるのが一般的であり， 総務省が運用するData.go.jpがオープンデータのカタログサイトとして知られています． このサイトでは，国土交通省，経済産業省などの組織別のデータセット，また，行財政や観光などのトピックに関するデータ・セットが提供されています． 例えば，観光 というキーワードで検索すると，「平成28年度 国際経済調査事業報告書」，「平成28年度 商店街インバウンド・空き店舗実態調査」などのデータセットがヒットします（平成30年2月28日現在）． しかし，残念ながら，これらの多くはPDF形式での提供であり，「機械判読に適したデータ」ではありません． 現状では，まだまだオープンデータの整備は不十分と言えるでしょう．
+この他，内閣府のまち・ひと・しごと創生本部が提供している地域経済分析システム（RESAS）が注目されています． RESAS（りーさす）は，総務省が提供している統計情報 e-Statのオープンデータなどを可視化するためのシステムです． 地方自治体の現状や課題を発見することを目的としており，情報を直感的にわかりやすく見える化することができます． 例えば，2015年の愛知県名古屋市の 人口マップ を下記のように可視化することができます． マウスで各市区町村をホバーすると人口が表示され，名古屋市千種区は164,696人であることが分かります． また，人口推移や人口ピラミッドなどのグラフも簡単に描画することができます． このようにデータを可視化して，分かりやすく伝えることも，オープンデータの活用に必要な要素です．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/5290ab846530f560720b7bff58a37bd4.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">Excelを利用した7市町オープンデータの分析①・グラフ作成</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/5290ab846530f560720b7bff58a37bd4"><img src="https://i.gyazo.com/5290ab846530f560720b7bff58a37bd4.png" alt="https://gyazo.com/5290ab846530f560720b7bff58a37bd4" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  オープンデータとは
+</h1>
+
+
+<p>平成２４年，日本において公共データの活用促進を目的として<strong>電子行政オープンデータ戦略</strong>が策定されました．
+この戦略では，「公共データ活用の推進」「公共データ活用のための環境整備」が具体的な施策とされており，
+これらの施策の鍵となるのが<strong>オープンデータ</strong>です．</p>
+
+<p>オープンデータは下記に従うことを条件としています．</p>
+
+<ul>
+<li>機械判読に適したデータ形式</li>
+<li>二次利用が可能な利用ルールで公開</li>
+</ul>
+
+<p>つまり，行政（地方自治体）が保持している統計データや施設データなどを，
+誰もが再利用や再頒布ができることを条件に，コンピュータに扱いやすい形式で公開されたデータを<strong>オープンデータ</strong>と呼びます．
+企業や個人のデータでも上記に従えばオープンデータですが，ここでは，行政のデータにターゲットを絞ります（オープンガバメントデータと呼ぶこともあります）．
+一般に，再利用や再頒布が可能なソフトウェアのことは<strong>オープンソース</strong>と呼ばれることも合わせて覚えておきましょう．</p>
+
+<p>ここで，ポイントとなるのは，「機械判読に適したデータとは何か？」ということです．
+一般に小規模のデータを管理するときには，<strong>エクセル</strong> を採用することが多いです．
+文化情報学部では，１年後期に開講されている「コンピュータと情報 Ⅱ」において，エクセルの使い方を学習します．
+たしかに，エクセルは，デザイン（書式）や関数など様々な機能を提供しており，人間にとってはとても便利なソフトウェアです．
+しかし，これらのデータをコンピュータで処理しようとするとき，これらの機能が却って冗長となり，コンピュータによる判読が難しい状況が起こります．</p>
+
+<p>具体例をみてみましょう．
+まずは，エクセル形式（.xlsx）で表現された<a href="/classes/seminar_fundamental_areas/data1/jinkou.xlsx">日進市の人口のデータ（jinkou.xlsx）</a>です．
+タイトル部分に太字，表部分に罫線などのデザイン（書式）が設定されていることが分かります．
+これらは，エクセルを利用している<strong>人間</strong>が見るためのデザインであり，データの本質ではありません．
+また，エクセル形式（.xlsx）の実態は，XMLや画像などで構成されるZIPファイルであり，
+専用のソフトウェア（エクセル，<a href="http://www.openoffice.org/ja/">OpenOffice</a>など）でしか開くことはできません．</p>
+
+<p><a href="https://gyazo.com/1616774a29db01f1cbeeab5f3cae2c40"><img src="https://i.gyazo.com/1616774a29db01f1cbeeab5f3cae2c40.png" alt="https://gyazo.com/1616774a29db01f1cbeeab5f3cae2c40" /></a></p>
+
+<p>次に，CSV形式（.csv）で表現された<a href="/classes/seminar_fundamental_areas/data1/jinkou.csv">日進市の人口のデータ（jinkou.csv）</a>です．
+CSVは「しーえすぶい」と読み，オープンデータで頻繁に採用されるデータ形式です．
+データが「,（カンマ）」で区切られて表現されるだけで，エクセルのようなデザイン（書式）は含みません．
+このため，一般的なエディタ（メモ帳）でも開くことができます（エクセルでも開けます）．
+エクセル形式（.xlsx）に比べると，人間にとっては理解しにくいですが，コンピュータの判読には優れています．</p>
+
+<pre><code>﻿町名,男,女,総数,世帯数
+赤池町,1693,1647,3340,1315
+浅田町,2593,2431,5024,2086
+梅森町,1017,1034,2051,876
+野方町,171,173,344,143
+蟹甲町,171,200,371,152
+折戸町,1404,1381,2785,1073
+</code></pre>
+
+<p>今回の授業では，<a href="http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/index.html">日進市のオープンデータミュージアム</a>で公開されている
+CSV形式のデータをエクセルで可視化することを目的とします．
+エクセル以外の方法でオープンデータを扱う方法は第３回以降に解説します．</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  公開されているオープンデータ
+</h1>
+
+
+<p>オープンデータはウェブで公開されるのが一般的であり，
+総務省が運用する<a href="http://www.data.go.jp/">Data.go.jp</a>がオープンデータのカタログサイトとして知られています．
+このサイトでは，国土交通省，経済産業省などの組織別のデータセット，また，行財政や観光などのトピックに関するデータ・セットが提供されています．
+例えば，<strong>観光</strong> というキーワードで検索すると，「平成28年度 国際経済調査事業報告書」，「平成28年度 商店街インバウンド・空き店舗実態調査」などのデータセットがヒットします（平成30年2月28日現在）．
+しかし，残念ながら，これらの多くはPDF形式での提供であり，「機械判読に適したデータ」ではありません．
+現状では，まだまだオープンデータの整備は不十分と言えるでしょう．</p>
+
+<p>この他，内閣府のまち・ひと・しごと創生本部が提供している<a href="https://resas.go.jp">地域経済分析システム（RESAS）</a>が注目されています．
+RESAS（りーさす）は，総務省が提供している<a href="https://www.e-stat.go.jp/">統計情報 e-Stat</a>のオープンデータなどを可視化するためのシステムです．
+地方自治体の現状や課題を発見することを目的としており，情報を直感的にわかりやすく<strong>見える化</strong>することができます．
+例えば，2015年の愛知県名古屋市の <strong>人口マップ</strong> を下記のように可視化することができます．
+マウスで各市区町村をホバーすると人口が表示され，名古屋市千種区は164,696人であることが分かります．
+また，人口推移や人口ピラミッドなどのグラフも簡単に描画することができます．
+このようにデータを可視化して，分かりやすく伝えることも，オープンデータの活用に必要な要素です．</p>
+
+<p><a href="https://gyazo.com/c575390dd62b9f96132d0f7094f7abda"><img src="https://i.gyazo.com/c575390dd62b9f96132d0f7094f7abda.png" alt="https://gyazo.com/c575390dd62b9f96132d0f7094f7abda" /></a></p>
+
+<p><a href="https://gyazo.com/683bc08c165bc4a45cc99d85c977b8bd"><img src="https://i.gyazo.com/683bc08c165bc4a45cc99d85c977b8bd.png" alt="https://gyazo.com/683bc08c165bc4a45cc99d85c977b8bd" /></a></p>
+
+<p><a href="https://gyazo.com/772116d1e62edbccc6fda77e87206b36"><img src="https://i.gyazo.com/772116d1e62edbccc6fda77e87206b36.png" alt="https://gyazo.com/772116d1e62edbccc6fda77e87206b36" /></a></p>
+
+<p>愛知県下においては，オープンデータに関する取り組みを精力的に進める自治体の一つに<strong>日進市</strong>があります．
+日進市のウェブサイトでは，<a href="http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/index.html">オープンデータミュージアム</a>を開設しており，
+住民向け情報（暮らしの情報），事業者向け情報，行政活動情報，観光情報の区分に分けてオープンデータを公開しています．
+また，平成28年度には，瀬戸市，尾張旭市，豊明市，日進市，みよし市，長久手市，東郷町の7市町で
+「7市町オープンデータ検討会」を組織し，連携してオープンデータの整備を始めています．
+これまでに，7市町が共通のフォーマットで，子育て支援施設，教育機関などのデータを各自治体のウェブサイトで公開しています．
+今回は日進市のオープンデータミュージアムで公開されている<strong>町別・年齢別人口</strong>のデータをダウンロードして利用します．
+<a href="http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/5498.html">行政活動情報のページ</a>にアクセスし，
+<strong>平成29年4月1日のCSV形式のデータ</strong> をダウンロードしてください．</p>
+
+<p><a href="https://gyazo.com/096232524a9ea8abf7fa67156de8a1c9"><img src="https://i.gyazo.com/096232524a9ea8abf7fa67156de8a1c9.png" alt="https://gyazo.com/096232524a9ea8abf7fa67156de8a1c9" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  人口ピラミッドの算出
+</h1>
+
+
+<p>ダウンロードしたCSV形式の町別・年齢別人口のデータ（chou_nenreibetsu_kakusai.h290401.csv）を利用して，人口ピラミッドの値を算出しましょう．
+まずはエクセルを起動して，<strong>空白のブック</strong>を選択します．
+セル<strong>A1</strong>をアクティブにした状態で，データ・タブの<strong>テキストまたはCSVから</strong>をクリックします．
+ダイアログが表示されたら，ダウンロードしたファイルを選択し，<strong>インポート</strong>をクリックします．</p>
+
+<p>プレビュー画面で，<strong>編集</strong>をクリックし，クエリエディタを開きます．
+ここでは，<strong>男</strong>，<strong>女</strong>の人口データを用いるため，1行目と2行目，また，B列とE列以降は削除してしまいます．
+削除後に，<strong>1行目をヘッダーとして使用</strong>をクリックして，最後に，<strong>閉じて読み込む</strong>をクリックします．</p>
+
+<p><a href="https://gyazo.com/cfcdad22c85e431a4447f48d802450c3"><img src="https://i.gyazo.com/cfcdad22c85e431a4447f48d802450c3.png" alt="https://gyazo.com/cfcdad22c85e431a4447f48d802450c3" /></a></p>
+
+<p>読み込み後に，下記のように表示されることを確認してください．
+年齢，男，女は<strong>ヘッダー（項目名）</strong>になっていることに注意が必要です．
+このとき，年齢の列のデータは一旦削除して，0から100までの値を再度入力してください（sumifs関数が動作しないバグ有り）．</p>
+
+<p><a href="https://gyazo.com/fcc05da8cf039d4e3f7ec665ec0e13d9"><img src="https://i.gyazo.com/fcc05da8cf039d4e3f7ec665ec0e13d9.png" alt="https://gyazo.com/fcc05da8cf039d4e3f7ec665ec0e13d9" /></a></p>
+
+<p>次に，年齢のデータ区間を設定し，区間ごとの人口を集計します．
+区間幅はRESASに合わせて5とします．
+下図を参考にE列，F列にデータ区間を入力してください（セル<strong>F21</strong>には100を入力すること）．</p>
+
+<p><a href="https://gyazo.com/c60c1c13d14a04c5bc3dd5eec9317fa8"><img src="https://i.gyazo.com/c60c1c13d14a04c5bc3dd5eec9317fa8.png" alt="https://gyazo.com/c60c1c13d14a04c5bc3dd5eec9317fa8" /></a></p>
+
+<p>ここで，<strong>sumifs関数</strong>を用いて，G列に男，H列に女の人口を集計します．
+まずは，G列に男の人口を集計します．
+セル<strong>G2</strong>をアクティブにした状態で，関数の挿入をクリックし，sumifs関数を選択します．</p>
+
+<p><a href="https://gyazo.com/a90f347ebd8472e80b735566926720a6"><img src="https://i.gyazo.com/a90f347ebd8472e80b735566926720a6.png" alt="https://gyazo.com/a90f347ebd8472e80b735566926720a6" /></a></p>
+
+<p>sumifs関数は複数の条件を満たすセルの値を合計するために用いられます．
+ここでは，「E列の値以上」かつ「F列の値以下」という条件を満たすセルの値を合計します．
+下図を参考に合計対象範囲，条件範囲1，条件1，条件範囲2，条件2を入力してください．
+このとき，参照するセルは絶対参照にすることに注意してください．</p>
+
+<p><a href="https://gyazo.com/7c4456930edff60fd18b938889ee0589"><img src="https://i.gyazo.com/7c4456930edff60fd18b938889ee0589.png" alt="https://gyazo.com/7c4456930edff60fd18b938889ee0589" /></a></p>
+
+<p>同様に，H列に女の人口を集計します．
+セル<strong>H2</strong>をアクティブにした状態で，上記と同じ操作を繰り返してください．
+sumifs関数の引数は下図を参考にしてください．</p>
+
+<p><a href="https://gyazo.com/6dcbbb366c5b451eb5097f3ef04302b3"><img src="https://i.gyazo.com/6dcbbb366c5b451eb5097f3ef04302b3.png" alt="https://gyazo.com/6dcbbb366c5b451eb5097f3ef04302b3" /></a></p>
+
+<p>この結果，区間ごとの人口が下記のように算出されます．
+算出された値が一致するか確認しましょう．</p>
+
+<p><a href="https://gyazo.com/f7b2f2b5736eb8d7d2fad985975cac6c"><img src="https://i.gyazo.com/f7b2f2b5736eb8d7d2fad985975cac6c.png" alt="https://gyazo.com/f7b2f2b5736eb8d7d2fad985975cac6c" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  人口ピラミッドのグラフ
+</h1>
+
+
+<p>それでは人口ピラミッドのグラフを作成しましょう．
+<strong>G1:H21</strong>をアクティブにした状態で，挿入タブから集合横棒のグラフを選択します．
+ここで，グラフタイトルに「日進市の人口ピラミッド」と入力し，グラフエリアの大きさを広げておきます．</p>
+
+<p><a href="https://gyazo.com/06fc5da0dc7d7649d1c9cfb348c83648"><img src="https://i.gyazo.com/06fc5da0dc7d7649d1c9cfb348c83648.png" alt="https://gyazo.com/06fc5da0dc7d7649d1c9cfb348c83648" /></a></p>
+
+<p>ここから，下記の手順でグラフを整えます．</p>
+
+<ul>
+<li>女の系列を選択し，データ系列の書式設定で，<strong>第2軸</strong>に変更</li>
+<li>男の系列の横軸（下）を選択し，軸の書式設定で，<strong>軸を反転する</strong>にチェック</li>
+<li>男の系列の横軸（下）を選択し，軸の書式設定で，最小値を<strong>-4500</strong>に設定</li>
+<li>女の系列の横軸（上）を選択し，軸の書式設定で，最小値を<strong>-4500</strong>に設定</li>
+<li>横軸ラベルを<strong>E2:E21</strong>に設定（任意）</li>
+<li>表示形式を<strong>ユーザ設定</strong>に変更し，表示形式コードを<strong>#,##0;</strong>に設定（任意）</li>
+</ul>
+
+<p>下記が生成された人口ピラミッドのグラフです．
+グラフが一致しているか確認してください．
+このグラフから，日進市のボリューム層は40代の子育て世代であることが分かります．
+また，10歳未満の子供も多く，子育てがしやすい環境であることが読み取れます．</p>
+
+<p><a href="https://gyazo.com/12fa1fbce4a8315efa35ae9fc4f0f867"><img src="https://i.gyazo.com/12fa1fbce4a8315efa35ae9fc4f0f867.png" alt="https://gyazo.com/12fa1fbce4a8315efa35ae9fc4f0f867" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>完成したエクセルファイルを保存し，提出しなさい（ファイル名は任意で構わない）．</p>
+
+<h3>参考書籍</h3>
+
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4860644883&linkId=35a8bf5b75668000ffcce934f03bc9bd&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4822339424&linkId=449dc6e33a1b34e928f316ce755bb5ab&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/seminar_fundamental_areas/chapter1/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.2563983 &#43;0900 JST m=&#43;2.467395601">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

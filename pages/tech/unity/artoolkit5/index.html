@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    NyARToolkit for UnityでNFTを利用したマーカーの認識 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="NyARToolkit for UnityでNFTを利用したマーカーの認識" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/unity/artoolkit5/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/399be0179fc2bc72d21c82d597d18d35.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="画像の準備NyARToolkitのパッケージに含まれるサンプルSimpleNftは NFT(Natural Feature Tracking)を利用したマーカー認識のサンプルです。 NFTとは自然特徴点を利用した物体認識のことで、この技術を利用することで、一般的な画像をマーカーとして扱うことができます （詳しくはThe Sixwish Projectを参照）。 ここでは、下記の下記の「犬の画像（001.png）」と 「うさぎの画像（002.png）」を マーカーとして利用することに挑戦します。 画像サイズは300x300ピクセル、画像フォーマットは透過背景のPNGです。 また、犬の画像を認識すると赤色の立方体、うさぎの画像を認識すると青色の立方体を表示させることにします。
+
+
+SimpleNftフォルダをコピーし、フォルダに含まれるC#スクリプトをARPictureCamera、 シーンをARPictureSceneにファイル名を変更した状態を前提とします（詳細はNYARToolkit for Unityの導入を参照）。
+パターンファイルの作成上記の２種類の画像から、マーカーのパターンファイルを作成します。 パターンファイルの作成には、NyARToolkitのパッケージに含まれるNftFileGeneratorを利用します （詳しくはNyARToolkit Projectを参照）。 [Data]-[Tools]にあるNftFileGeneratorをダブルクリックするとプログラムが起動します。 importをクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。 次に、Make Feature Setをクリックし、特徴点を抽出します。 このとき、Source DPIやIset DPIsなどのパラメータは特に変更する必要はないようですが、 特徴点数が多すぎたり、少なすぎる場合にはFSET parameterを調節すると良いようです。
+
+抽出されたパターンは赤い四角や青い円で表示されます。 パターンを保存するにはExportをクリックし、適当なファイル名で保存します。 ここでは、「犬の画像」のパターンファイルをpatt_001.bytes、 「うさぎの画像」のパターンファイルをpatt_002.bytesというファイル名で保存します。 これらのパターンファイルは、AssetsのResourcesフォルダにコピーしておきます。
+
+
+マーカーオブジェクトの作成SimpleNftはマーカーを認識すると赤色の立方体を表示します。 ここでは、２種類のマーカーに応じて、赤色の立方体に加え、青色の立方体を作成しておきます。
+まずは、シーンのARPictureSceneをダブルクリックし、HierarchyにあるMarkerObjectを複製します。 スクリプトからこれのオブジェクトを操作するため、２つのマーカーオブジェクトには共通のタグ（Tag）を設定します （Gameobject.FindGameObjectsWithTag(String tag)メソッドでタグからオブジェクトを取得することが可能）。 タグ名は自由に設定することができますが、ここではMarkerObjectとしておきます。
+
+次に、Assetsで赤色と青色のマテリアルを作成します。 [Create]-[Materials]をクリックしてマテリアルを作成し、Albedoに赤色と青色を設定します。 ここでは、マテリアルの名前をRedとBlueにしておきます。 これらのマテリアルはMarkerObjectの直下にあるCubeのMaterialsに設定しておきます。
+
+マーカーが認識されたときに表示されるのは、上記のCubeオブジェクトです。 Cubeのサイズ（Scale）や位置（Position）はマーカーの大きさに合わせて調整する必要がありますが、 ここでは、サイズの値をX=80、Y=80、Z=80、位置をX=-80、Y=80、Z=40に修正しておきます。
+
+スクリプトの修正最後にC#スクリプトのARPictureCameraを修正します。" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="NyARToolkit for UnityでNFTを利用したマーカーの認識" />
+
+
+
+  <meta name="twitter:description" content="画像の準備NyARToolkitのパッケージに含まれるサンプルSimpleNftは NFT(Natural Feature Tracking)を利用したマーカー認識のサンプルです。 NFTとは自然特徴点を利用した物体認識のことで、この技術を利用することで、一般的な画像をマーカーとして扱うことができます （詳しくはThe Sixwish Projectを参照）。 ここでは、下記の下記の「犬の画像（001.png）」と 「うさぎの画像（002.png）」を マーカーとして利用することに挑戦します。 画像サイズは300x300ピクセル、画像フォーマットは透過背景のPNGです。 また、犬の画像を認識すると赤色の立方体、うさぎの画像を認識すると青色の立方体を表示させることにします。
+
+
+SimpleNftフォルダをコピーし、フォルダに含まれるC#スクリプトをARPictureCamera、 シーンをARPictureSceneにファイル名を変更した状態を前提とします（詳細はNYARToolkit for Unityの導入を参照）。
+パターンファイルの作成上記の２種類の画像から、マーカーのパターンファイルを作成します。 パターンファイルの作成には、NyARToolkitのパッケージに含まれるNftFileGeneratorを利用します （詳しくはNyARToolkit Projectを参照）。 [Data]-[Tools]にあるNftFileGeneratorをダブルクリックするとプログラムが起動します。 importをクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。 次に、Make Feature Setをクリックし、特徴点を抽出します。 このとき、Source DPIやIset DPIsなどのパラメータは特に変更する必要はないようですが、 特徴点数が多すぎたり、少なすぎる場合にはFSET parameterを調節すると良いようです。
+
+抽出されたパターンは赤い四角や青い円で表示されます。 パターンを保存するにはExportをクリックし、適当なファイル名で保存します。 ここでは、「犬の画像」のパターンファイルをpatt_001.bytes、 「うさぎの画像」のパターンファイルをpatt_002.bytesというファイル名で保存します。 これらのパターンファイルは、AssetsのResourcesフォルダにコピーしておきます。
+
+
+マーカーオブジェクトの作成SimpleNftはマーカーを認識すると赤色の立方体を表示します。 ここでは、２種類のマーカーに応じて、赤色の立方体に加え、青色の立方体を作成しておきます。
+まずは、シーンのARPictureSceneをダブルクリックし、HierarchyにあるMarkerObjectを複製します。 スクリプトからこれのオブジェクトを操作するため、２つのマーカーオブジェクトには共通のタグ（Tag）を設定します （Gameobject.FindGameObjectsWithTag(String tag)メソッドでタグからオブジェクトを取得することが可能）。 タグ名は自由に設定することができますが、ここではMarkerObjectとしておきます。
+
+次に、Assetsで赤色と青色のマテリアルを作成します。 [Create]-[Materials]をクリックしてマテリアルを作成し、Albedoに赤色と青色を設定します。 ここでは、マテリアルの名前をRedとBlueにしておきます。 これらのマテリアルはMarkerObjectの直下にあるCubeのMaterialsに設定しておきます。
+
+マーカーが認識されたときに表示されるのは、上記のCubeオブジェクトです。 Cubeのサイズ（Scale）や位置（Position）はマーカーの大きさに合わせて調整する必要がありますが、 ここでは、サイズの値をX=80、Y=80、Z=80、位置をX=-80、Y=80、Z=40に修正しておきます。
+
+スクリプトの修正最後にC#スクリプトのARPictureCameraを修正します。" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/399be0179fc2bc72d21c82d597d18d35.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">NyARToolkit for UnityでNFTを利用したマーカーの認識</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/399be0179fc2bc72d21c82d597d18d35"><img src="https://i.gyazo.com/399be0179fc2bc72d21c82d597d18d35.png" alt="https://gyazo.com/399be0179fc2bc72d21c82d597d18d35" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  画像の準備
+</h1>
+
+
+<p><a href="http://nyatla.jp/nyartoolkit/wp/">NyARToolkit</a>のパッケージに含まれるサンプル<strong>SimpleNft</strong>は
+<strong>NFT(Natural Feature Tracking)</strong>を利用したマーカー認識のサンプルです。
+NFTとは自然特徴点を利用した物体認識のことで、この技術を利用することで、一般的な画像をマーカーとして扱うことができます
+（詳しくは<a href="http://sixwish.jp/ARToolKitNFT/">The Sixwish Project</a>を参照）。
+ここでは、下記の下記の「犬の画像（<a href="https://i.gyazo.com/ea8d174fc70bc754fa32fb9b5391b6d8.png">001.png</a>）」と
+「うさぎの画像（<a href="https://i.gyazo.com/5ad97af3ed708c91251ef897ca34d73a.png">002.png</a>）」を
+マーカーとして利用することに挑戦します。
+画像サイズは<strong>300x300</strong>ピクセル、画像フォーマットは透過背景の<strong>PNG</strong>です。
+また、犬の画像を認識すると<strong>赤色の立方体</strong>、うさぎの画像を認識すると<strong>青色の立方体</strong>を表示させることにします。</p>
+
+<p><a href="https://gyazo.com/ea8d174fc70bc754fa32fb9b5391b6d8"><img src="https://i.gyazo.com/ea8d174fc70bc754fa32fb9b5391b6d8.png" alt="https://gyazo.com/ea8d174fc70bc754fa32fb9b5391b6d8" /></a></p>
+
+<p><a href="https://gyazo.com/5ad97af3ed708c91251ef897ca34d73a"><img src="https://i.gyazo.com/5ad97af3ed708c91251ef897ca34d73a.png" alt="https://gyazo.com/5ad97af3ed708c91251ef897ca34d73a" /></a></p>
+
+<p><strong>SimpleNft</strong>フォルダをコピーし、フォルダに含まれるC#スクリプトを<strong>ARPictureCamera</strong>、
+シーンを<strong>ARPictureScene</strong>にファイル名を変更した状態を前提とします（詳細は<a href="artoolkit.html"><strong>NYARToolkit for Unityの導入</strong></a>を参照）。</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  パターンファイルの作成
+</h1>
+
+
+<p>上記の２種類の画像から、マーカーのパターンファイルを作成します。
+パターンファイルの作成には、<a href="http://nyatla.jp/nyartoolkit/wp/">NyARToolkit</a>のパッケージに含まれる<strong>NftFileGenerator</strong>を利用します
+（詳しくは<a href="http://nyatla.jp/nyartoolkit/wp/?cat=17">NyARToolkit Project</a>を参照）。
+[Data]-[Tools]にある<strong>NftFileGenerator</strong>をダブルクリックするとプログラムが起動します。
+<strong>import</strong>をクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。
+次に、<strong>Make Feature Set</strong>をクリックし、特徴点を抽出します。
+このとき、<strong>Source DPI</strong>や<strong>Iset DPIs</strong>などのパラメータは特に変更する必要はないようですが、
+特徴点数が多すぎたり、少なすぎる場合には<strong>FSET parameter</strong>を調節すると良いようです。</p>
+
+<p><a href="https://gyazo.com/5888670b05712f1852cabbce0a0576a9"><img src="https://i.gyazo.com/5888670b05712f1852cabbce0a0576a9.png" alt="https://gyazo.com/5888670b05712f1852cabbce0a0576a9" /></a></p>
+
+<p>抽出されたパターンは<strong>赤い四角</strong>や<strong>青い円</strong>で表示されます。
+パターンを保存するには<strong>Export</strong>をクリックし、適当なファイル名で保存します。
+ここでは、「犬の画像」のパターンファイルを<strong>patt_001.bytes</strong>、
+「うさぎの画像」のパターンファイルを<strong>patt_002.bytes</strong>というファイル名で保存します。
+これらのパターンファイルは、<strong>Assets</strong>の<strong>Resources</strong>フォルダにコピーしておきます。</p>
+
+<p><a href="https://gyazo.com/5c7da4b00d6c7139796c4c21b2f84c53"><img src="https://i.gyazo.com/5c7da4b00d6c7139796c4c21b2f84c53.png" alt="https://gyazo.com/5c7da4b00d6c7139796c4c21b2f84c53" /></a></p>
+
+<p><a href="https://gyazo.com/c306e5bf17af2bceb25bc0967b23cfa5"><img src="https://i.gyazo.com/c306e5bf17af2bceb25bc0967b23cfa5.png" alt="https://gyazo.com/c306e5bf17af2bceb25bc0967b23cfa5" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  マーカーオブジェクトの作成
+</h1>
+
+
+<p><strong>SimpleNft</strong>はマーカーを認識すると<strong>赤色の立方体</strong>を表示します。
+ここでは、２種類のマーカーに応じて、<strong>赤色の立方体</strong>に加え、<strong>青色の立方体</strong>を作成しておきます。</p>
+
+<p>まずは、シーンの<strong>ARPictureScene</strong>をダブルクリックし、Hierarchyにある<strong>MarkerObject</strong>を複製します。
+スクリプトからこれのオブジェクトを操作するため、２つのマーカーオブジェクトには共通のタグ（<strong>Tag</strong>）を設定します
+（<strong>Gameobject.FindGameObjectsWithTag(String tag)</strong>メソッドでタグからオブジェクトを取得することが可能）。
+タグ名は自由に設定することができますが、ここでは<strong>MarkerObject</strong>としておきます。</p>
+
+<p><a href="https://gyazo.com/2e6532cca4d4e4d1d30c3a6355246732"><img src="https://i.gyazo.com/2e6532cca4d4e4d1d30c3a6355246732.png" alt="https://gyazo.com/2e6532cca4d4e4d1d30c3a6355246732" /></a></p>
+
+<p>次に、Assetsで赤色と青色のマテリアルを作成します。
+[Create]-[Materials]をクリックしてマテリアルを作成し、<strong>Albedo</strong>に赤色と青色を設定します。
+ここでは、マテリアルの名前を<strong>Red</strong>と<strong>Blue</strong>にしておきます。
+これらのマテリアルは<strong>MarkerObject</strong>の直下にある<strong>Cube</strong>の<strong>Materials</strong>に設定しておきます。</p>
+
+<p><a href="https://gyazo.com/5c51275d39fcb86e09f1d073fb320011"><img src="https://i.gyazo.com/5c51275d39fcb86e09f1d073fb320011.png" alt="https://gyazo.com/5c51275d39fcb86e09f1d073fb320011" /></a></p>
+
+<p>マーカーが認識されたときに表示されるのは、上記の<strong>Cube</strong>オブジェクトです。
+<strong>Cube</strong>の<strong>サイズ（Scale）</strong>や<strong>位置（Position）</strong>はマーカーの大きさに合わせて調整する必要がありますが、
+ここでは、サイズの値をX=80、Y=80、Z=80、位置をX=-80、Y=80、Z=40に修正しておきます。</p>
+
+<p><a href="https://gyazo.com/5d1a3c61b18ceb85e4cf06bd3b504851"><img src="https://i.gyazo.com/5d1a3c61b18ceb85e4cf06bd3b504851.png" alt="https://gyazo.com/5d1a3c61b18ceb85e4cf06bd3b504851" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  スクリプトの修正
+</h1>
+
+
+<p>最後にC#スクリプトの<strong>ARPictureCamera</strong>を修正します。</p>
+
+<p>まずは、2つのマーカーオブジェクトを配列で取得します。
+マーカーオブジェクトは<strong>MarkerObject</strong>というタグが設定されていることを利用します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> GameObject<span style="color:#a6e22e">[]</span> objects = <span style="color:#66d9ef">new</span> GameObject<span style="color:#a6e22e">[2]</span>;
+objects = GameObject.FindGameObjectsWithTag(<span style="color:#e6db74">&#34;MarkerObject&#34;</span>);
+</code></pre></div>
+<p>同様に2つのパターンを基にマーカーIDを配列で取得します。
+<strong>Resources.Load()</strong>メソッドは、Resourcesフォルダ内にあるファイルを探索し取得するメソッドです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span><span style="color:#a6e22e">[]</span> mids = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span><span style="color:#a6e22e">[2]</span>; <span style="color:#75715e">//マーカーID
+</span><span style="color:#75715e"></span>mids<span style="color:#a6e22e">[0]</span> = <span style="color:#66d9ef">this</span>._ns.addNftTarget(<span style="color:#66d9ef">new</span> MemoryStream(((TextAsset)Resources.Load(<span style="color:#e6db74">&#34;patt_001&#34;</span>, <span style="color:#66d9ef">typeof</span>(TextAsset))).bytes), <span style="color:#ae81ff">160</span>);
+mids<span style="color:#a6e22e">[1]</span> = <span style="color:#66d9ef">this</span>._ns.addNftTarget(<span style="color:#66d9ef">new</span> MemoryStream(((TextAsset)Resources.Load(<span style="color:#e6db74">&#34;patt_002&#34;</span>, <span style="color:#66d9ef">typeof</span>(TextAsset))).bytes), <span style="color:#ae81ff">160</span>);
+</code></pre></div>
+<p>最後に、<strong>update()</strong>メソッドで、マーカーが認識された場合に、マーカーオブジェクトをアクティブに変更します。
+逆に、マーカーが認識されなかった場合は、マーカーオブジェクトを非アクティブに変更します。
+マーカーオブジェクトは、<strong>setTransform()</strong>メソッドで、マーカーが検出された位置に表示されます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i=<span style="color:#ae81ff">0</span>; i&lt;mids.Length; i++) {
+    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>._ns.isExist(mids<span style="color:#a6e22e">[i]</span>)) {
+        <span style="color:#66d9ef">if</span> (objects<span style="color:#a6e22e">[i]</span>.activeSelf == <span style="color:#66d9ef">false</span>){
+            objects<span style="color:#a6e22e">[i]</span>.SetActive(<span style="color:#66d9ef">true</span>);
+        }
+        <span style="color:#66d9ef">this</span>._ns.setTransform(mids<span style="color:#a6e22e">[i]</span>, objects<span style="color:#a6e22e">[i]</span>.transform);
+    } <span style="color:#66d9ef">else</span> {
+        objects<span style="color:#a6e22e">[i]</span>.SetActive(<span style="color:#66d9ef">false</span>);
+    }
+}
+</code></pre></div>
+<p>全ソースコードを下記に示します。
+コードの詳細は、付しているコメントを参考にしてください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/1a1da417d545e2f921b22fea2e98635e.js"></script>
+
+<p>プログラムを実行して、「犬の画像」を認識すると青い立方体、「うさぎの画像」を認識すると赤い立方体が表示されることを確認してください。
+これでイラストなど一般的な画像をマーカーとして利用することができるようになりました。</p>
+
+<p><a href="https://gyazo.com/1a4c1907e1278c7a03536496f7076574"><img src="https://i.gyazo.com/1a4c1907e1278c7a03536496f7076574.png" alt="https://gyazo.com/1a4c1907e1278c7a03536496f7076574" /></a></p>
+
+<p><a href="https://gyazo.com/2d0bef457c6ce380589daeb6a8f5808a"><img src="https://i.gyazo.com/2d0bef457c6ce380589daeb6a8f5808a.png" alt="https://gyazo.com/2d0bef457c6ce380589daeb6a8f5808a" /></a></p>
+
+<h3>参考書籍</h3>
+
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4797384433" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4797384255" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=B01E51LA4Y" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/unity/artoolkit5/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.4189583 &#43;0900 JST m=&#43;2.629955601">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

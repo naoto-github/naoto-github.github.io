@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    R言語のデータ構造 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="R言語のデータ構造" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter2/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/fb144abca81acc3329ed32171faf4398.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="データ構造 -- データ構造一般にプログラミング言語には，整数型，実数型，文字列型などデータの型が存在します． データの型を調べるにはtypeof関数を使用します． プロンプトで下記のように入力してみましょう．
+&gt; typeof(10) [1] &#34;double&#34; &gt; typeof(&#34;a&#34;) [1] &#34;character&#34; すると，10 は double型であることが分かります． このdouble型は実数であることを表しています． 同様に，a は character型であることが分かります． このcharacter型は文字（もしくは文字列）であることを表しています． これらのデータ型は自動的に設定されるため，普段は特に意識する必要はありません．
+R言語では，これらの基本的なデータ型に加えて，数値処理に適したベクトル，行列，データフレーム といった構造が存在します． これらは，基本的に複数の値をまとめて処理するときに利用し，他のプログラミング言語における配列と同じような使い方をされます． 今回は，これらデータ構造に注目していきます．
+スクリプトの作成 -- スクリプトの作成コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter2としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+変数 -- 変数上述した実数や文字列は変数と呼ばれるオブジェクトに記録し，参照することができます． 変数に値を代入するには，&lt;- という演算子を利用します． スクリプトに下記を入力して，スクリプトを読み込み実行してください（実行は「source(&ldquo;chapter2.R&rdquo;)」）．
+x &lt;- 10 y &lt;- 2 z &lt;- x * y これで，変数x，y，zに，それぞれ値が代入されました． 変数に代入された値を確認するには，プロンプトで下記のように，変数名をそのまま入力します．
+&gt; x [1] 10 &gt; y [1] 2 &gt; z [1] 20 x に10， y に2，z に20が代入されていることが確認できます． このように，演算子&lt;-の後方に，代入したい値や式を記述します．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="R言語のデータ構造" />
+
+
+
+  <meta name="twitter:description" content="データ構造 -- データ構造一般にプログラミング言語には，整数型，実数型，文字列型などデータの型が存在します． データの型を調べるにはtypeof関数を使用します． プロンプトで下記のように入力してみましょう．
+&gt; typeof(10) [1] &#34;double&#34; &gt; typeof(&#34;a&#34;) [1] &#34;character&#34; すると，10 は double型であることが分かります． このdouble型は実数であることを表しています． 同様に，a は character型であることが分かります． このcharacter型は文字（もしくは文字列）であることを表しています． これらのデータ型は自動的に設定されるため，普段は特に意識する必要はありません．
+R言語では，これらの基本的なデータ型に加えて，数値処理に適したベクトル，行列，データフレーム といった構造が存在します． これらは，基本的に複数の値をまとめて処理するときに利用し，他のプログラミング言語における配列と同じような使い方をされます． 今回は，これらデータ構造に注目していきます．
+スクリプトの作成 -- スクリプトの作成コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter2としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+変数 -- 変数上述した実数や文字列は変数と呼ばれるオブジェクトに記録し，参照することができます． 変数に値を代入するには，&lt;- という演算子を利用します． スクリプトに下記を入力して，スクリプトを読み込み実行してください（実行は「source(&ldquo;chapter2.R&rdquo;)」）．
+x &lt;- 10 y &lt;- 2 z &lt;- x * y これで，変数x，y，zに，それぞれ値が代入されました． 変数に代入された値を確認するには，プロンプトで下記のように，変数名をそのまま入力します．
+&gt; x [1] 10 &gt; y [1] 2 &gt; z [1] 20 x に10， y に2，z に20が代入されていることが確認できます． このように，演算子&lt;-の後方に，代入したい値や式を記述します．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/fb144abca81acc3329ed32171faf4398.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">R言語のデータ構造</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/fb144abca81acc3329ed32171faf4398"><img src="https://i.gyazo.com/fb144abca81acc3329ed32171faf4398.png" alt="https://gyazo.com/fb144abca81acc3329ed32171faf4398" /></a></p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">データ構造 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  データ構造
+</h1>
+
+
+<p>一般にプログラミング言語には，整数型，実数型，文字列型など<strong>データの型</strong>が存在します．
+データの型を調べるには<strong>typeof</strong>関数を使用します．
+プロンプトで下記のように入力してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">typeof</span>(<span style="color:#ae81ff">10</span>)
+[<span style="color:#ae81ff">1</span>] <span style="color:#e6db74">&#34;double&#34;</span>
+<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">typeof</span>(<span style="color:#e6db74">&#34;a&#34;</span>)
+[<span style="color:#ae81ff">1</span>] <span style="color:#e6db74">&#34;character&#34;</span></code></pre></div>
+<p>すると，<strong>10</strong> は <strong>double</strong>型であることが分かります．
+この<strong>double</strong>型は実数であることを表しています．
+同様に，<strong>a</strong> は <strong>character</strong>型であることが分かります．
+この<strong>character</strong>型は文字（もしくは文字列）であることを表しています．
+これらの<strong>データ型</strong>は自動的に設定されるため，普段は特に意識する必要はありません．</p>
+
+<p>R言語では，これらの基本的なデータ型に加えて，数値処理に適した<strong>ベクトル</strong>，<strong>行列</strong>，<strong>データフレーム</strong> といった構造が存在します．
+これらは，基本的に複数の値をまとめて処理するときに利用し，他のプログラミング言語における<strong>配列</strong>と同じような使い方をされます．
+今回は，これら<strong>データ構造</strong>に注目していきます．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スクリプトの作成 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  スクリプトの作成
+</h1>
+
+
+<p>コードを入力し保存するための<strong>スクリプト</strong>を作成しましょう．
+[ファイル]-[新しいスクリプト]をクリックし，<strong>Rエディタ</strong>を表示します．
+次に，[ファイル]-[保存]をクリックして，スクリプトを保存します．
+このとき，ファイル名は<strong>chapter2</strong>としてください．
+また，ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">変数 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  変数
+</h1>
+
+
+<p>上述した実数や文字列は<strong>変数</strong>と呼ばれるオブジェクトに記録し，参照することができます．
+変数に値を代入するには，<strong>&lt;-</strong> という演算子を利用します．
+スクリプトに下記を入力して，スクリプトを読み込み実行してください（実行は「<strong>source(&ldquo;chapter2.R&rdquo;)</strong>」）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">10</span>
+y <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">2</span>
+z <span style="color:#f92672">&lt;-</span> x <span style="color:#f92672">*</span> y</code></pre></div>
+<p>これで，変数<strong>x</strong>，<strong>y</strong>，<strong>z</strong>に，それぞれ値が代入されました．
+変数に代入された値を確認するには，プロンプトで下記のように，変数名をそのまま入力します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> x
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">10</span>
+<span style="color:#f92672">&gt;</span> y
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">2</span>
+<span style="color:#f92672">&gt;</span> z
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">20</span></code></pre></div>
+<p><strong>x</strong> に10， <strong>y</strong> に2，<strong>z</strong> に20が代入されていることが確認できます．
+このように，演算子<strong>&lt;-</strong>の後方に，代入したい値や式を記述します．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">ベクトル -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ベクトル
+</h1>
+
+
+<p><strong>ベクトル</strong>は複数の値をまとめて記録するために利用します．
+ベクトルを生成するには <strong>c()</strong> 関数を用います．
+引数には記録したい値を「<strong>,</strong>」で区切りながら列挙します．
+スクリプトに下記を入力して，スクリプトを読み込み実行してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">v <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">9</span>)</code></pre></div>
+<p>これで，<strong>v</strong>に，5つの値からなるベクトルが代入されました．
+ベクトルの値を参照するには，下記のように入力します．
+ここで，<strong>[]</strong> は <strong>添え字</strong> と呼ばれ，ベクトルに含まれる要素の番号を表します．
+配列とは異なり<strong>1</strong>から始まることに注意が必要です（配列では<strong>0</strong>から始まるのが一般的）．
+また，<strong>[3:5]</strong>と表記すると，要素の3番目から5番目の値を意味します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> v
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">9</span>
+<span style="color:#f92672">&gt;</span> v[<span style="color:#ae81ff">1</span>]
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">1</span>
+<span style="color:#f92672">&gt;</span> v[<span style="color:#ae81ff">3</span>]
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">5</span>
+<span style="color:#f92672">&gt;</span> v[<span style="color:#ae81ff">3</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>]
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">9</span></code></pre></div>
+<p>ベクトルの要素数を取得するには，<strong>length()</strong>関数を利用します．
+先程，作成したベクトル<strong>v</strong>の要素数を取得してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">length</span>(v)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">5</span></code></pre></div>
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">行列 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  行列
+</h1>
+
+
+<p><strong>行列</strong>は，長さが同じ複数のベクトルを，一つのデータとしてまとめたものです．
+行列を生成するには<strong>matrix()</strong>関数を用います．
+引数には，行列の成分となる<strong>ベクトル</strong>，<strong>行数</strong>，<strong>列数</strong> を指定します．
+スクリプトに下記を入力して，スクリプトを読み込み実行してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">m <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">matrix</span>(<span style="color:#66d9ef">c</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">9</span>),<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>)</code></pre></div>
+<p>これで，3 &times; 3の行列が生成されます．
+それでは，プロンプトで下記のように入力し，行列の値を確認しましょう．
+行列の値を参照するには，添え字に，<strong>行</strong>，<strong>列</strong>の順で番号を指定します．
+例えば，1行1列の値を取得する場合は<strong>m[1,1]</strong>と表記します．
+また，1行目を取得する場合は<strong>m[1,]</strong>，1列目を取得する場合は<strong>m[,1]</strong>と表記します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> m
+[,<span style="color:#ae81ff">1</span>] [,<span style="color:#ae81ff">2</span>] [,<span style="color:#ae81ff">3</span>]
+[<span style="color:#ae81ff">1</span>,]    <span style="color:#ae81ff">1</span>    <span style="color:#ae81ff">4</span>    <span style="color:#ae81ff">7</span>
+[<span style="color:#ae81ff">2</span>,]    <span style="color:#ae81ff">2</span>    <span style="color:#ae81ff">5</span>    <span style="color:#ae81ff">8</span>
+[<span style="color:#ae81ff">3</span>,]    <span style="color:#ae81ff">3</span>    <span style="color:#ae81ff">6</span>    <span style="color:#ae81ff">9</span>
+<span style="color:#f92672">&gt;</span> m[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>]
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">1</span>
+<span style="color:#f92672">&gt;</span> m[<span style="color:#ae81ff">1</span>,]
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">7</span>
+<span style="color:#f92672">&gt;</span> m[,<span style="color:#ae81ff">2</span>]
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span></code></pre></div>
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">データフレーム -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  データフレーム
+</h1>
+
+
+<p><strong>データフレーム</strong>は，行列とよく似た構造をしていますが，行列とは異なり数値ベクトルや文字列ベクトルなど，
+異なるデータ型を一つにまとめることができます．
+表計算ソフトで制作する<strong>表</strong>をR言語で表現したものと理解すると良いかもしれません．
+まずは，先程作成した，行列<strong>m</strong>を基に，データフレームを生成します．
+行列からデータフレームを生成するには<strong>as.data.frame()</strong>関数を用います．
+スクリプトに下記を入力して，スクリプトを読み込み実行してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">d <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">as.data.frame</span>(m)</code></pre></div>
+<p>それでは，プロンプトで下記のように入力し，データフレームの値を確認しましょう．
+行列との違いは何でしょうか．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> d
+  V1 V2 V3
+<span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">7</span>
+<span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">8</span>
+<span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">9</span></code></pre></div>
+<p>上記の<strong>V1</strong>，<strong>V2</strong>，<strong>V3</strong>は列名です．
+データフレームは<strong>表</strong>のため，行や列に名前を付けることができます（行列でも可能ですが）．
+列に名前を設定するには，<strong>colnames()</strong>関数を利用します．
+スクリプトに下記を入力して，スクリプトを読み込み実行してください．
+ここでは，列名として左から<strong>A</strong>，<strong>B</strong>，<strong>C</strong>と設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#66d9ef">colnames</span>(d) <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>(<span style="color:#e6db74">&#34;A&#34;</span>,<span style="color:#e6db74">&#34;B&#34;</span>,<span style="color:#e6db74">&#34;C&#34;</span>)</code></pre></div>
+<p>プロンプトで下記のように入力し，データフレームの値を確認しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> d
+  A B C
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">7</span>
+<span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">8</span>
+<span style="color:#ae81ff">3</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">9</span></code></pre></div>
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>Rでは<strong>CSVファイル</strong>を読み込んでデータフレームを生成することができます．
+まずは，Excelで下記のデータで構成されるCSVファイルを制作してください．
+CSVファイルの名前は<strong>meibo.csv</strong>，ファイル種類は「<strong>CSVカンマ区切り（*.csv）</strong>」とします（UTF-8を選ばないこと）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">名前, 読み, 身長, 体重
+石野 彩, いしの あや, 163, 45
+渥美 佳美, あつみ よしみ, 155, 55
+磯貝 明香, いそがい さやか, 165, 51</code></pre></div>
+<p>次に，<strong>read.csv</strong>を利用してCSVファイルを読み込みます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">meibo <span style="color:#f92672">&lt;-</span> read.csv(<span style="color:#e6db74">&#34;meibo.csv&#34;</span>)</code></pre></div>
+<p>最後に，データフレームの値を確認しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> meibo
+  名前      読み           身長  体重
+<span style="color:#ae81ff">1</span> 石野 彩     いしの あや  <span style="color:#ae81ff">163</span>   <span style="color:#ae81ff">45</span>
+<span style="color:#ae81ff">2</span> 渥美 佳美   あつみ よしみ  <span style="color:#ae81ff">155</span>   <span style="color:#ae81ff">55</span>
+<span style="color:#ae81ff">3</span> 磯貝 明香 いそがい さやか  <span style="color:#ae81ff">165</span>   <span style="color:#ae81ff">51</span></code></pre></div>
+<p>ソースは<strong>chapter2.R</strong>に記述し，コンソールの出力結果と，<strong>chapter2.R</strong> を提出すること．</p>
+
+<h3>参考書籍</h3>
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274067106&linkId=93d694711dbe1bcddf54d4dbceaa6634&bc1=F8F8F8&lt1=_blank&fc1=333333&lc1=0066C0&bg1=F8F8F8&f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4863542011&linkId=92f9b82cf210ae3681f8c607eae4ac8a&bc1=F8F8F8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=F8F8F8&f=ifr"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter2/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.541632 &#43;0900 JST m=&#43;2.752629301">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

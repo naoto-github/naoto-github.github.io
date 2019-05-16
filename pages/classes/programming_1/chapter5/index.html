@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    アニメーションの表示 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="アニメーションの表示" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/programming_1/chapter5/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/01cd25d187d03257cc85be5a3150916f.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="スケッチの作成Processingを起動して、新規にスケッチを保存しましょう。 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。 ファイル名に「Project5」を入力し、[保存]をクリックしましょう。 保存先に「Project5」という名前のフォルダが作成されていることを確認してください。
+
+setupとdrawアニメーションを制御するにはsetu()関数とdraw関数()が必要になります。 setup()関数には、変数の初期化など、プログラムを実行したときに1回だけ実行する処理を記述します。 一方、draw()関数は、プログラムの実行中に繰り返し実行され、アニメーションなど何かを変化させるための処理を記述します。 また、setup()関数とdraw()関数の外部で宣言された変数は両方の関数内で利用できます（グローバル変数と呼びます）。 setu()関数とdraw関数()は下記のように記述します（voidは「この関数は返値をもたない」という意味です）。
+void setup(){ 1回だけ実行する処理; } void draw(){ 繰り返し実行する処理; } ここでは、ウィンドウの中央に半径10の円を描いてみましょう。 変数の初期化はsetup()関数、円の描画はdraw()関数に記述していることに注意してください。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 ウィンドウの中央に円が描かれていることを確認してください。
+ 
+直線運動 円が右方向に直線的に動くアニメーションを設定してみましょう。 右方向へのアニメーションは、draw()関数において、変数*x*の値を増加させることで表現できます。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 複数の円が右方向に描画されることを確認してください。
+ 
+しかし、上記のコードでは円が複数描画されてしまい、アニメーションしているように見えません。 そこで、draw()関数の最初で、背景を灰色（#cccccc）で塗りつぶすことで、常に円が1つだけ描画されるように変更します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 1つの円が右方向に移動することを確認してください。
+ 
+円がウィンドウの端に到達したら、跳ね返って逆方向に進むように修正しましょう。 まずは、右端に到達したら、左方向に進むようにします。 円の速度を表す変数*speed*を宣言し、if文を利用して*x*の値が右端に到達したら*speed*の正負を反転します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 円が右端に到達すると跳ね返ることを確認してください。
+ 
+同様に、左端に到達したら、右方向に進むようにします。 if文を利用してxの値が左端に到達したらspeedの正負を反転します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 円が左端に到達すると跳ね返ることを確認してください。
+ 
+円運動 次は、円運動するアニメーションを設定してみましょう。 円運動を表現するにはsin()関数とcos()関数を利用します。 sin()関数とcos()関数の引数には角度を指定しますが、 ラジアン角を用いることに注意が必要です（ラジアン角は0から2&pi;）。
+円運動の半径を表す変数lとラジアン角を表す変数angleを宣言します。 また、座標を表すxとyはfloat型に変更します。 sin()関数とcos()関数を利用して、座標（x,y）を更新することで円運動を表現します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 円が円運動していることを確認してください。" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="アニメーションの表示" />
+
+
+
+  <meta name="twitter:description" content="スケッチの作成Processingを起動して、新規にスケッチを保存しましょう。 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。 ファイル名に「Project5」を入力し、[保存]をクリックしましょう。 保存先に「Project5」という名前のフォルダが作成されていることを確認してください。
+
+setupとdrawアニメーションを制御するにはsetu()関数とdraw関数()が必要になります。 setup()関数には、変数の初期化など、プログラムを実行したときに1回だけ実行する処理を記述します。 一方、draw()関数は、プログラムの実行中に繰り返し実行され、アニメーションなど何かを変化させるための処理を記述します。 また、setup()関数とdraw()関数の外部で宣言された変数は両方の関数内で利用できます（グローバル変数と呼びます）。 setu()関数とdraw関数()は下記のように記述します（voidは「この関数は返値をもたない」という意味です）。
+void setup(){ 1回だけ実行する処理; } void draw(){ 繰り返し実行する処理; } ここでは、ウィンドウの中央に半径10の円を描いてみましょう。 変数の初期化はsetup()関数、円の描画はdraw()関数に記述していることに注意してください。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 ウィンドウの中央に円が描かれていることを確認してください。
+ 
+直線運動 円が右方向に直線的に動くアニメーションを設定してみましょう。 右方向へのアニメーションは、draw()関数において、変数*x*の値を増加させることで表現できます。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 複数の円が右方向に描画されることを確認してください。
+ 
+しかし、上記のコードでは円が複数描画されてしまい、アニメーションしているように見えません。 そこで、draw()関数の最初で、背景を灰色（#cccccc）で塗りつぶすことで、常に円が1つだけ描画されるように変更します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 1つの円が右方向に移動することを確認してください。
+ 
+円がウィンドウの端に到達したら、跳ね返って逆方向に進むように修正しましょう。 まずは、右端に到達したら、左方向に進むようにします。 円の速度を表す変数*speed*を宣言し、if文を利用して*x*の値が右端に到達したら*speed*の正負を反転します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 円が右端に到達すると跳ね返ることを確認してください。
+ 
+同様に、左端に到達したら、右方向に進むようにします。 if文を利用してxの値が左端に到達したらspeedの正負を反転します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 円が左端に到達すると跳ね返ることを確認してください。
+ 
+円運動 次は、円運動するアニメーションを設定してみましょう。 円運動を表現するにはsin()関数とcos()関数を利用します。 sin()関数とcos()関数の引数には角度を指定しますが、 ラジアン角を用いることに注意が必要です（ラジアン角は0から2&pi;）。
+円運動の半径を表す変数lとラジアン角を表す変数angleを宣言します。 また、座標を表すxとyはfloat型に変更します。 sin()関数とcos()関数を利用して、座標（x,y）を更新することで円運動を表現します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 円が円運動していることを確認してください。" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/01cd25d187d03257cc85be5a3150916f.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">アニメーションの表示</h1>
+<div class="post-line"></div>
+
+    
+
+    
+
+<p><a href="https://gyazo.com/01cd25d187d03257cc85be5a3150916f"><img src="https://i.gyazo.com/01cd25d187d03257cc85be5a3150916f.png" alt="https://gyazo.com/01cd25d187d03257cc85be5a3150916f" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  スケッチの作成
+</h1>
+
+
+<p>Processingを起動して、新規にスケッチを保存しましょう。
+メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。
+ファイル名に「Project5」を入力し、[保存]をクリックしましょう。
+保存先に「Project5」という名前のフォルダが作成されていることを確認してください。</p>
+
+<p><a href="https://gyazo.com/0164542679637926cc8339ce165b4a5e"><img src="https://i.gyazo.com/0164542679637926cc8339ce165b4a5e.png" alt="https://gyazo.com/0164542679637926cc8339ce165b4a5e" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  setupとdraw
+</h1>
+
+
+<p>アニメーションを制御するには<code>setu()</code>関数と<code>draw関数()</code>が必要になります。
+<code>setup()</code>関数には、変数の初期化など、プログラムを実行したときに<strong>1回だけ</strong>実行する処理を記述します。
+一方、<code>draw()</code>関数は、プログラムの実行中に<strong>繰り返し</strong>実行され、アニメーションなど何かを変化させるための処理を記述します。
+また、<code>setup()</code>関数と<code>draw()</code>関数の外部で宣言された変数は両方の関数内で利用できます（<strong>グローバル変数</strong>と呼びます）。
+<code>setu()</code>関数と<code>draw関数()</code>は下記のように記述します（<strong>void</strong>は「この関数は返値をもたない」という意味です）。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setup</span><span style="color:#f92672">(){</span>
+    1回だけ実行する処理<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">draw</span><span style="color:#f92672">(){</span>
+    繰り返し実行する処理<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span></code></pre></div>
+<p>ここでは、ウィンドウの中央に半径10の円を描いてみましょう。
+変数の初期化は<code>setup()</code>関数、円の描画は<code>draw()</code>関数に記述していることに注意してください。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+ウィンドウの中央に円が描かれていることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/a3ec0fa860b68798b0fb749a79bb9292.js"></script>
+
+<p><a href="https://gyazo.com/acc31709869b190e55ef6c6a4179b396"><img src="https://i.gyazo.com/acc31709869b190e55ef6c6a4179b396.png" alt="https://gyazo.com/acc31709869b190e55ef6c6a4179b396" /></a></p>
+
+<h3 id="直線運動">直線運動</h3>
+
+<p>円が右方向に直線的に動くアニメーションを設定してみましょう。
+右方向へのアニメーションは、<code>draw()</code>関数において、変数*x*の値を増加させることで表現できます。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+複数の円が右方向に描画されることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/46ecff4e866f144c0ece31f30d0f75a9.js"></script>
+
+<p><a href="https://gyazo.com/5a2299a60de12f4a0a18a1734532dae1"><img src="https://i.gyazo.com/5a2299a60de12f4a0a18a1734532dae1.gif" alt="https://gyazo.com/5a2299a60de12f4a0a18a1734532dae1" /></a></p>
+
+<p>しかし、上記のコードでは円が複数描画されてしまい、アニメーションしているように見えません。
+そこで、<code>draw()</code>関数の最初で、背景を灰色（#cccccc）で塗りつぶすことで、常に円が1つだけ描画されるように変更します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+1つの円が右方向に移動することを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/f169257e50d580b1830bf11896368831.js"></script>
+
+<p><a href="https://gyazo.com/dad4f4fb1d0feb6da75b4e754a7c3d69"><img src="https://i.gyazo.com/dad4f4fb1d0feb6da75b4e754a7c3d69.gif" alt="https://gyazo.com/dad4f4fb1d0feb6da75b4e754a7c3d69" /></a></p>
+
+<p>円がウィンドウの端に到達したら、跳ね返って逆方向に進むように修正しましょう。
+まずは、右端に到達したら、左方向に進むようにします。
+円の速度を表す変数*speed*を宣言し、if文を利用して*x*の値が右端に到達したら*speed*の正負を反転します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+円が右端に到達すると跳ね返ることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/c23338eee2221d35a9d02a0ca930b997.js"></script>
+
+<p><a href="https://gyazo.com/611d2d56fd57a1cc8d3ac506275f5cf3"><img src="https://i.gyazo.com/611d2d56fd57a1cc8d3ac506275f5cf3.gif" alt="https://gyazo.com/611d2d56fd57a1cc8d3ac506275f5cf3" /></a></p>
+
+<p>同様に、左端に到達したら、右方向に進むようにします。
+if文を利用してxの値が左端に到達したらspeedの正負を反転します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+円が左端に到達すると跳ね返ることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/9e70813f9a4678de3c355cc35d38ac41.js"></script>
+
+<p><a href="https://gyazo.com/cd23307cf8fa36b1d03d2c6f48e4c1d0"><img src="https://i.gyazo.com/cd23307cf8fa36b1d03d2c6f48e4c1d0.gif" alt="https://gyazo.com/cd23307cf8fa36b1d03d2c6f48e4c1d0" /></a></p>
+
+<h3 id="円運動">円運動</h3>
+
+<p>次は、円運動するアニメーションを設定してみましょう。
+円運動を表現するには<code>sin()</code>関数と<code>cos()</code>関数を利用します。
+<code>sin()</code>関数と<code>cos()</code>関数の引数には<strong>角度</strong>を指定しますが、
+<strong>ラジアン角</strong>を用いることに注意が必要です（ラジアン角は<strong>0</strong>から<strong>2&pi;</strong>）。</p>
+
+<p>円運動の半径を表す変数lとラジアン角を表す変数angleを宣言します。
+また、座標を表すxとyはfloat型に変更します。
+<code>sin()</code>関数と<code>cos()</code>関数を利用して、座標（x,y）を更新することで円運動を表現します。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+円が円運動していることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/79ec23d093b9a432abaf8735633c18fe.js"></script>
+
+<p><a href="https://gyazo.com/4682360aab6f62b78117d9f185f3f7e2"><img src="https://i.gyazo.com/4682360aab6f62b78117d9f185f3f7e2.gif" alt="https://gyazo.com/4682360aab6f62b78117d9f185f3f7e2" /></a></p>
+
+<p>上記のコードを少し修正して、螺旋運動のアニメーションを設定してみましょう。
+円運動の半径を表す変数lの値を徐々に大きくします。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+円が螺旋運動していることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/ee03c8909bea1c66e315fd2db9c395b3.js"></script>
+
+<!-- [![https://gyazo.com/7a7ffd91ca5301f77ef8c279cd28f6c1](https://i.gyazo.com/7a7ffd91ca5301f77ef8c279cd28f6c1.gif)](https://gyazo.com/7a7ffd91ca5301f77ef8c279cd28f6c1) -->
+
+<p><a href="https://gyazo.com/8626a6845b9d691ef73e8badacd6fc1b"><img src="https://i.gyazo.com/8626a6845b9d691ef73e8badacd6fc1b.gif" alt="https://gyazo.com/8626a6845b9d691ef73e8badacd6fc1b" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>螺旋運動と共に描画される円の大きさが徐々に大きくなるアニメーションを設定してください。
+課題が完成したら、作成したスケッチを<strong>ZIPアーカイブ</strong>形式で保存します。
+ZIPアーカイブを作成するには、メニューから[ツール]-[スケッチをアーカイブ]をクリックして、「スケッチを名前を付けてアーカイブする」を開きます。
+保存するファイル名を確認した上で、[保存]をクリックします。
+保存先に「Project5-日付a.zip」というファイルが作成されていることを確認してください。</p>
+
+<!-- [![https://gyazo.com/93c3471ed12ea69506fddf180f5b95b7](https://i.gyazo.com/93c3471ed12ea69506fddf180f5b95b7.gif)](https://gyazo.com/93c3471ed12ea69506fddf180f5b95b7) -->
+
+<p><a href="https://gyazo.com/420dead37e17d266c1398716055d9c9e"><img src="https://i.gyazo.com/420dead37e17d266c1398716055d9c9e.gif" alt="https://gyazo.com/420dead37e17d266c1398716055d9c9e" /></a></p>
+
+<h3>参考書籍</h3>
+
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4873115159" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877832939" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/programming_1/chapter5/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.5356481 &#43;0900 JST m=&#43;2.746645301">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

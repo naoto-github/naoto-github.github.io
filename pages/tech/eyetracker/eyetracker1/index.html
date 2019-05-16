@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Tobii Eye Trackerを利用した視線の認識 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="Tobii Eye Trackerを利用した視線の認識" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/eyetracker/eyetracker1/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="Tobii Eye Trackerとは近年、ユーザの視線を検出するアイトラッキングという技術が注目されています。 アイトラッキングはマウスやキーボードの代替となりうるヒューマンインターフェイスの一つであり、 手足が不自由な障がい者のコミュニケーション装置としても活用されています。 光学センサーと画像処理技術を用いて、眼球の動き を解析することで、 ユーザの注視点（見つめている場所）を推定する方法が一般的です。 今回は、トビー・テクノロジー株式会社が ゲーム用に提供しているEye Tracker 4Cという 視線入力装置を利用して、ユーザの視線を検出するプログラムを実装してみます。 トビー・テクノロジーは自社の製品を利用したソフトウェアを開発するための Tobii Pro SDKを独自に提供していますが、 Eye Tracker 4CでTobii Pro SDKを利用するためには、 プロアップグレードキーが必要となることに注意が必要です （Tobii Core SDK や Tobii Gaming SDK という選択肢もありますが、研究やデータ分析を用途とする場合は Tobii Pro SDK を利用する必要があります）。 また、開発用の言語には Python、Matlab、C、Unity などに対応していますが、 ここでは、機械学習に適したPythonを採用します。 Tobii Pro SDK のドキュメントが公開されおり、この情報を参考にしながら開発を進めることになります。
+
+開発環境の準備まずは、Pythonをインストールします。 Pythonのバージョンには3.xと2.xの２通り存在しますが、 Tobii Pro SDK に対応している 2.x を選択する必要があることに注意してください。 ここでは、現時点での最新バージョンである2.7.14を利用します(2017年10月17日)。
+Pythonの本体に加えて、画像処理ライブラリのOpenCVと、 数値計算ライブラリのNumPyを追加でインストールします。 インストール方法はPythonのパッケージ管理システムであるpipを利用すれば簡単です。 コマンドプロンプトで下記のように入力します。 ここでは、3.3.0.10 のOpenCVと 1.13.3 のNumPyがインストールされました。
+$ python -m pip install opencv-python Collecting opencv-python Downloading opencv_python-3." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Tobii Eye Trackerを利用した視線の認識" />
+
+
+
+  <meta name="twitter:description" content="Tobii Eye Trackerとは近年、ユーザの視線を検出するアイトラッキングという技術が注目されています。 アイトラッキングはマウスやキーボードの代替となりうるヒューマンインターフェイスの一つであり、 手足が不自由な障がい者のコミュニケーション装置としても活用されています。 光学センサーと画像処理技術を用いて、眼球の動き を解析することで、 ユーザの注視点（見つめている場所）を推定する方法が一般的です。 今回は、トビー・テクノロジー株式会社が ゲーム用に提供しているEye Tracker 4Cという 視線入力装置を利用して、ユーザの視線を検出するプログラムを実装してみます。 トビー・テクノロジーは自社の製品を利用したソフトウェアを開発するための Tobii Pro SDKを独自に提供していますが、 Eye Tracker 4CでTobii Pro SDKを利用するためには、 プロアップグレードキーが必要となることに注意が必要です （Tobii Core SDK や Tobii Gaming SDK という選択肢もありますが、研究やデータ分析を用途とする場合は Tobii Pro SDK を利用する必要があります）。 また、開発用の言語には Python、Matlab、C、Unity などに対応していますが、 ここでは、機械学習に適したPythonを採用します。 Tobii Pro SDK のドキュメントが公開されおり、この情報を参考にしながら開発を進めることになります。
+
+開発環境の準備まずは、Pythonをインストールします。 Pythonのバージョンには3.xと2.xの２通り存在しますが、 Tobii Pro SDK に対応している 2.x を選択する必要があることに注意してください。 ここでは、現時点での最新バージョンである2.7.14を利用します(2017年10月17日)。
+Pythonの本体に加えて、画像処理ライブラリのOpenCVと、 数値計算ライブラリのNumPyを追加でインストールします。 インストール方法はPythonのパッケージ管理システムであるpipを利用すれば簡単です。 コマンドプロンプトで下記のように入力します。 ここでは、3.3.0.10 のOpenCVと 1.13.3 のNumPyがインストールされました。
+$ python -m pip install opencv-python Collecting opencv-python Downloading opencv_python-3." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">Tobii Eye Trackerを利用した視線の認識</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373"><img src="https://i.gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373.png" alt="https://gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Tobii Eye Trackerとは
+</h1>
+
+
+<p>近年、ユーザの視線を検出する<strong>アイトラッキング</strong>という技術が注目されています。
+アイトラッキングはマウスやキーボードの代替となりうるヒューマンインターフェイスの一つであり、
+手足が不自由な障がい者のコミュニケーション装置としても活用されています。
+光学センサーと画像処理技術を用いて、<strong>眼球の動き</strong> を解析することで、
+ユーザの注視点（見つめている場所）を推定する方法が一般的です。
+今回は、<a href="https://www.tobiipro.com/ja/">トビー・テクノロジー株式会社</a>が
+ゲーム用に提供している<a href="https://tobiigaming.com/eye-tracker-4c/">Eye Tracker 4C</a>という
+視線入力装置を利用して、ユーザの視線を検出するプログラムを実装してみます。
+トビー・テクノロジーは自社の製品を利用したソフトウェアを開発するための
+<a href="http://developer.tobii.com/">Tobii Pro SDK</a>を独自に提供していますが、
+<a href="https://tobiigaming.com/eye-tracker-4c/">Eye Tracker 4C</a>でTobii Pro SDKを利用するためには、
+<a href="https://www.tobiipro.com/product-listing/tobii-pro-sdk/tobii-pro-sdk-beta/">プロアップグレードキー</a>が必要となることに注意が必要です
+（<strong>Tobii Core SDK</strong> や <strong>Tobii Gaming SDK</strong> という選択肢もありますが、研究やデータ分析を用途とする場合は <strong>Tobii Pro SDK</strong> を利用する必要があります）。
+また、開発用の言語には <strong>Python</strong>、<strong>Matlab</strong>、<strong>C</strong>、<strong>Unity</strong> などに対応していますが、
+ここでは、機械学習に適した<a href="https://www.python.org/">Python</a>を採用します。
+<strong>Tobii Pro SDK</strong> の<a href="http://developer.tobiipro.com/index.html">ドキュメント</a>が公開されおり、この情報を参考にしながら開発を進めることになります。</p>
+
+<p><a href="https://gyazo.com/3d9120766d6fada3edbed98010181f83"><img src="https://i.gyazo.com/3d9120766d6fada3edbed98010181f83.jpg" alt="https://gyazo.com/3d9120766d6fada3edbed98010181f83" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  開発環境の準備
+</h1>
+
+
+<p>まずは、<a href="https://www.python.org/">Python</a>をインストールします。
+Pythonのバージョンには<strong>3.x</strong>と<strong>2.x</strong>の２通り存在しますが、
+<strong>Tobii Pro SDK</strong> に対応している <strong>2.x</strong> を選択する必要があることに注意してください。
+ここでは、現時点での最新バージョンである<strong>2.7.14</strong>を利用します(2017年10月17日)。</p>
+
+<p>Pythonの本体に加えて、画像処理ライブラリの<a href="http://labs.eecs.tottori-u.ac.jp/sd/Member/oyamada/OpenCV/html/index.html">OpenCV</a>と、
+数値計算ライブラリの<a href="http://www.numpy.org/">NumPy</a>を追加でインストールします。
+インストール方法はPythonのパッケージ管理システムである<strong>pip</strong>を利用すれば簡単です。
+コマンドプロンプトで下記のように入力します。
+ここでは、<strong>3.3.0.10</strong> のOpenCVと <strong>1.13.3</strong> のNumPyがインストールされました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">$ python -m pip install opencv-python
+Collecting opencv-python
+  Downloading opencv_python-3.3.0.10-cp27-cp27m-win32.whl (29.8MB)
+Requirement already satisfied: numpy&gt;=1.11.1 in c:\python27\lib\site-packages (from opencv-python)
+Installing collected packages: opencv-python
+Successfully installed opencv-python-3.3.0.10
+
+$ python -m pip install numpy
+Collecting numpy
+  Downloading numpy-1.13.3-2-cp27-none-win32.whl (6.7MB)
+Installing collected packages: numpy
+Successfully installed numpy-1.13.3</code></pre></div>
+<p>さらに、<strong>Tobii Pro SDK</strong>　のライブラリを導入します。
+ここでは、<a href="https://www.tobiipro.com/ja/product-listing/tobii-pro-sdk/#ダウンロード">Tobii Pro SDK Python for Windows</a>の
+最新バージョンである <strong>1.2</strong> を利用します。
+ダウンロードしたZIPファイルは解凍し、<strong>tobiiresearch.py</strong> と <strong>tobiiresearch</strong>フォルダを
+Pythonの開発用のフォルダにコピーしておきます。</p>
+
+<p>また、上述したように、<strong>Tobii Eye Tracker 4C</strong> で <strong>Tobii Pro SDK</strong> を用いるには、
+<strong>プロアップグレードキー</strong> が必要であり、このキーはファイルとして提供されます。
+このファイルもSDKと同様にPythonの開発用のフォルダにコピーしておきます。</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  アイトラッキングの実装
+</h1>
+
+
+<p>それではPythonでアイトラッキングを実装していきましょう。
+ファイル名は <strong>MyEyeTrack.py</strong> とします。
+まずは、必要なモジュール（ライブラリ）のインポートです。
+ここでは、<strong>tobii_research</strong>、<strong>sys</strong>、<strong>time</strong> の3つのモジュールをインポートします。
+<strong>sys</strong> はシステム関連のモジュールであり、プログラムを終了させるときに用います。
+また、<strong>time</strong> は時間関連のモジュールであり、スレッドを待機させるときに用います。
+<strong>tobii_research</strong> のモジュールに関しては、<strong>tr</strong> という別名を付けていることに注意してください。
+（OpenCVのモジュールは次回利用します）</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/9ee4cb865d0135badb3dd7a5a70fab0b.js"></script>
+
+<p>次に接続されている <strong>Tobii Eye Tracker 4C</strong> を認識します。
+認識には、<strong>find_all_eyetrackers</strong> メソッドを利用して、<strong>EyeTracker</strong> オブジェクトのリストとして取得します。
+接続されている <strong>Tobii Eye Tracker 4C</strong> は１つであるため、リストの最初の要素を取得しています。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/409d12fe1f6b65d17c2bfe0cb330ac89.js"></script>
+
+<p>認識した<strong>EyeTracker</strong>オブジェクトにプロダクトキーを登録します。
+登録には<strong>apply_licenses</strong>メソッドを利用し、引数としてプロダクトキーのファイルデータを渡します。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/ca893fa8c80f5f1ab537098dce465408.js"></script>
+
+<p>次にコールバックメソッドを実装します。
+これは、<strong>Eye Tracker 4C</strong> がユーザの視線情報を取得した際に、
+自動的に呼び出されるメソッドであり、視線情報を保持している<strong>GazeData</strong>オブジェクトを引数として受け取ります。
+<strong>GazeData</strong> オブジェクトは、タイムスタンプ <strong>device_time_stamp</strong> 、
+左目の視線情報 <strong>left_eye</strong>、
+右目の視線情報<strong>right_eye</strong> をフィールドとして持ちます。
+ここでは、タイムスタンプに加え、ディスプレイに対する両目の視線位置をコンソールに出力しています。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/d83000f3711e8c6fe14d3bf90d1737c3.js"></script>
+
+<p>最後にコールバックメソッドを<strong>EyeTracker</strong>オブジェクトに登録します。
+登録後に2秒間待機して、登録したコールバックメソッドを解除します。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/6cfa7beaf1fcd5c220c3277d9cffb894.js"></script>
+
+<p>では、プログラムを実行してみましょう。
+実行すると下記のように両目の視線位置がコンソールに出力されます。
+この視線位置はディスプレイに対する視線位置を標準化した値です。</p>
+
+<p>```txt
+$ python MyEyeTrack.py
+Time:1085371717
+Left Eye:0.220283389091 0.668268859386
+Right Eye:0.234770789742 0.648708641529
+Time:1085382820
+Left Eye:0.218198925257 0.671267986298
+Right Eye:0.233092829585 0.647686421871
+Time:1085393924
+Left Eye:0.219358816743 0.66589474678
+Right Eye:0.230099588633 0.645437598228
+&ldquo;&rsquo;</p>
+
+<p>次回はOpenCVを利用して、ウィンドウを作成し、視線位置に図形を描画することに挑戦してみます。</p>
+
+<h3>参考書籍</h3>
+
+
+
+
+
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B01MAWPMXQ&linkId=ecef4699dbd3f52f81d543250f9154eb&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479738946X&linkId=de444918271e503fbafc4e3809767738&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4873116554&linkId=d00c6162ea2e50700bce2c7d03b7cc3c&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/eyetracker/eyetracker1/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.5326557 &#43;0900 JST m=&#43;2.743652901">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

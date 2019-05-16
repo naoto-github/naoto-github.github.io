@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    ロボホンの開発環境の構築 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="ロボホンの開発環境の構築" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/robohon/robohon1/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/f28e97ef3b604599c791a2dc40e76551.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="ロボホンとはロボホン（RoBoHoN）はシャープ株式会社が開発する人型のロボットであり、音声UIを利用して自然言語で会話が出来ることを特徴としています。 ロボホンのOSはグーグル社が開発するAndroidであり、Android用のアプリ開発と同様にロボホンのアプリを制作することができます。 ロボホンの開発に必要なRoBoHoN Software Development Kitが公開されており、 ガイドラインに従って音声UIを利用したアプリを開発することが可能です。 ここで、ガイドラインとは、ロボホンの世界観を維持するための、ロボホンの キャラクター 、 話し方 、 ユーザとの関係性 のことを指しています。 今回は、ロボホンのアプリ開発に必要な環境の構築方法に関して解説します。
+開発環境ロボホンアプリの開発には下記の環境が必要です。 ココロプランには、「ビジネス基本プラン」「ビジネスプラン2000」など数種類が設定されており、 プランに応じて月毎の会話上限が定められています。 アプリ開発で頻繁に音声UIを利用する場合は高額なプランも検討する必要があります。
+ ロボホン本体（現状ではエミュレータは存在しない） ネットワーク環境（音声UIを利用するため） ココロプランの契約（本体購入時に同時契約）  開発プラットフォームとしては、Android Studioを利用します（ロボホンのOSはAndroid 5.0です）。 また、Android Studio のバージョンは 1.5 以降が必要とされており、今回は現時点での最新版である 2.3.3.0を採用します(2017年9月18日)。 ファイルサイズは約1.9GBと、かなり大きいので注意してください。
+
+Android Studioのインストール・パッケージをダウンロードしたら、インストールを始めましょう。 インストールが完了したらロボホンのアプリ開発に必要なパッケージを追加でインストールします。 まずは、バージョン 1.5 の Android SDKです。 Settingsのメニューから[Appearance&amp;Behavior]-[System Settings]-[Android SDK]を選択し、 Android 5.0 (Lollipop) にチェックを入れて Apply をクリックします。
+
+同様にAndroid SDK Build-Toolsを追加します。 バージョンは21.0.0以降にチェックを入れて Apply をクリックします（Show Package Detailsをクリックするとバージョンの選択が可能です）。
+
+開発したアプリをデバッグする際に、音声対話に失敗することを回避するために、 Instant Run の設定を無効化します。 Settingsのメニューから[Build, Execution, Developemnt]を選択し、全てのチェックをはずします。 これで、Android Studio の準備は完了です。" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="ロボホンの開発環境の構築" />
+
+
+
+  <meta name="twitter:description" content="ロボホンとはロボホン（RoBoHoN）はシャープ株式会社が開発する人型のロボットであり、音声UIを利用して自然言語で会話が出来ることを特徴としています。 ロボホンのOSはグーグル社が開発するAndroidであり、Android用のアプリ開発と同様にロボホンのアプリを制作することができます。 ロボホンの開発に必要なRoBoHoN Software Development Kitが公開されており、 ガイドラインに従って音声UIを利用したアプリを開発することが可能です。 ここで、ガイドラインとは、ロボホンの世界観を維持するための、ロボホンの キャラクター 、 話し方 、 ユーザとの関係性 のことを指しています。 今回は、ロボホンのアプリ開発に必要な環境の構築方法に関して解説します。
+開発環境ロボホンアプリの開発には下記の環境が必要です。 ココロプランには、「ビジネス基本プラン」「ビジネスプラン2000」など数種類が設定されており、 プランに応じて月毎の会話上限が定められています。 アプリ開発で頻繁に音声UIを利用する場合は高額なプランも検討する必要があります。
+ ロボホン本体（現状ではエミュレータは存在しない） ネットワーク環境（音声UIを利用するため） ココロプランの契約（本体購入時に同時契約）  開発プラットフォームとしては、Android Studioを利用します（ロボホンのOSはAndroid 5.0です）。 また、Android Studio のバージョンは 1.5 以降が必要とされており、今回は現時点での最新版である 2.3.3.0を採用します(2017年9月18日)。 ファイルサイズは約1.9GBと、かなり大きいので注意してください。
+
+Android Studioのインストール・パッケージをダウンロードしたら、インストールを始めましょう。 インストールが完了したらロボホンのアプリ開発に必要なパッケージを追加でインストールします。 まずは、バージョン 1.5 の Android SDKです。 Settingsのメニューから[Appearance&amp;Behavior]-[System Settings]-[Android SDK]を選択し、 Android 5.0 (Lollipop) にチェックを入れて Apply をクリックします。
+
+同様にAndroid SDK Build-Toolsを追加します。 バージョンは21.0.0以降にチェックを入れて Apply をクリックします（Show Package Detailsをクリックするとバージョンの選択が可能です）。
+
+開発したアプリをデバッグする際に、音声対話に失敗することを回避するために、 Instant Run の設定を無効化します。 Settingsのメニューから[Build, Execution, Developemnt]を選択し、全てのチェックをはずします。 これで、Android Studio の準備は完了です。" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/f28e97ef3b604599c791a2dc40e76551.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">ロボホンの開発環境の構築</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/f28e97ef3b604599c791a2dc40e76551"><img src="https://i.gyazo.com/f28e97ef3b604599c791a2dc40e76551.png" alt="https://gyazo.com/f28e97ef3b604599c791a2dc40e76551" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ロボホンとは
+</h1>
+
+
+<p><strong>ロボホン（RoBoHoN）</strong>はシャープ株式会社が開発する人型のロボットであり、音声UIを利用して自然言語で会話が出来ることを特徴としています。
+ロボホンのOSはグーグル社が開発する<strong>Android</strong>であり、Android用のアプリ開発と同様にロボホンのアプリを制作することができます。
+ロボホンの開発に必要な<a href="https://robohon.com/">RoBoHoN Software Development Kit</a>が公開されており、
+ガイドラインに従って音声UIを利用したアプリを開発することが可能です。
+ここで、ガイドラインとは、ロボホンの世界観を維持するための、ロボホンの <strong>キャラクター</strong> 、 <strong>話し方</strong> 、 <strong>ユーザとの関係性</strong> のことを指しています。
+今回は、<strong>ロボホン</strong>のアプリ開発に必要な環境の構築方法に関して解説します。</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  開発環境
+</h1>
+
+
+<p>ロボホンアプリの開発には下記の環境が必要です。
+<a href="https://robohon.com/corporation/developer.php">ココロプラン</a>には、「ビジネス基本プラン」「ビジネスプラン2000」など数種類が設定されており、
+プランに応じて月毎の会話上限が定められています。
+アプリ開発で頻繁に音声UIを利用する場合は高額なプランも検討する必要があります。</p>
+
+<ul>
+<li>ロボホン本体（現状ではエミュレータは存在しない）</li>
+<li>ネットワーク環境（音声UIを利用するため）</li>
+<li>ココロプランの契約（本体購入時に同時契約）</li>
+</ul>
+
+<p>開発プラットフォームとしては、<a href="https://developer.android.com/studio/">Android Studio</a>を利用します（ロボホンのOSは<strong>Android 5.0</strong>です）。
+また、<strong>Android Studio</strong> のバージョンは <strong>1.5</strong> 以降が必要とされており、今回は現時点での最新版である <strong>2.3.3.0</strong>を採用します(2017年9月18日)。
+ファイルサイズは約1.9GBと、かなり大きいので注意してください。</p>
+
+<p><a href="https://gyazo.com/749d76c6d2de671db0afd7885e3fab70"><img src="https://i.gyazo.com/749d76c6d2de671db0afd7885e3fab70.png" alt="https://gyazo.com/749d76c6d2de671db0afd7885e3fab70" /></a></p>
+
+<p><strong>Android Studio</strong>のインストール・パッケージをダウンロードしたら、インストールを始めましょう。
+インストールが完了したらロボホンのアプリ開発に必要なパッケージを追加でインストールします。
+まずは、バージョン <strong>1.5</strong> の <strong>Android SDK</strong>です。
+<strong>Settings</strong>のメニューから[Appearance&amp;Behavior]-[System Settings]-[Android SDK]を選択し、
+<strong>Android 5.0 (Lollipop)</strong> にチェックを入れて <strong>Apply</strong> をクリックします。</p>
+
+<p><a href="https://gyazo.com/7d5a5c7d6dad402ff422be74b7917290"><img src="https://i.gyazo.com/7d5a5c7d6dad402ff422be74b7917290.png" alt="https://gyazo.com/7d5a5c7d6dad402ff422be74b7917290" /></a></p>
+
+<p>同様に<strong>Android SDK Build-Tools</strong>を追加します。
+バージョンは<strong>21.0.0以降</strong>にチェックを入れて <strong>Apply</strong> をクリックします（<strong>Show Package Details</strong>をクリックするとバージョンの選択が可能です）。</p>
+
+<p><a href="https://gyazo.com/0a24f89bff194af6f3566ee2b5a3bf2b"><img src="https://i.gyazo.com/0a24f89bff194af6f3566ee2b5a3bf2b.png" alt="https://gyazo.com/0a24f89bff194af6f3566ee2b5a3bf2b" /></a></p>
+
+<p>開発したアプリをデバッグする際に、音声対話に失敗することを回避するために、
+<strong>Instant Run</strong> の設定を無効化します。
+<strong>Settings</strong>のメニューから[Build, Execution, Developemnt]を選択し、全てのチェックをはずします。
+これで、<strong>Android Studio</strong> の準備は完了です。</p>
+
+<p><a href="https://gyazo.com/abac755143d02210d2045c2f0501b234"><img src="https://i.gyazo.com/abac755143d02210d2045c2f0501b234.png" alt="https://gyazo.com/abac755143d02210d2045c2f0501b234" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  テンプレートの導入
+</h1>
+
+
+<p>ロボホンアプリの開発には提供されているテンプレートを利用することが出来ます。
+そこで、<strong>Android Studio</strong>に、このテンプレートを導入しましょう。
+ここからは、<a href="https://robohon.com/">RoBoHoN Software Development Kit</a>が必要となります。
+ファイルをダウンロードしたら、<strong>0803_SR01MW_RoBoHoN_Template_Vxxd_xx_xx.zip</strong>を展開します。
+展開後に含まれるpluginsフォルダを、Android Studioのインストールフォルダに上書きコピーします。
+この後で説明するプロジェクトの新規作成の際に、テンプレート一覧に<strong>Robohon Activity</strong>が表示されていれば完了です。</p>
+
+<p><a href="https://gyazo.com/b6f2498b2bda988aeb0bbd418ed41cb3"><img src="https://i.gyazo.com/b6f2498b2bda988aeb0bbd418ed41cb3.png" alt="https://gyazo.com/b6f2498b2bda988aeb0bbd418ed41cb3" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  プロジェクトの作成
+</h1>
+
+
+<p><strong>Android Studio</strong>を起動して、テンプレートを利用した新規プロジェクトを作成しましょう。
+まずは、<strong>アプリの名前</strong>、<strong>企業ドメイン</strong>、<strong>プロジェクトのフォルダ</strong>などを入力します。</p>
+
+<p><a href="https://gyazo.com/9f983b95ae43e77f76a02b45f5d5201a"><img src="https://i.gyazo.com/9f983b95ae43e77f76a02b45f5d5201a.png" alt="https://gyazo.com/9f983b95ae43e77f76a02b45f5d5201a" /></a></p>
+
+<p>次に開発するデバイスを選択します。
+ここでは、<strong>Phone and Tablet</strong> にチェックを入れ、
+Minimum SDKにはロボホンのOSバージョンである <strong>API 21: Android 5.0 (Lollipop)</strong> を選択します。</p>
+
+<p><a href="https://gyazo.com/0ee5a42a0d68147e6573827a4e4133eb"><img src="https://i.gyazo.com/0ee5a42a0d68147e6573827a4e4133eb.png" alt="https://gyazo.com/0ee5a42a0d68147e6573827a4e4133eb" /></a></p>
+
+<p>さらに先程導入したテンプレート <strong>Robohon Activity</strong> を選択します。
+ここで <strong>Robohon Activity</strong> が表示されていなければ、テンプレートの導入に失敗している可能性があります。</p>
+
+<p><a href="https://gyazo.com/0ae4418c72d77d0be10bc03da31f61bd"><img src="https://i.gyazo.com/0ae4418c72d77d0be10bc03da31f61bd.png" alt="https://gyazo.com/0ae4418c72d77d0be10bc03da31f61bd" /></a></p>
+
+<p>最後に <strong>Activity Name</strong> と <strong>Layout Name</strong> を入力します（デフォルトの設定で特に問題ありません）。
+このとき、<strong>Generate Layout File</strong> のチェックは外さないように注意して、<strong>Finish</strong> をクリックしましょう。</p>
+
+<p><a href="https://gyazo.com/6f2db09494e07bebc1101e7ebee0edd2"><img src="https://i.gyazo.com/6f2db09494e07bebc1101e7ebee0edd2.png" alt="https://gyazo.com/6f2db09494e07bebc1101e7ebee0edd2" /></a></p>
+
+<p>プロジェクトを作成したら、テンプレートのアプリを実行してみます。
+<strong>Run App</strong> をクリックして、<strong>SHARP SR01MW (Android 5.0.2, API21)</strong> を選択しましょう。
+このとき、上記デバイスが表示されていない場合は、<strong>ADBドライバ</strong> がインストールされていない、
+または、<strong>USBデバッグ設定</strong> がオンになっていないなどの理由が考えられます。
+下記のように動作すれば開発環境の準備は完了です。</p>
+
+<p><a href="https://gyazo.com/7b7ee49223a8c61ae3fe14cb622638f7"><img src="https://i.gyazo.com/7b7ee49223a8c61ae3fe14cb622638f7.png" alt="https://gyazo.com/7b7ee49223a8c61ae3fe14cb622638f7" /></a></p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jWBBKrrUD48?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+
+<p>次回は開発キットに同梱されているサンプルプロジェクトを基に
+アプリの開発方法について解説します。</p>
+
+<h3>参考書籍</h3>
+
+
+
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B01E9V8R32&linkId=ad8721ee9a80c9e905c7e732e27c2760&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B06W2FNX4L&linkId=ad25e4c25040fc06b2d4088920bcb09e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/robohon/robohon1/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.8537961 &#43;0900 JST m=&#43;3.064793301">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

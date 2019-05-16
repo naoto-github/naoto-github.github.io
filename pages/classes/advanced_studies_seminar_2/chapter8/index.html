@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    母集団と標本 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="母集団と標本" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter8/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/249d9842c81ea9a95111ffd0308df0c8.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="母集団と標本 -- 母集団と標本統計の醍醐味の一つが「推測統計」です． 推測統計では，対象となるデータが大規模であるために，その一部を取り出したデータから推測するということを行います． このとき，対象となるデータ全体のことを母集団，取り出した一部のデータのことを標本といいます． 例えば，日本国民全体の平均身長を調べるためには，莫大な費用と時間がかかってしまいます． そこで，多少の正確さは犠牲にして，一部の国民を対象として調査し，全体を予測するということが現実的な方法です． ここでは，母集団が正規分布であると仮定して，母集団と標本の関係を明らかにしていきます． これからは，ある母集団（または標本）Xが， 平均\mu，分散\sigma^2に従うとき， 下記のように表記しますので注意してください． ここで，Nは，Normal Distribution（正規分布）の頭文字です．
+X \sim N(\mu,\sigma^2)  スクリプトの作成 -- スクリプトの作成コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter8としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+母数の推定 -- 母数の推定母集団の特徴を表す基本統計量は母数と呼ばれます． 平均，分散などがその代表であり，母集団の平均を母平均\hat{\mu}， 母集団の分散を母分散 \hat{\sigma}^2と呼びます． また，母集団から抽出された標本の平均を標本平均 \mu， 標本の分散（不偏分散）を標本分散 \sigma^2と呼びます． テキストによっては，これらの定義が異なることもあるので注意してください．
+それでは，母集団から抽出した標本を用いて，母数の値を推定してみましょう． このとき，推定する母数が「1つの値」となっている場合は，点推定 と呼びます． ここでは，平均\hat{\mu}=100， 分散\hat{\sigma}^2=100に従う母集団を考えます （標準偏差は\hat{\sigma}=10）．
+X \sim N(100,100)  上記の正規分布に従った下記の10000の乱数を生成し，母集団Xとします． ファイル をダウンロードしたら，read.csv関数を利用して， 変数Xにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．
+89.74776 96.49404 98.46421 98.99935 93.35153 105.0311 123.9603 98.72574 105.1024 83.61765 ... ファイルを読み込んだら，母集団Xの平均と分散を求めてみましょう．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="母集団と標本" />
+
+
+
+  <meta name="twitter:description" content="母集団と標本 -- 母集団と標本統計の醍醐味の一つが「推測統計」です． 推測統計では，対象となるデータが大規模であるために，その一部を取り出したデータから推測するということを行います． このとき，対象となるデータ全体のことを母集団，取り出した一部のデータのことを標本といいます． 例えば，日本国民全体の平均身長を調べるためには，莫大な費用と時間がかかってしまいます． そこで，多少の正確さは犠牲にして，一部の国民を対象として調査し，全体を予測するということが現実的な方法です． ここでは，母集団が正規分布であると仮定して，母集団と標本の関係を明らかにしていきます． これからは，ある母集団（または標本）Xが， 平均\mu，分散\sigma^2に従うとき， 下記のように表記しますので注意してください． ここで，Nは，Normal Distribution（正規分布）の頭文字です．
+X \sim N(\mu,\sigma^2)  スクリプトの作成 -- スクリプトの作成コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter8としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+母数の推定 -- 母数の推定母集団の特徴を表す基本統計量は母数と呼ばれます． 平均，分散などがその代表であり，母集団の平均を母平均\hat{\mu}， 母集団の分散を母分散 \hat{\sigma}^2と呼びます． また，母集団から抽出された標本の平均を標本平均 \mu， 標本の分散（不偏分散）を標本分散 \sigma^2と呼びます． テキストによっては，これらの定義が異なることもあるので注意してください．
+それでは，母集団から抽出した標本を用いて，母数の値を推定してみましょう． このとき，推定する母数が「1つの値」となっている場合は，点推定 と呼びます． ここでは，平均\hat{\mu}=100， 分散\hat{\sigma}^2=100に従う母集団を考えます （標準偏差は\hat{\sigma}=10）．
+X \sim N(100,100)  上記の正規分布に従った下記の10000の乱数を生成し，母集団Xとします． ファイル をダウンロードしたら，read.csv関数を利用して， 変数Xにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．
+89.74776 96.49404 98.46421 98.99935 93.35153 105.0311 123.9603 98.72574 105.1024 83.61765 ... ファイルを読み込んだら，母集団Xの平均と分散を求めてみましょう．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/249d9842c81ea9a95111ffd0308df0c8.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">母集団と標本</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/249d9842c81ea9a95111ffd0308df0c8"><img src="https://i.gyazo.com/249d9842c81ea9a95111ffd0308df0c8.png" alt="https://gyazo.com/249d9842c81ea9a95111ffd0308df0c8" /></a></p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">母集団と標本 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  母集団と標本
+</h1>
+
+
+<p>統計の醍醐味の一つが「<strong>推測統計</strong>」です．
+推測統計では，対象となるデータが大規模であるために，その一部を取り出したデータから推測するということを行います．
+このとき，対象となるデータ全体のことを<strong>母集団</strong>，取り出した一部のデータのことを<strong>標本</strong>といいます．
+例えば，日本国民全体の平均身長を調べるためには，莫大な費用と時間がかかってしまいます．
+そこで，多少の正確さは犠牲にして，一部の国民を対象として調査し，全体を予測するということが現実的な方法です．
+ここでは，母集団が正規分布であると仮定して，母集団と標本の関係を明らかにしていきます．
+これからは，ある母集団（または標本）<script type="math/tex">X</script>が，
+平均<script type="math/tex">\mu</script>，分散<script type="math/tex">\sigma^2</script>に従うとき，
+下記のように表記しますので注意してください．
+ここで，<script type="math/tex">N</script>は，Normal Distribution（正規分布）の頭文字です．</p>
+
+<p style="text-align:center">
+    <script type="math/tex">
+    X \sim N(\mu,\sigma^2)
+    </script>
+</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スクリプトの作成 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  スクリプトの作成
+</h1>
+
+
+<p>コードを入力し保存するための<strong>スクリプト</strong>を作成しましょう．
+[ファイル]-[新しいスクリプト]をクリックし，<strong>Rエディタ</strong>を表示します．
+次に，[ファイル]-[保存]をクリックして，スクリプトを保存します．
+このとき，ファイル名は<strong>chapter8</strong>としてください．
+また，ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">母数の推定 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  母数の推定
+</h1>
+
+
+<p>母集団の特徴を表す基本統計量は<strong>母数</strong>と呼ばれます．
+平均，分散などがその代表であり，母集団の平均を<strong>母平均</strong><script type="math/tex">\hat{\mu}</script>，
+母集団の分散を<strong>母分散</strong> <script type="math/tex">\hat{\sigma}^2</script>と呼びます．
+また，母集団から抽出された標本の平均を<strong>標本平均</strong> <script type="math/tex">\mu</script>，
+標本の分散（不偏分散）を<strong>標本分散</strong> <script type="math/tex">\sigma^2</script>と呼びます．
+テキストによっては，これらの定義が異なることもあるので注意してください．</p>
+
+<p>それでは，母集団から抽出した標本を用いて，母数の値を推定してみましょう．
+このとき，推定する母数が「1つの値」となっている場合は，<strong>点推定</strong> と呼びます．
+ここでは，平均<script type="math/tex">\hat{\mu}=100</script>，
+分散<script type="math/tex">\hat{\sigma}^2=100</script>に従う母集団を考えます
+（標準偏差は<script type="math/tex">\hat{\sigma}=10</script>）．</p>
+
+<p style="text-align:center">
+    <script type="math/tex">
+    X \sim N(100,100)
+    </script>
+</p>
+
+<p>上記の正規分布に従った下記の10000の乱数を生成し，母集団<script type="math/tex">X</script>とします．
+<a href="N-100-100.csv">ファイル</a> をダウンロードしたら，<strong>read.csv</strong>関数を利用して，
+変数Xにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#ae81ff">89.74776</span>
+<span style="color:#ae81ff">96.49404</span>
+<span style="color:#ae81ff">98.46421</span>
+<span style="color:#ae81ff">98.99935</span>
+<span style="color:#ae81ff">93.35153</span>
+<span style="color:#ae81ff">105.0311</span>
+<span style="color:#ae81ff">123.9603</span>
+<span style="color:#ae81ff">98.72574</span>
+<span style="color:#ae81ff">105.1024</span>
+<span style="color:#ae81ff">83.61765</span>
+<span style="color:#66d9ef">...</span></code></pre></div>
+<p>ファイルを読み込んだら，母集団<script type="math/tex">X</script>の平均と分散を求めてみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">X <span style="color:#f92672">&lt;-</span> read.csv(<span style="color:#e6db74">&#34;N-100-10.csv&#34;</span>)
+<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">mean</span>(X[,<span style="color:#ae81ff">1</span>])
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">100.1837</span>
+<span style="color:#f92672">&gt;</span> var(X[,<span style="color:#ae81ff">1</span>])
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">99.70016</span></code></pre></div>
+<p>この結果から，母平均<script type="math/tex">\hat{\mu}=100.18 \simeq 100</script>，
+母分散<script type="math/tex">\hat{\sigma}^2=99.7 \simeq 100</script>に従うことが確認できます
+（標準偏差は<script type="math/tex">\hat{\sigma}=\sqrt{100} \simeq 10</script>）．
+次に，母集団<script type="math/tex">X</script>の確率密度のヒストグラムを描き，分布の形状を確認します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> hist(X[,<span style="color:#ae81ff">1</span>],freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
+<p>ヒストグラムは釣鐘状になっており，母集団<script type="math/tex">X</script>が正規分布に従っていることも確認できました．</p>
+
+<p><a href="https://gyazo.com/4082b0b964112b18b3cbd385a5db6355"><img src="https://i.gyazo.com/4082b0b964112b18b3cbd385a5db6355.png" alt="https://gyazo.com/4082b0b964112b18b3cbd385a5db6355" /></a></p>
+
+<p>それでは，母集団から標本<script type="math/tex">ｘ</script>を抽出します．
+ここで重要なことは，標本は母集団から <strong>ランダムサンプリング（無作為抽出）</strong> しなくてはならないということです．
+無作為に抽出しなければ，標本に偏りが生じる可能性があり，正確な推定ができないことに注意してください．
+標本を抽出するには<strong>sample</strong>関数を利用します．
+引数には抽出するサンプル数<script type="math/tex">n</script>として<strong>100</strong>を指定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">sample</span>(X[,<span style="color:#ae81ff">1</span>],<span style="color:#ae81ff">100</span>)</code></pre></div>
+<p>続けて，標本<script type="math/tex">ｘ</script>の平均と分散を調べてみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">mean</span>(x)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">100.4211</span>
+<span style="color:#f92672">&gt;</span> var(x)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">99.90735</span></code></pre></div>
+<p>この結果から，標本平均<script type="math/tex">\mu=100.42 \simeq = 100</script>，
+標本分散<script type="math/tex">\sigma^2=99.91 \simeq = 100</script>ということが分かりました
+（標準偏差<script type="math/tex">\sigma=\sqrt{99.91}=9.99 \simeq 10</script>）．
+この値は母平均，母分散とほぼ一致していますね．
+ただし，抽出する標本が変われば結果も変わることに注意してください．</p>
+
+<p>次に標本<script type="math/tex">ｘ</script>の確率密度のヒストグラムを描き，分布の形状を確認します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> hist(x,freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
+<p><a href="https://gyazo.com/22f61090f0f5565ad40c12267c063139"><img src="https://i.gyazo.com/22f61090f0f5565ad40c12267c063139.png" alt="https://gyazo.com/22f61090f0f5565ad40c12267c063139" /></a></p>
+
+<p>あまり綺麗とはいえませんが，おおまかには釣鐘状の分布をしていることがわかります．
+どうやら標本<script type="math/tex">ｘ</script>も，
+平均<script type="math/tex">\hat{\mu}=100</script>，
+分散<script type="math/tex">\hat{\sigma}^2=100</script>に従う正規分布のようです．</p>
+
+<p style="text-align:center">
+    <script type="math/tex">
+    x \sim N(\hat{\mu},\hat{\sigma}^2) = N(100,100)
+    </script>
+</p>
+
+<p>上記の結果から分かることを下記にまとめます．</p>
+
+<ul>
+<li>母集団<script type="math/tex">X</script>が正規分布であれば，ランダムサンプリングした標本<script type="math/tex">ｘ</script>も正規分布</li>
+<li>母平均<script type="math/tex">\hat{\mu}</script>は標本平均<script type="math/tex">\mu</script>で推定できる</li>
+<li>母分散<script type="math/tex">\hat{\sigma}^2</script>は標本分散（不偏分散）<script type="math/tex">\sigma^2</script>で推定できる</li>
+</ul>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">標本平均の分布 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  標本平均の分布
+</h1>
+
+
+<p>これまでは母集団<script type="math/tex">X</script>と標本<script type="math/tex">x</script>の関係を考えました．
+次に，母集団<script type="math/tex">X</script>と標本平均の分布<script type="math/tex">m</script>の関係を考えましょう．
+この<strong>標本平均の分布</strong>は，次回のテーマである<strong>検定</strong>に密接に関係する重要な概念です．
+少し回りくどいですが，混乱を避けるためにも，敢えて<strong>標本平均の分布</strong>という表現を採用します．</p>
+
+<p>それでは，母集団から標本<script type="math/tex">x</script>を<strong>1000</strong>回繰り返して抽出し，その平均を求めます．
+<strong>sample</strong>関数を利用し，抽出するサンプル数<script type="math/tex">n</script>は<strong>10</strong>を指定します．
+繰り返しには<strong>for文</strong>を利用しますが詳細は割愛します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">m <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">double</span>(length<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+<span style="color:#66d9ef">for</span>(i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1000</span>){
+    m[i] <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">mean</span>(<span style="color:#66d9ef">sample</span>(X[,<span style="color:#ae81ff">1</span>],<span style="color:#ae81ff">10</span>))
+}</code></pre></div>
+<p>続けて，標本平均の分布<script type="math/tex">m</script>の平均と分散を調べてみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">mean</span>(m)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">100.2321</span>
+<span style="color:#f92672">&gt;</span> var(m)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">9.451763</span>
+<span style="color:#e6db74">``</span>`r
+
+この結果から，<span style="color:#f92672">**</span>標本平均の分布<span style="color:#f92672">**</span> の平均<span style="color:#f92672">&lt;</span>script type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;math/tex&#34;</span><span style="color:#f92672">&gt;</span>\mu<span style="color:#f92672">=</span><span style="color:#ae81ff">100.23</span> \simeq <span style="color:#ae81ff">100</span><span style="color:#f92672">&lt;/</span>script<span style="color:#f92672">&gt;</span>，
+<span style="color:#f92672">**</span>標本平均の分布<span style="color:#f92672">**</span> の分散<span style="color:#f92672">&lt;</span>script type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;math/tex&#34;</span><span style="color:#f92672">&gt;</span>\sigma<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">=</span><span style="color:#ae81ff">9.45</span> \simeq <span style="color:#ae81ff">10</span><span style="color:#f92672">&lt;/</span>script<span style="color:#f92672">&gt;</span>ということが分かりました
+（標準偏差<span style="color:#f92672">&lt;</span>script type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;math/tex&#34;</span><span style="color:#f92672">&gt;</span>\sigma<span style="color:#f92672">=</span>\<span style="color:#66d9ef">sqrt</span>{<span style="color:#ae81ff">9.45</span>}<span style="color:#f92672">=</span><span style="color:#ae81ff">3.07</span> \simeq <span style="color:#ae81ff">3.16</span><span style="color:#f92672">&lt;/</span>script<span style="color:#f92672">&gt;</span>）．
+どうやら平均は母平均とほぼ一致しますが，分散は母分散よりも小さくなるようです．
+
+次に，標本平均の分布<span style="color:#f92672">&lt;</span>script type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;math/tex&#34;</span><span style="color:#f92672">&gt;</span>m<span style="color:#f92672">&lt;/</span>script<span style="color:#f92672">&gt;</span>の確率密度のヒストグラムを描き，分布の形状を確認します．
+
+<span style="color:#e6db74">``</span>`r
+<span style="color:#f92672">&gt;</span> hist(m,freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
+<p><a href="https://gyazo.com/0efe0a30f6f236ccdf08fef6e79601dc"><img src="https://i.gyazo.com/0efe0a30f6f236ccdf08fef6e79601dc.png" alt="https://gyazo.com/0efe0a30f6f236ccdf08fef6e79601dc" /></a></p>
+
+<p>釣鐘上の分布をしており，標本平均の分布<script type="math/tex">m</script>も正規分布のようです．
+実は，標本平均の分布<script type="math/tex">m</script>は，
+平均<script type="math/tex">\mu=\hat{\mu}=100</script>，
+分散<script type="math/tex">\sigma^2=\frac{\hat{\sigma}^2}{n}=10</script>に従う正規分布になります．
+ここで，<script type="math/tex">n</script>はサンプル数を意味していることに注意してください．</p>
+
+<p style="text-align:center">
+    <script type="math/tex">
+    m \sim N(\hat{\mu},\frac{\hat{\sigma}^2}{n}) = N(100,10)
+    </script>
+</p>
+
+<p>上記の結果から分かることを下記にまとめます．</p>
+
+<ul>
+<li>母集団<script type="math/tex">X</script>が正規分布であれば，標本平均の分布<script type="math/tex">m</script>も正規分布</li>
+<li>母平均<script type="math/tex">\hat{\mu}</script>は<strong>標本平均の分布</strong>の平均<script type="math/tex">\mu</script>で推定できる</li>
+<li>母分散<script type="math/tex">\hat{\sigma}^2</script>は<strong>標本平均の分布</strong>の分散（不偏分散）<script type="math/tex">\sigma^2 \times n</script>で推定できる</li>
+</ul>
+
+<p>最後に母集団<script type="math/tex">X</script>と標本平均の分布<script type="math/tex">m</script>の正規分布を描いてみましょう．
+平均は一致しますが，分散は <strong>標本平均の分布</strong> の方が小さいため，尖った分布になっていることが分かります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> curve(dnorm(x,<span style="color:#ae81ff">100</span>,<span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">10</span>)),from<span style="color:#f92672">=</span><span style="color:#ae81ff">70</span>,to<span style="color:#f92672">=</span><span style="color:#ae81ff">130</span>)
+<span style="color:#f92672">&gt;</span> curve(dnorm(x,<span style="color:#ae81ff">100</span>,<span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">100</span>)),from<span style="color:#f92672">=</span><span style="color:#ae81ff">70</span>,to<span style="color:#f92672">=</span><span style="color:#ae81ff">130</span>,add<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)</code></pre></div>
+<p><a href="https://gyazo.com/7624b18116ff22d7ecbc4b5468aab70a"><img src="https://i.gyazo.com/7624b18116ff22d7ecbc4b5468aab70a.png" alt="https://gyazo.com/7624b18116ff22d7ecbc4b5468aab70a" /></a></p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>上記の母集団<script type="math/tex">X</script>から，
+サンプル数<script type="math/tex">n=20</script>の標本を抽出したときの，
+標本平均の分布を描きなさい．
+ソースは<strong>chapter8.R</strong>に記述し，グラフの画像ファイル，<strong>chapter8.R</strong> を提出すること．</p>
+
+<p><a href="https://gyazo.com/12b582def0e3694b788fb3d90881059e"><img src="https://i.gyazo.com/12b582def0e3694b788fb3d90881059e.png" alt="https://gyazo.com/12b582def0e3694b788fb3d90881059e" /></a></p>
+
+<h3>参考書籍</h3>
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274067106&linkId=93d694711dbe1bcddf54d4dbceaa6634&bc1=F8F8F8&lt1=_blank&fc1=333333&lc1=0066C0&bg1=F8F8F8&f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4863542011&linkId=92f9b82cf210ae3681f8c607eae4ac8a&bc1=F8F8F8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=F8F8F8&f=ifr"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter8/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:03.1569853 &#43;0900 JST m=&#43;3.367982601">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

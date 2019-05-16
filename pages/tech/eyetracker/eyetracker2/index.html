@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    OpenCVを利用した視線位置の描画 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="OpenCVを利用した視線位置の描画" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/eyetracker/eyetracker2/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/10494725ec7c3a2ea055060c3bc2e51a.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="OpenCVとは前回はTobii Eye Tracker 4Cを利用して、 ディスプレイに対する視線の位置を検出しました。 今回は画像処理ライブラリのOpenCVを利用して、 視線位置に合わせてウィンドウに図形を描画することに挑戦します。 OpenCVは、インテル が開発したオープンソースのライブラリであり、 画像処理に関する様々なアルゴリズムを容易に実装することができます（2016年にインテルがItseezを買収）。 また、C/C&#43;&#43;、Java、Python、MATLAB のライブラリとして配布されており、 プログラミング言語を問わず利用できることも魅力です。
+図形描画の実装前回までにライブラリの導入は完了しているので、今回はウィンドウを表示するところからスタートしましょう。 ファイル名は MyEyeTrack2.py とします。 まずは、OpenCV(cv2) と NumPy のモジュールをインポートします。 ここで、NumPy には、np という別名を付けていることに注意してください。
+ 最初に、np.zeros メソッドを用いて、幅1980px、高さ1080pxの黒色の画像を生成します。 このメソッドは値が0の配列を返値とし、引数には配列の長さを表す タプル と データタイプを渡します。 ここでは、8ビットの符号なし整数（0~255）であるnp.unit8をデータタイプとしています。 この画像を imshow メソッドで表示します。 第1引数の &ldquo;MyEyeTrack&rdquo; はウィンドウのタイトルバーに表示される文字列です。
+ 前回実装したコールバックメソッドを修正し、視線位置に白色の円を描画するように改良します。 左右の視線位置の平均値を円の中心座標とします。 コールバックメソッドで取得される視線位置は、 標準化された値のためウィンドウのサイズを掛けて、ピクセル座標に変換しています。 このとき、y座標はウィンドウのタイトルバーの幅を考慮して、50 だけ減らしています （本当はキャリブレーションをやらなきゃいけないけど）。 円を描くには、cv2.circle メソッドを利用します。 引数には、画像、中心座標、半径、色、枠線の太さ を指定します。 ここで、枠線の太さに負の値を指定すると、塗りつぶしの円になります。 また、global はグローバル変数の img を用いることの宣言です。
+ 上記で実装したコールバックメソッドをEyeTrackerオブジェクトに登録します。
+ 最後にwhile文でimshowメソッドを呼び出し、画像の再描画を繰り返します。 ここでは、100ms毎に画像を描画しています。 このとき、ESCキー が押されると、ループを終了し、 コールバックメソッドの解除、ウィンドウの破棄、システムの終了を行います。" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="OpenCVを利用した視線位置の描画" />
+
+
+
+  <meta name="twitter:description" content="OpenCVとは前回はTobii Eye Tracker 4Cを利用して、 ディスプレイに対する視線の位置を検出しました。 今回は画像処理ライブラリのOpenCVを利用して、 視線位置に合わせてウィンドウに図形を描画することに挑戦します。 OpenCVは、インテル が開発したオープンソースのライブラリであり、 画像処理に関する様々なアルゴリズムを容易に実装することができます（2016年にインテルがItseezを買収）。 また、C/C&#43;&#43;、Java、Python、MATLAB のライブラリとして配布されており、 プログラミング言語を問わず利用できることも魅力です。
+図形描画の実装前回までにライブラリの導入は完了しているので、今回はウィンドウを表示するところからスタートしましょう。 ファイル名は MyEyeTrack2.py とします。 まずは、OpenCV(cv2) と NumPy のモジュールをインポートします。 ここで、NumPy には、np という別名を付けていることに注意してください。
+ 最初に、np.zeros メソッドを用いて、幅1980px、高さ1080pxの黒色の画像を生成します。 このメソッドは値が0の配列を返値とし、引数には配列の長さを表す タプル と データタイプを渡します。 ここでは、8ビットの符号なし整数（0~255）であるnp.unit8をデータタイプとしています。 この画像を imshow メソッドで表示します。 第1引数の &ldquo;MyEyeTrack&rdquo; はウィンドウのタイトルバーに表示される文字列です。
+ 前回実装したコールバックメソッドを修正し、視線位置に白色の円を描画するように改良します。 左右の視線位置の平均値を円の中心座標とします。 コールバックメソッドで取得される視線位置は、 標準化された値のためウィンドウのサイズを掛けて、ピクセル座標に変換しています。 このとき、y座標はウィンドウのタイトルバーの幅を考慮して、50 だけ減らしています （本当はキャリブレーションをやらなきゃいけないけど）。 円を描くには、cv2.circle メソッドを利用します。 引数には、画像、中心座標、半径、色、枠線の太さ を指定します。 ここで、枠線の太さに負の値を指定すると、塗りつぶしの円になります。 また、global はグローバル変数の img を用いることの宣言です。
+ 上記で実装したコールバックメソッドをEyeTrackerオブジェクトに登録します。
+ 最後にwhile文でimshowメソッドを呼び出し、画像の再描画を繰り返します。 ここでは、100ms毎に画像を描画しています。 このとき、ESCキー が押されると、ループを終了し、 コールバックメソッドの解除、ウィンドウの破棄、システムの終了を行います。" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/10494725ec7c3a2ea055060c3bc2e51a.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">OpenCVを利用した視線位置の描画</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/10494725ec7c3a2ea055060c3bc2e51a"><img src="https://i.gyazo.com/10494725ec7c3a2ea055060c3bc2e51a.png" alt="https://gyazo.com/10494725ec7c3a2ea055060c3bc2e51a" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  OpenCVとは
+</h1>
+
+
+<p><a href="contents/eyetracker/eyetracker1.html">前回</a>は<strong>Tobii Eye Tracker 4C</strong>を利用して、
+ディスプレイに対する視線の位置を検出しました。
+今回は画像処理ライブラリの<a href="https://opencv.org/">OpenCV</a>を利用して、
+視線位置に合わせてウィンドウに図形を描画することに挑戦します。
+<a href="https://opencv.org">OpenCV</a>は、<strong>インテル</strong> が開発したオープンソースのライブラリであり、
+画像処理に関する様々なアルゴリズムを容易に実装することができます（2016年にインテルが<strong>Itseez</strong>を買収）。
+また、<strong>C/C++</strong>、<strong>Java</strong>、<strong>Python</strong>、<strong>MATLAB</strong> のライブラリとして配布されており、
+プログラミング言語を問わず利用できることも魅力です。</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  図形描画の実装
+</h1>
+
+
+<p>前回までにライブラリの導入は完了しているので、今回はウィンドウを表示するところからスタートしましょう。
+ファイル名は <strong>MyEyeTrack2.py</strong> とします。
+まずは、<strong>OpenCV(cv2)</strong> と <strong>NumPy</strong> のモジュールをインポートします。
+ここで、<strong>NumPy</strong> には、<strong>np</strong> という別名を付けていることに注意してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/fda6c8009f56fef95bb9e4f292496f24.js"></script>
+
+<p>最初に、<strong>np.zeros</strong> メソッドを用いて、幅1980px、高さ1080pxの黒色の画像を生成します。
+このメソッドは値が0の配列を返値とし、引数には配列の長さを表す <strong>タプル</strong> と <strong>データタイプ</strong>を渡します。
+ここでは、8ビットの符号なし整数（0~255）である<strong>np.unit8</strong>をデータタイプとしています。
+この画像を <strong>imshow</strong> メソッドで表示します。
+第1引数の <strong>&ldquo;MyEyeTrack&rdquo;</strong> はウィンドウのタイトルバーに表示される文字列です。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/2c1f5beacfa14873ee049b92c9709f9a.js"></script>
+
+<p>前回実装したコールバックメソッドを修正し、視線位置に白色の円を描画するように改良します。
+左右の視線位置の平均値を円の中心座標とします。
+コールバックメソッドで取得される視線位置は、
+標準化された値のためウィンドウのサイズを掛けて、ピクセル座標に変換しています。
+このとき、y座標はウィンドウのタイトルバーの幅を考慮して、<strong>50</strong> だけ減らしています
+（本当はキャリブレーションをやらなきゃいけないけど）。
+円を描くには、<strong>cv2.circle</strong> メソッドを利用します。
+引数には、<strong>画像</strong>、<strong>中心座標</strong>、<strong>半径</strong>、<strong>色</strong>、<strong>枠線の太さ</strong> を指定します。
+ここで、枠線の太さに負の値を指定すると、塗りつぶしの円になります。
+また、<strong>global</strong> はグローバル変数の <strong>img</strong> を用いることの宣言です。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/757bfdf787b108e99efc9f366f63f950.js"></script>
+
+<p>上記で実装したコールバックメソッドを<strong>EyeTracker</strong>オブジェクトに登録します。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/f73b6e62af69e24864b5d6afb0b063c4.js"></script>
+
+<p>最後にwhile文で<strong>imshow</strong>メソッドを呼び出し、画像の再描画を繰り返します。
+ここでは、100ms毎に画像を描画しています。
+このとき、<strong>ESCキー</strong> が押されると、ループを終了し、
+コールバックメソッドの解除、ウィンドウの破棄、システムの終了を行います。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/cfd926077a9b05bdcf49cd3584f68a0c.js"></script>
+
+<p>では、プログラムを実行してみましょう。
+ここでは、四角形を描くように視線を動かしてみました。
+視線に合わせて白い円が描画されていることが分かります。
+しかし、思っていたより視線を安定させるのは難しいです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">$ python MyEyeTrack2.py</code></pre></div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qB8llQMwQIU?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+
+<h3>参考書籍</h3>
+
+
+
+
+
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B01MAWPMXQ&linkId=ecef4699dbd3f52f81d543250f9154eb&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479738946X&linkId=de444918271e503fbafc4e3809767738&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4873116554&linkId=d00c6162ea2e50700bce2c7d03b7cc3c&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/eyetracker/eyetracker2/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.4399038 &#43;0900 JST m=&#43;2.650901001">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

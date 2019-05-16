@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    NyARToolkit for Unityで3Dモデルのアニメーション | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="NyARToolkit for Unityで3Dモデルのアニメーション" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/unity/artoolkit4/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/1a1f0c692c93350bcbf3157ff85ff93a.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="
+3Dモデルのアニメーション前回に引き続き、Unityのオリジナルキャラクターである「ユニティちゃん」を利用して、 3Dモデルにアニメーションを設定してみましょう（詳細はNyARToolkit for 3Dモデルの表示を参照）。
+Unityで3Dモデルにアニメーションを設定するときは、Animator ControllerというAssetを利用します。 「ユニティちゃん」のパッケージには、UnityChanLocomotions、UnityChanActionCheck、UnityChanARPoseの ３種類のAnimator Controller **が含まれています。
+今回は、UnityChanLocomotionsを「ユニティちゃん」に設定して、キーボードの入力に対応してアニメーションするように改良します。
+Animation Controller[UnityChan]-[Animators]にAnimation ControllerのUnityChanLocomotionsがあります。 これをドラッグし、unitychanのInspectorにあるControllerに設定します。 これで、「ユニティちゃん」はUnityChanLocomotionsで定義されたアニメーションを行うことが可能となります。
+
+ここで、UnityChanLocomotionsの内容を確認してみましょう。 Animation Controllerは下図のようにグラフで定義されます。 まずは、Entryから始まり、Idle状態に遷移することが分かります。
+
+Idle状態のInspectorを確認すると、 MotionにWAIT00が設定されていることが分かります。 このWAIT00が3Dモデルの動きに対応します。 また、Idle状態から、Locomotion状態、WalkBack状態、Rest状態の ３つの状態に遷移可能なことが分かります。
+
+では、Idle状態から他の状態に遷移するための条件は何でしょうか。 TransitionsのIdle -&gt; Restをクリックすると、状態遷移のための条件（Conditions）が表示されます。 ここでは、Restという変数（パラメータ）がtrueであるときにRest状態に遷移することが分かります。 同様に、Locomotions状態に遷移する条件は、Speedが0.1より大きいとき、 また、WalkBack状態に遷移する条件は、Speedが-0.1より小さいときということが分かります。 このように変数（パラメータ）に基づき、3Dモデルの状態が確定します。
+
+スクリプトによる状態遷移の制御次に、C#スクリプトを作成し、キーボードからの入力に応じて状態遷移を制御してみます。 まずは、[Create]-[C# Script]をクリックして、新規にC#のスクリプトを作成します。 ファイル名はARAnimationsとしておきます。
+まずは、キーボードの1を押すとRest状態に遷移するようにしてみます。 キーの入力判定はInput.GetKey()メソッドを利用します。 引数にはstring型で対象となるキーを指定します。 また、状態遷移のトリガーとなる変数Restの値を設定するには、 SetBool()メソッドを利用します。 引数には、String型で対象となる変数と、その値を指定します。 再生ボタンをクリックして、「ユニティちゃん」を表示した状態で、キーボードの1を押してみましょう。 ユニティちゃんが背伸びをするアニメーションが表示されるはずです。
+ 次に、キーボードの2を押すとLocomotions状態、3を押すとWalkBack状態、 4を押すとIdle状態に遷移するようにしてみます。 トリガーとなる変数Speedはfloat型のため、SetFloat()メソッドを利用して値を変更しています。 再生ボタンをクリックして、「ユニティちゃん」を表示した状態で、キーボードの2、3、4を押してみましょう。 ユニティちゃんが走ったり、後ずさりするアニメーションが表示されるはずです。 
+
+
+これまでに紹介した機能を利用して、拡張現実を利用した作品を制作してみてください。
+参考書籍" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="NyARToolkit for Unityで3Dモデルのアニメーション" />
+
+
+
+  <meta name="twitter:description" content="
+3Dモデルのアニメーション前回に引き続き、Unityのオリジナルキャラクターである「ユニティちゃん」を利用して、 3Dモデルにアニメーションを設定してみましょう（詳細はNyARToolkit for 3Dモデルの表示を参照）。
+Unityで3Dモデルにアニメーションを設定するときは、Animator ControllerというAssetを利用します。 「ユニティちゃん」のパッケージには、UnityChanLocomotions、UnityChanActionCheck、UnityChanARPoseの ３種類のAnimator Controller **が含まれています。
+今回は、UnityChanLocomotionsを「ユニティちゃん」に設定して、キーボードの入力に対応してアニメーションするように改良します。
+Animation Controller[UnityChan]-[Animators]にAnimation ControllerのUnityChanLocomotionsがあります。 これをドラッグし、unitychanのInspectorにあるControllerに設定します。 これで、「ユニティちゃん」はUnityChanLocomotionsで定義されたアニメーションを行うことが可能となります。
+
+ここで、UnityChanLocomotionsの内容を確認してみましょう。 Animation Controllerは下図のようにグラフで定義されます。 まずは、Entryから始まり、Idle状態に遷移することが分かります。
+
+Idle状態のInspectorを確認すると、 MotionにWAIT00が設定されていることが分かります。 このWAIT00が3Dモデルの動きに対応します。 また、Idle状態から、Locomotion状態、WalkBack状態、Rest状態の ３つの状態に遷移可能なことが分かります。
+
+では、Idle状態から他の状態に遷移するための条件は何でしょうか。 TransitionsのIdle -&gt; Restをクリックすると、状態遷移のための条件（Conditions）が表示されます。 ここでは、Restという変数（パラメータ）がtrueであるときにRest状態に遷移することが分かります。 同様に、Locomotions状態に遷移する条件は、Speedが0.1より大きいとき、 また、WalkBack状態に遷移する条件は、Speedが-0.1より小さいときということが分かります。 このように変数（パラメータ）に基づき、3Dモデルの状態が確定します。
+
+スクリプトによる状態遷移の制御次に、C#スクリプトを作成し、キーボードからの入力に応じて状態遷移を制御してみます。 まずは、[Create]-[C# Script]をクリックして、新規にC#のスクリプトを作成します。 ファイル名はARAnimationsとしておきます。
+まずは、キーボードの1を押すとRest状態に遷移するようにしてみます。 キーの入力判定はInput.GetKey()メソッドを利用します。 引数にはstring型で対象となるキーを指定します。 また、状態遷移のトリガーとなる変数Restの値を設定するには、 SetBool()メソッドを利用します。 引数には、String型で対象となる変数と、その値を指定します。 再生ボタンをクリックして、「ユニティちゃん」を表示した状態で、キーボードの1を押してみましょう。 ユニティちゃんが背伸びをするアニメーションが表示されるはずです。
+ 次に、キーボードの2を押すとLocomotions状態、3を押すとWalkBack状態、 4を押すとIdle状態に遷移するようにしてみます。 トリガーとなる変数Speedはfloat型のため、SetFloat()メソッドを利用して値を変更しています。 再生ボタンをクリックして、「ユニティちゃん」を表示した状態で、キーボードの2、3、4を押してみましょう。 ユニティちゃんが走ったり、後ずさりするアニメーションが表示されるはずです。 
+
+
+これまでに紹介した機能を利用して、拡張現実を利用した作品を制作してみてください。
+参考書籍" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/1a1f0c692c93350bcbf3157ff85ff93a.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">NyARToolkit for Unityで3Dモデルのアニメーション</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/1a1f0c692c93350bcbf3157ff85ff93a"><img src="https://i.gyazo.com/1a1f0c692c93350bcbf3157ff85ff93a.png" alt="https://gyazo.com/1a1f0c692c93350bcbf3157ff85ff93a" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  3Dモデルのアニメーション
+</h1>
+
+
+<p>前回に引き続き、Unityのオリジナルキャラクターである「<a href="http://unity-chan.com/">ユニティちゃん</a>」を利用して、
+3Dモデルにアニメーションを設定してみましょう（詳細は<a href="artoolkit3.html">NyARToolkit for 3Dモデルの表示</a>を参照）。</p>
+
+<p>Unityで3Dモデルにアニメーションを設定するときは、<strong>Animator Controller</strong>というAssetを利用します。
+「ユニティちゃん」のパッケージには、<strong>UnityChanLocomotions</strong>、<strong>UnityChanActionCheck</strong>、<strong>UnityChanARPose</strong>の
+３種類の<strong>Animator Controller</strong> **が含まれています。</p>
+
+<p>今回は、<strong>UnityChanLocomotions</strong>を「ユニティちゃん」に設定して、キーボードの入力に対応してアニメーションするように改良します。</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Animation Controller
+</h1>
+
+
+<p>[UnityChan]-[Animators]に<strong>Animation Controller</strong>の<strong>UnityChanLocomotions</strong>があります。
+これをドラッグし、<strong>unitychan</strong>のInspectorにある<strong>Controller</strong>に設定します。
+これで、「ユニティちゃん」は<strong>UnityChanLocomotions</strong>で定義されたアニメーションを行うことが可能となります。</p>
+
+<p><a href="https://gyazo.com/579941d2517ea73413bf6d16569cbc4c"><img src="https://i.gyazo.com/579941d2517ea73413bf6d16569cbc4c.png" alt="https://gyazo.com/579941d2517ea73413bf6d16569cbc4c" /></a></p>
+
+<p>ここで、<strong>UnityChanLocomotions</strong>の内容を確認してみましょう。
+<strong>Animation Controller</strong>は下図のようにグラフで定義されます。
+まずは、<strong>Entry</strong>から始まり、<strong>Idle状態</strong>に遷移することが分かります。</p>
+
+<p><a href="https://gyazo.com/b70b92520da89c88aee8315c081b9e27"><img src="https://i.gyazo.com/b70b92520da89c88aee8315c081b9e27.png" alt="https://gyazo.com/b70b92520da89c88aee8315c081b9e27" /></a></p>
+
+<p><strong>Idle状態</strong>のInspectorを確認すると、
+<strong>Motion</strong>に<strong>WAIT00</strong>が設定されていることが分かります。
+この<strong>WAIT00</strong>が3Dモデルの動きに対応します。
+また、<strong>Idle状態</strong>から、<strong>Locomotion状態</strong>、<strong>WalkBack状態</strong>、<strong>Rest状態</strong>の
+３つの状態に遷移可能なことが分かります。</p>
+
+<p><a href="https://gyazo.com/13294a9337af0868d2ff1e993d7a9489"><img src="https://i.gyazo.com/13294a9337af0868d2ff1e993d7a9489.png" alt="https://gyazo.com/13294a9337af0868d2ff1e993d7a9489" /></a></p>
+
+<p>では、<strong>Idle状態</strong>から他の状態に遷移するための条件は何でしょうか。
+Transitionsの<strong>Idle -&gt; Rest</strong>をクリックすると、状態遷移のための条件（Conditions）が表示されます。
+ここでは、<strong>Rest</strong>という変数（パラメータ）が<strong>true</strong>であるときに<strong>Rest状態</strong>に遷移することが分かります。
+同様に、<strong>Locomotions状態</strong>に遷移する条件は、<strong>Speed</strong>が0.1より大きいとき、
+また、<strong>WalkBack状態</strong>に遷移する条件は、<strong>Speed</strong>が-0.1より小さいときということが分かります。
+このように変数（パラメータ）に基づき、3Dモデルの状態が確定します。</p>
+
+<p><a href="https://gyazo.com/21726acde178155403a0571609c2e418"><img src="https://i.gyazo.com/21726acde178155403a0571609c2e418.png" alt="https://gyazo.com/21726acde178155403a0571609c2e418" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  スクリプトによる状態遷移の制御
+</h1>
+
+
+<p>次に、C#スクリプトを作成し、キーボードからの入力に応じて状態遷移を制御してみます。
+まずは、[Create]-[C# Script]をクリックして、新規にC#のスクリプトを作成します。
+ファイル名は<strong>ARAnimations</strong>としておきます。</p>
+
+<p>まずは、キーボードの<strong>1</strong>を押すと<strong>Rest状態</strong>に遷移するようにしてみます。
+キーの入力判定は<strong>Input.GetKey()</strong>メソッドを利用します。
+引数にはstring型で対象となるキーを指定します。
+また、状態遷移のトリガーとなる変数<strong>Rest</strong>の値を設定するには、
+<strong>SetBool()</strong>メソッドを利用します。
+引数には、String型で対象となる変数と、その値を指定します。
+再生ボタンをクリックして、「ユニティちゃん」を表示した状態で、キーボードの<strong>1</strong>を押してみましょう。
+ユニティちゃんが背伸びをするアニメーションが表示されるはずです。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/3c2da899bba1affe00759edeec367145.js"></script>
+
+<p>次に、キーボードの<strong>2</strong>を押すと<strong>Locomotions状態</strong>、<strong>3</strong>を押すと<strong>WalkBack状態</strong>、
+<strong>4</strong>を押すと<strong>Idle状態</strong>に遷移するようにしてみます。
+トリガーとなる変数<strong>Speed</strong>はfloat型のため、<strong>SetFloat()</strong>メソッドを利用して値を変更しています。
+再生ボタンをクリックして、「ユニティちゃん」を表示した状態で、キーボードの<strong>2</strong>、<strong>3</strong>、<strong>4</strong>を押してみましょう。
+ユニティちゃんが走ったり、後ずさりするアニメーションが表示されるはずです。
+<script type="application/javascript" src="//gist.github.com/naoto-github/85f3805447eaeb6bc32fff8e60481656.js"></script></p>
+
+<p><a href="https://gyazo.com/19de693257ca6e584186bdcab63eba19"><img src="https://i.gyazo.com/19de693257ca6e584186bdcab63eba19.gif" alt="https://gyazo.com/19de693257ca6e584186bdcab63eba19" /></a></p>
+
+<p><a href="https://gyazo.com/ba1673e91a97d623e711ddc106edf82f"><img src="https://i.gyazo.com/ba1673e91a97d623e711ddc106edf82f.gif" alt="https://gyazo.com/ba1673e91a97d623e711ddc106edf82f" /></a></p>
+
+<p>これまでに紹介した機能を利用して、拡張現実を利用した作品を制作してみてください。</p>
+
+<h3>参考書籍</h3>
+
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4797384433" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4797384255" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=B01E51LA4Y" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/unity/artoolkit4/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.3511687 &#43;0900 JST m=&#43;2.562165901">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

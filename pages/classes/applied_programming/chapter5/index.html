@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    乱数生成とキーボート入力 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="乱数生成とキーボート入力" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/applied_programming/chapter5/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/1563cf6f8a35150975b9a1e09f19ade7.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="プロジェクトの準備 -- プロジェクトの準備Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project5”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+
+続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
+
+乱数生成 -- 乱数生成サイコロの出た目のように規則性がなく予測不能な数値のことを乱数と呼びます． コンピュータではその性質から完全な乱数を生成することは出来ないため， 擬似乱数と呼ばれる乱数とほぼ同じ特徴を持った値を生成します． 0以上，かつ，n未満を条件とした整数の乱数を生成するには下記のように記述します． RandomはJavaのライブラリに含まれるクラスの1つですが詳細は省略します．
+Random r = new Random(); int x = r.nextInt(n); 下記のコードを参考に，int型の変数xを宣言し，0～2までの乱数を代入してみましょう． プログラムの実行後に，コンソールの出力結果を確認してください． 実行毎に出力される値が変化することが分かります．
+ 乱数を利用しておみくじを作成してみましょう． 下記のコードを参考に，変数xの値に応じて，ランダムに”大吉”，”吉”，”凶”をコンソールに出力させてみましょう． プログラムの実行後に，コンソールの出力結果を確認してください．
+ キーボード入力 -- キーボード入力ユーザから入力を受け取る方法の1つがキーボードです． キーボードから文字列を受け取るには下記のように記述します． ScannerはJavaのライブラリに含まれるクラスの1つですが詳細は省略します．
+Scanner s = new Scanner(System.in); String text = s.nextLine(); s.close(); 下記のコードを参考に，変数nameにキーボードから入力した文字列を代入してみましょう． ここで，System.out.print()は，System.out.println()と同様に文字列をコンソールに出力する命令ですが，改行しないという点が異なります． また，コンソールへの出力の際には，文字列を連結するための演算子「&#43;」を利用していることに注意が必要です．
+ キーボードから整数を受け取るには下記のように記述します．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="乱数生成とキーボート入力" />
+
+
+
+  <meta name="twitter:description" content="プロジェクトの準備 -- プロジェクトの準備Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project5”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+
+続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
+
+乱数生成 -- 乱数生成サイコロの出た目のように規則性がなく予測不能な数値のことを乱数と呼びます． コンピュータではその性質から完全な乱数を生成することは出来ないため， 擬似乱数と呼ばれる乱数とほぼ同じ特徴を持った値を生成します． 0以上，かつ，n未満を条件とした整数の乱数を生成するには下記のように記述します． RandomはJavaのライブラリに含まれるクラスの1つですが詳細は省略します．
+Random r = new Random(); int x = r.nextInt(n); 下記のコードを参考に，int型の変数xを宣言し，0～2までの乱数を代入してみましょう． プログラムの実行後に，コンソールの出力結果を確認してください． 実行毎に出力される値が変化することが分かります．
+ 乱数を利用しておみくじを作成してみましょう． 下記のコードを参考に，変数xの値に応じて，ランダムに”大吉”，”吉”，”凶”をコンソールに出力させてみましょう． プログラムの実行後に，コンソールの出力結果を確認してください．
+ キーボード入力 -- キーボード入力ユーザから入力を受け取る方法の1つがキーボードです． キーボードから文字列を受け取るには下記のように記述します． ScannerはJavaのライブラリに含まれるクラスの1つですが詳細は省略します．
+Scanner s = new Scanner(System.in); String text = s.nextLine(); s.close(); 下記のコードを参考に，変数nameにキーボードから入力した文字列を代入してみましょう． ここで，System.out.print()は，System.out.println()と同様に文字列をコンソールに出力する命令ですが，改行しないという点が異なります． また，コンソールへの出力の際には，文字列を連結するための演算子「&#43;」を利用していることに注意が必要です．
+ キーボードから整数を受け取るには下記のように記述します．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/1563cf6f8a35150975b9a1e09f19ade7.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">乱数生成とキーボート入力</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/1563cf6f8a35150975b9a1e09f19ade7"><img src="https://i.gyazo.com/1563cf6f8a35150975b9a1e09f19ade7.png" alt="https://gyazo.com/1563cf6f8a35150975b9a1e09f19ade7" /></a></p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">プロジェクトの準備 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  プロジェクトの準備
+</h1>
+
+
+<p>Eclipseで新規にプロジェクトを作成しましょう．
+メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます．
+ここでは，プロジェクト名に”Project5”を入力して，[完了]をクリックしましょう．
+パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．</p>
+
+<p><a href="https://gyazo.com/0c72995508d93100e419ab4beec92c5d"><img src="https://i.gyazo.com/0c72995508d93100e419ab4beec92c5d.png" alt="https://gyazo.com/0c72995508d93100e419ab4beec92c5d" /></a></p>
+
+<p>続いてソースファイルを作成しましょう．
+メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます．
+ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう．
+パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．</p>
+
+<p><a href="https://gyazo.com/cf7ce1eb13d63d2e7a054d0464450fd0"><img src="https://i.gyazo.com/cf7ce1eb13d63d2e7a054d0464450fd0.png" alt="https://gyazo.com/cf7ce1eb13d63d2e7a054d0464450fd0" /></a></p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">乱数生成 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  乱数生成
+</h1>
+
+
+<p>サイコロの出た目のように規則性がなく予測不能な数値のことを<strong>乱数</strong>と呼びます．
+コンピュータではその性質から完全な乱数を生成することは出来ないため，
+<strong>擬似乱数</strong>と呼ばれる乱数とほぼ同じ特徴を持った値を生成します．
+0以上，かつ，n未満を条件とした整数の乱数を生成するには下記のように記述します．
+<strong>Random</strong>はJavaのライブラリに含まれる<strong>クラス</strong>の1つですが詳細は省略します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Random r <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Random<span style="color:#f92672">();</span>
+<span style="color:#66d9ef">int</span> x <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span><span style="color:#a6e22e">nextInt</span><span style="color:#f92672">(</span>n<span style="color:#f92672">);</span></code></pre></div>
+<p>下記のコードを参考に，int型の変数xを宣言し，0～2までの乱数を代入してみましょう．
+プログラムの実行後に，コンソールの出力結果を確認してください．
+実行毎に出力される値が変化することが分かります．</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/2744c6f4f4e7f598ae90.js"></script>
+
+<p>乱数を利用して<strong>おみくじ</strong>を作成してみましょう．
+下記のコードを参考に，変数xの値に応じて，ランダムに”大吉”，”吉”，”凶”をコンソールに出力させてみましょう．
+プログラムの実行後に，コンソールの出力結果を確認してください．</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/8b742f7aced0faae71cf.js"></script>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">キーボード入力 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  キーボード入力
+</h1>
+
+
+<p>ユーザから入力を受け取る方法の1つが<strong>キーボード</strong>です．
+キーボードから<strong>文字列</strong>を受け取るには下記のように記述します．
+<strong>Scanner</strong>はJavaのライブラリに含まれる<strong>クラス</strong>の1つですが詳細は省略します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Scanner s <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Scanner<span style="color:#f92672">(</span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">in</span><span style="color:#f92672">);</span>
+String text <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span><span style="color:#a6e22e">nextLine</span><span style="color:#f92672">();</span>
+s<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span></code></pre></div>
+<p>下記のコードを参考に，変数nameにキーボードから入力した文字列を代入してみましょう．
+ここで，<code>System.out.print()</code>は，<code>System.out.println()</code>と同様に文字列をコンソールに出力する命令ですが，改行しないという点が異なります．
+また，コンソールへの出力の際には，文字列を連結するための演算子「<strong>+</strong>」を利用していることに注意が必要です．</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/162e12ae242ec52de078.js"></script>
+
+<p>キーボードから<strong>整数</strong>を受け取るには下記のように記述します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Scanner s <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Scanner<span style="color:#f92672">(</span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">in</span><span style="color:#f92672">);</span>
+<span style="color:#66d9ef">int</span> number <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span><span style="color:#a6e22e">nextInt</span><span style="color:#f92672">();</span>
+s<span style="color:#f92672">.</span><span style="color:#a6e22e">close</span><span style="color:#f92672">();</span></code></pre></div>
+<p>下記のコードを参考に，変数ageにキーボードから入力した整数を代入してみましょう．
+<strong>Scannerの宣言</strong>や，<strong>s.close();</strong>は一度しか記述しないことに注意してください．</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/e16c069abbfa0ab0beda.js"></script>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>下記のコードを参考に<strong>ハイ＆ロー</strong>を実装してみましょう．
+ハイ＆ローはトランプゲームの1つで，ディーラーとプレイヤーに1枚ずつカードを配り，
+プレイヤーのカードの数字が大きいか（<strong>H</strong>）小さいか（<strong>L</strong>）を当てるゲームです．
+ここで「<strong>//</strong>」で始まる行は<strong>コメント</strong>です．
+コメントは，ソースコードを読みやすくするための解説文として用いられ，プログラムとして実行されることはありません．
+課題が完成したら，作成したプロジェクトを<strong>実行可能JARファイル</strong>の形式でファイルに保存（エクスポート）してください．</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/0b320d338872bdb85949.js"></script>
+
+<h3>参考書籍</h3>
+
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=484433638X" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4844336770" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877833765" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877833889" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/applied_programming/chapter5/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.8617741 &#43;0900 JST m=&#43;3.072771301">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

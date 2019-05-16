@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    マウスとキーボード | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="マウスとキーボード" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/applied_programming/chapter11/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/ff9782f1af234f83699046c458ec5eac.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="プロジェクトの準備 -- プロジェクトの準備Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project11”を入力ます． また，JREは&rdquo;プロジェクト固有のJREを使用&ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+ 
+Applicationクラスを継承したMyApplicationクラスを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します． 次にスーパークラスを設定するために，[参照]ボタンから「スーパークラスの選択」を開き， 一致する項目からjavafx.application.Applicationを選択して，[OK]をクリックします． 最後に[完了]をクリックしましょう．
+
+Applicationクラスの抽象メソッドであるstartメソッドをオーバーライドしておきます． 下記コードを参考に，タイトルをProject 11，幅を500px，高さを500pxに設定しましょう． プログラムの実行後にウィンドウが表示されることを確認してください．
+ 
+プログラム実行時の注意JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
+ マウス・イベント -- マウス・イベント今回はマウス操作に応じてキャンバスに絵を描くことに挑戦していきましょう． 前準備として，下記のコードを参考にCanvasクラスをウィンドウに配置してください． レイアウトペインとしてVBoxクラスを利用しています． プログラムの実行後に表示されるウィンドウを確認してください．
+ 
+キャンバス上でのマウスのクリックを検知するには， setOnMouseClicked()メソッドを利用します． このメソッドの引数にはラムダ式を利用して下記のように記述します． ラムダ式の左側の*event*はMouseEventクラスのインスタンスで， マウスの状態や位置などの情報を保持しています． 一方，ラムダ式の右側のpaint(event);はマウスがクリックされたときに呼び出されるメソッドです．
+canvas.setOnMouseClicked(event -&gt; paint(event)); 下記のコードを参考に，マウスがクリックされると，クリックされた位置に塗りつぶしの円を描いてみましょう（色はデフォルトの黒）． 円を描くコードはpaint(event)メソッドとして定義していることに注意してください． マウスの位置はMouseEventクラスのgetX()メソッドとgetY()メソッドで取得しています． プログラムの実行後に，キャンバスをクリックすると，円が描かれることに確認してください．
+  
+キーボード・イベント -- キーボード・イベントウィンドウ上でのマウスのクリックを検知するには，setOnKeyPressed()メソッドを利用します． このメソッドの引数にはラムダ式を利用して下記のように記述します． ラムダ式の左側の*event*はKeyEventクラスのインスタンスで， 押されたキーの状態や種類などの情報を保持しています． 一方，ラムダ式の右側のchange(event)はキーが押されたときに呼び出されるメソッドです．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="マウスとキーボード" />
+
+
+
+  <meta name="twitter:description" content="プロジェクトの準備 -- プロジェクトの準備Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project11”を入力ます． また，JREは&rdquo;プロジェクト固有のJREを使用&ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+ 
+Applicationクラスを継承したMyApplicationクラスを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します． 次にスーパークラスを設定するために，[参照]ボタンから「スーパークラスの選択」を開き， 一致する項目からjavafx.application.Applicationを選択して，[OK]をクリックします． 最後に[完了]をクリックしましょう．
+
+Applicationクラスの抽象メソッドであるstartメソッドをオーバーライドしておきます． 下記コードを参考に，タイトルをProject 11，幅を500px，高さを500pxに設定しましょう． プログラムの実行後にウィンドウが表示されることを確認してください．
+ 
+プログラム実行時の注意JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
+ マウス・イベント -- マウス・イベント今回はマウス操作に応じてキャンバスに絵を描くことに挑戦していきましょう． 前準備として，下記のコードを参考にCanvasクラスをウィンドウに配置してください． レイアウトペインとしてVBoxクラスを利用しています． プログラムの実行後に表示されるウィンドウを確認してください．
+ 
+キャンバス上でのマウスのクリックを検知するには， setOnMouseClicked()メソッドを利用します． このメソッドの引数にはラムダ式を利用して下記のように記述します． ラムダ式の左側の*event*はMouseEventクラスのインスタンスで， マウスの状態や位置などの情報を保持しています． 一方，ラムダ式の右側のpaint(event);はマウスがクリックされたときに呼び出されるメソッドです．
+canvas.setOnMouseClicked(event -&gt; paint(event)); 下記のコードを参考に，マウスがクリックされると，クリックされた位置に塗りつぶしの円を描いてみましょう（色はデフォルトの黒）． 円を描くコードはpaint(event)メソッドとして定義していることに注意してください． マウスの位置はMouseEventクラスのgetX()メソッドとgetY()メソッドで取得しています． プログラムの実行後に，キャンバスをクリックすると，円が描かれることに確認してください．
+  
+キーボード・イベント -- キーボード・イベントウィンドウ上でのマウスのクリックを検知するには，setOnKeyPressed()メソッドを利用します． このメソッドの引数にはラムダ式を利用して下記のように記述します． ラムダ式の左側の*event*はKeyEventクラスのインスタンスで， 押されたキーの状態や種類などの情報を保持しています． 一方，ラムダ式の右側のchange(event)はキーが押されたときに呼び出されるメソッドです．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/ff9782f1af234f83699046c458ec5eac.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">マウスとキーボード</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/ff9782f1af234f83699046c458ec5eac"><img src="https://i.gyazo.com/ff9782f1af234f83699046c458ec5eac.png" alt="https://gyazo.com/ff9782f1af234f83699046c458ec5eac" /></a></p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">プロジェクトの準備 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  プロジェクトの準備
+</h1>
+
+
+<p>Eclipseで新規にプロジェクトを作成しましょう．
+メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます．
+ここでは，プロジェクト名に”Project11”を入力ます．
+また，JREは&rdquo;<strong>プロジェクト固有のJREを使用</strong>&ldquo;を選択します．
+最後に，[完了]をクリックしましょう．
+パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．</p>
+
+<!--[![https://gyazo.com/92c204aaa4d46746026edba88b722ed7](https://i.gyazo.com/92c204aaa4d46746026edba88b722ed7.png)](https://gyazo.com/92c204aaa4d46746026edba88b722ed7)-->
+
+<p><a href="https://gyazo.com/0405cfbb87a5bae71a3e33c563f79363"><img src="https://i.gyazo.com/0405cfbb87a5bae71a3e33c563f79363.png" alt="https://gyazo.com/0405cfbb87a5bae71a3e33c563f79363" /></a></p>
+
+<p><strong>Application</strong>クラスを継承した<strong>MyApplication</strong>クラスを作成しましょう．
+メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します．
+次に<strong>スーパークラス</strong>を設定するために，[参照]ボタンから「スーパークラスの選択」を開き，
+一致する項目から<strong>javafx.application.Application</strong>を選択して，[OK]をクリックします．
+最後に[完了]をクリックしましょう．</p>
+
+<p><a href="https://gyazo.com/d9c737e5ac5dd58d9618be3117c73d0c"><img src="https://i.gyazo.com/d9c737e5ac5dd58d9618be3117c73d0c.png" alt="https://gyazo.com/d9c737e5ac5dd58d9618be3117c73d0c" /></a></p>
+
+<p>Applicationクラスの抽象メソッドである<strong>startメソッド</strong>をオーバーライドしておきます．
+下記コードを参考に，タイトルを<strong>Project 11</strong>，幅を<strong>500px</strong>，高さを<strong>500px</strong>に設定しましょう．
+プログラムの実行後にウィンドウが表示されることを確認してください．</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/b2b00a3eff45be2965c7.js"></script>
+
+<p><a href="https://gyazo.com/809f4689b12d3edb99481f2f9e12e575"><img src="https://i.gyazo.com/809f4689b12d3edb99481f2f9e12e575.png" alt="https://gyazo.com/809f4689b12d3edb99481f2f9e12e575" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  プログラム実行時の注意
+</h1>
+
+
+<p>JavaFXは<strong>mainメソッド</strong>がなくともプログラムの実行が可能という特徴を持っています．
+しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります．
+プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/d88625751b695e660adb.js"></script>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">マウス・イベント -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  マウス・イベント
+</h1>
+
+
+<p>今回はマウス操作に応じてキャンバスに絵を描くことに挑戦していきましょう．
+前準備として，下記のコードを参考に<strong>Canvasクラス</strong>をウィンドウに配置してください．
+レイアウトペインとして<strong>VBoxクラス</strong>を利用しています．
+プログラムの実行後に表示されるウィンドウを確認してください．</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/fed3810da487411a4246.js"></script>
+
+<p><a href="https://gyazo.com/c2df521649531c9264d5454d0a12f90c"><img src="https://i.gyazo.com/c2df521649531c9264d5454d0a12f90c.png" alt="https://gyazo.com/c2df521649531c9264d5454d0a12f90c" /></a></p>
+
+<p>キャンバス上でのマウスのクリックを検知するには，
+<code>setOnMouseClicked()</code>メソッドを利用します．
+このメソッドの引数には<strong>ラムダ式</strong>を利用して下記のように記述します．
+ラムダ式の左側の*event*は<strong>MouseEvent</strong>クラスのインスタンスで，
+マウスの状態や位置などの情報を保持しています．
+一方，ラムダ式の右側の<code>paint(event);</code>はマウスがクリックされたときに呼び出されるメソッドです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">canvas<span style="color:#f92672">.</span><span style="color:#a6e22e">setOnMouseClicked</span><span style="color:#f92672">(</span>event <span style="color:#f92672">-&gt;</span> paint<span style="color:#f92672">(</span>event<span style="color:#f92672">));</span></code></pre></div>
+<p>下記のコードを参考に，マウスがクリックされると，クリックされた位置に塗りつぶしの円を描いてみましょう（色はデフォルトの黒）．
+円を描くコードは<code>paint(event)</code>メソッドとして定義していることに注意してください．
+マウスの位置はMouseEventクラスの<code>getX()</code>メソッドと<code>getY()</code>メソッドで取得しています．
+プログラムの実行後に，キャンバスをクリックすると，円が描かれることに確認してください．</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/ee392067c12d24493433.js"></script>
+
+<!--[![https://gyazo.com/1d3a628d1aa9264f0abcdee6d631d204](https://i.gyazo.com/1d3a628d1aa9264f0abcdee6d631d204.gif)](https://gyazo.com/1d3a628d1aa9264f0abcdee6d631d204)-->
+
+<p><a href="https://gyazo.com/61dc300fd33ee30213c075a48c552d3d"><img src="https://i.gyazo.com/61dc300fd33ee30213c075a48c552d3d.gif" alt="https://gyazo.com/61dc300fd33ee30213c075a48c552d3d" /></a></p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">キーボード・イベント -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  キーボード・イベント
+</h1>
+
+
+<p>ウィンドウ上でのマウスのクリックを検知するには，<code>setOnKeyPressed()</code>メソッドを利用します．
+このメソッドの引数には<strong>ラムダ式</strong>を利用して下記のように記述します．
+ラムダ式の左側の*event*は<strong>KeyEvent</strong>クラスのインスタンスで，
+押されたキーの状態や種類などの情報を保持しています．
+一方，ラムダ式の右側の<code>change(event)</code>はキーが押されたときに呼び出されるメソッドです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">scene<span style="color:#f92672">.</span><span style="color:#a6e22e">setOnKeyPressed</span><span style="color:#f92672">(</span>event <span style="color:#f92672">-&gt;</span> change<span style="color:#f92672">(</span>event<span style="color:#f92672">));</span></code></pre></div>
+<p>下記のコードを参考に，塗りつぶしの色を，F1を押すと<strong>赤</strong>，F2を押すと<strong>青</strong>，F3を押すと<strong>黒</strong>に切り替えられるようにしましょう．
+押されたキーの種類は列挙型<strong>KeyCode</strong>で表され，<code>getCode()</code>メソッドで取得することができます（例，F1キーは<strong>F1</strong>という表記になる）．
+<code>setFill()</code>メソッドを利用して，キーがF1のとき<strong>Color.RED</strong>，F2のとき<strong>Color.BLUE</strong>，F3のとき<strong>Color.BLACK</strong>を設定します．
+プログラムの実行後に，塗りつぶしの色を切り替えられることを確認してください．</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/fe377f53f5b397e20d14.js"></script>
+
+<!--[![https://gyazo.com/0528631ecff5c67e071ef51c18a87e08](https://i.gyazo.com/0528631ecff5c67e071ef51c18a87e08.gif)](https://gyazo.com/0528631ecff5c67e071ef51c18a87e08)-->
+
+<p><a href="https://gyazo.com/0f82fc6d0f1c1f9d7bf09c98beac236b"><img src="https://i.gyazo.com/0f82fc6d0f1c1f9d7bf09c98beac236b.gif" alt="https://gyazo.com/0f82fc6d0f1c1f9d7bf09c98beac236b" /></a></p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>描く図形の形を，F4を押すと<strong>正方形</strong>，F5を押すと<strong>円</strong>に，切り替えられるようにしましょう（F1，F2，F3の色の切り替えも有効のまま）．
+課題が完成したら，作成したプロジェクトを実行可能JARファイルの形式でファイルに保存（エクスポート）してください．</p>
+
+<!--[![https://gyazo.com/45e2e3b936116e60abb65889e0c6129c](https://i.gyazo.com/45e2e3b936116e60abb65889e0c6129c.gif)](https://gyazo.com/45e2e3b936116e60abb65889e0c6129c)-->
+
+<p><a href="https://gyazo.com/c20401ccdf46eb69dde74d8ca37f12f8"><img src="https://i.gyazo.com/c20401ccdf46eb69dde74d8ca37f12f8.gif" alt="https://gyazo.com/c20401ccdf46eb69dde74d8ca37f12f8" /></a></p>
+
+<h3>参考書籍</h3>
+
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=484433638X" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4844336770" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877833765" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877833889" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/applied_programming/chapter11/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.8527987 &#43;0900 JST m=&#43;3.063795901">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

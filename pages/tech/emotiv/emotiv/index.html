@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Emotivで脳波を可視化 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="Emotivで脳波を可視化" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/emotiv/emotiv/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/7ccfb248a92d7521fe8851edaab45742.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="
+EmotivとはEmotivは株式会社イノバテックが提供している小型の脳波計です． Epoc&#43;，INSIGHT，EPOC flexなど複数の種類がありますが， ここでは，14チャネルの電極が装着されたEMOTIV EPOC&#43;を対象に開発することを目的とします． この装置は，他の脳波計と比べ，スタイリッシュなデザインが特徴です． 頭に装着するだけで，未来感がビシビシ伝わってきます． 専用のアプリケーションであるEmotivPROで， 脳波データを取得・可視化するだけなら無料のラインセンスで利用可能です． しかし，脳波の生データをAPI（Cortex）を経由して取得するなど， 研究を目的として利用するためには，別途ライセンスの購入が必要です． 月額99ドルと決して安くはないため注意が必要です（年払いで割引されますが）．
+
+EmotivPROを使ってみよう最初に，専用のアプリケーションであるEmotivPROを利用して， 脳波データを取得・可視化してみましょう． まずは，電極のフェルドパッドを生理食塩水で水和させます． この生理食塩水はコンタクトレンズなどにも用いられているものです． ここで，しっかりと水和させておかないと，センサーの感度が悪くなる可能性があります． 電極を時計回りに回すと取り外すことができますが， 力を入れ過ぎるとフェルト部分がはずれてしまうので要注意です．
+
+それでは，ヘッドセットを頭に装着します． ヘッドセットを両手で持ち，頭上から下に向かってスライドさせます． このとき，左右の参照電極を，ちょうど耳たぶの裏の骨部分に配置します． 参照電極を用いた方法は単極導出と呼ばれ，この参照電極と他の電極との電位差が記録されます． この参照電極は，他の電極にも影響するため，正確な設置が必要です． また，前方の左右の電極は，眉毛から指３本だけ上にあるように配置します．
+
+この電極の設置の質（コンタクト・クオリティ）はEmotivProの下記の画面で確認できますが，・・・，非常に難しい． 緑色の電極はコンタクト・クオリティが高いことを示しています． 電極の位置を微調整しても，コンタクト・クオリティは全体で28%がやっとでした． このあたりのコツをご存知でしたら，お教えください．
+
+脳波を可視化しよう次は脳波を可視化してみましょう． ここで，脳波のサンプリングレートとA/D変換の分解能を確認しておきます． サンプリングレートは128Hz，また，分解能は16ビット（65536階調）です． 図中にEEGと表記がありますが，これはElectroencephalographの略で脳波（図）を意味しています （単に脳波をEEGと呼ぶことも多い）．
+
+次に電極の位置番号を確認しておきます． 上述したようにEpoc&#43;では，14チャネルの電極があり， それぞれ，AF3，AF4，F3，F4，F7，F8，FC5，FC6，T7，T8，P7，P8，O1，O2です． 図中の赤い丸で表現されている電極は，耳たぶの裏にある参照電極です． ここでは，コンタクト・クオリティの高いAF4，F3，P8の３箇所に注目します．
+
+AF4，F3，P8の３箇所の電極の生データは下記です． 横軸は時間で単位は10[ms]，また，縦軸は電位を表し-100&micro;V〜100&micro;Vの範囲を取ります． 一般的にローデータから，脳波の意味を読み取ることは困難なため，高速フーリエ変換をして周波数成分を取り出します．
+
+EmotivProはフーリエ変換した周波数スペクトルの表示も可能です． P8にフーリエ変換をした結果は下記のようになります． 周波数に応じて脳波は分類され，4〜8Hzはシータ波，8〜12Hzはアルファ波，13Hz以上はベータ波と呼ばれます． この結果では，若干ですがシータ波が有意なように見えます． シータ波は眠い状態で発生する波とされ，いかに寝不足かが分かる結果となりました（笑）．
+
+今回はEmotivの基本的な使い方を解説しました． 次回はCortexと呼ばれるAPIを利用して，Pythonで脳波データを取得することに挑戦します．
+参考書籍" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Emotivで脳波を可視化" />
+
+
+
+  <meta name="twitter:description" content="
+EmotivとはEmotivは株式会社イノバテックが提供している小型の脳波計です． Epoc&#43;，INSIGHT，EPOC flexなど複数の種類がありますが， ここでは，14チャネルの電極が装着されたEMOTIV EPOC&#43;を対象に開発することを目的とします． この装置は，他の脳波計と比べ，スタイリッシュなデザインが特徴です． 頭に装着するだけで，未来感がビシビシ伝わってきます． 専用のアプリケーションであるEmotivPROで， 脳波データを取得・可視化するだけなら無料のラインセンスで利用可能です． しかし，脳波の生データをAPI（Cortex）を経由して取得するなど， 研究を目的として利用するためには，別途ライセンスの購入が必要です． 月額99ドルと決して安くはないため注意が必要です（年払いで割引されますが）．
+
+EmotivPROを使ってみよう最初に，専用のアプリケーションであるEmotivPROを利用して， 脳波データを取得・可視化してみましょう． まずは，電極のフェルドパッドを生理食塩水で水和させます． この生理食塩水はコンタクトレンズなどにも用いられているものです． ここで，しっかりと水和させておかないと，センサーの感度が悪くなる可能性があります． 電極を時計回りに回すと取り外すことができますが， 力を入れ過ぎるとフェルト部分がはずれてしまうので要注意です．
+
+それでは，ヘッドセットを頭に装着します． ヘッドセットを両手で持ち，頭上から下に向かってスライドさせます． このとき，左右の参照電極を，ちょうど耳たぶの裏の骨部分に配置します． 参照電極を用いた方法は単極導出と呼ばれ，この参照電極と他の電極との電位差が記録されます． この参照電極は，他の電極にも影響するため，正確な設置が必要です． また，前方の左右の電極は，眉毛から指３本だけ上にあるように配置します．
+
+この電極の設置の質（コンタクト・クオリティ）はEmotivProの下記の画面で確認できますが，・・・，非常に難しい． 緑色の電極はコンタクト・クオリティが高いことを示しています． 電極の位置を微調整しても，コンタクト・クオリティは全体で28%がやっとでした． このあたりのコツをご存知でしたら，お教えください．
+
+脳波を可視化しよう次は脳波を可視化してみましょう． ここで，脳波のサンプリングレートとA/D変換の分解能を確認しておきます． サンプリングレートは128Hz，また，分解能は16ビット（65536階調）です． 図中にEEGと表記がありますが，これはElectroencephalographの略で脳波（図）を意味しています （単に脳波をEEGと呼ぶことも多い）．
+
+次に電極の位置番号を確認しておきます． 上述したようにEpoc&#43;では，14チャネルの電極があり， それぞれ，AF3，AF4，F3，F4，F7，F8，FC5，FC6，T7，T8，P7，P8，O1，O2です． 図中の赤い丸で表現されている電極は，耳たぶの裏にある参照電極です． ここでは，コンタクト・クオリティの高いAF4，F3，P8の３箇所に注目します．
+
+AF4，F3，P8の３箇所の電極の生データは下記です． 横軸は時間で単位は10[ms]，また，縦軸は電位を表し-100&micro;V〜100&micro;Vの範囲を取ります． 一般的にローデータから，脳波の意味を読み取ることは困難なため，高速フーリエ変換をして周波数成分を取り出します．
+
+EmotivProはフーリエ変換した周波数スペクトルの表示も可能です． P8にフーリエ変換をした結果は下記のようになります． 周波数に応じて脳波は分類され，4〜8Hzはシータ波，8〜12Hzはアルファ波，13Hz以上はベータ波と呼ばれます． この結果では，若干ですがシータ波が有意なように見えます． シータ波は眠い状態で発生する波とされ，いかに寝不足かが分かる結果となりました（笑）．
+
+今回はEmotivの基本的な使い方を解説しました． 次回はCortexと呼ばれるAPIを利用して，Pythonで脳波データを取得することに挑戦します．
+参考書籍" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/7ccfb248a92d7521fe8851edaab45742.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">Emotivで脳波を可視化</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/7ccfb248a92d7521fe8851edaab45742"><img src="https://i.gyazo.com/7ccfb248a92d7521fe8851edaab45742.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Emotivとは
+</h1>
+
+
+<p><a href="https://www.emotiv.com">Emotiv</a>は<a href="http://www.innovatec.co.jp">株式会社イノバテック</a>が提供している小型の脳波計です．
+<strong>Epoc+</strong>，<strong>INSIGHT</strong>，<strong>EPOC flex</strong>など複数の種類がありますが，
+ここでは，14チャネルの電極が装着された<strong>EMOTIV EPOC+</strong>を対象に開発することを目的とします．
+この装置は，他の脳波計と比べ，スタイリッシュなデザインが特徴です．
+頭に装着するだけで，未来感がビシビシ伝わってきます．
+専用のアプリケーションである<a href="https://www.emotiv.com/emotivpro/">EmotivPRO</a>で，
+脳波データを取得・可視化するだけなら<strong>無料のラインセンス</strong>で利用可能です．
+しかし，脳波の生データをAPI（<strong>Cortex</strong>）を経由して取得するなど，
+研究を目的として利用するためには，別途ライセンスの購入が必要です．
+月額99ドルと決して安くはないため注意が必要です（年払いで割引されますが）．</p>
+
+<p><a href="https://gyazo.com/71499fbf173b4487cbc7cbe056c8bc41"><img src="https://i.gyazo.com/71499fbf173b4487cbc7cbe056c8bc41.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  EmotivPROを使ってみよう
+</h1>
+
+
+<p>最初に，専用のアプリケーションである<a href="https://www.emotiv.com/emotivpro/">EmotivPRO</a>を利用して，
+脳波データを取得・可視化してみましょう．
+まずは，電極のフェルドパッドを生理食塩水で水和させます．
+この生理食塩水はコンタクトレンズなどにも用いられているものです．
+ここで，しっかりと水和させておかないと，センサーの感度が悪くなる可能性があります．
+電極を時計回りに回すと取り外すことができますが，
+力を入れ過ぎるとフェルト部分がはずれてしまうので要注意です．</p>
+
+<p><a href="https://gyazo.com/2d48ec98bcecee18d4f3e5d0b68b5117"><img src="https://i.gyazo.com/2d48ec98bcecee18d4f3e5d0b68b5117.png" alt="Image from Gyazo" /></a></p>
+
+<p>それでは，ヘッドセットを頭に装着します．
+ヘッドセットを両手で持ち，頭上から下に向かってスライドさせます．
+このとき，左右の参照電極を，ちょうど耳たぶの裏の骨部分に配置します．
+参照電極を用いた方法は<strong>単極導出</strong>と呼ばれ，この参照電極と他の電極との電位差が記録されます．
+この参照電極は，他の電極にも影響するため，正確な設置が必要です．
+また，前方の左右の電極は，眉毛から指３本だけ上にあるように配置します．</p>
+
+<p><a href="https://gyazo.com/e191533e6ee5b057293b7eaf2e7fff96"><img src="https://i.gyazo.com/e191533e6ee5b057293b7eaf2e7fff96.png" alt="Image from Gyazo" /></a></p>
+
+<p>この電極の設置の質（コンタクト・クオリティ）はEmotivProの下記の画面で確認できますが，・・・，非常に難しい．
+<strong>緑色</strong>の電極はコンタクト・クオリティが高いことを示しています．
+電極の位置を微調整しても，コンタクト・クオリティは全体で<strong>28%</strong>がやっとでした．
+このあたりのコツをご存知でしたら，お教えください．</p>
+
+<p><a href="https://gyazo.com/2fdd8f8c5b802407399663905a3b0e7b"><img src="https://i.gyazo.com/2fdd8f8c5b802407399663905a3b0e7b.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  脳波を可視化しよう
+</h1>
+
+
+<p>次は脳波を可視化してみましょう．
+ここで，脳波のサンプリングレートとA/D変換の分解能を確認しておきます．
+サンプリングレートは<strong>128Hz</strong>，また，分解能は<strong>16ビット（65536階調）</strong>です．
+図中に<strong>EEG</strong>と表記がありますが，これはElectroencephalographの略で<strong>脳波（図）</strong>を意味しています
+（単に脳波を<strong>EEG</strong>と呼ぶことも多い）．</p>
+
+<p><a href="https://gyazo.com/75593375d5e29860e686faf840ca02a5"><img src="https://i.gyazo.com/75593375d5e29860e686faf840ca02a5.png" alt="Image from Gyazo" /></a></p>
+
+<p>次に電極の位置番号を確認しておきます．
+上述したようにEpoc+では，14チャネルの電極があり，
+それぞれ，<strong>AF3</strong>，<strong>AF4</strong>，<strong>F3</strong>，<strong>F4</strong>，<strong>F7</strong>，<strong>F8</strong>，<strong>FC5</strong>，<strong>FC6</strong>，<strong>T7</strong>，<strong>T8</strong>，<strong>P7</strong>，<strong>P8</strong>，<strong>O1</strong>，<strong>O2</strong>です．
+図中の赤い丸で表現されている電極は，耳たぶの裏にある参照電極です．
+ここでは，コンタクト・クオリティの高い<strong>AF4</strong>，<strong>F3</strong>，<strong>P8</strong>の３箇所に注目します．</p>
+
+<p><a href="https://gyazo.com/856dbe31f676fc0120b610f1e93f06f1"><img src="https://i.gyazo.com/856dbe31f676fc0120b610f1e93f06f1.png" alt="Image from Gyazo" /></a></p>
+
+<p><strong>AF4</strong>，<strong>F3</strong>，<strong>P8</strong>の３箇所の電極の生データは下記です．
+横軸は時間で単位は<strong>10[ms]</strong>，また，縦軸は電位を表し<strong>-100&micro;V</strong>〜<strong>100&micro;V</strong>の範囲を取ります．
+一般的にローデータから，脳波の意味を読み取ることは困難なため，高速フーリエ変換をして周波数成分を取り出します．</p>
+
+<p><a href="https://gyazo.com/b4e699e6fc9626167784238d7000148c"><img src="https://i.gyazo.com/b4e699e6fc9626167784238d7000148c.png" alt="Image from Gyazo" /></a></p>
+
+<p>EmotivProはフーリエ変換した周波数スペクトルの表示も可能です．
+<strong>P8</strong>にフーリエ変換をした結果は下記のようになります．
+周波数に応じて脳波は分類され，4〜8Hzは<strong>シータ波</strong>，8〜12Hzは<strong>アルファ波</strong>，13Hz以上は<strong>ベータ波</strong>と呼ばれます．
+この結果では，若干ですが<strong>シータ波</strong>が有意なように見えます．
+<strong>シータ波</strong>は眠い状態で発生する波とされ，いかに寝不足かが分かる結果となりました（笑）．</p>
+
+<p><a href="https://gyazo.com/474b1eaca562d3486e0d9eb159671ed9"><img src="https://i.gyazo.com/474b1eaca562d3486e0d9eb159671ed9.png" alt="Image from Gyazo" /></a></p>
+
+<p>今回はEmotivの基本的な使い方を解説しました．
+次回は<strong>Cortex</strong>と呼ばれるAPIを利用して，<strong>Python</strong>で脳波データを取得することに挑戦します．</p>
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4791105990&linkId=f9c1eb1531853c5ddd4830bd3d49d294&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274066177&linkId=9af75bd60e11590af6fb19ec55e49359&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4534052154&linkId=e50cd1018da7eefd349868d057e2ae7f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/emotiv/emotiv/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.2544001 &#43;0900 JST m=&#43;2.465397301">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

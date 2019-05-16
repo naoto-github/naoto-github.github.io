@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    対応のある2群のt検定 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="対応のある2群のt検定" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter12/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/9d7c82a5547945b989ff609f878470e1.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="対応のある2群とは -- 対応のある2群とは前回は独立な2群（対応のない2群）の検定を考えました． 今回は，対応のある2群 の検定に注目します． 対応のある2群 とは，2つの標本に含まれる対象に，何らかの対応関係があることを意味しています． 例えば，下記のように，同じ4人の被験者に対して，2種類の条件下で測定された2群のデータは，「対応のある2群」です．
+条件1: x_1 = \{a,b,c,d\} \\ 条件2: x_2 = \{a&#39;,b&#39;,c&#39;,d&#39;\}  「独立な2群の検定」には，新しい検定統計量が必要でしたが， 「対応のある2群の検定」では，2群のデータの「変化量」に着目することで， 標準的なt検定の検定統計量を適用することが可能です．
+スクリプトの作成 -- スクリプトの作成コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter12としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+対応のある2群のt検定 -- 対応のある2群のt検定それでは，下記の問題について考えていきましょう．
+向研究室の学生を対象に実施した情報数学に関するテストの得点はx_1であった． その後，向による熱心な指導を行い，再度，情報数学に関するテストを実施したところ， その得点はx_2となった． 指導の前後における得点の平均値に有意な差はあるか． （どちらも同じ母集団からランダムサンプリングした標本だろうか）． 指導前: x_1 = \{63,75,72,67,71\} \\ 指導後: x_2 = \{82,70,78,81,79\}   ここでは，指導の前後という対応関係があることから，得点の 変化量 に注目します． 変化量はD = X_2 - X_1で与えられます．
+変化量の母集団: D = X_2 - X_1\\ 変化量の標本: d = x_2 - x_1 = \{19,-5,6,14,8\}  この変化量が，平均\hat{\mu}， 分散\hat{\sigma}^2の正規分布に従うと仮定します．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="対応のある2群のt検定" />
+
+
+
+  <meta name="twitter:description" content="対応のある2群とは -- 対応のある2群とは前回は独立な2群（対応のない2群）の検定を考えました． 今回は，対応のある2群 の検定に注目します． 対応のある2群 とは，2つの標本に含まれる対象に，何らかの対応関係があることを意味しています． 例えば，下記のように，同じ4人の被験者に対して，2種類の条件下で測定された2群のデータは，「対応のある2群」です．
+条件1: x_1 = \{a,b,c,d\} \\ 条件2: x_2 = \{a&#39;,b&#39;,c&#39;,d&#39;\}  「独立な2群の検定」には，新しい検定統計量が必要でしたが， 「対応のある2群の検定」では，2群のデータの「変化量」に着目することで， 標準的なt検定の検定統計量を適用することが可能です．
+スクリプトの作成 -- スクリプトの作成コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter12としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+対応のある2群のt検定 -- 対応のある2群のt検定それでは，下記の問題について考えていきましょう．
+向研究室の学生を対象に実施した情報数学に関するテストの得点はx_1であった． その後，向による熱心な指導を行い，再度，情報数学に関するテストを実施したところ， その得点はx_2となった． 指導の前後における得点の平均値に有意な差はあるか． （どちらも同じ母集団からランダムサンプリングした標本だろうか）． 指導前: x_1 = \{63,75,72,67,71\} \\ 指導後: x_2 = \{82,70,78,81,79\}   ここでは，指導の前後という対応関係があることから，得点の 変化量 に注目します． 変化量はD = X_2 - X_1で与えられます．
+変化量の母集団: D = X_2 - X_1\\ 変化量の標本: d = x_2 - x_1 = \{19,-5,6,14,8\}  この変化量が，平均\hat{\mu}， 分散\hat{\sigma}^2の正規分布に従うと仮定します．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/9d7c82a5547945b989ff609f878470e1.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">対応のある2群のt検定</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/9d7c82a5547945b989ff609f878470e1"><img src="https://i.gyazo.com/9d7c82a5547945b989ff609f878470e1.png" alt="https://gyazo.com/9d7c82a5547945b989ff609f878470e1" /></a></p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">対応のある2群とは -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  対応のある2群とは
+</h1>
+
+
+<p>前回は独立な2群（対応のない2群）の検定を考えました．
+今回は，<strong>対応のある2群</strong> の検定に注目します．
+<strong>対応のある2群</strong> とは，2つの標本に含まれる対象に，何らかの対応関係があることを意味しています．
+例えば，下記のように，同じ4人の被験者に対して，2種類の条件下で測定された2群のデータは，「対応のある2群」です．</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        条件1: x_1 = \{a,b,c,d\} \\
+        条件2: x_2 = \{a',b',c',d'\}
+    </script>
+</p>
+
+<p>「独立な2群の検定」には，新しい検定統計量が必要でしたが，
+「対応のある2群の検定」では，2群のデータの「変化量」に着目することで，
+標準的なt検定の検定統計量を適用することが可能です．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スクリプトの作成 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  スクリプトの作成
+</h1>
+
+
+<p>コードを入力し保存するための<strong>スクリプト</strong>を作成しましょう．
+[ファイル]-[新しいスクリプト]をクリックし，<strong>Rエディタ</strong>を表示します．
+次に，[ファイル]-[保存]をクリックして，スクリプトを保存します．
+このとき，ファイル名は<strong>chapter12</strong>としてください．
+また，ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">対応のある2群のt検定 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  対応のある2群のt検定
+</h1>
+
+
+<p>それでは，下記の問題について考えていきましょう．</p>
+
+<div style="border:1px solid black;margin-bottom:5px">
+
+向研究室の学生を対象に実施した情報数学に関するテストの得点は<script type="math/tex">x_1</script>であった．
+その後，向による熱心な指導を行い，再度，情報数学に関するテストを実施したところ，
+その得点は<script type="math/tex">x_2</script>となった．
+指導の前後における得点の平均値に有意な差はあるか．
+（どちらも同じ母集団からランダムサンプリングした標本だろうか）．
+    
+<p style="text-align:center;">
+    <script type="math/tex">
+        指導前: x_1 = \{63,75,72,67,71\} \\
+        指導後: x_2 = \{82,70,78,81,79\}
+    </script>
+</p>
+
+</div>
+
+<p>ここでは，指導の前後という対応関係があることから，得点の <strong>変化量</strong> に注目します．
+変化量は<script type="math/tex">D = X_2 - X_1</script>で与えられます．</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        変化量の母集団: D = X_2 - X_1\\
+        変化量の標本: d = x_2 - x_1 = \{19,-5,6,14,8\}
+    </script>
+</p>
+
+<p>この変化量が，平均<script type="math/tex">\hat{\mu}</script>，
+分散<script type="math/tex">\hat{\sigma}^2</script>の正規分布に従うと仮定します．</p>
+
+<p style="text-align:center">
+    <script type="math/tex">
+    D \sim N(\hat{\mu},\hat{\sigma}^2)
+    </script>
+</p>
+
+<p>すると，この変化量（標本）の平均の分布<script type="math/tex">\bar{d}</script>は，
+平均<script type="math/tex">\hat{\mu}</script>，
+分散<script type="math/tex">\frac{\hat{\sigma}^2}{n}</script>の正規分布に従うことになります．
+これは，「母集団」と「標本平均の分布」の関係ですね．</p>
+
+<p style="text-align:center">
+    <script type="math/tex">
+    \bar{d} \sim N(\hat{\mu},\frac{\hat{\sigma}^2}{n})
+    </script>
+</p>
+
+<p>これを標準化することで，t分布の検定統計量になります．
+このとき，母集団の標準偏差<script type="math/tex">\hat{\sigma}</script>は未知のため，
+代わりに標本の標準偏差<script type="math/tex">\sigma_d</script>を用いることに注意してください．</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        t = \frac{\mu_D - \hat{\mu}}{\sqrt{ \sigma_D^2 / n }}
+    </script>
+</p>
+
+<ul>
+<li>母平均<script type="math/tex">\hat{\mu}</script><br /></li>
+<li>標本の平均<script type="math/tex">\mu_d</script><br /></li>
+<li>標本の標準偏差<script type="math/tex">\sigma_d</script><br /></li>
+<li>標本のサンプル数<script type="math/tex">n=5</script><br /></li>
+</ul>
+
+<p>また，対象が変化量であることから，
+帰無仮説は<script type="math/tex">\hat{\mu}=0</script>とおくため，
+上記の式は下記のようになります．
+随分とスッキリした検定統計量になりました．</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        t = \frac{\mu_d}{\sqrt{ \sigma_d^2 / n }}
+    </script>
+</p>
+
+<p>それでは，検定の手順に従って，上記の問題を解いていきましょう．
+まずは，<strong>帰無仮説</strong> と <strong>対立仮説</strong> を立てます．</p>
+
+<ul>
+<li>帰無仮説：変化量の母平均は0である <script type="math/tex">\hat{\mu} = 0</script></li>
+<li>対立仮説：変化量の母平均は0ではない <script type="math/tex">\hat{\mu} \neq 0</script></li>
+</ul>
+
+<p>次に，<strong>検定統計量</strong> と，<strong>信頼区間(棄却域)</strong> を定めます．
+今回は，検定統計量は上記の<strong>tスコア</strong>とし，信頼度には「95%信頼度（5%棄却域）」を用いることにしましょう．</p>
+
+<p>それでは，検定統計量であるtスコアを計算してみましょう．
+まずは，標本の平均<script type="math/tex">\mu_d</script>と
+標準偏差<script type="math/tex">\sigma_d</script>を求めます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x1 <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>(<span style="color:#ae81ff">63</span>,<span style="color:#ae81ff">75</span>,<span style="color:#ae81ff">72</span>,<span style="color:#ae81ff">67</span>,<span style="color:#ae81ff">71</span>)
+x2 <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>(<span style="color:#ae81ff">82</span>,<span style="color:#ae81ff">70</span>,<span style="color:#ae81ff">78</span>,<span style="color:#ae81ff">81</span>,<span style="color:#ae81ff">79</span>)
+d <span style="color:#f92672">&lt;-</span> x2 <span style="color:#f92672">-</span> x1
+mu <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">mean</span>(d)
+sigma <span style="color:#f92672">&lt;-</span> sd(d)
+
+<span style="color:#f92672">&gt;</span> d
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">-5</span>  <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">14</span>  <span style="color:#ae81ff">8</span>
+<span style="color:#f92672">&gt;</span> mu
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">8.4</span>
+<span style="color:#f92672">&gt;</span> sigma
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">9.071935</span></code></pre></div>
+<p>上記の計算結果を基ににtスコアを求めます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">n <span style="color:#f92672">=</span> <span style="color:#66d9ef">length</span>(d)
+t <span style="color:#f92672">&lt;-</span> mu <span style="color:#f92672">/</span> <span style="color:#66d9ef">sqrt</span>(sigma<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">/</span> n)
+<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">t</span>
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">2.070448</span></code></pre></div>
+<p>最後に，自由度<script type="math/tex">n-1=4</script>のt分布を利用して，帰無仮説が採択か棄却かを調べましょう．
+qt関数を用いると，95%信頼度のとき，<strong>t&lt;-2.77</strong>，また，<strong>t&gt;2.77</strong> が棄却域となることが分かります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> qt(<span style="color:#ae81ff">0.025</span>,<span style="color:#ae81ff">4</span>)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">-2.776445</span>
+<span style="color:#f92672">&gt;</span> qt(<span style="color:#ae81ff">0.975</span>,<span style="color:#ae81ff">4</span>)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">2.776445</span></code></pre></div>
+<p>合わせてt分布をグラフにして確認してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> curve(dt(x,<span style="color:#ae81ff">4</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>)
+<span style="color:#f92672">&gt;</span> abline(v<span style="color:#f92672">=</span>qt(<span style="color:#ae81ff">0.025</span>,<span style="color:#ae81ff">4</span>))
+<span style="color:#f92672">&gt;</span> abline(v<span style="color:#f92672">=</span>qt(<span style="color:#ae81ff">0.975</span>,<span style="color:#ae81ff">4</span>))</code></pre></div>
+<p><a href="https://gyazo.com/7f6a986e2ff25ce907cea3ede04287f0"><img src="https://i.gyazo.com/7f6a986e2ff25ce907cea3ede04287f0.png" alt="https://gyazo.com/7f6a986e2ff25ce907cea3ede04287f0" /></a></p>
+
+<p>上記の結果から，tスコアの2.07は棄却域に含まれないので，
+帰無仮説「変化量の母平均は0である」が採択されます．
+これは，指導の前後の得点には<strong>有意な差がない</strong>ということを意味しています．
+明確に指導の効果があったとは言えないということです．悲しいですね．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">関数を利用したt検定 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  関数を利用したt検定
+</h1>
+
+
+<p>上記の検定は<strong>t.test</strong>関数でも可能です．
+引数には「母平均が0である」ことを意味する<strong>mu=0</strong>を与えます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> t.test(d,mu<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+
+        One Sample <span style="color:#66d9ef">t</span><span style="color:#f92672">-</span>test
+
+data<span style="color:#f92672">:</span>  d
+t <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.0704</span>, df <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>, p<span style="color:#f92672">-</span>value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1072</span>
+alternative hypothesis<span style="color:#f92672">:</span> true mean is not equal to <span style="color:#ae81ff">0</span>
+<span style="color:#ae81ff">95</span> percent confidence interval<span style="color:#f92672">:</span>
+ <span style="color:#ae81ff">-2.864295</span> <span style="color:#ae81ff">19.664295</span>
+sample estimates<span style="color:#f92672">:</span>
+mean of x 
+      <span style="color:#ae81ff">8.4</span> </code></pre></div>
+<p>tスコアが求めた2.07に一致していることが分かります．
+p値が0.107（10%）であることから，信頼区間に含まれていることが分かります．
+また，母集団の平均値の信頼区間は<strong>-2.86</strong>から<strong>19.66</strong>となっており，
+帰無仮説である<script type="math/tex">\hat{\mu}=0</script>が含まれていることが分かります．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>指導後の得点が{83,93,75,84,85}だったときの<strong>tスコア</strong>を求めなさい．
+また，<strong>t検定</strong>を用いて，「95%信頼度（5%棄却域）」のときに，
+「帰無仮説：変化量の母平均は0である <script type="math/tex">\hat{\mu} = 0</script>」は棄却されるか調べ，
+そのときの母集団の平均値の信頼区間も求めなさい．
+ソースは<strong>chapter12.R</strong>に記述して提出すること．</p>
+
+<h3>参考書籍</h3>
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274067106&linkId=93d694711dbe1bcddf54d4dbceaa6634&bc1=F8F8F8&lt1=_blank&fc1=333333&lc1=0066C0&bg1=F8F8F8&f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4863542011&linkId=92f9b82cf210ae3681f8c607eae4ac8a&bc1=F8F8F8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=F8F8F8&f=ifr"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter12/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.9884639 &#43;0900 JST m=&#43;3.199461201">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

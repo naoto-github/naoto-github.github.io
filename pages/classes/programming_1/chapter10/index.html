@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    カメラ映像の表示 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="カメラ映像の表示" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/programming_1/chapter10/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/edffebcb2d7e3c361509dab7b6f2b8bb.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="スケッチの作成Processingを起動して、新規にスケッチを保存しましょう。 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。 ファイル名に「Project10」を入力し、[保存]をクリックしましょう。 保存先に「Project10」という名前のフォルダが作成されていることを確認してください。
+
+Videoライブラリの導入ProcessingではVideoライブラリを導入することで、 カメラからの映像をウィンドウに表示することができるようになります。 まずは、メニューから[スケッチ]-[ライブラリをインポート]-[ライブラリを追加]をクリックして、 「Contribution Manager」を開きます。 ここで、videoをキーワードに検索すると、 「Video|GStreamer-based video library for Processing」が表示されるので、 このライブラリを選択してインストールしましょう。
+
+次に、[スケッチ]-[ライブラリをインポート]-[Video]をクリックして、 Videoライブラリをインポート（プログラムで利用可能な状態にすること）します。 ソースコードの１行目に「import processing.video.*;」と表示されていることを確認してください。
+ カメラ映像の表示カメラから入力した映像はCaptureクラスを利用します。 まずは、setup()関数において、Captureクラスのlist()関数を呼び出し、 利用可能なカメラの一覧をString型の配列で取得します。 これをコンソールに出力し、利用可能なカメラの種類を確認してください。
+ 例えば、コンソールには下記のような一覧が表示されます。 この中から、サイズ（size）が320x240となっているカメラ番号を覚えておいてください。 この例では、3番が該当します。 ウィンドウのサイズも320x240に合わせます。 ちなみに、フレームレート（fps）は、1秒間に更新される画像（フレーム）数を意味しています。 つまり、フレームレートが高いほど、滑らかな動画となります。
+[0] name=FULL HD 1080P Webcam,size=640x480,fps=30 [1] name=FULL HD 1080P Webcam,size=160x120,fps=30 [2] name=FULL HD 1080P Webcam,size=176x144,fps=30 [3] name=FULL HD 1080P Webcam,size=320x240,fps=30 [4] name=FULL HD 1080P Webcam,size=352x288,fps=30 [5] name=FULL HD 1080P Webcam,size=640x360,fps=30 [6] name=FULL HD 1080P Webcam,size=800x600,fps=30 [7] name=FULL HD 1080P Webcam,size=960x720,fps=30 [8] name=FULL HD 1080P Webcam,size=1024x576,fps=30 [9] name=FULL HD 1080P Webcam,size=1280x720,fps=30 次に、Captureクラスのインスタンスcamを下記のように初期化します。 引数には先程確認したカメラ番号を指定することに注意してください。 start()関数を呼び出すことで、カメラ映像の取得を開始します。" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="カメラ映像の表示" />
+
+
+
+  <meta name="twitter:description" content="スケッチの作成Processingを起動して、新規にスケッチを保存しましょう。 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。 ファイル名に「Project10」を入力し、[保存]をクリックしましょう。 保存先に「Project10」という名前のフォルダが作成されていることを確認してください。
+
+Videoライブラリの導入ProcessingではVideoライブラリを導入することで、 カメラからの映像をウィンドウに表示することができるようになります。 まずは、メニューから[スケッチ]-[ライブラリをインポート]-[ライブラリを追加]をクリックして、 「Contribution Manager」を開きます。 ここで、videoをキーワードに検索すると、 「Video|GStreamer-based video library for Processing」が表示されるので、 このライブラリを選択してインストールしましょう。
+
+次に、[スケッチ]-[ライブラリをインポート]-[Video]をクリックして、 Videoライブラリをインポート（プログラムで利用可能な状態にすること）します。 ソースコードの１行目に「import processing.video.*;」と表示されていることを確認してください。
+ カメラ映像の表示カメラから入力した映像はCaptureクラスを利用します。 まずは、setup()関数において、Captureクラスのlist()関数を呼び出し、 利用可能なカメラの一覧をString型の配列で取得します。 これをコンソールに出力し、利用可能なカメラの種類を確認してください。
+ 例えば、コンソールには下記のような一覧が表示されます。 この中から、サイズ（size）が320x240となっているカメラ番号を覚えておいてください。 この例では、3番が該当します。 ウィンドウのサイズも320x240に合わせます。 ちなみに、フレームレート（fps）は、1秒間に更新される画像（フレーム）数を意味しています。 つまり、フレームレートが高いほど、滑らかな動画となります。
+[0] name=FULL HD 1080P Webcam,size=640x480,fps=30 [1] name=FULL HD 1080P Webcam,size=160x120,fps=30 [2] name=FULL HD 1080P Webcam,size=176x144,fps=30 [3] name=FULL HD 1080P Webcam,size=320x240,fps=30 [4] name=FULL HD 1080P Webcam,size=352x288,fps=30 [5] name=FULL HD 1080P Webcam,size=640x360,fps=30 [6] name=FULL HD 1080P Webcam,size=800x600,fps=30 [7] name=FULL HD 1080P Webcam,size=960x720,fps=30 [8] name=FULL HD 1080P Webcam,size=1024x576,fps=30 [9] name=FULL HD 1080P Webcam,size=1280x720,fps=30 次に、Captureクラスのインスタンスcamを下記のように初期化します。 引数には先程確認したカメラ番号を指定することに注意してください。 start()関数を呼び出すことで、カメラ映像の取得を開始します。" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/edffebcb2d7e3c361509dab7b6f2b8bb.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">カメラ映像の表示</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/edffebcb2d7e3c361509dab7b6f2b8bb"><img src="https://i.gyazo.com/edffebcb2d7e3c361509dab7b6f2b8bb.png" alt="https://gyazo.com/edffebcb2d7e3c361509dab7b6f2b8bb" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  スケッチの作成
+</h1>
+
+
+<p>Processingを起動して、新規にスケッチを保存しましょう。
+メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。
+ファイル名に「Project10」を入力し、[保存]をクリックしましょう。
+保存先に「Project10」という名前のフォルダが作成されていることを確認してください。</p>
+
+<p><a href="https://gyazo.com/a998688ddfc325db6e1d20982c4c1b36"><img src="https://i.gyazo.com/a998688ddfc325db6e1d20982c4c1b36.png" alt="https://gyazo.com/a998688ddfc325db6e1d20982c4c1b36" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Videoライブラリの導入
+</h1>
+
+
+<p>Processingでは<strong>Videoライブラリ</strong>を導入することで、
+カメラからの映像をウィンドウに表示することができるようになります。
+まずは、メニューから[スケッチ]-[ライブラリをインポート]-[ライブラリを追加]をクリックして、
+「Contribution Manager」を開きます。
+ここで、<strong>video</strong>をキーワードに検索すると、
+「<strong>Video|GStreamer-based video library for Processing</strong>」が表示されるので、
+このライブラリを選択してインストールしましょう。</p>
+
+<p><a href="https://gyazo.com/5ea11e24d42f92a343a2d51499018eeb"><img src="https://i.gyazo.com/5ea11e24d42f92a343a2d51499018eeb.png" alt="https://gyazo.com/5ea11e24d42f92a343a2d51499018eeb" /></a></p>
+
+<p>次に、[スケッチ]-[ライブラリをインポート]-[Video]をクリックして、
+Videoライブラリをインポート（プログラムで利用可能な状態にすること）します。
+ソースコードの１行目に「<strong>import processing.video.*;</strong>」と表示されていることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/461200e7f5f3d08be8b0a4a30ba6daeb.js"></script>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  カメラ映像の表示
+</h1>
+
+
+<p>カメラから入力した映像は<strong>Capture</strong>クラスを利用します。
+まずは、<strong>setup()</strong>関数において、<strong>Capture</strong>クラスの<strong>list()</strong>関数を呼び出し、
+利用可能なカメラの一覧を<strong>String</strong>型の配列で取得します。
+これをコンソールに出力し、利用可能なカメラの種類を確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/92ba7be251dc415f8268bfae16a1538b.js"></script>
+
+<p>例えば、コンソールには下記のような一覧が表示されます。
+この中から、<strong>サイズ（size）</strong>が<strong>320x240</strong>となっているカメラ番号を覚えておいてください。
+この例では、<strong>3</strong>番が該当します。
+ウィンドウのサイズも<strong>320x240</strong>に合わせます。
+ちなみに、<strong>フレームレート（fps）</strong>は、1秒間に更新される画像（フレーム）数を意味しています。
+つまり、フレームレートが高いほど、滑らかな動画となります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">[0] name=FULL HD 1080P Webcam,size=640x480,fps=30
+[1] name=FULL HD 1080P Webcam,size=160x120,fps=30
+[2] name=FULL HD 1080P Webcam,size=176x144,fps=30
+[3] name=FULL HD 1080P Webcam,size=320x240,fps=30
+[4] name=FULL HD 1080P Webcam,size=352x288,fps=30
+[5] name=FULL HD 1080P Webcam,size=640x360,fps=30
+[6] name=FULL HD 1080P Webcam,size=800x600,fps=30
+[7] name=FULL HD 1080P Webcam,size=960x720,fps=30
+[8] name=FULL HD 1080P Webcam,size=1024x576,fps=30
+[9] name=FULL HD 1080P Webcam,size=1280x720,fps=30</code></pre></div>
+<p>次に、<strong>Capture</strong>クラスのインスタンスcamを下記のように初期化します。
+引数には先程確認したカメラ番号を指定することに注意してください。
+<code>start()</code>関数を呼び出すことで、カメラ映像の取得を開始します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">cam <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Capture<span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> cameras<span style="color:#f92672">[</span>3<span style="color:#f92672">]);</span>
+cam<span style="color:#f92672">.</span><span style="color:#a6e22e">start</span><span style="color:#f92672">();</span></code></pre></div>
+<p>下記のコードを参考に、カメラ映像をウィンドウに表示してみましょう。
+<code>draw()</code>関数では、カメラが利用可能な状態であることを確認してから、
+<code>read()</code>関数で現在のフレーム（画像）を取得しています。
+Runボタンをクリックすると、ウィンドウにカメラ映像が表示されることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/098a6e59500c3836ffbc083680f2ef0b.js"></script>
+
+<p><a href="https://gyazo.com/ced8da66a6be46e25b6120a8d3067902"><img src="https://i.gyazo.com/ced8da66a6be46e25b6120a8d3067902.gif" alt="https://gyazo.com/ced8da66a6be46e25b6120a8d3067902" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  リアルタイム画像処理
+</h1>
+
+
+<p><code>draw())</code>関数で<code>filter()</code>関数を呼び出して、
+表示されている映像に様々な効果を与えてみましょう。
+ここでは、<strong>２値化（THRESHOLD）</strong>、<strong>グレースケール（GRAY）</strong>、
+<strong>ネガポジ反転（INVERT）</strong>を試してみます。</p>
+
+<p><strong>２値化（THRESHOLD）</strong>を適用してみましょう。
+２値化とは黒または白の２色で画像を表示する方法です。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+映像が２値化されていることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/5ce77161999c7c730cc08c4642c47eef.js"></script>
+
+<p><a href="https://gyazo.com/55a440c86f305b76dedd266a1fac1067"><img src="https://i.gyazo.com/55a440c86f305b76dedd266a1fac1067.gif" alt="https://gyazo.com/55a440c86f305b76dedd266a1fac1067" /></a></p>
+
+<p><strong>グレースケール（GRAY）</strong>を適用してみましょう。
+グレースケールとはモノクロで画像を表示する方法です。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+映像がグレースケールになっていることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/9d511d3874b0047652f069a9a0f4c10d.js"></script>
+
+<p><a href="https://gyazo.com/71cc062732ba08a84e51f4851231d1d6"><img src="https://i.gyazo.com/71cc062732ba08a84e51f4851231d1d6.gif" alt="https://gyazo.com/71cc062732ba08a84e51f4851231d1d6" /></a></p>
+
+<p><strong>ネガポジ反転（INVERT）</strong>を適用してみましょう。
+ネガポジ反転とは色相が正反対の補色で画像を表示する方法です。
+下記を参考にコードを入力したら、Runボタンをクリックしてください。
+映像がネガポジ反転になっていることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/ca56f6fc969d3e511adadd238191fa15.js"></script>
+
+<p><a href="https://gyazo.com/c7e70a238362f8bb11518f7ddc3d91c1"><img src="https://i.gyazo.com/c7e70a238362f8bb11518f7ddc3d91c1.gif" alt="https://gyazo.com/c7e70a238362f8bb11518f7ddc3d91c1" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>下記コードを参考に<strong>背景差分</strong>に挑戦しましょう。
+背景差分とは、「事前に取得しておいた画像」と「現在の画像」を比較することで、
+「事前に取得した画像」とは異なる画素を抽出する処理のことです。
+まず、ウィンドウ内でマウスをクリックしたときに背景用の画像を取得し、変数bgに代入します。
+変数bgが空（null）でなければ、カメラ映像と背景画像の<strong>モノクロ成分（輝度）の差</strong>を計算し、
+その差が<strong>閾値30</strong>を超える場合は、画素を赤色に設定します。</p>
+
+<p>課題が完成したら、作成したスケッチを<strong>ZIPアーカイブ</strong>形式で保存します。
+ZIPアーカイブを作成するには、メニューから[ツール]-[スケッチをアーカイブ]をクリックして、「スケッチを名前を付けてアーカイブする」を開きます。
+保存するファイル名を確認した上で、[保存]をクリックします。
+保存先に「Project10-日付a.zip」というファイルが作成されていることを確認してください。</p>
+
+<script type="application/javascript" src="//gist.github.com/naoto-github/c42a1c7a563b8a70f9706bf6f01626fc.js"></script>
+
+<p><a href="https://gyazo.com/2f4b6156a8f70a7c41c114c003999b9c"><img src="https://i.gyazo.com/2f4b6156a8f70a7c41c114c003999b9c.gif" alt="https://gyazo.com/2f4b6156a8f70a7c41c114c003999b9c" /></a></p>
+
+<h3>参考書籍</h3>
+
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4873115159" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4877832939" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/programming_1/chapter10/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:02.7620688 &#43;0900 JST m=&#43;2.973066101">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

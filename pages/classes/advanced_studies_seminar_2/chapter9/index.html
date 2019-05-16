@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    標準正規分布を用いた検定 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  
+  
+  
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="標準正規分布を用いた検定" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter9/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/bd7321b2a514a99661b8d6b725d59671.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="検定とは -- t検定とは検定とは「標本から推定された母数が，確率的に正しいかどうか」を判断することを意味します． 検定は，統計的仮説検定とも呼ばれ，推測統計でも利用頻度の高い重要なテクニックです． 検定を行うための手順は下記のようになります．
+1．母数に関する帰無仮説と対立仮説を立てる．
+2. 検定統計量を選択する．
+3. 信頼区間（棄却域）を決める．
+4. 標本から検定統計量を計算する．
+5. 検定統計量が棄却域に含まれれば，帰無仮説を棄却して，対立仮説を採用する．棄却域に含まれなければ，帰無仮説を採択する．
+難しい単語がたくさん出てきましたが，これは追々説明していきます． ここでは，母集団が正規分布であり，母平均，母分散が既知であるときに適用可能な標準正規分布を用いた検定を考えます． この，標準正規分布を用いた検定 は Z検定 とも呼ばれます．
+スクリプトの作成 -- スクリプトの作成コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter9としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+検定の目的 -- 検定の目的まずは下記の具体例を考えていきましょう．
+文化情報学部の学生Xに情報数学に関するテストを行ったところ， その得点の平均\hat{\mu}は60， 分散\hat{\sigma}^2は100であった． このうち，向研究室に所属する5人の学生xの得点は下記であった． 向研究室に所属する学生xは， 文化情報学部の学生Xと， 同様の傾向があるか（母集団からランダムサンプリングした学生だろうか）． x = \{63,75,72,67,71\}   母集団は「文化情報学部の学生X」， 標本は「向研究室に所属する学生x」と考えることができます． また，「標本平均の分布」をmとします． いずれも正規分布に従うと仮定すると，母集団の分布と，標本平均の分布は下記のようになります．
+X \sim N(60,100)  m \sim N(60,100/5) = N(60,20)  ここで，標本の平均を求めてみましょう．
+x &lt;- c(63,75,72,67,71) &gt; mean(x) [1] 69." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="標準正規分布を用いた検定" />
+
+
+
+  <meta name="twitter:description" content="検定とは -- t検定とは検定とは「標本から推定された母数が，確率的に正しいかどうか」を判断することを意味します． 検定は，統計的仮説検定とも呼ばれ，推測統計でも利用頻度の高い重要なテクニックです． 検定を行うための手順は下記のようになります．
+1．母数に関する帰無仮説と対立仮説を立てる．
+2. 検定統計量を選択する．
+3. 信頼区間（棄却域）を決める．
+4. 標本から検定統計量を計算する．
+5. 検定統計量が棄却域に含まれれば，帰無仮説を棄却して，対立仮説を採用する．棄却域に含まれなければ，帰無仮説を採択する．
+難しい単語がたくさん出てきましたが，これは追々説明していきます． ここでは，母集団が正規分布であり，母平均，母分散が既知であるときに適用可能な標準正規分布を用いた検定を考えます． この，標準正規分布を用いた検定 は Z検定 とも呼ばれます．
+スクリプトの作成 -- スクリプトの作成コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter9としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+検定の目的 -- 検定の目的まずは下記の具体例を考えていきましょう．
+文化情報学部の学生Xに情報数学に関するテストを行ったところ， その得点の平均\hat{\mu}は60， 分散\hat{\sigma}^2は100であった． このうち，向研究室に所属する5人の学生xの得点は下記であった． 向研究室に所属する学生xは， 文化情報学部の学生Xと， 同様の傾向があるか（母集団からランダムサンプリングした学生だろうか）． x = \{63,75,72,67,71\}   母集団は「文化情報学部の学生X」， 標本は「向研究室に所属する学生x」と考えることができます． また，「標本平均の分布」をmとします． いずれも正規分布に従うと仮定すると，母集団の分布と，標本平均の分布は下記のようになります．
+X \sim N(60,100)  m \sim N(60,100/5) = N(60,20)  ここで，標本の平均を求めてみましょう．
+x &lt;- c(63,75,72,67,71) &gt; mean(x) [1] 69." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/bd7321b2a514a99661b8d6b725d59671.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+</div>
+
+    <h1 class="post-title">標準正規分布を用いた検定</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/bd7321b2a514a99661b8d6b725d59671"><img src="https://i.gyazo.com/bd7321b2a514a99661b8d6b725d59671.png" alt="https://gyazo.com/bd7321b2a514a99661b8d6b725d59671" /></a></p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">検定とは -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  t検定とは
+</h1>
+
+
+<p><strong>検定</strong>とは「標本から推定された母数が，確率的に正しいかどうか」を判断することを意味します．
+検定は，<strong>統計的仮説検定</strong>とも呼ばれ，推測統計でも利用頻度の高い重要なテクニックです．
+検定を行うための手順は下記のようになります．</p>
+
+<p>1．母数に関する<strong>帰無仮説</strong>と<strong>対立仮説</strong>を立てる．<br />
+2. <strong>検定統計量</strong>を選択する．<br />
+3. <strong>信頼区間（棄却域）</strong>を決める．<br />
+4. 標本から検定統計量を計算する．<br />
+5. 検定統計量が棄却域に含まれれば，帰無仮説を<strong>棄却</strong>して，対立仮説を<strong>採用</strong>する．棄却域に含まれなければ，帰無仮説を<strong>採択</strong>する．</p>
+
+<p>難しい単語がたくさん出てきましたが，これは追々説明していきます．
+ここでは，母集団が正規分布であり，母平均，母分散が既知であるときに適用可能な<strong>標準正規分布を用いた検定</strong>を考えます．
+この，<strong>標準正規分布を用いた検定</strong> は <strong>Z検定</strong> とも呼ばれます．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スクリプトの作成 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  スクリプトの作成
+</h1>
+
+
+<p>コードを入力し保存するための<strong>スクリプト</strong>を作成しましょう．
+[ファイル]-[新しいスクリプト]をクリックし，<strong>Rエディタ</strong>を表示します．
+次に，[ファイル]-[保存]をクリックして，スクリプトを保存します．
+このとき，ファイル名は<strong>chapter9</strong>としてください．
+また，ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">検定の目的 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  検定の目的
+</h1>
+
+
+<p>まずは下記の具体例を考えていきましょう．</p>
+
+<div style="border:1px solid black;margin-bottom:5px">
+
+文化情報学部の学生<script type="math/tex">X</script>に情報数学に関するテストを行ったところ，
+その得点の平均<script type="math/tex">\hat{\mu}</script>は60，
+分散<script type="math/tex">\hat{\sigma}^2</script>は100であった．
+このうち，向研究室に所属する5人の学生<script type="math/tex">x</script>の得点は下記であった．
+向研究室に所属する学生<script type="math/tex">x</script>は，
+文化情報学部の学生<script type="math/tex">X</script>と，
+同様の傾向があるか（母集団からランダムサンプリングした学生だろうか）．
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        x = \{63,75,72,67,71\}
+    </script>
+</p>
+
+</div>
+
+<p>母集団は「文化情報学部の学生<script type="math/tex">X</script>」，
+標本は「向研究室に所属する学生<script type="math/tex">x</script>」と考えることができます．
+また，「標本平均の分布」を<script type="math/tex">m</script>とします．
+いずれも正規分布に従うと仮定すると，母集団の分布と，標本平均の分布は下記のようになります．</p>
+
+<p style="text-align:center">
+    <script type="math/tex">
+    X \sim N(60,100)
+    </script>
+</p>
+
+<p style="text-align:center">
+    <script type="math/tex">
+    m \sim N(60,100/5) = N(60,20)
+    </script>
+</p>
+
+<p>ここで，標本の平均を求めてみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>(<span style="color:#ae81ff">63</span>,<span style="color:#ae81ff">75</span>,<span style="color:#ae81ff">72</span>,<span style="color:#ae81ff">67</span>,<span style="color:#ae81ff">71</span>)
+<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">mean</span>(x)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">69.6</span></code></pre></div>
+<p>標本平均は69.6点とかなり高得点です．
+これは，どのくらい珍しいことなのでしょうか．
+標本平均の分布のグラフで確認してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> curve(dnorm(x,<span style="color:#ae81ff">60</span>,<span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">20</span>)),from<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>,to<span style="color:#f92672">=</span><span style="color:#ae81ff">90</span>)</code></pre></div>
+<p><a href="https://gyazo.com/2b42b5e10118f35bd5188e237eaca866"><img src="https://i.gyazo.com/2b42b5e10118f35bd5188e237eaca866.png" alt="https://gyazo.com/2b42b5e10118f35bd5188e237eaca866" /></a></p>
+
+<p>グラフを確認すると，標本平均が69.6点以上になる確率は，非常に低いことが分かります．
+<strong>pnorm</strong>関数を利用して，標本平均が69.6点以上になる確率を計算してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>pnorm(<span style="color:#ae81ff">69.6</span>,<span style="color:#ae81ff">60</span>,<span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">20</span>))
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">0.01591156</span></code></pre></div>
+<p>よって，母集団からランダムサンプリングで抽出した標本の
+平均が69.6点以上になる確率は <strong>約1.6%</strong> という結果になりました．
+これは，「向研究室の学生は母集団とは異なる傾向を持っている」ということを意味します．
+ようするに凄く優秀な学生が向研究室に集まっているということです（本当にこうなるといいなぁ）．</p>
+
+<p>上記が検定の基本的な考え方です．
+ここでは，検定に平均60，分散20の正規分布を利用しましたが，
+平均0，分散1の標準正規分布を用いるのが <strong>Z検定</strong> です．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">Z検定 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Z検定
+</h1>
+
+
+<p>上記の問題を <strong>Z検定</strong> で考えていきましょう．
+まずは，<strong>帰無仮説</strong> と <strong>対立仮説</strong> を立てます．</p>
+
+<ul>
+<li>帰無仮説：標本（向研究室に所属する学生）の母平均<script type="math/tex">\hat{\mu}</script>は60である</li>
+<li>対立仮説：標本（向研究室に所属する学生）の母平均<script type="math/tex">\hat{\mu}</script>は60ではない</li>
+</ul>
+
+<p>対立仮説が証明したい仮説であり，帰無仮説は本来証明したいことと逆の仮説になります．
+ここで，帰無仮説を正しいとすると，ありえない事象が起こっているとすれば，
+帰無仮説は<strong>棄却</strong>され，対立仮説が<strong>採択</strong>されることになります．</p>
+
+<p>次に，<strong>検定統計量</strong> を選択しますが，
+ここではZ検定の検定統計量である<strong>Zスコア</strong>を利用します．
+Zスコアに関しては，後程，詳しく説明します．</p>
+
+<p>次に，<strong>信頼度(棄却域)</strong> を定めます．
+これは，どの程度低い確率で事象が起こっていれば，帰無仮説を棄却するかを示す値です．
+一般的には，「<strong>95%信頼度（5%棄却域）</strong>」，「<strong>99%信頼度（1%棄却域）</strong>」が用いられます．
+ここでは，「95%信頼度（5%棄却域）」を用いることにしましょう．</p>
+
+<p>それでは，検定統計量であるZスコアを計算してみましょう．
+Zスコアは下記の式で求めます．
+この式は対象の分布を標準化しているにすぎません．
+標準化とは<strong>平均を0</strong>，<strong>分散（標準偏差）を1</strong>にすることを意味します．</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        Z = \frac{\mu - \hat{\mu}}{\sigma}
+    </script>
+</p>
+
+<ul>
+<li>標本平均<script type="math/tex">\mu=69.6</script><br /></li>
+<li>標本平均の標準偏差<script type="math/tex">\sigma=\sqrt{20}</script><br /></li>
+<li>母集団の平均<script type="math/tex">\hat{\mu}=60</script><br /></li>
+</ul>
+
+<p>このとき，標本平均の標準偏差<script type="math/tex">\sigma</script>は
+下記の式で求められることに注意してください．</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        \sigma = \sqrt{ \hat{\sigma}^2 / n }
+    </script>
+</p>
+
+<ul>
+<li>母集団の標準偏差<script type="math/tex">\hat{\sigma}=10</script><br /></li>
+<li>標本のサンプル数<script type="math/tex">n=5</script><br /></li>
+</ul>
+
+<p>上記の式を基にZスコアを計算します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> z <span style="color:#f92672">&lt;-</span> (<span style="color:#ae81ff">69.6</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">60</span>)<span style="color:#f92672">/</span> <span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">20</span>)
+<span style="color:#f92672">&gt;</span> z
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">2.146625</span></code></pre></div>
+<p>Zスコアは<strong>2.14</strong>という結果になりました．
+標準正規分布を利用して，このZスコアが棄却域に含まれるかを確認しましょう．
+ここでは，5%棄却域を採用するため，<strong>下側確率</strong> が<strong>0.025</strong>，
+<strong>上側確率</strong> が <strong>0.975</strong>となるZスコアを探します．
+Zスコア（標準正規分布のパーセント点）を求めるには<strong>qnorm</strong>関数を利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> qnorm(<span style="color:#ae81ff">0.025</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">-1.959964</span>
+<span style="color:#f92672">&gt;</span> qnorm(<span style="color:#ae81ff">0.975</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">1.959964</span></code></pre></div>
+<p>上記より，<strong>z&lt;-1.96</strong>，また，<strong>z&gt;1.96</strong> となる確率は5%ということが分かります．
+これは，下図の左端と右端のグレーの範囲を表しています．</p>
+
+<p><a href="https://gyazo.com/6291dddb4d5a907e64949ff532440735"><img src="https://i.gyazo.com/6291dddb4d5a907e64949ff532440735.png" alt="https://gyazo.com/6291dddb4d5a907e64949ff532440735" /></a></p>
+
+<p>今回の標本のZスコアは<strong>2.14</strong>だったため，棄却域に含まれ，その確率は5%以下であるということが分かります．
+よって，帰無仮説（向研究室に所属する学生の母平均は60である）は棄却され，
+対立仮説（向研究室に所属する学生の母平均は60ではない）が採択されます．
+結果として，先程と同様に，「向研究室の学生は母集団とは異なる傾向を持っている（母集団からランダムサンプリングした標本ではない）」という結論が導かれます．
+また，このときの母平均<script type="math/tex">\mu</script>の95％信頼度の信頼区間は，下記のように求めることができます．</p>
+
+<p style="text-align:center;">
+    <script type="math/tex">
+        -1.96 < \frac{69.6 - \mu}{\sqrt{20}} < 1.96 = 60.83 < \mu < 78.36
+    </script>
+</p>
+
+<p>これは，「真の母集団から標本を抽出すると，95%の確率で信頼区間（今回は63.81～75.38）に，<strong>真の母平均</strong> が含まれる」ということを意味しています．
+帰無仮説が棄却されたことから，標本は<script type="math/tex">\hat{\mu} \neq 60</script>の真の母集団から抽出されたはずです．
+つまり，「この真の母集団の平均（母平均）が，この信頼区間にあるだろう」という意味です．
+よく分かりませんよね．
+詳しくは滋賀大学の<a href="http://www.biwako.shiga-u.ac.jp/sensei/mnaka/ut/confidenceinterval.html">中川雅央先生の解説</a>を確認しましょう．</p>
+
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>向研究室の学生の得点が{65,55,52,45,51}だったときの<strong>Zスコア</strong>を求めなさい．
+また，<strong>検定</strong>を用いて，「95%信頼度（5%棄却域）」のときに，
+「帰無仮説：標本の母平均<script type="math/tex">\hat{\mu}</script>は60である」は棄却されるか調べ，そのときの母平均の信頼区間も求めなさい．
+ソースは<strong>chapter9.R</strong>に記述して提出すること．</p>
+
+<h3>参考書籍</h3>
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274067106&linkId=93d694711dbe1bcddf54d4dbceaa6634&bc1=F8F8F8&lt1=_blank&fc1=333333&lc1=0066C0&bg1=F8F8F8&f=ifr"></iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4863542011&linkId=92f9b82cf210ae3681f8c607eae4ac8a&bc1=F8F8F8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=F8F8F8&f=ifr"></iframe>
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter9/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-16 18:17:03.1380353 &#43;0900 JST m=&#43;3.349032501">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
