@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Pythonの基本 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="Pythonの基本" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter2/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/cc8854ed5b02df08b8301cf41b1325da.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="PythonとはPython はオランダ出身のプログラマーGuido Van Rossum氏が1991年に開発したプログラミング言語です． C言語やJavaに比べ，文法がシンプルであり，高い可読性を持っています． 例えば，多くのプログラミング言語では，コードの固まり（ブロック）を {}（中括弧） で表現することが多くあります． 一方，Pythonでは，字下げ（インデント） を利用して，ブロックを表現します． また，本授業でテーマとなっている機械学習など，豊富なライブラリが利用可能であり， パッケージ管理ツール（Anacondaなど）を利用して，手軽に導入可能という特徴もあります． コーディング，実行，デバッグ という一連のプロセスも簡単であり， 手を動かしながら学ぶには最適なプログラミング言語と言えるでしょう． 今回は，強化学習を学ぶ前準備として，Python の基本的な文法について学びます．
+ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook2 とします． ノートブックの作成方法は第１回の資料を参照してください．
+
+四則演算一般的な四則演算が利用可能です． セルに加算（&#43;），減算（-），乗算（*），除算（/），剰余（%），累乗（**）を入力して，結果を確認してみましょう． 乗算・除算などは，我々が通常用いている$\times$や$\div$などの演算子とは異なることに注意してください．
+   演算 演算子 例     加算 &#43; 3 &#43; 2 -&gt; 5   減算 - 3 - 2 -&gt; 1   乗算 * 3 * 2 -&gt; 6   除算 / 3 / 2 -&gt; 1." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Pythonの基本" />
+
+
+
+  <meta name="twitter:description" content="PythonとはPython はオランダ出身のプログラマーGuido Van Rossum氏が1991年に開発したプログラミング言語です． C言語やJavaに比べ，文法がシンプルであり，高い可読性を持っています． 例えば，多くのプログラミング言語では，コードの固まり（ブロック）を {}（中括弧） で表現することが多くあります． 一方，Pythonでは，字下げ（インデント） を利用して，ブロックを表現します． また，本授業でテーマとなっている機械学習など，豊富なライブラリが利用可能であり， パッケージ管理ツール（Anacondaなど）を利用して，手軽に導入可能という特徴もあります． コーディング，実行，デバッグ という一連のプロセスも簡単であり， 手を動かしながら学ぶには最適なプログラミング言語と言えるでしょう． 今回は，強化学習を学ぶ前準備として，Python の基本的な文法について学びます．
+ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook2 とします． ノートブックの作成方法は第１回の資料を参照してください．
+
+四則演算一般的な四則演算が利用可能です． セルに加算（&#43;），減算（-），乗算（*），除算（/），剰余（%），累乗（**）を入力して，結果を確認してみましょう． 乗算・除算などは，我々が通常用いている$\times$や$\div$などの演算子とは異なることに注意してください．
+   演算 演算子 例     加算 &#43; 3 &#43; 2 -&gt; 5   減算 - 3 - 2 -&gt; 1   乗算 * 3 * 2 -&gt; 6   除算 / 3 / 2 -&gt; 1." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/cc8854ed5b02df08b8301cf41b1325da.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-05-29 12:51:03 &#43;0900 JST">May 29, 2019</time>
+</div>
+
+    <h1 class="post-title">Pythonの基本</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/cc8854ed5b02df08b8301cf41b1325da"><img src="https://i.gyazo.com/cc8854ed5b02df08b8301cf41b1325da.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Pythonとは
+</h1>
+
+
+<p><strong>Python</strong> はオランダ出身のプログラマー<a href="https://twitter.com/gvanrossum">Guido Van Rossum</a>氏が1991年に開発したプログラミング言語です．
+C言語やJavaに比べ，文法がシンプルであり，高い可読性を持っています．
+例えば，多くのプログラミング言語では，コードの固まり（ブロック）を <strong>{}（中括弧）</strong> で表現することが多くあります．
+一方，Pythonでは，<strong>字下げ（インデント）</strong> を利用して，ブロックを表現します．
+また，本授業でテーマとなっている機械学習など，豊富なライブラリが利用可能であり，
+パッケージ管理ツール（Anacondaなど）を利用して，手軽に導入可能という特徴もあります．
+<strong>コーディング</strong>，<strong>実行</strong>，<strong>デバッグ</strong> という一連のプロセスも簡単であり，
+手を動かしながら学ぶには最適なプログラミング言語と言えるでしょう．
+今回は，強化学習を学ぶ前準備として，<strong>Python</strong> の基本的な文法について学びます．</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ノートブックの作成
+</h1>
+
+
+<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>Notebook2</strong> とします．
+ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．</p>
+
+<p><a href="https://gyazo.com/11434ec5907994499463001a0c75b412"><img src="https://i.gyazo.com/11434ec5907994499463001a0c75b412.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  四則演算
+</h1>
+
+
+<p>一般的な四則演算が利用可能です．
+セルに加算（+），減算（-），乗算（*），除算（/），剰余（%），累乗（**）を入力して，結果を確認してみましょう．
+乗算・除算などは，我々が通常用いている$\times$や$\div$などの演算子とは異なることに注意してください．</p>
+
+<table>
+<thead>
+<tr>
+<th>演算</th>
+<th>演算子</th>
+<th>例</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>加算</td>
+<td>+</td>
+<td>3 + 2 -&gt; 5</td>
+</tr>
+
+<tr>
+<td>減算</td>
+<td>-</td>
+<td>3 - 2 -&gt; 1</td>
+</tr>
+
+<tr>
+<td>乗算</td>
+<td>*</td>
+<td>3 * 2 -&gt; 6</td>
+</tr>
+
+<tr>
+<td>除算</td>
+<td>/</td>
+<td>3 / 2 -&gt; 1.5</td>
+</tr>
+
+<tr>
+<td>剰余</td>
+<td>%</td>
+<td>3 % 2 -&gt; 1</td>
+</tr>
+
+<tr>
+<td>累乗</td>
+<td>**</td>
+<td>3 ** 2 -&gt; 9</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">3</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">3</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">3</span> <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span></code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">5</span>
+<span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">6</span>
+<span style="color:#ae81ff">1.5</span>
+<span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">9</span></code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  変数
+</h1>
+
+
+<p>数値や文字列を記憶するための <strong>変数</strong> を用いることができます．
+変数名は，アルファベット，数字，アンダーバー（ _ ）で構成します（大文字と小文字は区別されます）．
+Pythonでは，明示的に変数の <strong>データ型</strong> を宣言する必要はありません．
+代入される値に応じて，自動的に変数の <strong>データ型</strong> が確定します（ <strong>型推論</strong> と呼ばれます）．
+データ型を確認するには，<strong>type</strong> 関数を用います．
+下記のように4つの変数x，y，z，fを定義してみましょう．
+変数に代入されている値を確認するには，単に変数名だけを入力すればOKです（もちろん <strong>print</strong> 関数を用いても良い）．</p>
+
+<table>
+<thead>
+<tr>
+<th>種類</th>
+<th>データ型</th>
+<th>例</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>整数</td>
+<td>int</td>
+<td>1, 10, 100</td>
+</tr>
+
+<tr>
+<td>実数</td>
+<td>float</td>
+<td>0.1, 1.1, 10.1</td>
+</tr>
+
+<tr>
+<td>文字列</td>
+<td>str</td>
+<td>&ldquo;abc&rdquo;, &ldquo;あいう&rdquo;</td>
+</tr>
+
+<tr>
+<td>真理値</td>
+<td>bool</td>
+<td>True, False</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># int</span>
+type(x)
+y <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#75715e"># float</span>
+type(y)
+z <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;abc&#34;</span> <span style="color:#75715e"># str</span>
+type(z)
+f <span style="color:#f92672">=</span> True <span style="color:#75715e"># bool</span>
+type(f)
+x <span style="color:#75715e"># xに代入されている値を出力</span>
+y <span style="color:#75715e"># yに代入されている値を出力</span>
+x <span style="color:#f92672">+</span> y <span style="color:#75715e"># 加算</span>
+x <span style="color:#f92672">*</span> y <span style="color:#75715e"># 乗算</span></code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">int
+float
+str
+bool
+<span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">0.5</span>
+<span style="color:#ae81ff">2.5</span>
+<span style="color:#ae81ff">1</span></code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  リストとタプル
+</h1>
+
+
+<p>複数のデータをまとめて扱う場合は，<strong>リスト</strong> または <strong>タプル</strong> を用います．
+リストは値を書き換えることが出来ますが，タプルでは書き換えが出来ないという特徴があります．
+リストとタプルの要素には，要素番号を用いて参照します．
+このとき，要素番号は <strong>0</strong> から始まることに注意してください．
+配列の長さは <strong>len</strong> 関数で得ることができます．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>] <span style="color:#75715e"># リスト</span>
+x
+x[<span style="color:#ae81ff">2</span>]
+x[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>
+x
+y <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># タプル</span>
+y
+y[<span style="color:#ae81ff">1</span>]
+y[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span> <span style="color:#75715e"># エラー</span>
+len(x) <span style="color:#75715e"># リストxの長さ</span>
+len(y) <span style="color:#75715e"># タプルyの長さ</span></code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
+<span style="color:#ae81ff">3</span>
+[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
+(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
+<span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">5</span>
+<span style="color:#ae81ff">3</span></code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  if文
+</h1>
+
+
+<p>条件に応じて処理を分岐させるときには <strong>if文</strong> を用います．
+条件は <code>==</code>，<code>&gt;</code>，<code>&gt;=</code> などの <strong>比較演算子</strong> で表現されます．
+例えば， <strong>xは正の値</strong> という条件を表現するには，<code>x &gt; 0</code>と記述します．
+また，多くのプログラミング言語では，<strong>{}（中括弧）</strong> でブロックを表現しますが，
+Pythonでは，<strong>字下げ（インデント）</strong> を利用することに注意してください（字下げ（インデント）するには <strong>タブ・キー</strong> を入力します）．
+<strong>else</strong> は省略することも出来ます．</p>
+
+<table>
+<thead>
+<tr>
+<th>比較演算子</th>
+<th>意味</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>a==b</code></td>
+<td>aとbは等しい</td>
+</tr>
+
+<tr>
+<td><code>a!=b</code></td>
+<td>aとbは異なる</td>
+</tr>
+
+<tr>
+<td><code>a&gt;b</code></td>
+<td>aはbより大きい</td>
+</tr>
+
+<tr>
+<td><code>a&gt;=b</code></td>
+<td>aはb以上</td>
+</tr>
+
+<tr>
+<td><code>a&lt;b</code></td>
+<td>aはbより小さい</td>
+</tr>
+
+<tr>
+<td><code>a&lt;=b</code></td>
+<td>aはb以下</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#75715e"># 正の値を代入</span>
+<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+  <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは正の値&#34;</span>)
+<span style="color:#66d9ef">else</span>:
+  <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは0または負の値&#34;</span>)
+
+x <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#75715e"># 負の値を代入</span>
+<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+  <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは正の値&#34;</span>)
+<span style="color:#66d9ef">else</span>:
+  <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは0または負の値&#34;</span>)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">xは正の値
+xは0または負の値</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  for文
+</h1>
+
+
+<p>特定の処理を繰り返し行うときには <strong>for文</strong> を用います．
+繰り返しの条件は <strong>リスト</strong> で表現するという特徴があります．
+また，<strong>リスト</strong> の代わりに，<strong>range</strong> 関数を用いることも可能です．
+例えば，<code>range(3)</code>と記述すると，<code>[0, 1, 2]</code>と同じ結果を得ます．
+ブロックは <strong>if文</strong> と同様に <strong>字下げ（インデント）</strong> で表現します．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> [<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>]: <span style="color:#75715e"># リストで繰り返し</span>
+  <span style="color:#66d9ef">print</span>(i)
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>): <span style="color:#75715e"># range関数で繰り返し</span>
+  <span style="color:#66d9ef">print</span>(i)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">0</span>
+<span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">0</span>
+<span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">2</span></code></pre></div>
+<p><h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+range関数を利用して，変数iを1から40まで変化させ，その値が3の倍数のときだけ出力しなさい（変数iは0からではないことに注意）．
+また，作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+
+<p><a href="https://gyazo.com/b54d86a2d0161bfcce82ef0efd058522"><img src="https://i.gyazo.com/b54d86a2d0161bfcce82ef0efd058522.png" alt="Image from Gyazo" /></a></p>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274222446&linkId=1a63210b6dc95e90156695289116cb1b&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B078767Y56&linkId=cd73876214aec3d9b72777ab73920051&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4802611641&linkId=e77970ab2740fac9fdeb8b877668c257&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4839963525&linkId=14f05f671ddd917b204596b6b535981e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter2/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-05-30 19:55:28.7234564 &#43;0900 JST m=&#43;1.530145701">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
