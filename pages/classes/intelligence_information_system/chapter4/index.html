@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    回帰分析②・最急降下法 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="回帰分析②・最急降下法" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter4/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/1d11800d6ff0e9c08574623da07440ad.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="解析解と数値解前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
+回帰式のパラメータ（$a$と$b$のこと）を求める方法には２通りあり， 方程式を解くことによって得られる厳密な解を 解析解， 繰り返しの計算によって得られる近似的な解を 数値解 と呼びます． 特定の処理を繰り返すことが得意なコンピュータでは， 後者の 数値解 と求める方法が良く用いられます． ここでは，数値解を求めるための最もシンプルな方法である 最急降下法（Steepest Descent Method） について学びます．
+ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook4 とします． ノートブックの作成方法は第１回の資料を参照してください．
+
+最急降下法最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
+データ 対象とするデータは前回と同じ，気温 と アイスクリーム のデータを用います． いずれも，numpyのndarray型でリストを作成しておきます．
+import numpy as np x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気温 y = np." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="回帰分析②・最急降下法" />
+
+
+
+  <meta name="twitter:description" content="解析解と数値解前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
+回帰式のパラメータ（$a$と$b$のこと）を求める方法には２通りあり， 方程式を解くことによって得られる厳密な解を 解析解， 繰り返しの計算によって得られる近似的な解を 数値解 と呼びます． 特定の処理を繰り返すことが得意なコンピュータでは， 後者の 数値解 と求める方法が良く用いられます． ここでは，数値解を求めるための最もシンプルな方法である 最急降下法（Steepest Descent Method） について学びます．
+ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook4 とします． ノートブックの作成方法は第１回の資料を参照してください．
+
+最急降下法最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
+データ 対象とするデータは前回と同じ，気温 と アイスクリーム のデータを用います． いずれも，numpyのndarray型でリストを作成しておきます．
+import numpy as np x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気温 y = np." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/1d11800d6ff0e9c08574623da07440ad.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-06-02 17:07:40 &#43;0900 JST">June 2, 2019</time>
+</div>
+
+    <h1 class="post-title">回帰分析②・最急降下法</h1>
+<div class="post-line"></div>
+
+    
+
+    
+
+<p><a href="https://gyazo.com/1d11800d6ff0e9c08574623da07440ad"><img src="https://i.gyazo.com/1d11800d6ff0e9c08574623da07440ad.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  解析解と数値解
+</h1>
+
+
+<p>前回は2変数の関係性を表す <strong>回帰式</strong> と，
+その回帰式の当てはまり具合を評価するための <strong>最小二乗法</strong> について学びました．
+回帰式の形を決める傾き $a$ と切片 $b$ の最適値は，
+<strong>numpy</strong> の <strong>polyfit</strong> 関数を利用して求めましたが，どのように最適値を求めているのでしょうか．
+今回はその秘密に迫ってみたいと思います．</p>
+
+<p>回帰式のパラメータ（$a$と$b$のこと）を求める方法には２通りあり，
+方程式を解くことによって得られる厳密な解を <strong>解析解</strong>，
+繰り返しの計算によって得られる近似的な解を <strong>数値解</strong> と呼びます．
+特定の処理を繰り返すことが得意なコンピュータでは，
+後者の <strong>数値解</strong> と求める方法が良く用いられます．
+ここでは，数値解を求めるための最もシンプルな方法である <strong>最急降下法（Steepest Descent Method）</strong> について学びます．</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ノートブックの作成
+</h1>
+
+
+<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>Notebook4</strong> とします．
+ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．</p>
+
+<p><a href="https://gyazo.com/11434ec5907994499463001a0c75b412"><img src="https://i.gyazo.com/11434ec5907994499463001a0c75b412.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  最急降下法
+</h1>
+
+
+<p>最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め，
+誤差が小さくなる方向へパラメータを更新するという手法です．
+理解するためには <strong>微分</strong> が必要となりますが，
+決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．</p>
+
+<h3 id="データ">データ</h3>
+
+<p>対象とするデータは前回と同じ，<strong>気温</strong> と <strong>アイスクリーム</strong> のデータを用います．
+いずれも，numpyのndarray型でリストを作成しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">33</span>]) <span style="color:#75715e"># 気温</span>
+y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">49</span>]) <span style="color:#75715e"># アイスクリームの売上</span></code></pre></div>
+<h3 id="回帰式">回帰式</h3>
+
+<p>今回も，線形回帰（一次式）を考えますが，
+回帰式は下記のように，一般化した表現で表すことにします（$a$を$w_0$，$b$を$w_1$に置き換えた）．
+この$w_0$と$w_1$の最適値を求めることが目的です．</p>
+
+<p>$$f(x_n) = w_0 + w_1 x_n $$</p>
+
+<h3 id="目的関数">目的関数</h3>
+
+<p>目的関数$E$を下記のように定義します．
+$N$はデータの長さを表しています（ここでは，$N=10$）．
+$y_n - f(x_n)$は誤差であり，その2乗を計算していることが分かります．
+$1 / 2$が係数となっていますが，これは後ほどの微分計算で役立ちます（得られる結果に影響はない）．</p>
+
+<p>$$E=\frac{1}{2} \sum_{n=0}^{N-1} (y_n - f(x_n))^2$$</p>
+
+<p>式中の$f(x)$を展開すると下記のようになります．</p>
+
+<p>$$E=\frac{1}{2} \sum_{n=0}^{N-1} (y_n - w_0 - w_1 x_n)^2$$</p>
+
+<p>この目的関数が最小となったとき，$w_0$と$w_1$は最適値とみなします．</p>
+
+<h3 id="目的関数とパラメータの関係">目的関数とパラメータの関係</h3>
+
+<p>では，この$E$と$w_0$と$w_1$の関係をグラフ化してみましょう．
+同時に２つのパラメータ（$w_0$と$w_1$）を考えると難しいため，
+まずは$w_0=2.52$を固定して考えます（2.52は前回求めた最適値）．
+$w_1$を-5から5まで変化させたときの，目的関数の値は下記のグラフとなります．
+グラフは下に凸のお椀型の形状をしており，
+誤差が最小となる$w_1 \simeq 1.36$が最適値となることが分かります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># w1の変化</span>
+y_ <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 空のリスト</span>
+w0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.52</span> <span style="color:#75715e"># w0を固定</span>
+<span style="color:#66d9ef">for</span> w1 <span style="color:#f92672">in</span> x_:
+    E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2乗誤差</span>
+    y_append(E) <span style="color:#75715e"># リストに要素を追加</span>
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w1&#34;</span>) <span style="color:#75715e"># 水平軸のラベル  </span>
+plt<span style="color:#f92672">.</span>plot(x_, y_)</code></pre></div>
+<p><a href="https://gyazo.com/67a72d8cb7002155c4761f2aa95f0888"><img src="https://i.gyazo.com/67a72d8cb7002155c4761f2aa95f0888.png" alt="Image from Gyazo" /></a></p>
+
+<p>同様に，$w_1=1.36$に固定して考えます（1.36は前回求めた最適値）．
+$w_0$を-5から5まで変化させたときの，目的関数の値は下記のグラフとなります．
+グラフは下に凸のお椀型の形状をしており，
+誤差が最小となる$w_0 \simeq 2.52$が最適値となることが分かります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># w0の変化</span>
+y_ <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 空のリスト</span>
+w1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.36</span> <span style="color:#75715e"># w1を固定</span>
+<span style="color:#66d9ef">for</span> w0 <span style="color:#f92672">in</span> x_:
+    E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2乗誤差</span>
+    y_<span style="color:#f92672">.</span>append(E) <span style="color:#75715e"># リストに要素を追加</span>
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w0&#34;</span>) <span style="color:#75715e"># 水平軸のラベル  </span>
+plt<span style="color:#f92672">.</span>plot(x_, y_)</code></pre></div>
+<p><a href="https://gyazo.com/c98203e828305e9daa0ccb82c15e4ece"><img src="https://i.gyazo.com/c98203e828305e9daa0ccb82c15e4ece.png" alt="Image from Gyazo" /></a></p>
+
+<h3 id="学習則">学習則</h3>
+
+<p>上記の$E$は，$w_0$と$w_1$に対して，下に凸のお椀型の形状をしていることがわかりました．
+最急降下法では，初期値として$w_0$と$w_1$に適当な値を設定し，坂を下る方向に$w_0$と$w_1$を更新することで最適値を探します．
+このためには，誤差$E$を$w_0$と$w_1$で偏微分し，接線の傾きを計算します．</p>
+
+<p>$$ \frac{\partial E}{\partial w_0} = 2 \cdot \frac{1}{2} \sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -1 =  -\sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) $$</p>
+
+<p>$$ \frac{\partial E}{\partial w_1} = 2 \cdot \frac{1}{2} \sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -x_n =  -\sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) x_n $$</p>
+
+<p>接線の傾き$\frac{\partial E}{\partial w_0} &lt; 0$のときは，
+$w_0$を増加させることで，より誤差を小さくすることができます．
+逆に，接線の傾き$\frac{\partial E}{\partial w_0} &gt; 0$のときは，
+$w_0$を減少させることで，より誤差を小さくすることができます．</p>
+
+<p><a href="https://gyazo.com/feca05208995373f4df80f1f0139867b"><img src="https://i.gyazo.com/feca05208995373f4df80f1f0139867b.png" alt="Image from Gyazo" /></a></p>
+
+<p>この$w_0$と$w_1$の更新を下記の式で与えます．
+この式は <strong>学習則</strong> と呼ばれます．
+ここで，$\alpha$は <strong>学習率</strong> と呼ばれ，$w_0$と$w_1$の更新の幅を調整するパラメータです．
+大きな値を設定すると収束は早くなりますが，結果に大きな誤差が含まれる可能性が高くなります．
+一方，小さな値を設定すると，結果に含まれる誤差は小さくなりますが，収束が遅くなってしまいます．
+このため，収束速度と誤差のバランスを調整した適切な値を設定する必要があります．</p>
+
+<p>$$ w_0&rsquo; = w_0 - \alpha \frac{\partial E}{\partial w_0} $$</p>
+
+<p>$$ w_1&rsquo; = w_1 - \alpha \frac{\partial E}{\partial w_1} $$</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  数値解の導出
+</h1>
+
+
+<p>それでは，最急降下法を利用して，$w_0$と$w_1$の数値解を求めてみましょう．
+パラメータは$w_0=0$，$w_1=0$，学習率は$\alpha=0.0001$を初期値とします．
+パラメータの更新を10万回繰り返した後に，$w_0$，$w_1$の値と，目的関数の値を出力しています．
+この結果，$w_0 \simeq 2.52$，$w_1 \simeq 1.36$となり，前回にpolyfit関数で求めた値と一致していることが分かります．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">w0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># w0の初期値</span>
+w1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># w1の初期値</span>
+alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0001</span>
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100000</span>):
+    g0 <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#75715e"># w0の偏微分</span>
+    g1 <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum((y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">*</span> x) <span style="color:#75715e"># w1の偏微分</span>
+    w0 <span style="color:#f92672">=</span> w0 <span style="color:#f92672">-</span> alpha <span style="color:#f92672">*</span> g0 <span style="color:#75715e"># w0の更新</span>
+    w1 <span style="color:#f92672">=</span> w1 <span style="color:#f92672">-</span> alpha <span style="color:#f92672">*</span> g1 <span style="color:#75715e"># w1の更新</span>
+
+E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 目的関数の計算</span>
+<span style="color:#66d9ef">print</span>(w0)
+<span style="color:#66d9ef">print</span>(w1)
+<span style="color:#66d9ef">print</span>(E)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">2.518733969947924</span>
+<span style="color:#ae81ff">1.3554170191576644</span>
+<span style="color:#ae81ff">97.5964381152417</span></code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274222446&linkId=1a63210b6dc95e90156695289116cb1b&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B078767Y56&linkId=cd73876214aec3d9b72777ab73920051&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4802611641&linkId=e77970ab2740fac9fdeb8b877668c257&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4839963525&linkId=14f05f671ddd917b204596b6b535981e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter4/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-06-03 18:05:49.340376 &#43;0900 JST m=&#43;2.033104201">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
