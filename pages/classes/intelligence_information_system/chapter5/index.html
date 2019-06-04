@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    回帰③・基底関数 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+  
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="回帰③・基底関数" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter5/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/19cd29f356cd3c56dfea9c16685c2a09.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="基底関数これまでは回帰式として線形関数（一次式）を採用してきました．
+$$f(x) = w_0 &#43; w_1 x $$
+しかし，下記のようなデータを対象とする場合は，直線ではなく曲線を用いた方が，傾向を正しく表現できそうです． このデータは，愛知県衛生研究所が公開しているインフルエンザの発症数です． 変数$x$は 経過週 ，変数$y$は インフルエンザの報告数（定点当たり） を表しています．
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) #週 y = np.array([0.26,0.25,0.19,0.34,0.89,1.78,2.51,4.81,10.97,18.02,19.28,32.42,62.12,62.18,62.60,49.18,32.57,25.93,21.17,14.68]) #報告数 
+このような場合は，基底関数 を利用します． 線形関数の$x$を，任意の$\phi(x)$という基底関数に置き換えるという方法です． 基底関数には，どんな関数を用いても良いのですが，よく用いられるのは， 多項式基底 や ガウス基底 と呼ばれる関数です． 今回は，これら 基底関数 を利用した回帰について学びます．
+ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook5 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy と matplotlib." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="回帰③・基底関数" />
+
+
+
+  <meta name="twitter:description" content="基底関数これまでは回帰式として線形関数（一次式）を採用してきました．
+$$f(x) = w_0 &#43; w_1 x $$
+しかし，下記のようなデータを対象とする場合は，直線ではなく曲線を用いた方が，傾向を正しく表現できそうです． このデータは，愛知県衛生研究所が公開しているインフルエンザの発症数です． 変数$x$は 経過週 ，変数$y$は インフルエンザの報告数（定点当たり） を表しています．
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) #週 y = np.array([0.26,0.25,0.19,0.34,0.89,1.78,2.51,4.81,10.97,18.02,19.28,32.42,62.12,62.18,62.60,49.18,32.57,25.93,21.17,14.68]) #報告数 
+このような場合は，基底関数 を利用します． 線形関数の$x$を，任意の$\phi(x)$という基底関数に置き換えるという方法です． 基底関数には，どんな関数を用いても良いのですが，よく用いられるのは， 多項式基底 や ガウス基底 と呼ばれる関数です． 今回は，これら 基底関数 を利用した回帰について学びます．
+ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook5 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy と matplotlib." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/19cd29f356cd3c56dfea9c16685c2a09.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-06-04 10:16:04 &#43;0900 JST">June 4, 2019</time>
+</div>
+
+    <h1 class="post-title">回帰③・基底関数</h1>
+<div class="post-line"></div>
+
+    
+
+    
+
+<p><a href="https://gyazo.com/19cd29f356cd3c56dfea9c16685c2a09"><img src="https://i.gyazo.com/19cd29f356cd3c56dfea9c16685c2a09.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  基底関数
+</h1>
+
+
+<p>これまでは回帰式として線形関数（一次式）を採用してきました．</p>
+
+<p>$$f(x) = w_0 + w_1 x $$</p>
+
+<p>しかし，下記のようなデータを対象とする場合は，直線ではなく曲線を用いた方が，傾向を正しく表現できそうです．
+このデータは，<a href="http://www.pref.aichi.jp/eiseiken/">愛知県衛生研究所</a>が公開しているインフルエンザの発症数です．
+変数$x$は <strong>経過週</strong> ，変数$y$は <strong>インフルエンザの報告数（定点当たり）</strong> を表しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">20</span>]) <span style="color:#75715e">#週</span>
+y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0.26</span>,<span style="color:#ae81ff">0.25</span>,<span style="color:#ae81ff">0.19</span>,<span style="color:#ae81ff">0.34</span>,<span style="color:#ae81ff">0.89</span>,<span style="color:#ae81ff">1.78</span>,<span style="color:#ae81ff">2.51</span>,<span style="color:#ae81ff">4.81</span>,<span style="color:#ae81ff">10.97</span>,<span style="color:#ae81ff">18.02</span>,<span style="color:#ae81ff">19.28</span>,<span style="color:#ae81ff">32.42</span>,<span style="color:#ae81ff">62.12</span>,<span style="color:#ae81ff">62.18</span>,<span style="color:#ae81ff">62.60</span>,<span style="color:#ae81ff">49.18</span>,<span style="color:#ae81ff">32.57</span>,<span style="color:#ae81ff">25.93</span>,<span style="color:#ae81ff">21.17</span>,<span style="color:#ae81ff">14.68</span>]) <span style="color:#75715e">#報告数</span></code></pre></div>
+<p><a href="https://gyazo.com/326520da8fef2e55d91d676e2efaa49c"><img src="https://i.gyazo.com/326520da8fef2e55d91d676e2efaa49c.png" alt="Image from Gyazo" /></a></p>
+
+<p>このような場合は，<strong>基底関数</strong> を利用します．
+線形関数の$x$を，任意の$\phi(x)$という基底関数に置き換えるという方法です．
+基底関数には，どんな関数を用いても良いのですが，よく用いられるのは，
+<strong>多項式基底</strong> や <strong>ガウス基底</strong> と呼ばれる関数です．
+今回は，これら <strong>基底関数</strong> を利用した回帰について学びます．</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ノートブックの作成
+</h1>
+
+
+<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>Notebook5</strong> とします．
+ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．
+また，<strong>numpy</strong> と <strong>matplotlib.pyplot</strong> を導入しておいてください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  多項式基底
+</h1>
+
+
+<p>多項式基底は下記の式で表されます．
+ここで，$i$は組み合わせる基底関数の番号を表します．</p>
+
+<p>$$ \phi_i(x) = x^i $$</p>
+
+<h3 id="回帰式">回帰式</h3>
+
+<p>4つの基底関数を組み合わせると，回帰式は下記のように表されます
+（2つの基底関数を組み合わせた場合は線形関数と一致する）．
+この回帰式では，$w_0$，$w_1$，$w_2$，$w_3$の4つのパラメータの最適値を求めることが目的です．</p>
+
+<p>$$ f(x) = w_0 \cdot \phi_0(x) + w_1 \cdot \phi_1(x) + w_2 \cdot \phi_2(x) + w_3 \cdot \phi_3(x) $$</p>
+
+<p>$$ = w_0 \cdot x^0 + w_1 \cdot x^1 + w_2 \cdot x^2 + w_3 \cdot x^3 $$</p>
+
+<p>$$ = w_0  + w_1 \cdot x + w_2 \cdot x^2 + w_3 \cdot x^3 $$</p>
+
+<p>この回帰式を関数 <strong>fx</strong> として定義しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(w, x): <span style="color:#75715e"># 回帰式の関数定義</span>
+  y_ <span style="color:#f92672">=</span> w[<span style="color:#ae81ff">0</span>]  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">3</span>
+  <span style="color:#66d9ef">return</span> y_</code></pre></div>
+<h3 id="目的関数">目的関数</h3>
+
+<p>目的関数$E$は，これまでと同じ2乗誤差で与えます．</p>
+
+<p>$$E=\sum_{n=0}^{N-1} (y_n - f(x_n))^2$$</p>
+
+<p>この目的関数を関数 <strong>gx</strong> として定義しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gx</span>(w, x, y): <span style="color:#75715e"># 目的関数（2乗誤差）の関数定義</span>
+  y_ <span style="color:#f92672">=</span> fx(w, x)
+  e <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum((y <span style="color:#f92672">-</span> y_) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)
+  <span style="color:#66d9ef">return</span> e</code></pre></div>
+<h3 id="数値解の導出">数値解の導出</h3>
+
+<p>数値解の導出には， <strong>SciPy</strong> という数値解析のためのライブラリを導入します．
+同ライブラリの <strong>minimize</strong> 関数は，指定した関数を最小化するようなパラメータを導出してくれます．
+引数には，目的関数 <strong>gx</strong> ，パラメータの初期値 <strong>w_init</strong> ，
+最適化の対象とならないパラメータ <strong>(x, y)</strong> ， 最適化アルゴリズム <strong>powell</strong> を指定します．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize <span style="color:#75715e"># ライブラリの導入</span>
+
+w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]) <span style="color:#75715e"># パラメータの初期値</span>
+result <span style="color:#f92672">=</span> minimize(gx, w_init, args<span style="color:#f92672">=</span>(x, y), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;powell&#34;</span>) <span style="color:#75715e"># Powell法で最適化</span>
+<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x) <span style="color:#75715e"># 導出されたパラメータ</span></code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[ <span style="color:#ae81ff">20.22701023</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">14.62576848</span>   <span style="color:#ae81ff">2.32622593</span>  <span style="color:#f92672">-</span><span style="color:#ae81ff">0.08134343</span>]</code></pre></div>
+<p>この結果，$w_0 \simeq 20.23$，$w_1 \simeq -14.63$，$w_2 \simeq 2.32$，$w_3 \simeq 0.08$であることがわかりました．
+この値を基に回帰式をグラフ化すると，曲線を利用して対象のデータを近似していることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(x, y)
+plt<span style="color:#f92672">.</span>plot(x, fx(result<span style="color:#f92672">.</span>x, x))
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;week&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;infuluenza&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/2cef45d08e8ae7d46127ddcbf8f25b5d"><img src="https://i.gyazo.com/2cef45d08e8ae7d46127ddcbf8f25b5d.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ガウス基底
+</h1>
+
+
+<p>ガウス基底は下記の式で表されます．
+ここで，$i$は組み合わせる基底関数の番号を表します．
+関数の中心位置を表す$\mu_i$，関数の広がりを表す$s$は，事前に適切な値に設定します．</p>
+
+<p>$$ \phi_i(x) = \exp \left(
+    - \frac{ (x - \mu_i)^2}{2s^2}
+  \right) $$</p>
+
+<p>ガウス基底を関数 <strong>gauss</strong> として定義しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gauss</span>(x, mu, s):
+  g <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>exp( <span style="color:#f92672">-</span>(x <span style="color:#f92672">-</span> mu) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">/</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> s<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>))
+  <span style="color:#66d9ef">return</span> g</code></pre></div>
+<p>ガウス基底の形状を確認しましょう．
+$\mu=0$，$s=3$のグラフを描いてみます．
+ガウス基底は上に凸の分布であり，正規分布（ガウス分布）と同じ形状であることが分かります．
+正規分布の正規化（面積の総和を1にする）のための係数を取り除いた式がガウス基底です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.1</span>)
+y_ <span style="color:#f92672">=</span> gauss(x_, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>)
+plt<span style="color:#f92672">.</span>plot(x_, y_)</code></pre></div>
+<p><a href="https://gyazo.com/923da2cb717e170091075b741f9919e7"><img src="https://i.gyazo.com/923da2cb717e170091075b741f9919e7.png" alt="Image from Gyazo" /></a></p>
+
+<h3 id="回帰式-1">回帰式</h3>
+
+<p>4つの基底関数を組み合わせることにします．
+このとき，$\phi_0(x)=1$とするため，実際は残りの3つのガウス基底を組み合わせることになります．</p>
+
+<p>$$ f(x) = w_0 \cdot 1 + w_1 \cdot \phi_1(x) + w_2 \cdot \phi_2(x) + w_3 \cdot \phi_3(x) $$</p>
+
+<p>この3つのガウス基底の平均$\mu$と間隔$s$は下記のように設定します．</p>
+
+<p>$$ (\mu_1=5, s_1=5), (\mu_2=10, s_2=5), (\mu_3=15, s_3=5), $$</p>
+
+<p>これは3つのガウス基底を均等な間隔で配置することを意味しています．</p>
+
+<p><a href="https://gyazo.com/f4d0250462943eb5fe9b686dd0a3949d"><img src="https://i.gyazo.com/f4d0250462943eb5fe9b686dd0a3949d.png" alt="Image from Gyazo" /></a></p>
+
+<p>この回帰式を関数 <strong>fx</strong> として定義しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(w, x): <span style="color:#75715e"># 回帰式の関数定義</span>
+  y_ <span style="color:#f92672">=</span> w[<span style="color:#ae81ff">0</span>]  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> gauss(x, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>) <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> gauss(x, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>)  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> gauss(x, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">5</span>)
+  <span style="color:#66d9ef">return</span> y_</code></pre></div>
+<h3 id="目的関数-1">目的関数</h3>
+
+<p>目的関数$E$は，多項式基底と同じ2乗誤差で与えます．</p>
+
+<h3 id="数値解の導出-1">数値解の導出</h3>
+
+<p>多項式基底と同様に <strong>SciPy</strong> で最適化します．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]) <span style="color:#75715e"># パラメータの初期値</span>
+result <span style="color:#f92672">=</span> minimize(gx, w_init, args<span style="color:#f92672">=</span>(x, y), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;powell&#34;</span>) <span style="color:#75715e"># Powell法で最適化</span>
+<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x) <span style="color:#75715e"># 導出されたパラメータ</span></code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">60.68720705</span>  <span style="color:#ae81ff">74.75886194</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">44.73746539</span> <span style="color:#ae81ff">130.07080173</span>]</code></pre></div>
+<p>この結果，$w_0 \simeq -60.69$，$w_1 \simeq -74.76$，$w_2 \simeq -44.74$，$w_3 \simeq 130.07$であることがわかりました．
+この値を基に回帰式をグラフ化すると，多項式基底と同様に曲線で対象のデータを近似していることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(x, y)
+plt<span style="color:#f92672">.</span>plot(x, fx(result<span style="color:#f92672">.</span>x, x))
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;week&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;infuluenza&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/9f7c3b83215916769f8ba6ac6d0ab8a7"><img src="https://i.gyazo.com/9f7c3b83215916769f8ba6ac6d0ab8a7.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274222446&linkId=1a63210b6dc95e90156695289116cb1b&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B078767Y56&linkId=cd73876214aec3d9b72777ab73920051&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4802611641&linkId=e77970ab2740fac9fdeb8b877668c257&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4839963525&linkId=14f05f671ddd917b204596b6b535981e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter5/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-06-04 18:49:04.3957111 &#43;0900 JST m=&#43;1.710338901">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

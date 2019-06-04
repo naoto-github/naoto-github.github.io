@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    回帰分析②・最急降下法 | MLAB
+    回帰②・最急降下法 | MLAB
   </title>
 
   
@@ -60,7 +60,7 @@
   
   
 
-  <meta property="og:title" content="回帰分析②・最急降下法" />
+  <meta property="og:title" content="回帰②・最急降下法" />
 
 
 
@@ -82,11 +82,9 @@
 
   <meta property="og:description" content="解析解と数値解前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
 回帰式のパラメータ（$a$と$b$のこと）を求める方法には２通りあり， 方程式を解くことによって得られる厳密な解を 解析解， 繰り返しの計算によって得られる近似的な解を 数値解 と呼びます． 特定の処理を繰り返すことが得意なコンピュータでは， 後者の 数値解 を求める方法が良く用いられます． ここでは，数値解を求めるための最もシンプルな方法である 最急降下法（Steepest Descent Method） について学びます．
-ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook4 とします． ノートブックの作成方法は第１回の資料を参照してください．
-
-最急降下法最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
-データ 対象とするデータは前回と同じ，気温 と アイスクリーム のデータを用います． いずれも，numpyのndarray型でリストを作成しておきます．
-import numpy as np x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気温 y = np." />
+ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook4 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy と matplotlib.pyplot を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt 最急降下法最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
+データ 対象とするデータは前回と同じ，気温 と アイスクリーム のデータを用います． いずれも，numpyのndarray型でリストを作成しておきます．" />
 
 
 
@@ -97,17 +95,15 @@ import numpy as np x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気�
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="回帰分析②・最急降下法" />
+  <meta name="twitter:title" content="回帰②・最急降下法" />
 
 
 
   <meta name="twitter:description" content="解析解と数値解前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
 回帰式のパラメータ（$a$と$b$のこと）を求める方法には２通りあり， 方程式を解くことによって得られる厳密な解を 解析解， 繰り返しの計算によって得られる近似的な解を 数値解 と呼びます． 特定の処理を繰り返すことが得意なコンピュータでは， 後者の 数値解 を求める方法が良く用いられます． ここでは，数値解を求めるための最もシンプルな方法である 最急降下法（Steepest Descent Method） について学びます．
-ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook4 とします． ノートブックの作成方法は第１回の資料を参照してください．
-
-最急降下法最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
-データ 対象とするデータは前回と同じ，気温 と アイスクリーム のデータを用います． いずれも，numpyのndarray型でリストを作成しておきます．
-import numpy as np x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気温 y = np." />
+ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook4 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy と matplotlib.pyplot を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt 最急降下法最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
+データ 対象とするデータは前回と同じ，気温 と アイスクリーム のデータを用います． いずれも，numpyのndarray型でリストを作成しておきます．" />
 
 
 
@@ -177,7 +173,7 @@ import numpy as np x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気�
   <span>on&nbsp;</span><time datetime="2019-06-02 17:07:40 &#43;0900 JST">June 2, 2019</time>
 </div>
 
-    <h1 class="post-title">回帰分析②・最急降下法</h1>
+    <h1 class="post-title">回帰②・最急降下法</h1>
 <div class="post-line"></div>
 
     
@@ -213,10 +209,10 @@ import numpy as np x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気�
 
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>Notebook4</strong> とします．
-ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．</p>
-
-<p><a href="https://gyazo.com/11434ec5907994499463001a0c75b412"><img src="https://i.gyazo.com/11434ec5907994499463001a0c75b412.png" alt="Image from Gyazo" /></a></p>
-
+ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．
+また，<strong>numpy</strong> と <strong>matplotlib.pyplot</strong> を導入しておいてください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt</code></pre></div>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   最急降下法
@@ -232,8 +228,7 @@ import numpy as np x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気�
 
 <p>対象とするデータは前回と同じ，<strong>気温</strong> と <strong>アイスクリーム</strong> のデータを用います．
 いずれも，numpyのndarray型でリストを作成しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">33</span>]) <span style="color:#75715e"># 気温</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">33</span>]) <span style="color:#75715e"># 気温</span>
 y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">49</span>]) <span style="color:#75715e"># アイスクリームの売上</span></code></pre></div>
 <h3 id="回帰式">回帰式</h3>
 
@@ -297,9 +292,11 @@ plt<span style="color:#f92672">.</span>plot(x_, y_)</code></pre></div>
 最急降下法では，初期値として$w_0$と$w_1$に適当な値を設定し，坂を下る方向に$w_0$と$w_1$を更新することで最適値を探します．
 このためには，誤差$E$を$w_0$と$w_1$で偏微分し，接線の傾きを計算します．</p>
 
-<p>$$ \frac{\partial E}{\partial w_0} = 2 \cdot \frac{1}{2} \sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -1 =  -\sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) $$</p>
+<p>$$ \frac{\partial E}{\partial w_0} = 2 \cdot \frac{1}{2} \sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -1 $$
+$$ =  -\sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) $$</p>
 
-<p>$$ \frac{\partial E}{\partial w_1} = 2 \cdot \frac{1}{2} \sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -x_n =  -\sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) x_n $$</p>
+<p>$$ \frac{\partial E}{\partial w_1} = 2 \cdot \frac{1}{2} \sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -x_n $$
+$$ =  -\sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) x_n $$</p>
 
 <p>接線の傾き$\frac{\partial E}{\partial w_0} &lt; 0$のときは，
 $w_0$を増加させることで，より誤差を小さくすることができます．
@@ -425,7 +422,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-06-03 19:00:20.170681 &#43;0900 JST m=&#43;2.219232601">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-06-04 18:49:04.3927456 &#43;0900 JST m=&#43;1.707373401">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
