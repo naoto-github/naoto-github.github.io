@@ -215,7 +215,7 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;W
 
 <p>未知のデータ $u_1=11.5$，$u_2=443$が与えられたとき，
 これはリンゴでしょうか，それともメロンでしょうか．
-これが <strong>分類</strong> と呼ばれる問題です．</p>
+これを当てるのが <strong>分類</strong> と呼ばれる問題です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">u1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">11.5</span>
 u2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">443</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(x1, x2, c<span style="color:#f92672">=</span>label)
 plt<span style="color:#f92672">.</span>scatter(u1, u2)
@@ -305,10 +305,14 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;W
 内積は <strong>dot</strong> 関数を用います．
 するとリンゴを表すベクトルとの内積は <strong>負の値</strong> ，メロンを表すベクトルとの内積は <strong>正の値</strong> になっていることが分かります．
 これにより，ベクトル${\bf w} = (1, 1)$とした識別関数 $f(x)$ は，リンゴとメロンを正しく分類できていることが示されました．</p>
+
+<p><strong>[In:]</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>])
 x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([x1, x2])
 p <span style="color:#f92672">=</span> w<span style="color:#f92672">.</span>dot(x) <span style="color:#75715e">#内積（識別関数）</span>
-<span style="color:#66d9ef">print</span>(p)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">2.48474564</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.44663783</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.81486073</span>  <span style="color:#ae81ff">1.61693019</span>  <span style="color:#ae81ff">1.48394489</span>  <span style="color:#ae81ff">2.64536912</span>]
+<span style="color:#66d9ef">print</span>(p)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">2.48474564</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.44663783</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.81486073</span>  <span style="color:#ae81ff">1.61693019</span>  <span style="color:#ae81ff">1.48394489</span>  <span style="color:#ae81ff">2.64536912</span>]
 <span style="color:#75715e">#リンゴ リンゴ リンゴ メロン メロン メロン</span></code></pre></div>
 <p>では，未知のデータ$u_1=11.5$，$u_2=443$ではどうでしょうか．
 $x_1$，$x_2$と同様に標準化し，ベクトル${\bf w} = (1, 1)$との内積を計算します．
@@ -320,11 +324,11 @@ u2 <span style="color:#f92672">=</span> (u2 <span style="color:#f92672">-</span>
 u <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([u1, u2])
 p <span style="color:#f92672">=</span> w<span style="color:#f92672">.</span>dot(u) <span style="color:#75715e">#内積</span>
 <span style="color:#66d9ef">print</span>(p)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">-</span><span style="color:#ae81ff">0.9921864664330837</span></code></pre></div>
+<p><a href="https://gyazo.com/56ff4456a4320195de3626888483b17a"><img src="https://i.gyazo.com/56ff4456a4320195de3626888483b17a.png" alt="Image from Gyazo" /></a></p>
+
 <p>今回設定した${\bf w} = (1, 1)$は，たまたま上手く分類が出来ました．
 一般的な分類アルゴリズムでは，適切な${\bf w}$を求めることが狙いとなります．
 次回は，ベクトルの内積の考えを利用した <strong>線形判別分析</strong> に挑戦します．</p>
-
-<p><a href="https://gyazo.com/56ff4456a4320195de3626888483b17a"><img src="https://i.gyazo.com/56ff4456a4320195de3626888483b17a.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -402,7 +406,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-06-27 16:16:08.8509569 &#43;0900 JST m=&#43;2.435926701">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-06-28 21:25:09.5507229 &#43;0900 JST m=&#43;2.520988901">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

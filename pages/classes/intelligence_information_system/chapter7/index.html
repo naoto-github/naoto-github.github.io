@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    分類②・線形判別分析 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="分類②・線形判別分析" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter7/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/0b9eec1b67c6c020166dd56814d50600.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook7 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize データの準備前回と同じリンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） を用います（未知のデータ$u$をリンゴとしてデータに追加）． 各要素はベクトル${\bf x} = (x_1,x_2)$として表すことに注意してください． ここでは，あらかじめデータを標準化しておきます．
+[In:]
+x1 = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） x2 = np.array([278, 298, 382, 443, 1221, 1305, 1512]) #重さ（g） label = np.array([&#34;red&#34;,&#34;red&#34;,&#34;red&#34;,&#34;red&#34;,&#34;green&#34;,&#34;green&#34;,&#34;green&#34;]) #カテゴリ x1 = (x1 - x1.mean()) / x1." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="分類②・線形判別分析" />
+
+
+
+  <meta name="twitter:description" content="ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook7 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize データの準備前回と同じリンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） を用います（未知のデータ$u$をリンゴとしてデータに追加）． 各要素はベクトル${\bf x} = (x_1,x_2)$として表すことに注意してください． ここでは，あらかじめデータを標準化しておきます．
+[In:]
+x1 = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） x2 = np.array([278, 298, 382, 443, 1221, 1305, 1512]) #重さ（g） label = np.array([&#34;red&#34;,&#34;red&#34;,&#34;red&#34;,&#34;red&#34;,&#34;green&#34;,&#34;green&#34;,&#34;green&#34;]) #カテゴリ x1 = (x1 - x1.mean()) / x1." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/0b9eec1b67c6c020166dd56814d50600.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-06-27 20:08:35 &#43;0900 JST">June 27, 2019</time>
+</div>
+
+    <h1 class="post-title">分類②・線形判別分析</h1>
+<div class="post-line"></div>
+
+    
+
+    
+
+<p><a href="https://gyazo.com/0b9eec1b67c6c020166dd56814d50600"><img src="https://i.gyazo.com/0b9eec1b67c6c020166dd56814d50600.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ノートブックの作成
+</h1>
+
+
+<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>Notebook7</strong> とします．
+ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．
+また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>，<strong>scipy.optimize</strong> を導入しておいてください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  データの準備
+</h1>
+
+
+<p>前回と同じリンゴとメロンの <strong>大きさ（$x_1$）</strong> と <strong>重さ（$x_2$）</strong> を用います（未知のデータ$u$をリンゴとしてデータに追加）．
+各要素はベクトル${\bf x} = (x_1,x_2)$として表すことに注意してください．
+ここでは，あらかじめデータを標準化しておきます．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">9.5</span>, <span style="color:#ae81ff">11.2</span>, <span style="color:#ae81ff">10.3</span>, <span style="color:#ae81ff">11.5</span>, <span style="color:#ae81ff">13.4</span>, <span style="color:#ae81ff">12.9</span>, <span style="color:#ae81ff">14.2</span>]) <span style="color:#75715e">#大きさ（cm）</span>
+x2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">278</span>, <span style="color:#ae81ff">298</span>, <span style="color:#ae81ff">382</span>, <span style="color:#ae81ff">443</span>, <span style="color:#ae81ff">1221</span>, <span style="color:#ae81ff">1305</span>, <span style="color:#ae81ff">1512</span>]) <span style="color:#75715e">#重さ（g）</span>
+label <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#e6db74">&#34;red&#34;</span>,<span style="color:#e6db74">&#34;red&#34;</span>,<span style="color:#e6db74">&#34;red&#34;</span>,<span style="color:#e6db74">&#34;red&#34;</span>,<span style="color:#e6db74">&#34;green&#34;</span>,<span style="color:#e6db74">&#34;green&#34;</span>,<span style="color:#e6db74">&#34;green&#34;</span>]) <span style="color:#75715e">#カテゴリ</span>
+x1 <span style="color:#f92672">=</span> (x1 <span style="color:#f92672">-</span> x1<span style="color:#f92672">.</span>mean()) <span style="color:#f92672">/</span> x1<span style="color:#f92672">.</span>std()
+x2 <span style="color:#f92672">=</span> (x2 <span style="color:#f92672">-</span> x2<span style="color:#f92672">.</span>mean()) <span style="color:#f92672">/</span> x2<span style="color:#f92672">.</span>std()
+<span style="color:#66d9ef">print</span>(x1)
+<span style="color:#66d9ef">print</span>(x2)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">1.49090975</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.41564757</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.98490402</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.22589542</span>  <span style="color:#ae81ff">0.9758682</span>   <span style="color:#ae81ff">0.65961462</span>
+  <span style="color:#ae81ff">1.48187394</span>]
+[<span style="color:#f92672">-</span><span style="color:#ae81ff">0.99454837</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.95468671</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.78726775</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.66568969</span>  <span style="color:#ae81ff">0.88492881</span>  <span style="color:#ae81ff">1.05234778</span>
+  <span style="color:#ae81ff">1.46491594</span>]</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(x1, x2, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>axes()<span style="color:#f92672">.</span>set_aspect(<span style="color:#e6db74">&#34;equal&#34;</span>, <span style="color:#e6db74">&#34;datalim&#34;</span>)
+plt<span style="color:#f92672">.</span>ylim([<span style="color:#f92672">-</span><span style="color:#ae81ff">1.8</span>, <span style="color:#ae81ff">1.8</span>])
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x1&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;x2&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/4f07752a455329c539ecba45247689a4"><img src="https://i.gyazo.com/4f07752a455329c539ecba45247689a4.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  線形判別分析
+</h1>
+
+
+<p>前回は <strong>分類</strong> における <strong>決定境界</strong> と <strong>ベクトル</strong> の役割について解説しました．
+今回は，決定境界を決めるベクトル${\bf w}=(w_1, w_2)$の導出方法について考えます．
+分類のためのアルゴリズムは様々ありますが，今回は <strong>線形判別分析（Linear Discriminant Analysis: LDA）</strong> に挑戦してみましょう．
+線形判別分析は，データを分類するために，<strong>線形（直線）</strong> の決定境界を求める方法です．</p>
+
+<h2 id="代表ベクトル">代表ベクトル</h2>
+
+<p>まず最初に，各ラベル（ここでは，リンゴとメロン）の <strong>代表ベクトル</strong> を求めます．
+代表ベクトルとは重心（平均）のことです．
+ここで，リンゴの代表ベクトルを${\bf a} = (a_1, a_2)$，
+メロンの代表ベクトルを${\bf m} = (m_1, m_2)$と表すことにします．</p>
+
+<p>$$
+(a_1, a_2) = \left( \frac{-1.49 + -0.42 + -0.98 + -0.23}{4}, \frac{-0.99 + -0.95 + -0.79 + -0.67}{4} \right)
+$$</p>
+
+<p>$$
+(m_1, m_2) = \left( \frac{0.98 + 0.66 + 1.48}{3}, \frac{0.88 + 1.05 + 1.46}{3} \right)
+$$</p>
+
+<p>これを計算すると，${\bf a} = (-0.78, -0.85)$，${\bf m} = (1.04, 1.13)$となります．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">apple <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(label<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;red&#34;</span>) <span style="color:#75715e">#リンゴのインデックスを取得</span>
+melon <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(label<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;green&#34;</span>) <span style="color:#75715e">#メロンのインデックスを取得</span>
+a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([x1[apple]<span style="color:#f92672">.</span>mean(),x2[apple]<span style="color:#f92672">.</span>mean()])
+m <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([x1[melon]<span style="color:#f92672">.</span>mean(),x2[melon]<span style="color:#f92672">.</span>mean()])
+<span style="color:#66d9ef">print</span>(a)
+<span style="color:#66d9ef">print</span>(m)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">0.77933919</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.85054813</span>]
+[<span style="color:#ae81ff">1.03911892</span> <span style="color:#ae81ff">1.13406417</span>]</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(x1, x2, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>scatter(a)
+plt<span style="color:#f92672">.</span>scatter(b)
+plt<span style="color:#f92672">.</span>axes()<span style="color:#f92672">.</span>set_aspect(<span style="color:#e6db74">&#34;equal&#34;</span>, <span style="color:#e6db74">&#34;datalim&#34;</span>)
+plt<span style="color:#f92672">.</span>ylim([<span style="color:#f92672">-</span><span style="color:#ae81ff">1.8</span>, <span style="color:#ae81ff">1.8</span>])
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x1&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;x2&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/54668309d3007fe78e2b461ea88bf3fc"><img src="https://i.gyazo.com/54668309d3007fe78e2b461ea88bf3fc.png" alt="Image from Gyazo" /></a></p>
+
+<h2 id="決定境界">決定境界</h2>
+
+<p>次に，決定境界を決めるベクトル${\bf w}=(w_1, w_2)$について考えます．
+前回は${\bf w}=(1, 1)$と勝手に決めてしまいましたが，
+線形判別分析では，下記の条件を満たす$w_1$と$w_2$の組み合わせに限定することにします．</p>
+
+<p>$$
+|{\bf w}| = w_1^2 + w_2^2 = 1^2 = 1
+$$</p>
+
+<p>これは，半径$1$の円周上にベクトル${\bf w}$があることを意味しています．
+つまりベクトルの <strong>大きさ</strong> は固定して，ベクトルの <strong>回転</strong> に注目するということです．
+例えば，${\bf w} = \left( \frac{\sqrt{3}}{2}, \frac{1}{2} \right)$ は，この条件を満たしています．
+このとき，決定境界は $x_2 = - \sqrt{3} \cdot x_1$ となります（前回の資料を参照すること）．</p>
+
+<p><a href="https://gyazo.com/e42d055a7d5720e67ad92d35f4ee51ca"><img src="https://i.gyazo.com/e42d055a7d5720e67ad92d35f4ee51ca.png" alt="Image from Gyazo" /></a></p>
+
+<h2 id="目的関数">目的関数</h2>
+
+<p>最適な${\bf w}=(w_1, w_2)$を求めるための目的関数を定めます．
+ここでも内積の概念を利用します．
+ベクトル${\bf w}$と，リンゴとメロンの代表値である${\bf r}$と${\bf m}$の内積を求めます．
+$|{\bf w}|=1$であることから，内積はベクトル${\bf w}$に対する，ベクトル${\bf r}$と${\bf m}$の正射影になります．
+正射影された2点間の距離を目的関数$g(w)$とし，これが最大となる${\bf w}=(w_1, w_2)$を求めます．</p>
+
+<p>$$
+g(w) = |{\bf w} \cdot {\bf a} - {\bf w} \cdot {\bf m}|
+$$</p>
+
+<p><a href="https://gyazo.com/3052e479834d231178283e50899aebd0"><img src="https://i.gyazo.com/3052e479834d231178283e50899aebd0.png" alt="Image from Gyazo" /></a></p>
+
+<p>例えば，${\bf w} = \left( \frac{\sqrt{3}}{2}, \frac{1}{2} \right)$ のときは，$g(x) = 2.57$となります．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gx</span>(w, a, m):
+  d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>abs(w<span style="color:#f92672">.</span>dot(a) <span style="color:#f92672">-</span> w<span style="color:#f92672">.</span>dot(m))
+  <span style="color:#66d9ef">return</span> d
+
+w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([w1,w2])
+gx(w, a, m)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">2.5671370685019306</span></code></pre></div>
+<h2 id="数値解の導出">数値解の導出</h2>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#75715e">#目的関数（最小化するため符号を反対に）</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gx2</span>(w, a, m):
+  d <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> gx(w, a, m)
+  <span style="color:#66d9ef">return</span> d
+
+<span style="color:#75715e">#条件式（ベクトル長から1を引く）</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cons</span>(w):
+  l <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(w, ord<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>) <span style="color:#75715e">#ベクトルの大きさ</span>
+  <span style="color:#66d9ef">return</span> l <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+
+<span style="color:#75715e">#制約条件（eqは0と等しいことを表す）</span>
+cons <span style="color:#f92672">=</span> (
+  {<span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;eq&#34;</span>, <span style="color:#e6db74">&#34;fun&#34;</span>: cons}
+)
+
+w_init <span style="color:#f92672">=</span> w
+result <span style="color:#f92672">=</span> minimize(gx2, w_init, args<span style="color:#f92672">=</span>(a, m), constraints<span style="color:#f92672">=</span>cons, method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SLSQP&#34;</span>)
+<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#ae81ff">0.67569856</span> <span style="color:#ae81ff">0.73717806</span>]</code></pre></div>
+<p><a href="https://gyazo.com/15af5168cdd5db7ec1389a00ef572db9"><img src="https://i.gyazo.com/15af5168cdd5db7ec1389a00ef572db9.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274222446&linkId=1a63210b6dc95e90156695289116cb1b&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B078767Y56&linkId=cd73876214aec3d9b72777ab73920051&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4802611641&linkId=e77970ab2740fac9fdeb8b877668c257&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4839963525&linkId=14f05f671ddd917b204596b6b535981e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter7/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-06-28 21:25:09.5517203 &#43;0900 JST m=&#43;2.521986301">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
