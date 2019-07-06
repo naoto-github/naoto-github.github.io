@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    分類③・ロジスティック回帰 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="分類③・ロジスティック回帰" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter8/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/24e52670db8206b33030897451a51f7d.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook8 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize  データの準備  これまでは，リンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） という2次元のデータを用いていました． 今回は単純化のため，大きさ（$x$） のみに注目して分類します． また，グラフで可視化するために，リンゴを$0$，メロンを$1$と表現することにします．
+x = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） label = np.array([0, 0, 0, 0, 1, 1, 1]) #カテゴリ x = (x - x.mean()) / x.std() //標準化 plt.scatter(x, label, c=label) plt.xlabel(&#34;x&#34;)" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="分類③・ロジスティック回帰" />
+
+
+
+  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook8 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize  データの準備  これまでは，リンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） という2次元のデータを用いていました． 今回は単純化のため，大きさ（$x$） のみに注目して分類します． また，グラフで可視化するために，リンゴを$0$，メロンを$1$と表現することにします．
+x = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） label = np.array([0, 0, 0, 0, 1, 1, 1]) #カテゴリ x = (x - x.mean()) / x.std() //標準化 plt.scatter(x, label, c=label) plt.xlabel(&#34;x&#34;)" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/24e52670db8206b33030897451a51f7d.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-07-06 12:29:32 &#43;0900 JST">July 6, 2019</time>
+</div>
+
+    <h1 class="post-title">分類③・ロジスティック回帰</h1>
+<div class="post-line"></div>
+
+    
+
+    
+
+<p><a href="https://gyazo.com/24e52670db8206b33030897451a51f7d"><img src="https://i.gyazo.com/24e52670db8206b33030897451a51f7d.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ノートブックの作成
+</h1>
+
+
+<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>Notebook8</strong> とします．
+ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．
+また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>，<strong>scipy.optimize</strong> を導入しておいてください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  データの準備
+</h1>
+
+
+<p>これまでは，リンゴとメロンの <strong>大きさ（$x_1$）</strong> と <strong>重さ（$x_2$）</strong> という2次元のデータを用いていました．
+今回は単純化のため，<strong>大きさ（$x$）</strong> のみに注目して分類します．
+また，グラフで可視化するために，リンゴを$0$，メロンを$1$と表現することにします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">9.5</span>, <span style="color:#ae81ff">11.2</span>, <span style="color:#ae81ff">10.3</span>, <span style="color:#ae81ff">11.5</span>, <span style="color:#ae81ff">13.4</span>, <span style="color:#ae81ff">12.9</span>, <span style="color:#ae81ff">14.2</span>]) <span style="color:#75715e">#大きさ（cm）</span>
+label <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>]) <span style="color:#75715e">#カテゴリ</span>
+x <span style="color:#f92672">=</span> (x <span style="color:#f92672">-</span> x<span style="color:#f92672">.</span>mean()) <span style="color:#f92672">/</span> x<span style="color:#f92672">.</span>std() <span style="color:#f92672">//</span><span style="color:#960050;background-color:#1e0010">標準化</span>
+plt<span style="color:#f92672">.</span>scatter(x, label, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/290ecebd48cdb4ad264677c1072a4e26"><img src="https://i.gyazo.com/290ecebd48cdb4ad264677c1072a4e26.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ロジスティック回帰
+</h1>
+
+
+<p>今回取り上げる手法は <strong>ロジスティック回帰</strong> です．
+”回帰”という文字列が含まれますが，実際は前回の線形判別分析と同様に <strong>分類</strong> を目的とした手法です．
+確率モデルとして用いられる <strong>ロジスティック関数（シグモイド関数）</strong> に，
+対象のデータを回帰させることから，その名前が付けられています．</p>
+
+<h2 id="ロジスティック関数">ロジスティック関数</h2>
+
+<p>まずは，ロジスティック関数$p(x)$の定義を確認しましょう．
+ロジスティック関数$p(x)$は，$x$が増加すると$1$に漸近し，また，$x$が減少すると$0$に漸近するという特徴を持ちます．</p>
+
+<p>$$
+p(x) = \frac{1}{1 + e^{-x}}
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">px</span>(x):
+    value <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> np<span style="color:#f92672">.</span>exp(<span style="color:#f92672">-</span>x))
+    <span style="color:#66d9ef">return</span> value
+
+x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.01</span>)
+y_ <span style="color:#f92672">=</span> px(x_)
+plt<span style="color:#f92672">.</span>plot(x_,y_)    
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/553c6a5801eb7dc8e7bb679e4c12e589"><img src="https://i.gyazo.com/553c6a5801eb7dc8e7bb679e4c12e589.png" alt="Image from Gyazo" /></a></p>
+
+<p>次に，入力$x$に依存して，関数の形状がどのように変化するか見てみましょう．
+下記のグラフは$x$，$5x$，$5x + 10$を入力としたときのロジスティック関数の比較です．
+入力が変化すると，<strong>傾き</strong> や <strong>変曲点の位置</strong> が変わることがわかります．</p>
+
+<p>$$
+p(5x) = \frac{1}{1 + e^{-(5x)}}
+$$</p>
+
+<p>$$
+p(5x + 10) = \frac{1}{1 + e^{-(5x + 10)}}
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.01</span>)
+y1_ <span style="color:#f92672">=</span> px(x_)
+y2_ <span style="color:#f92672">=</span> px(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> x_)
+y3_ <span style="color:#f92672">=</span> px(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> x_ <span style="color:#f92672">+</span> <span style="color:#ae81ff">10</span>)
+plt<span style="color:#f92672">.</span>plot(x_,y1_, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;x&#34;</span>)
+plt<span style="color:#f92672">.</span>plot(x_,y2_, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5x&#34;</span>)
+plt<span style="color:#f92672">.</span>plot(x_,y3_, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5x + 10&#34;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+plt<span style="color:#f92672">.</span>legend() <span style="color:#75715e">#判例を表示</span></code></pre></div>
+<p><a href="https://gyazo.com/73b984c7b2da2955ba7133e5c80da8e6"><img src="https://i.gyazo.com/73b984c7b2da2955ba7133e5c80da8e6.png" alt="Image from Gyazo" /></a></p>
+
+<p>そこで，ロジスティック関数の入力の一般式$f(x)$を下記のように定義します．
+$w_1$は傾き，$w_2$は変曲点の位置を決めるパラメータです．
+これらのパラメータを調整することで，ロジスティック関数の形状を自由に変えることができます．</p>
+
+<p>$$
+f(x) = w_1 \cdot x + w_0
+$$</p>
+
+<h2 id="尤度">尤度</h2>
+
+<p>次にもっともらしさを表す指標である <strong>尤度</strong> について考えます．
+ロジスティック回帰では，この <strong>尤度</strong> を最大化するようなパラメータを求めることが目的となります．</p>
+
+<p>最初に，$f(x)=x$（$w_1 = 1$，$w_0 = 0$ ）を入力とした場合を考えます．
+このとき，リンゴとメロンの大きさ$x$に対する，ロジスティック関数$p(x)$の値を計算します．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">p <span style="color:#f92672">=</span> px(x)
+<span style="color:#66d9ef">print</span>(x)
+<span style="color:#66d9ef">print</span>(p)
+<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>p)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">1.49090975</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.41564757</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.98490402</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.22589542</span>  <span style="color:#ae81ff">0.9758682</span>   <span style="color:#ae81ff">0.65961462</span>
+  <span style="color:#ae81ff">1.48187394</span>]
+[<span style="color:#ae81ff">0.18378522</span> <span style="color:#ae81ff">0.39755872</span> <span style="color:#ae81ff">0.2719198</span>  <span style="color:#ae81ff">0.44376508</span> <span style="color:#ae81ff">0.72628761</span> <span style="color:#ae81ff">0.65917381</span>
+ <span style="color:#ae81ff">0.81485546</span>]
+[<span style="color:#ae81ff">0.81621478</span> <span style="color:#ae81ff">0.60244128</span> <span style="color:#ae81ff">0.7280802</span>  <span style="color:#ae81ff">0.55623492</span> <span style="color:#ae81ff">0.27371239</span> <span style="color:#ae81ff">0.34082619</span>
+ <span style="color:#ae81ff">0.18514454</span>]</code></pre></div>
+<p>計算された値は，ロジスティック関数の特徴から，$0$から$1$の範囲に収まります．
+ロジスティック回帰では，この値を <strong>大きさが$x$であるときのメロンである確率</strong> とみなします．
+例えば，$x=-1.49$がメロンである確率は$18\%$，
+$x=0.98$がメロンである確率は$73\%$となります．
+また，<strong>大きさが$x$であるときのリンゴである確率</strong> は $1-p(x)$であるため，
+例えば，$x=-1.49$がリンゴである確率は$82\%$，
+$x=0.98$がリンゴである確率は$27\%$となります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0.01</span>)
+y_ <span style="color:#f92672">=</span> px(x_)
+p <span style="color:#f92672">=</span> px(x)
+plt<span style="color:#f92672">.</span>scatter(x, label, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>scatter(x, p, c<span style="color:#f92672">=</span>p)
+plt<span style="color:#f92672">.</span>plot(x_,y_)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/a135dcebade2a878d4f32dced1815ab4"><img src="https://i.gyazo.com/a135dcebade2a878d4f32dced1815ab4.png" alt="Image from Gyazo" /></a></p>
+
+<p>このときの尤度$L(x)$は下記のように定義します．
+尤度は，$x_1 \cdots x_4$がリンゴ，また，$x_5 \cdots x_7$がメロンであるときの尤もらしさを表現しています．
+つまり，前方の4つの項は，$x_1 \cdots x_4$がリンゴであるときの同時確率，
+また，後方の3つの項は，$x_5 \cdots x_7$がメロンであるときの同時確率であり，
+これらの同時確率を掛け合わせた値が尤度$L(x)$となります．</p>
+
+<p>$$
+L(x) = (1 - p(x_1)) \cdot (1 - p(x_2)) \cdot (1 - p(x_3)) \cdot (1 - p(x_4)) \cdot p(x_5) \cdot p(x_6) \cdot p(x_7)
+$$</p>
+
+<p>$$
+L(x) = 0.82 \cdot 0.60 \cdot 0.72 \cdot 0.56 \cdot 0.73\cdot 0.66 \cdot 0.81
+$$</p>
+
+<p>$$
+L(x) =0.078
+$$</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lx</span>(w, x): <span style="color:#75715e">#尤度</span>
+    apple <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(label<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>)
+    melon <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(label<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>)
+    p_apple <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>prod(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> px(w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x[apple] <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">0</span>])) <span style="color:#75715e">#リンゴである確率</span>
+    p_melon <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>prod(px(w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x[melon] <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">0</span>])) <span style="color:#75715e">#メロンである確率</span>
+    l <span style="color:#f92672">=</span> p_apple <span style="color:#f92672">*</span> p_melon
+    <span style="color:#66d9ef">return</span> l
+
+w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>])
+l <span style="color:#f92672">=</span> lx(w, x)
+<span style="color:#66d9ef">print</span>(l)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">0.07768654594308204</span></code></pre></div>
+<p>ここで，求めたのは$w_1=1$，$w_0=0$のときの尤度$L(x)$です．
+当然，このパラメータの値が変われば，尤度の値も変わります．
+そこで，尤度$L(x)$を最大化するような，$w_1$，$w_0$を求めます．
+このような手法は <strong>最尤推定</strong> と呼ばれ，ロジスティック回帰で主に用いられます．</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  数値解の導出
+</h1>
+
+
+<p>それでは，数値解を導出してみましょう．
+前回も用いた <strong>minimize</strong> 関数を利用します．
+今回も目的は尤度の <strong>最大化</strong> です．
+そこで，符号を反転した目的関数$g(x)$を定義しています．
+求めた数値解は$w_0 = -8.95$，$w_1 = 34.54$です．
+このパラメータで尤度を求めると$L(x) \simeq 1$となり，
+ほぼ正確に分類できたことが分かります．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gx</span>(w, x):
+    value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> lx(w, x)
+    <span style="color:#66d9ef">return</span> value
+
+w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>])
+result <span style="color:#f92672">=</span> minimize(gx, w_init, args<span style="color:#f92672">=</span>(x), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SLSQP&#34;</span>)
+<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">8.94836536</span> <span style="color:#ae81ff">34.53672525</span>]</code></pre></div>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>x
+<span style="color:#66d9ef">print</span>(lx(w, x))</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0.99999896366082</span></code></pre></div>
+<p>最後にグラフを描いて可視化してみましょう．
+ロジスティック関数により，リンゴとメロンが正確に分類されていることがわかります．
+決定境界は$f(x) = 34.54 \cdot x - 8.95 = 0$を解くことで求めることができます．
+これを解くと$x = 0.26$となるため，$x<0.26$であれば **リンゴ** ，
+$x>0.26$であれば <strong>メロン</strong> と分類することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0.01</span>)
+y_ <span style="color:#f92672">=</span> px(w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x_ <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">0</span>])
+p <span style="color:#f92672">=</span> px(w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">0</span>])
+plt<span style="color:#f92672">.</span>scatter(x, label, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>scatter(x, p, c<span style="color:#f92672">=</span>p)
+plt<span style="color:#f92672">.</span>plot(x_,y_)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/0fa8e4a86b95654bbf0c11e4a63b7a5b"><img src="https://i.gyazo.com/0fa8e4a86b95654bbf0c11e4a63b7a5b.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274222446&linkId=1a63210b6dc95e90156695289116cb1b&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B078767Y56&linkId=cd73876214aec3d9b72777ab73920051&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4802611641&linkId=e77970ab2740fac9fdeb8b877668c257&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4839963525&linkId=14f05f671ddd917b204596b6b535981e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter8/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-07-06 22:30:51.641695 &#43;0900 JST m=&#43;0.152629045">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
