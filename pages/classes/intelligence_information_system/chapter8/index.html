@@ -266,6 +266,10 @@ $w_1$は傾き，$w_2$は変曲点の位置を決めるパラメータです．
 f(x) = w_1 \cdot x + w_0
 $$</p>
 
+<p>$$
+p(f(x)) = p(w_1 \cdot x + w_0) = \frac{1}{1 + e^{-(w_1 \cdot x + w_0)}}
+$$</p>
+
 <h2 id="尤度">尤度</h2>
 
 <p>次にもっともらしさを表す指標である <strong>尤度</strong> について考えます．
@@ -275,7 +279,7 @@ $$</p>
 このとき，リンゴとメロンの大きさ$x$に対する，ロジスティック関数$p(x)$の値を計算します．</p>
 
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">p <span style="color:#f92672">=</span> px(x)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">p <span style="color:#f92672">=</span> px(<span style="color:#ae81ff">1</span><span style="color:#f92672">*</span>x <span style="color:#f92672">+</span> <span style="color:#ae81ff">0</span>)
 <span style="color:#66d9ef">print</span>(x)
 <span style="color:#66d9ef">print</span>(p)
 <span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>p)</code></pre></div>
@@ -351,7 +355,7 @@ l <span style="color:#f92672">=</span> lx(w, x)
 そこで，符号を反転した目的関数$g(x)$を定義しています．
 求めた数値解は$w_0 = -8.95$，$w_1 = 34.54$です．
 このパラメータで尤度を求めると$L(x) \simeq 1$となり，
-ほぼ正確に分類できたことが分かります．</p>
+ロジスティック関数で，ほぼ正確に回帰（近似）できたことが分かります．</p>
 
 <p><strong>[In:]</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gx</span>(w, x):
@@ -371,8 +375,8 @@ result <span style="color:#f92672">=</span> minimize(gx, w_init, args<span style
 <p>最後にグラフを描いて可視化してみましょう．
 ロジスティック関数により，リンゴとメロンが正確に分類されていることがわかります．
 決定境界は$f(x) = 34.54 \cdot x - 8.95 = 0$を解くことで求めることができます．
-これを解くと$x = 0.26$となるため，$x<0.26$であれば **リンゴ** ，
-$x>0.26$であれば <strong>メロン</strong> と分類することができます．</p>
+これは，ロジスティック関数の変曲点の値が1/2であることが理由です．
+これを解くと$x = 0.26$となり，$x<0.26$であればリンゴ，$x>0.26$であれば メロンと分類することができます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0.01</span>)
 y_ <span style="color:#f92672">=</span> px(w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x_ <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">0</span>])
 p <span style="color:#f92672">=</span> px(w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">0</span>])
@@ -458,7 +462,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-07-06 22:30:51.641695 &#43;0900 JST m=&#43;0.152629045">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-07-07 12:22:08.113843 &#43;0900 JST m=&#43;0.118424556">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
