@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    決定木 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="決定木" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter10/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/0f765b0d1f5517f2690a081f53e94bd5.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook10 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize データの準備今回は，曜日（平日 or 土日） ， 時間帯（昼 or 夜） ，価格（高 or 安）， 天気（晴 or 雨） の情報を利用して， イベントの 来場者数（多 or 少） を分類（予測）してみましょう． 学習用のデータには15のサンプルが含まれています． また，学習用のデータの表現のため，データフレーム（Excelの表のようなもの）を利用します． データフレームを利用するためにPandasというライブラリを導入します． これまでの行列とは異なり，データフレームには 列名（フィールド名） を設定することが可能です．
+[In:]
+import pandas as pd df = pd.DataFrame( { &#34;曜日&#34;: [&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;土日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;土日&#34;], &#34;時間帯&#34;:[&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;], &#34;価格&#34;:[&#34;安&#34;,&#34;安&#34;,&#34;高&#34;,&#34;高&#34;,&#34;高&#34;,&#34;高&#34;,&#34;安&#34;,&#34;高&#34;,&#34;安&#34;,&#34;高&#34;,&#34;高&#34;,&#34;安&#34;,&#34;安&#34;,&#34;高&#34;,&#34;安&#34;], &#34;天気&#34;:[&#34;晴&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,], &#34;来場者数&#34;:[&#34;多&#34;,&#34;多&#34;,&#34;少&#34;,&#34;多&#34;,&#34;多&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,] } ) print(df) [Out:]" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="決定木" />
+
+
+
+  <meta name="twitter:description" content="ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook10 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize データの準備今回は，曜日（平日 or 土日） ， 時間帯（昼 or 夜） ，価格（高 or 安）， 天気（晴 or 雨） の情報を利用して， イベントの 来場者数（多 or 少） を分類（予測）してみましょう． 学習用のデータには15のサンプルが含まれています． また，学習用のデータの表現のため，データフレーム（Excelの表のようなもの）を利用します． データフレームを利用するためにPandasというライブラリを導入します． これまでの行列とは異なり，データフレームには 列名（フィールド名） を設定することが可能です．
+[In:]
+import pandas as pd df = pd.DataFrame( { &#34;曜日&#34;: [&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;土日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;土日&#34;], &#34;時間帯&#34;:[&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;], &#34;価格&#34;:[&#34;安&#34;,&#34;安&#34;,&#34;高&#34;,&#34;高&#34;,&#34;高&#34;,&#34;高&#34;,&#34;安&#34;,&#34;高&#34;,&#34;安&#34;,&#34;高&#34;,&#34;高&#34;,&#34;安&#34;,&#34;安&#34;,&#34;高&#34;,&#34;安&#34;], &#34;天気&#34;:[&#34;晴&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,], &#34;来場者数&#34;:[&#34;多&#34;,&#34;多&#34;,&#34;少&#34;,&#34;多&#34;,&#34;多&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,] } ) print(df) [Out:]" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/0f765b0d1f5517f2690a081f53e94bd5.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-07-12 19:14:01 &#43;0900 JST">July 12, 2019</time>
+</div>
+
+    <h1 class="post-title">決定木</h1>
+<div class="post-line"></div>
+
+    
+
+    
+
+<p><a href="https://gyazo.com/0f765b0d1f5517f2690a081f53e94bd5"><img src="https://i.gyazo.com/0f765b0d1f5517f2690a081f53e94bd5.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ノートブックの作成
+</h1>
+
+
+<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>Notebook10</strong> とします．
+ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．
+また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>，<strong>scipy.optimize</strong> を導入しておいてください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  データの準備
+</h1>
+
+
+<p>今回は，<strong>曜日（平日 or 土日）</strong> ， <strong>時間帯（昼 or 夜）</strong> ，<strong>価格（高 or 安）</strong>， <strong>天気（晴 or 雨）</strong> の情報を利用して，
+イベントの <strong>来場者数（多 or 少）</strong> を分類（予測）してみましょう．
+学習用のデータには15のサンプルが含まれています．
+また，学習用のデータの表現のため，データフレーム（Excelの表のようなもの）を利用します．
+データフレームを利用するために<a href="https://pandas.pydata.org/">Pandas</a>というライブラリを導入します．
+これまでの行列とは異なり，データフレームには <strong>列名（フィールド名）</strong> を設定することが可能です．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(
+    {
+        <span style="color:#e6db74">&#34;曜日&#34;</span>: [<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;土日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;土日&#34;</span>],
+        <span style="color:#e6db74">&#34;時間帯&#34;</span>:[<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>],
+        <span style="color:#e6db74">&#34;価格&#34;</span>:[<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>],
+        <span style="color:#e6db74">&#34;天気&#34;</span>:[<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;雨&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;雨&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;雨&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;雨&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,],
+        <span style="color:#e6db74">&#34;来場者数&#34;</span>:[<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,]
+    }
+)
+<span style="color:#66d9ef">print</span>(df)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">    曜日 時間帯 価格 天気 来場者数
+0   平日   昼  安  晴    多
+1   平日   夜  安  晴    多
+2   平日   昼  高  晴    少
+3   平日   昼  高  雨    多
+4   平日   夜  高  晴    多
+5   平日   昼  高  晴    少
+6   土日   夜  安  雨    少
+7   平日   昼  高  晴    少
+8   平日   夜  安  雨    少
+9   平日   昼  高  晴    少
+10  平日   夜  高  晴    多
+11  平日   昼  安  晴    多
+12  平日   昼  安  雨    多
+13  平日   夜  高  晴    多
+14  土日   昼  安  晴    多</code></pre></div>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn <span style="color:#f92672">import</span> tree
+t <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>DecisionTreeClassifier(criterion<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;entropy&#34;</span>, max_depth<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+t <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>fit(data, target)
+<span style="color:#66d9ef">print</span>(data<span style="color:#f92672">.</span>columns)
+<span style="color:#66d9ef">print</span>(t<span style="color:#f92672">.</span>feature_importances_)</code></pre></div>
+<p>決定木の生成には，機械学習のライブラリである <a href="https://scikit-learn.org/stable/">scikit-learn</a> を利用しますが，
+&ldquo;平日&rdquo;や&rdquo;&ldquo;土日&rdquo;などの <strong>質的変数</strong> を扱うことができないため，上記のデータフレームを <strong>ダミー変数</strong> に変換する必要があります（R言語の <strong>rpart</strong> なら質的変数のままで良いのになぁ）．
+ダミー変数とは，文字列などの質的変数を，<strong>量的変数（数値）</strong> で表したものです．
+例えば &ldquo;平日&rdquo;を&rdquo;1&rdquo;，&rdquo;土日&rdquo;を&rdquo;0&rdquo;として表します．
+ダミー変数への変換は，Pandasの <strong>get_dummies</strong> 関数を用いるだけです（多重共線性を避けるため <strong>drop_first=True</strong> を設定しています）．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;曜日&#34;</span>,<span style="color:#e6db74">&#34;時間帯&#34;</span>,<span style="color:#e6db74">&#34;価格&#34;</span>,<span style="color:#e6db74">&#34;天気&#34;</span>]]
+target <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#34;来場者数&#34;</span>]
+data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>get_dummies(data, drop_first<span style="color:#f92672">=</span>True) <span style="color:#75715e">#ダミー変数の生成</span>
+target <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>get_dummies(target, drop_first<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">print</span>(data)
+<span style="color:#66d9ef">print</span>(target)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">   曜日_平日  時間帯_昼  価格_高  天気_雨
+0       1      1     0     0
+1       1      0     0     0
+2       1      1     1     0
+3       1      1     1     1
+4       1      0     1     0
+5       1      1     1     0
+6       0      0     0     1
+7       1      1     1     0
+8       1      0     0     1
+9       1      1     1     0
+10      1      0     1     0
+11      1      1     0     0
+12      1      1     0     1
+13      1      0     1     0
+14      0      1     0     0
+    少
+0   0
+1   0
+2   1
+3   0
+4   0
+5   1
+6   1
+7   1
+8   1
+9   1
+10  0
+11  0
+12  0
+13  0
+14  0</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  決定木のアルゴリズム
+</h1>
+
+
+<p>それでは， 今回のテーマである <strong>決定木</strong> について考えていきましょう．
+決定木は，これまでに紹介したロジスティック回帰やK近傍法のように分類（予測）のための手法です．
+分類のプロセスが <strong>木構造</strong> で表されることから，その名前が付けられました．
+決定木を生成するためには，<strong>ID3</strong>，<strong>C4.5</strong>，<strong>CART</strong> などのアルゴリズムが提案されています．
+これらのアルゴリズムは，<strong>エントロピー（平均情報量）</strong> や <strong>ジニ係数</strong> を基準に，
+サンプルの分割することを繰り返すことで，木構造を形成するという特徴を持ちます．
+ここでは，エントロピーを利用した，サンプルの分割に関して解説します．</p>
+
+<h3 id="情報量">情報量</h3>
+
+<p><strong>情報量</strong> とは，ある事象が起こった際の，起こりにくさを表す尺度です．
+事象を$E$，その事象が発生する確率を$P(E)$とすると，下記の式で情報量$I(E)$を求めることができます（対数の底は$2$とすることが多いです）．</p>
+
+<p>$$I(E) = \log_2\left( \frac{1}{P(E)} \right) = - \log_2( P(E) )$$</p>
+
+<p>例えば，いびつな形のサイコロを考えてみましょう．
+このサイコロは，1の目が出やすく，他の2,3,4,5,6の目は出にくいという特殊な形状だとします（確率は表に記載）．
+ここで，1の目が出る情報量を求めると，</p>
+
+<p>$$I(1の目) = - \log_2( P(1の目) ) =  - \log_2( 0.5 ) = 1$$</p>
+
+<p>また，2の目が出る情報量を求めると，</p>
+
+<p>$$I(2の目) = - \log_2( P(2の目) ) =  - \log_2( 0.1 ) = 3.32$$</p>
+
+<p>となります．
+このように，めったに起こることがない事象は情報量が <strong>大きく</strong>，
+頻繁に起こる事象は情報量が <strong>小さく</strong> なるという特徴を持ちます．</p>
+
+<table>
+<thead>
+<tr>
+<th>事象$E$（サイコロの目）</th>
+<th>確率$P(E)$</th>
+<th>情報量$I(E)$</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>1</td>
+<td>0.5</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>0.1</td>
+<td>3.32</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>0.1</td>
+<td>3.32</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>0.1</td>
+<td>3.32</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>0.1</td>
+<td>3.32</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>0.1</td>
+<td>3.32</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="平均情報量-エントロピー">平均情報量（エントロピー）</h3>
+
+<p><strong>平均情報量（エントロピー）</strong> とは，上記の <strong>情報量</strong> の期待値（平均値）です．
+確率変数（サイコロ）を$X$，結果として起こりうる事象（1,2,3,4,5,6の目）を$E_i$とすると，下記の式でエントロピー$H(X)$を求めることができます．</p>
+
+<p>$$H(X) = \sum_{E_i} P(E_i) \cdot I(E_i)$$</p>
+
+<p>例えば，上記のサイコロの例で，エントロピーを求めると，</p>
+
+<p>$$H(サイコロ) = P(1の目) \cdot I(1の目) + \cdots + P(6の目) \cdot I(6の目) $$</p>
+
+<p>$$H(サイコロ) = 0.5 \cdot 1 + (0.1 \cdot 3.32) \times 5 = 2.16$$</p>
+
+<p>となります．
+エントロピーは，事象の発生確率が，均一であるほど <strong>大きく</strong>,
+偏りがあるほど <strong>小さく</strong> なるという特徴を持ちます．</p>
+
+<h3 id="データセット-分割前-のエントロピー">データセット（分割前）のエントロピー</h3>
+
+<p>それでは，来場者数のデータセットのエントロピーを計算してみましょう．
+15のサンプルにおいて，来場者が多となる確率は $9 / 15$ ，少となる確率は $6 / 15$ です．
+この確率を基にエントロピーを計算すると$0.97$となります．</p>
+
+<table>
+<thead>
+<tr>
+<th>事象$E$（来場者数）</th>
+<th>確率$P(E)$</th>
+<th>情報量$I(E)$</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>多</td>
+<td>9 / 15</td>
+<td>0.74</td>
+</tr>
+
+<tr>
+<td>少</td>
+<td>6 / 15</td>
+<td>1.32</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#75715e">#エントロピーの定義</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">entropy</span>(probs):
+    value <span style="color:#f92672">=</span> (probs <span style="color:#f92672">*</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>log2(probs))<span style="color:#f92672">.</span>sum()
+    <span style="color:#66d9ef">return</span> value;
+
+<span style="color:#75715e">#分割前のエントロピー</span>
+probs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">9</span><span style="color:#f92672">/</span><span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">6</span><span style="color:#f92672">/</span><span style="color:#ae81ff">15</span>])
+e <span style="color:#f92672">=</span> entropy(probs)
+<span style="color:#66d9ef">print</span>(e)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">0.9709505944546686</code></pre></div>
+<h3 id="データセット-分割後-のエントロピー">データセット（分割後）のエントロピー</h3>
+
+<p>ここでは，<strong>価格</strong> でデータセットを分割してみましょう．
+価格が <strong>高</strong> は8サンプル，<strong>安</strong> は7サンプルとなります．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">high <span style="color:#f92672">=</span> data[data[<span style="color:#e6db74">&#34;価格_高&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>]
+low <span style="color:#f92672">=</span> data[data[<span style="color:#e6db74">&#34;価格_高&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>]
+
+target_high <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span>loc[high<span style="color:#f92672">.</span>index]
+<span style="color:#66d9ef">print</span>(target_high)
+target_low <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span>loc[low<span style="color:#f92672">.</span>index]
+<span style="color:#66d9ef">print</span>(target_low)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">    少
+2   1
+3   0
+4   0
+5   1
+7   1
+9   1
+10  0
+13  0
+    少
+0   0
+1   0
+6   1
+8   1
+11  0
+12  0
+14  0</code></pre></div>
+<p>分割したそれぞれのデータセットで，エントロピーを計算すると，
+高のエントロピーは $1.00$，安のエントロピーは $0.86$ となりました．</p>
+
+<p><strong>(価格=高)</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>事象$E$（来場者数）</th>
+<th>確率$P(E)$</th>
+<th>情報量$I(E)$</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>多</td>
+<td>4 / 8</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>少</td>
+<td>4 / 8</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>(価格=安)</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>事象$E$（来場者数）</th>
+<th>確率$P(E)$</th>
+<th>情報量$I(E)$</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>多</td>
+<td>2 / 7</td>
+<td>1,80</td>
+</tr>
+
+<tr>
+<td>少</td>
+<td>5 / 7</td>
+<td>0.49</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#75715e">#分割後（価格_高）のエントロピー</span>
+probs_high <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">4</span><span style="color:#f92672">/</span><span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">4</span><span style="color:#f92672">/</span><span style="color:#ae81ff">8</span>])
+e_high <span style="color:#f92672">=</span> entropy(probs_high)
+<span style="color:#66d9ef">print</span>(e_high)
+
+<span style="color:#75715e">#分割後（価格_低）のエントロピー</span>
+probs_low <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>])
+e_low <span style="color:#f92672">=</span> entropy(probs_low)
+<span style="color:#66d9ef">print</span>(e_low)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">1.0
+0.863120568566631</code></pre></div>
+<p>このエントロピーの期待値を求め，分割前のエントロピーとの差を計算すると$0.035$となります．
+この値は <strong>情報利得（Information Gain）</strong> と呼ばれ，分割後のデータが偏るほど（不純度が減ると），大きな値となります．
+例えば，分割後のデータセットが，全て&rdquo;多&rdquo;，または，全て&rdquo;少&rdquo;となるとき，情報利得は最大となります．
+全ての属性（曜日，時間帯，価格，天気）の情報利得を調べると，下記の表のようになり，
+最も値の大きい <strong>価格</strong> が分割のための基準として採用されます．
+この操作を繰り返すことで，決定木が生成されます．</p>
+
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>情報利得</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>曜日</td>
+<td>0.005</td>
+</tr>
+
+<tr>
+<td>時間帯</td>
+<td>0.009</td>
+</tr>
+
+<tr>
+<td>価格</td>
+<td>0.035</td>
+</tr>
+
+<tr>
+<td>天気</td>
+<td>0.011</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#75715e">#情報利得の定義</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gain</span>(data, target, attr):
+
+    probs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([target<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> len(target), (len(target) <span style="color:#f92672">-</span> target<span style="color:#f92672">.</span>sum()) <span style="color:#f92672">/</span> len(target)])
+    e <span style="color:#f92672">=</span> entropy(probs) <span style="color:#75715e">#分割前のエントロピー</span>
+
+    t <span style="color:#f92672">=</span> data[data[attr] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>]
+    f <span style="color:#f92672">=</span> data[data[attr] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>]
+
+    target_t <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span>loc[t<span style="color:#f92672">.</span>index]
+    target_f <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span>loc[f<span style="color:#f92672">.</span>index]
+
+    probs_t <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([target_t<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> len(target_t),  (len(target_t) <span style="color:#f92672">-</span> target_t<span style="color:#f92672">.</span>sum()) <span style="color:#f92672">/</span> len(target_t)])
+    probs_f <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([target_f<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> len(target_f),  (len(target_f) <span style="color:#f92672">-</span> target_f<span style="color:#f92672">.</span>sum()) <span style="color:#f92672">/</span> len(target_f)])
+
+    e_t <span style="color:#f92672">=</span> entropy(probs_t) <span style="color:#75715e">#分割後のエントロピー</span>
+    e_f <span style="color:#f92672">=</span> entropy(probs_f)
+
+    g <span style="color:#f92672">=</span> e <span style="color:#f92672">-</span> ((len(t) <span style="color:#f92672">/</span> len(data)) <span style="color:#f92672">*</span> e_t <span style="color:#f92672">+</span> (len(f) <span style="color:#f92672">/</span> len(data)) <span style="color:#f92672">*</span> e_f) <span style="color:#75715e">#情報利得</span>
+
+    <span style="color:#66d9ef">return</span> g
+
+g_price <span style="color:#f92672">=</span> gain(data, target, <span style="color:#e6db74">&#34;曜日_平日&#34;</span>)
+<span style="color:#66d9ef">print</span>(g_price)
+
+g_price <span style="color:#f92672">=</span> gain(data, target, <span style="color:#e6db74">&#34;時間帯_昼&#34;</span>)
+<span style="color:#66d9ef">print</span>(g_price)
+
+g_price <span style="color:#f92672">=</span> gain(data, target, <span style="color:#e6db74">&#34;価格_高&#34;</span>)
+<span style="color:#66d9ef">print</span>(g_price)
+
+g_price <span style="color:#f92672">=</span> gain(data, target, <span style="color:#e6db74">&#34;天気_雨&#34;</span>)
+<span style="color:#66d9ef">print</span>(g_price)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0.004545537028176172</span> <span style="color:#75715e">#曜日_平日</span>
+<span style="color:#ae81ff">0.008986624929939513</span> <span style="color:#75715e">#時間帯_昼</span>
+<span style="color:#ae81ff">0.03482766245690749</span> <span style="color:#75715e">#価格_高</span>
+<span style="color:#ae81ff">0.010799704414199196</span> <span style="color:#75715e">#天気_雨</span></code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  scikit-learnで決定木
+</h1>
+
+
+<p>それでは，機械学習のライブラリである <a href="https://scikit-learn.org/stable/">scikit-learn</a> を利用して決定木を生成してみましょう．
+scikit-learnでは， <strong>CART</strong> と呼ばれるアルゴリズムで決定木を生成します．
+また， 分割の基準として標準では <strong>ジニ係数</strong> が用いられますが，ここでは上記で説明した <strong>エントロピー</strong> を利用します．
+決定木を生成することはとても簡単なのですが，生成された決定木を可視化するには少し工夫が必要です．
+まずは，可視化のために <strong>pydotplus</strong> と <strong>graphviz</strong> のライブラリを導入します．</p>
+
+<p><a href="https://gyazo.com/c4235afba31cf5858449fb0fac233e0b"><img src="https://i.gyazo.com/c4235afba31cf5858449fb0fac233e0b.png" alt="Image from Gyazo" /></a></p>
+
+<p>決定木の生成には <strong>tree.DecisionTreeClassifier</strong> 関数を用います．
+ここで，基準（criterion）を <strong>entropy</strong> ，木の最大の深さ（max_depth）を <strong>3</strong> ，
+乱数のシード（random_state）を <strong>0</strong> に固定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">from</span> sklearn <span style="color:#f92672">import</span> tree
+t <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>DecisionTreeClassifier(criterion<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;entropy&#34;</span>, max_depth<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+t <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>fit(data, target)
+<span style="color:#66d9ef">print</span>(data<span style="color:#f92672">.</span>columns)</code></pre></div>
+<p>最後に生成された決定木を可視化します．
+可視化のためには，<a href="https://www.graphviz.org/">Graphviz</a>で表示可能な <strong>dotフォーマット</strong> でファイルを出力し，
+これを<a href="https://pydotplus.readthedocs.io/">PyDotPlus</a>で <strong>pngフォーマット</strong> に変換するという手続きが必要になります．
+この図では，日本語表示が出来ないため，&rdquo;曜日_平日 → Weekday&rdquo;, &ldquo;時間帯_昼 → Noon&rdquo;, &ldquo;価格_高 → Expensive&rdquo;, &ldquo;天気_雨 -&gt; Rain&rdquo;に</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.tree <span style="color:#f92672">import</span> export_graphviz
+<span style="color:#f92672">import</span> pydotplus
+<span style="color:#f92672">from</span> IPython.display <span style="color:#f92672">import</span> Image
+
+dot_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./tree.dot&#34;</span>
+export_graphviz(t, out_file<span style="color:#f92672">=</span>dot_file, feature_names<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;Weekday&#34;</span>, <span style="color:#e6db74">&#34;Noon&#34;</span>, <span style="color:#e6db74">&#34;Expensive&#34;</span>, <span style="color:#e6db74">&#34;Rain&#34;</span>], class_names<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;Large&#34;</span>,<span style="color:#e6db74">&#34;Small&#34;</span>])
+graph <span style="color:#f92672">=</span> pydotplus<span style="color:#f92672">.</span>graph_from_dot_file(dot_file)
+
+png_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./tree.png&#34;</span>
+graph<span style="color:#f92672">.</span>write_png(png_file)
+Image(png_file)</code></pre></div>
+<p>下図が生成された決定木です．
+決定木の根（ルート）から，属性に基づき分類し，最終的に到達する葉（リーフ）で <strong>Large（多）</strong> か <strong>Small（少）</strong> かを判定します．
+例えば，<strong>Expensive &lt;= 0.5</strong> は，チケット価格（価格_高）による分類であり，<strong>True</strong> は安，<strong>False</strong>　は高を表しています．</p>
+
+<p><strong>[Out:]</strong>
+<a href="https://gyazo.com/f044c4fed8b94280c6db197d016410f3"><img src="https://i.gyazo.com/f044c4fed8b94280c6db197d016410f3.png" alt="Image from Gyazo" /></a></p>
+
+<p>最後に，<strong>predict</strong> 関数を利用して，決定木に対数する入力と出力の関係を確認します．
+例えば，「平日（1），昼（1），安（0），晴（0）」を入力すると，来場者数の予測は「多（0）」という結果が得られます．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">result <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>predict([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]]) <span style="color:#75715e">#平日，昼，安，晴</span>
+<span style="color:#66d9ef">print</span>(result) <span style="color:#75715e">#多</span>
+
+result <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>predict([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]]) <span style="color:#75715e">#平日，夜，安　晴</span>
+<span style="color:#66d9ef">print</span>(result) <span style="color:#75715e">#多</span>
+
+result <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>predict([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>]]) <span style="color:#75715e">#平日，昼，高，晴</span>
+<span style="color:#66d9ef">print</span>(result) <span style="color:#75715e">#少</span></code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[0]
+[0]
+[1]</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274222446&linkId=1a63210b6dc95e90156695289116cb1b&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B078767Y56&linkId=cd73876214aec3d9b72777ab73920051&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4802611641&linkId=e77970ab2740fac9fdeb8b877668c257&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4839963525&linkId=14f05f671ddd917b204596b6b535981e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter10/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-07-19 16:36:17.4818852 &#43;0900 JST m=&#43;1.434869201">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
