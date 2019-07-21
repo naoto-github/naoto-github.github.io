@@ -6,10 +6,83 @@
     <description>Recent content on MLAB</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 06 Jul 2019 12:29:32 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jul 2019 14:30:56 +0900</lastBuildDate>
     
 	<atom:link href="https://mukai-lab.info/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>k平均法</title>
+      <link>https://mukai-lab.info/pages/classes/intelligence_information_system/chapter11/</link>
+      <pubDate>Sat, 20 Jul 2019 14:30:56 +0900</pubDate>
+      
+      <guid>https://mukai-lab.info/pages/classes/intelligence_information_system/chapter11/</guid>
+      <description>クラスタリング  これまで取り上げた手法は全て 教師あり学習 でした． 今回は，正解（教師）が与えられない 教師なし学習 に注目します． 教師なし学習の一つが クラスタリング と呼ばれる手法です． クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります． 分類と混同されがちですが，正解（教師）は存在しないため， 同じクラスタに割り当てられたデータは 似ている とみなすことができますが， その割り当てが 正しい， 正しくない といった判断は出来ないことに注意してください． また，クラスタリングには，階層型手法 と 非階層型手法 に分かれますが， ここでは非階層型手法を取り上げることにします．
+ ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook11 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot, pandas を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt import pandas as pd  データの準備  ユニセフ・世界子供白書が公開している人口統計指標のデータを用います． ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します． 下記リンクからCSVファイルをダウンロードしてください．
+世界の出生率と死亡率（population2016.csv）
+ファイルをダウンロードしたら，Jupyter Notebookのフォルダにアップロードし， pandasのデータフレームとして読み込みます． 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．
+data = pd.read_csv(&amp;#34;population2016.csv&amp;#34;) data.head() #最初の5件だけ表示</description>
+    </item>
+    
+    <item>
+      <title>決定木</title>
+      <link>https://mukai-lab.info/pages/classes/intelligence_information_system/chapter10/</link>
+      <pubDate>Fri, 12 Jul 2019 19:14:01 +0900</pubDate>
+      
+      <guid>https://mukai-lab.info/pages/classes/intelligence_information_system/chapter10/</guid>
+      <description>ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook10 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize  データの準備  今回は，曜日（平日 or 土日） ， 時間帯（昼 or 夜） ，価格（高 or 安）， 天気（晴 or 雨） の情報を利用して， イベントの 来場者数（多 or 少） を分類（予測）してみましょう． 学習用のデータには15のサンプルが含まれています． また，学習用のデータの表現のため，データフレーム（Excelの表のようなもの）を利用します． データフレームを利用するためにPandasというライブラリを導入します． これまでの行列とは異なり，データフレームには 属性名（列名） を設定することが可能です．
+[In:]
+import pandas as pd df = pd.DataFrame( { &amp;#34;曜日&amp;#34;: [&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;土日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;平日&amp;#34;,&amp;#34;土日&amp;#34;], &amp;#34;時間帯&amp;#34;:[&amp;#34;昼&amp;#34;,&amp;#34;夜&amp;#34;,&amp;#34;昼&amp;#34;,&amp;#34;昼&amp;#34;,&amp;#34;夜&amp;#34;,&amp;#34;昼&amp;#34;,&amp;#34;夜&amp;#34;,&amp;#34;昼&amp;#34;,&amp;#34;夜&amp;#34;,&amp;#34;昼&amp;#34;,&amp;#34;夜&amp;#34;,&amp;#34;昼&amp;#34;,&amp;#34;昼&amp;#34;,&amp;#34;夜&amp;#34;,&amp;#34;昼&amp;#34;], &amp;#34;価格&amp;#34;:[&amp;#34;安&amp;#34;,&amp;#34;安&amp;#34;,&amp;#34;高&amp;#34;,&amp;#34;高&amp;#34;,&amp;#34;高&amp;#34;,&amp;#34;高&amp;#34;,&amp;#34;安&amp;#34;,&amp;#34;高&amp;#34;,&amp;#34;安&amp;#34;,&amp;#34;高&amp;#34;,&amp;#34;高&amp;#34;,&amp;#34;安&amp;#34;,&amp;#34;安&amp;#34;,&amp;#34;高&amp;#34;,&amp;#34;安&amp;#34;], &amp;#34;天気&amp;#34;:[&amp;#34;晴&amp;#34;,&amp;#34;晴&amp;#34;,&amp;#34;晴&amp;#34;,&amp;#34;雨&amp;#34;,&amp;#34;晴&amp;#34;,&amp;#34;晴&amp;#34;,&amp;#34;雨&amp;#34;,&amp;#34;晴&amp;#34;,&amp;#34;雨&amp;#34;,&amp;#34;晴&amp;#34;,&amp;#34;晴&amp;#34;,&amp;#34;晴&amp;#34;,&amp;#34;雨&amp;#34;,&amp;#34;晴&amp;#34;,&amp;#34;晴&amp;#34;,], &amp;#34;来場者数&amp;#34;:[&amp;#34;多&amp;#34;,&amp;#34;多&amp;#34;,&amp;#34;少&amp;#34;,&amp;#34;多&amp;#34;,&amp;#34;多&amp;#34;,&amp;#34;少&amp;#34;,&amp;#34;少&amp;#34;,&amp;#34;少&amp;#34;,&amp;#34;少&amp;#34;,&amp;#34;少&amp;#34;,&amp;#34;多&amp;#34;,&amp;#34;多&amp;#34;,&amp;#34;多&amp;#34;,&amp;#34;多&amp;#34;,&amp;#34;多&amp;#34;,] } ) print(df) [Out:]</description>
+    </item>
+    
+    <item>
+      <title>Tobii Eye Trackerでシューティング</title>
+      <link>https://mukai-lab.info/pages/tech/unity/tobii2/</link>
+      <pubDate>Thu, 11 Jul 2019 18:33:33 +0900</pubDate>
+      
+      <guid>https://mukai-lab.info/pages/tech/unity/tobii2/</guid>
+      <description>シューティング  前回はTobii Unity SDK for Desktopを利用して， オブジェクトの注視状態を取得する方法を説明しました． 今回はスクリーン上の 注視座標 を取得することを目指します． また，この注視座標を利用して，簡単なシューティング・ゲームを制作してみたいと思います．
+ プロジェクトの作成  Unityでプロジェクトを新規作成します． テンプレートは 2D ， プロジェクト名は TobiiShooting に設定します． また，Tobii Unity SDK for Desktopをプロジェクトに導入してください．
+
+ アセットの導入とオブジェクトの配置  シューティングに必要なアセットを導入します． Asset Store から Fighter Interceptor をダウンロードします（無料）． このファイターの3Dモデルを自機とします．
+また，背景色は黒にするため，Main Camera の背景（Background）は， 黒（#000000）に設定しておきます．
+次に，シーンに下記のオブジェクトを配置します．
+ 方向性ライト（Directional Light） 導入したFighter Intercepterの Fighter オブジェクト  Fighterオブジェクトの，位置（Position），回転（Rotation），スケール（Scale）は下図のように設定します．
+
+ここまでで，ゲーム画面を確認すると下記のようになります．
+
+ ミサイルのプレハブの実装  次に，自機が発射するミサイルを実装します． ミサイルは Sphere で表すことにします． シーンに追加したら Missile にリネームしてください． 位置（Position），回転（Rotation），スケール（Scale）は下図のように設定します．</description>
+    </item>
+    
+    <item>
+      <title>Tobii Eye Trackerで視線検出</title>
+      <link>https://mukai-lab.info/pages/tech/unity/tobii/</link>
+      <pubDate>Wed, 10 Jul 2019 11:06:05 +0900</pubDate>
+      
+      <guid>https://mukai-lab.info/pages/tech/unity/tobii/</guid>
+      <description>Tobii Eye Tracker  トビー・テクノロジーが開発する Tobii Pro X2や Tbii Eye Tracker 4Cなどの視線入力装置を ゲームエンジンのUnityで利用するための実装方法を解説します． これらの視線入力装置は，既に，FFXV など143のPCゲームで利用可能であり（2019年7月現在）， ゲームをより楽しむためのサポート手段として用いられています． 視線入力装置を利用したゲーム映像はTobii Gamesで公開されているので視聴してみると良いでしょう．
+Unityでの開発にはTobii Unity SDK for Desktopを利用します． この開発キットは，あくまで個人利用向けであり，分析を目的として利用する場合は，別途ライセンスの購入が必要なことに注意してください（向は分析用のライセンスも所持しています）． また，システム要件として下記が挙げられています．
+ バージョン 5 または 4.5 以上のUnity ウィンドウズ10，8.1，7 Core Softwareのインストール  それでは，Tobii Unity SDK for Desktopをダウンロードしてください． 2019年7月現在のバージョンは 4.04 です．
+ プロジェクトの作成  まずは，Unityでプロジェクトを新規作成します． テンプレートは 2D ，プロジェクト名は TobiiSample に設定します（もちろん 3D でも利用可能です）．
+
+次に，ダウンロードした，Tobii Unity SDK for Desktopをプロジェクトに導入しましょう． [Assets] → [Import Package] → [Custom Package] をクリックし，ダウンロードしたファイルを選択します．</description>
+    </item>
+    
+    <item>
+      <title>分類④・k近傍法</title>
+      <link>https://mukai-lab.info/pages/classes/intelligence_information_system/chapter9/</link>
+      <pubDate>Sun, 07 Jul 2019 12:36:17 +0900</pubDate>
+      
+      <guid>https://mukai-lab.info/pages/classes/intelligence_information_system/chapter9/</guid>
+      <description>ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook9 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize  データの準備  あらかじめ用意された機械学習のための データセット を利用することができます． ここでは，scikit-learn ライブラリに収録されている アヤメ（iris） のデータセットを用います． アヤメは草地に生息している植物であり， setosa， versicolor， virginica などの種類があります（和名はよく分かりませんでした）． このデータセットには，上記３種類のアヤメの， がく片の長さ（Sepal Length），がく片の幅（Sepal Width）， 花弁の長さ（Petal Length），花弁の幅（Petal Width）を計測したデータが含まれています．
+
+各種類に50のサンプルがあり，例えば，最初のデータは[5.1,3.5,1.4, 0.2]となっています． これは，がく片の長さが5.1cm，がく片の幅が3.5cm，花弁の長さが1.4cm，花弁の幅が0.2cmを表しています． ラベルは0,1,2のいずれかで与えられ，それぞれsetosa，virsicolor, virginicaを表しています． 最初のサンプルのラベルは0であるため，これは setosa であることがわかります．
+[In:]
+from sklearn.datasets import load_iris iris = load_iris() print(iris.feature_names) #フィールド名 print(iris.data[0:5]) #フィールド・データ print(iris.target_names) #ラベル名 print(iris.</description>
+    </item>
     
     <item>
       <title>分類③・ロジスティック回帰</title>
@@ -19,7 +92,7 @@
       <guid>https://mukai-lab.info/pages/classes/intelligence_information_system/chapter8/</guid>
       <description>ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook8 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
 import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize  データの準備  これまでは，リンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） という2次元のデータを用いていました． 今回は単純化のため，大きさ（$x$） のみに注目して分類します． また，グラフで可視化するために，リンゴを$0$，メロンを$1$と表現することにします．
-x = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） label = np.array([0, 0, 0, 0, 1, 1, 1]) #カテゴリ x = (x - x.mean()) / x.std() //標準化 plt.scatter(x, label, c=label) plt.xlabel(&amp;#34;x&amp;#34;)</description>
+x = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） label = np.array([0, 0, 0, 0, 1, 1, 1]) #カテゴリ x = (x - x.mean()) / x.std() #標準化 plt.scatter(x, label, c=label) plt.xlabel(&amp;#34;x&amp;#34;)</description>
     </item>
     
     <item>
@@ -205,7 +278,7 @@ x = [12, 20, 13, 24, 28, 30, 31, 24, 18, 33] # 気温 y = [21, 35, 22, 29, 37, 4
 関連科目: 人工知能
 授業テーマ: 機械学習の理解と実装
 授業内容 人工知能の基礎となる機械学習を学び，実践的な問題に適用するための応用力を身に付ける． 機械学習はデータから法則や傾向を抽出するための手法であり，ディープラーニングと呼ばれる画像認識技術も機械学習の一つである. 機械学習の実装には，多様なライブラリが利用可能なPython（Jupyter Notebook）を採用する．
-授業計画  機械学習とは Pythonの基本 回帰①・線形回帰 回帰②・最急降下法 回帰③・基底関数 分類①・決定境界とベクトル 分類②・線形判別分析 分類③・ロジスティック回帰 分類④・k近傍法 分類⑤・決定木 クラスタリングとは クラスタリング①・k-means法 クラスタリング②・混合ガウス分布 ディープラーニングとは ディープラーニングの応用・手書き数字の認識  課題提出方法 Google Classroomから提出すること． 提出の際は大学から提供されたユーザIDでログインが必要なことに注意すること．
+授業計画  機械学習とは Pythonの基本 回帰①・線形回帰 回帰②・最急降下法 回帰③・基底関数 分類①・決定境界とベクトル 分類②・線形判別分析 分類③・ロジスティック回帰 分類④・k近傍法 分類⑤・決定木 クラスタリング①・K平均法 クラスタリング②・混合ガウス分布 オーバーフィッティングと交差検証 機械学習の実践①・手書き文字 機械学習の実践②・ボストンの住宅価格  課題提出方法 Google Classroomから提出すること． 提出の際は大学から提供されたユーザIDでログインが必要なことに注意すること．
 参考書籍     </description>
     </item>
     
@@ -311,7 +384,7 @@ H1要素を独自のショートコード（title-logo）に置換 % sed &amp;#3
       <pubDate>Sat, 04 May 2019 19:13:02 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/tech/</guid>
-      <description> Tableau  Tableauでオープンデータを可視化 Tableauで色々なグラフを作成しよう Tableauのダッシュボードを活用しよう Tableauのマップ機能でGoogle Fitを可視化  Emotiv  Emotivで脳波を可視化 Cotexで脳波データを取得 脳波データをフーリエ解析  Tobii Eyetracker  Tobii Eye Trackerを利用した視線の認識 OpenCVを利用した視線位置の描画  RoBoHoN  ロボホンの開発環境の構築 トリガを用いた発話 QRコードの読み取り  Unity  NyARToolkit for Unityの導入 NyARToolkit for Unityで画像を表示 NyARToolkit for Unityで3Dモデルを表示 NyARToolkit for Unityで3Dモデルのアニメーション NyARToolkit for UnityでNFTを利用したマーカーの認識 Google VR SDKを利用した360°画像ビューアー Google VR SDKで視線の検知  Codecomabat  CodeCombatでプログラミング学習  enchant.js  MOONBlockでゲームプログラミング  Processing  Processingではじめての画像処理  Jekyll  Jekyllデフォルトテンプレートの自動リンク Jekyllにおけるシンタックスハイライト Liquidを利用したファイルの埋め込み Jekyllでオープン・グラフ・プロトコル（OGP）の設定  GitHub  Github Pagesでの独自ドメインの設定 Git Bashのホームディレクトリの変更  Atom  Atomに必須のプラグイン紹介  Emacs  MacでEmacs  Java  Java 8における「Access Restriction」の回避  Hugo  sedでJekyllからHugoに変換  </description>
+      <description> Tableau  Tableauでオープンデータを可視化 Tableauで色々なグラフを作成しよう Tableauのダッシュボードを活用しよう Tableauのマップ機能でGoogle Fitを可視化  Emotiv  Emotivで脳波を可視化 Cotexで脳波データを取得 脳波データをフーリエ解析  Tobii Eyetracker  Tobii Eye Trackerを利用した視線の認識 OpenCVを利用した視線位置の描画  RoBoHoN  ロボホンの開発環境の構築 トリガを用いた発話 QRコードの読み取り  Unity  NyARToolkit for Unityの導入 NyARToolkit for Unityで画像を表示 NyARToolkit for Unityで3Dモデルを表示 NyARToolkit for Unityで3Dモデルのアニメーション NyARToolkit for UnityでNFTを利用したマーカーの認識 Google VR SDKを利用した360°画像ビューアー Google VR SDKで視線の検知 Tobii Eye Trackerで視線検出 Tobii Eye Trackerでシューティング  Codecomabat  CodeCombatでプログラミング学習  enchant.js  MOONBlockでゲームプログラミング  Processing  Processingではじめての画像処理  Jekyll  Jekyllデフォルトテンプレートの自動リンク Jekyllにおけるシンタックスハイライト Liquidを利用したファイルの埋め込み Jekyllでオープン・グラフ・プロトコル（OGP）の設定  GitHub  Github Pagesでの独自ドメインの設定 Git Bashのホームディレクトリの変更  Atom  Atomに必須のプラグイン紹介  Emacs  MacでEmacs  Java  Java 8における「Access Restriction」の回避  Hugo  sedでJekyllからHugoに変換  </description>
     </item>
     
     <item>
