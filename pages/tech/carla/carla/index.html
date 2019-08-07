@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    CARLAシミュレータの導入 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="CARLAシミュレータの導入" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/carla/carla/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/c6bdb7fead8fa55a1f788bd8141e60f4.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="CARLA近年，研究が急速に進む 自動運転車（Autonomous Car） のシミュレータの一つである CARLA Simulatorの導入に関して解説します． このCARLAはオープンソースとして開発されており， 自動運転車の実現に必須の，LiDAR（Light Detection and Ranging） ，多視点カメラ，深度カメラ などのセンサー群を利用することができます． この他にも，マップの自動生成や，交通シナリオの作成など，シミュレータに必要な要素も含まれています． このCARLAは，Alexey Dosovitskiy 氏らによって開発され， 2017年に Robot Learning の国際会議において，「CARLA: An Open Urban Driving Simulator」というタイトルで論文も発表されています．
+CARLAの導入CARLAの導入はとても簡単で，Githubで公開されているビルドされたパッケージをダウンロードするだけです． 現時点（2019年8月）では，最新版は 0.9.6 ですが，ここでは安定版の 0.8.2 を利用することにします．
+ CARLA 0.8.2(stable)
+ダウンロードしたファイルを解凍すると， CarlaUE4.exe というウィンドウズ用の実行ファイルがあります． これをダブルクリックすると，シミュレータが全画面表示されます（スタンドアロン・モード）． 画面左には，速度(Speed)やギア（Gear）などの情報が表示されていることがわかります．
+
+この画面では，キーボードで車両を操作することができます（操作一覧も参照のこと）． キーボードで操作するのはとても難しく，ぎこちない運転になってしまうので，オートパイロット を試してみると良いです．
+   キー 操作     W アクセル   A ステアリング（左）   S ブレーキ   D ステアリング（右）   Q ギアチェンジ   P オートパイロット" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="CARLAシミュレータの導入" />
+
+
+
+  <meta name="twitter:description" content="CARLA近年，研究が急速に進む 自動運転車（Autonomous Car） のシミュレータの一つである CARLA Simulatorの導入に関して解説します． このCARLAはオープンソースとして開発されており， 自動運転車の実現に必須の，LiDAR（Light Detection and Ranging） ，多視点カメラ，深度カメラ などのセンサー群を利用することができます． この他にも，マップの自動生成や，交通シナリオの作成など，シミュレータに必要な要素も含まれています． このCARLAは，Alexey Dosovitskiy 氏らによって開発され， 2017年に Robot Learning の国際会議において，「CARLA: An Open Urban Driving Simulator」というタイトルで論文も発表されています．
+CARLAの導入CARLAの導入はとても簡単で，Githubで公開されているビルドされたパッケージをダウンロードするだけです． 現時点（2019年8月）では，最新版は 0.9.6 ですが，ここでは安定版の 0.8.2 を利用することにします．
+ CARLA 0.8.2(stable)
+ダウンロードしたファイルを解凍すると， CarlaUE4.exe というウィンドウズ用の実行ファイルがあります． これをダブルクリックすると，シミュレータが全画面表示されます（スタンドアロン・モード）． 画面左には，速度(Speed)やギア（Gear）などの情報が表示されていることがわかります．
+
+この画面では，キーボードで車両を操作することができます（操作一覧も参照のこと）． キーボードで操作するのはとても難しく，ぎこちない運転になってしまうので，オートパイロット を試してみると良いです．
+   キー 操作     W アクセル   A ステアリング（左）   S ブレーキ   D ステアリング（右）   Q ギアチェンジ   P オートパイロット" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/c6bdb7fead8fa55a1f788bd8141e60f4.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-08-07 13:57:04 &#43;0900 JST">August 7, 2019</time>
+</div>
+
+    <h1 class="post-title">CARLAシミュレータの導入</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/c6bdb7fead8fa55a1f788bd8141e60f4"><img src="https://i.gyazo.com/c6bdb7fead8fa55a1f788bd8141e60f4.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  CARLA
+</h1>
+
+
+<p>近年，研究が急速に進む <strong>自動運転車（Autonomous Car）</strong> のシミュレータの一つである
+<a href="http://carla.org/">CARLA Simulator</a>の導入に関して解説します．
+このCARLAはオープンソースとして開発されており，
+自動運転車の実現に必須の，<strong>LiDAR（Light Detection and Ranging）</strong> ，<strong>多視点カメラ</strong>，<strong>深度カメラ</strong> などのセンサー群を利用することができます．
+この他にも，マップの自動生成や，交通シナリオの作成など，シミュレータに必要な要素も含まれています．
+このCARLAは，<a href="https://scholar.google.de/citations?user=FXNJRDoAAAAJ&amp;hl=ja">Alexey Dosovitskiy</a> 氏らによって開発され，
+2017年に <strong>Robot Learning</strong> の国際会議において，「CARLA: An Open Urban Driving Simulator」というタイトルで論文も発表されています．</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  CARLAの導入
+</h1>
+
+
+<p>CARLAの導入はとても簡単で，Githubで公開されているビルドされたパッケージをダウンロードするだけです．
+現時点（2019年8月）では，最新版は <strong>0.9.6</strong> ですが，ここでは安定版の <strong>0.8.2</strong> を利用することにします．</p>
+
+<p><a href="https://github.com/carla-simulator/carla/releases/tag/0.8.2"><i class="fas fa-cloud-download-alt"></i> CARLA 0.8.2(stable)</a></p>
+
+<p>ダウンロードしたファイルを解凍すると， <strong>CarlaUE4.exe</strong> というウィンドウズ用の実行ファイルがあります．
+これをダブルクリックすると，シミュレータが全画面表示されます（スタンドアロン・モード）．
+画面左には，速度(Speed)やギア（Gear）などの情報が表示されていることがわかります．</p>
+
+<p><a href="https://gyazo.com/080880647d3e777574c068077194b540"><img src="https://i.gyazo.com/080880647d3e777574c068077194b540.png" alt="Image from Gyazo" /></a></p>
+
+<p>この画面では，キーボードで車両を操作することができます（<a href="https://carla.readthedocs.io/en/stable/simulator_keyboard_input/">操作一覧</a>も参照のこと）．
+キーボードで操作するのはとても難しく，ぎこちない運転になってしまうので，<strong>オートパイロット</strong> を試してみると良いです．</p>
+
+<table>
+<thead>
+<tr>
+<th>キー</th>
+<th>操作</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>W</td>
+<td>アクセル</td>
+</tr>
+
+<tr>
+<td>A</td>
+<td>ステアリング（左）</td>
+</tr>
+
+<tr>
+<td>S</td>
+<td>ブレーキ</td>
+</tr>
+
+<tr>
+<td>D</td>
+<td>ステアリング（右）</td>
+</tr>
+
+<tr>
+<td>Q</td>
+<td>ギアチェンジ</td>
+</tr>
+
+<tr>
+<td>P</td>
+<td>オートパイロット</td>
+</tr>
+</tbody>
+</table>
+
+<p><a href="https://gyazo.com/fb00502d48a9a3fb14e612f7fbb688bc"><video alt="Video from Gyazo" width="652" autoplay muted loop playsinline controls><source src="https://i.gyazo.com/fb00502d48a9a3fb14e612f7fbb688bc.mp4" type="video/mp4" /></video></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Pythonクライアントの接続
+</h1>
+
+
+<p><strong>Python</strong> から，CARLAに接続し，環境をコントロールすることができます．
+Pythonのバージョン <strong>3.5</strong> の利用が推奨されており，最新の <strong>3.7</strong> ではエラーにより動作しませんでした.
+また，CARLAは <strong>2000番</strong>，<strong>2001番</strong>，<strong>2002番</strong> のポートを利用するため，
+ファイアウォールの設定を修正して，ポートを空けておく必要があることに注意しましょう．
+まずは，実行に必要なライブラリを <strong>pip</strong> コマンドで導入します（ <strong>numpy</strong> ，<strong>pygame</strong> などが含まれる）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% pip install -r PythonClient/requirements.txt</code></pre></div>
+<p>次に，CARLAをサーバとして起動します（サーバ・モード）．
+引数に <strong>-carla-server</strong> を設定すればOKです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% CarlaUE4.exe -carla-server</code></pre></div>
+<p>それでは，Pythonクライアントを接続します．
+ここでは，パッケージに含まれている <strong>client_example.py</strong> を <strong>オートパイロット</strong> の状態で実行します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% python client_example.py --autopilot</code></pre></div>
+<p>実行すると，エピソード（走行環境）を切り替えながら，
+オートパイロットで車両が走行をスタートします．</p>
+
+<p><a href="https://gyazo.com/ac08c208328d4477acab4abf8db3c8dd"><video alt="Video from Gyazo" width="608" autoplay muted loop playsinline controls><source src="https://i.gyazo.com/ac08c208328d4477acab4abf8db3c8dd.mp4" type="video/mp4" /></video></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  センサーデータの保存
+</h1>
+
+
+<p>シミュレータ内でセンサーが取得したデータを保存します．
+ここでは，<strong>RGBカメラ</strong>，<strong>深度カメラ</strong>, <strong>LiDAR</strong> のデータを出力することにします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">py -3.5 client_example.py --autopilot --lidar --images-to-disk</code></pre></div>
+<p>出力されたデータは <strong>_out</strong> フォルダに保存されます．
+RGBカメラと深度カメラは <strong>PNG形式</strong>， LiDARは <strong>PLY形式</strong> となっています．
+PLY形式のファイルは<a href="http://lidarview.com/">Online LIDAR point cloud viewer</a>で可視化できます．</p>
+
+<p><a href="https://gyazo.com/38b325bb4e865cfd20b43df7584d9b89"><img src="https://i.gyazo.com/38b325bb4e865cfd20b43df7584d9b89.png" alt="Image from Gyazo" /></a></p>
+
+<p><a href="https://gyazo.com/818244eb194aa41aee54cfdbd8ff855e"><img src="https://i.gyazo.com/818244eb194aa41aee54cfdbd8ff855e.png" alt="Image from Gyazo" /></a></p>
+
+<p><a href="https://gyazo.com/89698489d50e606b6f566c73f8932485"><img src="https://i.gyazo.com/89698489d50e606b6f566c73f8932485.png" alt="Image from Gyazo" /></a></p>
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/carla/carla/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-08-07 16:51:16.7227677 &#43;0900 JST m=&#43;1.295124301">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
