@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Carlaでセマンティック・セグメンテーション | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="Carlaでセマンティック・セグメンテーション" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/carla/carla2/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/2255f50589e9a31d36b0983b2e2adb7a.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="セマンティック・セグメンテーションセマンティック・セグメンテーション は人間の目の役割を担う技術のことであり，自動運転車の実現のために必須です． 具体的には，車両に取り付けられたカメラから取得される画像の， 各ピクセル（画素）に対し，「自動車」「人」「道路」などラベルを設定する仕組みのことです．
+一般にセマンティック・セグメンテーションを実現するには，ディープラーニング が用いられます． 特にケンブリッジ大学のAlex Kendall氏が提案したSegNetが有名です． SegNetはRGB画像を入力とし，画像に存在する物体にラベルを設定することが出来ます． 下記はSegNetのデモ動画です．
+  CARLA Simulatorのセマンティック・セグメンテーションはあくまで疑似センサーであり，正確なラベル付けが可能です． 各画素のラベルは，赤・緑・青（RGB）の 赤（R） の値として表現されます． 設定されるラベルは下記の13種類です．
+   値 ラベル     0 なし   1 建物   2 フェンス   3 その他   4 歩行者   5 柱   6 道路線   7 道路   8 歩道   9 街路樹   10 車両   11 壁   12 信号    Pythonクライアントの実装クライアントの初期化 それでは，セマンティック・セグメンテーションのラベルを得るためのPythonクライアントを実装しましょう． サーバーに接続するためのクライアントは with構文 を利用して生成します． このとき，サーバのIPアドレスとポート（デフォルトでは2000番）を指定します．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Carlaでセマンティック・セグメンテーション" />
+
+
+
+  <meta name="twitter:description" content="セマンティック・セグメンテーションセマンティック・セグメンテーション は人間の目の役割を担う技術のことであり，自動運転車の実現のために必須です． 具体的には，車両に取り付けられたカメラから取得される画像の， 各ピクセル（画素）に対し，「自動車」「人」「道路」などラベルを設定する仕組みのことです．
+一般にセマンティック・セグメンテーションを実現するには，ディープラーニング が用いられます． 特にケンブリッジ大学のAlex Kendall氏が提案したSegNetが有名です． SegNetはRGB画像を入力とし，画像に存在する物体にラベルを設定することが出来ます． 下記はSegNetのデモ動画です．
+  CARLA Simulatorのセマンティック・セグメンテーションはあくまで疑似センサーであり，正確なラベル付けが可能です． 各画素のラベルは，赤・緑・青（RGB）の 赤（R） の値として表現されます． 設定されるラベルは下記の13種類です．
+   値 ラベル     0 なし   1 建物   2 フェンス   3 その他   4 歩行者   5 柱   6 道路線   7 道路   8 歩道   9 街路樹   10 車両   11 壁   12 信号    Pythonクライアントの実装クライアントの初期化 それでは，セマンティック・セグメンテーションのラベルを得るためのPythonクライアントを実装しましょう． サーバーに接続するためのクライアントは with構文 を利用して生成します． このとき，サーバのIPアドレスとポート（デフォルトでは2000番）を指定します．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/2255f50589e9a31d36b0983b2e2adb7a.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-08-08 11:28:22 &#43;0900 JST">August 8, 2019</time>
+</div>
+
+    <h1 class="post-title">Carlaでセマンティック・セグメンテーション</h1>
+<div class="post-line"></div>
+
+    
+
+    
+
+<p><a href="https://gyazo.com/2255f50589e9a31d36b0983b2e2adb7a"><img src="https://i.gyazo.com/2255f50589e9a31d36b0983b2e2adb7a.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  セマンティック・セグメンテーション
+</h1>
+
+
+<p><strong>セマンティック・セグメンテーション</strong> は人間の目の役割を担う技術のことであり，自動運転車の実現のために必須です．
+具体的には，車両に取り付けられたカメラから取得される画像の，
+各ピクセル（画素）に対し，「自動車」「人」「道路」などラベルを設定する仕組みのことです．</p>
+
+<p>一般にセマンティック・セグメンテーションを実現するには，<strong>ディープラーニング</strong> が用いられます．
+特にケンブリッジ大学のAlex Kendall氏が提案した<a href="http://mi.eng.cam.ac.uk/projects/segnet/#demo">SegNet</a>が有名です．
+SegNetはRGB画像を入力とし，画像に存在する物体にラベルを設定することが出来ます．
+下記はSegNetのデモ動画です．</p>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="//www.youtube.com/embed/CxanE_W46ts" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<p>CARLA Simulatorのセマンティック・セグメンテーションはあくまで疑似センサーであり，正確なラベル付けが可能です．
+各画素のラベルは，赤・緑・青（RGB）の <strong>赤（R）</strong> の値として表現されます．
+設定されるラベルは下記の13種類です．</p>
+
+<table>
+<thead>
+<tr>
+<th>値</th>
+<th>ラベル</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0</td>
+<td>なし</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>建物</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>フェンス</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>その他</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>歩行者</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>柱</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>道路線</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>道路</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>歩道</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>街路樹</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>車両</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>壁</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>信号</td>
+</tr>
+</tbody>
+</table>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Pythonクライアントの実装
+</h1>
+
+
+<h2 id="クライアントの初期化">クライアントの初期化</h2>
+
+<p>それでは，セマンティック・セグメンテーションのラベルを得るためのPythonクライアントを実装しましょう．
+サーバーに接続するためのクライアントは <strong>with構文</strong> を利用して生成します．
+このとき，サーバのIPアドレスとポート（デフォルトでは2000番）を指定します．</p>
+
+<p>次にサーバの環境を設定します．
+ここでは，クライアントの同期（SynchronousMode），非プレイヤーの情報取得（SendNonPlayerAgentsInfo），
+車両数（NumberOfVehicles），歩行者数（NumberOfPedestrians），天候（WeatherId），画質（QualityLevel）を設定しています．
+天候は下記の15種類から選択可能です．</p>
+
+<p>最後に，自車両のスタート位置を設定します．
+選択可能な位置はマップに依存しますが，ここでは0番を指定しています．</p>
+
+<table>
+<thead>
+<tr>
+<th>値</th>
+<th>ラベル</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0</td>
+<td>デフォルト</td>
+</tr>
+
+<tr>
+<td>1</td>
+<td>晴・昼</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>雲・昼</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>晴・昼（湿潤）</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>雲・昼（湿潤）</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>雨・昼</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>強い雨・昼</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>弱い雨・昼</td>
+</tr>
+
+<tr>
+<td>8</td>
+<td>晴・夜</td>
+</tr>
+
+<tr>
+<td>9</td>
+<td>曇・夜</td>
+</tr>
+
+<tr>
+<td>10</td>
+<td>晴・夜（湿潤）</td>
+</tr>
+
+<tr>
+<td>11</td>
+<td>曇・夜（湿潤）</td>
+</tr>
+
+<tr>
+<td>12</td>
+<td>雨・夜</td>
+</tr>
+
+<tr>
+<td>13</td>
+<td>強い雨・夜</td>
+</tr>
+
+<tr>
+<td>14</td>
+<td>弱い雨・夜</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> carla.client <span style="color:#f92672">import</span> make_carla_client
+<span style="color:#f92672">from</span> carla.settings <span style="color:#f92672">import</span> CarlaSettings
+<span style="color:#f92672">from</span> carla.tcp <span style="color:#f92672">import</span> TCPConnectionError
+
+IP <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;localhost&#34;</span>
+PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">2000</span>
+
+<span style="color:#66d9ef">with</span> make_carla_client(IP, PORT) <span style="color:#66d9ef">as</span> client:
+
+    settings <span style="color:#f92672">=</span> CarlaSettings()
+    settings<span style="color:#f92672">.</span>set(
+        SynchronousMode <span style="color:#f92672">=</span> True,
+        SendNonPlayerAgentsInfo <span style="color:#f92672">=</span> False,
+        NumberOfVehicles <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>,
+        NumberOfPedestrians <span style="color:#f92672">=</span> <span style="color:#ae81ff">40</span>,
+        WeatherId <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+        QualityLevel <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Low&#34;</span>
+    )
+    settings<span style="color:#f92672">.</span>randomize_seeds()
+
+    client<span style="color:#f92672">.</span>load_settings(settings)
+    client<span style="color:#f92672">.</span>start_episode(<span style="color:#ae81ff">0</span>)</code></pre></div>
+<p><a href="https://gyazo.com/541294db14faf39262cc4338ab808054"><img src="https://i.gyazo.com/541294db14faf39262cc4338ab808054.jpg" alt="Image from Gyazo" /></a></p>
+
+<p><a href="https://gyazo.com/981c544c4126ac262ab888ce05bb5b2b"><img src="https://i.gyazo.com/981c544c4126ac262ab888ce05bb5b2b.jpg" alt="Image from Gyazo" /></a></p>
+
+<h2 id="カメラの実装">カメラの実装</h2>
+
+<p>セマンティック・セグメンテーションのためのカメラを環境に追加します．
+ここでは，カメラの視野角（FOV），サイズ（image_size），位置（position），向き（rotation）を設定しています．
+この設定は，車両の前方に向けて水平にカメラを設置していることになります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">from</span> carla.sensor <span style="color:#f92672">import</span> Camera
+camera <span style="color:#f92672">=</span> Camera(<span style="color:#e6db74">&#39;SemanticCamera&#39;</span>, PostProcessing<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;SemanticSegmentation&#39;</span>)
+camera<span style="color:#f92672">.</span>set(FOV<span style="color:#f92672">=</span><span style="color:#ae81ff">90.0</span>)
+camera<span style="color:#f92672">.</span>set_image_size(<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">600</span>)
+camera<span style="color:#f92672">.</span>set_position(x<span style="color:#f92672">=</span><span style="color:#ae81ff">0.30</span>, y<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, z<span style="color:#f92672">=</span><span style="color:#ae81ff">1.30</span>)
+camera<span style="color:#f92672">.</span>set_rotation(pitch<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, yaw<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, roll<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+settings<span style="color:#f92672">.</span>add_sensor(camera)</code></pre></div>
+<h2 id="画像の保存">画像の保存</h2>
+
+<p>カメラからデータを取得して，画像として保存します．
+取得されるデータはNumPyのndarray型であり，上述したように，赤・緑・青（RGB）の <strong>赤（R）</strong> の値として取得されます．
+このため，このままPNG画像として保存すると，真っ暗な画像になってしまいます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">from</span> carla <span style="color:#f92672">import</span> image_converter
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+measurements, sensor_data <span style="color:#f92672">=</span> client<span style="color:#f92672">.</span>read_data()
+image <span style="color:#f92672">=</span> sensor_data[<span style="color:#e6db74">&#34;SemanticCamera&#34;</span>]
+r_array <span style="color:#f92672">=</span> image_converter<span style="color:#f92672">.</span>to_rgb_array(image)
+pil_image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(r_array)
+pil_image<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;screen.png&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/ebe8cf0922cde1317ca36f93a79ba49d"><img src="https://i.gyazo.com/ebe8cf0922cde1317ca36f93a79ba49d.png" alt="Image from Gyazo" /></a></p>
+
+<p>これを解決するための方法もCARLAでは用意されており，
+<strong>image_converter</strong> のメソッドを用いることで，それぞれのラベルを色分けしたデータを取得することができます．
+結果を確認すると，人物や道路が色分けされていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">rgb_array <span style="color:#f92672">=</span> image_converter<span style="color:#f92672">.</span>labels_to_cityscapes_palette(image)
+pil_image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
+pil_image<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;screen.png&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/64af238082a7610ddf26e08cea171b1d"><img src="https://i.gyazo.com/64af238082a7610ddf26e08cea171b1d.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  リアルタイム処理
+</h1>
+
+
+<p>PyGameを利用してリアルタイムにセマンティック・セグメンテーションの結果を描画してみます．
+フレームレートを維持するため，カメラは320x180のサイズとしました．</p>
+
+<p><a href="https://gyazo.com/315b97fea759e116a13f1520ad702226"><video alt="Video from Gyazo" width="800" autoplay muted loop playsinline controls><source src="https://i.gyazo.com/315b97fea759e116a13f1520ad702226.mp4" type="video/mp4" /></video></a></p>
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/carla/carla2/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-08-08 15:15:07.7438576 &#43;0900 JST m=&#43;2.143625301">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
