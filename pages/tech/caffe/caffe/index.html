@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    Java 8における「Access Restriction」の回避 | MLAB
+    Caffe-Segnetのインストール | MLAB
   </title>
 
   
@@ -60,7 +60,7 @@
   
   
 
-  <meta property="og:title" content="Java 8における「Access Restriction」の回避" />
+  <meta property="og:title" content="Caffe-Segnetのインストール" />
 
 
 
@@ -68,7 +68,7 @@
 
 
 
-  <meta property="og:url" content="https://mukai-lab.info/pages/tech/java/2016-02-25-javafx/" />
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/caffe/caffe/" />
 
 
 
@@ -80,8 +80,10 @@
 
 
 
-  <meta property="og:description" content="Eclipse環境でJavaFX（javafxパッケージ）をインポートしようとすると， 「Access Restriction」エラーとなってしまいコンパイルできません． JavaFXはJava 8では標準のGUIライブラリとして統合されたはずなのに， なんでだー となったので回避方法を調べてみました．
-Eclipseのツールバーから[ウィンドウ]-[設定]-[Java]-[コンパイラー]-[エラー/警告]を選択します． ここで下記のように「使用すべきではない制限されたAPI」の「禁止された参照」を 無視 に設定します． これで問題なくインポートできるはずです．" />
+  <meta property="og:description" content=" Caffe-Segnetのインストール ディープラーニングのライブラリである Caffe-Segnet をMacにインストールしたときのメモです． 基本的には公式のインストラクションに従います． このQiitaの記事や ブロクも参考にさせて頂きました．
+まずは依存ライブラリをインストールします．
+brew install -vd snappy leveldb gflags glog szip lmdb brew tap brewsci/science # homebrew-scienceは廃止 brew install hdf5 opencv 次に，ptofobufとboost-pythonをビルドしてインストールします． このビルドはかなりの時間を要します．
+brew install --build-from-source -vd protobuf # --with-pythonは除く brew install --build-from-source -vd boost boost-pythonCPU_ONLY := 1mkdir build cd build cmake .. make all make install make runtest" />
 
 
 
@@ -92,12 +94,14 @@ Eclipseのツールバーから[ウィンドウ]-[設定]-[Java]-[コンパイ�
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="Java 8における「Access Restriction」の回避" />
+  <meta name="twitter:title" content="Caffe-Segnetのインストール" />
 
 
 
-  <meta name="twitter:description" content="Eclipse環境でJavaFX（javafxパッケージ）をインポートしようとすると， 「Access Restriction」エラーとなってしまいコンパイルできません． JavaFXはJava 8では標準のGUIライブラリとして統合されたはずなのに， なんでだー となったので回避方法を調べてみました．
-Eclipseのツールバーから[ウィンドウ]-[設定]-[Java]-[コンパイラー]-[エラー/警告]を選択します． ここで下記のように「使用すべきではない制限されたAPI」の「禁止された参照」を 無視 に設定します． これで問題なくインポートできるはずです．" />
+  <meta name="twitter:description" content=" Caffe-Segnetのインストール ディープラーニングのライブラリである Caffe-Segnet をMacにインストールしたときのメモです． 基本的には公式のインストラクションに従います． このQiitaの記事や ブロクも参考にさせて頂きました．
+まずは依存ライブラリをインストールします．
+brew install -vd snappy leveldb gflags glog szip lmdb brew tap brewsci/science # homebrew-scienceは廃止 brew install hdf5 opencv 次に，ptofobufとboost-pythonをビルドしてインストールします． このビルドはかなりの時間を要します．
+brew install --build-from-source -vd protobuf # --with-pythonは除く brew install --build-from-source -vd boost boost-pythonCPU_ONLY := 1mkdir build cd build cmake .. make all make install make runtest" />
 
 
 
@@ -164,32 +168,43 @@ Eclipseのツールバーから[ウィンドウ]-[設定]-[Java]-[コンパイ�
   
   
   
-  <span>on&nbsp;</span><time datetime="2016-02-25 06:18:31 &#43;0000 UTC">February 25, 2016</time>
+  <span>on&nbsp;</span><time datetime="2019-08-14 13:07:59 &#43;0900 JST">August 14, 2019</time>
 </div>
 
-    <h1 class="post-title">Java 8における「Access Restriction」の回避</h1>
+    <h1 class="post-title">Caffe-Segnetのインストール</h1>
 <div class="post-line"></div>
 
     
 
-    <p>Eclipse環境でJavaFX（javafxパッケージ）をインポートしようとすると，
-「Access Restriction」エラーとなってしまいコンパイルできません．
-JavaFXはJava 8では標準のGUIライブラリとして統合されたはずなのに，
-<strong>なんでだー</strong> となったので回避方法を調べてみました．</p>
+    
 
-<p>Eclipseのツールバーから[ウィンドウ]-[設定]-[Java]-[コンパイラー]-[エラー/警告]を選択します．
-ここで下記のように「使用すべきではない制限されたAPI」の「禁止された参照」を <strong>無視</strong> に設定します．
-これで問題なくインポートできるはずです．</p>
+<h1 id="caffe-segnetのインストール">Caffe-Segnetのインストール</h1>
 
-<p><a href="https://gyazo.com/b0d1d728ba365fc184a7cb0621d9653d"><img src="https://i.gyazo.com/b0d1d728ba365fc184a7cb0621d9653d.png" alt="https://gyazo.com/b0d1d728ba365fc184a7cb0621d9653d" /></a></p>
+<p>ディープラーニングのライブラリである <strong>Caffe-Segnet</strong> をMacにインストールしたときのメモです．
+基本的には公式の<a href="http://caffe.berkeleyvision.org/install_osx.html">インストラクション</a>に従います．
+この<a href="https://qiita.com/Kajiyu/items/e8ad0ccd878328a21e8a">Qiitaの記事</a>や
+<a href="https://qiita.com/Kajiyu/items/e8ad0ccd878328a21e8a">ブロク</a>も参考にさせて頂きました．</p>
 
+<p>まずは依存ライブラリをインストールします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">brew install -vd snappy leveldb gflags glog szip lmdb
+brew tap brewsci/science # homebrew-scienceは廃止
+brew install hdf5 opencv</code></pre></div>
+<p>次に，ptofobufとboost-pythonをビルドしてインストールします．
+このビルドはかなりの時間を要します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">brew install --build-from-source -vd protobuf # --with-pythonは除く
+brew install --build-from-source -vd boost boost-python</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">CPU_ONLY := 1</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">mkdir build
+cd build
+cmake ..
+make all
+make install
+make runtest</code></pre></div>
 
     
 
     <div class="horizontal">
 
   
-  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/java/2016-02-25-javafx/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/caffe/caffe/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
   
   
   <div style="padding: 6px; margin-top:1px">
@@ -214,8 +229,6 @@ JavaFXはJava 8では標準のGUIライブラリとして統合されたはず�
   
   <div class="adsense">
     
-      
-    
   </div>
 
   
@@ -237,7 +250,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-08-14 23:17:18.151095 &#43;0900 JST m=&#43;0.340778776">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-08-14 23:17:17.941261 &#43;0900 JST m=&#43;0.130950532">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
