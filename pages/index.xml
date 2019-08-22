@@ -6,10 +6,30 @@
     <description>Recent content in Pages on MLAB</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Tue, 20 Aug 2019 13:10:45 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 20 Aug 2019 16:43:49 +0900</lastBuildDate>
     
 	<atom:link href="https://mukai-lab.info/pages/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>BITalinoで筋電位センサー</title>
+      <link>https://mukai-lab.info/pages/tech/bitalino/bitalino2/</link>
+      <pubDate>Tue, 20 Aug 2019 16:43:49 +0900</pubDate>
+      
+      <guid>https://mukai-lab.info/pages/tech/bitalino/bitalino2/</guid>
+      <description>筋電位センサー今回はBITalinoの 筋電位センサー（EMG） を利用してみましょう． 筋電位センサーの電極ケーブルは3極で構成され，中央が基準電極（REF），左右が正極（+）と負極（-）を表しています． このように，2極の信号の差分を増幅して取得する方法は 作動増幅 と呼ばれ，生体センシングではよく用いられる方法です．
+
+筋電位センサーを腕に取り付けます． 基準となる基準電極は肘の骨がある部分に配置します． また，正極と負極は筋繊維に沿って配置します．
+
+OpenSignalsでデータを取得してみましょう． まずは，BITalinoの設定を変更します． 今回はA1に筋電位センサー（EMG）を接続しているため，EMG を指定しています．
+
+計測を開始すると，0を平均として小さなスパイク状の波形が発生している． ここで，腕に力をいれると，波の振幅は大きくなることがわかります．
+
+Python APIを利用した筋電位の取得それでは，Python APIを利用して筋電位のデータを取得してみましょう． データの取得方法は光センサーのときと全く同じです． しかし，取得されるデータはBITalino独自の単位となっているため， 一般的なミリボルト（mV）を単位とするには下記の式を用いて変換が必要です （詳細は公式ドキュメント参照）．
+$$ EMG(mV) = \frac{ (x / 2^n - 1 / 2) \cdot VCC \cdot 1000 }{ GAIN } $$
+上記の式において，$n$は信号のビット幅であり10ビット，$VCC$は電源電圧であり3.3ボルト，$GAIN$はセンサーゲインであり1009を指定します． この変換したデータ（mV）の 平均，標準偏差，最大値 を求めてみることにします．
+BITS = 10 # 信号のビット幅 VCC = 3.3 # 電源電圧 GAIN = 1009 # センサーゲイン emg = (((((data[:,5] / 2**BITS) - 1/2) * VCC) / GAIN) * 1000) # 単位変換（mV） emg = np.</description>
+    </item>
     
     <item>
       <title>BITalinoで光センサー</title>
@@ -425,7 +445,7 @@ H1要素を独自のショートコード（title-logo）に置換 % sed &amp;#3
       <pubDate>Sat, 04 May 2019 19:13:02 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/tech/</guid>
-      <description>CARLA Simulator  CARLAシミュレータの導入 CARLAでセマンティック・セグメンテーション  Tableau  Tableauでオープンデータを可視化 Tableauで色々なグラフを作成しよう Tableauのダッシュボードを活用しよう Tableauのマップ機能でGoogle Fitを可視化  Emotiv  Emotivで脳波を可視化 Cotexで脳波データを取得 脳波データをフーリエ解析  BITalino  BITalinoで光センサー  Tobii Eyetracker  Tobii Eye Trackerを利用した視線の認識 OpenCVを利用した視線位置の描画  RoBoHoN  ロボホンの開発環境の構築 トリガを用いた発話 QRコードの読み取り  Unity  NyARToolkit for Unityの導入 NyARToolkit for Unityで画像を表示 NyARToolkit for Unityで3Dモデルを表示 NyARToolkit for Unityで3Dモデルのアニメーション NyARToolkit for UnityでNFTを利用したマーカーの認識 Google VR SDKを利用した360°画像ビューアー Google VR SDKで視線の検知 Tobii Eye Trackerで視線検出 Tobii Eye Trackerでシューティング  Codecomabat  CodeCombatでプログラミング学習  enchant.</description>
+      <description>CARLA Simulator  CARLAシミュレータの導入 CARLAでセマンティック・セグメンテーション  Tableau  Tableauでオープンデータを可視化 Tableauで色々なグラフを作成しよう Tableauのダッシュボードを活用しよう Tableauのマップ機能でGoogle Fitを可視化  Emotiv  Emotivで脳波を可視化 Cotexで脳波データを取得 脳波データをフーリエ解析  BITalino  BITalinoで光センサー BITalinoで筋電位センサー  Tobii Eyetracker  Tobii Eye Trackerを利用した視線の認識 OpenCVを利用した視線位置の描画  RoBoHoN  ロボホンの開発環境の構築 トリガを用いた発話 QRコードの読み取り  Unity  NyARToolkit for Unityの導入 NyARToolkit for Unityで画像を表示 NyARToolkit for Unityで3Dモデルを表示 NyARToolkit for Unityで3Dモデルのアニメーション NyARToolkit for UnityでNFTを利用したマーカーの認識 Google VR SDKを利用した360°画像ビューアー Google VR SDKで視線の検知 Tobii Eye Trackerで視線検出 Tobii Eye Trackerでシューティング  Codecomabat  CodeCombatでプログラミング学習  enchant.</description>
     </item>
     
     <item>

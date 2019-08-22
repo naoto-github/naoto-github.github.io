@@ -280,7 +280,7 @@ BITalinoでは，センサーから取得した値をBluetoothを経由して，
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  Python APIでデータ取得
+  Python APIを利用した照度の取得
 </h1>
 
 
@@ -306,16 +306,16 @@ device <span style="color:#f92672">=</span> BITalino(macAddress) <span style="co
 <p>次に，サンプリングレート（1000Hz），取得チャネル（A1），取得サンプル数（10）を設定します．
 ここで，取得サンプル数は，一度のリクエストでデバイスから取得されるサンプルの数です．
 この値を <strong>1</strong> にすると計算負荷が高くなるため，<strong>10</strong> または <strong>100</strong> に設定するのが好ましいとされています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">Samplingrate <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span> <span style="color:#75715e"># サンプリングレート</span>
-Acqchannels <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>] <span style="color:#75715e"># 取得チャネル（A1）</span>
-Nsamples <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e"># 取得サンプル数</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">samplingRate <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000</span> <span style="color:#75715e"># サンプリングレート</span>
+acqChannels <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>] <span style="color:#75715e"># 取得チャネル（A1）</span>
+nSamples <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span> <span style="color:#75715e"># 取得サンプル数</span>
 
-Device<span style="color:#f92672">.</span>Start(Samplingrate, Acqchannels) <span style="color:#75715e"># データ取得開始</span>
-Data <span style="color:#f92672">=</span> Device<span style="color:#f92672">.</span>Read(Nsamples)
-Print(Data)
+device<span style="color:#f92672">.</span>start(samplingRate, acqChannels) <span style="color:#75715e"># データ取得開始</span>
+data <span style="color:#f92672">=</span> device<span style="color:#f92672">.</span>read(nSamples)
+<span style="color:#66d9ef">print</span>(data)
 
-Device<span style="color:#f92672">.</span>Stop()
-Device<span style="color:#f92672">.</span>Close()</code></pre></div>
+device<span style="color:#f92672">.</span>stop()
+device<span style="color:#f92672">.</span>close()</code></pre></div>
 <p>まずは，部屋の照明下でデータサンプルを取得してみます．
 サンプルは，シークエンス番号，デジタルチャネル0，デジタルチャネル1，デジタルチャネル2，デジタルチャネル3に加え，
 上記の <strong>AcqChannels</strong> で指定したアナログチャネルで構成された配列となっています．
@@ -399,7 +399,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-08-20 16:14:04.4263625 &#43;0900 JST m=&#43;0.726192601">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-08-22 17:16:32.5750665 &#43;0900 JST m=&#43;1.690863601">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
