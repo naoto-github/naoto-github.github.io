@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    リレーションと第一正規形 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="リレーションと第一正規形" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/database/chapter2/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/cd96c040507e94e0352e1e55134772f0.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="リレーショナルデータベースの特徴  リレーショナルデータベースは，関係データベースやRDB（Relational Data Base）とも呼ばれ， 最も広く利用されるデータベースです． 1968年にリレーショナルデータベースのアイデアが発表され， 現在でもデータベースの主流であることから，その有用性の高さが想像できると思います． 2次元の表形式という直感的で分かりやすいデータ形式でありながらも， 数学の集合論 が基本となっており，厳密なルールで運用されます． 今回は，集合論の概念を用いながら， リレーショナルデータベースがどのように構築されるかを解説します．
+ リレーションとは  リレーショナルデータベースは，その名の通り， データの リレーション（関係） を記述するためのデータベースです． では，一体，リレーションとは何を表すのでしょうか． 集合論の概念を利用して考えていきましょう．
+ドメイン ドメイン とは，特定の条件を満たす 要素（元） から構成される集合のことです． 例えば，名前の集合，電話番号の集合は，それぞれドメインです． 一般に，ドメインは $D_i$ で表現されます．
+$$ D_1 = \left( 高谷舞衣,福岡豊樹,西村朱音 \right) $$
+$$ D_2 = \left( 0786857519,0265723899,0178189244 \right) $$
+この他にも，アルファベットの集合や，整数の集合もドメインと考えることができます． ここでは，有限集合のみを対象としていますが，無限集合でも問題ありません．
+$$ D_3 = \left( a, b, c \right) $$
+$$ D_4 = \left( 1, 2, 3, 4, 5 \right) $$" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="リレーションと第一正規形" />
+
+
+
+  <meta name="twitter:description" content="リレーショナルデータベースの特徴  リレーショナルデータベースは，関係データベースやRDB（Relational Data Base）とも呼ばれ， 最も広く利用されるデータベースです． 1968年にリレーショナルデータベースのアイデアが発表され， 現在でもデータベースの主流であることから，その有用性の高さが想像できると思います． 2次元の表形式という直感的で分かりやすいデータ形式でありながらも， 数学の集合論 が基本となっており，厳密なルールで運用されます． 今回は，集合論の概念を用いながら， リレーショナルデータベースがどのように構築されるかを解説します．
+ リレーションとは  リレーショナルデータベースは，その名の通り， データの リレーション（関係） を記述するためのデータベースです． では，一体，リレーションとは何を表すのでしょうか． 集合論の概念を利用して考えていきましょう．
+ドメイン ドメイン とは，特定の条件を満たす 要素（元） から構成される集合のことです． 例えば，名前の集合，電話番号の集合は，それぞれドメインです． 一般に，ドメインは $D_i$ で表現されます．
+$$ D_1 = \left( 高谷舞衣,福岡豊樹,西村朱音 \right) $$
+$$ D_2 = \left( 0786857519,0265723899,0178189244 \right) $$
+この他にも，アルファベットの集合や，整数の集合もドメインと考えることができます． ここでは，有限集合のみを対象としていますが，無限集合でも問題ありません．
+$$ D_3 = \left( a, b, c \right) $$
+$$ D_4 = \left( 1, 2, 3, 4, 5 \right) $$" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/cd96c040507e94e0352e1e55134772f0.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-09-20 17:45:42 &#43;0900 JST">September 20, 2019</time>
+</div>
+
+    <h1 class="post-title">リレーションと第一正規形</h1>
+<div class="post-line"></div>
+
+    
+
+    
+
+<p><a href="https://gyazo.com/cd96c040507e94e0352e1e55134772f0"><img src="https://i.gyazo.com/cd96c040507e94e0352e1e55134772f0.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  リレーショナルデータベースの特徴
+</h1>
+
+
+<p>リレーショナルデータベースは，関係データベースやRDB（Relational Data Base）とも呼ばれ，
+最も広く利用されるデータベースです．
+1968年にリレーショナルデータベースのアイデアが発表され，
+現在でもデータベースの主流であることから，その有用性の高さが想像できると思います．
+2次元の表形式という直感的で分かりやすいデータ形式でありながらも，
+<strong>数学の集合論</strong> が基本となっており，厳密なルールで運用されます．
+今回は，集合論の概念を用いながら，
+リレーショナルデータベースがどのように構築されるかを解説します．</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  リレーションとは
+</h1>
+
+
+<p>リレーショナルデータベースは，その名の通り，
+データの <strong>リレーション（関係）</strong> を記述するためのデータベースです．
+では，一体，リレーションとは何を表すのでしょうか．
+集合論の概念を利用して考えていきましょう．</p>
+
+<h3 id="ドメイン">ドメイン</h3>
+
+<p><strong>ドメイン</strong> とは，特定の条件を満たす <strong>要素（元）</strong> から構成される集合のことです．
+例えば，名前の集合，電話番号の集合は，それぞれドメインです．
+一般に，ドメインは $D_i$ で表現されます．</p>
+
+<p>$$
+D_1 = \left( 高谷舞衣,福岡豊樹,西村朱音 \right)
+$$</p>
+
+<p>$$
+D_2 = \left( 0786857519,0265723899,0178189244 \right)
+$$</p>
+
+<p>この他にも，アルファベットの集合や，整数の集合もドメインと考えることができます．
+ここでは，有限集合のみを対象としていますが，無限集合でも問題ありません．</p>
+
+<p>$$
+D_3 = \left( a, b, c \right)
+$$</p>
+
+<p>$$
+D_4 = \left( 1, 2, 3, 4, 5 \right)
+$$</p>
+
+<h3 id="ドメインの直積">ドメインの直積</h3>
+
+<p>ドメインを対象として，<strong>直積</strong> という演算が定義されます．
+直積は $D_1 \times D_2$ のように表現され，
+各ドメインから一つずつ要素を取り出して組にした新たなドメインになります．
+$D_1$と$D_2$の直積の場合，新たなドメインの要素数は$3 \times 3 = 9$ です．</p>
+
+<p>$ D_1 \times D_2 = \{ $<br />
+ $(高谷舞衣,0786857519),(高谷舞衣,0265723899),(高谷舞衣,0178189244),$<br />
+ $(福岡豊樹,0786857519),(福岡豊樹,0265723899),(福岡豊樹,0178189244),$<br />
+ $(西村朱音,0786857519),(西村朱音,0265723899),(西村朱音,0178189244)$<br />
+$ \} $</p>
+
+<p>このとき，直積集合の要素は <strong>タプル（レコード）</strong> と呼ばれます．
+例えば，$(高谷舞衣,0786857519)$ はタプルです．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題1
+  </h3>
+
+  <p>
+    
+	下記のドメインの直積$D_1 \times D_2 \times D_3$を求めよ．
+	
+	$$
+	D_1 = \left( a, b \right)
+	$$
+
+	$$
+	D_2 = \left( 1, 2, 3 \right)
+	$$	
+	
+	$$
+	D_3 = \left( a, b \right)
+	$$		
+
+  </p>
+  
+</div>
+
+
+<h3 id="リレーション">リレーション</h3>
+
+<p>有限個のドメイン$D_1,D_2,\cdots,D_n$があるとき，
+これらの直積$D_1 \times D_2 \times \cdots \times D_n$の
+任意の部分集合を <strong>リレーション</strong> と呼びます．
+一般にリレーションは$R$で表現されます．</p>
+
+<p>$$
+R \subseteq D_1 \times D_2 \times \cdots \times D_n
+$$</p>
+
+<p>例えば，上述の$D_1 \times D_2$において，
+下記の3つの要素からなる集合はリレーションとなります．
+このとき，リレーションに含まれるタプルの総数を <strong>濃度</strong>，
+また，タプルを構成する要素数を <strong>次数</strong> と呼びます．
+ここでは，濃度は3，次数は2となります．</p>
+
+<p>$$
+R = \left\{
+(高谷舞衣,0786857519),(福岡豊樹,0265723899),(西村朱音,0178189244)
+\right\}
+$$</p>
+
+<p>直積はドメインから構成可能な <strong>全ての組み合わせ</strong> を表すのに対し，
+リレーションはその全ての中から実在する（意味のある）タプルだけを
+抽出した <strong>実在する組み合わせ</strong>と考えることができます．</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  リレーションと表
+</h1>
+
+
+<p>さて，リレーションの定義は分かりましたね．
+リレーションはリレーショナルデータベースとどのように関係するのでしょうか．
+実はリレーションは <strong>表（テーブル）</strong> と一致します．
+リレーションは表形式で表すと下記のようになります．</p>
+
+<table>
+<tr><td>高谷舞衣</td><td>0786857519</td></tr>
+<tr><td>福岡豊樹</td><td>0265723899</td></tr>
+<tr><td>西村朱音</td><td>0178189244</td></tr>
+</table>
+
+<p>これだけでは何だか寂しいですね．
+リレーションの基になっているドメイン名（氏名，電話番号）を表に付け加えましょう．
+これは <strong>属性名（列名）</strong> と呼ばれます．</p>
+
+<table>
+<thead>
+<tr>
+<th>氏名</th>
+<th>電話番号</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>高谷舞衣</td>
+<td>0786857519</td>
+</tr>
+
+<tr>
+<td>福岡豊樹</td>
+<td>0265723899</td>
+</tr>
+
+<tr>
+<td>西村朱音</td>
+<td>0178189244</td>
+</tr>
+</tbody>
+</table>
+
+<p>最後に表全体にも「アドレス帳」と名前を付けることにします．
+これは <strong>リレーション名（テーブル名）</strong> と呼ばれます．</p>
+
+<table>
+<thead>
+<tr>
+<th>氏名</th>
+<th>電話番号</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>高谷舞衣</td>
+<td>0786857519</td>
+</tr>
+
+<tr>
+<td>福岡豊樹</td>
+<td>0265723899</td>
+</tr>
+
+<tr>
+<td>西村朱音</td>
+<td>0178189244</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>【アドレス帳】</strong></p>
+
+<p>このようにリレーションに属性名とリレーション名を付与した
+表（テーブル）がリレーショナルデータベースの実態です．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題2
+  </h3>
+
+  <p>
+    
+	下記のリレーションを表形式で表せ．
+	また，適切な属性名とリレーション名を考えなさい．
+
+$$
+R = \left \{ 
+(米津玄師, 馬と鹿, 250円),(LiSA,紅蓮華,250円),(miwa,リブート,400円) 
+\right \}
+$$	
+		
+
+  </p>
+  
+</div>
+
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  第一正規形
+</h1>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4781913903&linkId=0a2c1ffad427bdeee3fd703f5392bac2&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479815654X&linkId=cfb458fce9d85899424b079e9b3743e8&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479813516X&linkId=38aea2a346205302f4138786b73ddd9f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274066312&linkId=236165e8339c6e743d26f664f7eb791f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+
+
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/database/chapter2/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-09-20 20:20:22.89125 &#43;0900 JST m=&#43;0.072027384">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
