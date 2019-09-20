@@ -421,6 +421,192 @@ $$
 </h1>
 
 
+<p>リレーショナルデータベースは考えなしに設計してしまうと，
+データが冗長になったり，不整合が発生してしまうことがあります．
+これを解決するのが，<strong>正規形</strong> と呼ばれるリレーションを制約するためのルールです．
+正規形には，第１正規形〜第５正規形，また，ボイス・コッド正規形があります．
+数字が増えるごとに制約の条件は厳しくなりますが，
+一般に第３正規形までを満たしていれば運用には問題ないと判断されます．
+今回は最も緩い制約である <strong>第１正規形（First Normal Form: 1NF）</strong> に関して解説します．
+第１正規形であるための条件は下記です．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    第１正規形
+  </h3>
+
+  <p>
+    
+	リレーション$R=(A_1, A_2, \cdots, A_n)$の各ドメインがシンプルであるとき<b>第１正規形</b>であるという．
+
+  </p>
+  
+</div>
+
+
+<p>まずは，第１正規形を満たしていないリレーション【学生名簿】を考えてみます．
+このリレーションには，第１正規形を満たしていない箇所が含まれています．
+どこに問題があるか考えてみましょう．</p>
+
+<table>
+<thead>
+<tr>
+<th>氏名</th>
+<th>所属</th>
+<th>趣味</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>岩城隼人</td>
+<td>(工学部,機械工学科)</td>
+<td>サッカー</td>
+</tr>
+
+<tr>
+<td>岩村優</td>
+<td>(工学部,情報工学科)</td>
+<td>テニス,読書</td>
+</tr>
+
+<tr>
+<td>杉江弘子</td>
+<td>(人文学部,心理学科)</td>
+<td>読書</td>
+</tr>
+
+<tr>
+<td>仙波あすか</td>
+<td>(国際関係学部,国際学科)</td>
+<td>テニス,映画鑑賞</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>【学生名簿（非第１正規形）】</strong></p>
+
+<p>ドメインが <strong>シンプル</strong> であるとはどういうことでしょうか．
+つまりは，ドメインが <strong>他のドメインの直積</strong> であることや
+<strong>あるドメインのべき集合</strong> であることが禁止されているということです．</p>
+
+<h3 id="ケース1-直積の場合">ケース1：直積の場合</h3>
+
+<p>まずは，所属の列に注目してみましょう．
+ここで，学部を表すドメイン$D_1$と，学科を表すドメイン$D_2$を下記のように定義することにします．</p>
+
+<p>$$D_1 = (工学部,人文学部,国際関係学部)$$
+$$D_2 = (機械工学科, 情報工学科, 心理学科, 国際学科)$$</p>
+
+<p>所属の列の要素は，これらのドメインの直積$D_1 \times D_2$で与えられています．
+例えば，$(工学部,機械工学科)$は，$D_1$の要素である工学部と，$D_2$の要素である機械工学科を組み合わせた表現になっています．
+これは，第１正規形の条件を満たしていません．</p>
+
+<h3 id="ケース2-べき集合の場合">ケース2：べき集合の場合</h3>
+
+<p>次に，趣味の列に注目してみましょう．
+ここで，趣味を表すドメイン$D_3$を下記のように定義することにします．</p>
+
+<p>$$D_3 = (サッカー,テニス,読書,映画鑑賞)$$</p>
+
+<p>趣味の列の要素は，このドメイン$D_3$のべき集合（部分集合を要素とする集合）で与えられています．
+例えば，$テニス,読書$は，$D_3$の部分集合の一つです．
+これも，第１正規形の条件を満たしていません．</p>
+
+<h3 id="正規化の方法">正規化の方法</h3>
+
+<p>非正規形から正規形に変形することを <strong>正規化</strong> と呼びます．
+ここでは，第１正規形になるように変形しましょう．
+直積の場合は 直積前のドメインに分割します．
+例えば，$(工学部, 機械工学科)$は，$工学部$と$機械工学科$の2列に分けます．
+また，べき集合の場合は，要素の数だけタプルを複製します．
+例えば，$テニス,読書$は，$岩村優$のタプルを2つに複製し，$テニス$と$読書$をそれぞれ設定します．
+この結果，リレーション【学生名簿】は第１正規形を満たします．</p>
+
+<table>
+<thead>
+<tr>
+<th>氏名</th>
+<th>学部</th>
+<th>学科</th>
+<th>趣味</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>岩城隼人</td>
+<td>工学部</td>
+<td>機械工学科</td>
+<td>サッカー</td>
+</tr>
+
+<tr>
+<td>岩村優</td>
+<td>工学部</td>
+<td>情報工学科</td>
+<td>テニス</td>
+</tr>
+
+<tr>
+<td>岩村優</td>
+<td>工学部</td>
+<td>情報工学科</td>
+<td>読書</td>
+</tr>
+
+<tr>
+<td>杉江弘子</td>
+<td>人文学部</td>
+<td>心理学科</td>
+<td>読書</td>
+</tr>
+
+<tr>
+<td>仙波あすか</td>
+<td>国際関係学部</td>
+<td>国際学科</td>
+<td>テニス</td>
+</tr>
+
+<tr>
+<td>仙波あすか</td>
+<td>国際関係学部</td>
+<td>国際学科</td>
+<td>映画鑑賞</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>【学生名簿（第１正規形）】</strong></p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題3
+  </h3>
+
+  <p>
+    
+下記のリレーション【取引銀行】を第１正規形に変形せよ．
+
+<table>
+<tr><th>銀行</th><th>電話番号</th><th>貯金額</th></tr>
+<tr><td>(愛知銀行,春日井支店)</td><td>052-123-1111, 052-123-2222</td><td>100,000円</td></tr>
+<tr><td>(愛知銀行,大曽根支店)</td><td>052-123-3333</td><td>200,000円</td></tr>
+<tr><td>(大垣共立銀行,名古屋支店)</td><td>052-123-4444,052-123-5555</td><td>300,000円</td></tr>
+</table>
+<b>【取引銀行】</b>
+
+
+  </p>
+  
+</div>
+
+
 <h3>参考書籍</h3>
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4781913903&linkId=0a2c1ffad427bdeee3fd703f5392bac2&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
@@ -495,7 +681,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-09-20 20:20:22.89125 &#43;0900 JST m=&#43;0.072027384">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-09-21 01:06:40.061942 &#43;0900 JST m=&#43;0.094829621">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
