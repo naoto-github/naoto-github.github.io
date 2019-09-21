@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    主キーと外部キー | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="主キーと外部キー" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/database/chapter3/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="本日のリレーション  今回は下記の 【学生リスト】 と 【学部リスト】 を対象に解説します． 学生リストは，学籍番号，氏名，学年，学部，また， 学部リストは，学部，キャンパス，教員数で構成されています．
+   学籍番号 氏名 学年 学部     A001 岩城隼人 2 工学部   A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部    【学生リスト】
+   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="主キーと外部キー" />
+
+
+
+  <meta name="twitter:description" content="本日のリレーション  今回は下記の 【学生リスト】 と 【学部リスト】 を対象に解説します． 学生リストは，学籍番号，氏名，学年，学部，また， 学部リストは，学部，キャンパス，教員数で構成されています．
+   学籍番号 氏名 学年 学部     A001 岩城隼人 2 工学部   A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部    【学生リスト】
+   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-09-21 10:01:12 &#43;0900 JST">September 21, 2019</time>
+</div>
+
+    <h1 class="post-title">主キーと外部キー</h1>
+<div class="post-line"></div>
+
+    
+
+    <h1>
+  <img class="head-image" src="/logo/logo.png">
+  本日のリレーション
+</h1>
+
+
+<p>今回は下記の <strong>【学生リスト】</strong> と <strong>【学部リスト】</strong> を対象に解説します．
+学生リストは，学籍番号，氏名，学年，学部，また，
+学部リストは，学部，キャンパス，教員数で構成されています．</p>
+
+<table>
+<thead>
+<tr>
+<th>学籍番号</th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>A001</td>
+<td>岩城隼人</td>
+<td>2</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>A002</td>
+<td>岩村優</td>
+<td>1</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+</tr>
+
+<tr>
+<td>C004</td>
+<td>仙波あすか</td>
+<td>1</td>
+<td>国際関係学部</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>【学生リスト】</strong></p>
+
+<table>
+<thead>
+<tr>
+<th>学部</th>
+<th>キャンパス</th>
+<th>教員数</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>工学部</td>
+<td>春日井</td>
+<td>30</td>
+</tr>
+
+<tr>
+<td>人文学部</td>
+<td>春日井</td>
+<td>20</td>
+</tr>
+
+<tr>
+<td>国際関係学部</td>
+<td>名古屋</td>
+<td>25</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>【学部リスト】</strong></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  主キー
+</h1>
+
+
+<p>リレーショナルデータベースの運用において
+タプル（レコード）の検索や更新などの処理は必須です．
+検索や更新を正しく行うには，
+リレーションに含まれる所定のタプルを一意に同定する必要があります．</p>
+
+<p>例えば，【学生リスト】でタプルを検索することを考えてみましょう．
+下記の学生証の学生をどのように検索したら良いでしょうか．</p>
+
+<div style="width:300px;height:200px;border:2px solid black;margin-bottom:20px">
+<h3 style="margin-left:5px">
+学籍番号：A002<br />
+工学部 1年
+</h3>
+<h2 style="text-align:center">岩村 優</h2>
+</div>
+
+<p><strong>学年</strong>や<strong>学部</strong>で検索することは問題がありそうですね．
+なぜなら，「1年」は岩村さんだけでなく，仙波さんも該当しています．
+同様に，「工学部」は岩城さんも該当しています．
+これでは，一意に同定することは出来ません．</p>
+
+<p>では，<strong>学籍番号</strong>や<strong>氏名</strong>ではどうでしょうか．
+「A002」や「岩村優」は，他のタプルと重複しておらず，
+所定の学生を同定することが出来そうです．
+しかし，氏名に関しては，今回のケースでは，
+たまたま同姓同名の学生がいなかっただけで，
+データベースを運用している過程で，
+重複が発生する可能性がありそうです．</p>
+
+<p>よって，【学生リスト】においては，
+<strong>学籍番号</strong>で検索するのが最も適していると言えそうです．
+このように，その値を指定すると特定のタプルを一意識別できる属性（属性集合も可）を
+<strong>主キー（Primary Key）</strong>と呼びます
+（正確には<strong>候補キー（Candidate Key）</strong>であり，その中で最も適切な一つを選び<strong>主キー</strong>とします）．</p>
+
+<p>主キーであるためには，下記の主キー制約を満たす必要があります．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    主キー制約
+  </h3>
+
+  <p>
+    
+	<ul>
+		<li>主キーはタプルの一意識別能力を持つ（重複しない）．</li>
+		<li>主キーは空値（NULL）を含まない．</li>
+	</ul>
+
+  </p>
+  
+</div>
+
+
+<p>一つ目の条件は上述した通りです．
+二つ目の条件は属性に値が設定されていない状態（<strong>空値</strong>と呼ぶ）は認められないことを意味しています．
+例えば，下記のようなタプルを【学生リスト】に追加することが出来ません．
+もし，このようなタプルを認めてしまうと，主キーである学生番号で一意識別が出来なくなってしまいます．</p>
+
+<table>
+<thead>
+<tr>
+<th>学籍番号</th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td></td>
+<td>内田弘</td>
+<td>3</td>
+<td>工学部</td>
+</tr>
+</tbody>
+</table>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題1
+  </h3>
+
+  <p>
+    
+	【納品表】における適切な主キーは何か．
+	
+	<table>
+	<tbody>
+		<tr>
+			<th>商品番号</th>
+			<th>顧客番号</th>
+			<th>納品数</th>
+		</tr>
+		<tr>
+			<td>G1</td>
+			<td>C1</td>
+			<td>10</td>
+		</tr>
+		<tr>
+			<td>G1</td>
+			<td>C2</td>
+			<td>15</td>
+		</tr>
+		<tr>
+			<td>G2</td>
+			<td>C1</td>
+			<td>20</td>
+		</tr>
+		<tr>
+			<td>G3</td>
+			<td>C3</td>
+			<td>10</td>
+		</tr>
+	</tbody>
+	</table>
+</table>
+<b>納品表</b>
+	
+
+  </p>
+  
+</div>
+
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  外部キー
+</h1>
+
+
+<p>一般にリレーショナルデータベースは，複数のリレーションで構成されます．
+今回対象としてるリレーションも【学生リスト】と【学部リスト】に分けて管理されています．
+これらのリレーションは，お互いに値を参照することで，関連付けられることがあります．
+この関連付けを定義するのが<strong>外部キー（Foreign Key）</strong>です．</p>
+
+<p>では，【学生リスト】と【学部リスト】の参照関係を考えてみましょう．
+いずれのリレーションにも <strong>学部</strong> が存在していますね．
+どうやらこの <strong>学部</strong> が参照関係にありそうです．
+ここで，注目すべきは【学部リスト】の <strong>学部</strong> は主キーであることです．
+つまり，主キー制約により，重複する値は存在せず，空値となることはありません．
+一方，【学生リスト】の <strong>学部</strong> は，主キーではないため，重複や空値が存在する可能性があります．</p>
+
+<p>この場合，【学生リスト】の <strong>学部</strong> は【学部リスト】の <strong>学部</strong> を参照していると考えます．
+つまり，【学生リスト】の <strong>学部</strong> に出現する値は，【学部リスト】の <strong>学部</strong> に存在する値から選ぶ必要があります．
+このとき，【学生リスト】の <strong>学部</strong> を <strong>外部キー</strong> と呼びます．</p>
+
+<p>外部キーであるためには，下記の外部キー制約を満たす必要があります．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    外部キー制約
+  </h3>
+
+  <p>
+    
+	<ul>
+		<li>外部キーの値は，参照先のリレーションの主キーの値から選ばれる．</li>
+		<li>外部キーは空値（NULL）を含むことが許される．</li>
+	</ul>	
+
+  </p>
+  
+</div>
+
+
+<p>外部キーは主キーとは異なり，空値を含むことが許される点に注意してください，
+このため，下記のようなタプルを【学生リスト】に追加することに問題はありません．</p>
+
+<table>
+<thead>
+<tr>
+<th>学籍番号</th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>A003</td>
+<td>内田弘</td>
+<td>3</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題2
+  </h3>
+
+  <p>
+    
+	関係データベースで管理された業者表，仕入明細表及び商品表がある．
+	新たな業者から新たな商品を仕入れた場合，
+	表にデータを追加する適切な順番を理由を挙げて説明せよ．
+	下線は主キーを示し，破線は外部キーを示す．
+	（平成22年度 秋期 ITパスポート）
+	
+	<table>
+	<tbody>
+		<tr>
+			<th><u>業者コード</u></th>
+			<th>業者名</th>
+		</tr>
+	</tbody>
+	</table>
+	<b>業者表</b>
+	
+	<table>
+	<tbody>
+		<tr>
+			<th><u>業者コード</u></th>
+			<th>枝番</th>
+			<th>日付</th>
+			<th><span style="border-bottom: 1px dashed black">商品コード</span></th>
+			<th>数量</th>			
+		</tr>
+	</tbody>
+	</table>
+	<b>仕入明細表</b>	
+	
+	<table>
+	<tbody>
+		<tr>
+			<th><u>商品コード</u></th>
+			<th>商品名</th>
+			<th><span style="border-bottom: 1px dashed black">業者コード</span></th>			
+			<th>単価</th>			
+		</tr>
+	</tbody>
+	</table>
+	<b>商品表</b>	
+
+  </p>
+  
+</div>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4781913903&linkId=0a2c1ffad427bdeee3fd703f5392bac2&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479815654X&linkId=cfb458fce9d85899424b079e9b3743e8&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479813516X&linkId=38aea2a346205302f4138786b73ddd9f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274066312&linkId=236165e8339c6e743d26f664f7eb791f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+
+
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/database/chapter3/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  <div class="adsense">
+    
+  </div>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2019-09-21 14:20:27.38401 &#43;0900 JST m=&#43;0.105828280">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
