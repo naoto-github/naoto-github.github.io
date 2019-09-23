@@ -72,7 +72,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+  <meta property="og:image" content="https://i.gyazo.com/947a868454d10d3e3bb67cbd887ae0e3.png" />
 
 
 
@@ -82,8 +82,7 @@
 
   <meta property="og:description" content="本日のリレーション  今回は下記の【サッカー部】，【テニス部】，【学部リスト】を対象に解説します． サッカー部とテニス部は，学籍番号，氏名，学年，学部，また， 学部リストは，学部，キャンパス，教員数で構成されています．
    学籍番号 氏名 学年 学部     A001 岩城隼人 2 工学部   A003 内田弘 3 工学部   B003 杉江弘子 3 人文学部    【サッカー部】
-   学籍番号 氏名 学年 学部     A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部    【テニス部】
-   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】" />
+   学籍番号 氏名 学年 学部     A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部    【テニス部】" />
 
 
 
@@ -100,12 +99,11 @@
 
   <meta name="twitter:description" content="本日のリレーション  今回は下記の【サッカー部】，【テニス部】，【学部リスト】を対象に解説します． サッカー部とテニス部は，学籍番号，氏名，学年，学部，また， 学部リストは，学部，キャンパス，教員数で構成されています．
    学籍番号 氏名 学年 学部     A001 岩城隼人 2 工学部   A003 内田弘 3 工学部   B003 杉江弘子 3 人文学部    【サッカー部】
-   学籍番号 氏名 学年 学部     A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部    【テニス部】
-   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】" />
+   学籍番号 氏名 学年 学部     A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部    【テニス部】" />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/947a868454d10d3e3bb67cbd887ae0e3.png" />
 
 
 
@@ -176,7 +174,11 @@
 
     
 
-    <h1>
+    
+
+<p><a href="https://gyazo.com/947a868454d10d3e3bb67cbd887ae0e3"><img src="https://i.gyazo.com/947a868454d10d3e3bb67cbd887ae0e3.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
   <img class="head-image" src="/logo/logo.png">
   本日のリレーション
 </h1>
@@ -291,9 +293,38 @@
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  関係代数演算
+  リレーションに対する演算
 </h1>
 
+
+<p>数値に対して足算や掛算などの四則演算が定義できるように，
+リレーションにも演算を定義することができます．
+リレーションに対する演算は4つの<strong>集合演算</strong>と，
+4つの<strong>関係代数演算（リレーショナル代数演算）</strong>で構成されています
+（商演算は殆ど用いることがないため，今回は割愛します）．</p>
+
+<p>集合演算は下記の4つです．</p>
+
+<ul>
+<li>和集合演算（Union Operation）</li>
+<li>差集合演算（Set Difference Operation）</li>
+<li>共通集合演算（Intersection Operation）</li>
+<li>直積演算（Direct Product Operation）</li>
+</ul>
+
+<p>関係代数演算は下記の4つです．</p>
+
+<ul>
+<li>射影演算（Projection Operation）</li>
+<li>選択演算(Selection Operation)</li>
+<li>結合演算（Join Operation）</li>
+<li>商演算（Division Operation）</li>
+</ul>
+
+<p>これらの演算は，リレーショナルデータベースにおける検索や更新に該当し，
+後に述べるSQLで表現が可能となっています．
+今回はこれらの演算がどのように表現され，
+どのような結果になるかを学びましょう．</p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -301,32 +332,725 @@
 </h1>
 
 
+<p>集合演算に含まれる和集合演算，差集合演算，共通集合演算を適用するには，
+リレーションが<strong>和両立</strong>と呼ばれる条件を満たしている必要があります．</p>
+
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
   <h3 style="color:#FF0000">
-    test
+    和両立
   </h3>
 
   <p>
     
-	test
+	リレーション$R_1$と$R_2$が下記の条件を満たすとき和両立であるという．
+	
+	<ul>
+	<li>$R_1$と$R_2$の次数が等しい</li>
+	<li>$R_1$と$R_2$の対応するドメインが等しい</li>
+	</ul>
 
   </p>
   
 </div>
 
 
+<p>例えば，【サッカー部】と【テニス部】の関係を確認してみましょう．
+いずれのリレーションも4つの属性で構成されているため次数は<strong>4</strong>です．
+また，各属性のドメインは下記のように表現できると考えられ，
+リレーション間で対応がとれていると言えます．
+よって，【サッカー部】と【テニス部】は <strong>和両立</strong> であり，
+和集合演算，差集合演算，共通集合演算が適用可能です．</p>
+
+<p>$$D_1 = (A001, A002, A003, B003, C004)$$
+$$D_2 = (岩城隼人,岩村優,内田弘,杉江弘子,仙波あすか)$$
+$$D_3 = (1, 2, 3, 4)$$
+$$D_4 = (工学部,人文学部,国際関係学部)$$</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  集合演算
+</h1>
+
+
+<h3 id="和集合演算">和集合演算</h3>
+
+<p>和集合演算は下記のように定義されます．</p>
+
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
-  <h3 style="color:#006600">
-    test
+  <h3 style="color:#FF0000">
+    和集合演算
   </h3>
 
   <p>
     
-	test
+
+	$R_1$と$R_2$の和集合$R_1 \cup R_2$を次のように定義する．
+
+	$$
+	R_1 \cup R_2 = \left\{
+		t|t \in R_1 \lor t \in R_2
+	\right\}
+	$$
+
+  </p>
+  
+</div>
+
+
+<p>ここで，記号$\lor$は <strong>論理和</strong> を表しています．
+$【サッカー部】\cup【テニス部】$の演算結果は下記のようになります．
+それぞれのリレーションからタプルを取り出し，それらを合わせていることが分かります．
+このとき，両方のリレーションに存在した$(B003,杉江弘子,3,人文学部)$は，
+和集合した結果には，1つしか存在しないことに注意してください．</p>
+
+<table>
+<thead>
+<tr>
+<th>学籍番号</th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>A001</td>
+<td>岩城隼人</td>
+<td>2</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>A003</td>
+<td>内田弘</td>
+<td>3</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+</tr>
+
+<tr>
+<td>A002</td>
+<td>岩村優</td>
+<td>1</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>C004</td>
+<td>仙波あすか</td>
+<td>1</td>
+<td>国際関係学部</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="差集合演算">差集合演算</h3>
+
+<p>差集合演算は下記のように定義されます．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    差集合演算
+  </h3>
+
+  <p>
+    
+
+	$R_1$と$R_2$の差集合$R_1 - R_2$を次のように定義する．
+
+	$$
+	R_1 - R_2 = \left\{
+		t|t \in R_1 \land \lnot(t \in R_2)
+	\right\}
+	$$
+
+  </p>
+  
+</div>
+
+
+<p>ここで，記号$\land$は <strong>論理積</strong> ，$\lnot$は <strong>否定</strong> を表しています．
+$【サッカー部】-【テニス部】$の演算結果は下記のようになります．
+【サッカー部】に存在し，かつ，【テニス部】には存在しないタプルが対象となります．
+$(B003,杉江弘子,3,人文学部)$は【テニス部】にも存在しているため，
+リレーションから取り除かれています．</p>
+
+<table>
+<thead>
+<tr>
+<th>学籍番号</th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>A001</td>
+<td>岩城隼人</td>
+<td>2</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>A003</td>
+<td>内田弘</td>
+<td>3</td>
+<td>工学部</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="共通集合演算">共通集合演算</h3>
+
+<p>共通集合演算は下記のように定義されます．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    共通集合演算
+  </h3>
+
+  <p>
+    
+
+	$R_1$と$R_2$の共通集合$R_1 \cap R_2$を次のように定義する．
+
+	$$
+	R_1 \cap R_2 = \left\{
+		t|t \in R_1 \land t \in R_2
+	\right\}
+	$$
+
+  </p>
+  
+</div>
+
+
+<p>$【サッカー部】\cap【テニス部】$の演算結果は下記のようになります．
+【サッカー部】と【テニス部】の両方に存在するタプルが対象となります．
+上述したように$(B003,杉江弘子,3,人文学部)$だけが両方のリレーションに存在していますね．</p>
+
+<table>
+<thead>
+<tr>
+<th>学籍番号</th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="直積集合演算">直積集合演算</h3>
+
+<p>直積集合演算は下記のように定義されます．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    直積集合演算
+  </h3>
+
+  <p>
+    
+
+	$R_1$と$R_2$の直積集合$R_1 \times R_2$を次のように定義する．
+
+	$$
+	R_1 \times R_2 = \left\{
+		(t_1,t_2) |t_1\in R_1 \land t_2 \in R_2
+	\right\}
+	$$
+
+  </p>
+  
+</div>
+
+
+<p>$【サッカー部】\times【テニス部】$の演算結果は下記のようになります．
+直積演算は，第2回で解説したドメインの直積と同じように，
+それぞれのリレーションからタプルを取り出し，それらを組み合わせた新しいリレーションを形成します．
+このとき，元はどのリレーションであるかを明確にするため，
+<strong>リレーション名.属性名</strong>という表記を用いることがあります（ <strong>ドット記法</strong>）．</p>
+
+<table>
+<thead>
+<tr>
+<th>サ.学籍番号</th>
+<th>サ.氏名</th>
+<th>サ.学年</th>
+<th>サ.学部</th>
+<th>テ.学籍番号</th>
+<th>テ.氏名</th>
+<th>テ.学年</th>
+<th>テ.学部</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>A001</td>
+<td>岩城隼人</td>
+<td>2</td>
+<td>工学部</td>
+<td>A002</td>
+<td>岩村優</td>
+<td>1</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>A001</td>
+<td>岩城隼人</td>
+<td>2</td>
+<td>工学部</td>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+</tr>
+
+<tr>
+<td>A001</td>
+<td>岩城隼人</td>
+<td>2</td>
+<td>工学部</td>
+<td>C004</td>
+<td>仙波あすか</td>
+<td>1</td>
+<td>国際関係学部</td>
+</tr>
+
+<tr>
+<td>A003</td>
+<td>内田弘</td>
+<td>3</td>
+<td>工学部</td>
+<td>A002</td>
+<td>岩村優</td>
+<td>1</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>A003</td>
+<td>内田弘</td>
+<td>3</td>
+<td>工学部</td>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+</tr>
+
+<tr>
+<td>A003</td>
+<td>内田弘</td>
+<td>3</td>
+<td>工学部</td>
+<td>C004</td>
+<td>仙波あすか</td>
+<td>1</td>
+<td>国際関係学部</td>
+</tr>
+
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+<td>A002</td>
+<td>岩村優</td>
+<td>1</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+</tr>
+
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+<td>C004</td>
+<td>仙波あすか</td>
+<td>1</td>
+<td>国際関係学部</td>
+</tr>
+</tbody>
+</table>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題1
+  </h3>
+
+  <p>
+    
+	【八百屋】と【果物屋】の和集合，差集合，共通集合，直積集合を求めよ．
+	
+<table>
+	<tbody>
+		<tr>
+			<th>商品番号</th>
+			<th>商品名</th>
+			<th>価格</th>
+		</tr>
+		<tr>
+			<td>G1</td>
+			<td>ニンジン</td>
+			<td>100円</td>
+		</tr>
+		<tr>
+			<td>G2</td>
+			<td>トマト</td>
+			<td>200円</td>
+		</tr>
+		<tr>
+			<td>G3</td>
+			<td>スイカ</td>
+			<td>500円</td>
+		</tr>
+	</tbody>
+</table>
+<b>【八百屋】</b>
+
+<table>
+	<tbody>
+		<tr>
+			<th>商品番号</th>
+			<th>商品名</th>
+			<th>価格</th>
+		</tr>
+		<tr>
+			<td>G4</td>
+			<td>イチゴ</td>
+			<td>300円</td>
+		</tr>
+		<tr>
+			<td>G5</td>
+			<td>ブドウ</td>
+			<td>200円</td>
+		</tr>
+		<tr>
+			<td>G3</td>
+			<td>スイカ</td>
+			<td>500円</td>
+		</tr>
+	</tbody>
+</table>
+<b>【果物屋】</b>
+
+
+  </p>
+  
+</div>
+
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  関係代数演算
+</h1>
+
+
+<h3 id="射影演算">射影演算</h3>
+
+<p>射影演算は下記のように定義されます．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    射影演算
+  </h3>
+
+  <p>
+    
+
+	$R$の射影$R[X]$を次のように定義する．
+	ここで，$R$の属性集合が$A=(a_1, a_2, \cdots, a_n)$であり，
+	その部分集合が$X = (x_1, x_2, \cdots,x_k) \in A$である．
+
+	$$
+	R[X] = R(x_1, x_2, \cdots, x_k)
+	$$
+
+  </p>
+  
+</div>
+
+
+<p>上記の定義は分かりにくいですが，具体例で考えれば簡単です．
+例えば，$【サッカー部】[氏名,学部]$の演算結果は下記のようになります．
+射影演算は，<strong>属性</strong>を指定して，リレーションを縦方向に切り出す操作を表しています．
+指定する属性は，一つでも，複数でも構いません．</p>
+
+<table>
+<thead>
+<tr>
+<th>氏名</th>
+<th>学部</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>岩城隼人</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>内田弘</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>杉江弘子</td>
+<td>人文学部</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="選択演算">選択演算</h3>
+
+<p>選択演算は下記のように定義されます．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    選択演算
+  </h3>
+
+  <p>
+    
+
+	$R$の選択$R[a_i = x]$を次のように定義する．
+	ここで，$R$の属性集合が$A=(a_1, a_2, \cdots, a_n)$である．
+
+	$$
+	R[a_i = x] = \left\{
+		t | t \in R \land t[a_i] = x
+	\right\}
+	$$
+
+  </p>
+  
+</div>
+
+
+<p>具体例で考えましょう．
+例えば，$【サッカー部】[学年=3]$の演算結果は下記のようになります．
+選択演算は，<strong>属性の値</strong>を指定して，リレーションを横方向に切り出す操作を表しています．
+ここでは，$[学年=3]$と指定しているため，学年が3と一致するタプルだけが抽出されます．
+このとき，「$=$」のような記号を <strong>比較演算子</strong> と呼び，
+等号($=$)，不等号($\neq$)，より小さい($&lt;$)，より大きい($&gt;$)，以下($\leq$)，以上($\geq$)などの記号を用いることが出来ます．</p>
+
+<table>
+<thead>
+<tr>
+<th>学籍番号</th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>A003</td>
+<td>内田弘</td>
+<td>3</td>
+<td>工学部</td>
+</tr>
+
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="結合演算">結合演算</h3>
+
+<p>結合演算は下記のように定義されます．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    結合演算
+  </h3>
+
+  <p>
+    
+
+	$R_1$と$R_2$の結合$R_1[a_i = b_i]R_2$を次のように定義する．
+	ここで，$R_1$の属性集合が$A=(a_1, a_2, \cdots, a_n)$であり，
+	$R_2$の属性集合が$B=(b_1, b_2, \cdots, b_n)$である．
+
+	$$
+	R_1[a_i = b_i]R_2 = \left\{
+		(t_1,t_2) | t_1 \in R_1 \land t_2 \in R_2 \land t_1[a_i] = t_2[b_i]
+	\right\}
+	$$
+
+  </p>
+  
+</div>
+
+
+<p>具体例で考えましょう．
+例えば，$【サッカー部】[学部=学部]【学部リスト】$の演算結果は下記のようになります．
+結合演算は，<strong>直積集合演算</strong>を適用した後で，<strong>選択演算</strong>を適用した結果と一致します．
+つまり，$【サッカー部】\times 【学部リスト】$の演算結果から，
+指定された属性（ここでは「学部」）の値（例えば「工学部」）が一致するタプルのみを選択するという操作です．
+ここでも， <strong>ドット記法</strong> が用いられることに注意してください．</p>
+
+<table>
+<thead>
+<tr>
+<th>サ.学籍番号</th>
+<th>サ.氏名</th>
+<th>サ.学年</th>
+<th>サ.学部</th>
+<th>学.学部</th>
+<th>学.キャンパス</th>
+<th>学.教員数</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>A001</td>
+<td>岩城隼人</td>
+<td>2</td>
+<td>工学部</td>
+<td>工学部</td>
+<td>春日井</td>
+<td>30</td>
+</tr>
+
+<tr>
+<td>A003</td>
+<td>内田弘</td>
+<td>3</td>
+<td>工学部</td>
+<td>工学部</td>
+<td>春日井</td>
+<td>30</td>
+</tr>
+
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+<td>人文学部</td>
+<td>春日井</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+
+<p>しかし，この場合，<strong>サ.学部</strong> と<strong>学.学部</strong> の両方がリレーションに混在することになってしまい冗長に感じます．
+そこで，条件を指定するのではなく，一致するドメインを自動的に条件に設定し，結合する演算が用意されています．
+これを <strong>自然結合(Natural Join)</strong> と呼び，$R_1 * R_2$ で表現します．
+例えば，$【サッカー部】*【学部リスト】$の演算結果は下記のようになります．
+ここでは，<strong>学部</strong> は同じドメインであることから，自動的に条件に設定されることになります．
+先程とは異なり冗長な属性が取り除かれていることが分かります．</p>
+
+<table>
+<thead>
+<tr>
+<th>学籍番号</th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+<th>キャンパス</th>
+<th>教員数</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>A001</td>
+<td>岩城隼人</td>
+<td>2</td>
+<td>工学部</td>
+<td>春日井</td>
+<td>30</td>
+</tr>
+
+<tr>
+<td>A003</td>
+<td>内田弘</td>
+<td>3</td>
+<td>工学部</td>
+<td>春日井</td>
+<td>30</td>
+</tr>
+
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+<td>春日井</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題2
+  </h3>
+
+  <p>
+    
+	【テニス部】と【学部リスト】の結合と自然結合を求めよ．ただし，結合は<b>学部</b>の一致を条件とする．
 
   </p>
   
@@ -407,7 +1131,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-09-23 17:09:00.518225 &#43;0900 JST m=&#43;0.072582731">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-09-23 20:11:48.702223 &#43;0900 JST m=&#43;0.084576678">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
