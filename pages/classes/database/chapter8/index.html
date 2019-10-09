@@ -233,7 +233,7 @@ sqlite&gt; .table
 <table>
 <thead>
 <tr>
-<th>学部</th>
+<th><u>学部</u></th>
 <th>キャンパス</th>
 <th>教員数</th>
 </tr>
@@ -311,11 +311,11 @@ SETの後にある属性名1と値1に置き換えるという操作を行いま
 <span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">属性名</span><span style="color:#ae81ff">1</span><span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">値</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">属性名</span><span style="color:#ae81ff">2</span><span style="color:#f92672">=</span><span style="color:#960050;background-color:#1e0010">値</span><span style="color:#ae81ff">2</span>;</code></pre></div>
 <p>それでは，【学生リスト】の$学籍番号=A001$のレコードの$よみがな$を設定してみましょう．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* よみがなの設定 */</span>
-<span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">よみがな</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;いわしろはやと&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A001&#34;</span>;</code></pre></div>
+<span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">よみがな</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;いわきはやと&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A001&#34;</span>;</code></pre></div>
 <p>$よみがな$が設定されたか<strong>SELECT文</strong>で確認してみます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from 学生リスト;
 学籍番号|氏名|学年|学部|よみがな
-A001|岩城隼人|2|工学部|いわしろはやと
+A001|岩城隼人|2|工学部|いわきはやと
 A002|岩村優|1|工学部|
 B003|杉江弘子|3|人文学部|
 C004|仙波あすか|1|国際関係学部|</code></pre></div>
@@ -354,7 +354,7 @@ C004|仙波あすか|1|国際関係学部|</code></pre></div>
 テニス部     学生リスト  学部リスト
 sqlite&gt; select * from テニス部;
 学籍番号|氏名|学年|学部|よみがな
-A001|岩城隼人|2|工学部|いわしろはやと
+A001|岩城隼人|2|工学部|いわきはやと
 A002|岩村優|1|工学部|いわむらゆう
 B003|杉江弘子|3|人文学部|すぎえひろこ
 C004|仙波あすか|1|国際関係学部|せんばあすか</code></pre></div>
@@ -453,7 +453,7 @@ C004|仙波あすか|1|国際関係学部|せんばあすか</code></pre></div>
 			<td>岩城隼人</td>
 			<td>2</td>
 			<td>工学部</td>
-			<td>いわしろはやと</td>			
+			<td>いわきはやと</td>			
 		</tr>
 		<tr>
 			<td>B003</td>
@@ -479,6 +479,15 @@ C004|仙波あすか|1|国際関係学部|せんばあすか</code></pre></div>
 </div>
 
 
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  テーブルのバックアップ
+</h1>
+
+
+<p>作成したテーブルをファイルにバックアップするには，<code>.backup</code>を用います．
+バックアップするファイル名は <strong>db2.sqlite</strong> としましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; .backup db2.sqlite</code></pre></div>
 <h3>参考書籍</h3>
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4781913903&linkId=0a2c1ffad427bdeee3fd703f5392bac2&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
@@ -571,7 +580,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-10-08 19:56:58.255214 &#43;0900 JST m=&#43;0.092003471">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-10-09 19:53:53.129697 &#43;0900 JST m=&#43;0.098668822">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
