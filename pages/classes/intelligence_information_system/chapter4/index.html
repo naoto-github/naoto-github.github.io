@@ -80,10 +80,10 @@
 
 
 
-  <meta property="og:description" content="解析解と数値解前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
+  <meta property="og:description" content="解析解と数値解  前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
 回帰式のパラメータ（$a$と$b$のこと）を求める方法には２通りあり， 方程式を解くことによって得られる厳密な解を 解析解， 繰り返しの計算によって得られる近似的な解を 数値解 と呼びます． 特定の処理を繰り返すことが得意なコンピュータでは， 後者の 数値解 を求める方法が良く用いられます． ここでは，数値解を求めるための最もシンプルな方法である 最急降下法（Steepest Descent Method） について学びます．
-ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook4 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy と matplotlib.pyplot を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt 最急降下法最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
+ ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook4 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy と matplotlib.pyplot を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt  最急降下法  最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
 データ 対象とするデータは前回と同じ，気温 と アイスクリーム のデータを用います． いずれも，numpyのndarray型でリストを作成しておきます．" />
 
 
@@ -99,10 +99,10 @@ import numpy as np import matplotlib.pyplot as plt 最急降下法最急降�
 
 
 
-  <meta name="twitter:description" content="解析解と数値解前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
+  <meta name="twitter:description" content="解析解と数値解  前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
 回帰式のパラメータ（$a$と$b$のこと）を求める方法には２通りあり， 方程式を解くことによって得られる厳密な解を 解析解， 繰り返しの計算によって得られる近似的な解を 数値解 と呼びます． 特定の処理を繰り返すことが得意なコンピュータでは， 後者の 数値解 を求める方法が良く用いられます． ここでは，数値解を求めるための最もシンプルな方法である 最急降下法（Steepest Descent Method） について学びます．
-ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook4 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy と matplotlib.pyplot を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt 最急降下法最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
+ ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook4 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy と matplotlib.pyplot を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt  最急降下法  最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
 データ 対象とするデータは前回と同じ，気温 と アイスクリーム のデータを用います． いずれも，numpyのndarray型でリストを作成しておきます．" />
 
 
@@ -261,13 +261,12 @@ $1 / 2$が係数となっていますが，これは後ほどの微分計算で�
 $w_1$を-5から5まで変化させたときの，目的関数の値は下記のグラフとなります．
 グラフは下に凸のお椀型の形状をしており，
 誤差が最小となる$w_1 \simeq 1.36$が最適値となることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># w1の変化</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># w1の変化</span>
 y_ <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 空のリスト</span>
 w0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.52</span> <span style="color:#75715e"># w0を固定</span>
 <span style="color:#66d9ef">for</span> w1 <span style="color:#f92672">in</span> x_:
     E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2乗誤差</span>
-    y_append(E) <span style="color:#75715e"># リストに要素を追加</span>
+    y_<span style="color:#f92672">.</span>append(E) <span style="color:#75715e"># リストに要素を追加</span>
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w1&#34;</span>) <span style="color:#75715e"># 水平軸のラベル  </span>
 plt<span style="color:#f92672">.</span>plot(x_, y_)</code></pre></div>
 <p><a href="https://gyazo.com/67a72d8cb7002155c4761f2aa95f0888"><img src="https://i.gyazo.com/67a72d8cb7002155c4761f2aa95f0888.png" alt="Image from Gyazo" /></a></p>
@@ -352,6 +351,10 @@ E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum
 </h1>
 
 
+<p>下記のデータの回帰式を最急降下法で求めよ．
+ただし，$\alpha=0.00001$，繰り返し回数を100万回とすること．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> [<span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">75</span>, <span style="color:#ae81ff">88</span>, <span style="color:#ae81ff">90</span>, <span style="color:#ae81ff">92</span>, <span style="color:#ae81ff">94</span>, <span style="color:#ae81ff">99</span>]
+y <span style="color:#f92672">=</span> [<span style="color:#ae81ff">89</span>, <span style="color:#ae81ff">86</span>, <span style="color:#ae81ff">77</span>, <span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">73</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">60</span>]</code></pre></div>
 <p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
 
 
@@ -440,7 +443,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-10-19 16:42:50.9250529 &#43;0900 JST m=&#43;3.594603101">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-10-22 16:04:11.570866 &#43;0900 JST m=&#43;0.261197588">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
