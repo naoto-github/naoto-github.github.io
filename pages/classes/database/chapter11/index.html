@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    SQL(5) その他のクエリー | MLAB
+    SQL(5) トランザクション | MLAB
   </title>
 
   
@@ -60,7 +60,7 @@
   
   
 
-  <meta property="og:title" content="SQL(5) その他のクエリー" />
+  <meta property="og:title" content="SQL(5) トランザクション" />
 
 
 
@@ -93,7 +93,7 @@ sqlite&gt; .restore db4.sqlite sqlite&gt; .table サッカー部 商品リスト
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="SQL(5) その他のクエリー" />
+  <meta name="twitter:title" content="SQL(5) トランザクション" />
 
 
 
@@ -169,12 +169,14 @@ sqlite&gt; .restore db4.sqlite sqlite&gt; .table サッカー部 商品リスト
   <span>on&nbsp;</span><time datetime="2019-10-25 10:32:49 &#43;0900 JST">October 25, 2019</time>
 </div>
 
-    <h1 class="post-title">SQL(5) その他のクエリー</h1>
+    <h1 class="post-title">SQL(5) トランザクション</h1>
 <div class="post-line"></div>
 
     
 
-    <p><a href="https://gyazo.com/4282e178b47949bfb812546e1d9c4c6d"><img src="https://i.gyazo.com/4282e178b47949bfb812546e1d9c4c6d.png" alt="Image from Gyazo" /></a></p>
+    
+
+<p><a href="https://gyazo.com/4282e178b47949bfb812546e1d9c4c6d"><img src="https://i.gyazo.com/4282e178b47949bfb812546e1d9c4c6d.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -505,8 +507,8 @@ sqlite&gt; .table
 
 <ul>
 <li><b>原子性(Atomicity)</b> トランザクションに含まれる処理は，全て実行されるか，全く実行されないことが保証される．</li>
-<li><b>一貫性(Consistency)</b> トランザクションの終了時に矛盾が発生する処理は実行されない（中断される）．</li>
 <li><b>独立性(Isolation)</b> トランザクションの実行過程は隠蔽される（他者から観測できない）．</li>
+<li><b>一貫性(Consistency)</b> トランザクションの終了時に矛盾が発生する処理は実行されない（中断される）．</li>
 <li><b>永続性(Durability)</b> トランザクションが完了したら，その結果は失われない．</li>
 </ul>
 
@@ -516,7 +518,121 @@ sqlite&gt; .table
 </div>
 
 
-<p>このうち，<strong>原子性</strong>と<strong>独立性</strong>に関して確認していきましょう．</p>
+<h3 id="原子性">原子性</h3>
+
+<p>まずは，<strong>原子性</strong>に関して確認していきましょう．
+トランザクションをスタートするには，<code>BEGIN TRANSACTION</code>と入力します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* トランザクションのスタート */</span>
+<span style="color:#66d9ef">BEGIN</span> <span style="color:#66d9ef">TRANSACTION</span>;</code></pre></div>
+<p>トランザクションをスタートすると，データベースがロックされ，他者は書き込みが出来なくなります
+（正確にはデータベースへの最初のアクセスがあった時点でロックされる）．
+それでは，学籍番号が$A002$の学生が，$人文学部$に転学部したことを想定し，
+【学生リスト】と【テニス部】のレコードをUPDATE文で更新してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 学生リストの更新 */</span>
+<span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;人文学部&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A002&#34;</span>;</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* テニス部の更新 */</span>
+<span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;人文学部&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A002&#34;</span>;</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from 学生リスト;
+学籍番号|氏名|学年|学部|よみがな
+A001|岩城隼人|2|工学部|いわきはやと
+A002|岩村優|1|人文学部|いわむらゆう
+B003|杉江弘子|3|人文学部|すぎえひろこ
+C004|仙波あすか|1|国際関係学部|せんばあすか
+D006|山下隆|4|経営情報学部|やましたたかし</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from テニス部;
+学籍番号|氏名|学年|学部|よみがな
+A002|岩村優|1|人文学部|いわむらゆう
+B003|杉江弘子|3|人文学部|すぎえひろこ
+C004|仙波あすか|1|国際関係学部|せんばあすか</code></pre></div>
+<p>【学生リスト】と【テニス部】を確認すると，
+確かに学籍番号が$A002$の所属が$人文学部$に変更されていることが確認できます．
+しかし，実はこの時点では，更新は確定されておらず，更新前の状態に戻すことが可能です．
+前の状態に戻すことを <strong>ロールバック</strong> と言います．
+ロールバックするには，<code>ROLLBACK TRANSACTION</code>と入力します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* トランザクションのロールバック */</span>
+<span style="color:#66d9ef">ROLLBACK</span> <span style="color:#66d9ef">TRANSACTION</span>;</code></pre></div>
+<p>ロールバックすると，【学部リスト】と【テニス部】は更新前の状態に戻っていることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from 学生リスト;
+学籍番号|氏名|学年|学部|よみがな
+A001|岩城隼人|2|工学部|いわきはやと
+A002|岩村優|1|工学部|いわむらゆう
+B003|杉江弘子|3|人文学部|すぎえひろこ
+C004|仙波あすか|1|国際関係学部|せんばあすか
+D006|山下隆|4|経営情報学部|やましたたかし</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from テニス部;
+学籍番号|氏名|学年|学部|よみがな
+A002|岩村優|1|工学部|いわむらゆう
+B003|杉江弘子|3|人文学部|すぎえひろこ
+C004|仙波あすか|1|国際関係学部|せんばあすか</code></pre></div>
+<p>それでは，もう一度，トランザクションをスタートして，
+先程と同じように【学部リスト】と【テニス部】を更新しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">BEGIN</span> <span style="color:#66d9ef">TRANSACTION</span>;
+<span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;人文学部&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A002&#34;</span>;
+<span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;人文学部&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A002&#34;</span>;</code></pre></div>
+<p>今度は，更新を確定しましょう．
+確定するには，<code>COMMIT TRANSACTION</code>と入力します．
+これで，更新は確定され，データベースに対するロックも解除されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">COMMIT</span> <span style="color:#66d9ef">TRANSACTION</span>;</code></pre></div>
+<p>このように，トランザクションの処理は全て実行されるか，または，
+ロールバックで全て取り消されるか，どちらかの結果となります．
+ここで，一旦，作成したテーブルをファイルにバックアップしましょう．
+バックアップするファイル名は <strong>db5.sqlite</strong> としましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; .backup db5.sqlite</code></pre></div>
+<h3 id="独立性">独立性</h3>
+
+<p>次に，<strong>独立性</strong>に関して確認していきましょう．
+独立性を確認するためには，複数のクライアントから，データベースに接続する必要があります．
+そこで，2つのクライアント(便宜的に <strong>クライアントA</strong> と <strong>クライアントB</strong> と呼ぶ)を起動し，
+それぞれから<code>.open</code>を利用して，先程バックアップしたファイル（ <strong>db5.sqlite</strong> ）に接続します．
+ファイルへの接続は<code>.database</code>で確認することができます．
+これで，クライアントAとクライアントBは同じデータベースを共有していることになります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">/* クライアントAとクライアントBの両方で実行 */
+sqlite&gt; .open db.sqlite
+sqlite&gt; .database
+main: db5.sqlite</code></pre></div>
+<p>それでは，クライアントAで，トランザクションをスタートし，
+学籍番号が$A002$の学部を$工学部$に戻してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* クライアントAで実行 */</span>
+<span style="color:#66d9ef">BEGIN</span> <span style="color:#66d9ef">TRANSACTION</span>;
+<span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;工学部&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A002&#34;</span>;
+<span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;工学部&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A002&#34;</span>;</code></pre></div>
+<p>クライアントAで更新を確定していない状態で，
+クライアントBから【学生リスト】を確認してみます．
+学部は更新されておらず$人文学部$のままであることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">/* クライアントBの【学生リスト】 */
+sqlite&gt; select * from 学生リスト;
+A001|岩城隼人|2|工学部|いわきはやと
+A002|岩村優|1|人文学部|いわむらゆう
+B003|杉江弘子|3|人文学部|すぎえひろこ
+C004|仙波あすか|1|国際関係学部|せんばあすか
+D006|山下隆|4|経営情報学部|やましたたかし</code></pre></div>
+<p>そこで，クライアントAで更新を確定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* クライアントAで実行 */</span>
+<span style="color:#66d9ef">COMMIT</span> <span style="color:#66d9ef">TRANSACTION</span>;</code></pre></div>
+<p>再度，クライアントBから【学生リスト】を確認すると，
+学部が$工学部$に更新されていることがわかります．
+このように，トランザクションの途中経過は，
+他のクライアントには隠蔽され，確定した段階で観測できるようになります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">/* クライアントBの【学生リスト】 */
+sqlite&gt; select * from 学生リスト;
+A001|岩城隼人|2|工学部|いわきはやと
+A002|岩村優|1|工学部|いわむらゆう
+B003|杉江弘子|3|人文学部|すぎえひろこ
+C004|仙波あすか|1|国際関係学部|せんばあすか
+D006|山下隆|4|経営情報学部|やましたたかし</code></pre></div>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題1
+  </h3>
+
+  <p>
+    
+トランザクションを利用して【八百屋】と【果物屋】のスイカの価格を700円に変更しなさい．
+このとき，2つのクライアントを起動し，一方には途中経過が隠蔽されていることを確認しなさい．
+また，各クライアントの出力結果（確定前と確定後）を提出しなさい．
+
+  </p>
+  
+</div>
+
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -527,6 +643,18 @@ sqlite&gt; .table
 <p>作成したテーブルをファイルにバックアップするには，<code>.backup</code>を用います．
 バックアップするファイル名は <strong>db5.sqlite</strong> としましょう．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; .backup db5.sqlite</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  情報処理技術者試験・過去問
+</h1>
+
+
+<ul>
+<li><a href="https://www.fe-siken.com/kakomon/24_haru/q30.html">基本情報技術者 平成24年春期 午前 問30</a></li>
+<li><a href="https://www.fe-siken.com/kakomon/24_haru/q31.html">基本情報技術者 平成24年春期 午前 問31</a></li>
+<li><a href="https://www.fe-siken.com/kakomon/27_aki/q28.html">基本情報技術者 平成27年春期 午前 問28</a></li>
+</ul>
+
 <h3>参考書籍</h3>
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4781913903&linkId=0a2c1ffad427bdeee3fd703f5392bac2&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
@@ -619,7 +747,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-11-07 10:43:54.806887 &#43;0900 JST m=&#43;0.105420865">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-11-07 19:48:59.874408 &#43;0900 JST m=&#43;0.111461205">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
