@@ -259,16 +259,16 @@ X \sim N(100,100)  上記の正規分布に従った下記の10000の乱数を�
 <span style="color:#ae81ff">83.61765</span>
 <span style="color:#66d9ef">...</span></code></pre></div>
 <p>ファイルを読み込んだら，母集団<script type="math/tex">X</script>の平均と分散を求めてみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">X <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">read.csv</span>(<span style="color:#e6db74">&#34;N-100-10.csv&#34;</span>)
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">mean</span>(X[,<span style="color:#ae81ff">1</span>])
-[1] <span style="color:#ae81ff">100.1837</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">var</span>(X[,<span style="color:#ae81ff">1</span>])
-[1] <span style="color:#ae81ff">99.70016</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">X <span style="color:#f92672">&lt;-</span> read.csv(<span style="color:#e6db74">&#34;N-100-10.csv&#34;</span>)
+<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">mean</span>(X[,<span style="color:#ae81ff">1</span>])
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">100.1837</span>
+<span style="color:#f92672">&gt;</span> var(X[,<span style="color:#ae81ff">1</span>])
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">99.70016</span></code></pre></div>
 <p>この結果から，母平均<script type="math/tex">\hat{\mu}=100.18 \simeq 100</script>，
 母分散<script type="math/tex">\hat{\sigma}^2=99.7 \simeq 100</script>に従うことが確認できます
 （標準偏差は<script type="math/tex">\hat{\sigma}=\sqrt{100} \simeq 10</script>）．
 次に，母集団<script type="math/tex">X</script>の確率密度のヒストグラムを描き，分布の形状を確認します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">hist</span>(X[,<span style="color:#ae81ff">1</span>],freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> hist(X[,<span style="color:#ae81ff">1</span>],freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
 <p>ヒストグラムは釣鐘状になっており，母集団<script type="math/tex">X</script>が正規分布に従っていることも確認できました．</p>
 
 <p><a href="https://gyazo.com/4082b0b964112b18b3cbd385a5db6355"><img src="https://i.gyazo.com/4082b0b964112b18b3cbd385a5db6355.png" alt="https://gyazo.com/4082b0b964112b18b3cbd385a5db6355" /></a></p>
@@ -278,12 +278,12 @@ X \sim N(100,100)  上記の正規分布に従った下記の10000の乱数を�
 無作為に抽出しなければ，標本に偏りが生じる可能性があり，正確な推定ができないことに注意してください．
 標本を抽出するには<strong>sample</strong>関数を利用します．
 引数には抽出するサンプル数<script type="math/tex">n</script>として<strong>100</strong>を指定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sample</span>(X[,<span style="color:#ae81ff">1</span>],<span style="color:#ae81ff">100</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">sample</span>(X[,<span style="color:#ae81ff">1</span>],<span style="color:#ae81ff">100</span>)</code></pre></div>
 <p>続けて，標本<script type="math/tex">ｘ</script>の平均と分散を調べてみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">mean</span>(x)
-[1] <span style="color:#ae81ff">100.4211</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">var</span>(x)
-[1] <span style="color:#ae81ff">99.90735</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">mean</span>(x)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">100.4211</span>
+<span style="color:#f92672">&gt;</span> var(x)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">99.90735</span></code></pre></div>
 <p>この結果から，標本平均<script type="math/tex">\mu=100.42 \simeq = 100</script>，
 標本分散<script type="math/tex">\sigma^2=99.91 \simeq = 100</script>ということが分かりました
 （標準偏差<script type="math/tex">\sigma=\sqrt{99.91}=9.99 \simeq 10</script>）．
@@ -291,7 +291,7 @@ X \sim N(100,100)  上記の正規分布に従った下記の10000の乱数を�
 ただし，抽出する標本が変われば結果も変わることに注意してください．</p>
 
 <p>次に標本<script type="math/tex">ｘ</script>の確率密度のヒストグラムを描き，分布の形状を確認します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">hist</span>(x,freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> hist(x,freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
 <p><a href="https://gyazo.com/22f61090f0f5565ad40c12267c063139"><img src="https://i.gyazo.com/22f61090f0f5565ad40c12267c063139.png" alt="https://gyazo.com/22f61090f0f5565ad40c12267c063139" /></a></p>
 
 <p>あまり綺麗とはいえませんが，おおまかには釣鐘状の分布をしていることがわかります．
@@ -329,24 +329,26 @@ X \sim N(100,100)  上記の正規分布に従った下記の10000の乱数を�
 <p>それでは，母集団から標本<script type="math/tex">x</script>を<strong>1000</strong>回繰り返して抽出し，その平均を求めます．
 <strong>sample</strong>関数を利用し，抽出するサンプル数<script type="math/tex">n</script>は<strong>10</strong>を指定します．
 繰り返しには<strong>for文</strong>を利用しますが詳細は割愛します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">m <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">double</span>(length<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
-<span style="color:#a6e22e">for</span>(i in <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1000</span>){
-	m[i] <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">mean</span>(<span style="color:#a6e22e">sample</span>(X[,<span style="color:#ae81ff">1</span>],<span style="color:#ae81ff">10</span>))
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">m <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">double</span>(length<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+<span style="color:#66d9ef">for</span>(i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1000</span>){
+	m[i] <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">mean</span>(<span style="color:#66d9ef">sample</span>(X[,<span style="color:#ae81ff">1</span>],<span style="color:#ae81ff">10</span>))
 }</code></pre></div>
 <p>続けて，標本平均の分布<script type="math/tex">m</script>の平均と分散を調べてみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">mean</span>(m)
-[1] <span style="color:#ae81ff">100.2321</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">var</span>(m)
-[1] <span style="color:#ae81ff">9.451763</span></code></pre></div>
-<p>r</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">mean</span>(m)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">100.2321</span>
+<span style="color:#f92672">&gt;</span> var(m)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">9.451763</span>
+<span style="color:#e6db74">``</span>`r
 
-<p>この結果から，<strong>標本平均の分布</strong> の平均<script type="math/tex">\mu=100.23 \simeq 100</script>，
-<strong>標本平均の分布</strong> の分散<script type="math/tex">\sigma^2=9.45 \simeq 10</script>ということが分かりました
-（標準偏差<script type="math/tex">\sigma=\sqrt{9.45}=3.07 \simeq 3.16</script>）．
-どうやら平均は母平均とほぼ一致しますが，分散は母分散よりも小さくなるようです．</p>
+この結果から，<span style="color:#f92672">**</span>標本平均の分布<span style="color:#f92672">**</span> の平均<span style="color:#f92672">&lt;</span>script type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;math/tex&#34;</span><span style="color:#f92672">&gt;</span>\mu<span style="color:#f92672">=</span><span style="color:#ae81ff">100.23</span> \simeq <span style="color:#ae81ff">100</span><span style="color:#f92672">&lt;/</span>script<span style="color:#f92672">&gt;</span>，
+<span style="color:#f92672">**</span>標本平均の分布<span style="color:#f92672">**</span> の分散<span style="color:#f92672">&lt;</span>script type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;math/tex&#34;</span><span style="color:#f92672">&gt;</span>\sigma<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">=</span><span style="color:#ae81ff">9.45</span> \simeq <span style="color:#ae81ff">10</span><span style="color:#f92672">&lt;/</span>script<span style="color:#f92672">&gt;</span>ということが分かりました
+（標準偏差<span style="color:#f92672">&lt;</span>script type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;math/tex&#34;</span><span style="color:#f92672">&gt;</span>\sigma<span style="color:#f92672">=</span>\<span style="color:#66d9ef">sqrt</span>{<span style="color:#ae81ff">9.45</span>}<span style="color:#f92672">=</span><span style="color:#ae81ff">3.07</span> \simeq <span style="color:#ae81ff">3.16</span><span style="color:#f92672">&lt;/</span>script<span style="color:#f92672">&gt;</span>）．
+どうやら平均は母平均とほぼ一致しますが，分散は母分散よりも小さくなるようです．
 
-<p>次に，標本平均の分布<script type="math/tex">m</script>の確率密度のヒストグラムを描き，分布の形状を確認します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">hist</span>(m,freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
+次に，標本平均の分布<span style="color:#f92672">&lt;</span>script type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;math/tex&#34;</span><span style="color:#f92672">&gt;</span>m<span style="color:#f92672">&lt;/</span>script<span style="color:#f92672">&gt;</span>の確率密度のヒストグラムを描き，分布の形状を確認します．
+
+<span style="color:#e6db74">``</span>`r
+<span style="color:#f92672">&gt;</span> hist(m,freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
 <p><a href="https://gyazo.com/0efe0a30f6f236ccdf08fef6e79601dc"><img src="https://i.gyazo.com/0efe0a30f6f236ccdf08fef6e79601dc.png" alt="https://gyazo.com/0efe0a30f6f236ccdf08fef6e79601dc" /></a></p>
 
 <p>釣鐘上の分布をしており，標本平均の分布<script type="math/tex">m</script>も正規分布のようです．
@@ -371,8 +373,8 @@ X \sim N(100,100)  上記の正規分布に従った下記の10000の乱数を�
 
 <p>最後に母集団<script type="math/tex">X</script>と標本平均の分布<script type="math/tex">m</script>の正規分布を描いてみましょう．
 平均は一致しますが，分散は <strong>標本平均の分布</strong> の方が小さいため，尖った分布になっていることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">curve</span>(<span style="color:#a6e22e">dnorm</span>(x,<span style="color:#ae81ff">100</span>,<span style="color:#a6e22e">sqrt</span>(<span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">10</span>)),from<span style="color:#f92672">=</span><span style="color:#ae81ff">70</span>,to<span style="color:#f92672">=</span><span style="color:#ae81ff">130</span>)
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">curve</span>(<span style="color:#a6e22e">dnorm</span>(x,<span style="color:#ae81ff">100</span>,<span style="color:#a6e22e">sqrt</span>(<span style="color:#ae81ff">100</span>)),from<span style="color:#f92672">=</span><span style="color:#ae81ff">70</span>,to<span style="color:#f92672">=</span><span style="color:#ae81ff">130</span>,add<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> curve(dnorm(x,<span style="color:#ae81ff">100</span>,<span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">100</span><span style="color:#f92672">/</span><span style="color:#ae81ff">10</span>)),from<span style="color:#f92672">=</span><span style="color:#ae81ff">70</span>,to<span style="color:#f92672">=</span><span style="color:#ae81ff">130</span>)
+<span style="color:#f92672">&gt;</span> curve(dnorm(x,<span style="color:#ae81ff">100</span>,<span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">100</span>)),from<span style="color:#f92672">=</span><span style="color:#ae81ff">70</span>,to<span style="color:#f92672">=</span><span style="color:#ae81ff">130</span>,add<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)</code></pre></div>
 <p><a href="https://gyazo.com/7624b18116ff22d7ecbc4b5468aab70a"><img src="https://i.gyazo.com/7624b18116ff22d7ecbc4b5468aab70a.png" alt="https://gyazo.com/7624b18116ff22d7ecbc4b5468aab70a" /></a></p>
 
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
@@ -470,7 +472,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-11-07 19:49:00.004962 &#43;0900 JST m=&#43;0.242020721">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-11-08 10:40:58.565981 &#43;0900 JST m=&#43;0.528178750">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
