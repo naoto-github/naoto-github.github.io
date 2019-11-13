@@ -259,8 +259,8 @@ m <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arr
 <p><strong>[Out:]</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">0.77933919</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.85054813</span>]
 [<span style="color:#ae81ff">1.03911892</span> <span style="color:#ae81ff">1.13406417</span>]</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(x1, x2, c<span style="color:#f92672">=</span>label)
-plt<span style="color:#f92672">.</span>scatter(a)
-plt<span style="color:#f92672">.</span>scatter(m)
+plt<span style="color:#f92672">.</span>scatter(a[<span style="color:#ae81ff">0</span>], a[<span style="color:#ae81ff">1</span>])
+plt<span style="color:#f92672">.</span>scatter(m[<span style="color:#ae81ff">0</span>], m[<span style="color:#ae81ff">1</span>])
 plt<span style="color:#f92672">.</span>axes()<span style="color:#f92672">.</span>set_aspect(<span style="color:#e6db74">&#34;equal&#34;</span>, <span style="color:#e6db74">&#34;datalim&#34;</span>)
 plt<span style="color:#f92672">.</span>ylim([<span style="color:#f92672">-</span><span style="color:#ae81ff">1.8</span>, <span style="color:#ae81ff">1.8</span>])
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x1&#34;</span>)
@@ -279,14 +279,14 @@ $$</p>
 
 <p>これは，半径$1$の円周上にベクトル${\bf w}$があることを意味しています．
 つまりベクトルの <strong>大きさ</strong> は固定して，ベクトルの <strong>回転</strong> に注目するということです．
-例えば，${\bf w} = \left( \frac{\sqrt{3}}{2}, \frac{1}{2} \right)$ は，この条件を満たしています．
+例えば，${\bf w} = \left( \cos(\pi / 6), \sin(\pi / 6) \right) = \left( \frac{\sqrt{3}}{2}, \frac{1}{2} \right)$ は，この条件を満たしています．
 このとき，決定境界は $x_2 = - \sqrt{3} \cdot x_1$ となります（前回の資料を参照すること）．</p>
 
 <p><strong>[In:]</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">3</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
 w2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
 w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([w1, w2])
-np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(w, ord<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)</code></pre></div>
+np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(w, ord<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>) <span style="color:#75715e">#ユークリッド距離(org=2)</span></code></pre></div>
 <p><strong>[Out:]</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0.9999999999999999</span></code></pre></div>
 <p><a href="https://gyazo.com/e42d055a7d5720e67ad92d35f4ee51ca"><img src="https://i.gyazo.com/e42d055a7d5720e67ad92d35f4ee51ca.png" alt="Image from Gyazo" /></a></p>
@@ -298,7 +298,7 @@ np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>
 ベクトル${\bf w}$と，リンゴとメロンの代表値である${\bf r}$と${\bf m}$の内積を求めます．
 $|{\bf w}|=1$であることから，内積はベクトル${\bf w}$に対する，ベクトル${\bf r}$と${\bf m}$の正射影になります．
 正射影された2点間の距離を目的関数$g({\bf w})$とし，これが最大となる${\bf w}=(w_1, w_2)$を求めます．
-例えば，${\bf w} = \left( \frac{\sqrt{3}}{2}, \frac{1}{2} \right)$ のときは，$g({\bf w}) = 2.57$となります．</p>
+例えば，${\bf w} =\left( \frac{\sqrt{3}}{2}, \frac{1}{2} \right)$ のときは，$g({\bf w}) = 2.57$となります．</p>
 
 <p>$$
 g(w) = |{\bf w} \cdot {\bf a} - {\bf w} \cdot {\bf m}|
@@ -307,7 +307,8 @@ $$</p>
 <p><a href="https://gyazo.com/3052e479834d231178283e50899aebd0"><img src="https://i.gyazo.com/3052e479834d231178283e50899aebd0.png" alt="Image from Gyazo" /></a></p>
 
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gw</span>(w, a, m):
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#75715e"># 正射影された2点間の距離</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gw</span>(w, a, m):
   d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>abs(w<span style="color:#f92672">.</span>dot(a) <span style="color:#f92672">-</span> w<span style="color:#f92672">.</span>dot(m))
   <span style="color:#66d9ef">return</span> d
 
@@ -355,6 +356,17 @@ result <span style="color:#f92672">=</span> minimize(gw2, w_init, args<span styl
 <span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x)</code></pre></div>
 <p><strong>[Out:]</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#ae81ff">0.67569856</span> <span style="color:#ae81ff">0.73717806</span>]</code></pre></div>
+<p>最後に決定境界を求めプロットしてみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x1_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0.01</span>)
+x2_ <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> (result<span style="color:#f92672">.</span>x[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">/</span> result<span style="color:#f92672">.</span>x[<span style="color:#ae81ff">1</span>]) <span style="color:#f92672">*</span> x1_
+plt<span style="color:#f92672">.</span>plot(x1_, x2_) <span style="color:#75715e">#決定境界</span>
+plt<span style="color:#f92672">.</span>scatter(x1, x2, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>scatter(a[<span style="color:#ae81ff">0</span>], a[<span style="color:#ae81ff">1</span>])
+plt<span style="color:#f92672">.</span>scatter(m[<span style="color:#ae81ff">0</span>], m[<span style="color:#ae81ff">1</span>])
+plt<span style="color:#f92672">.</span>axes()<span style="color:#f92672">.</span>set_aspect(<span style="color:#e6db74">&#34;equal&#34;</span>, <span style="color:#e6db74">&#34;datalim&#34;</span>)
+plt<span style="color:#f92672">.</span>ylim([<span style="color:#f92672">-</span><span style="color:#ae81ff">1.8</span>, <span style="color:#ae81ff">1.8</span>])
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x1&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;x2&#34;</span>)</code></pre></div>
 <p><a href="https://gyazo.com/15af5168cdd5db7ec1389a00ef572db9"><img src="https://i.gyazo.com/15af5168cdd5db7ec1389a00ef572db9.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
@@ -362,6 +374,12 @@ result <span style="color:#f92672">=</span> minimize(gw2, w_init, args<span styl
   課題
 </h1>
 
+
+<p>下記のデータを分類する決定境界を線形判別分析で求めよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">23</span>, <span style="color:#ae81ff">25</span>])
+x2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">16</span>])
+label <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#e6db74">&#34;blue&#34;</span>,<span style="color:#e6db74">&#34;blue&#34;</span>,<span style="color:#e6db74">&#34;blue&#34;</span>,<span style="color:#e6db74">&#34;pink&#34;</span>,<span style="color:#e6db74">&#34;pink&#34;</span>,<span style="color:#e6db74">&#34;pink&#34;</span>]) <span style="color:#75715e">#カテゴリ</span></code></pre></div>
+<p><a href="https://gyazo.com/4eb332c26bf259b7e38f1e0e1ebeb633"><img src="https://i.gyazo.com/4eb332c26bf259b7e38f1e0e1ebeb633.png" alt="Image from Gyazo" /></a></p>
 
 <p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
 
@@ -451,7 +469,11 @@ if (!doNotTrack) {
 
         <footer>
   <div>
+<<<<<<< HEAD
     <span>&copy; <time datetime="2019-11-08 21:54:59.782071 &#43;0900 JST m=&#43;0.379975461">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+=======
+    <span>&copy; <time datetime="2019-11-12 17:17:46.508665 &#43;0900 JST m=&#43;0.143865598">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+>>>>>>> 698cfe27e8ff9923b171d3dcb75b6653181b2564
   </div>
 </footer>
 
