@@ -80,15 +80,15 @@
 
 
 
-  <meta property="og:description" content="プロジェクトの準備 -- プロジェクトの準備Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+  <meta property="og:description" content="プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
 
-ストリーム -- ストリームプログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます． ファイルに何かしらの操作を行う場合は，ストリームという仕組みを利用します． ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています． ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです． ここでは，10人の身長と体重が保存されたファイルからデータを読み込んでみましょう． データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください． このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます． ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．
- ファイルの読み込み -- ファイルの読み込みmeasure.csvから文字列データを読み込むには下記のように記述します． ファイルの読み込みにはFileReaderクラスとBufferedReaderクラスを利用しますが， ここではファイルに取り付ける蛇口がFileReader， 蛇口から流れてくるホースの役割がBufferedReaderクラスと考えてください． line=br.readLine()でファイルから1行ずつ読み込み，System.out.println(line)でコンソール出力しています． ファイルの終端に到達すると，readLine()はnullという値を返すため， while文でlineがnullになるまで，ファイルからの読み込みを繰り返しています．
+ストリーム --  ストリーム  プログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます． ファイルに何かしらの操作を行う場合は，ストリームという仕組みを利用します． ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています． ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです． ここでは，10人の身長と体重が保存されたファイルからデータを読み込んでみましょう． データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください． このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます． ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．
+ ファイルの読み込み --  ファイルの読み込み  measure.csvから文字列データを読み込むには下記のように記述します． ファイルの読み込みにはFileReaderクラスとBufferedReaderクラスを利用しますが， ここではファイルに取り付ける蛇口がFileReader， 蛇口から流れてくるホースの役割がBufferedReaderクラスと考えてください． line=br.readLine()でファイルから1行ずつ読み込み，System.out.println(line)でコンソール出力しています． ファイルの終端に到達すると，readLine()はnullという値を返すため， while文でlineがnullになるまで，ファイルからの読み込みを繰り返しています．
  実は上記のコードだけではエラーが残ったままです． このエラーを取り除くには例外処理が必要です． 例外とはプログラムの実行中に発生する想定外の事態を意味しており， 例えば「対象のファイルが存在しない」「空っぽ（null）の変数を利用しようとした」などの状態が該当します． ファイル読込に利用するFileReaderとBufferedReaderはこの例外処理が必要なクラスです． 例外処理は下記のように，例外の発生の可能性のある命令をtry{}で囲み，例外発生時の命令をcatch(例外の種類){}に記述します．
 try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する命令 } 下記のコードを参考に例外処理を施してmeasure.csvから文字列データを読み込んでみましょう． ここで，e.printStackTrace();は例外の原因を突き止めるために，例外に関する情報を遡って表示する命令です． また，IOExceptionは入出力に関する例外を意味しています． プログラムの実行後に，コンソールの出力結果を確認してください．
- CSV形式の処理 -- CSV形式の処理前述したようにCSV形式のファイルは「,（カンマ）」で区切られています． カンマで区切られた文字列（トークン）を取り出すにはStringTokenizerというクラスを利用します． 下記のコードを参考にトークン毎に取り出して，コンソールに出力してみましょう． ここで，new StringTokenizer(line, &quot;,&quot;)は， 変数lineに代入されている文字列を「,（カンマ）」で分割して取得することを表しています． また，身長と体重は整数のため，Integer." />
+ CSV形式の処理 --  CSV形式の処理  前述したようにCSV形式のファイルは「,（カンマ）」で区切られています． カンマで区切られた文字列（トークン）を取り出すにはStringTokenizerというクラスを利用します． 下記のコードを参考にトークン毎に取り出して，コンソールに出力してみましょう． ここで，new StringTokenizer(line, &quot;,&quot;)は， 変数lineに代入されている文字列を「,（カンマ）」で分割して取得することを表しています． また，身長と体重は整数のため，Integer." />
 
 
 
@@ -103,15 +103,15 @@ try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する�
 
 
 
-  <meta name="twitter:description" content="プロジェクトの準備 -- プロジェクトの準備Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+  <meta name="twitter:description" content="プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
 
-ストリーム -- ストリームプログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます． ファイルに何かしらの操作を行う場合は，ストリームという仕組みを利用します． ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています． ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです． ここでは，10人の身長と体重が保存されたファイルからデータを読み込んでみましょう． データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください． このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます． ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．
- ファイルの読み込み -- ファイルの読み込みmeasure.csvから文字列データを読み込むには下記のように記述します． ファイルの読み込みにはFileReaderクラスとBufferedReaderクラスを利用しますが， ここではファイルに取り付ける蛇口がFileReader， 蛇口から流れてくるホースの役割がBufferedReaderクラスと考えてください． line=br.readLine()でファイルから1行ずつ読み込み，System.out.println(line)でコンソール出力しています． ファイルの終端に到達すると，readLine()はnullという値を返すため， while文でlineがnullになるまで，ファイルからの読み込みを繰り返しています．
+ストリーム --  ストリーム  プログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます． ファイルに何かしらの操作を行う場合は，ストリームという仕組みを利用します． ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています． ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです． ここでは，10人の身長と体重が保存されたファイルからデータを読み込んでみましょう． データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください． このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます． ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．
+ ファイルの読み込み --  ファイルの読み込み  measure.csvから文字列データを読み込むには下記のように記述します． ファイルの読み込みにはFileReaderクラスとBufferedReaderクラスを利用しますが， ここではファイルに取り付ける蛇口がFileReader， 蛇口から流れてくるホースの役割がBufferedReaderクラスと考えてください． line=br.readLine()でファイルから1行ずつ読み込み，System.out.println(line)でコンソール出力しています． ファイルの終端に到達すると，readLine()はnullという値を返すため， while文でlineがnullになるまで，ファイルからの読み込みを繰り返しています．
  実は上記のコードだけではエラーが残ったままです． このエラーを取り除くには例外処理が必要です． 例外とはプログラムの実行中に発生する想定外の事態を意味しており， 例えば「対象のファイルが存在しない」「空っぽ（null）の変数を利用しようとした」などの状態が該当します． ファイル読込に利用するFileReaderとBufferedReaderはこの例外処理が必要なクラスです． 例外処理は下記のように，例外の発生の可能性のある命令をtry{}で囲み，例外発生時の命令をcatch(例外の種類){}に記述します．
 try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する命令 } 下記のコードを参考に例外処理を施してmeasure.csvから文字列データを読み込んでみましょう． ここで，e.printStackTrace();は例外の原因を突き止めるために，例外に関する情報を遡って表示する命令です． また，IOExceptionは入出力に関する例外を意味しています． プログラムの実行後に，コンソールの出力結果を確認してください．
- CSV形式の処理 -- CSV形式の処理前述したようにCSV形式のファイルは「,（カンマ）」で区切られています． カンマで区切られた文字列（トークン）を取り出すにはStringTokenizerというクラスを利用します． 下記のコードを参考にトークン毎に取り出して，コンソールに出力してみましょう． ここで，new StringTokenizer(line, &quot;,&quot;)は， 変数lineに代入されている文字列を「,（カンマ）」で分割して取得することを表しています． また，身長と体重は整数のため，Integer." />
+ CSV形式の処理 --  CSV形式の処理  前述したようにCSV形式のファイルは「,（カンマ）」で区切られています． カンマで区切られた文字列（トークン）を取り出すにはStringTokenizerというクラスを利用します． 下記のコードを参考にトークン毎に取り出して，コンソールに出力してみましょう． ここで，new StringTokenizer(line, &quot;,&quot;)は， 変数lineに代入されている文字列を「,（カンマ）」で分割して取得することを表しています． また，身長と体重は整数のため，Integer." />
 
 
 
@@ -223,7 +223,8 @@ try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する�
 このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます．
 ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．</p>
 
-<script type="application/javascript" src="//gist.github.com/naoto-github/aeebc1a9011f4f07e007.js"></script>
+<script type="application/javascript" src="https://gist.github.com/naoto-github/aeebc1a9011f4f07e007.js"></script>
+
 
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">ファイルの読み込み -->
 
@@ -241,7 +242,8 @@ try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する�
 ファイルの終端に到達すると，<code>readLine()</code>は<strong>null</strong>という値を返すため，
 while文でlineが<strong>null</strong>になるまで，ファイルからの読み込みを繰り返しています．</p>
 
-<script type="application/javascript" src="//gist.github.com/naoto-github/b9b8b615cfb89b1564c2.js"></script>
+<script type="application/javascript" src="https://gist.github.com/naoto-github/b9b8b615cfb89b1564c2.js"></script>
+
 
 <p>実は上記のコードだけではエラーが残ったままです．
 このエラーを取り除くには<strong>例外処理</strong>が必要です．
@@ -249,17 +251,18 @@ while文でlineが<strong>null</strong>になるまで，ファイルからの�
 例えば「対象のファイルが存在しない」「空っぽ（null）の変数を利用しようとした」などの状態が該当します．
 ファイル読込に利用する<strong>FileReader</strong>と<strong>BufferedReader</strong>はこの例外処理が必要なクラスです．
 例外処理は下記のように，例外の発生の可能性のある命令を<code>try{}</code>で囲み，例外発生時の命令を<code>catch(例外の種類){}</code>に記述します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
-    実行する命令
-<span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span><span style="color:#f92672">(</span>例外の種類<span style="color:#f92672">){</span>
-    例外発生時に実行する命令
-<span style="color:#f92672">}</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">try</span>{
+	実行する命令
+}<span style="color:#66d9ef">catch</span>(例外の種類){
+	例外発生時に実行する命令
+}</code></pre></div>
 <p>下記のコードを参考に例外処理を施して<strong>measure.csv</strong>から文字列データを読み込んでみましょう．
 ここで，<code>e.printStackTrace();</code>は例外の原因を突き止めるために，例外に関する情報を遡って表示する命令です．
 また，<code>IOException</code>は入出力に関する例外を意味しています．
 プログラムの実行後に，コンソールの出力結果を確認してください．</p>
 
-<script type="application/javascript" src="//gist.github.com/naoto-github/7c696252d8f6a1a8d2c9.js"></script>
+<script type="application/javascript" src="https://gist.github.com/naoto-github/7c696252d8f6a1a8d2c9.js"></script>
+
 
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">CSV形式の処理 -->
 
@@ -278,7 +281,8 @@ while文でlineが<strong>null</strong>になるまで，ファイルからの�
 String型からint型に変換しています．
 プログラムの実行後に，コンソールの出力結果を確認してください．</p>
 
-<script type="application/javascript" src="//gist.github.com/naoto-github/5d813f7cbb04d34b6989.js"></script>
+<script type="application/javascript" src="https://gist.github.com/naoto-github/5d813f7cbb04d34b6989.js"></script>
+
 
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">ファイルの書き込み -->
 
@@ -297,7 +301,8 @@ BMI指数は$$BMI=体重[kg]/身長[m]^2$$で求めることができます．
 プログラムの実行後に，コンソールの出力結果と，
 作成された<strong>bmi.csv</strong>にBMI指数が記録されていることを確認してください．</p>
 
-<script type="application/javascript" src="//gist.github.com/naoto-github/ecf0559a101ad48753c2.js"></script>
+<script type="application/javascript" src="https://gist.github.com/naoto-github/ecf0559a101ad48753c2.js"></script>
+
 
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
 
@@ -417,7 +422,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-11-26 11:06:09.9910475 &#43;0900 JST m=&#43;5.191113801">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-11-27 10:37:05.877918 &#43;0900 JST m=&#43;0.215625012">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
