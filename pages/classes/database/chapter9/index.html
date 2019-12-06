@@ -558,7 +558,7 @@ B003|杉江弘子|3|人文学部|すぎえひろこ</code></pre></div>
 
 
 <p>SELECT文で取得したレコードに対し，
-合計や平均などの関数を適用することができあます．
+合計や平均などの関数を適用することができます．
 合計は$SUM(属性名)$，平均は$AVG(属性名)$，件数は$COUNT(属性名)と記述します．</p>
 
 <p>それでは，【商品リスト】の売値の合計を計算してみましょう．</p>
@@ -572,6 +572,76 @@ avg(売値)
 <p>最後に，【商品リスト】のレコード件数を求めてみましょう．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select count(*) from 商品リスト;
 5</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  正規表現
+</h1>
+
+
+<p>正規表現を利用した検索条件を設定することが出来ます．
+正規表現は <strong>GLOB句</strong> を用いて表現します．</p>
+
+<table>
+<thead>
+<tr>
+<th>文字</th>
+<th>説明</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>*</td>
+<td>任意の0文字以上からなる文字列</td>
+</tr>
+
+<tr>
+<td>?</td>
+<td>任意の1文字</td>
+</tr>
+
+<tr>
+<td>[abc]</td>
+<td>a，b，cのいずれかに一致</td>
+</tr>
+
+<tr>
+<td>[a-d]</td>
+<td>aからdのいずれかに一致</td>
+</tr>
+
+<tr>
+<td>[1-4]</td>
+<td>1から4のいずれかに一致</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* WHERE句 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">属性名</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">属性名（条件）</span> GLOB <span style="color:#960050;background-color:#1e0010">正規表現</span>;</code></pre></div>
+<p>それでは，学籍番号がAから始まるレコードを正規表現で検索してみましょう．
+正規表現は <strong>A*</strong> と表します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from 学生リスト where 学籍番号 glob &#34;A*&#34;;
+学籍番号|氏名|学年|学部|よみがな
+A001|岩城隼人|2|工学部|いわきはやと
+A002|岩村優|1|工学部|いわむらゆう</code></pre></div>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題4
+  </h3>
+
+  <p>
+    
+【学生リスト】から，正規表現を用いて，氏名が"岩"から始まるレコードを取得しなさい，
+また，同様に1年生〜2年生のレコードを取得しなさい．
+また，その出力結果を提出しなさい．
+
+  </p>
+  
+</div>
+
+
 <h1>
   <img class="head-image" src="/logo/logo.png">
   テーブルのバックアップ
@@ -673,7 +743,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-12-03 21:18:31.626743 &#43;0900 JST m=&#43;0.107723163">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-12-06 10:56:04.047317 &#43;0900 JST m=&#43;0.169412233">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
