@@ -294,11 +294,12 @@ $$</p>
     d <span style="color:#f92672">=</span> []
     <span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> data<span style="color:#f92672">.</span>iterrows():
         x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([row[<span style="color:#e6db74">&#34;出生率&#34;</span>], row[<span style="color:#e6db74">&#34;死亡率&#34;</span>]])
+		<span style="color:#75715e">#clustersの要素cに対するユークリッド距離を計算</span>
         value <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> c:  np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(x <span style="color:#f92672">-</span> c), clusters))
         d<span style="color:#f92672">.</span>append(value)
     <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(d)
 
-d <span style="color:#f92672">=</span> distance(data, clusters)
+d <span style="color:#f92672">=</span> distance(data, clusters) <span style="color:#75715e">#c1,c2,c3までの距離</span>
 <span style="color:#66d9ef">print</span>(d[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])</code></pre></div>
 <p><strong>[Out:]</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">23.19482701</span> <span style="color:#ae81ff">13.34166406</span>  <span style="color:#ae81ff">4.24264069</span>]
@@ -444,6 +445,19 @@ index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span
 </h1>
 
 
+<p>scikit-learnの <strong>アヤメ</strong>の データセットをk平均法でクラスタリングしてください（クラスタ数は3）．
+このとき，<strong>Sepal Length</strong> と<strong>Sepal Width</strong> のみを対象とすること
+（データフレームの列名は「出生率」「死亡率」にしておくとラクチン）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_iris
+iris <span style="color:#f92672">=</span> load_iris()
+data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(iris<span style="color:#f92672">.</span>data)
+data <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>loc[:,<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">1</span>] 
+data<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;出生率&#34;</span>,<span style="color:#e6db74">&#34;死亡率&#34;</span>] <span style="color:#75715e">#本当はSepal LengthとSepal Width</span>
+data<span style="color:#f92672">.</span>head()</code></pre></div>
+<p><a href="https://gyazo.com/ff28fe07c081d7dd5c296dab7bf1cebe"><img src="https://i.gyazo.com/ff28fe07c081d7dd5c296dab7bf1cebe.png" alt="Image from Gyazo" /></a></p>
+
+<p><a href="https://gyazo.com/7a71b9bcca2f2e8f0fab7de1c0ebf4f4"><img src="https://i.gyazo.com/7a71b9bcca2f2e8f0fab7de1c0ebf4f4.png" alt="Image from Gyazo" /></a></p>
+
 <p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
 
 
@@ -532,7 +546,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-12-06 10:56:04.121889 &#43;0900 JST m=&#43;0.243983106">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-12-11 10:31:26.029612 &#43;0900 JST m=&#43;0.165827199">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
