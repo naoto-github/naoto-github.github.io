@@ -80,19 +80,19 @@
 
 
 
-  <meta property="og:description" content="スケッチの作成  Processingを起動して、新規にスケッチを保存しましょう。 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。 ファイル名に「Project12」を入力し、[保存]をクリックしましょう。 保存先に「Project12」という名前のフォルダが作成されていることを確認してください。
+  <meta property="og:description" content="スケッチの作成  Processingを起動して，新規にスケッチを保存しましょう． メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます． ファイル名に「Project12」を入力し，[保存]をクリックしましょう． 保存先に「Project12」という名前のフォルダが作成されていることを確認してください．
 
- NyARToolkitの導入  ARToolkitは奈良先端科学技術大学院大学の加藤研究室によって 開発された拡張現実（Augumented Reality: AR）のためのソフトウェアです。 拡張現実とは、コンピュータを利用して、現実世界の一部に「仮想的な物体や情報」を重ねて表示することを指します。 このARToolkitのProcessing向けのライブラリが「NyARToolkit for Processing」です。
-GitHubのリリースページから、 最新バージョンのNyARToolkitをダウンロードしましょう。 ダウンロードしたファイルはZIPで圧縮されているので解凍し、 解凍後のlibraryフォルダをコピーして、「スケッチフォルダ（Project12）」の中に配置しましょう。 コピーしたら、フォルダの名前をlibraryからcodeに変更します。 同様に、カメラの設定ファイルcamera_para.datも「スケッチフォルダ（Project12）」の中にコピーしておきます。
+ NyARToolkitの導入  ARToolkitは奈良先端科学技術大学院大学の加藤研究室によって 開発された拡張現実（Augumented Reality: AR）のためのソフトウェアです． 拡張現実とは，コンピュータを利用して，現実世界の一部に「仮想的な物体や情報」を重ねて表示することを指します． このARToolkitのProcessing向けのライブラリが「NyARToolkit for Processing」です．
+GitHubのリリースページから， 最新バージョンのNyARToolkitをダウンロードしましょう． ダウンロードしたファイルはZIPで圧縮されているので解凍し， 解凍後のlibraryフォルダをコピーして，「スケッチフォルダ（Project12）」の中に配置しましょう． コピーしたら，フォルダの名前をlibraryからcodeに変更します． 同様に，カメラの設定ファイルcamera_para.datも「スケッチフォルダ（Project12）」の中にコピーしておきます．
 
 
-次に、ソースコードの先頭に「import jp.nyatla.nyar4psg.&lowast;;」を入力してください。 また、今回もカメラ映像を利用するため、[スケッチ]-[ライブラリをインポート]-[Video]をクリックして、 Videoライブラリをインポートしておきます。
-  カメラ映像の表示  Captureクラスを利用して、カメラから入力した画像を表示しましょう。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 ここでは、サイズ（size）が320x240、フレームレート（fps）が30となっている、 3番のカメラを使用していることに注意してください。 ウィンドウにカメラ映像が表示されることを確認してください。
+次に，ソースコードの先頭に「import jp.nyatla.nyar4psg.&lowast;;」を入力してください． また，今回もカメラ映像を利用するため，[スケッチ]-[ライブラリをインポート]-[Video]をクリックして， Videoライブラリをインポートしておきます．
+  カメラ映像の表示  Captureクラスを利用して，カメラから入力した画像を表示しましょう． 下記を参考にコードを入力したら，Runボタンをクリックしてください． ここでは，サイズ（size）が320x240，フレームレート（fps）が30となっている， 3番のカメラを使用していることに注意してください． ウィンドウにカメラ映像が表示されることを確認してください．
  
- 拡張現実の表示  ARToolkitを利用すると、ARマーカーと呼ばれる特定のパターンをカメラで読み取ることにより、 その位置を認識し、３Dオブジェクトを配置することができます。 ここでは、NYARToolkitに標準搭載されているNyIDを利用します。 NyIDには番号が設定されており、 ここではMODEL2の1番のNyIDを利用します。
-まずは、下記のように、MultiMarkerクラスを利用して、利用するマーカーを設定します。 MultiMarkerクラスのインスタンスを作成するときは、カメラ映像の幅と高さに加え、 カメラのパラメータファイル（camera_para.dat）を指定します。 また、対象のNyIDを登録するには、addNyIDMarker()関数を利用します。 引数には「NyIDの番号」と「マーカーの物理サイズ（mm）」を指定します。
-marker = new MultiMarker(this, 320, 240, &#34;camera_para.dat&#34;); marker.addNyIdMarker(1, 80); 次に、detect()関数で、カメラ映像からマーカーを検出し、 drawBackground()関数でカメラ映像を背景に設定します。 いずれの関数も引数にはCaptureクラスのインスタンスを渡します。
-marker.detect(cam); marker.drawBackground(cam); 最後に、マーカーが検出された場合に、立方体をマーカー上に配置します。 ここで、beginTransform()関数によって、原点をカメラに映ったマーカーの中心に変更していることに注意してください。 endTransform()関数で、元の座標系に戻ります。" />
+ 拡張現実の表示  ARToolkitを利用すると，ARマーカーと呼ばれる特定のパターンをカメラで読み取ることにより， その位置を認識し，３Dオブジェクトを配置することができます． ここでは，NYARToolkitに標準搭載されているNyIDを利用します． NyIDには番号が設定されており， ここではMODEL2の1番のNyIDを利用します．
+まずは，下記のように，MultiMarkerクラスを利用して，利用するマーカーを設定します． MultiMarkerクラスのインスタンスを作成するときは，カメラ映像の幅と高さに加え， カメラのパラメータファイル（camera_para.dat）を指定します． また，対象のNyIDを登録するには，addNyIDMarker()関数を利用します． 引数には「NyIDの番号」と「マーカーの物理サイズ（mm）」を指定します．
+marker = new MultiMarker(this, 320, 240, &#34;camera_para.dat&#34;); marker.addNyIdMarker(1, 80); 次に，detect()関数で，カメラ映像からマーカーを検出し， drawBackground()関数でカメラ映像を背景に設定します． いずれの関数も引数にはCaptureクラスのインスタンスを渡します．
+marker.detect(cam); marker.drawBackground(cam); 最後に，マーカーが検出された場合に，立方体をマーカー上に配置します． ここで，beginTransform()関数によって，原点をカメラに映ったマーカーの中心に変更していることに注意してください． endTransform()関数で，元の座標系に戻ります．" />
 
 
 
@@ -107,19 +107,19 @@ marker.detect(cam); marker.drawBackground(cam); 最後に、マーカーが検�
 
 
 
-  <meta name="twitter:description" content="スケッチの作成  Processingを起動して、新規にスケッチを保存しましょう。 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。 ファイル名に「Project12」を入力し、[保存]をクリックしましょう。 保存先に「Project12」という名前のフォルダが作成されていることを確認してください。
+  <meta name="twitter:description" content="スケッチの作成  Processingを起動して，新規にスケッチを保存しましょう． メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます． ファイル名に「Project12」を入力し，[保存]をクリックしましょう． 保存先に「Project12」という名前のフォルダが作成されていることを確認してください．
 
- NyARToolkitの導入  ARToolkitは奈良先端科学技術大学院大学の加藤研究室によって 開発された拡張現実（Augumented Reality: AR）のためのソフトウェアです。 拡張現実とは、コンピュータを利用して、現実世界の一部に「仮想的な物体や情報」を重ねて表示することを指します。 このARToolkitのProcessing向けのライブラリが「NyARToolkit for Processing」です。
-GitHubのリリースページから、 最新バージョンのNyARToolkitをダウンロードしましょう。 ダウンロードしたファイルはZIPで圧縮されているので解凍し、 解凍後のlibraryフォルダをコピーして、「スケッチフォルダ（Project12）」の中に配置しましょう。 コピーしたら、フォルダの名前をlibraryからcodeに変更します。 同様に、カメラの設定ファイルcamera_para.datも「スケッチフォルダ（Project12）」の中にコピーしておきます。
+ NyARToolkitの導入  ARToolkitは奈良先端科学技術大学院大学の加藤研究室によって 開発された拡張現実（Augumented Reality: AR）のためのソフトウェアです． 拡張現実とは，コンピュータを利用して，現実世界の一部に「仮想的な物体や情報」を重ねて表示することを指します． このARToolkitのProcessing向けのライブラリが「NyARToolkit for Processing」です．
+GitHubのリリースページから， 最新バージョンのNyARToolkitをダウンロードしましょう． ダウンロードしたファイルはZIPで圧縮されているので解凍し， 解凍後のlibraryフォルダをコピーして，「スケッチフォルダ（Project12）」の中に配置しましょう． コピーしたら，フォルダの名前をlibraryからcodeに変更します． 同様に，カメラの設定ファイルcamera_para.datも「スケッチフォルダ（Project12）」の中にコピーしておきます．
 
 
-次に、ソースコードの先頭に「import jp.nyatla.nyar4psg.&lowast;;」を入力してください。 また、今回もカメラ映像を利用するため、[スケッチ]-[ライブラリをインポート]-[Video]をクリックして、 Videoライブラリをインポートしておきます。
-  カメラ映像の表示  Captureクラスを利用して、カメラから入力した画像を表示しましょう。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 ここでは、サイズ（size）が320x240、フレームレート（fps）が30となっている、 3番のカメラを使用していることに注意してください。 ウィンドウにカメラ映像が表示されることを確認してください。
+次に，ソースコードの先頭に「import jp.nyatla.nyar4psg.&lowast;;」を入力してください． また，今回もカメラ映像を利用するため，[スケッチ]-[ライブラリをインポート]-[Video]をクリックして， Videoライブラリをインポートしておきます．
+  カメラ映像の表示  Captureクラスを利用して，カメラから入力した画像を表示しましょう． 下記を参考にコードを入力したら，Runボタンをクリックしてください． ここでは，サイズ（size）が320x240，フレームレート（fps）が30となっている， 3番のカメラを使用していることに注意してください． ウィンドウにカメラ映像が表示されることを確認してください．
  
- 拡張現実の表示  ARToolkitを利用すると、ARマーカーと呼ばれる特定のパターンをカメラで読み取ることにより、 その位置を認識し、３Dオブジェクトを配置することができます。 ここでは、NYARToolkitに標準搭載されているNyIDを利用します。 NyIDには番号が設定されており、 ここではMODEL2の1番のNyIDを利用します。
-まずは、下記のように、MultiMarkerクラスを利用して、利用するマーカーを設定します。 MultiMarkerクラスのインスタンスを作成するときは、カメラ映像の幅と高さに加え、 カメラのパラメータファイル（camera_para.dat）を指定します。 また、対象のNyIDを登録するには、addNyIDMarker()関数を利用します。 引数には「NyIDの番号」と「マーカーの物理サイズ（mm）」を指定します。
-marker = new MultiMarker(this, 320, 240, &#34;camera_para.dat&#34;); marker.addNyIdMarker(1, 80); 次に、detect()関数で、カメラ映像からマーカーを検出し、 drawBackground()関数でカメラ映像を背景に設定します。 いずれの関数も引数にはCaptureクラスのインスタンスを渡します。
-marker.detect(cam); marker.drawBackground(cam); 最後に、マーカーが検出された場合に、立方体をマーカー上に配置します。 ここで、beginTransform()関数によって、原点をカメラに映ったマーカーの中心に変更していることに注意してください。 endTransform()関数で、元の座標系に戻ります。" />
+ 拡張現実の表示  ARToolkitを利用すると，ARマーカーと呼ばれる特定のパターンをカメラで読み取ることにより， その位置を認識し，３Dオブジェクトを配置することができます． ここでは，NYARToolkitに標準搭載されているNyIDを利用します． NyIDには番号が設定されており， ここではMODEL2の1番のNyIDを利用します．
+まずは，下記のように，MultiMarkerクラスを利用して，利用するマーカーを設定します． MultiMarkerクラスのインスタンスを作成するときは，カメラ映像の幅と高さに加え， カメラのパラメータファイル（camera_para.dat）を指定します． また，対象のNyIDを登録するには，addNyIDMarker()関数を利用します． 引数には「NyIDの番号」と「マーカーの物理サイズ（mm）」を指定します．
+marker = new MultiMarker(this, 320, 240, &#34;camera_para.dat&#34;); marker.addNyIdMarker(1, 80); 次に，detect()関数で，カメラ映像からマーカーを検出し， drawBackground()関数でカメラ映像を背景に設定します． いずれの関数も引数にはCaptureクラスのインスタンスを渡します．
+marker.detect(cam); marker.drawBackground(cam); 最後に，マーカーが検出された場合に，立方体をマーカー上に配置します． ここで，beginTransform()関数によって，原点をカメラに映ったマーカーの中心に変更していることに注意してください． endTransform()関数で，元の座標系に戻ります．" />
 
 
 
@@ -198,10 +198,10 @@ marker.detect(cam); marker.drawBackground(cam); 最後に、マーカーが検�
 </h1>
 
 
-<p>Processingを起動して、新規にスケッチを保存しましょう。
-メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。
-ファイル名に「Project12」を入力し、[保存]をクリックしましょう。
-保存先に「Project12」という名前のフォルダが作成されていることを確認してください。</p>
+<p>Processingを起動して，新規にスケッチを保存しましょう．
+メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます．
+ファイル名に「Project12」を入力し，[保存]をクリックしましょう．
+保存先に「Project12」という名前のフォルダが作成されていることを確認してください．</p>
 
 <p><a href="https://gyazo.com/076ac2a103f8fd0a4a9da408dd1316be"><img src="https://i.gyazo.com/076ac2a103f8fd0a4a9da408dd1316be.png" alt="https://gyazo.com/076ac2a103f8fd0a4a9da408dd1316be" /></a></p>
 
@@ -212,27 +212,26 @@ marker.detect(cam); marker.drawBackground(cam); 最後に、マーカーが検�
 
 
 <p><strong>ARToolkit</strong>は奈良先端科学技術大学院大学の<a href="http://imd.naist.jp/index.html">加藤研究室</a>によって
-開発された拡張現実（Augumented Reality: AR）のためのソフトウェアです。
-拡張現実とは、コンピュータを利用して、現実世界の一部に「仮想的な物体や情報」を重ねて表示することを指します。
-この<strong>ARToolkit</strong>のProcessing向けのライブラリが「<strong><a href="http://nyatla.jp/nyartoolkit/wp/">NyARToolkit for Processing</a></strong>」です。</p>
+開発された拡張現実（Augumented Reality: AR）のためのソフトウェアです．
+拡張現実とは，コンピュータを利用して，現実世界の一部に「仮想的な物体や情報」を重ねて表示することを指します．
+この<strong>ARToolkit</strong>のProcessing向けのライブラリが「<strong><a href="http://nyatla.jp/nyartoolkit/wp/">NyARToolkit for Processing</a></strong>」です．</p>
 
-<p><a href="https://github.com/nyatla/NyARToolkit-for-Processing/releases">GitHubのリリースページ</a>から、
-最新バージョンのNyARToolkitをダウンロードしましょう。
-ダウンロードしたファイルはZIPで圧縮されているので解凍し、
-解凍後の<strong>library</strong>フォルダをコピーして、「スケッチフォルダ（Project12）」の中に配置しましょう。
-コピーしたら、フォルダの名前を<strong>library</strong>から<strong>code</strong>に変更します。
-同様に、カメラの設定ファイル<strong>camera_para.dat</strong>も「スケッチフォルダ（Project12）」の中にコピーしておきます。</p>
+<p><a href="https://github.com/nyatla/NyARToolkit-for-Processing/releases">GitHubのリリースページ</a>から，
+最新バージョンのNyARToolkitをダウンロードしましょう．
+ダウンロードしたファイルはZIPで圧縮されているので解凍し，
+解凍後の<strong>library</strong>フォルダをコピーして，「スケッチフォルダ（Project12）」の中に配置しましょう．
+コピーしたら，フォルダの名前を<strong>library</strong>から<strong>code</strong>に変更します．
+同様に，カメラの設定ファイル<strong>camera_para.dat</strong>も「スケッチフォルダ（Project12）」の中にコピーしておきます．</p>
 
 <p><a href="https://gyazo.com/f51e44ba97374402116f2669ec181fc7"><img src="https://i.gyazo.com/f51e44ba97374402116f2669ec181fc7.png" alt="https://gyazo.com/f51e44ba97374402116f2669ec181fc7" /></a></p>
 
 <p><a href="https://gyazo.com/d7ea94eea2337d06e294fbd7cab058c7"><img src="https://i.gyazo.com/d7ea94eea2337d06e294fbd7cab058c7.png" alt="https://gyazo.com/d7ea94eea2337d06e294fbd7cab058c7" /></a></p>
 
-<p>次に、ソースコードの先頭に「<strong>import jp.nyatla.nyar4psg.&lowast;;</strong>」を入力してください。
-また、今回もカメラ映像を利用するため、[スケッチ]-[ライブラリをインポート]-[Video]をクリックして、
-Videoライブラリをインポートしておきます。</p>
+<p>次に，ソースコードの先頭に「<strong>import jp.nyatla.nyar4psg.&lowast;;</strong>」を入力してください．
+また，今回もカメラ映像を利用するため，[スケッチ]-[ライブラリをインポート]-[Video]をクリックして，
+Videoライブラリをインポートしておきます．</p>
 
-<script type="application/javascript" src="https://gist.github.com/naoto-github/234cc5f58c5a26d3352a7ddfa9469bd7.js"></script>
-
+<script type="application/javascript" src="//gist.github.com/naoto-github/234cc5f58c5a26d3352a7ddfa9469bd7.js"></script>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -240,14 +239,13 @@ Videoライブラリをインポートしておきます。</p>
 </h1>
 
 
-<p><strong>Capture</strong>クラスを利用して、カメラから入力した画像を表示しましょう。
-下記を参考にコードを入力したら、Runボタンをクリックしてください。
-ここでは、<strong>サイズ（size）</strong>が<strong>320x240</strong>、<strong>フレームレート（fps）</strong>が<strong>30</strong>となっている、
-<strong>3</strong>番のカメラを使用していることに注意してください。
-ウィンドウにカメラ映像が表示されることを確認してください。</p>
+<p><strong>Capture</strong>クラスを利用して，カメラから入力した画像を表示しましょう．
+下記を参考にコードを入力したら，Runボタンをクリックしてください．
+ここでは，<strong>サイズ（size）</strong>が<strong>320x240</strong>，<strong>フレームレート（fps）</strong>が<strong>30</strong>となっている，
+<strong>3</strong>番のカメラを使用していることに注意してください．
+ウィンドウにカメラ映像が表示されることを確認してください．</p>
 
-<script type="application/javascript" src="https://gist.github.com/naoto-github/c7c85dd9f7a5f8ba8e6208334a212246.js"></script>
-
+<script type="application/javascript" src="//gist.github.com/naoto-github/c7c85dd9f7a5f8ba8e6208334a212246.js"></script>
 
 <p><a href="https://gyazo.com/b74d10f276cb735c3ad41cd1e079f4c2"><img src="https://i.gyazo.com/b74d10f276cb735c3ad41cd1e079f4c2.gif" alt="https://gyazo.com/b74d10f276cb735c3ad41cd1e079f4c2" /></a></p>
 
@@ -257,51 +255,49 @@ Videoライブラリをインポートしておきます。</p>
 </h1>
 
 
-<p>ARToolkitを利用すると、<strong>ARマーカー</strong>と呼ばれる特定のパターンをカメラで読み取ることにより、
-その位置を認識し、３Dオブジェクトを配置することができます。
-ここでは、NYARToolkitに標準搭載されている<strong>NyID</strong>を利用します。
-<a href="http://sixwish.jp/AR/Marker/idMarker/">NyID</a>には番号が設定されており、
-ここではMODEL2の<a href="/classes/programming_1/nyid-m2_id001.png">1番のNyID</a>を利用します。</p>
+<p>ARToolkitを利用すると，<strong>ARマーカー</strong>と呼ばれる特定のパターンをカメラで読み取ることにより，
+その位置を認識し，３Dオブジェクトを配置することができます．
+ここでは，NYARToolkitに標準搭載されている<strong>NyID</strong>を利用します．
+<a href="http://sixwish.jp/AR/Marker/idMarker/">NyID</a>には番号が設定されており，
+ここではMODEL2の<a href="/classes/programming_1/nyid-m2_id001.png">1番のNyID</a>を利用します．</p>
 
 <p><img src="/classes/programming_1/nyid-m2_id001.png" alt="nyid-m2_id001.png" /></p>
 
-<p>まずは、下記のように、<strong>MultiMarker</strong>クラスを利用して、利用するマーカーを設定します。
-<strong>MultiMarker</strong>クラスのインスタンスを作成するときは、カメラ映像の幅と高さに加え、
-カメラのパラメータファイル（<strong>camera_para.dat</strong>）を指定します。
-また、対象のNyIDを登録するには、<code>addNyIDMarker()</code>関数を利用します。
-引数には「<strong>NyIDの番号</strong>」と「<strong>マーカーの物理サイズ（mm）</strong>」を指定します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">marker <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MultiMarker(<span style="color:#66d9ef">this</span>, 320, 240, <span style="color:#e6db74">&#34;camera_para.dat&#34;</span>);
-marker.<span style="color:#a6e22e">addNyIdMarker</span>(1, 80);</code></pre></div>
-<p>次に、<code>detect()</code>関数で、カメラ映像からマーカーを検出し、
-<code>drawBackground()</code>関数でカメラ映像を背景に設定します。
-いずれの関数も引数には<strong>Capture</strong>クラスのインスタンスを渡します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">marker.<span style="color:#a6e22e">detect</span>(cam);
-marker.<span style="color:#a6e22e">drawBackground</span>(cam);</code></pre></div>
-<p>最後に、マーカーが検出された場合に、立方体をマーカー上に配置します。
-ここで、<code>beginTransform()</code>関数によって、原点をカメラに映ったマーカーの中心に変更していることに注意してください。
-<code>endTransform()</code>関数で、元の座標系に戻ります。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">if</span>(marker.<span style="color:#a6e22e">isExist</span>(0)){
-	marker.<span style="color:#a6e22e">beginTransform</span>(0);
-	box(50, 50, 50);
-	marker.<span style="color:#a6e22e">endTransform</span>();
-}</code></pre></div>
-<p>下記を参考にコードを入力したら、Runボタンをクリックしてください。
-マーカーをカメラに映すと立方体が表示されることを確認してください。</p>
+<p>まずは，下記のように，<strong>MultiMarker</strong>クラスを利用して，利用するマーカーを設定します．
+<strong>MultiMarker</strong>クラスのインスタンスを作成するときは，カメラ映像の幅と高さに加え，
+カメラのパラメータファイル（<strong>camera_para.dat</strong>）を指定します．
+また，対象のNyIDを登録するには，<code>addNyIDMarker()</code>関数を利用します．
+引数には「<strong>NyIDの番号</strong>」と「<strong>マーカーの物理サイズ（mm）</strong>」を指定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">marker <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MultiMarker<span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> 320<span style="color:#f92672">,</span> 240<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;camera_para.dat&#34;</span><span style="color:#f92672">);</span>
+marker<span style="color:#f92672">.</span><span style="color:#a6e22e">addNyIdMarker</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> 80<span style="color:#f92672">);</span></code></pre></div>
+<p>次に，<code>detect()</code>関数で，カメラ映像からマーカーを検出し，
+<code>drawBackground()</code>関数でカメラ映像を背景に設定します．
+いずれの関数も引数には<strong>Capture</strong>クラスのインスタンスを渡します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">marker<span style="color:#f92672">.</span><span style="color:#a6e22e">detect</span><span style="color:#f92672">(</span>cam<span style="color:#f92672">);</span>
+marker<span style="color:#f92672">.</span><span style="color:#a6e22e">drawBackground</span><span style="color:#f92672">(</span>cam<span style="color:#f92672">);</span></code></pre></div>
+<p>最後に，マーカーが検出された場合に，立方体をマーカー上に配置します．
+ここで，<code>beginTransform()</code>関数によって，原点をカメラに映ったマーカーの中心に変更していることに注意してください．
+<code>endTransform()</code>関数で，元の座標系に戻ります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>marker<span style="color:#f92672">.</span><span style="color:#a6e22e">isExist</span><span style="color:#f92672">(</span>0<span style="color:#f92672">)){</span>
+	marker<span style="color:#f92672">.</span><span style="color:#a6e22e">beginTransform</span><span style="color:#f92672">(</span>0<span style="color:#f92672">);</span>
+	box<span style="color:#f92672">(</span>50<span style="color:#f92672">,</span> 50<span style="color:#f92672">,</span> 50<span style="color:#f92672">);</span>
+	marker<span style="color:#f92672">.</span><span style="color:#a6e22e">endTransform</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span></code></pre></div>
+<p>下記を参考にコードを入力したら，Runボタンをクリックしてください．
+マーカーをカメラに映すと立方体が表示されることを確認してください．</p>
 
-<script type="application/javascript" src="https://gist.github.com/naoto-github/b340c2f05c2e00f5483ac26155e67990.js"></script>
-
+<script type="application/javascript" src="//gist.github.com/naoto-github/b340c2f05c2e00f5483ac26155e67990.js"></script>
 
 <p><a href="https://gyazo.com/cc1ef09628049dcee9c1dec23c903e41"><img src="https://i.gyazo.com/cc1ef09628049dcee9c1dec23c903e41.gif" alt="https://gyazo.com/cc1ef09628049dcee9c1dec23c903e41" /></a></p>
 
-<p>カメラ映像を確認すると、マーカーの中心を原点とした立方体を表示するため、
-立方体が紙を突き破っていることが分かります。
-そこで、<code>translate()</code>関数を利用して、立方体の１辺の長さの半分（25）だけ、
-Z軸方向にずらしてみましょう。
-下記を参考にコードを入力したら、Runボタンをクリックしてください。
-立方体がマーカーの表面に乗っているように表示されることを確認してください。</p>
+<p>カメラ映像を確認すると，マーカーの中心を原点とした立方体を表示するため，
+立方体が紙を突き破っていることが分かります．
+そこで，<code>translate()</code>関数を利用して，立方体の１辺の長さの半分（25）だけ，
+Z軸方向にずらしてみましょう．
+下記を参考にコードを入力したら，Runボタンをクリックしてください．
+立方体がマーカーの表面に乗っているように表示されることを確認してください．</p>
 
-<script type="application/javascript" src="https://gist.github.com/naoto-github/3d849dbbc53f15b76028e6815371e7fb.js"></script>
-
+<script type="application/javascript" src="//gist.github.com/naoto-github/3d849dbbc53f15b76028e6815371e7fb.js"></script>
 
 <p><a href="https://gyazo.com/055a9e37e204598b50098dae10ee4c8e"><img src="https://i.gyazo.com/055a9e37e204598b50098dae10ee4c8e.gif" alt="https://gyazo.com/055a9e37e204598b50098dae10ee4c8e" /></a></p>
 
@@ -311,11 +307,11 @@ Z軸方向にずらしてみましょう。
 </h1>
 
 
-<p>マーカーの表面に乗っているように、<code>sphere()</code>関数を利用して半径50の球を表示させてください。
-課題が完成したら、作成したスケッチを<strong>ZIPアーカイブ</strong>形式で保存します。
-ZIPアーカイブを作成するには、メニューから[ツール]-[スケッチをアーカイブ]をクリックして、「スケッチを名前を付けてアーカイブする」を開きます。
-保存するファイル名を確認した上で、[保存]をクリックします。
-保存先に「Project12-日付a.zip」というファイルが作成されていることを確認してください。</p>
+<p>マーカーの表面に乗っているように，<code>sphere()</code>関数を利用して半径50の球を表示させてください．
+課題が完成したら，作成したスケッチを<strong>ZIPアーカイブ</strong>形式で保存します．
+ZIPアーカイブを作成するには，メニューから[ツール]-[スケッチをアーカイブ]をクリックして，「スケッチを名前を付けてアーカイブする」を開きます．
+保存するファイル名を確認した上で，[保存]をクリックします．
+保存先に「Project12-日付a.zip」というファイルが作成されていることを確認してください．</p>
 
 <p><a href="https://gyazo.com/d1c96efa60230fb28c013a754b29b5b4"><img src="https://i.gyazo.com/d1c96efa60230fb28c013a754b29b5b4.gif" alt="https://gyazo.com/d1c96efa60230fb28c013a754b29b5b4" /></a></p>
 
@@ -397,7 +393,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2019-12-17 19:30:34.539384 &#43;0900 JST m=&#43;0.207042798">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2019-12-29 13:56:12.98132 &#43;0900 JST m=&#43;0.401073728">2019</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
