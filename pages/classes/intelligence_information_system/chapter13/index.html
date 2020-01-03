@@ -279,9 +279,9 @@ plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)</code></pre></div>
 <p><a href="https://gyazo.com/a0a9796309339c97c9df3f5db34c6aac"><img src="https://i.gyazo.com/a0a9796309339c97c9df3f5db34c6aac.png" alt="Image from Gyazo" /></a></p>
 
-<p>最後に，次数$d$に伴う誤差の推移を可視化してみましょう．
-次数が増えるとサンプルデータに対する誤差は減少するのに対し，
-データ全体に対しては誤差が増加してしまうことがわかります．
+<p>最後に，次数$d$に伴う2乗誤差の推移を可視化してみましょう．
+次数が増えるとサンプルデータに対する2乗誤差は減少するのに対し，
+データ全体に対しては2乗誤差が増加してしまうことがわかります．
 これが <strong>オーバーフィッティング</strong> です．
 これは回帰問題に限らず，サンプルデータを用いて学習する手法では，
 起こり得る現象です．</p>
@@ -310,11 +310,104 @@ plt<span style="color:#f92672">.</span>legend(</code></pre></div>
 </h1>
 
 
+<p>オーバーフィッティングの影響を減らし，回帰式の妥当な精度を得ることを目的として，
+<strong>交差検証（Cross-Validation）</strong> と呼ばれる方法が用いられます．
+特に十分なデータセットが用意できないときに，汎用性を向上させる手段として，
+有効な方法とされています．</p>
+
+<p>ここでは，機械学習でよく用いられる <strong>k-分割交差検証（k-fold cross validation）</strong> を取り上げます．
+この方法では，データセットをk個に分割し， <strong>k-1個</strong> を学習に，残りの <strong>1個</strong> をテストに用います．
+<code>KFold</code>関数に分割数$k=5$を指定して分割します（データの順番もシャッフルします）．
+この結果，5パターンの学習用とテスト用のサンプルが生成されます．
+各サンプルは，学習用に32，テスト用に8のデータが用意されていることがわかります．</p>
+
+<p><strong>[IN:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> KFold
+
+kf <span style="color:#f92672">=</span> KFold(n_splits<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, shuffle<span style="color:#f92672">=</span>True) <span style="color:#75715e">#k-分割交差検証（k=5）</span>
+    
+<span style="color:#66d9ef">for</span> train_set, test_set <span style="color:#f92672">in</span> kf<span style="color:#f92672">.</span>split(data[<span style="color:#ae81ff">0</span>]):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;train_set: &#34;</span><span style="color:#f92672">+</span>  str(train_set) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; test_set: &#34;</span> <span style="color:#f92672">+</span>  str(test_set))</code></pre></div>
+<p><strong>[OUT:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">26</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">28</span> <span style="color:#ae81ff">29</span>
+ <span style="color:#ae81ff">30</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">35</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">37</span> <span style="color:#ae81ff">38</span> <span style="color:#ae81ff">39</span>] test_set: [ <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">31</span> <span style="color:#ae81ff">34</span>]
+train_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">8</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">26</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">28</span> <span style="color:#ae81ff">29</span> <span style="color:#ae81ff">31</span>
+ <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">34</span> <span style="color:#ae81ff">35</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">37</span> <span style="color:#ae81ff">38</span> <span style="color:#ae81ff">39</span>] test_set: [ <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">30</span>]
+train_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">8</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">28</span>
+ <span style="color:#ae81ff">29</span> <span style="color:#ae81ff">30</span> <span style="color:#ae81ff">31</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">34</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">38</span> <span style="color:#ae81ff">39</span>] test_set: [ <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">26</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">35</span> <span style="color:#ae81ff">37</span>]
+train_set: [ <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">26</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">29</span>
+ <span style="color:#ae81ff">30</span> <span style="color:#ae81ff">31</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">34</span> <span style="color:#ae81ff">35</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">37</span> <span style="color:#ae81ff">39</span>] test_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">28</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">38</span>]
+train_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">8</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">26</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">28</span>
+ <span style="color:#ae81ff">30</span> <span style="color:#ae81ff">31</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">34</span> <span style="color:#ae81ff">35</span> <span style="color:#ae81ff">37</span> <span style="color:#ae81ff">38</span>] test_set: [ <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">29</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">39</span>]</code></pre></div>
+<p>次に，<code>KFold</code>関数を利用して，多項式回帰の2乗誤差を求める<code>validate</code>関数を定義します．
+5パターンのデータセットで，それぞれ2乗誤差を求め，その <strong>平均値</strong> を最終的な評価とします．
+例えば，分割数$k=5$で，3次の多項式回帰の2乗誤差の平均は <strong>2.78</strong> となりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">validate</span>(n, dimension):
+    kf <span style="color:#f92672">=</span> KFold(n_splits<span style="color:#f92672">=</span>n, shuffle<span style="color:#f92672">=</span>True)
+    errors <span style="color:#f92672">=</span> []
+    
+    <span style="color:#66d9ef">for</span> train_set, test_set <span style="color:#f92672">in</span> kf<span style="color:#f92672">.</span>split(data[<span style="color:#ae81ff">0</span>]):
+        <span style="color:#75715e">#print(&#34;train_set: &#34;+  str(train_set) + &#34; test_set: &#34; +  str(test_set))</span>
+        train <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([data[<span style="color:#ae81ff">0</span>][train_set], data[<span style="color:#ae81ff">1</span>][train_set]])
+        test  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([data[<span style="color:#ae81ff">0</span>][test_set],  data[<span style="color:#ae81ff">1</span>][test_set]])
+        y, e <span style="color:#f92672">=</span> regression(test, train, dimension)
+        errors<span style="color:#f92672">.</span>append(e)
+        
+    avg <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(errors) <span style="color:#75715e"># ２乗誤差の平均</span>
+    <span style="color:#66d9ef">return</span> avg</code></pre></div>
+<p><strong>[IN:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">avg <span style="color:#f92672">=</span> validate(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># 5分割， 3次の多項式回帰</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Average Error: &#34;</span> <span style="color:#f92672">+</span> str(avg))</code></pre></div>
+<p><strong>[OUT:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Average Error: <span style="color:#ae81ff">2.781161227904894</span></code></pre></div>
+<p>最後に，k-分割交差検証を利用して，次数$d$に伴う2乗誤差の推移を可視化してみましょう．
+全体的な傾向はk-分割交差検証を用いない場合と同様ですが，
+オーバーフィッティングの影響が小さくなるため，
+次数が増えても2乗誤差は極端に増加していません．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dimension <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">1</span>)
+
+errors_avg <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dimension:
+    e <span style="color:#f92672">=</span> validate(<span style="color:#ae81ff">5</span>, i)
+    errors_avg<span style="color:#f92672">.</span>append(e)
+    
+plt<span style="color:#f92672">.</span>plot(dimension, errors_avg, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;average&#34;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;dimension&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;error&#34;</span>)
+plt<span style="color:#f92672">.</span>legend()</code></pre></div>
+<p><a href="https://gyazo.com/ca9e6c07656ba67003547944de93c427"><img src="https://i.gyazo.com/ca9e6c07656ba67003547944de93c427.png" alt="Image from Gyazo" /></a></p>
+
 <h1>
   <img class="head-image" src="/logo/logo.png">
   課題
 </h1>
 
+
+<p>下記のデータセットを利用し，k-分割交差検証で多項式回帰の精度を評価しなさい．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#f92672">-</span><span style="color:#ae81ff">2.00000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.90000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.80000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.70000000e+00</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">1.60000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.50000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.40000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.30000000e+00</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">1.20000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.10000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.00000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">9.00000000e-01</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">8.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5.00000000e-01</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">4.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.00000000e-01</span>,
+        <span style="color:#ae81ff">1.77635684e-15</span>,  <span style="color:#ae81ff">1.00000000e-01</span>,  <span style="color:#ae81ff">2.00000000e-01</span>,  <span style="color:#ae81ff">3.00000000e-01</span>,
+        <span style="color:#ae81ff">4.00000000e-01</span>,  <span style="color:#ae81ff">5.00000000e-01</span>,  <span style="color:#ae81ff">6.00000000e-01</span>,  <span style="color:#ae81ff">7.00000000e-01</span>,
+        <span style="color:#ae81ff">8.00000000e-01</span>,  <span style="color:#ae81ff">9.00000000e-01</span>,  <span style="color:#ae81ff">1.00000000e+00</span>,  <span style="color:#ae81ff">1.10000000e+00</span>,
+        <span style="color:#ae81ff">1.20000000e+00</span>,  <span style="color:#ae81ff">1.30000000e+00</span>,  <span style="color:#ae81ff">1.40000000e+00</span>,  <span style="color:#ae81ff">1.50000000e+00</span>,
+        <span style="color:#ae81ff">1.60000000e+00</span>,  <span style="color:#ae81ff">1.70000000e+00</span>,  <span style="color:#ae81ff">1.80000000e+00</span>,  <span style="color:#ae81ff">1.90000000e+00</span>])
+		
+y2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([ <span style="color:#ae81ff">4.39898556e+00</span>,  <span style="color:#ae81ff">3.93435081e+00</span>,  <span style="color:#ae81ff">2.61498259e+00</span>,  <span style="color:#ae81ff">2.72044213e+00</span>,
+        <span style="color:#ae81ff">1.30362037e+00</span>,  <span style="color:#ae81ff">2.08098975e+00</span>,  <span style="color:#ae81ff">1.85633410e+00</span>,  <span style="color:#ae81ff">1.44865881e+00</span>,
+        <span style="color:#ae81ff">7.29089005e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">9.42380345e-02</span>,  <span style="color:#ae81ff">8.39806492e-01</span>,  <span style="color:#ae81ff">9.13725511e-01</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">6.89556978e-02</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.88622122e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.17447107e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8.50096595e-02</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">5.10447688e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.18019152e-03</span>,  <span style="color:#ae81ff">1.36162277e-01</span>,  <span style="color:#ae81ff">8.31331709e-01</span>,
+        <span style="color:#ae81ff">9.37694167e-02</span>,  <span style="color:#ae81ff">1.68726072e+00</span>,  <span style="color:#ae81ff">4.71255186e-01</span>,  <span style="color:#ae81ff">2.02384997e+00</span>,
+        <span style="color:#ae81ff">1.12543648e+00</span>,  <span style="color:#ae81ff">2.23950532e+00</span>,  <span style="color:#ae81ff">2.69476804e+00</span>,  <span style="color:#ae81ff">1.50769218e+00</span>,
+        <span style="color:#ae81ff">2.86140345e+00</span>,  <span style="color:#ae81ff">2.46208705e+00</span>,  <span style="color:#ae81ff">2.46640709e+00</span>,  <span style="color:#ae81ff">2.40690140e+00</span>,
+        <span style="color:#ae81ff">1.29052071e+00</span>,  <span style="color:#ae81ff">7.78084009e-01</span>,  <span style="color:#ae81ff">1.01201918e+00</span>,  <span style="color:#ae81ff">5.94619852e-01</span>,
+        <span style="color:#ae81ff">1.27863784e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.80496436e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.75028230e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.54273399e+00</span>])		
+
+data2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>stack([x2, y2])</code></pre></div>
+<p><a href="https://gyazo.com/c3b122c99c004d9f7ba915d117858e92"><img src="https://i.gyazo.com/c3b122c99c004d9f7ba915d117858e92.png" alt="Image from Gyazo" /></a></p>
 
 <p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
 
@@ -404,7 +497,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-01-02 13:20:28.903392 &#43;0900 JST m=&#43;0.127156396">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-01-03 18:37:00.134971 &#43;0900 JST m=&#43;0.237287149">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
