@@ -352,48 +352,48 @@ Welchの検定に関しては割愛します．
 <p>それでは，検定統計量であるtスコアを計算してみましょう．
 まずは，標本の平均<script type="math/tex">\mu_1，\mu_2</script>と
 標準偏差<script type="math/tex">\sigma_1，\sigma_2</script>を求めます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">63</span>,<span style="color:#ae81ff">75</span>,<span style="color:#ae81ff">72</span>,<span style="color:#ae81ff">67</span>,<span style="color:#ae81ff">71</span>)
-x2 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">70</span>,<span style="color:#ae81ff">56</span>,<span style="color:#ae81ff">64</span>,<span style="color:#ae81ff">56</span>,<span style="color:#ae81ff">64</span>)
-mu1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">mean</span>(x1)
-mu2 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">mean</span>(x2)
-sigma1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sd</span>(x1)
-sigma2 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sd</span>(x2)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x1 <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>(<span style="color:#ae81ff">63</span>,<span style="color:#ae81ff">75</span>,<span style="color:#ae81ff">72</span>,<span style="color:#ae81ff">67</span>,<span style="color:#ae81ff">71</span>)
+x2 <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>(<span style="color:#ae81ff">70</span>,<span style="color:#ae81ff">56</span>,<span style="color:#ae81ff">64</span>,<span style="color:#ae81ff">56</span>,<span style="color:#ae81ff">64</span>)
+mu1 <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">mean</span>(x1)
+mu2 <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">mean</span>(x2)
+sigma1 <span style="color:#f92672">&lt;-</span> sd(x1)
+sigma2 <span style="color:#f92672">&lt;-</span> sd(x2)
     
 <span style="color:#f92672">&gt;</span> mu1
-[1] <span style="color:#ae81ff">69.6</span>
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">69.6</span>
 <span style="color:#f92672">&gt;</span> mu2
-[1] <span style="color:#ae81ff">62</span>
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">62</span>
 <span style="color:#f92672">&gt;</span> sigma1
-[1] <span style="color:#ae81ff">4.669047</span>
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">4.669047</span>
 <span style="color:#f92672">&gt;</span> sigma2
-[1] <span style="color:#ae81ff">6</span></code></pre></div>
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">6</span></code></pre></div>
 <p>次に，母集団の分散の推定値（プールした分散）を求めましょう．
 ここで求めた値は <strong>標準偏差</strong><script type="math/tex">\hat{\sigma}</script>ではなく，
 <strong>分散</strong><script type="math/tex">\hat{\sigma}^2</script>であることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">n1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">length</span>(x1)
-n2 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">length</span>(x2)
-pvar <span style="color:#f92672">&lt;-</span> ((n1<span style="color:#ae81ff">-1</span>)<span style="color:#f92672">*</span>sigma1^2 <span style="color:#f92672">+</span> (n2<span style="color:#ae81ff">-1</span>)<span style="color:#f92672">*</span>sigma2^2) <span style="color:#f92672">/</span> (n1 <span style="color:#f92672">+</span> n2 <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>) 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">n1 <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">length</span>(x1)
+n2 <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">length</span>(x2)
+pvar <span style="color:#f92672">&lt;-</span> ((n1<span style="color:#ae81ff">-1</span>)<span style="color:#f92672">*</span>sigma1<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> (n2<span style="color:#ae81ff">-1</span>)<span style="color:#f92672">*</span>sigma2<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> (n1 <span style="color:#f92672">+</span> n2 <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>) 
     
 <span style="color:#f92672">&gt;</span> n1
-[1] <span style="color:#ae81ff">5</span>
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">5</span>
 <span style="color:#f92672">&gt;</span> n2
-[1] <span style="color:#ae81ff">5</span>
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">5</span>
 <span style="color:#f92672">&gt;</span> pvar
-[1] <span style="color:#ae81ff">28.9</span></code></pre></div>
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">28.9</span></code></pre></div>
 <p>上記の計算結果を基ににtスコアを求めます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">t <span style="color:#f92672">&lt;-</span> (mu1 <span style="color:#f92672">-</span> mu2) <span style="color:#f92672">/</span> <span style="color:#a6e22e">sqrt</span>(pvar <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>n1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>n2))
-<span style="color:#f92672">&gt;</span> t
-[1] <span style="color:#ae81ff">2.235294</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">t <span style="color:#f92672">&lt;-</span> (mu1 <span style="color:#f92672">-</span> mu2) <span style="color:#f92672">/</span> <span style="color:#66d9ef">sqrt</span>(pvar <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>n1 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>n2))
+<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">t</span>
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">2.235294</span></code></pre></div>
 <p>最後に，自由度<script type="math/tex">n1+n2-2=8</script>のt分布を利用して，帰無仮説が採択か棄却かを調べましょう．
 qt関数を用いると，95%信頼度のとき，<strong>t&lt;-2.3</strong>，また，<strong>t&gt;2.3</strong> が棄却域となることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">qt</span>(<span style="color:#ae81ff">0.025</span>,<span style="color:#ae81ff">8</span>)
-[1] <span style="color:#ae81ff">-2.306004</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">qt</span>(<span style="color:#ae81ff">0.975</span>,<span style="color:#ae81ff">8</span>)
-[1] <span style="color:#ae81ff">2.306004</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> qt(<span style="color:#ae81ff">0.025</span>,<span style="color:#ae81ff">8</span>)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">-2.306004</span>
+<span style="color:#f92672">&gt;</span> qt(<span style="color:#ae81ff">0.975</span>,<span style="color:#ae81ff">8</span>)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">2.306004</span></code></pre></div>
 <p>合わせてt分布をグラフにして確認してみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">curve</span>(<span style="color:#a6e22e">dt</span>(x,<span style="color:#ae81ff">8</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>)
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">abline</span>(v<span style="color:#f92672">=</span><span style="color:#a6e22e">qt</span>(<span style="color:#ae81ff">0.025</span>,<span style="color:#ae81ff">8</span>))
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">abline</span>(v<span style="color:#f92672">=</span><span style="color:#a6e22e">qt</span>(<span style="color:#ae81ff">0.975</span>,<span style="color:#ae81ff">8</span>))</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> curve(dt(x,<span style="color:#ae81ff">8</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>)
+<span style="color:#f92672">&gt;</span> abline(v<span style="color:#f92672">=</span>qt(<span style="color:#ae81ff">0.025</span>,<span style="color:#ae81ff">8</span>))
+<span style="color:#f92672">&gt;</span> abline(v<span style="color:#f92672">=</span>qt(<span style="color:#ae81ff">0.975</span>,<span style="color:#ae81ff">8</span>))</code></pre></div>
 <p><a href="https://gyazo.com/3302a4bf3c494c4c8d12de90b0943e16"><img src="https://i.gyazo.com/3302a4bf3c494c4c8d12de90b0943e16.png" alt="https://gyazo.com/3302a4bf3c494c4c8d12de90b0943e16" /></a></p>
 
 <p>上記の結果から，tスコアの2.24は棄却域に含まれないので，
@@ -412,13 +412,13 @@ qt関数を用いると，95%信頼度のとき，<strong>t&lt;-2.3</strong>，�
 <p>上記の検定は<strong>t.test</strong>関数でも可能です．
 2つの標本の平均値差を検定するには，比較したい2つの標本を引数として与えるだけです．
 このとき，母分散が等質であることを表す<strong>var.equal=TRUE</strong>というオプションも同時に指定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">t.test</span>(x1,x2,var.equal<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> t.test(x1,x2,var.equal<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)
 
-Two Sample t<span style="color:#f92672">-</span>test
+Two Sample <span style="color:#66d9ef">t</span><span style="color:#f92672">-</span>test
 
 data<span style="color:#f92672">:</span>  x1 and x2
 t <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.2353</span>, df <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>, p<span style="color:#f92672">-</span>value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.05583</span>
-alternative hypothesis<span style="color:#f92672">:</span> true difference in means is not equal to <span style="color:#ae81ff">0</span>
+alternative hypothesis<span style="color:#f92672">:</span> true difference <span style="color:#66d9ef">in</span> means is not equal to <span style="color:#ae81ff">0</span>
 <span style="color:#ae81ff">95</span> percent confidence interval<span style="color:#f92672">:</span>
 <span style="color:#ae81ff">-0.2404141</span> <span style="color:#ae81ff">15.4404141</span>
 sample estimates<span style="color:#f92672">:</span>
@@ -523,7 +523,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-01-05 14:00:20.623933 &#43;0900 JST m=&#43;0.243738452">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-01-05 18:51:57.753098 &#43;0900 JST m=&#43;0.734599453">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
