@@ -301,7 +301,7 @@ plt<span style="color:#f92672">.</span>plot(dimension, errors_all, label<span st
 plt<span style="color:#f92672">.</span>plot(dimension, errors_sample, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sample&#34;</span>)
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;dimension&#34;</span>)
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;error&#34;</span>)
-plt<span style="color:#f92672">.</span>legend(</code></pre></div>
+plt<span style="color:#f92672">.</span>legend()</code></pre></div>
 <p><a href="https://gyazo.com/e5c82f094eb68f9ad2a84193c500668b"><img src="https://i.gyazo.com/e5c82f094eb68f9ad2a84193c500668b.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
@@ -324,7 +324,7 @@ plt<span style="color:#f92672">.</span>legend(</code></pre></div>
 <p><strong>[IN:]</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> KFold
 
-kf <span style="color:#f92672">=</span> KFold(n_splits<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, shuffle<span style="color:#f92672">=</span>True) <span style="color:#75715e">#k-分割交差検証（k=5）</span>
+kf <span style="color:#f92672">=</span> KFold(n_splits<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, shuffle<span style="color:#f92672">=</span>True, random_state <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#k-分割交差検証（k=5）</span>
     
 <span style="color:#66d9ef">for</span> train_set, test_set <span style="color:#f92672">in</span> kf<span style="color:#f92672">.</span>split(data[<span style="color:#ae81ff">0</span>]):
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;train_set: &#34;</span><span style="color:#f92672">+</span>  str(train_set) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; test_set: &#34;</span> <span style="color:#f92672">+</span>  str(test_set))</code></pre></div>
@@ -342,12 +342,11 @@ train_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">4
 <p>次に，<code>KFold</code>関数を利用して，多項式回帰の2乗誤差を求める<code>validate</code>関数を定義します．
 5パターンのデータセットで，それぞれ2乗誤差を求め，その <strong>平均値</strong> を最終的な評価とします．
 例えば，分割数$k=5$で，3次の多項式回帰の2乗誤差の平均は <strong>2.78</strong> となりました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">validate</span>(n, dimension):
-    kf <span style="color:#f92672">=</span> KFold(n_splits<span style="color:#f92672">=</span>n, shuffle<span style="color:#f92672">=</span>True)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">validate</span>(k, dimension):
+    kf <span style="color:#f92672">=</span> KFold(n_splits<span style="color:#f92672">=</span>k, shuffle<span style="color:#f92672">=</span>True, random_state <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
     errors <span style="color:#f92672">=</span> []
     
     <span style="color:#66d9ef">for</span> train_set, test_set <span style="color:#f92672">in</span> kf<span style="color:#f92672">.</span>split(data[<span style="color:#ae81ff">0</span>]):
-        <span style="color:#75715e">#print(&#34;train_set: &#34;+  str(train_set) + &#34; test_set: &#34; +  str(test_set))</span>
         train <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([data[<span style="color:#ae81ff">0</span>][train_set], data[<span style="color:#ae81ff">1</span>][train_set]])
         test  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([data[<span style="color:#ae81ff">0</span>][test_set],  data[<span style="color:#ae81ff">1</span>][test_set]])
         y, e <span style="color:#f92672">=</span> regression(test, train, dimension)
@@ -408,6 +407,8 @@ y2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ar
 
 data2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>stack([x2, y2])</code></pre></div>
 <p><a href="https://gyazo.com/c3b122c99c004d9f7ba915d117858e92"><img src="https://i.gyazo.com/c3b122c99c004d9f7ba915d117858e92.png" alt="Image from Gyazo" /></a></p>
+
+<p><a href="https://gyazo.com/4589eebf892e43a067313ce66fa87b9e"><img src="https://i.gyazo.com/4589eebf892e43a067313ce66fa87b9e.png" alt="Image from Gyazo" /></a></p>
 
 <p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
 
@@ -497,7 +498,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-01-05 18:51:57.316319 &#43;0900 JST m=&#43;0.297825045">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-01-08 18:37:43.527376 &#43;0900 JST m=&#43;0.152046708">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
