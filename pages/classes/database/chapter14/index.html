@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    データベースを利用したウェブサイトの構築 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="データベースを利用したウェブサイトの構築" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/database/chapter14/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/54d0cd01d577ba69bc077ec013832f4b.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="SQLiteを利用したウェブサイト  SQLiteなどデータベース管理システムの多くは， C，C&#43;&#43;，Perl，Ruby，Pythonなど様々なプログラミング言語で利用するためのライブラリ（またはAPI） が公開されています． ライブラリを導入することで，プログラムを介したレコードの追加・削除などの操作が可能となります． 今回は，Pythonのウェブサーバ機能を用いて，ウェブサイトでSQLiteのデータベースを操作するCGI(Common Gateway Interface)を実装することを目的とします．
+Pythonのインストール Windowsの場合 Windows版は，公式サイトからダウンロードしましょう． ここでは，ダウンロードするパッケージとして，embeddable zip file を選択するようにしてください．
+Windows版 Pythonのダウンロード
+MacOSの場合 MacOSでは，バージョン管理が容易な pyenv をインストールすると良いでしょう． pyenv のインストールはHomeBrewを利用します．
+% brew install pyenv pyenv をインストールしたら，利用可能なPythonのバージョンを調べます． ここでは，最新の3.8.0をインストールします（2020年1月21日時点）．
+% pyenv install --list % pyenv install 3.8.0 ソースファイルのダウンロード SQLiteを利用するためのPythonのソースファイルはGitHubで公開しています． 下記のプロジェクトページで， Download ZIP をクリックし，ダウンロードしたファイルを展開してください．
+ naoto-github/WebSQLite
+データベースの確認 展開したフォルダにある db/students.db が今回利用するデータベース・ファイルです． sqlite3コマンドを用いて，データベースの内容を確認しておきましょう． データベースには，テーブル students が存在し，4件のレコードが登録されています． 各レコードは，id，name，grade という3つの属性で構成され，id が主キーです．
+% sqlite3 students.dbsqlite&gt; .table students qlite&gt; .header on sqlite&gt; select * from students; id|name|grade A001|Iwashiro Hayato|2 A002|Iwamura Yuu|1 B003|Sugie Hiroko|3 C004|Senba Asuka|1  id name grade  A001 Iwashiro Hayato 2  A002 Iwamura Yuu 1  B003 Sugie Hiroko 3  C004 Senba Asuka 1   【students】" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="データベースを利用したウェブサイトの構築" />
+
+
+
+  <meta name="twitter:description" content="SQLiteを利用したウェブサイト  SQLiteなどデータベース管理システムの多くは， C，C&#43;&#43;，Perl，Ruby，Pythonなど様々なプログラミング言語で利用するためのライブラリ（またはAPI） が公開されています． ライブラリを導入することで，プログラムを介したレコードの追加・削除などの操作が可能となります． 今回は，Pythonのウェブサーバ機能を用いて，ウェブサイトでSQLiteのデータベースを操作するCGI(Common Gateway Interface)を実装することを目的とします．
+Pythonのインストール Windowsの場合 Windows版は，公式サイトからダウンロードしましょう． ここでは，ダウンロードするパッケージとして，embeddable zip file を選択するようにしてください．
+Windows版 Pythonのダウンロード
+MacOSの場合 MacOSでは，バージョン管理が容易な pyenv をインストールすると良いでしょう． pyenv のインストールはHomeBrewを利用します．
+% brew install pyenv pyenv をインストールしたら，利用可能なPythonのバージョンを調べます． ここでは，最新の3.8.0をインストールします（2020年1月21日時点）．
+% pyenv install --list % pyenv install 3.8.0 ソースファイルのダウンロード SQLiteを利用するためのPythonのソースファイルはGitHubで公開しています． 下記のプロジェクトページで， Download ZIP をクリックし，ダウンロードしたファイルを展開してください．
+ naoto-github/WebSQLite
+データベースの確認 展開したフォルダにある db/students.db が今回利用するデータベース・ファイルです． sqlite3コマンドを用いて，データベースの内容を確認しておきましょう． データベースには，テーブル students が存在し，4件のレコードが登録されています． 各レコードは，id，name，grade という3つの属性で構成され，id が主キーです．
+% sqlite3 students.dbsqlite&gt; .table students qlite&gt; .header on sqlite&gt; select * from students; id|name|grade A001|Iwashiro Hayato|2 A002|Iwamura Yuu|1 B003|Sugie Hiroko|3 C004|Senba Asuka|1  id name grade  A001 Iwashiro Hayato 2  A002 Iwamura Yuu 1  B003 Sugie Hiroko 3  C004 Senba Asuka 1   【students】" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/54d0cd01d577ba69bc077ec013832f4b.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2020-01-21 19:35:51 &#43;0900 JST">January 21, 2020</time>
+</div>
+
+    <h1 class="post-title">データベースを利用したウェブサイトの構築</h1>
+<div class="post-line"></div>
+
+    
+
+    
+
+<p><a href="https://gyazo.com/54d0cd01d577ba69bc077ec013832f4b"><img src="https://i.gyazo.com/54d0cd01d577ba69bc077ec013832f4b.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  SQLiteを利用したウェブサイト
+</h1>
+
+
+<p><a href="https://www.sqlite.org/index.html">SQLite</a>などデータベース管理システムの多くは，
+C，C++，Perl，Ruby，Pythonなど様々なプログラミング言語で利用するための<strong>ライブラリ（またはAPI）</strong> が公開されています．
+ライブラリを導入することで，プログラムを介したレコードの追加・削除などの操作が可能となります．
+今回は，Pythonのウェブサーバ機能を用いて，ウェブサイトでSQLiteのデータベースを操作するCGI(Common Gateway Interface)を実装することを目的とします．</p>
+
+<h2 id="pythonのインストール">Pythonのインストール</h2>
+
+<h3 id="windowsの場合">Windowsの場合</h3>
+
+<p>Windows版は，公式サイトからダウンロードしましょう．
+ここでは，ダウンロードするパッケージとして，<strong>embeddable zip file</strong> を選択するようにしてください．</p>
+
+<p><a href="https://www.python.org/"><i class="fas fa-cloud-download-alt"></i>Windows版 Pythonのダウンロード</a></p>
+
+<h3 id="macosの場合">MacOSの場合</h3>
+
+<p>MacOSでは，バージョン管理が容易な <strong>pyenv</strong> をインストールすると良いでしょう．
+<strong>pyenv</strong> のインストールはHomeBrewを利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% brew install pyenv</code></pre></div>
+<p><strong>pyenv</strong> をインストールしたら，利用可能なPythonのバージョンを調べます．
+ここでは，最新の3.8.0をインストールします（2020年1月21日時点）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% pyenv install --list
+% pyenv install 3.8.0</code></pre></div>
+<h2 id="ソースファイルのダウンロード">ソースファイルのダウンロード</h2>
+
+<p>SQLiteを利用するためのPythonのソースファイルは<a href="https://github.com">GitHub</a>で公開しています．
+下記のプロジェクトページで， <strong>Download ZIP</strong> をクリックし，ダウンロードしたファイルを展開してください．</p>
+
+<p><a href="https://github.com/naoto-github/WebSQLite"><i class="fas fa-cloud-download-alt"></i> naoto-github/WebSQLite</a></p>
+
+<h2 id="データベースの確認">データベースの確認</h2>
+
+<p>展開したフォルダにある <strong>db/students.db</strong> が今回利用するデータベース・ファイルです．
+<code>sqlite3</code>コマンドを用いて，データベースの内容を確認しておきましょう．
+データベースには，テーブル <strong>students</strong> が存在し，4件のレコードが登録されています．
+各レコードは，<strong>id</strong>，<strong>name</strong>，<strong>grade</strong> という3つの属性で構成され，<strong>id</strong> が主キーです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% sqlite3 students.db</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; .table
+students
+qlite&gt; .header on
+sqlite&gt; select * from students;
+id|name|grade
+A001|Iwashiro Hayato|2
+A002|Iwamura Yuu|1
+B003|Sugie Hiroko|3
+C004|Senba Asuka|1</code></pre></div>
+<p><table>
+<TR><TH><u>id</u></TH>
+<TH>name</TH>
+<TH>grade</TH>
+</TR>
+<TR><TD>A001</TD>
+<TD>Iwashiro Hayato</TD>
+<TD>2</TD>
+</TR>
+<TR><TD>A002</TD>
+<TD>Iwamura Yuu</TD>
+<TD>1</TD>
+</TR>
+<TR><TD>B003</TD>
+<TD>Sugie Hiroko</TD>
+<TD>3</TD>
+</TR>
+<TR><TD>C004</TD>
+<TD>Senba Asuka</TD>
+<TD>1</TD>
+</TR>
+</table>
+<strong>【students】</strong></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ウェブサーバの起動
+</h1>
+
+
+<p>Pythonのウェブサーバ機能（<a href="https://docs.python.org/ja/3.8/library/http.server.html#module-http.server">http.server</a>）を利用します．
+ウェブサーバの設定は <strong>server.py</strong> に記述されています．
+CGIの設置ディレクトリ，ポート番号，IPアドレスなどの設定をしています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> http.server <span style="color:#f92672">import</span> HTTPServer, CGIHTTPRequestHandler
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Handler</span>(CGIHTTPRequestHandler):
+    <span style="color:#75715e"># CGIを設置するディレクトリ</span>
+    cgi_directories <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;/cgi-bin&#34;</span>]
+
+<span style="color:#75715e"># ポート番号</span>
+PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">8080</span>
+
+<span style="color:#75715e"># IPアドレス</span>
+HOST <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;http://localhost:8080/cgi-bin/sql.py&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;http://localhost:8080/cgi-bin/sql.py?id=A001&#34;</span>)
+
+<span style="color:#75715e"># サーバの起動</span>
+httpd <span style="color:#f92672">=</span> HTTPServer((HOST, PORT), Handler)
+httpd<span style="color:#f92672">.</span>serve_forever()</code></pre></div>
+<p>それでは，<strong>server.py</strong> を実行してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% python server.py 
+http://localhost:8080/cgi-bin/sql.py
+http://localhost:8080/cgi-bin/sql.py?id=A001</code></pre></div>
+<p>実行したらブラウザで<a href="http://localhost:8080/">http://localhost:8080/</a>を開きます．
+下記のように表示されれば，サーバは正しく動作しています．</p>
+
+<p><a href="https://gyazo.com/7a435d3500b02e00948952be92c6211b"><img src="https://i.gyazo.com/7a435d3500b02e00948952be92c6211b.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  データベースの表示
+</h1>
+
+
+<p>PythonのSQLiteライブラリを利用して，データベース（<strong>students.db</strong>）を表示します．
+Pythonのバージョン3以降は標準でSQLiteのライブラリが導入されています．
+データベースの操作は <strong>cgi-bin/sql.py</strong> に記述されています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /anaconda3/bin/python</span>
+
+<span style="color:#f92672">import</span> sqlite3
+<span style="color:#f92672">import</span> cgi
+
+<span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;Content-type:text/html</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;&lt;html&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;&lt;body&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h1&gt;SQLite on Web&lt;/h1&gt;&#34;</span>)
+
+<span style="color:#75715e"># データベース・ファイル</span>
+DB_FILE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;db/students.db&#34;</span>
+
+<span style="color:#75715e"># データベースへの接続</span>
+connection <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(DB_FILE)
+
+<span style="color:#75715e"># カーソルの取得</span>
+cursor <span style="color:#f92672">=</span> connection<span style="color:#f92672">.</span>cursor()
+
+<span style="color:#75715e"># フォームの取得</span>
+form <span style="color:#f92672">=</span> cgi<span style="color:#f92672">.</span>FieldStorage()
+
+<span style="color:#75715e"># SQL文の開始</span>
+sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;select * from students&#34;</span>
+
+<span style="color:#75715e"># IDによる検索</span>
+<span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;id&#34;</span> <span style="color:#f92672">in</span> form:
+    sql <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34; where id=</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">+</span> form[<span style="color:#e6db74">&#34;id&#34;</span>]<span style="color:#f92672">.</span>value <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span>
+
+<span style="color:#75715e"># SQL文の終了</span>
+sql <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;;&#34;</span>
+
+<span style="color:#75715e"># SQLの実行</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h3&gt;SQL: &#34;</span> <span style="color:#f92672">+</span> sql <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&lt;/h3&gt;&#34;</span>)
+<span style="color:#66d9ef">for</span> record <span style="color:#f92672">in</span> cursor<span style="color:#f92672">.</span>execute(sql):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;p&gt;&#34;</span> <span style="color:#f92672">+</span> str(record) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&lt;/r&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;&lt;/body&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;&lt;/html&gt;&#34;</span>)</code></pre></div>
+<p>CGIを実行するには，Pythonの実行ファイルのパスを設定する必要があります．
+一行目の <strong>#!</strong> の後に，環境に合わせたパスを記述してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#! /anaconda3/bin/python</span></code></pre></div>
+<p>設定したらブラウザで<a href="http://localhost:8080/cgi-bin/sql.py">http://localhost:8080/cgi-bin/sql.py</a>を開きます．
+下記のように表示されれば，サーバは正しく動作しています．</p>
+
+<p><a href="https://gyazo.com/9c2b2523e1a5b44dd342bb699301928e"><img src="https://i.gyazo.com/9c2b2523e1a5b44dd342bb699301928e.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  データベースの検索
+</h1>
+
+
+<p>条件を指定してデータベースから目的のレコードを検索してみましょう．
+CGIに条件となるデータを渡すには <strong>GETメソッド</strong> を用います．
+GETメソッドでは，URLの最後に <strong>?</strong> を記述し，キー・バリューの組み合わせてデータを指定します（クエストリング）．
+ここでは，主キーである <strong>id</strong> を条件に用いて検索してみます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">http://localhost:8080/?key=value</code></pre></div>
+<p>ここでは，<strong>id</strong> が <strong>A001</strong> となっているレコードを検索するため，
+ブラウザで<a href="http://localhost:8080/cgi-bin/sql.py?id=A001">http://localhost:8080/cgi-bin/sql.py?id=A001</a> を開きます．
+下記のように表示されれば，サーバは正しく動作しています．</p>
+
+<p><a href="https://gyazo.com/7e39803ddfb9f95010ae3dde7ad0749e"><img src="https://i.gyazo.com/7e39803ddfb9f95010ae3dde7ad0749e.png" alt="Image from Gyazo" /></a></p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    演習
+  </h3>
+
+  <p>
+    
+
+<b>sql.py</b>を修正し，下記の機能を追加しなさい．
+
+<ul>
+<li>検索結果を表形式（tableタグ）で表示</li>
+<li><b>grade</b>で検索</li>
+<li><b>name</b>を正規表現で検索</li>
+</ul>
+
+
+  </p>
+  
+</div>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4781913903&linkId=0a2c1ffad427bdeee3fd703f5392bac2&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479815654X&linkId=cfb458fce9d85899424b079e9b3743e8&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479813516X&linkId=38aea2a346205302f4138786b73ddd9f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274066312&linkId=236165e8339c6e743d26f664f7eb791f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+
+
+
+
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/database/chapter14/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+  <h3>スポンサーリンク</h3>
+
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1652300955422837"
+     data-ad-slot="5881819823"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-01-23 15:25:31.814268 &#43;0900 JST m=&#43;0.103351708">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

@@ -248,9 +248,9 @@ X \sim N(60,\hat{\sigma}^2)  m \sim N(60,\hat{\sigma}^2/5)  帰無仮説 と 対
 
 <p>上記の問題を <strong>t検定</strong> で考えます．
 準備として，標本の分散を求めておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>(<span style="color:#ae81ff">63</span>,<span style="color:#ae81ff">75</span>,<span style="color:#ae81ff">72</span>,<span style="color:#ae81ff">67</span>,<span style="color:#ae81ff">71</span>)
-<span style="color:#f92672">&gt;</span> var(x)
-[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">21.8</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">63</span>,<span style="color:#ae81ff">75</span>,<span style="color:#ae81ff">72</span>,<span style="color:#ae81ff">67</span>,<span style="color:#ae81ff">71</span>)
+<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">var</span>(x)
+[1] <span style="color:#ae81ff">21.8</span></code></pre></div>
 <p>母集団は「文化情報学部の学生<script type="math/tex">X</script>」，
 標本は「向研究室に所属する学生<script type="math/tex">x</script>」と考えることができます．
 また，「標本平均の分布」を<script type="math/tex">m</script>とします．
@@ -303,9 +303,9 @@ tスコアは下記の式で求めます．
 </ul>
 
 <p>上記の式を基にtスコアを計算します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> t <span style="color:#f92672">&lt;-</span> (<span style="color:#ae81ff">69.6</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">60</span>)<span style="color:#f92672">/</span> <span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">21.8</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">5</span>)
-<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">t</span>
-[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">4.597566</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> t <span style="color:#f92672">&lt;-</span> (<span style="color:#ae81ff">69.6</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">60</span>)<span style="color:#f92672">/</span> <span style="color:#a6e22e">sqrt</span>(<span style="color:#ae81ff">21.8</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">5</span>)
+<span style="color:#f92672">&gt;</span> t
+[1] <span style="color:#ae81ff">4.597566</span></code></pre></div>
 <p>tスコアは<strong>4.59</strong>という結果になりました．
 ここで，前回は標準正規分布を利用して棄却域に含まれるかを判断しましたが，
 今回は <strong>t分布</strong> の出番です．
@@ -315,9 +315,9 @@ t分布は正規分布とは異なり，<strong>自由度</strong> という概�
 
 <p>ここで，<strong>自由度</strong> が1，3，5のt分布のグラフを描いて，その形状を確認してみましょう．
 t分布の確率密度を算出するには<strong>dt</strong>関数を用います．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> curve(dt(x,<span style="color:#ae81ff">5</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>)
-<span style="color:#f92672">&gt;</span> curve(dt(x,<span style="color:#ae81ff">3</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>,add<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)
-<span style="color:#f92672">&gt;</span> curve(dt(x,<span style="color:#ae81ff">1</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>,add<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">curve</span>(<span style="color:#a6e22e">dt</span>(x,<span style="color:#ae81ff">5</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>)
+<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">curve</span>(<span style="color:#a6e22e">dt</span>(x,<span style="color:#ae81ff">3</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>,add<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)
+<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">curve</span>(<span style="color:#a6e22e">dt</span>(x,<span style="color:#ae81ff">1</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>,add<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)</code></pre></div>
 <p><a href="https://gyazo.com/b84027ecc5855e474731ad476599ece5"><img src="https://i.gyazo.com/b84027ecc5855e474731ad476599ece5.png" alt="https://gyazo.com/b84027ecc5855e474731ad476599ece5" /></a></p>
 
 <p>自由度が大きいほど，尖った形状となり，峰が高く裾が低い形状になります．
@@ -327,17 +327,17 @@ t分布の確率密度を算出するには<strong>dt</strong>関数を用いま
 
 <p>さて，問題に戻ります．
 今回は自由度が4のため，下記のt分布に従います．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> curve(dt(x,<span style="color:#ae81ff">4</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">curve</span>(<span style="color:#a6e22e">dt</span>(x,<span style="color:#ae81ff">4</span>),<span style="color:#ae81ff">-3</span>,<span style="color:#ae81ff">3</span>)</code></pre></div>
 <p><a href="https://gyazo.com/fea42bb50a9824cafc0f0c7fb2b41301"><img src="https://i.gyazo.com/fea42bb50a9824cafc0f0c7fb2b41301.png" alt="https://gyazo.com/fea42bb50a9824cafc0f0c7fb2b41301" /></a></p>
 
 <p>この分布を利用して，先程求めたtスコアが棄却域に含まれるかを確認しましょう．
 ここでは，5%棄却域を採用するため，<strong>下側確率</strong> が<strong>0.025</strong>，
 <strong>上側確率</strong> が <strong>0.975</strong>となるtスコアを探します．
 tスコアを求めるには<strong>qt</strong>関数を利用します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> qt(<span style="color:#ae81ff">0.025</span>, <span style="color:#ae81ff">4</span>)
-[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">-2.776445</span>
-<span style="color:#f92672">&gt;</span> qt(<span style="color:#ae81ff">0.975</span>, <span style="color:#ae81ff">4</span>)
-[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">2.776445</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">qt</span>(<span style="color:#ae81ff">0.025</span>, <span style="color:#ae81ff">4</span>)
+[1] <span style="color:#ae81ff">-2.776445</span>
+<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">qt</span>(<span style="color:#ae81ff">0.975</span>, <span style="color:#ae81ff">4</span>)
+[1] <span style="color:#ae81ff">2.776445</span></code></pre></div>
 <p>上記より，<strong>t&lt;-2.77</strong>，また，<strong>t&gt;2.77</strong> となる確率は5%ということが分かります．
 これは，下図の左端と右端のグレーの範囲を表しています．</p>
 
@@ -367,9 +367,9 @@ tスコアを求めるには<strong>qt</strong>関数を利用します．</p>
 <p>R言語では，t検定を行うための<strong>t.test</strong>関数があります．
 使い方はとても簡単で，引数に標本<script type="math/tex">x</script>と，
 母平均<script type="math/tex">\hat{\mu}</script>を設定するだけです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> t.test(x,mu<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">t.test</span>(x,mu<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span>)
 
-		One Sample <span style="color:#66d9ef">t</span><span style="color:#f92672">-</span>test
+		One Sample t<span style="color:#f92672">-</span>test
 
 data<span style="color:#f92672">:</span>  x
 t <span style="color:#f92672">=</span> <span style="color:#ae81ff">4.5976</span>, df <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>, p<span style="color:#f92672">-</span>value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.01005</span>
@@ -385,8 +385,8 @@ mean of x
 <strong>p値 &lt; 0.05(棄却域)</strong>である場合に帰無仮説は棄却となります．
 p値の2分の1のパーセント点を確認すると-4.59となり，絶対値がtスコアと一致します．
 下図においては，薄いグレーが5%の棄却域であり，濃いグレーが1.005%の棄却域です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> qt(<span style="color:#ae81ff">0.01005</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">4</span>)
-[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">-4.597475</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">qt</span>(<span style="color:#ae81ff">0.01005</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">4</span>)
+[1] <span style="color:#ae81ff">-4.597475</span></code></pre></div>
 <p>また，母平均の95%信頼度の信頼区間は<strong>63.80</strong>から<strong>75.39</strong>となっており，誤差はありますが先程求めた値と一致します．</p>
 
 <p><a href="https://gyazo.com/b8c31d7963f56201a47c9b6cf38859b0"><img src="https://i.gyazo.com/b8c31d7963f56201a47c9b6cf38859b0.png" alt="https://gyazo.com/b8c31d7963f56201a47c9b6cf38859b0" /></a></p>
@@ -484,7 +484,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-01-11 16:02:26.190374 &#43;0900 JST m=&#43;0.512468921">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-01-23 15:25:31.943987 &#43;0900 JST m=&#43;0.233076408">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
