@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    混合ガウスモデル | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="混合ガウスモデル" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter12/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook12 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt ガウス分布（正規分布）ガウス分布（正規分布）は，ドイツの数学者のガウスに由来する確率・統計において最重要な確率分布の一つです． 自然界や社会の様々な現象を表現するモデルとして知られています． Pythonでは，Numpyを利用して，正規分布に従う乱数を生成することが可能です．
+例えば，平均0，標準偏差1の正規分布に従う乱数を生成してみます． 生成した乱数のヒストグラム（度数）は下図のようになります． このヒストグラムからも分かるように，正規分布には下記の特徴があります．
+ 平均値がピークとなる 平均値を中心として左右対称 標準偏差が小さいと尖った形状，大きいと平らな形状  x = np.random.normal(0, 1, 10000) # 10000の乱数を生成 plt.hist(x, bins=100) # 階級数を100に設定したヒストグラム plt.xlim(-5, 5) plt.xlabel(&#34;x&#34;) plt.ylabel(&#34;Frequency&#34;) 
+正規分布に従う特徴量の一つに人間の身長があります． 例えば，日本人男性の平均は167.7cm，標準偏差は6.6cm， また，アメリカ人男性の平均は178.4cmで，標準偏差は7.6cmとされています． それでは，この特徴量を利用して日本人男性とアメリカ人男性の正規分布に従う乱数を生成しましょう． そして，これを重ね合わせてしまいます．
+x1 = np.random.normal(167.7, 6.6, 10000) x2 = np.random.normal(178.4, 7.6, 10000) x = np.concatenate((x1, x2)) # 結合（重ね合わせ） plt." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="混合ガウスモデル" />
+
+
+
+  <meta name="twitter:description" content="ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook12 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt ガウス分布（正規分布）ガウス分布（正規分布）は，ドイツの数学者のガウスに由来する確率・統計において最重要な確率分布の一つです． 自然界や社会の様々な現象を表現するモデルとして知られています． Pythonでは，Numpyを利用して，正規分布に従う乱数を生成することが可能です．
+例えば，平均0，標準偏差1の正規分布に従う乱数を生成してみます． 生成した乱数のヒストグラム（度数）は下図のようになります． このヒストグラムからも分かるように，正規分布には下記の特徴があります．
+ 平均値がピークとなる 平均値を中心として左右対称 標準偏差が小さいと尖った形状，大きいと平らな形状  x = np.random.normal(0, 1, 10000) # 10000の乱数を生成 plt.hist(x, bins=100) # 階級数を100に設定したヒストグラム plt.xlim(-5, 5) plt.xlabel(&#34;x&#34;) plt.ylabel(&#34;Frequency&#34;) 
+正規分布に従う特徴量の一つに人間の身長があります． 例えば，日本人男性の平均は167.7cm，標準偏差は6.6cm， また，アメリカ人男性の平均は178.4cmで，標準偏差は7.6cmとされています． それでは，この特徴量を利用して日本人男性とアメリカ人男性の正規分布に従う乱数を生成しましょう． そして，これを重ね合わせてしまいます．
+x1 = np.random.normal(167.7, 6.6, 10000) x2 = np.random.normal(178.4, 7.6, 10000) x = np.concatenate((x1, x2)) # 結合（重ね合わせ） plt." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2019-12-16 19:05:44 &#43;0900 JST">December 16, 2019</time>
+</div>
+
+    <h1 class="post-title">混合ガウスモデル</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d"><img src="https://i.gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ノートブックの作成
+</h1>
+
+
+<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>Notebook12</strong> とします．
+ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．
+また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong> を導入しておいてください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ガウス分布（正規分布）
+</h1>
+
+
+<p>ガウス分布（正規分布）は，ドイツの数学者の<a href="https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%BC%E3%83%AB%E3%83%BB%E3%83%95%E3%83%AA%E3%83%BC%E3%83%89%E3%83%AA%E3%83%92%E3%83%BB%E3%82%AC%E3%82%A6%E3%82%B9">ガウス</a>に由来する確率・統計において最重要な確率分布の一つです．
+自然界や社会の様々な現象を表現するモデルとして知られています．
+Pythonでは，Numpyを利用して，正規分布に従う乱数を生成することが可能です．</p>
+
+<p>例えば，平均0，標準偏差1の正規分布に従う乱数を生成してみます．
+生成した乱数のヒストグラム（度数）は下図のようになります．
+このヒストグラムからも分かるように，正規分布には下記の特徴があります．</p>
+
+<ul>
+<li>平均値がピークとなる</li>
+<li>平均値を中心として左右対称</li>
+<li>標準偏差が小さいと尖った形状，大きいと平らな形状</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10000</span>) <span style="color:#75715e"># 10000の乱数を生成</span>
+
+plt<span style="color:#f92672">.</span>hist(x, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>) <span style="color:#75715e"># 階級数を100に設定したヒストグラム</span>
+plt<span style="color:#f92672">.</span>xlim(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Frequency&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/924fd161bbbadf80cf3ab949734a0990"><img src="https://i.gyazo.com/924fd161bbbadf80cf3ab949734a0990.png" alt="Image from Gyazo" /></a></p>
+
+<p>正規分布に従う特徴量の一つに人間の身長があります．
+例えば，日本人男性の平均は167.7cm，標準偏差は6.6cm，
+また，アメリカ人男性の平均は178.4cmで，標準偏差は7.6cmとされています．
+それでは，この特徴量を利用して日本人男性とアメリカ人男性の正規分布に従う乱数を生成しましょう．
+そして，これを重ね合わせてしまいます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">167.7</span>,  <span style="color:#ae81ff">6.6</span>, <span style="color:#ae81ff">10000</span>) 
+x2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">178.4</span>, <span style="color:#ae81ff">7.6</span>, <span style="color:#ae81ff">10000</span>)
+x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate((x1, x2)) <span style="color:#75715e"># 結合（重ね合わせ）</span>
+
+plt<span style="color:#f92672">.</span>hist(x, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Frequency&#34;</span>)</code></pre></div>
+<p>結合された乱数のヒストグラムは下記のようになります．
+このように複数の正規分布に従う乱数を重ね合わせることで，
+多彩な分布を表現することが可能になります．
+この正規分布を重ね合わせた表現を <strong>混合ガウスモデル（Gaussian Mixture Model）</strong> と呼びます．
+一方で，重ね合わせた分布からは，元の正規分布の特徴量を得ることは難しくなります．
+これを得るには <strong>EMアルゴリズム</strong> と呼ばれる手法が用いられます（詳細は割愛）．</p>
+
+<p><a href="https://gyazo.com/8af75bfb39facb6515c6d386666ebba6"><img src="https://i.gyazo.com/8af75bfb39facb6515c6d386666ebba6.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  混合ガウスモデル
+</h1>
+
+
+<p>それでは，scikit-learnを利用して <strong>混合ガウスモデル（Gaussian Mixture Model）</strong> の特徴量を推定してみましょう．
+まずは，対象のデータを<code>reshape</code>で2次元配列に変換します（scikit-learnの制限のため）．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(x)<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">print</span>(x)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">162.08389117</span>]
+ [<span style="color:#ae81ff">170.77306785</span>]
+ [<span style="color:#ae81ff">165.28550483</span>]
+ <span style="color:#f92672">...</span>
+ [<span style="color:#ae81ff">175.53732234</span>]
+ [<span style="color:#ae81ff">178.69420996</span>]
+ [<span style="color:#ae81ff">177.08352499</span>]]</code></pre></div>
+<p>次に，scikit-learnのGaussianMixtureを利用して特徴量を推定します．
+このとき，重ね合わせた元の正規分布の <strong>数</strong> と <strong>分散</strong> を指定します．
+ここでは，各次元の分散が共通である2つの正規分布が重なっているとします（今回のデータは身長のみの1次元）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.mixture <span style="color:#f92672">import</span> GaussianMixture
+
+gmm <span style="color:#f92672">=</span> GaussianMixture(
+	n_components<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, <span style="color:#75715e"># 重ね合わせた分布数</span>
+	covariance_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spherical&#34;</span> <span style="color:#75715e"># 分散は共通（球状）</span>
+	)<span style="color:#f92672">.</span>fit(x)</code></pre></div>
+<p>推定された <strong>重み</strong>，<strong>平均</strong>，<strong>標準偏差</strong>を調べてみましょう．
+推定された日本人男性の平均は167.4cm，標準偏差は6.4cm，また，
+推定されたアメリカ人男性の平均は179.7cm，標準偏差は6.9cmです．
+かなり高い精度で推定されていることが分かります．
+また，重みは2つの分布を混合した割合を意味しており，
+推定された重みは0.53:0.46となりました．
+今回は0.5:0.5で混合したため，これもほぼ一致していることが分かります．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">weight <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>weights_ <span style="color:#75715e">#重み（足すと1になる）</span>
+mean <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>means_ <span style="color:#75715e">#平均</span>
+sd <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sqrt(gmm<span style="color:#f92672">.</span>covariances_) <span style="color:#75715e">#標準偏差</span>
+<span style="color:#66d9ef">print</span>(weight)
+<span style="color:#66d9ef">print</span>(mean)
+<span style="color:#66d9ef">print</span>(sd)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">0.46127772</span> <span style="color:#ae81ff">0.53872228</span>] <span style="color:#75715e">#重み（足すと1になる）</span>
+[[<span style="color:#ae81ff">179.65302075</span>] [<span style="color:#ae81ff">167.4491238</span> ]] <span style="color:#75715e">#平均</span>
+[<span style="color:#ae81ff">6.92751809</span> <span style="color:#ae81ff">6.35107582</span>] <span style="color:#75715e">#標準偏差</span></code></pre></div>
+<p>推定された特徴量を用いて，正規分布を描いてみましょう．
+正規分布の確率密度を求めるには <code>norm.pdf</code> を利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> norm
+
+x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">140</span>, <span style="color:#ae81ff">210</span>, <span style="color:#ae81ff">0.1</span>)
+y1 <span style="color:#f92672">=</span> weight[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>pdf(x_, mean[<span style="color:#ae81ff">0</span>], sd[<span style="color:#ae81ff">0</span>])
+y2 <span style="color:#f92672">=</span> weight[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>pdf(x_,mean[<span style="color:#ae81ff">1</span>], sd[<span style="color:#ae81ff">1</span>])
+
+plt<span style="color:#f92672">.</span>plot(x_, y1)
+plt<span style="color:#f92672">.</span>plot(x_, y2)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Height&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Probability Density&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/966ccbfdb5997cab640f735a1a79a84b"><img src="https://i.gyazo.com/966ccbfdb5997cab640f735a1a79a84b.png" alt="Image from Gyazo" /></a></p>
+
+<p>この2つの正規分布を重ねると，元の分布の形状とほぼ一致した確率分布を得ることができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y3 <span style="color:#f92672">=</span> y1 <span style="color:#f92672">+</span> y2
+
+plt<span style="color:#f92672">.</span>plot(x_, y3)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Height&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Probability Density&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/d97cc6cd3f3ca52640b07b8d759f2b03"><img src="https://i.gyazo.com/d97cc6cd3f3ca52640b07b8d759f2b03.png" alt="Image from Gyazo" /></a></p>
+
+<p>さて，今回の混合ガウスモデルは，前回の <strong>k平均法</strong> と同じように，
+クラスタリングの手法としても用いることができます．
+例えば，165cmの男性がどちらの分布（クラスタ）に属するかを <code>predict</code> で判定すると，
+日本人の分布に属しているという結果になりました．
+同様に，185cmの男性は，アメリカ人の分布に属しているという結果になりました．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sample1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">165</span>]]) <span style="color:#75715e"># 165cm</span>
+sample2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">185</span>]]) <span style="color:#75715e"># 185cm</span>
+
+result1 <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>predict(sample1)
+result2 <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>predict(sample2)
+
+<span style="color:#66d9ef">print</span>(result1) <span style="color:#75715e"># 日本人</span>
+<span style="color:#66d9ef">print</span>(result2) <span style="color:#75715e"># アメリカ人</span></code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">1</span>]
+[<span style="color:#ae81ff">0</span>]</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>下記のデータから元の正規分布の特徴量を推定しなさい．
+ただし，正規分布の数は2，また，分散は共通とすること．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">14.25503594</span>,  <span style="color:#ae81ff">8.83020581</span>, <span style="color:#ae81ff">10.45406782</span>, <span style="color:#ae81ff">12.53819445</span>,  <span style="color:#ae81ff">7.86459267</span>,
+        <span style="color:#ae81ff">8.03801485</span>, <span style="color:#ae81ff">11.31295349</span>, <span style="color:#ae81ff">10.09167258</span>, <span style="color:#ae81ff">12.87803092</span>, <span style="color:#ae81ff">14.48622644</span>,
+       <span style="color:#ae81ff">11.99081559</span>,  <span style="color:#ae81ff">9.63743057</span>, <span style="color:#ae81ff">10.77132259</span>, <span style="color:#ae81ff">10.50821578</span>, <span style="color:#ae81ff">12.2923627</span> ,
+        <span style="color:#ae81ff">6.83922144</span>, <span style="color:#ae81ff">11.59345268</span>,  <span style="color:#ae81ff">8.38998967</span>, <span style="color:#ae81ff">11.77040723</span>,  <span style="color:#ae81ff">8.50230634</span>,
+        <span style="color:#ae81ff">7.3762556</span> , <span style="color:#ae81ff">11.11177995</span>, <span style="color:#ae81ff">13.57393876</span>, <span style="color:#ae81ff">14.39937259</span>,  <span style="color:#ae81ff">8.92640252</span>,
+       <span style="color:#ae81ff">12.62335089</span>, <span style="color:#ae81ff">10.04121407</span>, <span style="color:#ae81ff">11.20886925</span>, <span style="color:#ae81ff">10.53488673</span>,  <span style="color:#ae81ff">7.57188571</span>,
+       <span style="color:#ae81ff">19.20054947</span>, <span style="color:#ae81ff">20.67642748</span>, <span style="color:#ae81ff">17.81617885</span>, <span style="color:#ae81ff">24.66817129</span>, <span style="color:#ae81ff">20.9813163</span> ,
+       <span style="color:#ae81ff">21.92106427</span>, <span style="color:#ae81ff">19.31876107</span>, <span style="color:#ae81ff">17.31019546</span>, <span style="color:#ae81ff">16.69085822</span>, <span style="color:#ae81ff">14.48237459</span>,
+       <span style="color:#ae81ff">20.35137646</span>, <span style="color:#ae81ff">20.19614246</span>, <span style="color:#ae81ff">16.47291945</span>, <span style="color:#ae81ff">18.87417032</span>, <span style="color:#ae81ff">24.24447717</span>,
+       <span style="color:#ae81ff">26.12173461</span>, <span style="color:#ae81ff">27.47509222</span>, <span style="color:#ae81ff">19.05972395</span>, <span style="color:#ae81ff">18.82537232</span>, <span style="color:#ae81ff">18.87784878</span>,
+       <span style="color:#ae81ff">20.60160528</span>, <span style="color:#ae81ff">14.17361497</span>, <span style="color:#ae81ff">18.01530688</span>, <span style="color:#ae81ff">21.87758915</span>, <span style="color:#ae81ff">16.012469</span>  ,
+       <span style="color:#ae81ff">19.69841929</span>, <span style="color:#ae81ff">22.10291163</span>, <span style="color:#ae81ff">15.22297199</span>, <span style="color:#ae81ff">23.14124462</span>, <span style="color:#ae81ff">14.84946092</span>])</code></pre></div>
+<p><a href="https://gyazo.com/fa0a3eda6701ec254b0b025b756cfda2"><img src="https://i.gyazo.com/fa0a3eda6701ec254b0b025b756cfda2.png" alt="Image from Gyazo" /></a></p>
+
+<p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274222446&linkId=1a63210b6dc95e90156695289116cb1b&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B078767Y56&linkId=cd73876214aec3d9b72777ab73920051&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4802611641&linkId=e77970ab2740fac9fdeb8b877668c257&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4839963525&linkId=14f05f671ddd917b204596b6b535981e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter12/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+  <h3>スポンサーリンク</h3>
+
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1652300955422837"
+     data-ad-slot="5881819823"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-02-21 17:07:56.6507707 &#43;0900 JST m=&#43;2.601042101">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
