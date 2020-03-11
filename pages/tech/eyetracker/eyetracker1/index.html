@@ -80,9 +80,9 @@
 
 
 
-  <meta property="og:description" content="Tobii Eye Trackerとは近年、ユーザの視線を検出するアイトラッキングという技術が注目されています。 アイトラッキングはマウスやキーボードの代替となりうるヒューマンインターフェイスの一つであり、 手足が不自由な障がい者のコミュニケーション装置としても活用されています。 光学センサーと画像処理技術を用いて、眼球の動き を解析することで、 ユーザの注視点（見つめている場所）を推定する方法が一般的です。 今回は、トビー・テクノロジー株式会社が ゲーム用に提供しているEye Tracker 4Cという 視線入力装置を利用して、ユーザの視線を検出するプログラムを実装してみます。 トビー・テクノロジーは自社の製品を利用したソフトウェアを開発するための Tobii Pro SDKを独自に提供していますが、 Eye Tracker 4CでTobii Pro SDKを利用するためには、 プロアップグレードキーが必要となることに注意が必要です （Tobii Core SDK や Tobii Gaming SDK という選択肢もありますが、研究やデータ分析を用途とする場合は Tobii Pro SDK を利用する必要があります）。 また、開発用の言語には Python、Matlab、C、Unity などに対応していますが、 ここでは、機械学習に適したPythonを採用します。 Tobii Pro SDK のドキュメントが公開されおり、この情報を参考にしながら開発を進めることになります。
+  <meta property="og:description" content="Tobii Eye Trackerとは  近年、ユーザの視線を検出するアイトラッキングという技術が注目されています。 アイトラッキングはマウスやキーボードの代替となりうるヒューマンインターフェイスの一つであり、 手足が不自由な障がい者のコミュニケーション装置としても活用されています。 光学センサーと画像処理技術を用いて、眼球の動き を解析することで、 ユーザの注視点（見つめている場所）を推定する方法が一般的です。 今回は、トビー・テクノロジー株式会社が ゲーム用に提供しているEye Tracker 4Cという 視線入力装置を利用して、ユーザの視線を検出するプログラムを実装してみます。 トビー・テクノロジーは自社の製品を利用したソフトウェアを開発するための Tobii Pro SDKを独自に提供していますが、 Eye Tracker 4CでTobii Pro SDKを利用するためには、 プロアップグレードキーが必要となることに注意が必要です （Tobii Core SDK や Tobii Gaming SDK という選択肢もありますが、研究やデータ分析を用途とする場合は Tobii Pro SDK を利用する必要があります）。 また、開発用の言語には Python、Matlab、C、Unity などに対応していますが、 ここでは、機械学習に適したPythonを採用します。 Tobii Pro SDK のドキュメントが公開されおり、この情報を参考にしながら開発を進めることになります。
 
-開発環境の準備まずは、Pythonをインストールします。 Pythonのバージョンには3.xと2.xの２通り存在しますが、 Tobii Pro SDK に対応している 2.x を選択する必要があることに注意してください。 ここでは、現時点での最新バージョンである2.7.14を利用します(2017年10月17日)。
+ 開発環境の準備  まずは、Pythonをインストールします。 Pythonのバージョンには3.xと2.xの２通り存在しますが、 Tobii Pro SDK に対応している 2.x を選択する必要があることに注意してください。 ここでは、現時点での最新バージョンである2.7.14を利用します(2017年10月17日)。
 Pythonの本体に加えて、画像処理ライブラリのOpenCVと、 数値計算ライブラリのNumPyを追加でインストールします。 インストール方法はPythonのパッケージ管理システムであるpipを利用すれば簡単です。 コマンドプロンプトで下記のように入力します。 ここでは、3.3.0.10 のOpenCVと 1.13.3 のNumPyがインストールされました。
 $ python -m pip install opencv-python Collecting opencv-python Downloading opencv_python-3." />
 
@@ -99,9 +99,9 @@ $ python -m pip install opencv-python Collecting opencv-python Downloading openc
 
 
 
-  <meta name="twitter:description" content="Tobii Eye Trackerとは近年、ユーザの視線を検出するアイトラッキングという技術が注目されています。 アイトラッキングはマウスやキーボードの代替となりうるヒューマンインターフェイスの一つであり、 手足が不自由な障がい者のコミュニケーション装置としても活用されています。 光学センサーと画像処理技術を用いて、眼球の動き を解析することで、 ユーザの注視点（見つめている場所）を推定する方法が一般的です。 今回は、トビー・テクノロジー株式会社が ゲーム用に提供しているEye Tracker 4Cという 視線入力装置を利用して、ユーザの視線を検出するプログラムを実装してみます。 トビー・テクノロジーは自社の製品を利用したソフトウェアを開発するための Tobii Pro SDKを独自に提供していますが、 Eye Tracker 4CでTobii Pro SDKを利用するためには、 プロアップグレードキーが必要となることに注意が必要です （Tobii Core SDK や Tobii Gaming SDK という選択肢もありますが、研究やデータ分析を用途とする場合は Tobii Pro SDK を利用する必要があります）。 また、開発用の言語には Python、Matlab、C、Unity などに対応していますが、 ここでは、機械学習に適したPythonを採用します。 Tobii Pro SDK のドキュメントが公開されおり、この情報を参考にしながら開発を進めることになります。
+  <meta name="twitter:description" content="Tobii Eye Trackerとは  近年、ユーザの視線を検出するアイトラッキングという技術が注目されています。 アイトラッキングはマウスやキーボードの代替となりうるヒューマンインターフェイスの一つであり、 手足が不自由な障がい者のコミュニケーション装置としても活用されています。 光学センサーと画像処理技術を用いて、眼球の動き を解析することで、 ユーザの注視点（見つめている場所）を推定する方法が一般的です。 今回は、トビー・テクノロジー株式会社が ゲーム用に提供しているEye Tracker 4Cという 視線入力装置を利用して、ユーザの視線を検出するプログラムを実装してみます。 トビー・テクノロジーは自社の製品を利用したソフトウェアを開発するための Tobii Pro SDKを独自に提供していますが、 Eye Tracker 4CでTobii Pro SDKを利用するためには、 プロアップグレードキーが必要となることに注意が必要です （Tobii Core SDK や Tobii Gaming SDK という選択肢もありますが、研究やデータ分析を用途とする場合は Tobii Pro SDK を利用する必要があります）。 また、開発用の言語には Python、Matlab、C、Unity などに対応していますが、 ここでは、機械学習に適したPythonを採用します。 Tobii Pro SDK のドキュメントが公開されおり、この情報を参考にしながら開発を進めることになります。
 
-開発環境の準備まずは、Pythonをインストールします。 Pythonのバージョンには3.xと2.xの２通り存在しますが、 Tobii Pro SDK に対応している 2.x を選択する必要があることに注意してください。 ここでは、現時点での最新バージョンである2.7.14を利用します(2017年10月17日)。
+ 開発環境の準備  まずは、Pythonをインストールします。 Pythonのバージョンには3.xと2.xの２通り存在しますが、 Tobii Pro SDK に対応している 2.x を選択する必要があることに注意してください。 ここでは、現時点での最新バージョンである2.7.14を利用します(2017年10月17日)。
 Pythonの本体に加えて、画像処理ライブラリのOpenCVと、 数値計算ライブラリのNumPyを追加でインストールします。 インストール方法はPythonのパッケージ管理システムであるpipを利用すれば簡単です。 コマンドプロンプトで下記のように入力します。 ここでは、3.3.0.10 のOpenCVと 1.13.3 のNumPyがインストールされました。
 $ python -m pip install opencv-python Collecting opencv-python Downloading opencv_python-3." />
 
@@ -254,18 +254,21 @@ Pythonの開発用のフォルダにコピーしておきます。</p>
 <strong>tobii_research</strong> のモジュールに関しては、<strong>tr</strong> という別名を付けていることに注意してください。
 （OpenCVのモジュールは次回利用します）</p>
 
-<script type="application/javascript" src="//gist.github.com/naoto-github/9ee4cb865d0135badb3dd7a5a70fab0b.js"></script>
+<script type="application/javascript" src="https://gist.github.com/naoto-github/9ee4cb865d0135badb3dd7a5a70fab0b.js"></script>
+
 
 <p>次に接続されている <strong>Tobii Eye Tracker 4C</strong> を認識します。
 認識には、<strong>find_all_eyetrackers</strong> メソッドを利用して、<strong>EyeTracker</strong> オブジェクトのリストとして取得します。
 接続されている <strong>Tobii Eye Tracker 4C</strong> は１つであるため、リストの最初の要素を取得しています。</p>
 
-<script type="application/javascript" src="//gist.github.com/naoto-github/409d12fe1f6b65d17c2bfe0cb330ac89.js"></script>
+<script type="application/javascript" src="https://gist.github.com/naoto-github/409d12fe1f6b65d17c2bfe0cb330ac89.js"></script>
+
 
 <p>認識した<strong>EyeTracker</strong>オブジェクトにプロダクトキーを登録します。
 登録には<strong>apply_licenses</strong>メソッドを利用し、引数としてプロダクトキーのファイルデータを渡します。</p>
 
-<script type="application/javascript" src="//gist.github.com/naoto-github/ca893fa8c80f5f1ab537098dce465408.js"></script>
+<script type="application/javascript" src="https://gist.github.com/naoto-github/ca893fa8c80f5f1ab537098dce465408.js"></script>
+
 
 <p>次にコールバックメソッドを実装します。
 これは、<strong>Eye Tracker 4C</strong> がユーザの視線情報を取得した際に、
@@ -275,12 +278,14 @@ Pythonの開発用のフォルダにコピーしておきます。</p>
 右目の視線情報<strong>right_eye</strong> をフィールドとして持ちます。
 ここでは、タイムスタンプに加え、ディスプレイに対する両目の視線位置をコンソールに出力しています。</p>
 
-<script type="application/javascript" src="//gist.github.com/naoto-github/d83000f3711e8c6fe14d3bf90d1737c3.js"></script>
+<script type="application/javascript" src="https://gist.github.com/naoto-github/d83000f3711e8c6fe14d3bf90d1737c3.js"></script>
+
 
 <p>最後にコールバックメソッドを<strong>EyeTracker</strong>オブジェクトに登録します。
 登録後に2秒間待機して、登録したコールバックメソッドを解除します。</p>
 
-<script type="application/javascript" src="//gist.github.com/naoto-github/6cfa7beaf1fcd5c220c3277d9cffb894.js"></script>
+<script type="application/javascript" src="https://gist.github.com/naoto-github/6cfa7beaf1fcd5c220c3277d9cffb894.js"></script>
+
 
 <p>では、プログラムを実行してみましょう。
 実行すると下記のように両目の視線位置がコンソールに出力されます。
@@ -380,7 +385,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-02-26 21:01:09.0592234 &#43;0900 JST m=&#43;6.799804701">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-11 18:11:20.334618 &#43;0900 JST m=&#43;0.264523085">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
