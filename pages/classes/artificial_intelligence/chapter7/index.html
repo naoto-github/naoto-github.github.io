@@ -85,7 +85,7 @@
 &gt; .\Scripts\pip install gym &gt; .\Scripts\pip install &#34;gym[atari]&#34; &gt; .\Scripts\pip install &#34;gym[all]&#34;  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-7 とします． ノートブックの作成方法は第1回の資料を参照してください．
  バランスゲーム（CartPole）  バランスゲームは，カートの上に垂直に立てたポールを落とさないようにバランスをとることが目的です． ユーザは，下記の状態を観測することが出来ます．
  カートの位置（-2.4 〜 2.4） カートの速度 ポールの角度（-12度 〜 12度） ポールの速度  また，ユーザは，カートに対し，下記のいずれかの行動をとることが出来ます．
- 左に向かって力を加える 右に向かって力を加える  下記の条件を満たしたとき，ゲームは失敗となります．
+ 左に向かって力を加える（0） 右に向かって力を加える（1）  下記の条件を満たしたとき，ゲームは失敗となります．
  ポールが12度以上傾く カートの位置が画面の端に到達する（中央から2.4以上離れる）  ポールを落とさずバランスを維持して200ステップが経過すれば成功となります．
 [学習前] 
 [学習後] 
@@ -109,7 +109,7 @@
 &gt; .\Scripts\pip install gym &gt; .\Scripts\pip install &#34;gym[atari]&#34; &gt; .\Scripts\pip install &#34;gym[all]&#34;  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-7 とします． ノートブックの作成方法は第1回の資料を参照してください．
  バランスゲーム（CartPole）  バランスゲームは，カートの上に垂直に立てたポールを落とさないようにバランスをとることが目的です． ユーザは，下記の状態を観測することが出来ます．
  カートの位置（-2.4 〜 2.4） カートの速度 ポールの角度（-12度 〜 12度） ポールの速度  また，ユーザは，カートに対し，下記のいずれかの行動をとることが出来ます．
- 左に向かって力を加える 右に向かって力を加える  下記の条件を満たしたとき，ゲームは失敗となります．
+ 左に向かって力を加える（0） 右に向かって力を加える（1）  下記の条件を満たしたとき，ゲームは失敗となります．
  ポールが12度以上傾く カートの位置が画面の端に到達する（中央から2.4以上離れる）  ポールを落とさずバランスを維持して200ステップが経過すれば成功となります．
 [学習前] 
 [学習後] 
@@ -236,8 +236,8 @@
 <p>また，ユーザは，カートに対し，下記のいずれかの行動をとることが出来ます．</p>
 
 <ul>
-<li>左に向かって力を加える</li>
-<li>右に向かって力を加える</li>
+<li>左に向かって力を加える（0）</li>
+<li>右に向かって力を加える（1）</li>
 </ul>
 
 <p>下記の条件を満たしたとき，ゲームは失敗となります．</p>
@@ -341,7 +341,7 @@ env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># �
 	action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
     observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
 	
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
 	
@@ -367,7 +367,7 @@ env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># �
 	action <span style="color:#f92672">=</span> selectAction(observation) <span style="color:#75715e"># ポールの速度に基づき選択</span>
     observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
 	
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
 	
@@ -469,7 +469,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-03-12 16:56:26.411655 &#43;0900 JST m=&#43;0.123157799">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-12 19:38:30.834299 &#43;0900 JST m=&#43;0.110193482">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
