@@ -289,34 +289,33 @@ NFTとは自然特徴点を利用した物体認識のことで、この技術�
 
 <p>まずは、2つのマーカーオブジェクトを配列で取得します。
 マーカーオブジェクトは<strong>MarkerObject</strong>というタグが設定されていることを利用します。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> GameObject[] objects = <span style="color:#66d9ef">new</span> GameObject[<span style="color:#ae81ff">2</span>];
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> GameObject<span style="color:#a6e22e">[]</span> objects = <span style="color:#66d9ef">new</span> GameObject<span style="color:#a6e22e">[2]</span>;
 objects = GameObject.FindGameObjectsWithTag(<span style="color:#e6db74">&#34;MarkerObject&#34;</span>);
 </code></pre></div>
 <p>同様に2つのパターンを基にマーカーIDを配列で取得します。
 <strong>Resources.Load()</strong>メソッドは、Resourcesフォルダ内にあるファイルを探索し取得するメソッドです。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span>[] mids = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">2</span>]; <span style="color:#75715e">//マーカーID
-</span><span style="color:#75715e"></span>mids[<span style="color:#ae81ff">0</span>] = <span style="color:#66d9ef">this</span>._ns.addNftTarget(<span style="color:#66d9ef">new</span> MemoryStream(((TextAsset)Resources.Load(<span style="color:#e6db74">&#34;patt_001&#34;</span>, <span style="color:#66d9ef">typeof</span>(TextAsset))).bytes), <span style="color:#ae81ff">160</span>);
-mids[<span style="color:#ae81ff">1</span>] = <span style="color:#66d9ef">this</span>._ns.addNftTarget(<span style="color:#66d9ef">new</span> MemoryStream(((TextAsset)Resources.Load(<span style="color:#e6db74">&#34;patt_002&#34;</span>, <span style="color:#66d9ef">typeof</span>(TextAsset))).bytes), <span style="color:#ae81ff">160</span>);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span><span style="color:#a6e22e">[]</span> mids = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span><span style="color:#a6e22e">[2]</span>; <span style="color:#75715e">//マーカーID
+</span><span style="color:#75715e"></span>mids<span style="color:#a6e22e">[0]</span> = <span style="color:#66d9ef">this</span>._ns.addNftTarget(<span style="color:#66d9ef">new</span> MemoryStream(((TextAsset)Resources.Load(<span style="color:#e6db74">&#34;patt_001&#34;</span>, <span style="color:#66d9ef">typeof</span>(TextAsset))).bytes), <span style="color:#ae81ff">160</span>);
+mids<span style="color:#a6e22e">[1]</span> = <span style="color:#66d9ef">this</span>._ns.addNftTarget(<span style="color:#66d9ef">new</span> MemoryStream(((TextAsset)Resources.Load(<span style="color:#e6db74">&#34;patt_002&#34;</span>, <span style="color:#66d9ef">typeof</span>(TextAsset))).bytes), <span style="color:#ae81ff">160</span>);
 </code></pre></div>
 <p>最後に、<strong>update()</strong>メソッドで、マーカーが認識された場合に、マーカーオブジェクトをアクティブに変更します。
 逆に、マーカーが認識されなかった場合は、マーカーオブジェクトを非アクティブに変更します。
 マーカーオブジェクトは、<strong>setTransform()</strong>メソッドで、マーカーが検出された位置に表示されます。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i=<span style="color:#ae81ff">0</span>; i&lt;mids.Length; i++) {
-    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>._ns.isExist(mids[i])) {
-        <span style="color:#66d9ef">if</span> (objects[i].activeSelf == <span style="color:#66d9ef">false</span>){
-            objects[i].SetActive(<span style="color:#66d9ef">true</span>);
+    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>._ns.isExist(mids<span style="color:#a6e22e">[i]</span>)) {
+        <span style="color:#66d9ef">if</span> (objects<span style="color:#a6e22e">[i]</span>.activeSelf == <span style="color:#66d9ef">false</span>){
+            objects<span style="color:#a6e22e">[i]</span>.SetActive(<span style="color:#66d9ef">true</span>);
         }
-        <span style="color:#66d9ef">this</span>._ns.setTransform(mids[i], objects[i].transform);
+        <span style="color:#66d9ef">this</span>._ns.setTransform(mids<span style="color:#a6e22e">[i]</span>, objects<span style="color:#a6e22e">[i]</span>.transform);
     } <span style="color:#66d9ef">else</span> {
-        objects[i].SetActive(<span style="color:#66d9ef">false</span>);
+        objects<span style="color:#a6e22e">[i]</span>.SetActive(<span style="color:#66d9ef">false</span>);
     }
 }
 </code></pre></div>
 <p>全ソースコードを下記に示します。
 コードの詳細は、付しているコメントを参考にしてください。</p>
 
-<script type="application/javascript" src="https://gist.github.com/naoto-github/1a1da417d545e2f921b22fea2e98635e.js"></script>
-
+<script type="application/javascript" src="//gist.github.com/naoto-github/1a1da417d545e2f921b22fea2e98635e.js"></script>
 
 <p>プログラムを実行して、「犬の画像」を認識すると青い立方体、「うさぎの画像」を認識すると赤い立方体が表示されることを確認してください。
 これでイラストなど一般的な画像をマーカーとして利用することができるようになりました。</p>
@@ -404,7 +403,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-03-12 19:38:30.944363 &#43;0900 JST m=&#43;0.220262770">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-15 22:11:45.253681 &#43;0900 JST m=&#43;0.629785090">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    8パズル | MLAB
+    探索木・8パズル | MLAB
   </title>
 
   
@@ -60,7 +60,7 @@
   
   
 
-  <meta property="og:title" content="8パズル" />
+  <meta property="og:title" content="探索木・8パズル" />
 
 
 
@@ -83,7 +83,7 @@
   <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-2 とします． ノートブックの作成方法は第1回の資料を参照してください．
  8パズル  今回は 8パズル（8 Puzzle） を取り上げましょう．
 8パズル   1から8の数字が書いてあるタイルが不規則に3 $\times$ 3のマス目に並べてある． タイルをスライドさせ，左上から順番に1から8まで並び替えるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．
-状態空間モデル   タイルの数字を$x_i$で表します（$i$はタイルの位置）． 例えば初期状態と目的状態を下記で与えます． タイルがないマスは$b（ブランク）$と表していることに注意すること．  $$ 初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2) $$ $$ 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8) $$ タイルに対する行動（操作）はブランクの位置に応じて決まります． 例えば，ブランクが 左上（$x_1$） にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができます．  A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$  同様に，ブランクが 上（$x_2$） にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．  A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$ A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$  上記に沿って全てを列挙すると24の行動が定義できます．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+状態空間モデル   タイルの数字を$x_i$で表します（$i$はタイルの位置）． 例えば初期状態と目的状態を下記で与える． タイルがないマスは$b（ブランク）$と表していることに注意すること．  $$ 初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2) $$ $$ 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8) $$ タイルに対する行動（操作）はブランクの位置に応じて決まる． 例えば，ブランクが 左上（$x_1$） にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができる．  A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$  同様に，ブランクが 上（$x_2$） にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．  A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$ A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$  上記に沿って全てを列挙すると24の行動が定義できる．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
 
 
 
@@ -94,14 +94,14 @@
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="8パズル" />
+  <meta name="twitter:title" content="探索木・8パズル" />
 
 
 
   <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-2 とします． ノートブックの作成方法は第1回の資料を参照してください．
  8パズル  今回は 8パズル（8 Puzzle） を取り上げましょう．
 8パズル   1から8の数字が書いてあるタイルが不規則に3 $\times$ 3のマス目に並べてある． タイルをスライドさせ，左上から順番に1から8まで並び替えるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．
-状態空間モデル   タイルの数字を$x_i$で表します（$i$はタイルの位置）． 例えば初期状態と目的状態を下記で与えます． タイルがないマスは$b（ブランク）$と表していることに注意すること．  $$ 初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2) $$ $$ 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8) $$ タイルに対する行動（操作）はブランクの位置に応じて決まります． 例えば，ブランクが 左上（$x_1$） にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができます．  A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$  同様に，ブランクが 上（$x_2$） にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．  A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$ A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$  上記に沿って全てを列挙すると24の行動が定義できます．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+状態空間モデル   タイルの数字を$x_i$で表します（$i$はタイルの位置）． 例えば初期状態と目的状態を下記で与える． タイルがないマスは$b（ブランク）$と表していることに注意すること．  $$ 初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2) $$ $$ 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8) $$ タイルに対する行動（操作）はブランクの位置に応じて決まる． 例えば，ブランクが 左上（$x_1$） にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができる．  A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$  同様に，ブランクが 上（$x_2$） にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．  A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$ A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$  上記に沿って全てを列挙すると24の行動が定義できる．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
 
 
 
@@ -171,7 +171,7 @@
   <span>on&nbsp;</span><time datetime="2020-01-05 12:19:26 &#43;0900 JST">January 5, 2020</time>
 </div>
 
-    <h1 class="post-title">8パズル</h1>
+    <h1 class="post-title">探索木・8パズル</h1>
 <div class="post-line"></div>
 
     
@@ -234,7 +234,7 @@
     
 
 タイルの数字を$x_i$で表します（$i$はタイルの位置）．
-例えば初期状態と目的状態を下記で与えます．
+例えば初期状態と目的状態を下記で与える．
 タイルがないマスは$b（ブランク）$と表していることに注意すること．
 
 <a href="https://gyazo.com/962bcf260c93c9be280754f6b3284106"><img style="margin-top:20px" src="https://i.gyazo.com/962bcf260c93c9be280754f6b3284106.png" alt="Image from Gyazo" width="200"/></a>
@@ -247,8 +247,8 @@ $$
 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8)
 $$
 
-タイルに対する<b>行動（操作）</b>はブランクの位置に応じて決まります．
-例えば，ブランクが <b>左上（$x_1$）</b> にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができます．
+タイルに対する<b>行動（操作）</b>はブランクの位置に応じて決まる．
+例えば，ブランクが <b>左上（$x_1$）</b> にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができる．
 
 
 <ul>
@@ -264,7 +264,7 @@ $$
 <li>A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$</li>
 </ul>
 
-上記に沿って全てを列挙すると24の行動が定義できます．
+上記に沿って全てを列挙すると24の行動が定義できる．
 
 
   </p>
@@ -302,163 +302,166 @@ GOAL <span style="color:#f92672">=</span> (
 <p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
 8パズルを表す<code>EightPuzzle</code>を定義します．
 オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>is_goal</code>の3種類です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EightPuzzle</span>(SearchProblem):
 
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
+		<span style="color:#f92672">...</span>
+		
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+		<span style="color:#f92672">...</span>
+		
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
+		<span style="color:#f92672">...</span></code></pre></div>
 <h3 id="actions-self-state">actions(self, state)</h3>
 
 <p>ブランクの位置に応じた行動のリストを返します．
 行動は全部で24パターンが存在します．
 また，リストのインデックスは0番から始まることに注意してください．
 例えば，<code>state[0]</code>は$x_1$を表しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
+	list <span style="color:#f92672">=</span> []
+	
+	<span style="color:#66d9ef">if</span> state[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#左上がブランク</span>
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],
+		))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],
+        ))            
+    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#上がブランク</span>
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],
+		))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>], state[<span style="color:#ae81ff">1</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+		))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))            
+    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#右上がブランク</span>
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>], state[<span style="color:#ae81ff">1</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#左がブランク</span>
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+		))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+		))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#中央がブランク</span>
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>], state[<span style="color:#ae81ff">4</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))                        
+    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#右がブランク</span>
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>], state[<span style="color:#ae81ff">4</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],                
+		))                        
+    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#左下がブランク</span>
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))                        
+    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#下がブランク</span>
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>],                
+        ))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>], state[<span style="color:#ae81ff">7</span>],                
+        ))                        
+    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#右下がブランク</span>
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],                
+        ))
+		list<span style="color:#f92672">.</span>append((
+			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
+			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
+			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>], state[<span style="color:#ae81ff">7</span>],                
+            ))                        
 
+    <span style="color:#66d9ef">return</span> list</code></pre></div>
 <h3 id="result-self-state-action">result(self, state, action)</h3>
 
 <p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+	<span style="color:#66d9ef">return</span> action</code></pre></div>
 <h3 id="is-goal-self-state">is_goal(self, state)</h3>
 
 <p>状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EightPuzzle</span>(SearchProblem):
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
-        list <span style="color:#f92672">=</span> []
-
-        <span style="color:#66d9ef">if</span> state[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#左上がブランク</span>
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],
-            ))            
-        <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#上がブランク</span>
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>], state[<span style="color:#ae81ff">1</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))            
-        <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#右上がブランク</span>
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>], state[<span style="color:#ae81ff">1</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-        <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#左がブランク</span>
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-        <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#中央がブランク</span>
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>], state[<span style="color:#ae81ff">4</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))                        
-        <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#右がブランク</span>
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>], state[<span style="color:#ae81ff">4</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],                
-            ))                        
-        <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#左下がブランク</span>
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))                        
-        <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#下がブランク</span>
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>], state[<span style="color:#ae81ff">7</span>],                
-            ))                        
-        <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#右下がブランク</span>
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],                
-            ))
-            list<span style="color:#f92672">.</span>append((
-                state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-                state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-                state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>], state[<span style="color:#ae81ff">7</span>],                
-            ))                        
-
-        <span style="color:#66d9ef">return</span> list
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-        <span style="color:#66d9ef">return</span> action
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-        <span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
+	<span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
 <h2 id="解の探索">解の探索</h2>
 
 <p>幅優先探索（探索木）<code>breadth_first</code>を用いて解を探索します．</p>
@@ -579,7 +582,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-03-12 19:38:30.865084 &#43;0900 JST m=&#43;0.140980601">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-15 22:11:44.886511 &#43;0900 JST m=&#43;0.262625087">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    探索木・「ハノイの塔」 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="探索木・「ハノイの塔」" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter3/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします． ノートブックの作成方法に関しては第１回の資料を参考にしてください．
+ ハノイの塔  今回は ハノイの塔（Tower of Hanoi） を取り上げましょう．
+ハノイの塔   3本の支柱（A，B，C）があり，支柱Aに3枚の円盤（小，中，大）が重なっている． 円盤を他の支柱に移動させることができるが， 必ず大きい円盤の上に小さい円盤が積まれる状態でなければいけない． 支柱Aにある全ての円盤を支柱Cに移すにはどうすれば良いか．   この問題を 状態空間モデル で表現します．
+状態空間モデル   円盤の状態を，支柱Aにあるとき1 ，支柱Bにあるとき2， 支柱Cにあるとき3と表す． この状態を，$(小, 中, 大)$の円盤の順に並べる． 例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す． また，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す． $$ 初期状態：(1, 1, 1) $$ $$ 目的状態：(3, 3, 3) $$ 行動（操作）は，円盤を現在の支柱から，他の支柱へ移動することで与えられる． ただし，大きい円盤を小さい円盤の上に移動させることはできない． 円盤（小）に対する行動は下記の6通りである． ここで，$y$と$z$は円盤（中）と円盤（大）の状態である．   $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ  $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ  $(2, y, z) \rightarrow (1, y, z)$ #支柱Bから支柱Aへ  $(2, y, z) \rightarrow (3, y, z)$ #支柱Bから支柱Cへ  $(3, y, z) \rightarrow (1, y, z)$ #支柱Cから支柱Aへ  $(3, y, z) \rightarrow (2, y, z)$ #支柱Cから支柱Bへ  同様に円盤（中），円盤（大）にも6通りの行動が存在し， 合わせて18の行動が定義できる．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="探索木・「ハノイの塔」" />
+
+
+
+  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします． ノートブックの作成方法に関しては第１回の資料を参考にしてください．
+ ハノイの塔  今回は ハノイの塔（Tower of Hanoi） を取り上げましょう．
+ハノイの塔   3本の支柱（A，B，C）があり，支柱Aに3枚の円盤（小，中，大）が重なっている． 円盤を他の支柱に移動させることができるが， 必ず大きい円盤の上に小さい円盤が積まれる状態でなければいけない． 支柱Aにある全ての円盤を支柱Cに移すにはどうすれば良いか．   この問題を 状態空間モデル で表現します．
+状態空間モデル   円盤の状態を，支柱Aにあるとき1 ，支柱Bにあるとき2， 支柱Cにあるとき3と表す． この状態を，$(小, 中, 大)$の円盤の順に並べる． 例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す． また，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す． $$ 初期状態：(1, 1, 1) $$ $$ 目的状態：(3, 3, 3) $$ 行動（操作）は，円盤を現在の支柱から，他の支柱へ移動することで与えられる． ただし，大きい円盤を小さい円盤の上に移動させることはできない． 円盤（小）に対する行動は下記の6通りである． ここで，$y$と$z$は円盤（中）と円盤（大）の状態である．   $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ  $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ  $(2, y, z) \rightarrow (1, y, z)$ #支柱Bから支柱Aへ  $(2, y, z) \rightarrow (3, y, z)$ #支柱Bから支柱Cへ  $(3, y, z) \rightarrow (1, y, z)$ #支柱Cから支柱Aへ  $(3, y, z) \rightarrow (2, y, z)$ #支柱Cから支柱Bへ  同様に円盤（中），円盤（大）にも6通りの行動が存在し， 合わせて18の行動が定義できる．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2020-02-29 20:11:10 &#43;0900 JST">February 29, 2020</time>
+</div>
+
+    <h1 class="post-title">探索木・「ハノイの塔」</h1>
+<div class="post-line"></div>
+
+    
+
+    
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ノートブックの作成
+</h1>
+
+
+<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>AI-3</strong> とします．
+ノートブックの作成方法に関しては<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第１回の資料</a>を参考にしてください．</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ハノイの塔
+</h1>
+
+
+<p>今回は <strong>ハノイの塔（Tower of Hanoi）</strong> を取り上げましょう．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    ハノイの塔
+  </h3>
+
+  <p>
+    
+
+3本の支柱（A，B，C）があり，支柱Aに3枚の円盤（小，中，大）が重なっている．
+円盤を他の支柱に移動させることができるが，
+必ず大きい円盤の上に小さい円盤が積まれる状態でなければいけない．
+支柱Aにある全ての円盤を支柱Cに移すにはどうすれば良いか．
+
+<a href="https://gyazo.com/edde4c5e9604916dc110d391ee3e03fb"><img src="https://i.gyazo.com/edde4c5e9604916dc110d391ee3e03fb.png" alt="Image from Gyazo" width="931"/></a>
+
+
+  </p>
+  
+</div>
+
+
+<p>この問題を <strong>状態空間モデル</strong> で表現します．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    状態空間モデル
+  </h3>
+
+  <p>
+    
+
+円盤の状態を，支柱Aにあるとき<b>1</b> ，支柱Bにあるとき<b>2</b>，
+支柱Cにあるとき<b>3</b>と表す．
+この状態を，$(小, 中, 大)$の円盤の順に並べる．
+
+例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す．
+また，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す．
+
+$$
+初期状態：(1, 1, 1)
+$$
+
+$$
+目的状態：(3, 3, 3)
+$$
+
+行動（操作）は，円盤を現在の支柱から，他の支柱へ移動することで与えられる．
+ただし，大きい円盤を小さい円盤の上に移動させることはできない．
+
+円盤（小）に対する行動は下記の6通りである．
+ここで，$y$と$z$は円盤（中）と円盤（大）の状態である．
+
+<ul>
+<li> $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ</li>
+<li> $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ</li>
+<li> $(2, y, z) \rightarrow (1, y, z)$ #支柱Bから支柱Aへ</li>
+<li> $(2, y, z) \rightarrow (3, y, z)$ #支柱Bから支柱Cへ</li>
+<li> $(3, y, z) \rightarrow (1, y, z)$ #支柱Cから支柱Aへ</li>
+<li> $(3, y, z) \rightarrow (2, y, z)$ #支柱Cから支柱Bへ</li>
+</ul>
+
+同様に円盤（中），円盤（大）にも6通りの行動が存在し，
+合わせて18の行動が定義できる．
+
+
+  </p>
+  
+</div>
+
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  実装
+</h1>
+
+
+<h2 id="クラスの定義">クラスの定義</h2>
+
+<p>最初にライブラリをインポートします．
+前回と同様に，<strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
+<strong>幅優先探索</strong> を表す<code>breadth_first</code>をインポートします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, breadth_first</code></pre></div>
+<p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
+初期状態は$(1, 1, 1)$，目的状態は$(3, 3, 3)$です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+GOAL  <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)</code></pre></div>
+<p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
+ハノイの塔を表す<code>HanoiProblem</code>を定義します．
+オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>is_goal</code>の3種類です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HanoiProblem</span>(SearchProblem):
+
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
+		<span style="color:#f92672">...</span>
+		
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+		<span style="color:#f92672">...</span>
+		
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
+		<span style="color:#f92672">...</span></code></pre></div>
+<h3 id="actions-self-state">actions(self, state)</h3>
+
+<p>実行可能な行動のリストを返します．
+行動は全部で18パターンが存在します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
+	list <span style="color:#f92672">=</span> []
+
+	s <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">0</span>]
+	m <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">1</span>]
+	l <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">2</span>]
+
+	<span style="color:#75715e"># 円盤小</span>
+	<span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">2</span>, m, l))
+		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">3</span>, m, l))            
+	<span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:            
+		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">1</span>, m, l))
+		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">3</span>, m, l))
+	<span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:            
+		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">1</span>, m, l))
+		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">2</span>, m, l))            
+
+	<span style="color:#75715e"># 円盤中</span>
+	<span style="color:#66d9ef">if</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
+			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">2</span>, l))
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
+			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">3</span>, l))            
+	<span style="color:#66d9ef">if</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
+			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">1</span>, l))
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
+			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">3</span>, l))            
+	<span style="color:#66d9ef">if</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
+			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">1</span>, l))
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
+			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">2</span>, l))            
+
+	<span style="color:#75715e"># 円盤大</span>
+	<span style="color:#66d9ef">if</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> (s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>):
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
+			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">2</span>))
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:                
+			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">3</span>))            
+    <span style="color:#66d9ef">if</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> (s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>):
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
+			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">1</span>))
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:                
+			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">3</span>))
+    <span style="color:#66d9ef">if</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> (s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>):
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
+			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">1</span>))
+		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:                
+			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">2</span>)) 
+
+	<span style="color:#66d9ef">return</span> list</code></pre></div>
+<h3 id="result-self-state-action">result(self, state, action)</h3>
+
+<p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+	<span style="color:#66d9ef">return</span> action</code></pre></div>
+<h3 id="is-goal-self-state">is_goal(self, state)</h3>
+
+<p>状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
+	<span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
+<h2 id="解の探索">解の探索</h2>
+
+<p>幅優先探索（探索木）<code>breadth_first</code>を用いて解を探索します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> HanoiProblem(initial_state<span style="color:#f92672">=</span>START)
+result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True)</code></pre></div>
+<p>探索が終了したら，最終状態，パス，コストを表示します．
+最終状態は<code>(3, 3, 3)</code>となっており目的状態に到達できたことがわかります．
+このとき，初期状態から目的状態までのコスト（ステップ数）は7です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>state)
+<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>path())
+<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>cost)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">(3, 3, 3)
+[(None, (1, 1, 1)), ((3, 1, 1), (3, 1, 1)), ((3, 2, 1), (3, 2, 1)), ((2, 2, 1), (2, 2, 1)), ((2, 2, 3), (2, 2, 3)), ((1, 2, 3), (1, 2, 3)), ((1, 3, 3), (1, 3, 3)), ((3, 3, 3), (3, 3, 3))]
+7</code></pre></div>
+<p>上記の結果は下図と一致します．</p>
+
+<p><a href="https://gyazo.com/b7eebfe2a4553a9e53e2d92add412f60"><img src="https://i.gyazo.com/b7eebfe2a4553a9e53e2d92add412f60.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>ハノイの塔を分割統治法を用いて解く方法を説明しなさい（マークダウンにしてセルに入力すること）．
+作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=477416013X&linkId=a3e3de6cdd05f8a87e01091a9529a212&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4061538233&linkId=9b22cb2b9a07a725897b3598e4bb4418&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4339023957&linkId=8f5ccc75e9cf345c48d02210a3230069&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=427422371X&linkId=d5436c8655f90c573302f07ed9cb9ddf&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter3/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+  <h3>スポンサーリンク</h3>
+
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1652300955422837"
+     data-ad-slot="5881819823"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-03-15 22:11:44.815131 &#43;0900 JST m=&#43;0.191247565">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
