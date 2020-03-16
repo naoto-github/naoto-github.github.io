@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    強化学習・OpenAI Gym | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="強化学習・OpenAI Gym" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter11/" />
+
+
+
+  <meta property="og:image" content="https://gyazo.com/b382b7380e2c0466e31fbf6e6b0728cc" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="OpenAI Gymとは  OpenAI Gymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． バランスゲーム（CartPole）や，ドライブゲーム（MountainCar）などのゲームを題材に， 強化学習のアルゴリズムを実装し評価することができます．
+最初に，OpenAI Gym をインストールします． インストールしたフォルダで，PowerShellを起動し， 下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
+&gt; .\Scripts\pip install gym &gt; .\Scripts\pip install &#34;gym[atari]&#34; &gt; .\Scripts\pip install &#34;gym[all]&#34;  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-11 とします． ノートブックの作成方法は第3回の資料を参照してください．
+ バランスゲーム（CartPole）  バランスゲームは，カートの上に垂直に立てたポールを落とさないようにバランスをとることが目的です． ユーザは，下記の状態を観測することが出来ます．
+ カートの位置（-2.4 〜 2.4） カートの速度 ポールの角度（-12度 〜 12度） ポールの速度  また，ユーザは，カートに対し，下記のいずれかの行動をとることが出来ます．
+ 左に向かって力を加える（0） 右に向かって力を加える（1）  下記の条件を満たしたとき，ゲームは失敗となります．
+ ポールが12度以上傾く カートの位置が画面の端に到達する（中央から2.4以上離れる）  ポールを落とさずバランスを維持して200ステップが経過すれば成功となります．
+[学習前] 
+[学習後] 
+ 実装  今回は強化学習は利用せず，観測した状態に応じて行動を選択するアプローチで挑戦してみましょう．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="強化学習・OpenAI Gym" />
+
+
+
+  <meta name="twitter:description" content="OpenAI Gymとは  OpenAI Gymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． バランスゲーム（CartPole）や，ドライブゲーム（MountainCar）などのゲームを題材に， 強化学習のアルゴリズムを実装し評価することができます．
+最初に，OpenAI Gym をインストールします． インストールしたフォルダで，PowerShellを起動し， 下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
+&gt; .\Scripts\pip install gym &gt; .\Scripts\pip install &#34;gym[atari]&#34; &gt; .\Scripts\pip install &#34;gym[all]&#34;  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-11 とします． ノートブックの作成方法は第3回の資料を参照してください．
+ バランスゲーム（CartPole）  バランスゲームは，カートの上に垂直に立てたポールを落とさないようにバランスをとることが目的です． ユーザは，下記の状態を観測することが出来ます．
+ カートの位置（-2.4 〜 2.4） カートの速度 ポールの角度（-12度 〜 12度） ポールの速度  また，ユーザは，カートに対し，下記のいずれかの行動をとることが出来ます．
+ 左に向かって力を加える（0） 右に向かって力を加える（1）  下記の条件を満たしたとき，ゲームは失敗となります．
+ ポールが12度以上傾く カートの位置が画面の端に到達する（中央から2.4以上離れる）  ポールを落とさずバランスを維持して200ステップが経過すれば成功となります．
+[学習前] 
+[学習後] 
+ 実装  今回は強化学習は利用せず，観測した状態に応じて行動を選択するアプローチで挑戦してみましょう．" />
+
+
+
+  <meta name="twitter:image" content="https://gyazo.com/b382b7380e2c0466e31fbf6e6b0728cc" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2020-03-09 19:31:38 &#43;0900 JST">March 9, 2020</time>
+</div>
+
+    <h1 class="post-title">強化学習・OpenAI Gym</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/b382b7380e2c0466e31fbf6e6b0728cc"><img src="https://i.gyazo.com/b382b7380e2c0466e31fbf6e6b0728cc.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  OpenAI Gymとは
+</h1>
+
+
+<p><a href="https://gym.openai.com/">OpenAI Gym</a>は，
+機械学習の一分野である <strong>強化学習</strong> を開発するためのツールキットです．
+バランスゲーム（CartPole）や，ドライブゲーム（MountainCar）などのゲームを題材に，
+強化学習のアルゴリズムを実装し評価することができます．</p>
+
+<p>最初に，<strong>OpenAI Gym</strong> をインストールします．
+インストールしたフォルダで，<strong>PowerShell</strong>を起動し，
+下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; .\Scripts\pip install gym
+&gt; .\Scripts\pip install &#34;gym[atari]&#34;
+&gt; .\Scripts\pip install &#34;gym[all]&#34;</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ノートブックの作成
+</h1>
+
+
+<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>AI-11</strong> とします．
+ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter3/">第3回の資料</a>を参照してください．</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  バランスゲーム（CartPole）
+</h1>
+
+
+<p>バランスゲームは，カートの上に垂直に立てたポールを落とさないようにバランスをとることが目的です．
+ユーザは，下記の状態を観測することが出来ます．</p>
+
+<ul>
+<li>カートの位置（-2.4 〜 2.4）</li>
+<li>カートの速度</li>
+<li>ポールの角度（-12度 〜 12度）</li>
+<li>ポールの速度</li>
+</ul>
+
+<p>また，ユーザは，カートに対し，下記のいずれかの行動をとることが出来ます．</p>
+
+<ul>
+<li>左に向かって力を加える（0）</li>
+<li>右に向かって力を加える（1）</li>
+</ul>
+
+<p>下記の条件を満たしたとき，ゲームは失敗となります．</p>
+
+<ul>
+<li>ポールが12度以上傾く</li>
+<li>カートの位置が画面の端に到達する（中央から2.4以上離れる）</li>
+</ul>
+
+<p>ポールを落とさずバランスを維持して200ステップが経過すれば成功となります．</p>
+
+<p><strong>[学習前]</strong>
+<a href="https://gyazo.com/80314e768d571a5758a511cf46f2607c"><img src="https://i.gyazo.com/80314e768d571a5758a511cf46f2607c.gif" alt="Image from Gyazo" /></a></p>
+
+<p><strong>[学習後]</strong>
+<a href="https://gyazo.com/8f2e141389d5598fba33252dc25c48df"><img src="https://i.gyazo.com/8f2e141389d5598fba33252dc25c48df.gif" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  実装
+</h1>
+
+
+<p>今回は強化学習は利用せず，観測した状態に応じて行動を選択するアプローチで挑戦してみましょう．</p>
+
+<p>まずはライブラリを導入します．
+ここでは，<strong>Gym</strong> に加えて，数値計算のための <strong>Numpy</strong> も導入します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gym
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np</code></pre></div>
+<p>最初に対象とする環境（ゲーム）を作成します．
+ここでは，バランスゲーム（CartPole-v0）を指定します．
+このゲームの <strong>行動空間</strong> は2種類の離散値（0:左へ押す，1:右へ押す），
+また，<strong>状態空間</strong> は区間のある4種類の連続値で表されることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;CartPole-v0&#39;</span>) <span style="color:#75715e"># 環境の初期化</span>
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Action Space: {}&#34;</span><span style="color:#f92672">.</span>format(env<span style="color:#f92672">.</span>action_space)) <span style="color:#75715e"># 行動空間</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Env Space: {}&#34;</span><span style="color:#f92672">.</span>format(env<span style="color:#f92672">.</span>observation_space)) <span style="color:#75715e"># 状態空間</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Action Space: Discrete(2)
+Env Space: Box(4,)</code></pre></div>
+<p>次に環境を<code>reset</code>関数で初期化します．
+このとき，観測された初期状態も取得されます．
+状態は4種類の要素から構成されるタプルであり，
+カートの位置，カートの速度，ポールの角度，ポールの速度を表しています．
+このとき，ポールの角度はラジアン角であることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">observation <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境の初期化</span>
+
+cart_position <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">0</span>] <span style="color:#75715e"># カートの位置</span>
+cart_speed <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">1</span>] <span style="color:#75715e"># カートの速度</span>
+pole_angle <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">2</span>] <span style="color:#75715e"># ポールの角度</span>
+pole_speed <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">3</span>] <span style="color:#75715e"># ポールの速度</span>
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;カートの位置: {}&#34;</span><span style="color:#f92672">.</span>format(cart_position))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;カートの速度: {}&#34;</span><span style="color:#f92672">.</span>format(cart_speed))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;ポールの角度: {}&#34;</span><span style="color:#f92672">.</span>format(pole_angle))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;ポールの速度: {}&#34;</span><span style="color:#f92672">.</span>format(pole_speed))</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">カートの位置: -0.01807530436166336
+カートの速度: 0.028363315474415216
+ポールの角度: -0.022288393152732122
+ポールの速度: -0.010803063301248708</code></pre></div>
+<p>それでは，上記の状態を<code>render()</code>関数で描画してみます．
+初期状態はランダムに決定されるため，実行するごとに結果は変化します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
+<p><a href="https://gyazo.com/bc499e0443d53481de63e03f57f317aa"><img src="https://i.gyazo.com/bc499e0443d53481de63e03f57f317aa.png" alt="Image from Gyazo" /></a></p>
+
+<p>それでは，<code>step</code>関数を利用して，行動を選択します．
+ここでは，「左に向かって力を加える」という行動を10回繰り返して実行しています．
+この結果，カートは左に移動し，ポールが右に傾いていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">action <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># 左に向かって力を加える</span>
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+	env<span style="color:#f92672">.</span>step(action) 
+
+env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
+<p><a href="https://gyazo.com/fc3833ae9783aa04d1c401636a58cc29"><img src="https://i.gyazo.com/fc3833ae9783aa04d1c401636a58cc29.png" alt="Image from Gyazo" /></a></p>
+
+<p><code>step</code>関数は，行動を終了後の4種類の情報を返します．</p>
+
+<ul>
+<li>状態(observation)</li>
+<li>報酬(reward)</li>
+<li>終了判定(done)</li>
+<li>その他の情報(info)です．</li>
+</ul>
+
+<p>ここでは，<strong>状態(observation)</strong>と<strong>終了判定(done)</strong>のみを確認してみます．
+ポールの角度は0.338（=19.36度）であり，これは失敗の条件を満たしています．
+このため，終了判定は <strong>True</strong> となっています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
+
+env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">状態: [-0.21165671 -2.12699302  0.33853234  3.51525944]
+終了判定: True</code></pre></div>
+<p><a href="https://gyazo.com/c0e45a82648e5038c380d310c9e1c155"><img src="https://i.gyazo.com/c0e45a82648e5038c380d310c9e1c155.png" alt="Image from Gyazo" /></a></p>
+
+<p>では，200ステップに限定して，<code>action_space.sample()</code>関数を利用して，
+ランダムに行動を選択してみましょう．
+この結果，わずか <strong>15ステップ</strong> でポールは倒れ失敗してしまいました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
+	action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
+    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+	
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
+	
+	env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
+<p><a href="https://gyazo.com/e1adbf0bf716a6b52af57c7aedcb9e73"><img src="https://i.gyazo.com/e1adbf0bf716a6b52af57c7aedcb9e73.gif" alt="Image from Gyazo" /></a></p>
+
+<p>最後に，<strong>ポールの速度</strong> に基づき行動を選択するように改良してみましょう．
+<code>selectAction</code>関数は，ポールの速度が右なら，右方向に力を加え，
+ポールの速度が左なら，左方向に力を加えます．
+この結果，先程より長く <strong>177ステップ</strong> でカートが画面の端に到達し失敗となりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">selectAction</span>(observation):
+
+	pole_speed <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">3</span>] <span style="color:#75715e"># ポールの速度</span>
+	
+	<span style="color:#66d9ef">if</span> pole_speed <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>:
+		action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># 速度が右なら，右方向に力</span>
+	<span style="color:#66d9ef">else</span>:
+		action <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># 速度が左なら，左方向に力</span>
+		
+	<span style="color:#66d9ef">return</span> action</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境の初期化</span>
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
+	action <span style="color:#f92672">=</span> selectAction(observation) <span style="color:#75715e"># ポールの速度に基づき選択</span>
+    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+	
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
+	
+	env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
+<p><a href="https://gyazo.com/a81bce74630e64401d9250fe0c8bfa2d"><img src="https://i.gyazo.com/a81bce74630e64401d9250fe0c8bfa2d.gif" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  課題
+</h1>
+
+
+<p>ポールが直立している時間が長くなるよう<code>selectAction</code>関数を改良しなさい．
+作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=477416013X&linkId=a3e3de6cdd05f8a87e01091a9529a212&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4061538233&linkId=9b22cb2b9a07a725897b3598e4bb4418&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4339023957&linkId=8f5ccc75e9cf345c48d02210a3230069&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=427422371X&linkId=d5436c8655f90c573302f07ed9cb9ddf&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter11/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+  <h3>スポンサーリンク</h3>
+
+
+
+
+
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1652300955422837"
+     data-ad-slot="5881819823"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-03-16 11:26:05.374886 &#43;0900 JST m=&#43;0.112226113">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    強化学習・山登りゲーム | MLAB
+    進化的アルゴリズム・遺伝的アルゴリズム | MLAB
   </title>
 
   
@@ -60,7 +60,7 @@
   
   
 
-  <meta property="og:title" content="強化学習・山登りゲーム" />
+  <meta property="og:title" content="進化的アルゴリズム・遺伝的アルゴリズム" />
 
 
 
@@ -72,7 +72,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/6357d8a28d99610207123448f3eb799a.png" />
+  <meta property="og:image" content="https://i.gyazo.com/3d91d3d8392e40f736740f4ee9168354.png" />
 
 
 
@@ -80,16 +80,9 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-10 とします． ノートブックの作成方法は第1回の資料を参照してください．
- 山登りゲーム（MountainCar）  山登りゲームは，車両を山の上の旗がある場所まで移動させることが目的です（旗の位置は0.5）． ユーザは，下記の状態を観測することが出来ます．
- 車両の位置（-1.2 〜 0.6） 車両の速度（-0.07 〜 0.07）  また，ユーザは，車両に対し，下記のいずれかの行動をとることが出来ます．
- 後方に加速（0） 加速なし（1） 前方に加速（2）  下記の条件を満たしたとき，ゲームは失敗となります．
- 旗に到達できず200ステップが経過する  今回は，この山登りゲームをQ学習で解いてみましょう． 基本的には前回のバランスゲームの実装方法と同じです．
-[学習前] 
-[学習後] 
- 山登りゲームの実装  まずは必要なライブラリの導入と，山登りゲーム（MountainCar-v0）の初期化をします．
-import gym import numpy as np env = gym.make(&#39;MountainCar-v0&#39;) # 環境の初期化 次に，200ステップに限定して，ランダムな行動選択を行なった結果を確認しましょう． 車両は谷底をウロウロするだけで，山を登ることはありません．
-env.reset() # 環境のリセット for i in range(200): action = env.action_space.sample() # ランダムに行動選択 observation, reward, done, info = env." />
+  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-10 とします． ノートブックの作成方法は第3回の資料を参照してください．
+ フロイド問題  今回は フロイド問題(Floyd Problem) を取り上げましょう．
+フロイド問題   1から10までの整数を$A$と$B$の2つのグループに分ける． このとき，各グループの整数の平方根の和を求め，その差の絶対値を目的関数$g(A,B)$とする． この目的関数が最小となるグループ$A$，$B$を求めよ． 例えば，グループ$A$を奇数，グループ$B$を偶数とするとき， 目的関数の値は$1.24$となる． $$ A=\{1, 3, 5, 7, 9\} $$ $$ B=\{2, 4, 6, 8, 10\} $$ $$ f(A) = \sqrt{1} &#43; \sqrt{3} &#43; \sqrt{5} &#43; \sqrt{7} &#43; \sqrt{9} \simeq 10.61 $$ $$ f(B) = \sqrt{2} &#43; \sqrt{4} &#43; \sqrt{6} &#43; \sqrt{8} &#43; \sqrt{10} \simeq 11.85 $$ $$ g(A, B) = |f(A) - f(B)| \simeq 1." />
 
 
 
@@ -100,24 +93,17 @@ env.reset() # 環境のリセット for i in range(200): action = env.action_spa
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="強化学習・山登りゲーム" />
+  <meta name="twitter:title" content="進化的アルゴリズム・遺伝的アルゴリズム" />
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-10 とします． ノートブックの作成方法は第1回の資料を参照してください．
- 山登りゲーム（MountainCar）  山登りゲームは，車両を山の上の旗がある場所まで移動させることが目的です（旗の位置は0.5）． ユーザは，下記の状態を観測することが出来ます．
- 車両の位置（-1.2 〜 0.6） 車両の速度（-0.07 〜 0.07）  また，ユーザは，車両に対し，下記のいずれかの行動をとることが出来ます．
- 後方に加速（0） 加速なし（1） 前方に加速（2）  下記の条件を満たしたとき，ゲームは失敗となります．
- 旗に到達できず200ステップが経過する  今回は，この山登りゲームをQ学習で解いてみましょう． 基本的には前回のバランスゲームの実装方法と同じです．
-[学習前] 
-[学習後] 
- 山登りゲームの実装  まずは必要なライブラリの導入と，山登りゲーム（MountainCar-v0）の初期化をします．
-import gym import numpy as np env = gym.make(&#39;MountainCar-v0&#39;) # 環境の初期化 次に，200ステップに限定して，ランダムな行動選択を行なった結果を確認しましょう． 車両は谷底をウロウロするだけで，山を登ることはありません．
-env.reset() # 環境のリセット for i in range(200): action = env.action_space.sample() # ランダムに行動選択 observation, reward, done, info = env." />
+  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-10 とします． ノートブックの作成方法は第3回の資料を参照してください．
+ フロイド問題  今回は フロイド問題(Floyd Problem) を取り上げましょう．
+フロイド問題   1から10までの整数を$A$と$B$の2つのグループに分ける． このとき，各グループの整数の平方根の和を求め，その差の絶対値を目的関数$g(A,B)$とする． この目的関数が最小となるグループ$A$，$B$を求めよ． 例えば，グループ$A$を奇数，グループ$B$を偶数とするとき， 目的関数の値は$1.24$となる． $$ A=\{1, 3, 5, 7, 9\} $$ $$ B=\{2, 4, 6, 8, 10\} $$ $$ f(A) = \sqrt{1} &#43; \sqrt{3} &#43; \sqrt{5} &#43; \sqrt{7} &#43; \sqrt{9} \simeq 10.61 $$ $$ f(B) = \sqrt{2} &#43; \sqrt{4} &#43; \sqrt{6} &#43; \sqrt{8} &#43; \sqrt{10} \simeq 11.85 $$ $$ g(A, B) = |f(A) - f(B)| \simeq 1." />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/6357d8a28d99610207123448f3eb799a.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/3d91d3d8392e40f736740f4ee9168354.png" />
 
 
 
@@ -180,17 +166,17 @@ env.reset() # 環境のリセット for i in range(200): action = env.action_spa
   
   
   
-  <span>on&nbsp;</span><time datetime="2020-03-12 18:47:35 &#43;0900 JST">March 12, 2020</time>
+  <span>on&nbsp;</span><time datetime="2020-03-15 10:32:41 &#43;0900 JST">March 15, 2020</time>
 </div>
 
-    <h1 class="post-title">強化学習・山登りゲーム</h1>
+    <h1 class="post-title">進化的アルゴリズム・遺伝的アルゴリズム</h1>
 <div class="post-line"></div>
 
     
 
     
 
-<p><a href="https://gyazo.com/6357d8a28d99610207123448f3eb799a"><img src="https://i.gyazo.com/6357d8a28d99610207123448f3eb799a.png" alt="Image from Gyazo" /></a></p>
+<p><a href="https://gyazo.com/3d91d3d8392e40f736740f4ee9168354"><img src="https://i.gyazo.com/3d91d3d8392e40f736740f4ee9168354.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -200,247 +186,265 @@ env.reset() # 環境のリセット for i in range(200): action = env.action_spa
 
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-10</strong> とします．
-ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
+ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter3/">第3回の資料</a>を参照してください．</p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  山登りゲーム（MountainCar）
+  フロイド問題
 </h1>
 
 
-<p>山登りゲームは，車両を山の上の旗がある場所まで移動させることが目的です（旗の位置は0.5）．
-ユーザは，下記の状態を観測することが出来ます．</p>
-
-<ul>
-<li>車両の位置（-1.2 〜 0.6）</li>
-<li>車両の速度（-0.07 〜 0.07）</li>
-</ul>
-
-<p>また，ユーザは，車両に対し，下記のいずれかの行動をとることが出来ます．</p>
-
-<ul>
-<li>後方に加速（0）</li>
-<li>加速なし（1）</li>
-<li>前方に加速（2）</li>
-</ul>
-
-<p>下記の条件を満たしたとき，ゲームは失敗となります．</p>
-
-<ul>
-<li>旗に到達できず200ステップが経過する</li>
-</ul>
-
-<p>今回は，この山登りゲームをQ学習で解いてみましょう．
-基本的には前回のバランスゲームの実装方法と同じです．</p>
-
-<p><strong>[学習前]</strong>
-<a href="https://gyazo.com/32d02f4759157860ece14f06590baefd"><img src="https://i.gyazo.com/32d02f4759157860ece14f06590baefd.gif" alt="Image from Gyazo" /></a></p>
-
-<p><strong>[学習後]</strong>
-<a href="https://gyazo.com/960bd92b1c260d91c5ced82ccf7e7ca8"><img src="https://i.gyazo.com/960bd92b1c260d91c5ced82ccf7e7ca8.gif" alt="Image from Gyazo" /></a></p>
-
-<h1>
-  <img class="head-image" src="/logo/logo.png">
-  山登りゲームの実装
-</h1>
+<p>今回は <strong>フロイド問題(Floyd Problem)</strong> を取り上げましょう．</p>
 
 
-<p>まずは必要なライブラリの導入と，山登りゲーム（MountainCar-v0）の初期化をします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gym
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    フロイド問題
+  </h3>
 
-env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;MountainCar-v0&#39;</span>) <span style="color:#75715e"># 環境の初期化</span></code></pre></div>
-<p>次に，200ステップに限定して，ランダムな行動選択を行なった結果を確認しましょう．
-車両は谷底をウロウロするだけで，山を登ることはありません．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-	action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-	
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
-	
-	env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
-<p><a href="https://gyazo.com/dd845bdbbdd2136f120f023868e1b4ad"><img src="https://i.gyazo.com/dd845bdbbdd2136f120f023868e1b4ad.gif" alt="Image from Gyazo" /></a></p>
-
-<h1>
-  <img class="head-image" src="/logo/logo.png">
-  Q学習の実装
-</h1>
-
-
-<h3 id="qテーブルの作成">Qテーブルの作成</h3>
-
-<p>最初に <strong>価値$Q(s,a)$</strong> を記録しておくQテーブル（辞書型）を作成します．
-前回のバランスゲームと全く同じです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">q_table <span style="color:#f92672">=</span> {} <span style="color:#75715e"># Qテーブル</span>
-
-<span style="color:#75715e"># Q値の設定</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setQ</span>(state, action, value):
-    q_table[(state, action)] <span style="color:#f92672">=</span> value
-                     
-<span style="color:#75715e"># Q値の取得</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getQ</span>(state, action):
-
-	<span style="color:#75715e"># テーブルに状態が存在しないとき</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span>(state, action) <span style="color:#f92672">in</span> q_table:
-        q_table[(state, action)] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-
-    <span style="color:#66d9ef">return</span> q_table[(state, action)]</code></pre></div>
-<h3 id="状態の離散化">状態の離散化</h3>
-
-<p>次に状態の離散化を行います．
-山登りゲームでは，車両の位置，車両の速度の2つの状態を <strong>連続値</strong> で取得します．
-しかし，このままではQテーブルに記録できないため，区間を定め <strong>離散値</strong> に変換します．
-バランスゲームでは6区間でしたが，今回は40区間に分割することにします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">BIN_NUMBER <span style="color:#f92672">=</span> <span style="color:#ae81ff">40</span> <span style="color:#75715e"># 離散値の数</span>
-
-<span style="color:#75715e"># 離散値の範囲</span>
-bins <span style="color:#f92672">=</span> []
-bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">1.2</span>, <span style="color:#ae81ff">0.6</span>, BIN_NUMBER)) <span style="color:#75715e"># 車両の位置</span>
-bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">0.07</span>, <span style="color:#ae81ff">0.07</span>, BIN_NUMBER)) <span style="color:#75715e"># 車両の速度</span>
-
-<span style="color:#75715e"># 観測データを状態（離散値）に変換</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">digitize</span>(observation):
-
-    state <span style="color:#f92672">=</span> []
+  <p>
     
-    state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">0</span>], bins[<span style="color:#ae81ff">0</span>]))
-    state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">1</span>], bins[<span style="color:#ae81ff">1</span>]))
-    
-    <span style="color:#66d9ef">return</span> tuple(state)</code></pre></div>
-<p>どのように離散値に変換されるか確認してみましょう．
-この例では，$(17,20)$ -&gt; $(17,20)$ -&gt; $(17,19)$と状態が変化していることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
 
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):
-    action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+1から10までの整数を$A$と$B$の2つのグループに分ける．
+このとき，各グループの整数の平方根の和を求め，その差の絶対値を目的関数$g(A,B)$とする．
+この目的関数が最小となるグループ$A$，$B$を求めよ．
+例えば，グループ$A$を奇数，グループ$B$を偶数とするとき，
+目的関数の値は$1.24$となる．
 
-    <span style="color:#66d9ef">print</span>(observation)
-    <span style="color:#66d9ef">print</span>(digitize(observation))</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[-4.21336289e-01  2.46770426e-04]
-(17, 20)
-[-0.42184451 -0.00050822]
-(17, 20)
-[-0.4241041  -0.00225958]
-(17, 19)</code></pre></div>
-<h3 id="報酬と更新式">報酬と更新式</h3>
+$$
+A=\{1, 3, 5, 7, 9\}
+$$
 
-<p>報酬を<code>getReward</code>関数で定義します．
-200ステップ以内に旗に到達できれば$r=200$を与えます．
-一方，旗に到達できない場合は常に$r=-1$のペナルティを与えます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 報酬の取得</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getReward</span>(step, done):
+$$
+B=\{2, 4, 6, 8, 10\}
+$$
 
-    <span style="color:#66d9ef">if</span> done:
-        <span style="color:#66d9ef">if</span> step <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">200</span>:
-            reward <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span> <span style="color:#75715e"># 目標ステップ以内に旗に到達</span>
+$$
+f(A) = \sqrt{1} + \sqrt{3} + \sqrt{5} + \sqrt{7} + \sqrt{9} \simeq 10.61
+$$
+
+$$
+f(B) = \sqrt{2} + \sqrt{4} + \sqrt{6} + \sqrt{8} + \sqrt{10} \simeq 11.85
+$$
+
+$$
+g(A, B) = |f(A) - f(B)| \simeq 1.24
+$$
+
+
+  </p>
+  
+</div>
+
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  遺伝的アルゴリズム
+</h1>
+
+
+<p>フロイド問題を <strong>遺伝的アルゴリズム(Genetic Algorithm)</strong> で解きます．
+遺伝的アルゴリズムは，進化的アルゴリズムの一つに分類され，
+進化の仕組みを参考に開発されたアルゴリズムです．
+ネーミングがとてもキャッチーなこともあり，とても人気のあるアルゴリズムです．
+問題の解は，数値の列で構成される <strong>個体</strong> として表現され，この個体を複数生成し <strong>世代</strong> と呼びます．
+この世代で，<strong>突然変異</strong> と <strong>交叉</strong> と呼ばれるオペレータ（操作）を適用して，
+新しい個体を生成し，次の世代とすることを繰り返します．</p>
+
+<p>フロイド問題では，整数がグループAに属するとき$0$，
+グループBに属するとき$1$とする数値列を個体とします．
+例えば，グループ$A$を奇数，グループ$B$を偶数とするとき，
+個体$I_1$は下記のように表現されます．</p>
+
+<p>$$
+I_1 = (0, 1, 0, 1, 0, 1, 0, 1, 0, 1)
+$$</p>
+
+<p>この他にも，グループ$A$を1〜5，グループ$B$を6〜10とするとき，
+個体$I_2$は下記のように表現されます．</p>
+
+<p>$$
+I_2 = (0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
+$$</p>
+
+<p><strong>突然変異</strong> は個体に含まれる$n$番目の数値をランダムに変化させ，
+新しい個体を生成する操作のことです．
+例えば，個体$I_1$の5番目の数値を$0$から$1$に変化させます．</p>
+
+<p>$$
+(0, 1, 0, 1, 0, 1, 0, 1, 0, 1) \rightarrow (0, 1, 0, 1, 1, 1, 0, 1, 0, 1)
+$$</p>
+
+<p><strong>交叉</strong> は複数の個体を繋ぎ合わせて，新しい個体を生成する操作のことです．
+例えば，個体$I_1$の前半と，個体$I_2$の後半の数値を繋ぎ合わせます．</p>
+
+<p>$$
+(0, 1, 0, 1, 0, 1, 0, 1, 0, 1) \times (0, 0, 0, 0, 0, 1, 1, 1, 1, 1) \rightarrow (0, 1, 0, 1, 0, 1, 1, 1, 1, 1)
+$$</p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  実装
+</h1>
+
+
+<h2 id="クラスの定義">クラスの定義</h2>
+
+<p>最初にライブラリをインポートします．
+<strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
+<strong>遺伝的アルゴリズム</strong> を表す <code>genetic</code> をインポートします．
+この他にも，数値計算のための <code>Numpy</code> と，
+オブジェクトのコピーのための <code>copy</code> もインポートします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> copy
+<span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem
+<span style="color:#f92672">from</span> simpleai.search.local <span style="color:#f92672">import</span> genetic</code></pre></div>
+<p>次に <strong>対象とする整数</strong> と，<strong>初期状態</strong> を定義します．
+初期状態は，全ての整数がグループ$A$に属することとします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">NUMBERS <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>]
+START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]</code></pre></div>
+<p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
+フロイド問題を表す <code>FloydProblem</code>  を定義します．
+オーバライドするメソッドは，<code>value</code>，<code>generate_random_state</code>，
+<code>crossover</code>，<code>mutate</code> の4種類です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FloydProblem</span>(SearchProblem):
+	
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
+		<span style="color:#f92672">...</span>
+		
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_random_state</span>(self):
+		<span style="color:#f92672">...</span>		
+		
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossover</span>(self, state1, state2):
+		<span style="color:#f92672">...</span>
+	
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mutate</span>(self, state):
+		<span style="color:#f92672">...</span>
+	</code></pre></div>
+<h3 id="value-self-state">value(self, state)</h3>
+
+<p>状態<code>state</code> の目的関数を実装します．
+フロイド問題は目的関数を<strong>最小化</strong>する必要がありますが，
+ここでは目的関数を負の値で表し，<strong>最大化</strong>を目的とした問題として扱います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
+
+        value0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+        value1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+        
+        <span style="color:#66d9ef">for</span> n, s <span style="color:#f92672">in</span> zip(NUMBERS, state):
+            <span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+                value0 <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>sqrt(n)
+            <span style="color:#66d9ef">else</span>:
+                value1 <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>sqrt(n)
+            
+        value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>abs(value0 <span style="color:#f92672">-</span> value1) <span style="color:#75715e"># 負の値</span>
+            
+        <span style="color:#66d9ef">return</span> value</code></pre></div>
+<h3 id="generate-random-state-self">generate_random_state(self)</h3>
+
+<p>ランダムに状態を生成します．
+生成した乱数が0.5未満であればグループA，
+0.5以上であればグループBとします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_random_state</span>(self):
+        
+        state <span style="color:#f92672">=</span> []
+
+        <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> NUMBERS:
+            <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span>:
+                state<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span>)
+            <span style="color:#66d9ef">else</span>:
+                state<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)        
+        
+        <span style="color:#66d9ef">return</span> state</code></pre></div>
+<h3 id="crossover-self-state1-state2">crossover(self, state1, state2)</h3>
+
+<p>状態<code>state1</code>と状態<code>state2</code>を交叉し，新しい状態を生成します．
+交差する位置は乱数で決定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossover</span>(self, state1, state2):
+
+        child <span style="color:#f92672">=</span> []
+
+        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(state1))
+
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, index):
+            child<span style="color:#f92672">.</span>append(state1[i])
+
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(index, len(state2)):
+            child<span style="color:#f92672">.</span>append(state2[i])                
+        
+        <span style="color:#66d9ef">return</span> child</code></pre></div>
+<h3 id="mutate-self-state">mutate(self, state)</h3>
+
+<p>状態<code>state</code>を突然変異させ，新しい状態を生成します，
+突然変異する位置は乱数で決定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mutate</span>(self, state):
+
+        mutated <span style="color:#f92672">=</span> copy<span style="color:#f92672">.</span>deepcopy(state)                                
+
+        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(mutated))
+                         
+        <span style="color:#66d9ef">if</span> mutated[index] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            mutated[index] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
         <span style="color:#66d9ef">else</span>:
-            reward <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">else</span>:
-        reward <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
-
-    <span style="color:#66d9ef">return</span> reward</code></pre></div>
-<p>Qテーブルの更新式を<code>updateQTable</code>関数で定義します．
-このとき，学習率$\alpha=0.1$，割引率$\gamma=0.9$とします．
-ここで，Qテーブルのキーは状態$s$と行動$a$のペアとなることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span> <span style="color:#75715e"># 学習率</span>
-gamma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span> <span style="color:#75715e"># 割引率</span>
-
-<span style="color:#75715e"># Q値の更新</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateQTable</span>(state, action, next_state, reward):
-
-    max_value <span style="color:#f92672">=</span> max(getQ(next_state, <span style="color:#ae81ff">0</span>), getQ(next_state, <span style="color:#ae81ff">1</span>), getQ(next_state, <span style="color:#ae81ff">2</span>))
-
-    value <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> getQ(state, action) <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (reward <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> max_value)
-
-    setQ(state, action, value)</code></pre></div>
-<h3 id="行動の選択">行動の選択</h3>
-
-<p>行動の選択には前回と同じ$\epsilon$グリーティ手法を採用します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># εグリーディ手法で行動選択</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">greedyAction</span>(state, epsilon):    
-    
-    <span style="color:#66d9ef">if</span> epsilon <span style="color:#f92672">&gt;</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand():
-        action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample()
-    <span style="color:#66d9ef">else</span>:
-        action <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax([getQ(state, <span style="color:#ae81ff">0</span>), getQ(state, <span style="color:#ae81ff">1</span>), getQ(state, <span style="color:#ae81ff">2</span>)])
-
-    <span style="color:#66d9ef">return</span> action</code></pre></div>
-<h3 id="qテーブルの学習">Qテーブルの学習</h3>
-
-<p>これで準備が整いました．
-200ステップのエピソード（ゲーム）を10000回繰り返してQテーブルを学習します．
-このとき，$\epsilon=0.2$に設定しておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
-q_table <span style="color:#f92672">=</span> {}
-
-<span style="color:#66d9ef">for</span> episode <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10000</span>):
-
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;エピソード [{}]&#34;</span><span style="color:#f92672">.</span>format(episode))
-    
-    observation <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-    
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
+            mutated[index] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>                                     
         
-        <span style="color:#75715e"># 状態の取得</span>
-        state <span style="color:#f92672">=</span> digitize(observation)
+        <span style="color:#66d9ef">return</span> mutated</code></pre></div>
+<h2 id="解の探索">解の探索</h2>
+
+<p>上記の実装だと最良解の推移がわからないため，下記のコードを<code>value</code>関数に追加します．
+目的関数が最大の状態と値を記録し，更新があったときに表示します，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
+
+	<span style="color:#f92672">...</span>
+
+	<span style="color:#75715e"># ここから</span>
+	<span style="color:#66d9ef">global</span> max_state
+	<span style="color:#66d9ef">global</span> max_value
         
-        <span style="color:#75715e"># εグリーディ手法で行動選択</span>
-        action <span style="color:#f92672">=</span> greedyAction(state, <span style="color:#ae81ff">0.2</span>)
+	<span style="color:#66d9ef">if</span> max_value <span style="color:#f92672">&lt;</span> value:
+		max_state <span style="color:#f92672">=</span> state
+		max_value <span style="color:#f92672">=</span> value            
+		<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;max state: {}({:.3f})&#34;</span><span style="color:#f92672">.</span>format(max_state, max_value))
+	<span style="color:#75715e"># ここまで追加</span>
+		
+	<span style="color:#66d9ef">return</span> value</code></pre></div>
+<p>遺伝的アルゴリズム<code>genetic</code>を用いて解を探索します
+ここで，<code>population_size</code>は1世代の個体の数，<code>mutation_chance</code>は突然変異の確率，<code>iterations_limit</code>は世代交代の数です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">max_state <span style="color:#f92672">=</span> START
+max_value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;max state: {}({:.3f})&#34;</span><span style="color:#f92672">.</span>format(max_state, max_value))
 
-        <span style="color:#75715e"># 次の状態に遷移</span>
-        observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+problem <span style="color:#f92672">=</span> FloydProblem(initial_state<span style="color:#f92672">=</span>START)
+result <span style="color:#f92672">=</span> genetic(problem, population_size<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, mutation_chance<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, iterations_limit<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)</code></pre></div>
+<p>この結果，目的関数が$-0.015$に収束します．
+これは，下記のグループに分けられたことを意味しています（AとBが逆の場合も同じ）．</p>
 
-        <span style="color:#75715e"># 次の状態</span>
-        next_state <span style="color:#f92672">=</span> digitize(observation)        
-        
-        <span style="color:#75715e"># 報酬の取得</span>
-        reward <span style="color:#f92672">=</span> getReward((i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>), done)
+<p>$$
+A = \{ 1, 4, 5, 8, 10 \}
+$$</p>
 
-        <span style="color:#75715e"># Q値の更新</span>
-        updateQTable(state, action, next_state, reward)
-
-        <span style="color:#66d9ef">if</span> done:
-			<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))		
-            <span style="color:#66d9ef">break</span>  </code></pre></div>
-<p>学習したQテーブルを用いて実行しましょう．
-このとき，$\epsilon=0$に設定しておきましょう．
-うまく学習できていれば200ステップ以内に山を登り旗に到達出来るはずです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
-
-observation <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-    
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-        
-    <span style="color:#75715e"># 状態の取得</span>
-    state <span style="color:#f92672">=</span> digitize(observation)
-        
-    <span style="color:#75715e"># εグリーディ手法で行動選択</span>
-    action <span style="color:#f92672">=</span> greedyAction(state, <span style="color:#ae81ff">0</span>)
-
-    <span style="color:#75715e"># 次の状態に遷移</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
-    
-    env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
-	
-	<span style="color:#66d9ef">if</span> done:
-		<span style="color:#66d9ef">break</span></code></pre></div>
-<p><a href="https://gyazo.com/57db372642952fe2b9a0bdc5eaeab09a"><img src="https://i.gyazo.com/57db372642952fe2b9a0bdc5eaeab09a.gif" alt="Image from Gyazo" /></a></p>
-
+<p>$$
+B = \{ 2, 3, 6, 7, 9 \}
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">max state: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0](-100.000)
+max state: [1, 0, 1, 0, 0, 1, 0, 0, 0, 0](-12.105)
+max state: [0, 0, 0, 1, 1, 1, 1, 0, 0, 0](-3.806)
+max state: [1, 1, 1, 0, 0, 1, 1, 1, 0, 0](-1.672)
+max state: [0, 0, 1, 0, 1, 1, 1, 1, 0, 0](-1.315)
+max state: [0, 1, 1, 0, 1, 0, 1, 1, 0, 0](-0.755)
+max state: [1, 0, 1, 0, 0, 0, 1, 1, 0, 1](-0.269)
+max state: [0, 1, 1, 0, 1, 0, 1, 0, 0, 1](-0.088)
+max state: [0, 0, 0, 0, 0, 1, 1, 0, 1, 1](-0.047)
+max state: [1, 1, 0, 0, 0, 0, 1, 0, 1, 1](-0.024)
+max state: [0, 1, 1, 0, 0, 1, 1, 0, 1, 0](-0.015)</code></pre></div>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   課題
 </h1>
 
 
-<p>より早く車両が旗に到達する工夫を考え実装しなさい．
+<p>1〜20の整数で構成されたフロイド問題を解きなさい．
 作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
 
 
@@ -529,7 +533,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-03-15 22:11:44.796426 &#43;0900 JST m=&#43;0.172542270">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-16 11:26:05.373633 &#43;0900 JST m=&#43;0.110972518">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

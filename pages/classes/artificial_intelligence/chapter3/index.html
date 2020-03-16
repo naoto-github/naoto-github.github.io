@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    探索木・「ハノイの塔」 | MLAB
+    探索木・Simple AI | MLAB
   </title>
 
   
@@ -60,7 +60,7 @@
   
   
 
-  <meta property="og:title" content="探索木・「ハノイの塔」" />
+  <meta property="og:title" content="探索木・Simple AI" />
 
 
 
@@ -72,7 +72,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+  <meta property="og:image" content="https://i.gyazo.com/618761db12a3d583a1b5e06c4a05b44b.png" />
 
 
 
@@ -80,10 +80,12 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします． ノートブックの作成方法に関しては第１回の資料を参考にしてください．
- ハノイの塔  今回は ハノイの塔（Tower of Hanoi） を取り上げましょう．
-ハノイの塔   3本の支柱（A，B，C）があり，支柱Aに3枚の円盤（小，中，大）が重なっている． 円盤を他の支柱に移動させることができるが， 必ず大きい円盤の上に小さい円盤が積まれる状態でなければいけない． 支柱Aにある全ての円盤を支柱Cに移すにはどうすれば良いか．   この問題を 状態空間モデル で表現します．
-状態空間モデル   円盤の状態を，支柱Aにあるとき1 ，支柱Bにあるとき2， 支柱Cにあるとき3と表す． この状態を，$(小, 中, 大)$の円盤の順に並べる． 例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す． また，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す． $$ 初期状態：(1, 1, 1) $$ $$ 目的状態：(3, 3, 3) $$ 行動（操作）は，円盤を現在の支柱から，他の支柱へ移動することで与えられる． ただし，大きい円盤を小さい円盤の上に移動させることはできない． 円盤（小）に対する行動は下記の6通りである． ここで，$y$と$z$は円盤（中）と円盤（大）の状態である．   $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ  $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ  $(2, y, z) \rightarrow (1, y, z)$ #支柱Bから支柱Aへ  $(2, y, z) \rightarrow (3, y, z)$ #支柱Bから支柱Cへ  $(3, y, z) \rightarrow (1, y, z)$ #支柱Cから支柱Aへ  $(3, y, z) \rightarrow (2, y, z)$ #支柱Cから支柱Bへ  同様に円盤（中），円盤（大）にも6通りの行動が存在し， 合わせて18の行動が定義できる．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+  <meta property="og:description" content="Simple AIとは  Simple AIは，Stuart Russel氏とPeter Norvig氏が執筆した 「Artificial Intelligence: A Modern Approach」に掲載されている 人工知能で用いられる伝統的なアルゴリズムを提供するPythonのライブラリです． このライブラリを導入することで， 幅優先探索などの 探索アルゴリズム，遺伝的アルゴリズムなどの 進化的アルゴリズム， 決定木などの 機械学習アルゴリズム を簡単に実装することが可能です． ここでは，授業で紹介したアルゴリズムを Simple AI で実装することで， 知識を定着させ，様々な問題に応用できるようになることを目指します．
+ 最初に，Simple AI をインストールします． pydotとflaskは探索過程を可視化ためのライブラリです． インストールには pip というパッケージ管理コマンドを利用します． インストールしたフォルダで，PowerShellを起動し，下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
+&gt; .\Scripts\pip install simpleai &gt; .\Scripts\pip install pydot &gt; .\Scripts\pip install flask  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします．
+
+ 水差し問題  今回は 水差し問題（Jug Problem） を取り上げましょう．
+水差し問題   3リットルと4リットルのコップ（水差し）がある． 4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．" />
 
 
 
@@ -94,18 +96,20 @@
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="探索木・「ハノイの塔」" />
+  <meta name="twitter:title" content="探索木・Simple AI" />
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします． ノートブックの作成方法に関しては第１回の資料を参考にしてください．
- ハノイの塔  今回は ハノイの塔（Tower of Hanoi） を取り上げましょう．
-ハノイの塔   3本の支柱（A，B，C）があり，支柱Aに3枚の円盤（小，中，大）が重なっている． 円盤を他の支柱に移動させることができるが， 必ず大きい円盤の上に小さい円盤が積まれる状態でなければいけない． 支柱Aにある全ての円盤を支柱Cに移すにはどうすれば良いか．   この問題を 状態空間モデル で表現します．
-状態空間モデル   円盤の状態を，支柱Aにあるとき1 ，支柱Bにあるとき2， 支柱Cにあるとき3と表す． この状態を，$(小, 中, 大)$の円盤の順に並べる． 例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す． また，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す． $$ 初期状態：(1, 1, 1) $$ $$ 目的状態：(3, 3, 3) $$ 行動（操作）は，円盤を現在の支柱から，他の支柱へ移動することで与えられる． ただし，大きい円盤を小さい円盤の上に移動させることはできない． 円盤（小）に対する行動は下記の6通りである． ここで，$y$と$z$は円盤（中）と円盤（大）の状態である．   $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ  $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ  $(2, y, z) \rightarrow (1, y, z)$ #支柱Bから支柱Aへ  $(2, y, z) \rightarrow (3, y, z)$ #支柱Bから支柱Cへ  $(3, y, z) \rightarrow (1, y, z)$ #支柱Cから支柱Aへ  $(3, y, z) \rightarrow (2, y, z)$ #支柱Cから支柱Bへ  同様に円盤（中），円盤（大）にも6通りの行動が存在し， 合わせて18の行動が定義できる．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+  <meta name="twitter:description" content="Simple AIとは  Simple AIは，Stuart Russel氏とPeter Norvig氏が執筆した 「Artificial Intelligence: A Modern Approach」に掲載されている 人工知能で用いられる伝統的なアルゴリズムを提供するPythonのライブラリです． このライブラリを導入することで， 幅優先探索などの 探索アルゴリズム，遺伝的アルゴリズムなどの 進化的アルゴリズム， 決定木などの 機械学習アルゴリズム を簡単に実装することが可能です． ここでは，授業で紹介したアルゴリズムを Simple AI で実装することで， 知識を定着させ，様々な問題に応用できるようになることを目指します．
+ 最初に，Simple AI をインストールします． pydotとflaskは探索過程を可視化ためのライブラリです． インストールには pip というパッケージ管理コマンドを利用します． インストールしたフォルダで，PowerShellを起動し，下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
+&gt; .\Scripts\pip install simpleai &gt; .\Scripts\pip install pydot &gt; .\Scripts\pip install flask  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします．
+
+ 水差し問題  今回は 水差し問題（Jug Problem） を取り上げましょう．
+水差し問題   3リットルと4リットルのコップ（水差し）がある． 4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．" />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/618761db12a3d583a1b5e06c4a05b44b.png" />
 
 
 
@@ -168,16 +172,43 @@
   
   
   
-  <span>on&nbsp;</span><time datetime="2020-02-29 20:11:10 &#43;0900 JST">February 29, 2020</time>
+  <span>on&nbsp;</span><time datetime="2020-01-04 13:29:27 &#43;0900 JST">January 4, 2020</time>
 </div>
 
-    <h1 class="post-title">探索木・「ハノイの塔」</h1>
+    <h1 class="post-title">探索木・Simple AI</h1>
 <div class="post-line"></div>
 
     
 
     
 
+<p><a href="https://gyazo.com/618761db12a3d583a1b5e06c4a05b44b"><img src="https://i.gyazo.com/618761db12a3d583a1b5e06c4a05b44b.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Simple AIとは
+</h1>
+
+
+<p><a href="https://github.com/simpleai-team/simpleai">Simple AI</a>は，Stuart Russel氏とPeter Norvig氏が執筆した
+「<strong>Artificial Intelligence: A Modern Approach</strong>」に掲載されている
+人工知能で用いられる伝統的なアルゴリズムを提供するPythonのライブラリです．
+このライブラリを導入することで，
+幅優先探索などの <strong>探索アルゴリズム</strong>，遺伝的アルゴリズムなどの <strong>進化的アルゴリズム</strong>，
+決定木などの <strong>機械学習アルゴリズム</strong> を簡単に実装することが可能です．
+ここでは，授業で紹介したアルゴリズムを <strong>Simple AI</strong> で実装することで，
+知識を定着させ，様々な問題に応用できるようになることを目指します．</p>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=0134610997&linkId=1c6d2aae0a2fd57a91177b9cc8cc888b&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<p>最初に，<strong>Simple AI</strong> をインストールします．
+pydotとflaskは探索過程を可視化ためのライブラリです．
+インストールには <code>pip</code> というパッケージ管理コマンドを利用します．
+インストールしたフォルダで，<strong>PowerShell</strong>を起動し，下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; .\Scripts\pip install simpleai
+&gt; .\Scripts\pip install pydot
+&gt; .\Scripts\pip install flask</code></pre></div>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ノートブックの作成
@@ -185,33 +216,32 @@
 
 
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
-ノートブックのタイトルは <strong>AI-3</strong> とします．
-ノートブックの作成方法に関しては<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第１回の資料</a>を参考にしてください．</p>
+ノートブックのタイトルは <strong>AI-3</strong> とします．</p>
+
+<p><a href="https://gyazo.com/0d44325625980697eaa2940d2351447d"><img src="https://i.gyazo.com/0d44325625980697eaa2940d2351447d.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  ハノイの塔
+  水差し問題
 </h1>
 
 
-<p>今回は <strong>ハノイの塔（Tower of Hanoi）</strong> を取り上げましょう．</p>
+<p>今回は <strong>水差し問題（Jug Problem）</strong> を取り上げましょう．</p>
 
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
   <h3 style="color:#006600">
-    ハノイの塔
+    水差し問題
   </h3>
 
   <p>
     
 
-3本の支柱（A，B，C）があり，支柱Aに3枚の円盤（小，中，大）が重なっている．
-円盤を他の支柱に移動させることができるが，
-必ず大きい円盤の上に小さい円盤が積まれる状態でなければいけない．
-支柱Aにある全ての円盤を支柱Cに移すにはどうすれば良いか．
+3リットルと4リットルのコップ（水差し）がある．
+4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．
 
-<a href="https://gyazo.com/edde4c5e9604916dc110d391ee3e03fb"><img src="https://i.gyazo.com/edde4c5e9604916dc110d391ee3e03fb.png" alt="Image from Gyazo" width="931"/></a>
+<a href="https://gyazo.com/dd29766d2255fea9a16ac101fbe3da2e"><img src="https://i.gyazo.com/dd29766d2255fea9a16ac101fbe3da2e.png" alt="Image from Gyazo" width="400"/></a>
 
 
   </p>
@@ -231,38 +261,26 @@
   <p>
     
 
-円盤の状態を，支柱Aにあるとき<b>1</b> ，支柱Bにあるとき<b>2</b>，
-支柱Cにあるとき<b>3</b>と表す．
-この状態を，$(小, 中, 大)$の円盤の順に並べる．
-
-例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す．
-また，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す．
+3リットルのコップの水の量を$x$，
+4リットルのコップの水の量を$y$と表し，
+この組み合わせを<b>状態</b>と定義する．
 
 $$
-初期状態：(1, 1, 1)
+(x, y)
 $$
 
-$$
-目的状態：(3, 3, 3)
-$$
-
-行動（操作）は，円盤を現在の支柱から，他の支柱へ移動することで与えられる．
-ただし，大きい円盤を小さい円盤の上に移動させることはできない．
-
-円盤（小）に対する行動は下記の6通りである．
-ここで，$y$と$z$は円盤（中）と円盤（大）の状態である．
+コップに対する<b>行動（操作）</b>として下記の8つを定義する．
 
 <ul>
-<li> $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ</li>
-<li> $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ</li>
-<li> $(2, y, z) \rightarrow (1, y, z)$ #支柱Bから支柱Aへ</li>
-<li> $(2, y, z) \rightarrow (3, y, z)$ #支柱Bから支柱Cへ</li>
-<li> $(3, y, z) \rightarrow (1, y, z)$ #支柱Cから支柱Aへ</li>
-<li> $(3, y, z) \rightarrow (2, y, z)$ #支柱Cから支柱Bへ</li>
+<li>A1: 3Lのコップを満杯にする</li>
+<li>A2: 4Lのコップを満杯にする</li>
+<li>A3: 3Lのコップを空にする</li>
+<li>A4: 4Lのコップを空にする</li>
+<li>A5: 3Lのコップを4Lのコップに移し満杯にする</li>
+<li>A6: 4Lのコップを3Lのコップに移し満杯にする</li>
+<li>A7: 3Lのコップの水を全て4Lのコップに移す</li>
+<li>A8: 4Lのコップの水を全て3Lのコップに移す</li>
 </ul>
-
-同様に円盤（中），円盤（大）にも6通りの行動が存在し，
-合わせて18の行動が定義できる．
 
 
   </p>
@@ -279,109 +297,93 @@ $$
 <h2 id="クラスの定義">クラスの定義</h2>
 
 <p>最初にライブラリをインポートします．
-前回と同様に，<strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
-<strong>幅優先探索</strong> を表す<code>breadth_first</code>をインポートします．</p>
+ここでは，<strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
+<strong>幅優先探索</strong> を表す<code>breadth_first</code>をインポートします（幅優先探索に関しては第4回で解説予定）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, breadth_first</code></pre></div>
 <p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
-初期状態は$(1, 1, 1)$，目的状態は$(3, 3, 3)$です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
-GOAL  <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)</code></pre></div>
+初期状態は両方のコップに水がない状態を表す <code>(0, 0)</code>，
+目的状態は4リットルのコップに2リットルの水がある状態を表す<code>(0, 2)</code>です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
+GOAL  <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>)</code></pre></div>
 <p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
-ハノイの塔を表す<code>HanoiProblem</code>を定義します．
+水差し問題を表す<code>JogProblem</code>を定義します．
 オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>is_goal</code>の3種類です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HanoiProblem</span>(SearchProblem):
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JugProblem</span>(SearchProblem):
+	
 	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
 		<span style="color:#f92672">...</span>
 		
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
 		<span style="color:#f92672">...</span>
 		
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
 		<span style="color:#f92672">...</span></code></pre></div>
 <h3 id="actions-self-state">actions(self, state)</h3>
 
-<p>実行可能な行動のリストを返します．
-行動は全部で18パターンが存在します．</p>
+<p>このメソッドでは，状態<code>state</code>で選択可能な行動のリストを返します．
+ここでは，上記で定義した8つの行動が該当します．
+また，<code>state[0]</code>は3Lのコップの水量，<code>state[1]</code>は4Lのコップの水量を表します．
+<code>min</code>と<code>max</code>は，それぞれ引数の最小値と最大値を選択するメソッドです．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
-	list <span style="color:#f92672">=</span> []
 
-	s <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">0</span>]
-	m <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">1</span>]
-	l <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">2</span>]
+	a1 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span>, state[<span style="color:#ae81ff">1</span>])
+	a2 <span style="color:#f92672">=</span> (state[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">4</span>)
+	a3 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span>, state[<span style="color:#ae81ff">1</span>])
+	a4 <span style="color:#f92672">=</span> (state[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">0</span>)
 
-	<span style="color:#75715e"># 円盤小</span>
-	<span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
-		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">2</span>, m, l))
-		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">3</span>, m, l))            
-	<span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:            
-		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">1</span>, m, l))
-		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">3</span>, m, l))
-	<span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:            
-		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">1</span>, m, l))
-		list<span style="color:#f92672">.</span>append((<span style="color:#ae81ff">2</span>, m, l))            
+	g1 <span style="color:#f92672">=</span> max(state[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">-</span> (<span style="color:#ae81ff">4</span> <span style="color:#f92672">-</span> state[<span style="color:#ae81ff">1</span>]), <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#3Lのコップの水量</span>
+	g2 <span style="color:#f92672">=</span> min(state[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> state[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">4</span>) <span style="color:#75715e">#4Lのコップの水量</span>
+	a5 <span style="color:#f92672">=</span> (g1, g2)
 
-	<span style="color:#75715e"># 円盤中</span>
-	<span style="color:#66d9ef">if</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
-			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">2</span>, l))
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
-			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">3</span>, l))            
-	<span style="color:#66d9ef">if</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">1</span>, l))
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
-			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">3</span>, l))            
-	<span style="color:#66d9ef">if</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">1</span>, l))
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
-			list<span style="color:#f92672">.</span>append((s, <span style="color:#ae81ff">2</span>, l))            
+	g1 <span style="color:#f92672">=</span> min(state[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> state[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">3</span>) <span style="color:#75715e">#3Lのコップの水量</span>
+	g2 <span style="color:#f92672">=</span> max(state[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> (<span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> state[<span style="color:#ae81ff">0</span>]), <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#4Lのコップの水量</span>
+	a6 <span style="color:#f92672">=</span> (g1, g2)
+	
+	a7 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span>, min(state[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> state[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">4</span>))
+	a8 <span style="color:#f92672">=</span> (min(state[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> state[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">3</span>), <span style="color:#ae81ff">0</span>)
 
-	<span style="color:#75715e"># 円盤大</span>
-	<span style="color:#66d9ef">if</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> (s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>):
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
-			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">2</span>))
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:                
-			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">3</span>))            
-    <span style="color:#66d9ef">if</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> (s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>):
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">1</span>))
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:                
-			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">3</span>))
-    <span style="color:#66d9ef">if</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> (s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>):
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">1</span>))
-		<span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:                
-			list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">2</span>)) 
+	list <span style="color:#f92672">=</span> [a1, a2, a3, a4, a5, a6, a7, a8]
 
 	<span style="color:#66d9ef">return</span> list</code></pre></div>
 <h3 id="result-self-state-action">result(self, state, action)</h3>
 
-<p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
+<p>このメソッドでは，状態<code>state</code>で，行動<code>action</code>を実行したときに遷移する次の状態を返します．
+ここでは，行動<code>action</code>を，そのまま次の状態として扱います．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
 	<span style="color:#66d9ef">return</span> action</code></pre></div>
 <h3 id="is-goal-self-state">is_goal(self, state)</h3>
 
-<p>状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
+<p>このメソッドでは，状態<code>state</code>が目的状態かどうかを判定します．
+ここでは，状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
 	<span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
 <h2 id="解の探索">解の探索</h2>
 
-<p>幅優先探索（探索木）<code>breadth_first</code>を用いて解を探索します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> HanoiProblem(initial_state<span style="color:#f92672">=</span>START)
-result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True)</code></pre></div>
+<p>幅優先探索（探索木）<code>breadth_first</code>を用いて解を探索します．
+解とは初期状態<code>START</code>から，目的状態<code>GOAL</code>までのパス（経路）を意味します．
+探索過程における冗長な状態を省略するために<code>graph_search=True</code>という引数を設定していることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> JugProblem(initial_state<span style="color:#f92672">=</span>START)
+result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True) <span style="color:#75715e">#幅優先探索</span></code></pre></div>
 <p>探索が終了したら，最終状態，パス，コストを表示します．
-最終状態は<code>(3, 3, 3)</code>となっており目的状態に到達できたことがわかります．
-このとき，初期状態から目的状態までのコスト（ステップ数）は7です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>state)
-<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>path())
-<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>cost)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">(3, 3, 3)
-[(None, (1, 1, 1)), ((3, 1, 1), (3, 1, 1)), ((3, 2, 1), (3, 2, 1)), ((2, 2, 1), (2, 2, 1)), ((2, 2, 3), (2, 2, 3)), ((1, 2, 3), (1, 2, 3)), ((1, 3, 3), (1, 3, 3)), ((3, 3, 3), (3, 3, 3))]
-7</code></pre></div>
-<p>上記の結果は下図と一致します．</p>
+最終状態は<code>(0,2)</code>となっており目的状態に到達できたことがわかります．
+また，パスは<code>(0, 0), (3, 0), (0, 3), (3, 3), (2, 4), (2, 0), (0, 2)</code>となりました．
+このとき，初期状態から目的状態までのコスト（ステップ数）は6です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;State:&#34;</span>, result<span style="color:#f92672">.</span>state)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Path:&#34;</span>, result<span style="color:#f92672">.</span>path())
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Cost:&#34;</span>, result<span style="color:#f92672">.</span>cost)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">State: (0, 2)
+Path: [(None, (0, 0)), ((3, 0), (3, 0)), ((0, 3), (0, 3)), ((3, 3), (3, 3)), ((2, 4), (2, 4)), ((2, 0), (2, 0)), ((0, 2), (0, 2))]
+Cost: 6</code></pre></div>
+<h2 id="探索過程の可視化">探索過程の可視化</h2>
 
-<p><a href="https://gyazo.com/b7eebfe2a4553a9e53e2d92add412f60"><img src="https://i.gyazo.com/b7eebfe2a4553a9e53e2d92add412f60.png" alt="Image from Gyazo" /></a></p>
+<p>最後に探索過程を可視化してみましょう．
+Simple AIでは，<strong>WebViewer</strong> という可視化ツールを利用することができます．
+WebViewerを起動すると <strong><a href="http://localhost:8000">http://localhost:8000</a></strong> というURLで結果を確認することができます．
+可視化することで目的状態を発見するまでの過程が明確になります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search.viewers <span style="color:#f92672">import</span> WebViewer
+
+web_viewer <span style="color:#f92672">=</span> WebViewer()
+result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True, viewer<span style="color:#f92672">=</span>web_viewer)</code></pre></div>
+<p><a href="https://gyazo.com/ba1b2b4c87534e6c6d2a68f9b6316d25"><img src="https://i.gyazo.com/ba1b2b4c87534e6c6d2a68f9b6316d25.gif" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -389,7 +391,7 @@ result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<
 </h1>
 
 
-<p>ハノイの塔を分割統治法を用いて解く方法を説明しなさい（マークダウンにしてセルに入力すること）．
+<p>3リットルのコップに正確に1リットルの水を入れるための解を求めなさい．
 作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
 
 
@@ -478,7 +480,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-03-15 22:11:44.815131 &#43;0900 JST m=&#43;0.191247565">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-16 11:26:05.377379 &#43;0900 JST m=&#43;0.114719352">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
