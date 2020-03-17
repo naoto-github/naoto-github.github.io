@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    進化的アルゴリズム・遺伝的アルゴリズム | MLAB
+    探索アルゴリズム・ヒューリスティック探索 | MLAB
   </title>
 
   
@@ -45,7 +45,7 @@
 
   
   <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -60,7 +60,7 @@
   
   
 
-  <meta property="og:title" content="進化的アルゴリズム・遺伝的アルゴリズム" />
+  <meta property="og:title" content="探索アルゴリズム・ヒューリスティック探索" />
 
 
 
@@ -72,7 +72,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+  <meta property="og:image" content="https://i.gyazo.com/243ad2b694bc7b14ea9ce4795d7f9381.png" />
 
 
 
@@ -80,9 +80,12 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-7 とします． ノートブックの作成方法は第1回の資料を参照してください．
- フロイド問題  今回は フロイド問題(Floyd Problem) を取り上げましょう．
-フロイド問題   1から10までの整数を$A$と$B$の2つのグループに分ける． このとき，各グループの整数の平方根の和を求め，その差の絶対値を目的関数$g(A,B)$とする． この目的関数が最小となるグループ$A$，$B$を求めよ． 例えば，グループ$A$を奇数，グループ$B$を偶数とするとき， 目的関数の値は$1.24$となる． $$ A=\{1, 3, 5, 7, 9\} $$ $$ B=\{2, 4, 6, 8, 10\} $$ $$ f(A) = \sqrt{1} &#43; \sqrt{3} &#43; \sqrt{5} &#43; \sqrt{7} &#43; \sqrt{9} \simeq 10.61 $$ $$ f(B) = \sqrt{2} &#43; \sqrt{4} &#43; \sqrt{6} &#43; \sqrt{8} &#43; \sqrt{10} \simeq 11.85 $$ $$ g(A, B) = |f(A) - f(B)| \simeq 1." />
+  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-7 とします． ノートブックの作成方法に関しては第3回の資料を参考にしてください．
+ 迷路問題  今回も前回と同じ 迷路問題を取り上げます．
+迷路問題   初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ． ただし，隣り合う状態への移動にかかるコストは$1$とする．   迷路問題の状態空間モデルを確認しておきましょう．
+状態空間モデル   $A$から$Y$までの25の状態から，冗長な状態を取り除く． 例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する． この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．  行動は移動可能な状態のペアとして定義する． 例えば，$S1$からは，$S2$と$S7$に移動可能なため， 下記のように表現できる．  $S1 \rightarrow S2$ $S1 \rightarrow S7$  同様に全ての状態について列挙すると， 合わせて31通りの行動が定義できる．   ヒューリスティック探索  前回紹介した幅優先探索と深さ優先探索は知識を用いない探索手法でした． ヒューリスティック探索とは，必ず正解に到達できるわけではないけれど， ある程度のレベルで正解に近い解を得ることが出来る知識（ヒューリスティックス） を利用した探索手法のことです．
+迷路問題におけるヒューリスティックス   迷路問題におけるヒューリスティックスとしてマンハッタン距離を用いる． マンハッタン距離とは，ある状態$S$から目的状態までの各座標（ここでは$x$座標と$y$座標）の 差の総和を距離とする指標であり， ここでは$h(S)$で表すことにする．
+例えば，$S1$から$S17$までのマンハッタン距離は， $x$座標の差は$4$，$y$座標の差は$4$であるため， これを合計して$8$となる． $$ h(S1) = 8 $$ 同様に，$S12$から$S17$までのマンハッタン距離は， $x$座標の差は$2$，$y$座標の差は$1$であるため， これを合計して$3$となる． $$ h(S12) = 3 $$    A*アルゴリズム  今回は，ヒューリスティック探索の一つである A*アルゴリズム（エースターアルゴリズム） を紹介します． A*アルゴリズムでは，下記の評価関数$f(S)$が最小となる状態を優先して探索します． $h(S)$は先に述べたマンハッタン距離を表し， $g(S)$は状態$S$に到達するまでにかかったコストを表しています． ここで注意すべきことは， $g(S)$は既に確定したコストであるのに対し， $h(S)$は将来のコストの推定値であるということです．" />
 
 
 
@@ -93,17 +96,20 @@
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="進化的アルゴリズム・遺伝的アルゴリズム" />
+  <meta name="twitter:title" content="探索アルゴリズム・ヒューリスティック探索" />
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-7 とします． ノートブックの作成方法は第1回の資料を参照してください．
- フロイド問題  今回は フロイド問題(Floyd Problem) を取り上げましょう．
-フロイド問題   1から10までの整数を$A$と$B$の2つのグループに分ける． このとき，各グループの整数の平方根の和を求め，その差の絶対値を目的関数$g(A,B)$とする． この目的関数が最小となるグループ$A$，$B$を求めよ． 例えば，グループ$A$を奇数，グループ$B$を偶数とするとき， 目的関数の値は$1.24$となる． $$ A=\{1, 3, 5, 7, 9\} $$ $$ B=\{2, 4, 6, 8, 10\} $$ $$ f(A) = \sqrt{1} &#43; \sqrt{3} &#43; \sqrt{5} &#43; \sqrt{7} &#43; \sqrt{9} \simeq 10.61 $$ $$ f(B) = \sqrt{2} &#43; \sqrt{4} &#43; \sqrt{6} &#43; \sqrt{8} &#43; \sqrt{10} \simeq 11.85 $$ $$ g(A, B) = |f(A) - f(B)| \simeq 1." />
+  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-7 とします． ノートブックの作成方法に関しては第3回の資料を参考にしてください．
+ 迷路問題  今回も前回と同じ 迷路問題を取り上げます．
+迷路問題   初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ． ただし，隣り合う状態への移動にかかるコストは$1$とする．   迷路問題の状態空間モデルを確認しておきましょう．
+状態空間モデル   $A$から$Y$までの25の状態から，冗長な状態を取り除く． 例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する． この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．  行動は移動可能な状態のペアとして定義する． 例えば，$S1$からは，$S2$と$S7$に移動可能なため， 下記のように表現できる．  $S1 \rightarrow S2$ $S1 \rightarrow S7$  同様に全ての状態について列挙すると， 合わせて31通りの行動が定義できる．   ヒューリスティック探索  前回紹介した幅優先探索と深さ優先探索は知識を用いない探索手法でした． ヒューリスティック探索とは，必ず正解に到達できるわけではないけれど， ある程度のレベルで正解に近い解を得ることが出来る知識（ヒューリスティックス） を利用した探索手法のことです．
+迷路問題におけるヒューリスティックス   迷路問題におけるヒューリスティックスとしてマンハッタン距離を用いる． マンハッタン距離とは，ある状態$S$から目的状態までの各座標（ここでは$x$座標と$y$座標）の 差の総和を距離とする指標であり， ここでは$h(S)$で表すことにする．
+例えば，$S1$から$S17$までのマンハッタン距離は， $x$座標の差は$4$，$y$座標の差は$4$であるため， これを合計して$8$となる． $$ h(S1) = 8 $$ 同様に，$S12$から$S17$までのマンハッタン距離は， $x$座標の差は$2$，$y$座標の差は$1$であるため， これを合計して$3$となる． $$ h(S12) = 3 $$    A*アルゴリズム  今回は，ヒューリスティック探索の一つである A*アルゴリズム（エースターアルゴリズム） を紹介します． A*アルゴリズムでは，下記の評価関数$f(S)$が最小となる状態を優先して探索します． $h(S)$は先に述べたマンハッタン距離を表し， $g(S)$は状態$S$に到達するまでにかかったコストを表しています． ここで注意すべきことは， $g(S)$は既に確定したコストであるのに対し， $h(S)$は将来のコストの推定値であるということです．" />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/243ad2b694bc7b14ea9ce4795d7f9381.png" />
 
 
 
@@ -166,15 +172,17 @@
   
   
   
-  <span>on&nbsp;</span><time datetime="2020-03-15 10:32:41 &#43;0900 JST">March 15, 2020</time>
+  <span>on&nbsp;</span><time datetime="2020-03-17 13:44:45 &#43;0900 JST">March 17, 2020</time>
 </div>
 
-    <h1 class="post-title">進化的アルゴリズム・遺伝的アルゴリズム</h1>
+    <h1 class="post-title">探索アルゴリズム・ヒューリスティック探索</h1>
 <div class="post-line"></div>
 
     
 
     
+
+<p><a href="https://gyazo.com/243ad2b694bc7b14ea9ce4795d7f9381"><img src="https://i.gyazo.com/243ad2b694bc7b14ea9ce4795d7f9381.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -184,51 +192,66 @@
 
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-7</strong> とします．
-ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
+ノートブックの作成方法に関しては<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter3/">第3回の資料</a>を参考にしてください．</p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  フロイド問題
+  迷路問題
 </h1>
 
 
-<p>今回は <strong>フロイド問題(Floyd Problem)</strong> を取り上げましょう．</p>
+<p>今回も前回と同じ <strong>迷路問題</strong>を取り上げます．</p>
 
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
   <h3 style="color:#006600">
-    フロイド問題
+    迷路問題
   </h3>
 
   <p>
     
 
-1から10までの整数を$A$と$B$の2つのグループに分ける．
-このとき，各グループの整数の平方根の和を求め，その差の絶対値を目的関数$g(A,B)$とする．
-この目的関数が最小となるグループ$A$，$B$を求めよ．
-例えば，グループ$A$を奇数，グループ$B$を偶数とするとき，
-目的関数の値は$1.24$となる．
+初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ．
+ただし，隣り合う状態への移動にかかるコストは$1$とする．
 
-$$
-A=\{1, 3, 5, 7, 9\}
-$$
+<a href="https://gyazo.com/405a6712eb33d597cef82a66607d13ab"><img src="https://i.gyazo.com/405a6712eb33d597cef82a66607d13ab.png" alt="Image from Gyazo" width="477"/></a>
 
-$$
-B=\{2, 4, 6, 8, 10\}
-$$
 
-$$
-f(A) = \sqrt{1} + \sqrt{3} + \sqrt{5} + \sqrt{7} + \sqrt{9} \simeq 10.61
-$$
+  </p>
+  
+</div>
 
-$$
-f(B) = \sqrt{2} + \sqrt{4} + \sqrt{6} + \sqrt{8} + \sqrt{10} \simeq 11.85
-$$
 
-$$
-g(A, B) = |f(A) - f(B)| \simeq 1.24
-$$
+<p>迷路問題の状態空間モデルを確認しておきましょう．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    状態空間モデル
+  </h3>
+
+  <p>
+    
+
+$A$から$Y$までの25の状態から，冗長な状態を取り除く．
+例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する．
+この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．
+
+<a href="https://gyazo.com/2510a16d81e5f60052a2edd08a7e5aad"><img src="https://i.gyazo.com/2510a16d81e5f60052a2edd08a7e5aad.png" alt="Image from Gyazo" width="480"/></a>
+
+行動は移動可能な状態のペアとして定義する．
+例えば，$S1$からは，$S2$と$S7$に移動可能なため，
+下記のように表現できる．
+
+<ul>
+<li>$S1 \rightarrow S2$</li>
+<li>$S1 \rightarrow S7$</li>
+</ul>
+
+同様に全ての状態について列挙すると，
+合わせて31通りの行動が定義できる．
 
 
   </p>
@@ -238,48 +261,91 @@ $$
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  遺伝的アルゴリズム
+  ヒューリスティック探索
 </h1>
 
 
-<p>フロイド問題を <strong>遺伝的アルゴリズム(Genetic Algorithm)</strong> で解きます．
-遺伝的アルゴリズムは，進化的アルゴリズムの一つに分類され，
-進化の仕組みを参考に開発されたアルゴリズムです．
-ネーミングがとてもキャッチーなこともあり，とても人気のあるアルゴリズムです．
-問題の解は，数値の列で構成される <strong>個体</strong> として表現され，この個体を複数生成し <strong>世代</strong> と呼びます．
-この世代で，<strong>突然変異</strong> と <strong>交叉</strong> と呼ばれるオペレータ（操作）を適用して，
-新しい個体を生成し，次の世代とすることを繰り返します．</p>
+<p>前回紹介した幅優先探索と深さ優先探索は知識を用いない探索手法でした．
+ヒューリスティック探索とは，必ず正解に到達できるわけではないけれど，
+ある程度のレベルで正解に近い解を得ることが出来る知識（ヒューリスティックス）
+を利用した探索手法のことです．</p>
 
-<p>フロイド問題では，整数がグループAに属するとき$0$，
-グループBに属するとき$1$とする数値列を個体とします．
-例えば，グループ$A$を奇数，グループ$B$を偶数とするとき，
-個体$I_1$は下記のように表現されます．</p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    迷路問題におけるヒューリスティックス
+  </h3>
+
+  <p>
+    
+
+迷路問題におけるヒューリスティックスとして<b>マンハッタン距離</b>を用いる．
+マンハッタン距離とは，ある状態$S$から目的状態までの各座標（ここでは$x$座標と$y$座標）の
+差の総和を距離とする指標であり，
+ここでは$h(S)$で表すことにする．<br><br>
+
+例えば，$S1$から$S17$までのマンハッタン距離は，
+$x$座標の差は$4$，$y$座標の差は$4$であるため，
+これを合計して$8$となる．
+
+$$
+h(S1) = 8
+$$
+
+同様に，$S12$から$S17$までのマンハッタン距離は，
+$x$座標の差は$2$，$y$座標の差は$1$であるため，
+これを合計して$3$となる．
+
+$$
+h(S12) = 3
+$$
+
+<a href="https://gyazo.com/f407b37e030102afa7485a1e23a9ff18"><img src="https://i.gyazo.com/f407b37e030102afa7485a1e23a9ff18.png" alt="Image from Gyazo" width="807"/></a>
+
+
+  </p>
+  
+</div>
+
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  A*アルゴリズム
+</h1>
+
+
+<p>今回は，ヒューリスティック探索の一つである <strong>A*アルゴリズム（エースターアルゴリズム）</strong> を紹介します．
+A*アルゴリズムでは，下記の評価関数$f(S)$が最小となる状態を優先して探索します．
+$h(S)$は先に述べたマンハッタン距離を表し，
+$g(S)$は状態$S$に到達するまでにかかったコストを表しています．
+ここで注意すべきことは，
+$g(S)$は既に確定したコストであるのに対し，
+$h(S)$は将来のコストの推定値であるということです．</p>
 
 <p>$$
-I_1 = (0, 1, 0, 1, 0, 1, 0, 1, 0, 1)
+f(S) = g(S) + h(S)
 $$</p>
 
-<p>この他にも，グループ$A$を1〜5，グループ$B$を6〜10とするとき，
-個体$I_2$は下記のように表現されます．</p>
+<p>例えば，探索過程で$S8$に到達した場合を考えます．
+初期状態の$S1$から$S8$に到達するには，$S1 \rightarrow S7 \rightarrow S8$ を辿る必要があり，
+そのコストは$g(S8)=4$です．
+一方，$S8$から$S17$の将来のコストは，まだ探索しておらず不明であるため，
+推定値であるマンハッタン距離$h(S8)=4$を用います（本当は$S8 \rightarrow S12 \rightarrow S13 \rightarrow S9 \rightarrow S10 \rightarrow S17$を辿る必要があり，そのコストは$6$です）．
+よって，$S8$の評価関数は下記のように計算されます．</p>
 
 <p>$$
-I_2 = (0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
+f(S8) = g(S8)+h(S8) = 4+4 = 8
 $$</p>
 
-<p><strong>突然変異</strong> は個体に含まれる$n$番目の数値をランダムに変化させ，
-新しい個体を生成する操作のことです．
-例えば，個体$I_1$の5番目の数値を$0$から$1$に変化させます．</p>
+<p><a href="https://gyazo.com/b09884f12597f6f5cf11d0b105cd59cf"><img src="https://i.gyazo.com/b09884f12597f6f5cf11d0b105cd59cf.png" alt="Image from Gyazo" /></a></p>
 
-<p>$$
-(0, 1, 0, 1, 0, 1, 0, 1, 0, 1) \rightarrow (0, 1, 0, 1, 1, 1, 0, 1, 0, 1)
-$$</p>
+<p>下図は各状態の評価関数$f$を表しています．
+この値が小さい順番に探索は進行します．
+A*アルゴリズムの効率は用いるヒューリスティックスに影響されますが，
+一般に知識を用いない手法に比べ有効とされています．</p>
 
-<p><strong>交叉</strong> は複数の個体を繋ぎ合わせて，新しい個体を生成する操作のことです．
-例えば，個体$I_1$の前半と，個体$I_2$の後半の数値を繋ぎ合わせます．</p>
-
-<p>$$
-(0, 1, 0, 1, 0, 1, 0, 1, 0, 1) \times (0, 0, 0, 0, 0, 1, 1, 1, 1, 1) \rightarrow (0, 1, 0, 1, 0, 1, 1, 1, 1, 1)
-$$</p>
+<p><a href="https://gyazo.com/314f34c63b6525f114db0a5e88e0d10b"><img src="https://i.gyazo.com/314f34c63b6525f114db0a5e88e0d10b.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -287,162 +353,168 @@ $$</p>
 </h1>
 
 
-<h2 id="クラスの定義">クラスの定義</h2>
-
 <p>最初にライブラリをインポートします．
 <strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
-<strong>遺伝的アルゴリズム</strong> を表す <code>genetic</code> をインポートします．
-この他にも，数値計算のための <code>Numpy</code> と，
-オブジェクトのコピーのための <code>copy</code> もインポートします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> copy
-<span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem
-<span style="color:#f92672">from</span> simpleai.search.local <span style="color:#f92672">import</span> genetic</code></pre></div>
-<p>次に <strong>対象とする整数</strong> と，<strong>初期状態</strong> を定義します．
-初期状態は，全ての整数がグループ$A$に属することとします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">NUMBERS <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>]
-START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]</code></pre></div>
+<strong>A*アルゴリズム</strong> を表す<code>astar</code> をインポートします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, astar</code></pre></div>
+<p>最初に各状態の座標を定義します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">S1 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S1&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+S2 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S2&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>)
+S3 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S3&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+S4 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S4&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>)
+S5 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S5&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">2</span>)
+S6 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S6&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">2</span>)
+S7 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S7&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
+S8 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S8&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)
+S9 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S9&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>)
+S10 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S10&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>)
+S11 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S11&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>)
+S12 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S12&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>)
+S13 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S13&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>)
+S14 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S14&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>)
+S15 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S15&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>)
+S16 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S16&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>)
+S17 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S17&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)</code></pre></div>
+<p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
+初期状態は$1$，目的状態は$17$です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> S1
+GOAL  <span style="color:#f92672">=</span> S17</code></pre></div>
 <p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
-フロイド問題を表す <code>FloydProblem</code>  を定義します．
-オーバライドするメソッドは，<code>value</code>，<code>generate_random_state</code>，
-<code>crossover</code>，<code>mutate</code> の4種類です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FloydProblem</span>(SearchProblem):
-	
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
+迷路問題を表す<code>MazeProblem</code>を定義します．
+オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>is_goal</code>，<code>cost</code>，<code>heuristic</code>の3種類です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MazeProblem</span>(SearchProblem):
+
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
 		<span style="color:#f92672">...</span>
 		
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_random_state</span>(self):
-		<span style="color:#f92672">...</span>		
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+		<span style="color:#f92672">...</span>
 		
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossover</span>(self, state1, state2):
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
 		<span style="color:#f92672">...</span>
-	
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mutate</span>(self, state):
+		
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
 		<span style="color:#f92672">...</span>
-	</code></pre></div>
-<h3 id="value-self-state">value(self, state)</h3>
+		
+	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heuristic</span>(self, state):
+		<span style="color:#f92672">...</span>		</code></pre></div>
+<h3 id="actions-self-state">actions(self, state)</h3>
 
-<p>状態<code>state</code> の目的関数を実装します．
-フロイド問題は目的関数を<strong>最小化</strong>する必要がありますが，
-ここでは目的関数を負の値で表し，<strong>最大化</strong>を目的とした問題として扱います．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
+<p>実行可能な行動のリストを返します．
+行動は全部で31パターンが存在します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
+	list <span style="color:#f92672">=</span> []
 
-        value0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-        value1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-        
-        <span style="color:#66d9ef">for</span> n, s <span style="color:#f92672">in</span> zip(NUMBERS, state):
-            <span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-                value0 <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>sqrt(n)
-            <span style="color:#66d9ef">else</span>:
-                value1 <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>sqrt(n)
-            
-        value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>abs(value0 <span style="color:#f92672">-</span> value1) <span style="color:#75715e"># 負の値</span>
-            
-        <span style="color:#66d9ef">return</span> value</code></pre></div>
-<h3 id="generate-random-state-self">generate_random_state(self)</h3>
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S1:
+		list <span style="color:#f92672">=</span> [S2, S7]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S2:
+		list <span style="color:#f92672">=</span> [S1, S6]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S3:
+		list <span style="color:#f92672">=</span> [S4]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S4:
+		list <span style="color:#f92672">=</span> [S3, S5, S8]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S5:
+		list <span style="color:#f92672">=</span> [S4]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S6:
+		list <span style="color:#f92672">=</span> [S2]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S7:
+		list <span style="color:#f92672">=</span> [S1, S8, S14]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S8:
+		list <span style="color:#f92672">=</span> [S4, S12]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S9:
+		list <span style="color:#f92672">=</span> [S10, S13]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S10:
+		list <span style="color:#f92672">=</span> [S9, S17]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S11:
+		list <span style="color:#f92672">=</span> [S12]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S12:
+		list <span style="color:#f92672">=</span> [S8, S11, S13]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S13:
+		list <span style="color:#f92672">=</span> [S9, S12]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S14:
+		list <span style="color:#f92672">=</span> [S7, S15]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S15:
+		list <span style="color:#f92672">=</span> [S14]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S16:
+		list <span style="color:#f92672">=</span> [S17]
+	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S17:
+		list <span style="color:#f92672">=</span> [S10, S16]
 
-<p>ランダムに状態を生成します．
-生成した乱数が0.5未満であればグループA，
-0.5以上であればグループBとします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_random_state</span>(self):
-        
-        state <span style="color:#f92672">=</span> []
+	list<span style="color:#f92672">.</span>reverse()
 
-        <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> NUMBERS:
-            <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span>:
-                state<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span>)
-            <span style="color:#66d9ef">else</span>:
-                state<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)        
-        
-        <span style="color:#66d9ef">return</span> state</code></pre></div>
-<h3 id="crossover-self-state1-state2">crossover(self, state1, state2)</h3>
+	<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{} -&gt; {}&#34;</span><span style="color:#f92672">.</span>format(state, list))	
 
-<p>状態<code>state1</code>と状態<code>state2</code>を交叉し，新しい状態を生成します．
-交差する位置は乱数で決定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossover</span>(self, state1, state2):
+	<span style="color:#66d9ef">return</span> list</code></pre></div>
+<h3 id="result-self-state-action">result(self, state, action)</h3>
 
-        child <span style="color:#f92672">=</span> []
+<p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+	<span style="color:#66d9ef">return</span> action</code></pre></div>
+<h3 id="is-goal-self-state">is_goal(self, state)</h3>
 
-        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(state1))
+<p>状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
+	<span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
+<h3 id="cost-self-state-action-state2">cost(self, state, action, state2)</h3>
 
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, index):
-            child<span style="color:#f92672">.</span>append(state1[i])
+<p>状態間のコストを定義します（$g(S)$ではないことに注意）．
+現在の状態$state$と，遷移先の状態$state2$は，
+$x$軸または$y$軸に沿って直線的に接続されているため，その座標の差をコストとします．
+計算方法は，マンハッタン距離と同じとなりますが，
+接続されている状態同士の実際のコストであり，推定値ではないことに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
+	x1, y1 <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>]
+	x2, y2 <span style="color:#f92672">=</span> state2[<span style="color:#ae81ff">1</span>], state2[<span style="color:#ae81ff">2</span>]
+	c <span style="color:#f92672">=</span> abs(x1 <span style="color:#f92672">-</span> x2) <span style="color:#f92672">+</span> abs(y1 <span style="color:#f92672">-</span> y2)
+	<span style="color:#66d9ef">return</span> c</code></pre></div>
+<h3 id="heuristic-self-state">heuristic(self, state)</h3>
 
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(index, len(state2)):
-            child<span style="color:#f92672">.</span>append(state2[i])                
-        
-        <span style="color:#66d9ef">return</span> child</code></pre></div>
-<h3 id="mutate-self-state">mutate(self, state)</h3>
-
-<p>状態<code>state</code>を突然変異させ，新しい状態を生成します，
-突然変異する位置は乱数で決定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mutate</span>(self, state):
-
-        mutated <span style="color:#f92672">=</span> copy<span style="color:#f92672">.</span>deepcopy(state)                                
-
-        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(mutated))
-                         
-        <span style="color:#66d9ef">if</span> mutated[index] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-            mutated[index] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-        <span style="color:#66d9ef">else</span>:
-            mutated[index] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>                                     
-        
-        <span style="color:#66d9ef">return</span> mutated</code></pre></div>
+<p>ヒューリスティックス$h(S)$を定義します．
+現在の状態$state$から目的状態$GOAL$までのマンハッタン距離です．
+上記とは異なり，計算されたコストはあくまで推定値です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heuristic</span>(self, state):
+	x1, y1 <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>]
+	x2, y2 <span style="color:#f92672">=</span> GOAL[<span style="color:#ae81ff">1</span>], GOAL[<span style="color:#ae81ff">2</span>]
+	h <span style="color:#f92672">=</span> abs(x1 <span style="color:#f92672">-</span> x2) <span style="color:#f92672">+</span> abs(y1 <span style="color:#f92672">-</span> y2)
+	<span style="color:#66d9ef">return</span> h</code></pre></div>
 <h2 id="解の探索">解の探索</h2>
 
-<p>上記の実装だと最良解の推移がわからないため，下記のコードを<code>value</code>関数に追加します．
-目的関数が最大の状態と値を記録し，更新があったときに表示します，</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
-
-	<span style="color:#f92672">...</span>
-
-	<span style="color:#75715e"># ここから</span>
-	<span style="color:#66d9ef">global</span> max_state
-	<span style="color:#66d9ef">global</span> max_value
-        
-	<span style="color:#66d9ef">if</span> max_value <span style="color:#f92672">&lt;</span> value:
-		max_state <span style="color:#f92672">=</span> state
-		max_value <span style="color:#f92672">=</span> value            
-		<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;max state: {}({:.3f})&#34;</span><span style="color:#f92672">.</span>format(max_state, max_value))
-	<span style="color:#75715e"># ここまで追加</span>
-		
-	<span style="color:#66d9ef">return</span> value</code></pre></div>
-<p>遺伝的アルゴリズム<code>genetic</code>を用いて解を探索します
-ここで，<code>population_size</code>は1世代の個体の数，<code>mutation_chance</code>は突然変異の確率，<code>iterations_limit</code>は世代交代の数です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">max_state <span style="color:#f92672">=</span> START
-max_value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;max state: {}({:.3f})&#34;</span><span style="color:#f92672">.</span>format(max_state, max_value))
-
-problem <span style="color:#f92672">=</span> FloydProblem(initial_state<span style="color:#f92672">=</span>START)
-result <span style="color:#f92672">=</span> genetic(problem, population_size<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, mutation_chance<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, iterations_limit<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)</code></pre></div>
-<p>この結果，目的関数が$-0.015$に収束します．
-これは，下記のグループに分けられたことを意味しています（AとBが逆の場合も同じ）．</p>
-
-<p>$$
-A = \{ 1, 4, 5, 8, 10 \}
-$$</p>
-
-<p>$$
-B = \{ 2, 3, 6, 7, 9 \}
-$$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">max state: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0](-100.000)
-max state: [1, 0, 1, 0, 0, 1, 0, 0, 0, 0](-12.105)
-max state: [0, 0, 0, 1, 1, 1, 1, 0, 0, 0](-3.806)
-max state: [1, 1, 1, 0, 0, 1, 1, 1, 0, 0](-1.672)
-max state: [0, 0, 1, 0, 1, 1, 1, 1, 0, 0](-1.315)
-max state: [0, 1, 1, 0, 1, 0, 1, 1, 0, 0](-0.755)
-max state: [1, 0, 1, 0, 0, 0, 1, 1, 0, 1](-0.269)
-max state: [0, 1, 1, 0, 1, 0, 1, 0, 0, 1](-0.088)
-max state: [0, 0, 0, 0, 0, 1, 1, 0, 1, 1](-0.047)
-max state: [1, 1, 0, 0, 0, 0, 1, 0, 1, 1](-0.024)
-max state: [0, 1, 1, 0, 0, 1, 1, 0, 1, 0](-0.015)</code></pre></div>
+<p>A*アルゴリズム<code>astar</code>を用いて探索します．
+探索順番は$S1,S2,S7,\cdots,S5,S10$となっていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> MazeProblem(initial_state<span style="color:#f92672">=</span>START)
+result <span style="color:#f92672">=</span> astar(problem, graph_search<span style="color:#f92672">=</span>True)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">(&#39;S1&#39;, 1, 1) -&gt; [(&#39;S2&#39;, 5, 1), (&#39;S7&#39;, 1, 3)]
+(&#39;S2&#39;, 5, 1) -&gt; [(&#39;S1&#39;, 1, 1), (&#39;S6&#39;, 5, 2)]
+(&#39;S7&#39;, 1, 3) -&gt; [(&#39;S1&#39;, 1, 1), (&#39;S8&#39;, 3, 3), (&#39;S14&#39;, 1, 5)]
+(&#39;S6&#39;, 5, 2) -&gt; [(&#39;S2&#39;, 5, 1)]
+(&#39;S8&#39;, 3, 3) -&gt; [(&#39;S4&#39;, 3, 2), (&#39;S12&#39;, 3, 4)]
+(&#39;S14&#39;, 1, 5) -&gt; [(&#39;S7&#39;, 1, 3), (&#39;S15&#39;, 3, 5)]
+(&#39;S12&#39;, 3, 4) -&gt; [(&#39;S8&#39;, 3, 3), (&#39;S11&#39;, 2, 4), (&#39;S13&#39;, 4, 4)]
+(&#39;S15&#39;, 3, 5) -&gt; [(&#39;S14&#39;, 1, 5)]
+(&#39;S13&#39;, 4, 4) -&gt; [(&#39;S9&#39;, 4, 3), (&#39;S12&#39;, 3, 4)]
+(&#39;S4&#39;, 3, 2) -&gt; [(&#39;S3&#39;, 2, 2), (&#39;S5&#39;, 4, 2), (&#39;S8&#39;, 3, 3)]
+(&#39;S11&#39;, 2, 4) -&gt; [(&#39;S12&#39;, 3, 4)]
+(&#39;S9&#39;, 4, 3) -&gt; [(&#39;S10&#39;, 5, 3), (&#39;S13&#39;, 4, 4)]
+(&#39;S5&#39;, 4, 2) -&gt; [(&#39;S4&#39;, 3, 2)]
+(&#39;S10&#39;, 5, 3) -&gt; [(&#39;S9&#39;, 4, 3), (&#39;S17&#39;, 5, 5)]</code></pre></div>
+<p>最終状態，パス，コストを確認してみましょう．
+初期状態$S1$から目的状態$S17$までのパスは，
+$S1, S7, S8, S12, S13, S9, S10, S17$であり，
+そのコストは$10$となっています．
+ここでのコストはステップ数ではなく，
+得られたパスの実際のコスト（距離）となっていることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>state)
+<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>path())
+<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>cost)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">(&#39;S17&#39;, 5, 5)
+[(None, (&#39;S1&#39;, 1, 1)), ((&#39;S7&#39;, 1, 3), (&#39;S7&#39;, 1, 3)), ((&#39;S8&#39;, 3, 3), (&#39;S8&#39;, 3, 3)), ((&#39;S12&#39;, 3, 4), (&#39;S12&#39;, 3, 4)), ((&#39;S13&#39;, 4, 4), (&#39;S13&#39;, 4, 4)), ((&#39;S9&#39;, 4, 3), (&#39;S9&#39;, 4, 3)), ((&#39;S10&#39;, 5, 3), (&#39;S10&#39;, 5, 3)), ((&#39;S17&#39;, 5, 5), (&#39;S17&#39;, 5, 5))]
+10</code></pre></div>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   課題
 </h1>
 
 
-<p>1〜20の整数で構成されたフロイド問題を解きなさい．
+<p>8パズルをA*アルゴリズムで解くとき，どのようなヒューリスティックスを用いれば良いか考え説明しなさい
+（マークダウンにしてセルに入力すること）．
 作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
 
 
@@ -531,7 +603,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-03-15 22:11:44.796078 &#43;0900 JST m=&#43;0.172194914">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-17 16:41:06.981337 &#43;0900 JST m=&#43;0.131468924">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

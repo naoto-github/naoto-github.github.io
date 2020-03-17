@@ -83,9 +83,8 @@
   <meta property="og:description" content="Simple AIとは  Simple AIは，Stuart Russel氏とPeter Norvig氏が執筆した 「Artificial Intelligence: A Modern Approach」に掲載されている 人工知能で用いられる伝統的なアルゴリズムを提供するPythonのライブラリです． このライブラリを導入することで， 幅優先探索などの 探索アルゴリズム，遺伝的アルゴリズムなどの 進化的アルゴリズム， 決定木などの 機械学習アルゴリズム を簡単に実装することが可能です． ここでは，授業で紹介したアルゴリズムを Simple AI で実装することで， 知識を定着させ，様々な問題に応用できるようになることを目指します．
  最初に，Simple AI をインストールします． pydotとflaskは探索過程を可視化ためのライブラリです． インストールには pip というパッケージ管理コマンドを利用します． インストールしたフォルダで，PowerShellを起動し，下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
 &gt; .\Scripts\pip install simpleai &gt; .\Scripts\pip install pydot &gt; .\Scripts\pip install flask  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします．
-
  水差し問題  今回は 水差し問題（Jug Problem） を取り上げましょう．
-水差し問題   3リットルと4リットルのコップ（水差し）がある． 4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．" />
+水差し問題   3リットルと4リットルのコップ（水差し）がある． 4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．   この問題を 状態空間モデル で表現します． 状態空間モデルとは，探索過程の途中経過を 状態， またその状態間の遷移を 行動(操作) として表現したモデルです． 一般に，行動の結果，1通りに状態が定まるとき， 確定システム , 確率的に状態が変化するとき， 確率システム と呼ばれます． 現実世界の事象の多くは 確率システム となりますが， ここではシンプルな 確定システム のみを対象とします．" />
 
 
 
@@ -103,9 +102,8 @@
   <meta name="twitter:description" content="Simple AIとは  Simple AIは，Stuart Russel氏とPeter Norvig氏が執筆した 「Artificial Intelligence: A Modern Approach」に掲載されている 人工知能で用いられる伝統的なアルゴリズムを提供するPythonのライブラリです． このライブラリを導入することで， 幅優先探索などの 探索アルゴリズム，遺伝的アルゴリズムなどの 進化的アルゴリズム， 決定木などの 機械学習アルゴリズム を簡単に実装することが可能です． ここでは，授業で紹介したアルゴリズムを Simple AI で実装することで， 知識を定着させ，様々な問題に応用できるようになることを目指します．
  最初に，Simple AI をインストールします． pydotとflaskは探索過程を可視化ためのライブラリです． インストールには pip というパッケージ管理コマンドを利用します． インストールしたフォルダで，PowerShellを起動し，下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
 &gt; .\Scripts\pip install simpleai &gt; .\Scripts\pip install pydot &gt; .\Scripts\pip install flask  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします．
-
  水差し問題  今回は 水差し問題（Jug Problem） を取り上げましょう．
-水差し問題   3リットルと4リットルのコップ（水差し）がある． 4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．" />
+水差し問題   3リットルと4リットルのコップ（水差し）がある． 4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．   この問題を 状態空間モデル で表現します． 状態空間モデルとは，探索過程の途中経過を 状態， またその状態間の遷移を 行動(操作) として表現したモデルです． 一般に，行動の結果，1通りに状態が定まるとき， 確定システム , 確率的に状態が変化するとき， 確率システム と呼ばれます． 現実世界の事象の多くは 確率システム となりますが， ここではシンプルな 確定システム のみを対象とします．" />
 
 
 
@@ -218,7 +216,7 @@ pydotとflaskは探索過程を可視化ためのライブラリです．
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-3</strong> とします．</p>
 
-<p><a href="https://gyazo.com/0d44325625980697eaa2940d2351447d"><img src="https://i.gyazo.com/0d44325625980697eaa2940d2351447d.png" alt="Image from Gyazo" /></a></p>
+<!-- [![Image from Gyazo](https://i.gyazo.com/0d44325625980697eaa2940d2351447d.png)](https://gyazo.com/0d44325625980697eaa2940d2351447d) -->
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -249,7 +247,13 @@ pydotとflaskは探索過程を可視化ためのライブラリです．
 </div>
 
 
-<p>この問題を <strong>状態空間モデル</strong> で表現します．</p>
+<p>この問題を <strong>状態空間モデル</strong> で表現します．
+状態空間モデルとは，探索過程の途中経過を <strong>状態</strong>，
+またその状態間の遷移を <strong>行動(操作)</strong> として表現したモデルです．
+一般に，行動の結果，1通りに状態が定まるとき， <strong>確定システム</strong> ,
+確率的に状態が変化するとき， <strong>確率システム</strong> と呼ばれます．
+現実世界の事象の多くは <strong>確率システム</strong> となりますが，
+ここではシンプルな <strong>確定システム</strong> のみを対象とします．</p>
 
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
@@ -378,7 +382,9 @@ Cost: 6</code></pre></div>
 <p>最後に探索過程を可視化してみましょう．
 Simple AIでは，<strong>WebViewer</strong> という可視化ツールを利用することができます．
 WebViewerを起動すると <strong><a href="http://localhost:8000">http://localhost:8000</a></strong> というURLで結果を確認することができます．
-可視化することで目的状態を発見するまでの過程が明確になります．</p>
+可視化することで目的状態を発見するまでの過程が明確になります．
+この過程を確認すると，状態が <strong>木の形</strong> に展開されていることがわかります．
+このため，このような探索手順は <strong>探索木</strong> と呼ばれます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search.viewers <span style="color:#f92672">import</span> WebViewer
 
 web_viewer <span style="color:#f92672">=</span> WebViewer()
@@ -480,7 +486,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-03-16 11:38:23.697314 &#43;0900 JST m=&#43;0.128215356">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-17 16:41:06.965408 &#43;0900 JST m=&#43;0.115539985">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
