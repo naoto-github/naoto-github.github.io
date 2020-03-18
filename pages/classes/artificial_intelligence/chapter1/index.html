@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    探索木・Simple AI | MLAB
+    人工知能とは | MLAB
   </title>
 
   
@@ -45,7 +45,7 @@
 
   
   <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -60,7 +60,7 @@
   
   
 
-  <meta property="og:title" content="探索木・Simple AI" />
+  <meta property="og:title" content="人工知能とは" />
 
 
 
@@ -72,7 +72,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/618761db12a3d583a1b5e06c4a05b44b.png" />
+  <meta property="og:image" content="https://i.gyazo.com/a313f4661f3c68a84b772eb0ff59aa67.png" />
 
 
 
@@ -80,12 +80,22 @@
 
 
 
-  <meta property="og:description" content="Simple AIとは  Simple AIは，Stuart Russel氏とPeter Norvig氏が執筆した 「Artificial Intelligence: A Modern Approach」に掲載されている 人工知能で用いられる伝統的なアルゴリズムを提供するPythonのライブラリです． このライブラリを導入することで， 幅優先探索などの 探索アルゴリズム，遺伝的アルゴリズムなどの 進化的アルゴリズム， 決定木などの 機械学習アルゴリズム を簡単に実装することが可能です． ここでは，授業で紹介したアルゴリズムを Simple AI で実装することで， 知識を定着させ，様々な問題に応用できるようになることを目指します．
- 最初に，Simple AI をインストールします． pydotとflaskは探索過程を可視化ためのライブラリです． インストールには pip というパッケージ管理コマンドを利用します． インストールしたフォルダで，PowerShellを起動し，下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
-&gt; .\Scripts\pip install simpleai &gt; .\Scripts\pip install pydot &gt; .\Scripts\pip install flask  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-1 とします．
+  <meta property="og:description" content="人工知能とは  この授業では，人工知能 の理論と実践を学びます． 近年注目される人工知能の殆どは 機械学習 と呼ばれる技術の応用であり， 顔認識や商品推薦など様々な用途に用いられるようになりました．
+一方で，人工知能の歴史は，1956年のダートマス会議 から始まり， 1950年代の 第1次AIブーム，また，1980年代の 第2次AIブーム などの紆余曲折を経て， 現在の機械学習を主役とした 第3次AIブーム に繋がっています．
+第1次ブームでは，探索 と 推論 と呼ばれる技術の研究が進み， パズルや迷路などの問題を人間より高速に解くことが出来るようになりました． また，第2次ブームでは， エキスパートシステム と呼ばれる 専門知識の分野を取り込んだコンピュータが開発されました．
+人工知能を学ぶには，これら伝統的な知識や技術を習得することが重要です． 本講義では， パズルやゲームなどを題材に， 探索や推論の基本的なアルゴリズムを体験的に学ぶことを目標とします． また，遺伝的アルゴリズムや強化学習など， 第3次ブームに繋がる発展的な技術についても取り上げます．
+アルゴリズムの実装にはPythonを採用し， Jupyter Notebookと呼ばれるツールを利用してコーディングします． また，探索アルゴリズムや遺伝的アルゴリズムの実装にはSimple AI， 強化学習の実装にはOpenAI Gymなど最新のライブラリを使用します． 机上の理論で終わることなく，実用的な問題に人工知能技術を適用する術を学びましょう．
 
- 水差し問題  今回は 水差し問題（Jug Problem） を取り上げましょう．
-水差し問題   3リットルと4リットルのコップ（水差し）がある． 4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．" />
+
+ Jupyter Notebookのインストール  Pythonのインストール・パッケージをダウンロードしましよう． このとき，Pythonのバージョンは3.xを選択してください． インストールを始める前に，ファイルをインストールするためのフォルダを作成します． Hドライブ に，MyPythonという名前でフォルダを作成してください．
+それでは，インストーラを実行しましょう． Customize installationを選択し， パッケージ管理システムの pip が同時にインストールされることを確認してください．
+
+
+このとき，インストールするフォルダは，上記で作成したH:\MyPythonとすることに注意してください．
+
+インストールが終了すると，下記のダイアログが表示されます． Closeを選択して，ダイアログを閉じてください．
+
+次にインストールしたフォルダに移動し， シフトを押しながら右クリックして PowerShell を起動し，下記のコマンドを実行します． PowerShellは，マイクロソフト製のコマンドラインインターフェイスです． これで，Jupyter Notebookのインストールは完了です．" />
 
 
 
@@ -96,20 +106,30 @@
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="探索木・Simple AI" />
+  <meta name="twitter:title" content="人工知能とは" />
 
 
 
-  <meta name="twitter:description" content="Simple AIとは  Simple AIは，Stuart Russel氏とPeter Norvig氏が執筆した 「Artificial Intelligence: A Modern Approach」に掲載されている 人工知能で用いられる伝統的なアルゴリズムを提供するPythonのライブラリです． このライブラリを導入することで， 幅優先探索などの 探索アルゴリズム，遺伝的アルゴリズムなどの 進化的アルゴリズム， 決定木などの 機械学習アルゴリズム を簡単に実装することが可能です． ここでは，授業で紹介したアルゴリズムを Simple AI で実装することで， 知識を定着させ，様々な問題に応用できるようになることを目指します．
- 最初に，Simple AI をインストールします． pydotとflaskは探索過程を可視化ためのライブラリです． インストールには pip というパッケージ管理コマンドを利用します． インストールしたフォルダで，PowerShellを起動し，下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
-&gt; .\Scripts\pip install simpleai &gt; .\Scripts\pip install pydot &gt; .\Scripts\pip install flask  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-1 とします．
-
- 水差し問題  今回は 水差し問題（Jug Problem） を取り上げましょう．
-水差し問題   3リットルと4リットルのコップ（水差し）がある． 4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．" />
-
+  <meta name="twitter:description" content="人工知能とは  この授業では，人工知能 の理論と実践を学びます． 近年注目される人工知能の殆どは 機械学習 と呼ばれる技術の応用であり， 顔認識や商品推薦など様々な用途に用いられるようになりました．
+一方で，人工知能の歴史は，1956年のダートマス会議 から始まり， 1950年代の 第1次AIブーム，また，1980年代の 第2次AIブーム などの紆余曲折を経て， 現在の機械学習を主役とした 第3次AIブーム に繋がっています．
+第1次ブームでは，探索 と 推論 と呼ばれる技術の研究が進み， パズルや迷路などの問題を人間より高速に解くことが出来るようになりました． また，第2次ブームでは， エキスパートシステム と呼ばれる 専門知識の分野を取り込んだコンピュータが開発されました．
+人工知能を学ぶには，これら伝統的な知識や技術を習得することが重要です． 本講義では， パズルやゲームなどを題材に， 探索や推論の基本的なアルゴリズムを体験的に学ぶことを目標とします． また，遺伝的アルゴリズムや強化学習など， 第3次ブームに繋がる発展的な技術についても取り上げます．
+アルゴリズムの実装にはPythonを採用し， Jupyter Notebookと呼ばれるツールを利用してコーディングします． また，探索アルゴリズムや遺伝的アルゴリズムの実装にはSimple AI， 強化学習の実装にはOpenAI Gymなど最新のライブラリを使用します． 机上の理論で終わることなく，実用的な問題に人工知能技術を適用する術を学びましょう．
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/618761db12a3d583a1b5e06c4a05b44b.png" />
+ Jupyter Notebookのインストール  Pythonのインストール・パッケージをダウンロードしましよう． このとき，Pythonのバージョンは3.xを選択してください． インストールを始める前に，ファイルをインストールするためのフォルダを作成します． Hドライブ に，MyPythonという名前でフォルダを作成してください．
+それでは，インストーラを実行しましょう． Customize installationを選択し， パッケージ管理システムの pip が同時にインストールされることを確認してください．
+
+
+このとき，インストールするフォルダは，上記で作成したH:\MyPythonとすることに注意してください．
+
+インストールが終了すると，下記のダイアログが表示されます． Closeを選択して，ダイアログを閉じてください．
+
+次にインストールしたフォルダに移動し， シフトを押しながら右クリックして PowerShell を起動し，下記のコマンドを実行します． PowerShellは，マイクロソフト製のコマンドラインインターフェイスです． これで，Jupyter Notebookのインストールは完了です．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/a313f4661f3c68a84b772eb0ff59aa67.png" />
 
 
 
@@ -172,218 +192,143 @@
   
   
   
-  <span>on&nbsp;</span><time datetime="2020-01-04 13:29:27 &#43;0900 JST">January 4, 2020</time>
+  <span>on&nbsp;</span><time datetime="2020-03-18 16:01:09 &#43;0900 JST">March 18, 2020</time>
 </div>
 
-    <h1 class="post-title">探索木・Simple AI</h1>
+    <h1 class="post-title">人工知能とは</h1>
 <div class="post-line"></div>
 
     
 
-    
-
-<p><a href="https://gyazo.com/618761db12a3d583a1b5e06c4a05b44b"><img src="https://i.gyazo.com/618761db12a3d583a1b5e06c4a05b44b.png" alt="Image from Gyazo" /></a></p>
+    <p><a href="https://gyazo.com/a313f4661f3c68a84b772eb0ff59aa67"><img src="https://i.gyazo.com/a313f4661f3c68a84b772eb0ff59aa67.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  Simple AIとは
+  人工知能とは
 </h1>
 
 
-<p><a href="https://github.com/simpleai-team/simpleai">Simple AI</a>は，Stuart Russel氏とPeter Norvig氏が執筆した
-「<strong>Artificial Intelligence: A Modern Approach</strong>」に掲載されている
-人工知能で用いられる伝統的なアルゴリズムを提供するPythonのライブラリです．
-このライブラリを導入することで，
-幅優先探索などの <strong>探索アルゴリズム</strong>，遺伝的アルゴリズムなどの <strong>進化的アルゴリズム</strong>，
-決定木などの <strong>機械学習アルゴリズム</strong> を簡単に実装することが可能です．
-ここでは，授業で紹介したアルゴリズムを <strong>Simple AI</strong> で実装することで，
-知識を定着させ，様々な問題に応用できるようになることを目指します．</p>
+<p>この授業では，<strong>人工知能</strong> の理論と実践を学びます．
+近年注目される人工知能の殆どは <strong>機械学習</strong> と呼ばれる技術の応用であり，
+顔認識や商品推薦など様々な用途に用いられるようになりました．</p>
 
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=0134610997&linkId=1c6d2aae0a2fd57a91177b9cc8cc888b&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
-    </iframe>
+<p>一方で，人工知能の歴史は，1956年の<a href="https://www.ai-gakkai.or.jp/whatsai/AItopics5.html">ダートマス会議</a> から始まり，
+1950年代の <strong>第1次AIブーム</strong>，また，1980年代の <strong>第2次AIブーム</strong> などの紆余曲折を経て，
+現在の機械学習を主役とした <strong>第3次AIブーム</strong> に繋がっています．</p>
 
-<p>最初に，<strong>Simple AI</strong> をインストールします．
-pydotとflaskは探索過程を可視化ためのライブラリです．
-インストールには <code>pip</code> というパッケージ管理コマンドを利用します．
-インストールしたフォルダで，<strong>PowerShell</strong>を起動し，下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; .\Scripts\pip install simpleai
-&gt; .\Scripts\pip install pydot
-&gt; .\Scripts\pip install flask</code></pre></div>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
-  ノートブックの作成
-</h1>
+<p>第1次ブームでは，<strong>探索</strong> と <strong>推論</strong> と呼ばれる技術の研究が進み，
+パズルや迷路などの問題を人間より高速に解くことが出来るようになりました．
+また，第2次ブームでは， <strong>エキスパートシステム</strong> と呼ばれる
+専門知識の分野を取り込んだコンピュータが開発されました．</p>
 
+<p>人工知能を学ぶには，これら伝統的な知識や技術を習得することが重要です．
+本講義では， パズルやゲームなどを題材に，
+探索や推論の基本的なアルゴリズムを体験的に学ぶことを目標とします．
+また，遺伝的アルゴリズムや強化学習など，
+第3次ブームに繋がる発展的な技術についても取り上げます．</p>
 
-<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
-ノートブックのタイトルは <strong>AI-1</strong> とします．</p>
+<p>アルゴリズムの実装には<a href="https://www.ai-gakkai.or.jp/whatsai/AItopics5.html">Python</a>を採用し，
+<a href="https://jupyter.org/">Jupyter Notebook</a>と呼ばれるツールを利用してコーディングします．
+また，探索アルゴリズムや遺伝的アルゴリズムの実装には<a href="https://github.com/simpleai-team/simpleai">Simple AI</a>，
+強化学習の実装には<a href="https://gym.openai.com/">OpenAI Gym</a>など最新のライブラリを使用します．
+机上の理論で終わることなく，実用的な問題に人工知能技術を適用する術を学びましょう．</p>
 
-<p><a href="https://gyazo.com/0d44325625980697eaa2940d2351447d"><img src="https://i.gyazo.com/0d44325625980697eaa2940d2351447d.png" alt="Image from Gyazo" /></a></p>
+<p><a href="https://gyazo.com/8f2e141389d5598fba33252dc25c48df"><img src="https://i.gyazo.com/8f2e141389d5598fba33252dc25c48df.gif" alt="Image from Gyazo" /></a></p>
 
-<h1>
-  <img class="head-image" src="/logo/logo.png">
-  水差し問題
-</h1>
-
-
-<p>今回は <strong>水差し問題（Jug Problem）</strong> を取り上げましょう．</p>
-
-
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#006600">
-    水差し問題
-  </h3>
-
-  <p>
-    
-
-3リットルと4リットルのコップ（水差し）がある．
-4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．
-
-<a href="https://gyazo.com/dd29766d2255fea9a16ac101fbe3da2e"><img src="https://i.gyazo.com/dd29766d2255fea9a16ac101fbe3da2e.png" alt="Image from Gyazo" width="400"/></a>
-
-
-  </p>
-  
-</div>
-
-
-<p>この問題を <strong>状態空間モデル</strong> で表現します．</p>
-
-
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#FF0000">
-    状態空間モデル
-  </h3>
-
-  <p>
-    
-
-3リットルのコップの水の量を$x$，
-4リットルのコップの水の量を$y$と表し，
-この組み合わせを<b>状態</b>と定義する．
-
-$$
-(x, y)
-$$
-
-コップに対する<b>行動（操作）</b>として下記の8つを定義する．
-
-<ul>
-<li>A1: 3Lのコップを満杯にする</li>
-<li>A2: 4Lのコップを満杯にする</li>
-<li>A3: 3Lのコップを空にする</li>
-<li>A4: 4Lのコップを空にする</li>
-<li>A5: 3Lのコップを4Lのコップに移し満杯にする</li>
-<li>A6: 4Lのコップを3Lのコップに移し満杯にする</li>
-<li>A7: 3Lのコップの水を全て4Lのコップに移す</li>
-<li>A8: 4Lのコップの水を全て3Lのコップに移す</li>
-</ul>
-
-
-  </p>
-  
-</div>
-
+<p><a href="https://gyazo.com/960bd92b1c260d91c5ced82ccf7e7ca8"><img src="https://i.gyazo.com/960bd92b1c260d91c5ced82ccf7e7ca8.gif" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  実装
+  Jupyter Notebookのインストール
 </h1>
 
 
-<h2 id="クラスの定義">クラスの定義</h2>
+<p><a href="https://www.python.org">Python</a>のインストール・パッケージをダウンロードしましよう．
+このとき，Pythonのバージョンは<strong>3.x</strong>を選択してください．
+インストールを始める前に，ファイルをインストールするためのフォルダを作成します．
+<strong>Hドライブ</strong> に，<strong>MyPython</strong>という名前でフォルダを作成してください．</p>
 
-<p>最初にライブラリをインポートします．
-ここでは，<strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
-<strong>幅優先探索</strong> を表す<code>breadth_first</code>をインポートします（幅優先探索に関しては第4回で解説予定）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, breadth_first</code></pre></div>
-<p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
-初期状態は両方のコップに水がない状態を表す <code>(0, 0)</code>，
-目的状態は4リットルのコップに2リットルの水がある状態を表す<code>(0, 2)</code>です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
-GOAL  <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>)</code></pre></div>
-<p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
-水差し問題を表す<code>JogProblem</code>を定義します．
-オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>is_goal</code>の3種類です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">JugProblem</span>(SearchProblem):
-	
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
-		<span style="color:#f92672">...</span>
-		
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-		<span style="color:#f92672">...</span>
-		
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-		<span style="color:#f92672">...</span></code></pre></div>
-<h3 id="actions-self-state">actions(self, state)</h3>
+<p>それでは，インストーラを実行しましょう．
+<strong>Customize installation</strong>を選択し，
+パッケージ管理システムの <strong>pip</strong> が同時にインストールされることを確認してください．</p>
 
-<p>このメソッドでは，状態<code>state</code>で選択可能な行動のリストを返します．
-ここでは，上記で定義した8つの行動が該当します．
-また，<code>state[0]</code>は3Lのコップの水量，<code>state[1]</code>は4Lのコップの水量を表します．
-<code>min</code>と<code>max</code>は，それぞれ引数の最小値と最大値を選択するメソッドです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
+<p><a href="https://gyazo.com/e1fc572f43e771cb3901a76e927a84bd"><img src="https://i.gyazo.com/e1fc572f43e771cb3901a76e927a84bd.png" alt="Image from Gyazo" /></a></p>
 
-	a1 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span>, state[<span style="color:#ae81ff">1</span>])
-	a2 <span style="color:#f92672">=</span> (state[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">4</span>)
-	a3 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span>, state[<span style="color:#ae81ff">1</span>])
-	a4 <span style="color:#f92672">=</span> (state[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">0</span>)
+<p><a href="https://gyazo.com/294b8b48f53df91303d1c26bfaf7ada8"><img src="https://i.gyazo.com/294b8b48f53df91303d1c26bfaf7ada8.png" alt="Image from Gyazo" /></a></p>
 
-	g1 <span style="color:#f92672">=</span> max(state[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">-</span> (<span style="color:#ae81ff">4</span> <span style="color:#f92672">-</span> state[<span style="color:#ae81ff">1</span>]), <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#3Lのコップの水量</span>
-	g2 <span style="color:#f92672">=</span> min(state[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> state[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">4</span>) <span style="color:#75715e">#4Lのコップの水量</span>
-	a5 <span style="color:#f92672">=</span> (g1, g2)
+<p>このとき，インストールするフォルダは，上記で作成した<strong>H:\MyPython</strong>とすることに注意してください．</p>
 
-	g1 <span style="color:#f92672">=</span> min(state[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> state[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">3</span>) <span style="color:#75715e">#3Lのコップの水量</span>
-	g2 <span style="color:#f92672">=</span> max(state[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> (<span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> state[<span style="color:#ae81ff">0</span>]), <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#4Lのコップの水量</span>
-	a6 <span style="color:#f92672">=</span> (g1, g2)
-	
-	a7 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">0</span>, min(state[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> state[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">4</span>))
-	a8 <span style="color:#f92672">=</span> (min(state[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> state[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">3</span>), <span style="color:#ae81ff">0</span>)
+<p><a href="https://gyazo.com/d59ad4a8259cd08233c53a23fce576b2"><img src="https://i.gyazo.com/d59ad4a8259cd08233c53a23fce576b2.png" alt="Image from Gyazo" /></a></p>
 
-	list <span style="color:#f92672">=</span> [a1, a2, a3, a4, a5, a6, a7, a8]
+<p>インストールが終了すると，下記のダイアログが表示されます．
+<strong>Close</strong>を選択して，ダイアログを閉じてください．</p>
 
-	<span style="color:#66d9ef">return</span> list</code></pre></div>
-<h3 id="result-self-state-action">result(self, state, action)</h3>
+<p><a href="https://gyazo.com/ac9e747d8ee0cdeab324b5a0b1cabd43"><img src="https://i.gyazo.com/ac9e747d8ee0cdeab324b5a0b1cabd43.png" alt="Image from Gyazo" /></a></p>
 
-<p>このメソッドでは，状態<code>state</code>で，行動<code>action</code>を実行したときに遷移する次の状態を返します．
-ここでは，行動<code>action</code>を，そのまま次の状態として扱います．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-	<span style="color:#66d9ef">return</span> action</code></pre></div>
-<h3 id="is-goal-self-state">is_goal(self, state)</h3>
+<p>次にインストールしたフォルダに移動し，
+シフトを押しながら右クリックして <strong>PowerShell</strong> を起動し，下記のコマンドを実行します．
+PowerShellは，マイクロソフト製のコマンドラインインターフェイスです．
+これで，Jupyter Notebookのインストールは完了です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;</span> <span style="color:#f92672">.</span>\Scripts\pip install jupyter
+<span style="color:#f92672">&gt;</span> <span style="color:#f92672">.</span>\Scripts\pip install <span style="color:#e6db74">&#34;ipython[notebook]&#34;</span></code></pre></div>
+<p>最後に，PowerShellから下記のコマンドを実行し，JupyterNotebookを起動してください（エクスプローラでダブルクリックでもOK）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;</span> <span style="color:#f92672">.</span>\Scripts\jupyter<span style="color:#f92672">-</span>notebook<span style="color:#f92672">.</span>exe</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Jupyter Notebookの起動
+</h1>
 
-<p>このメソッドでは，状態<code>state</code>が目的状態かどうかを判定します．
-ここでは，状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-	<span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
-<h2 id="解の探索">解の探索</h2>
 
-<p>幅優先探索（探索木）<code>breadth_first</code>を用いて解を探索します．
-解とは初期状態<code>START</code>から，目的状態<code>GOAL</code>までのパス（経路）を意味します．
-探索過程における冗長な状態を省略するために<code>graph_search=True</code>という引数を設定していることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> JugProblem(initial_state<span style="color:#f92672">=</span>START)
-result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True) <span style="color:#75715e">#幅優先探索</span></code></pre></div>
-<p>探索が終了したら，最終状態，パス，コストを表示します．
-最終状態は<code>(0,2)</code>となっており目的状態に到達できたことがわかります．
-また，パスは<code>(0, 0), (3, 0), (0, 3), (3, 3), (2, 4), (2, 0), (0, 2)</code>となりました．
-このとき，初期状態から目的状態までのコスト（ステップ数）は6です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;State:&#34;</span>, result<span style="color:#f92672">.</span>state)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Path:&#34;</span>, result<span style="color:#f92672">.</span>path())
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Cost:&#34;</span>, result<span style="color:#f92672">.</span>cost)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">State: (0, 2)
-Path: [(None, (0, 0)), ((3, 0), (3, 0)), ((0, 3), (0, 3)), ((3, 3), (3, 3)), ((2, 4), (2, 4)), ((2, 0), (2, 0)), ((0, 2), (0, 2))]
-Cost: 6</code></pre></div>
-<h2 id="探索過程の可視化">探索過程の可視化</h2>
+<p>Jupyter Notebookを起動すると，ブラウザ（Chromeを推奨）に <strong>Jupyter Notebook</strong> のトップ画面が表示されます．
+この画面で，ノートブック（Jupyter Notebookのプロジェクト）を管理します．
+早速， <strong>New</strong> をクリックして，<strong>Python 3</strong> を選択し，新規にノートブックを作成しましょう．</p>
 
-<p>最後に探索過程を可視化してみましょう．
-Simple AIでは，<strong>WebViewer</strong> という可視化ツールを利用することができます．
-WebViewerを起動すると <strong><a href="http://localhost:8000">http://localhost:8000</a></strong> というURLで結果を確認することができます．
-可視化することで目的状態を発見するまでの過程が明確になります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search.viewers <span style="color:#f92672">import</span> WebViewer
+<p><a href="https://gyazo.com/f68f3ade834d99a99a923144fb3f78b3"><img src="https://i.gyazo.com/f68f3ade834d99a99a923144fb3f78b3.png" alt="Image from Gyazo" /></a></p>
 
-web_viewer <span style="color:#f92672">=</span> WebViewer()
-result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True, viewer<span style="color:#f92672">=</span>web_viewer)</code></pre></div>
-<p><a href="https://gyazo.com/ba1b2b4c87534e6c6d2a68f9b6316d25"><img src="https://i.gyazo.com/ba1b2b4c87534e6c6d2a68f9b6316d25.gif" alt="Image from Gyazo" /></a></p>
+<p>ノートブックは下記の画面となります．
+まずは，ノートブックにタイトルを設定します．
+<strong>Untitled</strong> となっている箇所をクリックし，<strong>AI-1</strong> と入力します．</p>
+
+<p><a href="https://gyazo.com/16c66bed7ab0b49b4049395265201fa4"><img src="https://i.gyazo.com/16c66bed7ab0b49b4049395265201fa4.png" alt="Image from Gyazo" /></a></p>
+
+<p>次に，簡単な計算をやってみましょう．
+ノートブックには，文字列や数式の入力可能なフィールドがあり，<strong>セル</strong> と呼びます．
+ここに，下記のように入力します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">1</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span></code></pre></div>
+<p>入力したら，実行ボタンをクリックします（Shift + EnterでもOK）．
+この結果， <strong>3</strong> という出力が得られることが分かります．
+<strong>Jupyter Notebook</strong> では，このセルにPythonのコードを入力することで，
+プログラムの実行結果が確認できる仕組みになっています．</p>
+
+<p><a href="https://gyazo.com/1059373746f5c1f6b99de9dd218a119c"><img src="https://i.gyazo.com/1059373746f5c1f6b99de9dd218a119c.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  print関数
+</h1>
+
+
+<p><strong>Jupyter Notebook</strong> では，自動的に最後のセルに入力された式や変数の値を出力する仕様になっています．
+明示的に出力を行いたい場合は， <strong>print</strong> 関数を用いることで解決できます．
+文字列を出力する場合は，文字列の前後に <strong>&rdquo;&ldquo;（ダブルクォーテーション）</strong> が必要なことに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Hello World!&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/2dca7538008d48750f303a36e6f0281e"><img src="https://i.gyazo.com/2dca7538008d48750f303a36e6f0281e.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ノートブックの保存
+</h1>
+
+
+<p>ここで，ノートブックを保存します．
+<strong>Save and Checkpoint</strong> のボタンをクリックしてください．
+最後に，<strong>Close and Halt</strong> でノートブックを終了します．</p>
+
+<p>トップ画面に戻ると <strong>AI-1.ipynb</strong> というファイルが作成されていることが分かります．
+これを選択することで，ノートブックを開き，作業を再開することが出来ます．</p>
+
+<p><a href="https://gyazo.com/b20a883e55fc53e5d18529f76005fbc4"><img src="https://i.gyazo.com/b20a883e55fc53e5d18529f76005fbc4.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -391,8 +336,8 @@ result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<
 </h1>
 
 
-<p>3リットルのコップに正確に1リットルの水を入れるための解を求めなさい．
-作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+<p>保存した <strong>AI-1.ipynb</strong> を開き，ノートブックを <strong>HTML(.html)</strong> 形式でダウンロードしなさい．
+また，ダウンロードしたファイル（ <strong>Notebook1.html</strong> ）を提出しなさい．</p>
 
 
 <h3>参考書籍</h3>
@@ -480,7 +425,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-03-15 22:11:44.869225 &#43;0900 JST m=&#43;0.245339428">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-18 17:07:23.341054 &#43;0900 JST m=&#43;0.105157810">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

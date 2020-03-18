@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    強化学習・バランスゲーム | MLAB
+    局所探索アルゴリズム・シミュレーテッドアニーリング | MLAB
   </title>
 
   
@@ -45,7 +45,7 @@
 
   
   <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -60,7 +60,7 @@
   
   
 
-  <meta property="og:title" content="強化学習・バランスゲーム" />
+  <meta property="og:title" content="局所探索アルゴリズム・シミュレーテッドアニーリング" />
 
 
 
@@ -72,7 +72,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/372bc65ab38c0331bec2702e0a04a3c1.png" />
+  <meta property="og:image" content="https://i.gyazo.com/0e25b819192b0b1c9ba3f388bedaae92.png" />
 
 
 
@@ -80,9 +80,10 @@
 
 
 
-  <meta property="og:description" content="Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&rsquo;, a&rsquo;)$は，状態$s$から遷移した先の状態$s&rsquo;$において，行動$a&rsquo;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
-$$ Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&rsquo; \in A(s&rsquo;)} Q(s&rsquo;, a&rsquo;)) $$
-   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率     ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-9 とします． ノートブックの作成方法は第1回の資料を参照してください．" />
+  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-9 とします． ノートブックの作成方法に関しては第1回の資料を参考にしてください．
+ 最適化問題  今回も 最適化問題 を取り上げます．
+最適化問題   下記の関数の値が最大となる$x$を求めよ． ただし，$x$の範囲は$0 \leq x \leq 20$とする． $$ f(x) = | \cos(x) \cdot x| $$   最適化問題の状態空間モデルを確認しておきます．
+状態空間モデル   状態は$x(0 \leq x \leq 20)$で表す． ただし，$x$は連続値ではなく，$0.1$で刻んだ離散値とする． また，現在の状態$x$から，$&#43;0.1$，また，$-0.1$だけ増減することを行動と定義する．  $x&#39; = x &#43; 0.1$ $x&#39; = x - 0.1$  初期状態は$0 \leq x \leq 20$の範囲でランダムに選んだ値とし， 目的状態は$f(x)$を最大化することである．   シミュレーテッド・アニーリング（Simulated Annealing）  シミュレーテッド・アニーリングは日本語では焼きなまし法と呼ばれる手法で， 金属加工において，金属を熱した後で徐々に冷やしながら，金属の形状を安定させる方法に由来しています． 山登り法は評価の高い方向に必ず進むのに対し，シミュレーテッド・アニーリングでは， 遷移確率$p$に応じて評価が低い場合も受け入れることにあります． これにより，局所解に陥ることなく，大局解を発見できる可能性が高くなります． 一般に，遷移確率$p$は，ステップ数（時間）が経過するとともに小さな値となり， 最終的には山登り法と同様に評価が高い方向に探索を進めます．" />
 
 
 
@@ -93,17 +94,18 @@ $$ Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&rsquo;
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="強化学習・バランスゲーム" />
+  <meta name="twitter:title" content="局所探索アルゴリズム・シミュレーテッドアニーリング" />
 
 
 
-  <meta name="twitter:description" content="Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&rsquo;, a&rsquo;)$は，状態$s$から遷移した先の状態$s&rsquo;$において，行動$a&rsquo;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
-$$ Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&rsquo; \in A(s&rsquo;)} Q(s&rsquo;, a&rsquo;)) $$
-   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率     ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-9 とします． ノートブックの作成方法は第1回の資料を参照してください．" />
+  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-9 とします． ノートブックの作成方法に関しては第1回の資料を参考にしてください．
+ 最適化問題  今回も 最適化問題 を取り上げます．
+最適化問題   下記の関数の値が最大となる$x$を求めよ． ただし，$x$の範囲は$0 \leq x \leq 20$とする． $$ f(x) = | \cos(x) \cdot x| $$   最適化問題の状態空間モデルを確認しておきます．
+状態空間モデル   状態は$x(0 \leq x \leq 20)$で表す． ただし，$x$は連続値ではなく，$0.1$で刻んだ離散値とする． また，現在の状態$x$から，$&#43;0.1$，また，$-0.1$だけ増減することを行動と定義する．  $x&#39; = x &#43; 0.1$ $x&#39; = x - 0.1$  初期状態は$0 \leq x \leq 20$の範囲でランダムに選んだ値とし， 目的状態は$f(x)$を最大化することである．   シミュレーテッド・アニーリング（Simulated Annealing）  シミュレーテッド・アニーリングは日本語では焼きなまし法と呼ばれる手法で， 金属加工において，金属を熱した後で徐々に冷やしながら，金属の形状を安定させる方法に由来しています． 山登り法は評価の高い方向に必ず進むのに対し，シミュレーテッド・アニーリングでは， 遷移確率$p$に応じて評価が低い場合も受け入れることにあります． これにより，局所解に陥ることなく，大局解を発見できる可能性が高くなります． 一般に，遷移確率$p$は，ステップ数（時間）が経過するとともに小さな値となり， 最終的には山登り法と同様に評価が高い方向に探索を進めます．" />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/372bc65ab38c0331bec2702e0a04a3c1.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/0e25b819192b0b1c9ba3f388bedaae92.png" />
 
 
 
@@ -166,81 +168,15 @@ $$ Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&rsquo;
   
   
   
-  <span>on&nbsp;</span><time datetime="2020-03-11 18:33:09 &#43;0900 JST">March 11, 2020</time>
+  <span>on&nbsp;</span><time datetime="2020-03-18 12:19:16 &#43;0900 JST">March 18, 2020</time>
 </div>
 
-    <h1 class="post-title">強化学習・バランスゲーム</h1>
+    <h1 class="post-title">局所探索アルゴリズム・シミュレーテッドアニーリング</h1>
 <div class="post-line"></div>
 
     
 
-    
-
-<p><a href="https://gyazo.com/372bc65ab38c0331bec2702e0a04a3c1"><img src="https://i.gyazo.com/372bc65ab38c0331bec2702e0a04a3c1.png" alt="Image from Gyazo" /></a></p>
-
-<h1>
-  <img class="head-image" src="/logo/logo.png">
-  Q学習とは
-</h1>
-
-
-<p><strong>Q学習</strong> は状態$S$と行動$a$の組み合わせに対する <strong>価値$Q(s,a)$</strong> を学習するためのアルゴリズムです．
-下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です．
-また，$Q(s&rsquo;, a&rsquo;)$は，状態$s$から遷移した先の状態$s&rsquo;$において，行動$a&rsquo;$を選択したときの価値を表しています．
-ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり，
-$0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します．
-学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）．
-また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．</p>
-
-<p>$$
-Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) + \alpha(r + \gamma \max_{a&rsquo; \in A(s&rsquo;)} Q(s&rsquo;, a&rsquo;))
-$$</p>
-
-<table>
-<thead>
-<tr>
-<th>パラメータ</th>
-<th>意味</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>$s$</td>
-<td>状態</td>
-</tr>
-
-<tr>
-<td>$a$</td>
-<td>行動</td>
-</tr>
-
-<tr>
-<td>$Q(s,a)$</td>
-<td>状態$s$で行動$a$を選択する価値</td>
-</tr>
-
-<tr>
-<td>$r$</td>
-<td>報酬</td>
-</tr>
-
-<tr>
-<td>$A(s)$</td>
-<td>状態$s$で選択可能な行動の集合</td>
-</tr>
-
-<tr>
-<td>$\alpha$</td>
-<td>学習率</td>
-</tr>
-
-<tr>
-<td>$\gamma$</td>
-<td>割引率</td>
-</tr>
-</tbody>
-</table>
+    <p><a href="https://gyazo.com/0e25b819192b0b1c9ba3f388bedaae92"><img src="https://i.gyazo.com/0e25b819192b0b1c9ba3f388bedaae92.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -250,287 +186,214 @@ $$</p>
 
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-9</strong> とします．
-ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
+ノートブックの作成方法に関しては<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参考にしてください．</p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  バランスゲームの復習
+  最適化問題
 </h1>
 
 
-<p>前回実装したバランスゲームを復習しましょう．
-必要なライブラリの導入と，バランスゲーム（CartPole-v0）の初期化をします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gym
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<p>今回も <strong>最適化問題</strong> を取り上げます．</p>
 
-env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;CartPole-v0&#39;</span>) <span style="color:#75715e"># 環境の初期化</span></code></pre></div>
-<p>次に，200ステップに限定して，ランダムな行動選択を行なった結果を確認しましょう．
-ポールはあっという間に倒れてしまいます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
 
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-	action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-	
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
-	
-	env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
-<p><a href="https://gyazo.com/899c1c6cf6ca3a390fbea4f0ea4cc72e"><img src="https://i.gyazo.com/899c1c6cf6ca3a390fbea4f0ea4cc72e.gif" alt="Image from Gyazo" /></a></p>
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    最適化問題
+  </h3>
+
+  <p>
+    
+
+下記の関数の値が最大となる$x$を求めよ．
+ただし，$x$の範囲は$0 \leq x \leq 20$とする．
+
+$$
+f(x) = | \cos(x) \cdot x|
+$$
+
+<a href="https://gyazo.com/627fbc02f93784fed3731cc89f4fdff8"><img src="https://i.gyazo.com/627fbc02f93784fed3731cc89f4fdff8.png" alt="Image from Gyazo" width="396"/></a>
+
+
+  </p>
+  
+</div>
+
+
+<p>最適化問題の状態空間モデルを確認しておきます．</p>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    状態空間モデル
+  </h3>
+
+  <p>
+    
+
+状態は$x(0 \leq x \leq 20)$で表す．
+ただし，$x$は連続値ではなく，$0.1$で刻んだ離散値とする．
+また，現在の状態$x$から，$+0.1$，また，$-0.1$だけ増減することを行動と定義する．
+
+<ul>
+<li>$x' = x + 0.1$</li>
+<li>$x' = x - 0.1$</li>
+</ul>
+
+初期状態は$0 \leq x \leq 20$の範囲でランダムに選んだ値とし，
+目的状態は$f(x)$を最大化することである．
+
+
+  </p>
+  
+</div>
+
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  Q学習の実装
+  シミュレーテッド・アニーリング（Simulated Annealing）
 </h1>
 
 
-<h3 id="qテーブルの作成">Qテーブルの作成</h3>
+<p>シミュレーテッド・アニーリングは日本語では焼きなまし法と呼ばれる手法で，
+金属加工において，金属を熱した後で徐々に冷やしながら，金属の形状を安定させる方法に由来しています．
+山登り法は評価の高い方向に必ず進むのに対し，シミュレーテッド・アニーリングでは，
+遷移確率$p$に応じて評価が低い場合も受け入れることにあります．
+これにより，局所解に陥ることなく，大局解を発見できる可能性が高くなります．
+一般に，遷移確率$p$は，ステップ数（時間）が経過するとともに小さな値となり，
+最終的には山登り法と同様に評価が高い方向に探索を進めます．</p>
 
-<p>最初に <strong>価値$Q(s,a)$</strong> を記録しておくQテーブル（辞書型）を作成します．
-また，Qテーブルに値を設定するための <code>setQ</code>関数，
-Qテーブルから値を取得するための<code>getQ</code>関数も実装します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">q_table <span style="color:#f92672">=</span> {} <span style="color:#75715e"># Qテーブル</span>
+<p><a href="https://gyazo.com/eac4ba27e87718dba5b1e9bff17dabfd"><img src="https://i.gyazo.com/eac4ba27e87718dba5b1e9bff17dabfd.png" alt="Image from Gyazo" /></a></p>
 
-<span style="color:#75715e"># Q値の設定</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setQ</span>(state, action, value):
-    q_table[(state, action)] <span style="color:#f92672">=</span> value
-                     
-<span style="color:#75715e"># Q値の取得</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getQ</span>(state, action):
+<p><a href="https://gyazo.com/06b6199208e6ae44171f4723e605fdc5"><img src="https://i.gyazo.com/06b6199208e6ae44171f4723e605fdc5.png" alt="Image from Gyazo" /></a></p>
 
-	<span style="color:#75715e"># テーブルに状態が存在しないとき</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span>(state, action) <span style="color:#f92672">in</span> q_table:
-        q_table[(state, action)] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<p>ここでは，下記の式を遷移確率$p$とします．
+$k$は遷移確率の最大値，$\lambda$は確率の変化を決めるパラメータであり，$i$はステップ数を表しています．
+例えば，$k=50$，$\lambda=0.0005$としたとき，下図のように遷移確率は変化します．
+最初は$50\%$の確率で評価が低い遷移を受け入れますが，
+探索が進むと確率は$0\%$に近づき，高い評価のみを受け入れることになります．</p>
 
-    <span style="color:#66d9ef">return</span> q_table[(state, action)]</code></pre></div>
-<h3 id="状態の離散化">状態の離散化</h3>
+<p>$$
+p = k \cdot e^{- \lambda \cdot i}
+$$</p>
 
-<p>次に状態の離散化を行います．
-本来，バランスゲームでは，
-カートの位置，カートの速度，ポールの角度，ポールの速度の4つの状態を <strong>連続値</strong> で取得します．
-しかし，このままではQテーブルに記録できないため，区間を定め <strong>離散値</strong> に変換します．
-例えば，カートの位置は，-2.4〜2.4までの値をとりますが，
-これを6つの範囲に分割し，下記の表の離散値に変換します．</p>
+<p><a href="https://gyazo.com/e0302b99fe040ac48e598613294ca9f1"><img src="https://i.gyazo.com/e0302b99fe040ac48e598613294ca9f1.png" alt="Image from Gyazo" /></a></p>
 
-<table>
-<thead>
-<tr>
-<th>範囲</th>
-<th>離散値</th>
-</tr>
-</thead>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  実装
+</h1>
 
-<tbody>
-<tr>
-<td>-2.4〜-1.6</td>
-<td>1</td>
-</tr>
 
-<tr>
-<td>-1.6〜-0.8</td>
-<td>2</td>
-</tr>
+<p>最初にライブラリをインポートします．
+<strong>探索問題の型</strong> を表す<code>SearchPrblem</code>に加え，
+<strong>山登り法</strong> を表す <code>hill_climbing</code>と
+<strong>シミュレーテッド・アニーリング</strong>を表す<code>simulated_annealing</code>をインポートします．
+また，数値計算やグラフ描画のために，<code>Numpy</code>，<code>Matplotib</code>，<code>random</code>もインポートします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> random
 
-<tr>
-<td>-0.8〜0</td>
-<td>3</td>
-</tr>
+<span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, hill_climbing, simulated_annealing</code></pre></div>
+<p>最初に関数$f(x)$を定義します．
+ここでは，$f(x) = | \cos(x) \cdot x|$とします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(x):
+    y <span style="color:#f92672">=</span> abs(np<span style="color:#f92672">.</span>cos(x) <span style="color:#f92672">*</span> x)
+    <span style="color:#66d9ef">return</span> y</code></pre></div>
+<p>関数をグラフに描画してみましょう．
+グラフの描画には<code>Matplotlib</code>を用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">0.1</span>)
+y <span style="color:#f92672">=</span> fx(x)
+plt<span style="color:#f92672">.</span>plot(x, y)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/627fbc02f93784fed3731cc89f4fdff8"><img src="https://i.gyazo.com/627fbc02f93784fed3731cc89f4fdff8.png" alt="Image from Gyazo" /></a></p>
 
-<tr>
-<td>0〜0.8</td>
-<td>4</td>
-</tr>
+<p>次に <strong>初期状態</strong> を定義します．
+初期状態は$0$に固定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span></code></pre></div>
+<p><a href="https://gyazo.com/338ee79e5b76f5ce39bfdb9a6e523434"><img src="https://i.gyazo.com/338ee79e5b76f5ce39bfdb9a6e523434.png" alt="Image from Gyazo" /></a></p>
 
-<tr>
-<td>0.8〜1.6</td>
-<td>5</td>
-</tr>
-
-<tr>
-<td>1.6〜2.4</td>
-<td>6</td>
-</tr>
-</tbody>
-</table>
-
-<p>上記の変換を<code>digitize</code>関数として実装します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">BIN_NUMBER <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span> <span style="color:#75715e"># 離散値の数</span>
-
-<span style="color:#75715e"># 離散値の範囲</span>
-bins <span style="color:#f92672">=</span> []
-bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">2.4</span>, <span style="color:#ae81ff">2.4</span>, BIN_NUMBER)) <span style="color:#75715e"># カートの位置</span>
-bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">3.0</span>, <span style="color:#ae81ff">3.0</span>, BIN_NUMBER)) <span style="color:#75715e"># カートの速度</span>
-bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.2</span>, BIN_NUMBER)) <span style="color:#75715e"># ポールの角度</span>
-bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">2.0</span>, <span style="color:#ae81ff">2.0</span>, BIN_NUMBER)) <span style="color:#75715e"># ポールの速度</span>
-
-<span style="color:#75715e"># 観測データを状態（離散値）に変換</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">digitize</span>(observation):
-
-    state <span style="color:#f92672">=</span> []
+<p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
+最適化問題を表す<code>HillProblem</code>を定義します．
+<code>actions</code>，<code>result</code>，<code>value</code>は前回の山登り法のときと同じです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HillProblem</span>(SearchProblem):
     
-    state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">0</span>], bins[<span style="color:#ae81ff">0</span>]))
-    state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">1</span>], bins[<span style="color:#ae81ff">1</span>]))
-    state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">2</span>], bins[<span style="color:#ae81ff">2</span>]))
-    state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">3</span>], bins[<span style="color:#ae81ff">3</span>]))
-    
-    <span style="color:#66d9ef">return</span> tuple(state)</code></pre></div>
-<p>どのように離散値に変換されるか確認してみましょう．
-この例では，$(3, 3, 3, 3)$ -&gt; $(3, 3, 3, 2)$ -&gt; $(3, 4, 2, 2)$と状態が変化していることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
 
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):
-    action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+        list <span style="color:#f92672">=</span> []
 
-    <span style="color:#66d9ef">print</span>(observation)
-    <span style="color:#66d9ef">print</span>(digitize(observation))</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[-0.03864226  0.2379734  -0.0228475  -0.28297691]
-(3, 3, 3, 3)
-[-0.03388279  0.43341365 -0.02850703 -0.58277736]
-(3, 3, 3, 2)
-[-0.02521452  0.62892315 -0.04016258 -0.88430238]
-(3, 4, 2, 2)</code></pre></div>
-<h3 id="報酬と更新式">報酬と更新式</h3>
-
-<p>報酬を<code>getReward</code>関数で定義します．
-ポールが倒れていなければ$r=1$です．
-一方，ポールが倒れた場合，目標ステップ（ここでは180とした）に到達していれば$r=1$，
-到達していなければペナルティとして$r=-200$を与えることにします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 報酬の取得</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getReward</span>(step, done):
-
-    <span style="color:#66d9ef">if</span> done:
-        <span style="color:#66d9ef">if</span> step <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">180</span>:
-            reward <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># 目標ステップに到達</span>
-        <span style="color:#66d9ef">else</span>:
-            reward <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">200</span> <span style="color:#75715e"># ペナルティ</span>
-    <span style="color:#66d9ef">else</span>:
-        reward <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-
-    <span style="color:#66d9ef">return</span> reward</code></pre></div>
-<p>Qテーブルの更新式を<code>updateQTable</code>関数で定義します．
-このとき，学習率$\alpha=0.1$，割引率$\gamma=0.9$とします．
-ここで，Qテーブルのキーは状態$s$と行動$a$のペアとなることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span> <span style="color:#75715e"># 学習率</span>
-gamma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span> <span style="color:#75715e"># 割引率</span>
-
-<span style="color:#75715e"># Q値の更新</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateQTable</span>(state, action, next_state, reward):
-
-    max_value <span style="color:#f92672">=</span> max(getQ(next_state, <span style="color:#ae81ff">0</span>), getQ(next_state, <span style="color:#ae81ff">1</span>))
-
-    value <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> getQ(state, action) <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (reward <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> max_value)
-
-    setQ(state, action, value)</code></pre></div>
-<p>Qテーブルが更新される様子を確認してみましょう．
-ここでは，状態$(3, 3, 3, 3)$において，行動$1$を選択したとき，
-状態$(3, 3, 3, 2)$に遷移し，報酬$1$を獲得しました．
-この情報を用いてQテーブルを更新すると，
-状態と行動のペアの価値$Q((3, 3, 3, 3), 1)$は$0.1$に設定されたことがわかります（学習率$\alpha=0.1$だから）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
-q_table <span style="color:#f92672">=</span> {} <span style="color:#75715e">#Qテーブルの初期化</span>
-
-<span style="color:#75715e"># 最初の状態</span>
-action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() 
-observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-state <span style="color:#f92672">=</span> digitize(observation)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;state: {}&#34;</span><span style="color:#f92672">.</span>format(state))
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;action: {}&#34;</span><span style="color:#f92672">.</span>format(action))
-
-<span style="color:#75715e"># 次の状態</span>
-next_action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() 
-observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-next_state <span style="color:#f92672">=</span> digitize(observation)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;next_state: {}&#34;</span><span style="color:#f92672">.</span>format(next_state))
-
-<span style="color:#75715e"># 報酬を取得</span>
-reward <span style="color:#f92672">=</span> getReward(<span style="color:#ae81ff">0</span>, done)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;reward: {}&#34;</span><span style="color:#f92672">.</span>format(reward))
-
-<span style="color:#75715e"># Qテーブルの更新</span>
-updateQTable(state, action, next_state, reward)
-
-<span style="color:#75715e"># Q値の確認</span>
-q_value <span style="color:#f92672">=</span> q_table[(state, action)]
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Q value: {}&#34;</span><span style="color:#f92672">.</span>format(q_value))</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">state: (3, 3, 3, 3)
-action: 1
-next_state: (3, 3, 3, 2)
-reward: 1
-Q value: 0.1</code></pre></div>
-<h3 id="行動の選択">行動の選択</h3>
-
-<p>行動の選択には$\epsilon$グリーティ手法を採用します．
-この手法は，確率$\epsilon$でランダムな行動を選択し，
-確率$1 - \epsilon$で状態$s$において最も価値$Q(s,a)$が大きい行動$a$を選択します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># εグリーディ手法で行動選択</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">greedyAction</span>(state, epsilon):    
-    
-    <span style="color:#66d9ef">if</span> epsilon <span style="color:#f92672">&gt;</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand():
-        action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample()
-    <span style="color:#66d9ef">else</span>:
-        action <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax([getQ(state, <span style="color:#ae81ff">0</span>), getQ(state, <span style="color:#ae81ff">1</span>)])
-
-    <span style="color:#66d9ef">return</span> action</code></pre></div>
-<h3 id="qテーブルの学習">Qテーブルの学習</h3>
-
-<p>これで準備が整いました．
-200ステップのエピソード（ゲーム）を1000回繰り返してQテーブルを学習します．
-このとき，$\epsilon=0.2$に設定しておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
-q_table <span style="color:#f92672">=</span> {}
-
-<span style="color:#66d9ef">for</span> episode <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000</span>):
-
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;エピソード [{}]&#34;</span><span style="color:#f92672">.</span>format(episode))
-    
-    observation <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-    
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
+        list<span style="color:#f92672">.</span>append(min(state <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">20</span>))
+        list<span style="color:#f92672">.</span>append(max(state <span style="color:#f92672">-</span> <span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0</span>))      
         
-        <span style="color:#75715e"># 状態の取得</span>
-        state <span style="color:#f92672">=</span> digitize(observation)
-        
-        <span style="color:#75715e"># εグリーディ手法で行動選択</span>
-        action <span style="color:#f92672">=</span> greedyAction(state, <span style="color:#ae81ff">0.2</span>)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{:.3f} -&gt; [{:.3f} {:.3f}]&#34;</span><span style="color:#f92672">.</span>format(state, list[<span style="color:#ae81ff">0</span>], list[<span style="color:#ae81ff">1</span>]))
 
-        <span style="color:#75715e"># 次の状態に遷移</span>
-        observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-
-        <span style="color:#75715e"># 次の状態</span>
-        next_state <span style="color:#f92672">=</span> digitize(observation)        
-        
-        <span style="color:#75715e"># 報酬の取得</span>
-        reward <span style="color:#f92672">=</span> getReward((i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>), done)
-
-        <span style="color:#75715e"># Q値の更新</span>
-        updateQTable(state, action, next_state, reward)
-
-        <span style="color:#66d9ef">if</span> done:
-            <span style="color:#66d9ef">break</span>        </code></pre></div>
-<p>学習したQテーブルを用いて実行しましょう．
-このとき，$\epsilon=0$に設定しておきましょう．
-うまく学習できていれば200ステップを維持することが出来るはずです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
-
-observation <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
+        <span style="color:#66d9ef">return</span> list 
     
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-        
-    <span style="color:#75715e"># 状態の取得</span>
-    state <span style="color:#f92672">=</span> digitize(observation)
-        
-    <span style="color:#75715e"># εグリーディ手法で行動選択</span>
-    action <span style="color:#f92672">=</span> greedyAction(state, <span style="color:#ae81ff">0</span>)
-
-    <span style="color:#75715e"># 次の状態に遷移</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+        <span style="color:#66d9ef">return</span> action
     
-    env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
-<p><a href="https://gyazo.com/11558b8cb97ac192672b1254001877b7"><img src="https://i.gyazo.com/11558b8cb97ac192672b1254001877b7.gif" alt="Image from Gyazo" /></a></p>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
+        v <span style="color:#f92672">=</span> fx(state)
+        <span style="color:#66d9ef">return</span> v</code></pre></div>
+<p>まずは山登り法<code>hill_climbing</code>を用いて探索します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> HillProblem(initial_state<span style="color:#f92672">=</span>START)
+result <span style="color:#f92672">=</span> hill_climbing(problem)</code></pre></div>
+<p>最終状態と評価を確認します．
+最終状態は$x=0.9$，また，その評価は$f(0.9)=0559$であることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{:.3f}&#34;</span><span style="color:#f92672">.</span>format(result<span style="color:#f92672">.</span>state))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{:.3f}&#34;</span><span style="color:#f92672">.</span>format(result<span style="color:#f92672">.</span>value))</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">0.900
+0.559</code></pre></div>
+<p>最終状態も合わせてグラフに描画します．
+局所解で探索が終了していることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">0.1</span>)
+y <span style="color:#f92672">=</span> fx(x)
+plt<span style="color:#f92672">.</span>plot(x, y)
+plt<span style="color:#f92672">.</span>plot(result<span style="color:#f92672">.</span>state,  result<span style="color:#f92672">.</span>value,  marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;o&#34;</span>, markersize<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/1834ad6033bf1157f3e6e819eb642367"><img src="https://i.gyazo.com/1834ad6033bf1157f3e6e819eb642367.png" alt="Image from Gyazo" /></a></p>
+
+<p>次に，シミュレーテッド・アニーリングを用いて探索します．
+まずは，遷移確率を表す<code>schedule</code>関数を定義します．
+$k=50$，$\lambda=0.0005$に設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">schedule</span>(iteration, k<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>, lamda<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0005</span>, limit<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>):
+    
+    p <span style="color:#f92672">=</span> k <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>exp(<span style="color:#f92672">-</span>lamda <span style="color:#f92672">*</span> iteration)
+    
+    <span style="color:#66d9ef">return</span> p</code></pre></div>
+<p>遷移確率をグラフに描画してみます．
+ステップ数（時間）が増加するごとに，遷移確率が$0$に近くことがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">i  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">10000</span>, <span style="color:#ae81ff">1</span>)
+p <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> x: schedule(x), i))
+
+plt<span style="color:#f92672">.</span>plot(i, p)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;iteration&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;probability&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/e0302b99fe040ac48e598613294ca9f1"><img src="https://i.gyazo.com/e0302b99fe040ac48e598613294ca9f1.png" alt="Image from Gyazo" /></a></p>
+
+<p>それでは，シミュレーテッド・アニーリングを適用します．
+最大ステップ数（繰り返し回数）は$10000$に設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> HillProblem(initial_state<span style="color:#f92672">=</span>START)
+result <span style="color:#f92672">=</span> simulated_annealing(problem, schedule<span style="color:#f92672">=</span>schedule, iterations_limit<span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span>)</code></pre></div>
+<p>最終状態と評価を確認します．
+最終状態は$x=15.8$，また，その評価は$f(15.8)=15.733$であることがわかります．
+実行するごとに異なる結果になる可能性があることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{:.3f}&#34;</span><span style="color:#f92672">.</span>format(result<span style="color:#f92672">.</span>state))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{:.3f}&#34;</span><span style="color:#f92672">.</span>format(result<span style="color:#f92672">.</span>value))</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">15.800
+15.733</code></pre></div>
+<p>最終状態も合わせてグラフに描画します．
+大局解には到達できませんでしたが，
+山登り法に比べ高い評価の状態を得られたことがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">0.1</span>)
+y <span style="color:#f92672">=</span> fx(x)
+plt<span style="color:#f92672">.</span>plot(x, y)
+plt<span style="color:#f92672">.</span>plot(result<span style="color:#f92672">.</span>state,  result<span style="color:#f92672">.</span>value,  marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;o&#34;</span>, markersize<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)</code></pre></div>
+<p><a href="https://gyazo.com/afdc4fe57498c1fa29cf469208098a7a"><img src="https://i.gyazo.com/afdc4fe57498c1fa29cf469208098a7a.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -538,7 +401,7 @@ observation <span style="color:#f92672">=</span> env<span style="color:#f92672">
 </h1>
 
 
-<p>ポールが直立している時間を延ばす工夫を考え実装しなさい．
+<p>自由に関数を定義してシミュレーテッド・アニーリングを適用し，その結果を考察しなさい．
 作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
 
 
@@ -627,7 +490,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-03-15 22:11:44.800259 &#43;0900 JST m=&#43;0.176375561">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-18 17:07:23.359141 &#43;0900 JST m=&#43;0.123246300">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

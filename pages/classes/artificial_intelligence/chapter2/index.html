@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    探索木・8パズル | MLAB
+    Pythonの基本 | MLAB
   </title>
 
   
@@ -45,7 +45,7 @@
 
   
   <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -60,7 +60,7 @@
   
   
 
-  <meta property="og:title" content="探索木・8パズル" />
+  <meta property="og:title" content="Pythonの基本" />
 
 
 
@@ -72,7 +72,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/d9c458606aeaa73df9890d7221dd1b8c.png" />
+  <meta property="og:image" content="https://i.gyazo.com/43fd570daa04f04c827b9d42d3b63040.png" />
 
 
 
@@ -80,10 +80,12 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-2 とします． ノートブックの作成方法は第1回の資料を参照してください．
- 8パズル  今回は 8パズル（8 Puzzle） を取り上げましょう．
-8パズル   1から8の数字が書いてあるタイルが不規則に3 $\times$ 3のマス目に並べてある． タイルをスライドさせ，左上から順番に1から8まで並び替えるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．
-状態空間モデル   タイルの数字を$x_i$で表します（$i$はタイルの位置）． 例えば初期状態と目的状態を下記で与える． タイルがないマスは$b（ブランク）$と表していることに注意すること．  $$ 初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2) $$ $$ 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8) $$ タイルに対する行動（操作）はブランクの位置に応じて決まる． 例えば，ブランクが 左上（$x_1$） にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができる．  A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$  同様に，ブランクが 上（$x_2$） にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．  A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$ A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$  上記に沿って全てを列挙すると24の行動が定義できる．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+  <meta property="og:description" content="Pythonとは  Python はオランダ出身のプログラマーGuido Van Rossum氏が1991年に開発したプログラミング言語です． C言語やJavaに比べ，文法がシンプルであり，高い可読性を持っています． 例えば，多くのプログラミング言語では，コードの固まり（ブロック）を {}（中括弧） で表現することが多くあります． 一方，Pythonでは， 字下げ（インデント） を利用して，ブロックを表現します． また，豊富なライブラリが利用可能であり，パッケージ管理ツール（pipなど）を利用して，手軽に導入可能という特徴もあります．
+コーディング， 実行， デバッグ という一連のプロセスも簡単であり， 手を動かしながら学ぶには最適なプログラミング言語と言えるでしょう． 今回は，人工知能技術を学ぶ前準備として， Python の基本的な文法について学びます．
+ ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-2 とします． ノートブックの作成方法は第1回の資料を参照してください．
+
+ 四則演算  一般的な四則演算が利用可能です． セルに加算（&#43;），減算（-），乗算（*），除算（/），剰余（%），累乗（**）を入力して，結果を確認してみましょう． 乗算・除算などは，我々が通常用いている$\times$や$\div$などの演算子とは異なることに注意してください．
+   演算 演算子 例     加算 &#43; 3 &#43; 2 -&gt; 5   減算 - 3 - 2 -&gt; 1   乗算 * 3 * 2 -&gt; 6   除算 / 3 / 2 -&gt; 1." />
 
 
 
@@ -94,18 +96,20 @@
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="探索木・8パズル" />
+  <meta name="twitter:title" content="Pythonの基本" />
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-2 とします． ノートブックの作成方法は第1回の資料を参照してください．
- 8パズル  今回は 8パズル（8 Puzzle） を取り上げましょう．
-8パズル   1から8の数字が書いてあるタイルが不規則に3 $\times$ 3のマス目に並べてある． タイルをスライドさせ，左上から順番に1から8まで並び替えるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．
-状態空間モデル   タイルの数字を$x_i$で表します（$i$はタイルの位置）． 例えば初期状態と目的状態を下記で与える． タイルがないマスは$b（ブランク）$と表していることに注意すること．  $$ 初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2) $$ $$ 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8) $$ タイルに対する行動（操作）はブランクの位置に応じて決まる． 例えば，ブランクが 左上（$x_1$） にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができる．  A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$  同様に，ブランクが 上（$x_2$） にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．  A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$ A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$  上記に沿って全てを列挙すると24の行動が定義できる．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+  <meta name="twitter:description" content="Pythonとは  Python はオランダ出身のプログラマーGuido Van Rossum氏が1991年に開発したプログラミング言語です． C言語やJavaに比べ，文法がシンプルであり，高い可読性を持っています． 例えば，多くのプログラミング言語では，コードの固まり（ブロック）を {}（中括弧） で表現することが多くあります． 一方，Pythonでは， 字下げ（インデント） を利用して，ブロックを表現します． また，豊富なライブラリが利用可能であり，パッケージ管理ツール（pipなど）を利用して，手軽に導入可能という特徴もあります．
+コーディング， 実行， デバッグ という一連のプロセスも簡単であり， 手を動かしながら学ぶには最適なプログラミング言語と言えるでしょう． 今回は，人工知能技術を学ぶ前準備として， Python の基本的な文法について学びます．
+ ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-2 とします． ノートブックの作成方法は第1回の資料を参照してください．
+
+ 四則演算  一般的な四則演算が利用可能です． セルに加算（&#43;），減算（-），乗算（*），除算（/），剰余（%），累乗（**）を入力して，結果を確認してみましょう． 乗算・除算などは，我々が通常用いている$\times$や$\div$などの演算子とは異なることに注意してください．
+   演算 演算子 例     加算 &#43; 3 &#43; 2 -&gt; 5   減算 - 3 - 2 -&gt; 1   乗算 * 3 * 2 -&gt; 6   除算 / 3 / 2 -&gt; 1." />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/d9c458606aeaa73df9890d7221dd1b8c.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/43fd570daa04f04c827b9d42d3b63040.png" />
 
 
 
@@ -168,17 +172,31 @@
   
   
   
-  <span>on&nbsp;</span><time datetime="2020-01-05 12:19:26 &#43;0900 JST">January 5, 2020</time>
+  <span>on&nbsp;</span><time datetime="2020-03-18 16:01:10 &#43;0900 JST">March 18, 2020</time>
 </div>
 
-    <h1 class="post-title">探索木・8パズル</h1>
+    <h1 class="post-title">Pythonの基本</h1>
 <div class="post-line"></div>
 
     
 
-    
+    <p><a href="https://gyazo.com/43fd570daa04f04c827b9d42d3b63040"><img src="https://i.gyazo.com/43fd570daa04f04c827b9d42d3b63040.png" alt="Image from Gyazo" /></a></p>
 
-<p><a href="https://gyazo.com/d9c458606aeaa73df9890d7221dd1b8c"><img src="https://i.gyazo.com/d9c458606aeaa73df9890d7221dd1b8c.png" alt="Image from Gyazo" /></a></p>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Pythonとは
+</h1>
+
+
+<p><strong>Python</strong> はオランダ出身のプログラマー<a href="https://twitter.com/gvanrossum">Guido Van Rossum</a>氏が1991年に開発したプログラミング言語です．
+C言語やJavaに比べ，文法がシンプルであり，高い可読性を持っています．
+例えば，多くのプログラミング言語では，コードの固まり（ブロック）を <strong>{}（中括弧）</strong> で表現することが多くあります．
+一方，Pythonでは， <strong>字下げ（インデント）</strong>  を利用して，ブロックを表現します．
+また，豊富なライブラリが利用可能であり，パッケージ管理ツール（pipなど）を利用して，手軽に導入可能という特徴もあります．</p>
+
+<p><strong>コーディング</strong>， <strong>実行</strong>， <strong>デバッグ</strong> という一連のプロセスも簡単であり，
+手を動かしながら学ぶには最適なプログラミング言語と言えるでしょう．
+今回は，人工知能技術を学ぶ前準備として， <strong>Python</strong> の基本的な文法について学びます．</p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -190,311 +208,289 @@
 ノートブックのタイトルは <strong>AI-2</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
 
-<!-- [![Image from Gyazo](https://i.gyazo.com/54d5cced235882d26a3a323388173139.png)](https://gyazo.com/54d5%cced235882d26a3a323388173139) -->
+<p><a href="https://gyazo.com/2a6e8cfa4ea0f576247423a613b8b52f"><img src="https://i.gyazo.com/2a6e8cfa4ea0f576247423a613b8b52f.png" alt="Image from Gyazo" /></a></p>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  8パズル
+  四則演算
 </h1>
 
 
-<p>今回は <strong>8パズル（8 Puzzle）</strong> を取り上げましょう．</p>
+<p>一般的な四則演算が利用可能です．
+セルに加算（+），減算（-），乗算（*），除算（/），剰余（%），累乗（**）を入力して，結果を確認してみましょう．
+乗算・除算などは，我々が通常用いている$\times$や$\div$などの演算子とは異なることに注意してください．</p>
 
+<table>
+<thead>
+<tr>
+<th>演算</th>
+<th>演算子</th>
+<th>例</th>
+</tr>
+</thead>
 
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#006600">
-    8パズル
-  </h3>
+<tbody>
+<tr>
+<td>加算</td>
+<td>+</td>
+<td>3 + 2 -&gt; 5</td>
+</tr>
 
-  <p>
-    
+<tr>
+<td>減算</td>
+<td>-</td>
+<td>3 - 2 -&gt; 1</td>
+</tr>
 
-1から8の数字が書いてあるタイルが不規則に3 $\times$ 3のマス目に並べてある．
-タイルをスライドさせ，左上から順番に1から8まで並び替えるにはどうしたらよいか．
+<tr>
+<td>乗算</td>
+<td>*</td>
+<td>3 * 2 -&gt; 6</td>
+</tr>
 
-<a href="https://gyazo.com/0c56c9198817eeb43d10e4fd9fbc262c"><img style="margin-top:20px" src="https://i.gyazo.com/0c56c9198817eeb43d10e4fd9fbc262c.png" alt="Image from Gyazo" width="500"/></a>
+<tr>
+<td>除算</td>
+<td>/</td>
+<td>3 / 2 -&gt; 1.5</td>
+</tr>
 
+<tr>
+<td>剰余</td>
+<td>%</td>
+<td>3 % 2 -&gt; 1</td>
+</tr>
 
-  </p>
-  
-</div>
+<tr>
+<td>累乗</td>
+<td>**</td>
+<td>3 ** 2 -&gt; 9</td>
+</tr>
+</tbody>
+</table>
 
-
-<p>この問題を <strong>状態空間モデル</strong> で表現します．</p>
-
-
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#FF0000">
-    状態空間モデル
-  </h3>
-
-  <p>
-    
-
-タイルの数字を$x_i$で表します（$i$はタイルの位置）．
-例えば初期状態と目的状態を下記で与える．
-タイルがないマスは$b（ブランク）$と表していることに注意すること．
-
-<a href="https://gyazo.com/962bcf260c93c9be280754f6b3284106"><img style="margin-top:20px" src="https://i.gyazo.com/962bcf260c93c9be280754f6b3284106.png" alt="Image from Gyazo" width="200"/></a>
-
-$$
-初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2)
-$$
-
-$$
-目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8)
-$$
-
-タイルに対する<b>行動（操作）</b>はブランクの位置に応じて決まる．
-例えば，ブランクが <b>左上（$x_1$）</b> にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができる．
-
-
-<ul>
-<li>A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$</li>
-<li>A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$</li>
-</ul>
-
-同様に，ブランクが <b>上（$x_2$）</b> にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．
-
-<ul>
-<li>A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$</li>
-<li>A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$</li>
-<li>A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$</li>
-</ul>
-
-上記に沿って全てを列挙すると24の行動が定義できる．
-
-
-  </p>
-  
-</div>
-
-
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">3</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">3</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">3</span> <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span></code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">5</span>
+<span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">6</span>
+<span style="color:#ae81ff">1.5</span>
+<span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">9</span></code></pre></div>
 <h1>
   <img class="head-image" src="/logo/logo.png">
-  実装
+  変数
 </h1>
 
 
-<h2 id="クラスの定義">クラスの定義</h2>
+<p>数値や文字列を記憶するための <strong>変数</strong> を用いることができます．
+変数名は，アルファベット，数字，アンダーバー（ _ ）で構成します（大文字と小文字は区別されます）．
+Pythonでは，明示的に変数の <strong>データ型</strong> を宣言する必要はありません．
+代入される値に応じて，自動的に変数の <strong>データ型</strong> が確定します（ <strong>型推論</strong> と呼ばれます）．
+データ型を確認するには，<strong>type</strong> 関数を用います．
+下記のように4つの変数x，y，z，fを定義してみましょう．
+変数に代入されている値を確認するには，単に変数名だけを入力すればOKです（もちろん <strong>print</strong> 関数を用いても良い）．</p>
 
-<p>最初にライブラリをインポートします．
-前回と同様に，<strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
-<strong>幅優先探索</strong> を表す<code>breadth_first</code>をインポートします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, breadth_first</code></pre></div>
-<p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
-初期状態は$(3, 1, 5, b, 7, 4, 6, 8, 2)$，
-目的状態は$(b, 1, 2, 3, 4, 5, 6, 7, 8)$です．
-ここでは，$b$を$0$で表現していることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> (
-    <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>,
-    <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">4</span>,
-    <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">2</span>
-)
+<table>
+<thead>
+<tr>
+<th>種類</th>
+<th>データ型</th>
+<th>例</th>
+</tr>
+</thead>
 
-GOAL <span style="color:#f92672">=</span> (
-    <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>,
-    <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>,
-    <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>
-)</code></pre></div>
-<p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
-8パズルを表す<code>EightPuzzle</code>を定義します．
-オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>is_goal</code>の3種類です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EightPuzzle</span>(SearchProblem):
+<tbody>
+<tr>
+<td>整数</td>
+<td>int</td>
+<td>1, 10, 100</td>
+</tr>
 
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
-		<span style="color:#f92672">...</span>
-		
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-		<span style="color:#f92672">...</span>
-		
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-		<span style="color:#f92672">...</span></code></pre></div>
-<h3 id="actions-self-state">actions(self, state)</h3>
+<tr>
+<td>実数</td>
+<td>float</td>
+<td>0.1, 1.1, 10.1</td>
+</tr>
 
-<p>ブランクの位置に応じた行動のリストを返します．
-行動は全部で24パターンが存在します．
-また，リストのインデックスは0番から始まることに注意してください．
-例えば，<code>state[0]</code>は$x_1$を表しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
-	list <span style="color:#f92672">=</span> []
-	
-	<span style="color:#66d9ef">if</span> state[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#左上がブランク</span>
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],
-		))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],
-        ))            
-    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#上がブランク</span>
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],
-		))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>], state[<span style="color:#ae81ff">1</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-		))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))            
-    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#右上がブランク</span>
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">2</span>], state[<span style="color:#ae81ff">1</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#左がブランク</span>
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-		))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-		))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#中央がブランク</span>
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>], state[<span style="color:#ae81ff">4</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))                        
-    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#右がブランク</span>
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">5</span>], state[<span style="color:#ae81ff">4</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],                
-		))                        
-    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#左下がブランク</span>
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))                        
-    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#下がブランク</span>
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>],                
-        ))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>], state[<span style="color:#ae81ff">7</span>],                
-        ))                        
-    <span style="color:#66d9ef">elif</span> state[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#75715e">#右下がブランク</span>
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">8</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">7</span>], state[<span style="color:#ae81ff">5</span>],                
-        ))
-		list<span style="color:#f92672">.</span>append((
-			state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>],
-			state[<span style="color:#ae81ff">3</span>], state[<span style="color:#ae81ff">4</span>], state[<span style="color:#ae81ff">5</span>],
-			state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>], state[<span style="color:#ae81ff">7</span>],                
-            ))                        
+<tr>
+<td>文字列</td>
+<td>str</td>
+<td>&ldquo;abc&rdquo;, &ldquo;あいう&rdquo;</td>
+</tr>
 
-    <span style="color:#66d9ef">return</span> list</code></pre></div>
-<h3 id="result-self-state-action">result(self, state, action)</h3>
+<tr>
+<td>真理値</td>
+<td>bool</td>
+<td>True, False</td>
+</tr>
+</tbody>
+</table>
 
-<p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-	<span style="color:#66d9ef">return</span> action</code></pre></div>
-<h3 id="is-goal-self-state">is_goal(self, state)</h3>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># int</span>
+type(x)
+y <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#75715e"># float</span>
+type(y)
+z <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;abc&#34;</span> <span style="color:#75715e"># str</span>
+type(z)
+f <span style="color:#f92672">=</span> True <span style="color:#75715e"># bool</span>
+type(f)
+x <span style="color:#75715e"># xに代入されている値を出力</span>
+y <span style="color:#75715e"># yに代入されている値を出力</span>
+x <span style="color:#f92672">+</span> y <span style="color:#75715e"># 加算</span>
+x <span style="color:#f92672">*</span> y <span style="color:#75715e"># 乗算</span></code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">int
+float
+str
+bool
+<span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">0.5</span>
+<span style="color:#ae81ff">2.5</span>
+<span style="color:#ae81ff">1</span></code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  リストとタプル
+</h1>
 
-<p>状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-	<span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
-<h2 id="解の探索">解の探索</h2>
 
-<p>幅優先探索（探索木）<code>breadth_first</code>を用いて解を探索します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> EightPuzzle(initial_state<span style="color:#f92672">=</span>START)
-result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True)</code></pre></div>
-<p>探索が終了したら，最終状態，パス，コストを表示します．
-最終状態は<code>(0, 1, 2, 3, 4, 5, 6, 7, 8)</code>となっており目的状態に到達できたことがわかります．
-このとき，初期状態から目的状態までのコスト（ステップ数）は13です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;State:&#34;</span>, result<span style="color:#f92672">.</span>state)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Path:&#34;</span>, result<span style="color:#f92672">.</span>path())
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Cost:&#34;</span>, result<span style="color:#f92672">.</span>cost)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">State: (0, 1, 2, 3, 4, 5, 6, 7, 8)
-Path: [(None, (3, 1, 5, 0, 7, 4, 6, 8, 2)), ((0, 1, 5, 3, 7, 4, 6, 8, 2), (0, 1, 5, 3, 7, 4, 6, 8, 2)), ((1, 0, 5, 3, 7, 4, 6, 8, 2), (1, 0, 5, 3, 7, 4, 6, 8, 2)), ((1, 5, 0, 3, 7, 4, 6, 8, 2), (1, 5, 0, 3, 7, 4, 6, 8, 2)), ((1, 5, 4, 3, 7, 0, 6, 8, 2), (1, 5, 4, 3, 7, 0, 6, 8, 2)), ((1, 5, 4, 3, 7, 2, 6, 8, 0), (1, 5, 4, 3, 7, 2, 6, 8, 0)), ((1, 5, 4, 3, 7, 2, 6, 0, 8), (1, 5, 4, 3, 7, 2, 6, 0, 8)), ((1, 5, 4, 3, 0, 2, 6, 7, 8), (1, 5, 4, 3, 0, 2, 6, 7, 8)), ((1, 0, 4, 3, 5, 2, 6, 7, 8), (1, 0, 4, 3, 5, 2, 6, 7, 8)), ((1, 4, 0, 3, 5, 2, 6, 7, 8), (1, 4, 0, 3, 5, 2, 6, 7, 8)), ((1, 4, 2, 3, 5, 0, 6, 7, 8), (1, 4, 2, 3, 5, 0, 6, 7, 8)), ((1, 4, 2, 3, 0, 5, 6, 7, 8), (1, 4, 2, 3, 0, 5, 6, 7, 8)), ((1, 0, 2, 3, 4, 5, 6, 7, 8), (1, 0, 2, 3, 4, 5, 6, 7, 8)), ((0, 1, 2, 3, 4, 5, 6, 7, 8), (0, 1, 2, 3, 4, 5, 6, 7, 8))]
-Cost: 13</code></pre></div>
-<h2 id="探索過程の可視化">探索過程の可視化</h2>
+<p>複数のデータをまとめて扱う場合は，<strong>リスト</strong> または <strong>タプル</strong> を用います．
+リストは値を書き換えることが出来ますが，タプルでは書き換えが出来ないという特徴があります．
+リストとタプルの要素には，要素番号を用いて参照します．
+このとき，要素番号は <strong>0</strong> から始まることに注意してください．
+配列の長さは <strong>len</strong> 関数で得ることができます．</p>
 
-<p>最後に探索過程を可視化してみましょう．
-8パズルは前回の水差し問題に比べると，非常に複雑な問題であり，
-とても大きな探索木になってしまいます（探索した状態数は2116）．
-この探索する状態数をいかに減らすかが，探索アルゴリズムの重要なキーとなります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search.viewers <span style="color:#f92672">import</span> WebViewer
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>] <span style="color:#75715e"># リスト</span>
+x
+x[<span style="color:#ae81ff">2</span>]
+x[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>
+x
+y <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># タプル</span>
+y
+y[<span style="color:#ae81ff">1</span>]
+y[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span> <span style="color:#75715e"># エラー</span>
+len(x) <span style="color:#75715e"># リストxの長さ</span>
+len(y) <span style="color:#75715e"># タプルyの長さ</span></code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
+<span style="color:#ae81ff">3</span>
+[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
+(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
+<span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">5</span>
+<span style="color:#ae81ff">3</span></code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  if文
+</h1>
 
-web_viewer <span style="color:#f92672">=</span> WebViewer()
-result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True, viewer<span style="color:#f92672">=</span>web_viewer)</code></pre></div>
-<p><a href="https://gyazo.com/6893e43131955778143518f6ba052de7"><img src="https://i.gyazo.com/6893e43131955778143518f6ba052de7.png" alt="Image from Gyazo" /></a></p>
 
+<p>条件に応じて処理を分岐させるときには <strong>if文</strong> を用います．
+条件は <code>==</code>，<code>&gt;</code>，<code>&gt;=</code> などの <strong>比較演算子</strong> で表現されます．
+例えば， <strong>xは正の値</strong> という条件を表現するには，<code>x &gt; 0</code>と記述します．
+また，多くのプログラミング言語では，<strong>{}（中括弧）</strong> でブロックを表現しますが，
+Pythonでは，<strong>字下げ（インデント）</strong> を利用することに注意してください（字下げ（インデント）するには <strong>タブ・キー</strong> を入力します）．
+<strong>else</strong> は省略することも出来ます．</p>
+
+<table>
+<thead>
+<tr>
+<th>比較演算子</th>
+<th>意味</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>a==b</code></td>
+<td>aとbは等しい</td>
+</tr>
+
+<tr>
+<td><code>a!=b</code></td>
+<td>aとbは異なる</td>
+</tr>
+
+<tr>
+<td><code>a&gt;b</code></td>
+<td>aはbより大きい</td>
+</tr>
+
+<tr>
+<td><code>a&gt;=b</code></td>
+<td>aはb以上</td>
+</tr>
+
+<tr>
+<td><code>a&lt;b</code></td>
+<td>aはbより小さい</td>
+</tr>
+
+<tr>
+<td><code>a&lt;=b</code></td>
+<td>aはb以下</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#75715e"># 正の値を代入</span>
+<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+  <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは正の値&#34;</span>)
+<span style="color:#66d9ef">else</span>:
+  <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは0または負の値&#34;</span>)
+
+x <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">3</span> <span style="color:#75715e"># 負の値を代入</span>
+<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+  <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは正の値&#34;</span>)
+<span style="color:#66d9ef">else</span>:
+  <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは0または負の値&#34;</span>)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">xは正の値
+xは0または負の値</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  for文
+</h1>
+
+
+<p>特定の処理を繰り返し行うときには <strong>for文</strong> を用います．
+繰り返しの条件は <strong>リスト</strong> で表現するという特徴があります．
+また，<strong>リスト</strong> の代わりに，<strong>range</strong> 関数を用いることも可能です．
+例えば，<code>range(3)</code>と記述すると，<code>[0, 1, 2]</code>と同じ結果を得ます．
+ブロックは <strong>if文</strong> と同様に <strong>字下げ（インデント）</strong> で表現します．</p>
+
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> [<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>]: <span style="color:#75715e"># リストで繰り返し</span>
+  <span style="color:#66d9ef">print</span>(i)
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>): <span style="color:#75715e"># range関数で繰り返し</span>
+  <span style="color:#66d9ef">print</span>(i)</code></pre></div>
+<p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">0</span>
+<span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">0</span>
+<span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">2</span></code></pre></div>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   課題
 </h1>
 
 
-<p>探索数を減らすためにはどうしたら良いかアイデアを述べなさい（マークダウンにしてセルに入力すること）．
-作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+<p>下記の2次方程式の解を <strong>解の公式</strong> を用いて導出しなさい．</p>
+
+<p>$$
+x^2+6x+8 = 0
+$$</p>
 
 
 <h3>参考書籍</h3>
@@ -582,7 +578,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-03-15 22:11:44.886511 &#43;0900 JST m=&#43;0.262625087">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-03-18 17:07:23.354081 &#43;0900 JST m=&#43;0.118185834">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
