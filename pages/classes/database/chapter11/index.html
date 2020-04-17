@@ -523,7 +523,7 @@ sqlite&gt; .table
 <p>まずは，<strong>原子性</strong>に関して確認していきましょう．
 トランザクションをスタートするには，<code>BEGIN TRANSACTION</code>と入力します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* トランザクションのスタート */</span>
-<span style="color:#66d9ef">BEGIN</span> TRANSACTION;</code></pre></div>
+<span style="color:#66d9ef">BEGIN</span> <span style="color:#66d9ef">TRANSACTION</span>;</code></pre></div>
 <p>トランザクションをスタートすると，データベースがロックされ，他者は書き込みが出来なくなります
 （正確にはデータベースへの最初のアクセスがあった時点でロックされる）．
 それでは，学籍番号が$A002$の学生が，$人文学部$に転学部したことを想定し，
@@ -547,7 +547,7 @@ C004|仙波あすか|1|国際関係学部|せんばあすか</code></pre></div>
 前の状態に戻すことを <strong>ロールバック</strong> と言います．
 ロールバックするには，<code>ROLLBACK TRANSACTION</code>と入力します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* トランザクションのロールバック */</span>
-<span style="color:#66d9ef">ROLLBACK</span> TRANSACTION;</code></pre></div>
+<span style="color:#66d9ef">ROLLBACK</span> <span style="color:#66d9ef">TRANSACTION</span>;</code></pre></div>
 <p>ロールバックすると，【学部リスト】と【テニス部】は更新前の状態に戻っていることが確認できます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from 学生リスト;
 学籍番号|氏名|学年|学部|よみがな
@@ -562,13 +562,13 @@ B003|杉江弘子|3|人文学部|すぎえひろこ
 C004|仙波あすか|1|国際関係学部|せんばあすか</code></pre></div>
 <p>それでは，もう一度，トランザクションをスタートして，
 先程と同じように【学部リスト】と【テニス部】を更新しましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">BEGIN</span> TRANSACTION;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">BEGIN</span> <span style="color:#66d9ef">TRANSACTION</span>;
 <span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;人文学部&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A002&#34;</span>;
 <span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;人文学部&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A002&#34;</span>;</code></pre></div>
 <p>今度は，更新を確定しましょう．
 確定するには，<code>COMMIT TRANSACTION</code>と入力します．
 これで，更新は確定され，データベースに対するロックも解除されます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">COMMIT</span> TRANSACTION;</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">COMMIT</span> <span style="color:#66d9ef">TRANSACTION</span>;</code></pre></div>
 <p>このように，トランザクションの処理は全て実行されるか，または，
 ロールバックで全て取り消されるか，どちらかの結果となります．
 ここで，一旦，作成したテーブルをファイルにバックアップしましょう．
@@ -589,7 +589,7 @@ main: db5.sqlite</code></pre></div>
 <p>それでは，クライアントAで，トランザクションをスタートし，
 学籍番号が$A002$の学部を$工学部$に戻してみましょう．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* クライアントAで実行 */</span>
-<span style="color:#66d9ef">BEGIN</span> TRANSACTION;
+<span style="color:#66d9ef">BEGIN</span> <span style="color:#66d9ef">TRANSACTION</span>;
 <span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;工学部&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A002&#34;</span>;
 <span style="color:#66d9ef">UPDATE</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">SET</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;工学部&#34;</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">学籍番号</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A002&#34;</span>;</code></pre></div>
 <p>クライアントAで更新を確定していない状態で，
@@ -604,7 +604,7 @@ C004|仙波あすか|1|国際関係学部|せんばあすか
 D006|山下隆|4|経営情報学部|やましたたかし</code></pre></div>
 <p>そこで，クライアントAで更新を確定します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* クライアントAで実行 */</span>
-<span style="color:#66d9ef">COMMIT</span> TRANSACTION;</code></pre></div>
+<span style="color:#66d9ef">COMMIT</span> <span style="color:#66d9ef">TRANSACTION</span>;</code></pre></div>
 <p>再度，クライアントBから【学生リスト】を確認すると，
 学部が$工学部$に更新されていることがわかります．
 このように，トランザクションの途中経過は，
@@ -734,7 +734,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-04-16 15:58:27.3269326 &#43;0900 JST m=&#43;0.240328301">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-04-17 11:32:42.575365 &#43;0900 JST m=&#43;0.151124822">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
