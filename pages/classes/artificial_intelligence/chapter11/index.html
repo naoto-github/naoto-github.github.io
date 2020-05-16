@@ -306,7 +306,7 @@ pole_speed <span style="color:#f92672">=</span> observation[<span style="color:#
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">action <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># 左に向かって力を加える</span>
 
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-	env<span style="color:#f92672">.</span>step(action) 
+    env<span style="color:#f92672">.</span>step(action) 
 
 env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
 <p><a href="https://gyazo.com/fc3833ae9783aa04d1c401636a58cc29"><img src="https://i.gyazo.com/fc3833ae9783aa04d1c401636a58cc29.png" alt="Image from Gyazo" /></a></p>
@@ -338,14 +338,14 @@ env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># �
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
 
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-	action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
+    action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
     observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-	
+    
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
-	
-	env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
+    
+    env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
 <p><a href="https://gyazo.com/e1adbf0bf716a6b52af57c7aedcb9e73"><img src="https://i.gyazo.com/e1adbf0bf716a6b52af57c7aedcb9e73.gif" alt="Image from Gyazo" /></a></p>
 
 <p>最後に，<strong>ポールの速度</strong> に基づき行動を選択するように改良してみましょう．
@@ -354,24 +354,24 @@ env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># �
 この結果，先程より長く <strong>177ステップ</strong> でカートが画面の端に到達し失敗となりました．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">selectAction</span>(observation):
 
-	pole_speed <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">3</span>] <span style="color:#75715e"># ポールの速度</span>
-	
-	<span style="color:#66d9ef">if</span> pole_speed <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>:
-		action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># 速度が右なら，右方向に力</span>
-	<span style="color:#66d9ef">else</span>:
-		action <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># 速度が左なら，左方向に力</span>
-		
-	<span style="color:#66d9ef">return</span> action</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境の初期化</span>
+    pole_speed <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">3</span>] <span style="color:#75715e"># ポールの速度</span>
+    
+    <span style="color:#66d9ef">if</span> pole_speed <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>:
+        action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># 速度が右なら，右方向に力</span>
+    <span style="color:#66d9ef">else</span>:
+        action <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># 速度が左なら，左方向に力</span>
+        
+    <span style="color:#66d9ef">return</span> action</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境の初期化</span>
 
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-	action <span style="color:#f92672">=</span> selectAction(observation) <span style="color:#75715e"># ポールの速度に基づき選択</span>
+    action <span style="color:#f92672">=</span> selectAction(observation) <span style="color:#75715e"># ポールの速度に基づき選択</span>
     observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-	
+    
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
-	
-	env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
+    
+    env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
 <p><a href="https://gyazo.com/a81bce74630e64401d9250fe0c8bfa2d"><img src="https://i.gyazo.com/a81bce74630e64401d9250fe0c8bfa2d.gif" alt="Image from Gyazo" /></a></p>
 
 <!-- <h1>
@@ -452,7 +452,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-05-12 09:18:31.700985 &#43;0900 JST m=&#43;0.128708631">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-05-16 13:37:40.713643 &#43;0900 JST m=&#43;0.235178154">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

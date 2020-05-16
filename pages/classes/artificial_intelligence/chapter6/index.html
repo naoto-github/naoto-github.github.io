@@ -310,69 +310,69 @@ GOAL  <span style="color:#f92672">=</span> <span style="color:#ae81ff">17</span>
 オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>is_goal</code>の3種類です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MazeProblem</span>(SearchProblem):
 
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
-		<span style="color:#f92672">...</span>
-		
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-		<span style="color:#f92672">...</span>
-		
-	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-		<span style="color:#f92672">...</span></code></pre></div>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
+        <span style="color:#f92672">...</span>
+        
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+        <span style="color:#f92672">...</span>
+        
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
+        <span style="color:#f92672">...</span></code></pre></div>
 <h3 id="actions-self-state">actions(self, state)</h3>
 
 <p>実行可能な行動のリストを返します．
 行動は全部で31パターンが存在します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
-	list <span style="color:#f92672">=</span> []
-	
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>: <span style="color:#75715e">#S1からS2,S7に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">7</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>: <span style="color:#75715e">#S2からS1,S6に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>: <span style="color:#75715e">#S3からS4に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span>: <span style="color:#75715e">#S4からS3,S5,S8に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">8</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>: <span style="color:#75715e">#S5からS4に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">6</span>: <span style="color:#75715e">#S6からS2に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>: <span style="color:#75715e">#S7からS1,S8,S14に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">14</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">8</span>: <span style="color:#75715e">#S8からS9に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">12</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>: <span style="color:#75715e">#S9からS10,S13に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">13</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span>: <span style="color:#75715e">#S10からS9,S17に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">17</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">11</span>: <span style="color:#75715e">#S11からS12に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">12</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">12</span>: <span style="color:#75715e">#S12からS8,S11,S13に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">13</span>: <span style="color:#75715e">#S13からS9,S12に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">12</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">14</span>: <span style="color:#75715e">#S14からS7,S15に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">15</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">15</span>: <span style="color:#75715e">#S15からS4に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">14</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">16</span>: <span style="color:#75715e">#S16からS17に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">17</span>]
-	<span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">17</span>: <span style="color:#75715e">#S17からS10,S16に到達可能</span>
-		list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">16</span>]
+    list <span style="color:#f92672">=</span> []
+    
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>: <span style="color:#75715e">#S1からS2,S7に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">7</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>: <span style="color:#75715e">#S2からS1,S6に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>: <span style="color:#75715e">#S3からS4に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span>: <span style="color:#75715e">#S4からS3,S5,S8に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">8</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>: <span style="color:#75715e">#S5からS4に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">6</span>: <span style="color:#75715e">#S6からS2に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>: <span style="color:#75715e">#S7からS1,S8,S14に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">14</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">8</span>: <span style="color:#75715e">#S8からS9に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">12</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>: <span style="color:#75715e">#S9からS10,S13に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">13</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span>: <span style="color:#75715e">#S10からS9,S17に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">17</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">11</span>: <span style="color:#75715e">#S11からS12に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">12</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">12</span>: <span style="color:#75715e">#S12からS8,S11,S13に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">13</span>: <span style="color:#75715e">#S13からS9,S12に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">12</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">14</span>: <span style="color:#75715e">#S14からS7,S15に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">15</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">15</span>: <span style="color:#75715e">#S15からS4に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">14</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">16</span>: <span style="color:#75715e">#S16からS17に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">17</span>]
+    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">17</span>: <span style="color:#75715e">#S17からS10,S16に到達可能</span>
+        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">16</span>]
 
-	<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{} -&gt; {}&#34;</span><span style="color:#f92672">.</span>format(state, list))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{} -&gt; {}&#34;</span><span style="color:#f92672">.</span>format(state, list))
 
-	<span style="color:#66d9ef">return</span> list</code></pre></div>
+    <span style="color:#66d9ef">return</span> list</code></pre></div>
 <h3 id="result-self-state-action">result(self, state, action)</h3>
 
 <p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-	<span style="color:#66d9ef">return</span> action</code></pre></div>
+    <span style="color:#66d9ef">return</span> action</code></pre></div>
 <h3 id="is-goal-self-state">is_goal(self, state)</h3>
 
 <p>状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-	<span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
+    <span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
 <h2 id="解の探索">解の探索</h2>
 
 <h3 id="幅優先探索">幅優先探索</h3>
@@ -514,7 +514,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-05-12 09:18:31.70941 &#43;0900 JST m=&#43;0.137134752">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-05-16 13:37:40.69274 &#43;0900 JST m=&#43;0.214275021">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
