@@ -80,8 +80,8 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-10 とします． ノートブックの作成方法は第1回の資料を参照してください．
- フロイド問題  今回は フロイド問題(Floyd Problem) を取り上げましょう．
+  <meta property="og:description" content="ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-10 とします． ノートブックの作成方法は第1回の資料を参照してください．
+フロイド問題今回は フロイド問題(Floyd Problem) を取り上げましょう．
 フロイド問題   1から10までの整数を$A$と$B$の2つのグループに分ける． このとき，各グループの整数の平方根の和を求め，その差の絶対値を目的関数$g(A,B)$とする． この目的関数が最小となるグループ$A$，$B$を求めよ． 例えば，グループ$A$を奇数，グループ$B$を偶数とするとき， 目的関数の値は$1.24$となる． $$ A=\{1, 3, 5, 7, 9\} $$ $$ B=\{2, 4, 6, 8, 10\} $$ $$ f(A) = \sqrt{1} &#43; \sqrt{3} &#43; \sqrt{5} &#43; \sqrt{7} &#43; \sqrt{9} \simeq 10.61 $$ $$ f(B) = \sqrt{2} &#43; \sqrt{4} &#43; \sqrt{6} &#43; \sqrt{8} &#43; \sqrt{10} \simeq 11.85 $$ $$ g(A, B) = |f(A) - f(B)| \simeq 1." />
 
 
@@ -97,8 +97,8 @@
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-10 とします． ノートブックの作成方法は第1回の資料を参照してください．
- フロイド問題  今回は フロイド問題(Floyd Problem) を取り上げましょう．
+  <meta name="twitter:description" content="ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-10 とします． ノートブックの作成方法は第1回の資料を参照してください．
+フロイド問題今回は フロイド問題(Floyd Problem) を取り上げましょう．
 フロイド問題   1から10までの整数を$A$と$B$の2つのグループに分ける． このとき，各グループの整数の平方根の和を求め，その差の絶対値を目的関数$g(A,B)$とする． この目的関数が最小となるグループ$A$，$B$を求めよ． 例えば，グループ$A$を奇数，グループ$B$を偶数とするとき， 目的関数の値は$1.24$となる． $$ A=\{1, 3, 5, 7, 9\} $$ $$ B=\{2, 4, 6, 8, 10\} $$ $$ f(A) = \sqrt{1} &#43; \sqrt{3} &#43; \sqrt{5} &#43; \sqrt{7} &#43; \sqrt{9} \simeq 10.61 $$ $$ f(B) = \sqrt{2} &#43; \sqrt{4} &#43; \sqrt{6} &#43; \sqrt{8} &#43; \sqrt{10} \simeq 11.85 $$ $$ g(A, B) = |f(A) - f(B)| \simeq 1." />
 
 
@@ -309,19 +309,18 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
 オーバライドするメソッドは，<code>value</code>，<code>generate_random_state</code>，
 <code>crossover</code>，<code>mutate</code> の4種類です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FloydProblem</span>(SearchProblem):
-    
+
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
         <span style="color:#f92672">...</span>
-        
+
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_random_state</span>(self):
         <span style="color:#f92672">...</span>     
-        
+
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossover</span>(self, state1, state2):
         <span style="color:#f92672">...</span>
-    
+
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mutate</span>(self, state):
-        <span style="color:#f92672">...</span>
-    </code></pre></div>
+        <span style="color:#f92672">...</span></code></pre></div>
 <h3 id="value-self-state">value(self, state)</h3>
 
 <p>状態<code>state</code> の目的関数を実装します．
@@ -329,67 +328,67 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
 ここでは目的関数を負の値で表し，<strong>最大化</strong>を目的とした問題として扱います．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
 
-        value0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-        value1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-        
-        <span style="color:#66d9ef">for</span> n, s <span style="color:#f92672">in</span> zip(NUMBERS, state):
-            <span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-                value0 <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>sqrt(n)
-            <span style="color:#66d9ef">else</span>:
-                value1 <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>sqrt(n)
-            
-        value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>abs(value0 <span style="color:#f92672">-</span> value1) <span style="color:#75715e"># 負の値</span>
-            
-        <span style="color:#66d9ef">return</span> value</code></pre></div>
+    value0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    value1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+
+    <span style="color:#66d9ef">for</span> n, s <span style="color:#f92672">in</span> zip(NUMBERS, state):
+        <span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            value0 <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>sqrt(n)
+        <span style="color:#66d9ef">else</span>:
+            value1 <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>sqrt(n)
+
+    value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>abs(value0 <span style="color:#f92672">-</span> value1) <span style="color:#75715e"># 負の値</span>
+
+    <span style="color:#66d9ef">return</span> value</code></pre></div>
 <h3 id="generate-random-state-self">generate_random_state(self)</h3>
 
 <p>ランダムに状態を生成します．
 生成した乱数が0.5未満であればグループA，
 0.5以上であればグループBとします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_random_state</span>(self):
-        
-        state <span style="color:#f92672">=</span> []
 
-        <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> NUMBERS:
-            <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span>:
-                state<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span>)
-            <span style="color:#66d9ef">else</span>:
-                state<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)        
-        
-        <span style="color:#66d9ef">return</span> state</code></pre></div>
+    state <span style="color:#f92672">=</span> []
+
+    <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> NUMBERS:
+        <span style="color:#66d9ef">if</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span>:
+            state<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span>)
+        <span style="color:#66d9ef">else</span>:
+            state<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)        
+
+    <span style="color:#66d9ef">return</span> state</code></pre></div>
 <h3 id="crossover-self-state1-state2">crossover(self, state1, state2)</h3>
 
 <p>状態<code>state1</code>と状態<code>state2</code>を交叉し，新しい状態を生成します．
 交差する位置は乱数で決定します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossover</span>(self, state1, state2):
 
-        child <span style="color:#f92672">=</span> []
+    child <span style="color:#f92672">=</span> []
 
-        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(state1))
+    index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(state1))
 
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, index):
-            child<span style="color:#f92672">.</span>append(state1[i])
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, index):
+        child<span style="color:#f92672">.</span>append(state1[i])
 
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(index, len(state2)):
-            child<span style="color:#f92672">.</span>append(state2[i])                
-        
-        <span style="color:#66d9ef">return</span> child</code></pre></div>
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(index, len(state2)):
+        child<span style="color:#f92672">.</span>append(state2[i])                
+
+    <span style="color:#66d9ef">return</span> child</code></pre></div>
 <h3 id="mutate-self-state">mutate(self, state)</h3>
 
 <p>状態<code>state</code>を突然変異させ，新しい状態を生成します，
 突然変異する位置は乱数で決定します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mutate</span>(self, state):
 
-        mutated <span style="color:#f92672">=</span> copy<span style="color:#f92672">.</span>deepcopy(state)                                
+    mutated <span style="color:#f92672">=</span> copy<span style="color:#f92672">.</span>deepcopy(state)                                
 
-        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(mutated))
-                         
-        <span style="color:#66d9ef">if</span> mutated[index] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
-            mutated[index] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-        <span style="color:#66d9ef">else</span>:
-            mutated[index] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>                                     
-        
-        <span style="color:#66d9ef">return</span> mutated</code></pre></div>
+    index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(mutated))
+
+    <span style="color:#66d9ef">if</span> mutated[index] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        mutated[index] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">else</span>:
+        mutated[index] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>                                     
+
+    <span style="color:#66d9ef">return</span> mutated</code></pre></div>
 <h2 id="解の探索">解の探索</h2>
 
 <p>上記の実装だと最良解の推移がわからないため，下記のコードを<code>value</code>関数に追加します．
@@ -401,13 +400,13 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
     <span style="color:#75715e"># ここから</span>
     <span style="color:#66d9ef">global</span> max_state
     <span style="color:#66d9ef">global</span> max_value
-        
+
     <span style="color:#66d9ef">if</span> max_value <span style="color:#f92672">&lt;</span> value:
         max_state <span style="color:#f92672">=</span> state
         max_value <span style="color:#f92672">=</span> value            
         <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;max state: {}({:.3f})&#34;</span><span style="color:#f92672">.</span>format(max_state, max_value))
     <span style="color:#75715e"># ここまで追加</span>
-        
+
     <span style="color:#66d9ef">return</span> value</code></pre></div>
 <p>遺伝的アルゴリズム<code>genetic</code>を用いて解を探索します
 ここで，<code>population_size</code>は1世代の個体の数，<code>mutation_chance</code>は突然変異の確率，<code>iterations_limit</code>は世代交代の数です．</p>
@@ -421,23 +420,20 @@ result <span style="color:#f92672">=</span> genetic(problem, population_size<spa
 これは，下記のグループに分けられたことを意味しています（AとBが逆の場合も同じ）．</p>
 
 <p>$$
-A = \{ 1, 4, 5, 8, 10 \}
+A = \{ 1, 2, 3, 4, 6, 7 \}
 $$</p>
 
 <p>$$
-B = \{ 2, 3, 6, 7, 9 \}
+B = \{ 5, 8, 9, 10 \}
 $$</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">max state: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0](-100.000)
-max state: [1, 0, 1, 0, 0, 1, 0, 0, 0, 0](-12.105)
-max state: [0, 0, 0, 1, 1, 1, 1, 0, 0, 0](-3.806)
-max state: [1, 1, 1, 0, 0, 1, 1, 1, 0, 0](-1.672)
-max state: [0, 0, 1, 0, 1, 1, 1, 1, 0, 0](-1.315)
-max state: [0, 1, 1, 0, 1, 0, 1, 1, 0, 0](-0.755)
-max state: [1, 0, 1, 0, 0, 0, 1, 1, 0, 1](-0.269)
-max state: [0, 1, 1, 0, 1, 0, 1, 0, 0, 1](-0.088)
-max state: [0, 0, 0, 0, 0, 1, 1, 0, 1, 1](-0.047)
+max state: [1, 1, 1, 1, 0, 1, 0, 0, 0, 0](-5.277)
+max state: [0, 1, 0, 0, 0, 0, 1, 1, 1, 1](-3.633)
+max state: [1, 1, 1, 0, 1, 0, 0, 0, 0, 1](-3.379)
+max state: [1, 0, 0, 1, 1, 0, 1, 1, 0, 0](-1.048)
 max state: [1, 1, 0, 0, 0, 0, 1, 0, 1, 1](-0.024)
-max state: [0, 1, 1, 0, 0, 1, 1, 0, 1, 0](-0.015)</code></pre></div>
+max state: [1, 0, 0, 1, 1, 0, 0, 1, 0, 1](-0.015)
+max state: [0, 0, 0, 0, 1, 0, 0, 1, 1, 1](-0.015)</code></pre></div>
 <!-- <h1>
   <img class="head-image" src="/logo/logo.png">
   課題
@@ -516,7 +512,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-05-19 14:58:37.982387 &#43;0900 JST m=&#43;0.218065942">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-05-19 16:53:39.1918278 &#43;0900 JST m=&#43;3.531021001">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
