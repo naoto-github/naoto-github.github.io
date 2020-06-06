@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Pythonでウェブサーバの構築 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="Pythonでウェブサーバの構築" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/seminar_database/chapter3/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="Pythonのインストール  本講義ではデータベースと連携したウェブサイトを構築します． 本来は，Apacheなどのソフトウェアを利用してウェブサーバを構築する必要がありますが， ここではPythonのhttp.serverモジュールを利用してローカル環境の簡易ウェブサーバとします．
+それでは，Pythonのインストール・パッケージをダウンロードしてください． このとき，Pythonのバージョンは3.xを選択してください． インストールを始める前に，ファイルをインストールするためのフォルダを作成します． 大学で環境を構築する場合は，Hドライブ に，MyPythonという名前でフォルダを作成してください （人工知能など他の授業で既にインストール済みの場合は作業は不要）．
+それでは，インストーラを実行しましょう． Customize installationを選択し， パッケージ管理システムの pip が同時にインストールされることを確認してください．
+
+
+このとき，インストールするフォルダは，上記で作成したH:\MyPythonとすることに注意してください．
+
+インストールが終了すると，下記のダイアログが表示されます． Closeを選択して，ダイアログを閉じてください．
+
+最後に，インストールしたPythonへのパスを 環境変数 に追加します． 任意のフォルダで，パワーシェルを起動して，下記コマンドが実行できれば準備OKです．
+% python -V Python 3.7.4  ウェブサーバの構築  Pythonを利用してウェブサーバを構築します． 作業用の空のフォルダ sugiten を作成し， パワーシェルを起動して，下記のコマンドを実行してください．
+% python -m http.server 8080 Serving HTTP on 0.0.0.0 port 8080 (http://0.0.0.0:8080/) ... これで，ローカル環境でウェブサーバが起動しています． ブラウザでhttp://0.0.0.0:8080/にアクセスしてみましょう． 下記の画面が表示されていればOKです．
+
+次に，新規にindex.html を作成し，sugitenフォルダに配置します． index.htmlには下記のコードを記述します． タイトルやヘッダに 椙天市場 という文字列を設定しています．
+&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;meta charset=&#34;utf-8&#34;&gt; &lt;title&gt;椙天市場&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;h1&gt;椙天市場&lt;/h1&gt; &lt;/body&gt; &lt;/html&gt; ブラウザでhttp://0." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Pythonでウェブサーバの構築" />
+
+
+
+  <meta name="twitter:description" content="Pythonのインストール  本講義ではデータベースと連携したウェブサイトを構築します． 本来は，Apacheなどのソフトウェアを利用してウェブサーバを構築する必要がありますが， ここではPythonのhttp.serverモジュールを利用してローカル環境の簡易ウェブサーバとします．
+それでは，Pythonのインストール・パッケージをダウンロードしてください． このとき，Pythonのバージョンは3.xを選択してください． インストールを始める前に，ファイルをインストールするためのフォルダを作成します． 大学で環境を構築する場合は，Hドライブ に，MyPythonという名前でフォルダを作成してください （人工知能など他の授業で既にインストール済みの場合は作業は不要）．
+それでは，インストーラを実行しましょう． Customize installationを選択し， パッケージ管理システムの pip が同時にインストールされることを確認してください．
+
+
+このとき，インストールするフォルダは，上記で作成したH:\MyPythonとすることに注意してください．
+
+インストールが終了すると，下記のダイアログが表示されます． Closeを選択して，ダイアログを閉じてください．
+
+最後に，インストールしたPythonへのパスを 環境変数 に追加します． 任意のフォルダで，パワーシェルを起動して，下記コマンドが実行できれば準備OKです．
+% python -V Python 3.7.4  ウェブサーバの構築  Pythonを利用してウェブサーバを構築します． 作業用の空のフォルダ sugiten を作成し， パワーシェルを起動して，下記のコマンドを実行してください．
+% python -m http.server 8080 Serving HTTP on 0.0.0.0 port 8080 (http://0.0.0.0:8080/) ... これで，ローカル環境でウェブサーバが起動しています． ブラウザでhttp://0.0.0.0:8080/にアクセスしてみましょう． 下記の画面が表示されていればOKです．
+
+次に，新規にindex.html を作成し，sugitenフォルダに配置します． index.htmlには下記のコードを記述します． タイトルやヘッダに 椙天市場 という文字列を設定しています．
+&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt; &lt;meta charset=&#34;utf-8&#34;&gt; &lt;title&gt;椙天市場&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;h1&gt;椙天市場&lt;/h1&gt; &lt;/body&gt; &lt;/html&gt; ブラウザでhttp://0." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+  <li>	
+    <a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target="_blank">学内専用</a>
+  </li>  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2020-06-06 10:30:31 &#43;0900 JST">June 6, 2020</time>
+</div>
+
+    <h1 class="post-title">Pythonでウェブサーバの構築</h1>
+<div class="post-line"></div>
+
+    
+
+    <h1>
+  <img class="head-image" src="/logo/logo.png">
+  Pythonのインストール
+</h1>
+
+
+<p>本講義ではデータベースと連携したウェブサイトを構築します．
+本来は，<a href="https://httpd.apache.org/">Apache</a>などのソフトウェアを利用してウェブサーバを構築する必要がありますが，
+ここではPythonのhttp.serverモジュールを利用してローカル環境の簡易ウェブサーバとします．</p>
+
+<p>それでは，<a href="https://www.python.org">Python</a>のインストール・パッケージをダウンロードしてください．
+このとき，Pythonのバージョンは<strong>3.x</strong>を選択してください．
+インストールを始める前に，ファイルをインストールするためのフォルダを作成します．
+大学で環境を構築する場合は，<strong>Hドライブ</strong> に，<strong>MyPython</strong>という名前でフォルダを作成してください
+（人工知能など他の授業で既にインストール済みの場合は作業は不要）．</p>
+
+<p>それでは，インストーラを実行しましょう．
+<strong>Customize installation</strong>を選択し，
+パッケージ管理システムの <strong>pip</strong> が同時にインストールされることを確認してください．</p>
+
+<p><a href="https://gyazo.com/e1fc572f43e771cb3901a76e927a84bd"><img src="https://i.gyazo.com/e1fc572f43e771cb3901a76e927a84bd.png" alt="Image from Gyazo" /></a></p>
+
+<p><a href="https://gyazo.com/294b8b48f53df91303d1c26bfaf7ada8"><img src="https://i.gyazo.com/294b8b48f53df91303d1c26bfaf7ada8.png" alt="Image from Gyazo" /></a></p>
+
+<p>このとき，インストールするフォルダは，上記で作成した<strong>H:\MyPython</strong>とすることに注意してください．</p>
+
+<p><a href="https://gyazo.com/d59ad4a8259cd08233c53a23fce576b2"><img src="https://i.gyazo.com/d59ad4a8259cd08233c53a23fce576b2.png" alt="Image from Gyazo" /></a></p>
+
+<p>インストールが終了すると，下記のダイアログが表示されます．
+<strong>Close</strong>を選択して，ダイアログを閉じてください．</p>
+
+<p><a href="https://gyazo.com/ac9e747d8ee0cdeab324b5a0b1cabd43"><img src="https://i.gyazo.com/ac9e747d8ee0cdeab324b5a0b1cabd43.png" alt="Image from Gyazo" /></a></p>
+
+<p>最後に，インストールしたPythonへのパスを <strong>環境変数</strong> に追加します．
+任意のフォルダで，パワーシェルを起動して，下記コマンドが実行できれば準備OKです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">% python -V
+Python 3.7.4</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ウェブサーバの構築
+</h1>
+
+
+<p>Pythonを利用してウェブサーバを構築します．
+作業用の空のフォルダ <strong>sugiten</strong> を作成し，
+パワーシェルを起動して，下記のコマンドを実行してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">% python -m http.server 8080
+Serving HTTP on 0.0.0.0 port 8080 (http://0.0.0.0:8080/) ...</code></pre></div>
+<p>これで，ローカル環境でウェブサーバが起動しています．
+ブラウザで<a href="http://0.0.0.0:8080/">http://0.0.0.0:8080/</a>にアクセスしてみましょう．
+下記の画面が表示されていればOKです．</p>
+
+<p><a href="https://gyazo.com/6112facf777ef8bf1338915b0816b3c3"><img src="https://i.gyazo.com/6112facf777ef8bf1338915b0816b3c3.png" alt="Image from Gyazo" /></a></p>
+
+<p>次に，新規に<strong>index.html</strong> を作成し，sugitenフォルダに配置します．
+<strong>index.html</strong>には下記のコードを記述します．
+タイトルやヘッダに <strong>椙天市場</strong> という文字列を設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+
+&lt;<span style="color:#f92672">html</span>&gt;
+  
+  &lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;utf-8&#34;</span>&gt;
+    &lt;<span style="color:#f92672">title</span>&gt;椙天市場&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;/<span style="color:#f92672">head</span>&gt;
+  
+  &lt;<span style="color:#f92672">body</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;椙天市場&lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;/<span style="color:#f92672">body</span>&gt;
+  
+&lt;/<span style="color:#f92672">html</span>&gt;</code></pre></div>
+<p>ブラウザで<a href="http://0.0.0.0:8080/">http://0.0.0.0:8080/</a>にアクセスすると，
+下記の画面が表示されます．</p>
+
+<p><a href="https://gyazo.com/4c7241f08ea8d27d8c353efb7e4fac0d"><img src="https://i.gyazo.com/4c7241f08ea8d27d8c353efb7e4fac0d.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  CGIの設定
+</h1>
+
+
+<p>データベースを操作するには，<strong>CGI(Common Gate Interface)</strong>
+を有効にする必要があります．
+CGIとは，ウェブサーバが外部プログラム（ここでPython）を呼び出す仕組みのことです．
+新規に <strong>server.py</strong> を作成し，sugitenフォルダに配置します．
+<strong>server.py</strong>には下記のコードを記述します．
+ここではポート番号やIPアドレスを指定しています．
+また，sugitenフォルダに，新規に <strong>cgi-bin</strong> フォルダ作成します．
+このフォルダにCGIのプログラムを配置します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> http.server <span style="color:#f92672">import</span> HTTPServer, CGIHTTPRequestHandler
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Handler</span>(CGIHTTPRequestHandler):
+    <span style="color:#75715e"># CGIを設置するディレクトリ</span>
+    cgi_directories <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;/cgi-bin&#34;</span>]
+
+<span style="color:#75715e"># ポート番号</span>
+PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">8080</span>
+
+<span style="color:#75715e"># IPアドレス</span>
+HOST <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;127.0.0.1&#34;</span>
+
+<span style="color:#75715e"># URLを表示</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;http://0.0.0.0:8080/&#34;</span>)
+
+<span style="color:#75715e"># サーバの起動</span>
+httpd <span style="color:#f92672">=</span> HTTPServer((HOST, PORT), Handler)
+httpd<span style="color:#f92672">.</span>serve_forever()</code></pre></div>
+<p>先程と同様にパワーシェルで下記のコマンドを実行してください．
+ブラウザにindex.htmlが表示されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">% python server.py 
+http://0.0.0.0:8080/</code></pre></div>
+<p>次にPythonでCGIのプログラムを作成します．
+新規に <strong>users.py</strong> を作成し，cgi-binフォルダに配置します．
+<strong>users.py</strong>には下記のコードを記述します（ユーザーの一覧情報を表示させるために用いる）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
+
+<span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;Content-type:text/html</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;!DOCTYPE html&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;html&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;head&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;meta charset=&#39;utf-8&#39;&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;title&gt;ユーザー情報&lt;/title&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/head&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;body&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h1&gt;ユーザー情報&lt;/h1&gt;&#34;</span>);
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/body&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/html&gt;&#34;</span>)</code></pre></div>
+<p>このファイルに実行権限を付与します．
+macOSの場合は下記のように <code>chmod</code> コマンドを用いて権限を変更します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">% chmod 755 users.py</code></pre></div>
+<p>また，index.htmlのbodyタグに，<strong>user.py</strong>へのリンク文字列を追加します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">body</span>&gt;
+  &lt;<span style="color:#f92672">h1</span>&gt;椙天市場&lt;/<span style="color:#f92672">h1</span>&gt;
+	
+  &lt;<span style="color:#f92672">ul</span>&gt;
+    &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/users.py&#34;</span>&gt;ユーザー情報&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+  &lt;/<span style="color:#f92672">ul</span>&gt;  
+&lt;/<span style="color:#f92672">body</span>&gt;</code></pre></div>
+<p><a href="https://gyazo.com/b634f4a836d18dde6405c643836948e1"><img src="https://i.gyazo.com/b634f4a836d18dde6405c643836948e1.png" alt="Image from Gyazo" /></a></p>
+
+<p>ユーザー情報へのリンクをクリックして，下記のページが表示されれば，
+CGIが問題なく動作していることになります．</p>
+
+<p><a href="https://gyazo.com/a4485ec36bf3e89dd0975a565561e42e"><img src="https://i.gyazo.com/a4485ec36bf3e89dd0975a565561e42e.png" alt="Image from Gyazo" /></a></p>
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4877834621&linkId=1c194738150d2b5415587a94b093c534&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B017LQG9XC&linkId=ae295da41172fb287fc431f49c2d6acd&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4297103176&linkId=486b8eb79d1711554ad2fdd24fd2b995&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/seminar_database/chapter3/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-06-06 13:56:09.737546 &#43;0900 JST m=&#43;0.128541274">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
