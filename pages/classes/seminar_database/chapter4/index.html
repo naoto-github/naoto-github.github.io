@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    データベースの表示 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="データベースの表示" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/seminar_database/chapter4/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="SQLiteデータベースの確認  前回作成した cgi-bin フォルダに， SQLiteで作成したデータベースファイル sugiten.db をコピーします． SQLite で sugiten.db を開き，保存されているテーブルを確認しましょう． ユーザーの情報を保持するUsersには4件， 商品の情報を保持するItemsには6件， 購買履歴を保持するHistoriesには4件のレコードが登録されています．
+sqlite&gt; .open sugiten.db sqlite&gt; .database main: /Users/naoto/sugiten.db sqlite&gt; .table Histories Items Userssqlite&gt; .header on sqlite&gt; select * from Users; id|password|name|tel|mail u01|X2ng|中谷俊介|090-1111-1111|shunsuke@mail.jp u02|fL4m|永松克也|090-2222-2222|katsuya@mail.jp u03|hY8W|神野愛美|090-3333-3333|aimi@mail.jp u04|jY4p|大久真鈴|090-4444-4444|masuzu@mail.jpsqlite&gt; select * from Items; id|name|price|stock i01|マウス|2000|10 i02|パソコン|150000|5 i03|キーボード|3000|10 i04|モニタ|40000|3 i05|ウェブカメラ|6000|5 i06|ノートパソコン|170000|3sqlite&gt; select * from Histories; id|time|user_id|item_id 1|2020-01-01 12:00:00|u01|i01 2|2020-01-02 14:00:00|u02|i02 3|2020-01-02 18:00:00|u01|i04 4|2020-01-03 12:00:00|u04|i02  データベースの表示  それではCGIを利用してデータベース sugiten.db のテーブルを表示してみます． まずは，PythonでSQLiteのデータベースを操作するためのライブラリを導入します． パワーシェルを立ち上げ，下記のようにpipコマンドで sqlite3 をインストールします．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="データベースの表示" />
+
+
+
+  <meta name="twitter:description" content="SQLiteデータベースの確認  前回作成した cgi-bin フォルダに， SQLiteで作成したデータベースファイル sugiten.db をコピーします． SQLite で sugiten.db を開き，保存されているテーブルを確認しましょう． ユーザーの情報を保持するUsersには4件， 商品の情報を保持するItemsには6件， 購買履歴を保持するHistoriesには4件のレコードが登録されています．
+sqlite&gt; .open sugiten.db sqlite&gt; .database main: /Users/naoto/sugiten.db sqlite&gt; .table Histories Items Userssqlite&gt; .header on sqlite&gt; select * from Users; id|password|name|tel|mail u01|X2ng|中谷俊介|090-1111-1111|shunsuke@mail.jp u02|fL4m|永松克也|090-2222-2222|katsuya@mail.jp u03|hY8W|神野愛美|090-3333-3333|aimi@mail.jp u04|jY4p|大久真鈴|090-4444-4444|masuzu@mail.jpsqlite&gt; select * from Items; id|name|price|stock i01|マウス|2000|10 i02|パソコン|150000|5 i03|キーボード|3000|10 i04|モニタ|40000|3 i05|ウェブカメラ|6000|5 i06|ノートパソコン|170000|3sqlite&gt; select * from Histories; id|time|user_id|item_id 1|2020-01-01 12:00:00|u01|i01 2|2020-01-02 14:00:00|u02|i02 3|2020-01-02 18:00:00|u01|i04 4|2020-01-03 12:00:00|u04|i02  データベースの表示  それではCGIを利用してデータベース sugiten.db のテーブルを表示してみます． まずは，PythonでSQLiteのデータベースを操作するためのライブラリを導入します． パワーシェルを立ち上げ，下記のようにpipコマンドで sqlite3 をインストールします．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+  <li>	
+    <a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target="_blank">学内専用</a>
+  </li>  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2020-06-07 10:50:18 &#43;0900 JST">June 7, 2020</time>
+</div>
+
+    <h1 class="post-title">データベースの表示</h1>
+<div class="post-line"></div>
+
+    
+
+    <h1>
+  <img class="head-image" src="/logo/logo.png">
+  SQLiteデータベースの確認
+</h1>
+
+
+<p>前回作成した <strong>cgi-bin</strong> フォルダに，
+SQLiteで作成したデータベースファイル <strong>sugiten.db</strong> をコピーします．
+<strong>SQLite</strong> で <strong>sugiten.db</strong> を開き，保存されているテーブルを確認しましょう．
+ユーザーの情報を保持するUsersには4件，
+商品の情報を保持するItemsには6件，
+購買履歴を保持するHistoriesには4件のレコードが登録されています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">sqlite<span style="color:#f92672">&gt;</span> .<span style="color:#66d9ef">open</span> sugiten.db
+sqlite<span style="color:#f92672">&gt;</span> .<span style="color:#66d9ef">database</span>
+main: <span style="color:#f92672">/</span>Users<span style="color:#f92672">/</span>naoto<span style="color:#f92672">/</span>sugiten.db
+sqlite<span style="color:#f92672">&gt;</span> .<span style="color:#66d9ef">table</span>
+Histories  Items      Users</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">sqlite<span style="color:#f92672">&gt;</span> .header <span style="color:#66d9ef">on</span>
+sqlite<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> Users;
+id<span style="color:#f92672">|</span>password<span style="color:#f92672">|</span>name<span style="color:#f92672">|</span>tel<span style="color:#f92672">|</span>mail
+u01<span style="color:#f92672">|</span>X2ng<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">中谷俊介</span><span style="color:#f92672">|</span><span style="color:#ae81ff">090</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1111</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1111</span><span style="color:#f92672">|</span>shunsuke<span style="color:#f92672">@</span>mail.jp
+u02<span style="color:#f92672">|</span>fL4m<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">永松克也</span><span style="color:#f92672">|</span><span style="color:#ae81ff">090</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2222</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2222</span><span style="color:#f92672">|</span>katsuya<span style="color:#f92672">@</span>mail.jp
+u03<span style="color:#f92672">|</span>hY8W<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">神野愛美</span><span style="color:#f92672">|</span><span style="color:#ae81ff">090</span><span style="color:#f92672">-</span><span style="color:#ae81ff">3333</span><span style="color:#f92672">-</span><span style="color:#ae81ff">3333</span><span style="color:#f92672">|</span>aimi<span style="color:#f92672">@</span>mail.jp
+u04<span style="color:#f92672">|</span>jY4p<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">大久真鈴</span><span style="color:#f92672">|</span><span style="color:#ae81ff">090</span><span style="color:#f92672">-</span><span style="color:#ae81ff">4444</span><span style="color:#f92672">-</span><span style="color:#ae81ff">4444</span><span style="color:#f92672">|</span>masuzu<span style="color:#f92672">@</span>mail.jp</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">sqlite<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> Items;
+id<span style="color:#f92672">|</span>name<span style="color:#f92672">|</span>price<span style="color:#f92672">|</span>stock
+i01<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">マウス</span><span style="color:#f92672">|</span><span style="color:#ae81ff">2000</span><span style="color:#f92672">|</span><span style="color:#ae81ff">10</span>
+i02<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">パソコン</span><span style="color:#f92672">|</span><span style="color:#ae81ff">150000</span><span style="color:#f92672">|</span><span style="color:#ae81ff">5</span>
+i03<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">キーボード</span><span style="color:#f92672">|</span><span style="color:#ae81ff">3000</span><span style="color:#f92672">|</span><span style="color:#ae81ff">10</span>
+i04<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">モニタ</span><span style="color:#f92672">|</span><span style="color:#ae81ff">40000</span><span style="color:#f92672">|</span><span style="color:#ae81ff">3</span>
+i05<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">ウェブカメラ</span><span style="color:#f92672">|</span><span style="color:#ae81ff">6000</span><span style="color:#f92672">|</span><span style="color:#ae81ff">5</span>
+i06<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">ノートパソコン</span><span style="color:#f92672">|</span><span style="color:#ae81ff">170000</span><span style="color:#f92672">|</span><span style="color:#ae81ff">3</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">sqlite<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> Histories;
+id<span style="color:#f92672">|</span>time<span style="color:#f92672">|</span>user_id<span style="color:#f92672">|</span>item_id
+<span style="color:#ae81ff">1</span><span style="color:#f92672">|</span><span style="color:#ae81ff">2020</span><span style="color:#f92672">-</span><span style="color:#ae81ff">01</span><span style="color:#f92672">-</span><span style="color:#ae81ff">01</span> <span style="color:#ae81ff">12</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">00</span><span style="color:#f92672">|</span>u01<span style="color:#f92672">|</span>i01
+<span style="color:#ae81ff">2</span><span style="color:#f92672">|</span><span style="color:#ae81ff">2020</span><span style="color:#f92672">-</span><span style="color:#ae81ff">01</span><span style="color:#f92672">-</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">14</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">00</span><span style="color:#f92672">|</span>u02<span style="color:#f92672">|</span>i02
+<span style="color:#ae81ff">3</span><span style="color:#f92672">|</span><span style="color:#ae81ff">2020</span><span style="color:#f92672">-</span><span style="color:#ae81ff">01</span><span style="color:#f92672">-</span><span style="color:#ae81ff">02</span> <span style="color:#ae81ff">18</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">00</span><span style="color:#f92672">|</span>u01<span style="color:#f92672">|</span>i04
+<span style="color:#ae81ff">4</span><span style="color:#f92672">|</span><span style="color:#ae81ff">2020</span><span style="color:#f92672">-</span><span style="color:#ae81ff">01</span><span style="color:#f92672">-</span><span style="color:#ae81ff">03</span> <span style="color:#ae81ff">12</span>:<span style="color:#ae81ff">00</span>:<span style="color:#ae81ff">00</span><span style="color:#f92672">|</span>u04<span style="color:#f92672">|</span>i02</code></pre></div>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  データベースの表示
+</h1>
+
+
+<p>それではCGIを利用してデータベース <strong>sugiten.db</strong> のテーブルを表示してみます．
+まずは，PythonでSQLiteのデータベースを操作するためのライブラリを導入します．
+パワーシェルを立ち上げ，下記のように<code>pip</code>コマンドで <strong>sqlite3</strong> をインストールします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">% pip install sqlite3</code></pre></div>
+<p>前回作成した <strong>users.py</strong> をエディタで開き，
+<code>#!</code>で始まる1行目のコード（シェバン: shebang）の後に，
+<code>import slite3</code>を追加します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
+
+<span style="color:#f92672">import</span> slite3</code></pre></div>
+<p>次に <code>body</code>タグのprint関数の後に，下記のコードを追加します．
+ここでは， <strong>sugiten.db</strong> に接続し，
+<strong>Users</strong>テーブルの全てのレコードを取得して表示しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;body&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h1&gt;ユーザー情報&lt;/h1&gt;&#34;</span>);
+
+<span style="color:#75715e"># データベースに接続</span>
+con <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#39;sugiten.db&#39;</span>)
+
+<span style="color:#75715e"># カーソルを取得</span>
+cur <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span>cursor()
+
+<span style="color:#75715e"># ユーザー情報を取得</span>
+records <span style="color:#f92672">=</span> cur<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;SELECT * FROM Users;&#34;</span>)
+
+<span style="color:#75715e"># ユーザー情報を表示</span>
+<span style="color:#66d9ef">for</span> record <span style="color:#f92672">in</span> records:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;p&gt;&#34;</span> <span style="color:#f92672">+</span> str(record) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&lt;/p&gt;&#34;</span>)
+
+<span style="color:#75715e"># データベースを切断</span>
+con<span style="color:#f92672">.</span>close() 
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/body&gt;&#34;</span>)</code></pre></div>
+<p><code>server.py</code>を実行してウェブサーバを起動して，
+<code>users.py</code>を開くと，下記のように <strong>Users</strong> テーブルのレコードが表示されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">% python server.py</code></pre></div>
+<p><a href="https://gyazo.com/1c410485d7ccfa7cf0c2a80158153e33"><img src="https://i.gyazo.com/1c410485d7ccfa7cf0c2a80158153e33.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  テーブル表示を整形
+</h1>
+
+
+<p><code>table</code>タグを利用して，テーブルの表示を整えます．
+<code>for</code>文を下記のように修正します．
+テーブルの属性名は<code>th</code>タグ，レコードは<code>td</code>タグで表示します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ユーザー情報を表示</span>
+table <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;table border=`1``&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;id&lt;/th&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;password&lt;/th&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;name&lt;/th&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;tel&lt;/th&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;mail&lt;/th&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>
+
+<span style="color:#66d9ef">for</span> record <span style="color:#f92672">in</span> records:
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
+    <span style="color:#66d9ef">for</span> column <span style="color:#f92672">in</span> record:
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span>
+        table <span style="color:#f92672">+=</span> str(column)
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>    
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/table&gt;&#34;</span>
+<span style="color:#66d9ef">print</span>(table)</code></pre></div>
+<p><code>users.py</code>を開くと，下記のように <strong>Users</strong> テーブルのレコードが表示されます．</p>
+
+<p><a href="https://gyazo.com/2927043a63017ef09dc9846cc4df8fa5"><img src="https://i.gyazo.com/2927043a63017ef09dc9846cc4df8fa5.png" alt="Image from Gyazo" /></a></p>
+
+<p>上記と同じ方法で，ItemsテーブルとHistoriesテーブルのレコードも表示させてください．</p>
+
+<p><a href="https://gyazo.com/d21080bb55acfe4caa34b441f7ff72b2"><img src="https://i.gyazo.com/d21080bb55acfe4caa34b441f7ff72b2.png" alt="Image from Gyazo" /></a></p>
+
+<p><a href="https://gyazo.com/3a8432647396d63bfd6115ad259b115a"><img src="https://i.gyazo.com/3a8432647396d63bfd6115ad259b115a.png" alt="Image from Gyazo" /></a></p>
+
+<p><a href="https://gyazo.com/a4af9820ffda898a55af59019d7a4dad"><img src="https://i.gyazo.com/a4af9820ffda898a55af59019d7a4dad.png" alt="Image from Gyazo" /></a></p>
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4877834621&linkId=1c194738150d2b5415587a94b093c534&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B017LQG9XC&linkId=ae295da41172fb287fc431f49c2d6acd&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4297103176&linkId=486b8eb79d1711554ad2fdd24fd2b995&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/seminar_database/chapter4/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-06-07 12:08:35.31059 &#43;0900 JST m=&#43;0.184719559">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

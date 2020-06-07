@@ -6,10 +6,20 @@
     <description>Recent content on MLAB</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Sat, 06 Jun 2020 10:30:31 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2020 10:50:18 +0900</lastBuildDate>
     
 	<atom:link href="https://mukai-lab.info/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>データベースの表示</title>
+      <link>https://mukai-lab.info/pages/classes/seminar_database/chapter4/</link>
+      <pubDate>Sun, 07 Jun 2020 10:50:18 +0900</pubDate>
+      
+      <guid>https://mukai-lab.info/pages/classes/seminar_database/chapter4/</guid>
+      <description>SQLiteデータベースの確認  前回作成した cgi-bin フォルダに， SQLiteで作成したデータベースファイル sugiten.db をコピーします． SQLite で sugiten.db を開き，保存されているテーブルを確認しましょう． ユーザーの情報を保持するUsersには4件， 商品の情報を保持するItemsには6件， 購買履歴を保持するHistoriesには4件のレコードが登録されています．
+sqlite&amp;gt; .open sugiten.db sqlite&amp;gt; .database main: /Users/naoto/sugiten.db sqlite&amp;gt; .table Histories Items Userssqlite&amp;gt; .header on sqlite&amp;gt; select * from Users; id|password|name|tel|mail u01|X2ng|中谷俊介|090-1111-1111|shunsuke@mail.jp u02|fL4m|永松克也|090-2222-2222|katsuya@mail.jp u03|hY8W|神野愛美|090-3333-3333|aimi@mail.jp u04|jY4p|大久真鈴|090-4444-4444|masuzu@mail.jpsqlite&amp;gt; select * from Items; id|name|price|stock i01|マウス|2000|10 i02|パソコン|150000|5 i03|キーボード|3000|10 i04|モニタ|40000|3 i05|ウェブカメラ|6000|5 i06|ノートパソコン|170000|3sqlite&amp;gt; select * from Histories; id|time|user_id|item_id 1|2020-01-01 12:00:00|u01|i01 2|2020-01-02 14:00:00|u02|i02 3|2020-01-02 18:00:00|u01|i04 4|2020-01-03 12:00:00|u04|i02  データベースの表示  それではCGIを利用してデータベース sugiten.db のテーブルを表示してみます． まずは，PythonでSQLiteのデータベースを操作するためのライブラリを導入します． パワーシェルを立ち上げ，下記のようにpipコマンドで sqlite3 をインストールします．</description>
+    </item>
     
     <item>
       <title>Pythonでウェブサーバの構築</title>
@@ -44,9 +54,9 @@
 SQLiteのダウンロード
 インストールが完了したら，インストールされたフォルダに含まれる コマンドライン・ツール（sqlite3.exe）をダブルクリックして起動してください． 下図のようなコマンド入力が可能なターミナルが表示されます．
 
- データベースの作成  本講義では，架空のオンライン・ショッピングサイト 椙天市場 のサービス構築を想定して，下記の3種類のテーブルを作成します． usersは，サイトのユーザの情報を格納するテーブルです． ユーザID，パスワード，氏名，電話番号，メールアドレスの情報を管理します． itemsは，サイトで取り扱う商品の情報を格納するテーブルです． 商品ID，商品名，価格，在庫数の情報を管理します． historiesは，ユーザによる商品の購買履歴を格納するテーブルです． 取引ID，取引日，ユーザID，商品IDの情報を管理します．
- Users（ユーザの情報） Items（商品の情報） Histories（商品の購買履歴）  データベースの作成 まずはデータベースを作成します． .openコマンドで sugiten という名前のデータベースを作成します． .databaseコマンドでメインのデータベースがsugitenになっていることを確認します．
-sqlite&amp;gt; .open sugiten sqlite&amp;gt; .database main: /Users/naoto/sugiten Usersテーブルの作成 ユーザの情報を格納するUsersテーブルをCREATE文で作成します． 主キーは id であることに注意してください．
+ データベースの作成  本講義では，架空のオンライン・ショッピングサイト 椙天市場 のサービス構築を想定して，下記の3種類のテーブルを作成します． usersは，サイトのユーザーの情報を格納するテーブルです． ユーザーID，パスワード，氏名，電話番号，メールアドレスの情報を管理します． itemsは，サイトで取り扱う商品の情報を格納するテーブルです． 商品ID，商品名，価格，在庫数の情報を管理します． historiesは，ユーザーによる商品の購買履歴を格納するテーブルです． 取引ID，取引日，ユーザーID，商品IDの情報を管理します．
+ Users（ユーザーの情報） Items（商品の情報） Histories（商品の購買履歴）  データベースの作成 まずはデータベースを作成します． .openコマンドで sugiten.db という名前のデータベースを作成します． .databaseコマンドでメインのデータベースがsugiten.dbになっていることを確認します．
+sqlite&amp;gt; .open sugiten.db sqlite&amp;gt; .database main: /Users/naoto/sugiten.db Usersテーブルの作成 ユーザーの情報を格納するUsersテーブルをCREATE文で作成します． 主キーは id であることに注意してください．
 CREATE TABLE Users( id text primary key, password text, name text, tel text, mail text ); テーブルを作成したら，.tableコマンドで確認しましょう．
 sqlite&amp;gt; .</description>
     </item>
