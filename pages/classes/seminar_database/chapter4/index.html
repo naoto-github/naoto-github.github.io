@@ -80,8 +80,8 @@
 
 
 
-  <meta property="og:description" content="SQLiteデータベースの確認  前回作成した cgi-bin フォルダに， SQLiteで作成したデータベースファイル sugiten.db をコピーします． SQLite で sugiten.db を開き，保存されているテーブルを確認しましょう． ユーザーの情報を保持するUsersには4件， 商品の情報を保持するItemsには6件， 購買履歴を保持するHistoriesには4件のレコードが登録されています．
-sqlite&gt; .open sugiten.db sqlite&gt; .database main: /Users/naoto/sugiten.db sqlite&gt; .table Histories Items Userssqlite&gt; .header on sqlite&gt; select * from Users; id|password|name|tel|mail u01|X2ng|中谷俊介|090-1111-1111|shunsuke@mail.jp u02|fL4m|永松克也|090-2222-2222|katsuya@mail.jp u03|hY8W|神野愛美|090-3333-3333|aimi@mail.jp u04|jY4p|大久真鈴|090-4444-4444|masuzu@mail.jpsqlite&gt; select * from Items; id|name|price|stock i01|マウス|2000|10 i02|パソコン|150000|5 i03|キーボード|3000|10 i04|モニタ|40000|3 i05|ウェブカメラ|6000|5 i06|ノートパソコン|170000|3sqlite&gt; select * from Histories; id|time|user_id|item_id 1|2020-01-01 12:00:00|u01|i01 2|2020-01-02 14:00:00|u02|i02 3|2020-01-02 18:00:00|u01|i04 4|2020-01-03 12:00:00|u04|i02  データベースの表示  それではCGIを利用してデータベース sugiten.db のテーブルを表示してみます． まずは，PythonでSQLiteのデータベースを操作するためのライブラリを導入します． パワーシェルを立ち上げ，下記のようにpipコマンドで sqlite3 をインストールします．" />
+  <meta property="og:description" content="SQLiteデータベースの確認  前回作成した sugiten フォルダに， SQLiteで作成したデータベースファイル sugiten.db をコピーします （cgi-binではないことに注意）． SQLite で sugiten.db を開き，保存されているテーブルを確認しましょう． ユーザの情報を保持するUsersには4件， 商品の情報を保持するItemsには6件， 購買履歴を保持するHistoriesには4件のレコードが登録されています．
+sqlite&gt; .open sugiten.db sqlite&gt; .database main: /sugiten/sugiten.db sqlite&gt; .table Histories Items Userssqlite&gt; .header on sqlite&gt; select * from Users; id|password|name|tel|mail u01|X2ng|中谷俊介|090-1111-1111|shunsuke@mail.jp u02|fL4m|永松克也|090-2222-2222|katsuya@mail.jp u03|hY8W|神野愛美|090-3333-3333|aimi@mail.jp u04|jY4p|大久真鈴|090-4444-4444|masuzu@mail.jpsqlite&gt; select * from Items; id|name|price|stock i01|マウス|2000|10 i02|パソコン|150000|5 i03|キーボード|3000|10 i04|モニタ|40000|3 i05|ウェブカメラ|6000|5 i06|ノートパソコン|170000|3sqlite&gt; select * from Histories; id|time|user_id|item_id 1|2020-01-01 12:00:00|u01|i01 2|2020-01-02 14:00:00|u02|i02 3|2020-01-02 18:00:00|u01|i04 4|2020-01-03 12:00:00|u04|i02  データベースの表示  それではCGIを利用してデータベース sugiten.db のテーブルを表示してみます． まずは，PythonでSQLiteのデータベースを操作するためのライブラリを導入します． パワーシェルを立ち上げ，下記のようにpipコマンドで sqlite3 をインストールします．" />
 
 
 
@@ -96,8 +96,8 @@ sqlite&gt; .open sugiten.db sqlite&gt; .database main: /Users/naoto/sugiten.db s
 
 
 
-  <meta name="twitter:description" content="SQLiteデータベースの確認  前回作成した cgi-bin フォルダに， SQLiteで作成したデータベースファイル sugiten.db をコピーします． SQLite で sugiten.db を開き，保存されているテーブルを確認しましょう． ユーザーの情報を保持するUsersには4件， 商品の情報を保持するItemsには6件， 購買履歴を保持するHistoriesには4件のレコードが登録されています．
-sqlite&gt; .open sugiten.db sqlite&gt; .database main: /Users/naoto/sugiten.db sqlite&gt; .table Histories Items Userssqlite&gt; .header on sqlite&gt; select * from Users; id|password|name|tel|mail u01|X2ng|中谷俊介|090-1111-1111|shunsuke@mail.jp u02|fL4m|永松克也|090-2222-2222|katsuya@mail.jp u03|hY8W|神野愛美|090-3333-3333|aimi@mail.jp u04|jY4p|大久真鈴|090-4444-4444|masuzu@mail.jpsqlite&gt; select * from Items; id|name|price|stock i01|マウス|2000|10 i02|パソコン|150000|5 i03|キーボード|3000|10 i04|モニタ|40000|3 i05|ウェブカメラ|6000|5 i06|ノートパソコン|170000|3sqlite&gt; select * from Histories; id|time|user_id|item_id 1|2020-01-01 12:00:00|u01|i01 2|2020-01-02 14:00:00|u02|i02 3|2020-01-02 18:00:00|u01|i04 4|2020-01-03 12:00:00|u04|i02  データベースの表示  それではCGIを利用してデータベース sugiten.db のテーブルを表示してみます． まずは，PythonでSQLiteのデータベースを操作するためのライブラリを導入します． パワーシェルを立ち上げ，下記のようにpipコマンドで sqlite3 をインストールします．" />
+  <meta name="twitter:description" content="SQLiteデータベースの確認  前回作成した sugiten フォルダに， SQLiteで作成したデータベースファイル sugiten.db をコピーします （cgi-binではないことに注意）． SQLite で sugiten.db を開き，保存されているテーブルを確認しましょう． ユーザの情報を保持するUsersには4件， 商品の情報を保持するItemsには6件， 購買履歴を保持するHistoriesには4件のレコードが登録されています．
+sqlite&gt; .open sugiten.db sqlite&gt; .database main: /sugiten/sugiten.db sqlite&gt; .table Histories Items Userssqlite&gt; .header on sqlite&gt; select * from Users; id|password|name|tel|mail u01|X2ng|中谷俊介|090-1111-1111|shunsuke@mail.jp u02|fL4m|永松克也|090-2222-2222|katsuya@mail.jp u03|hY8W|神野愛美|090-3333-3333|aimi@mail.jp u04|jY4p|大久真鈴|090-4444-4444|masuzu@mail.jpsqlite&gt; select * from Items; id|name|price|stock i01|マウス|2000|10 i02|パソコン|150000|5 i03|キーボード|3000|10 i04|モニタ|40000|3 i05|ウェブカメラ|6000|5 i06|ノートパソコン|170000|3sqlite&gt; select * from Histories; id|time|user_id|item_id 1|2020-01-01 12:00:00|u01|i01 2|2020-01-02 14:00:00|u02|i02 3|2020-01-02 18:00:00|u01|i04 4|2020-01-03 12:00:00|u04|i02  データベースの表示  それではCGIを利用してデータベース sugiten.db のテーブルを表示してみます． まずは，PythonでSQLiteのデータベースを操作するためのライブラリを導入します． パワーシェルを立ち上げ，下記のようにpipコマンドで sqlite3 をインストールします．" />
 
 
 
@@ -181,15 +181,16 @@ sqlite&gt; .open sugiten.db sqlite&gt; .database main: /Users/naoto/sugiten.db s
 </h1>
 
 
-<p>前回作成した <strong>cgi-bin</strong> フォルダに，
-SQLiteで作成したデータベースファイル <strong>sugiten.db</strong> をコピーします．
+<p>前回作成した <strong>sugiten</strong> フォルダに，
+SQLiteで作成したデータベースファイル <strong>sugiten.db</strong> をコピーします
+（<strong>cgi-bin</strong>ではないことに注意）．
 <strong>SQLite</strong> で <strong>sugiten.db</strong> を開き，保存されているテーブルを確認しましょう．
-ユーザーの情報を保持するUsersには4件，
+ユーザの情報を保持するUsersには4件，
 商品の情報を保持するItemsには6件，
 購買履歴を保持するHistoriesには4件のレコードが登録されています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">sqlite<span style="color:#f92672">&gt;</span> .<span style="color:#66d9ef">open</span> sugiten.db
 sqlite<span style="color:#f92672">&gt;</span> .<span style="color:#66d9ef">database</span>
-main: <span style="color:#f92672">/</span>Users<span style="color:#f92672">/</span>naoto<span style="color:#f92672">/</span>sugiten.db
+main: <span style="color:#f92672">/</span>sugiten<span style="color:#f92672">/</span>sugiten.db
 sqlite<span style="color:#f92672">&gt;</span> .<span style="color:#66d9ef">table</span>
 Histories  Items      Users</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql">sqlite<span style="color:#f92672">&gt;</span> .header <span style="color:#66d9ef">on</span>
 sqlite<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> Users;
@@ -230,7 +231,7 @@ id<span style="color:#f92672">|</span>time<span style="color:#f92672">|</span>us
 ここでは， <strong>sugiten.db</strong> に接続し，
 <strong>Users</strong>テーブルの全てのレコードを取得して表示しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;body&gt;&#34;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h1&gt;ユーザー情報&lt;/h1&gt;&#34;</span>);
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h1&gt;ユーザ情報&lt;/h1&gt;&#34;</span>);
 
 <span style="color:#75715e"># データベースに接続</span>
 con <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#39;sugiten.db&#39;</span>)
@@ -238,10 +239,10 @@ con <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</s
 <span style="color:#75715e"># カーソルを取得</span>
 cur <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span>cursor()
 
-<span style="color:#75715e"># ユーザー情報を取得</span>
+<span style="color:#75715e"># ユーザ情報を取得</span>
 records <span style="color:#f92672">=</span> cur<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;SELECT * FROM Users;&#34;</span>)
 
-<span style="color:#75715e"># ユーザー情報を表示</span>
+<span style="color:#75715e"># ユーザ情報を表示</span>
 <span style="color:#66d9ef">for</span> record <span style="color:#f92672">in</span> records:
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;p&gt;&#34;</span> <span style="color:#f92672">+</span> str(record) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&lt;/p&gt;&#34;</span>)
 
@@ -263,7 +264,7 @@ con<span style="color:#f92672">.</span>close()
 <p><code>table</code>タグを利用して，テーブルの表示を整えます．
 <code>for</code>文を下記のように修正します．
 テーブルの属性名は<code>th</code>タグ，レコードは<code>td</code>タグで表示します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ユーザー情報を表示</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ユーザ情報を表示</span>
 table <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;table border=`1``&gt;&#34;</span>
 table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
 table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;id&lt;/th&gt;&#34;</span>
@@ -358,7 +359,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-07 12:08:35.31059 &#43;0900 JST m=&#43;0.184719559">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-08 14:52:03.591009 &#43;0900 JST m=&#43;0.120144611">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
