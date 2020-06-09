@@ -275,19 +275,19 @@ x &lt;- c(63,75,72,67,71) &gt; mean(x) [1] 69." />
 </p>
 
 <p>ここで，標本の平均を求めてみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">63</span>,<span style="color:#ae81ff">75</span>,<span style="color:#ae81ff">72</span>,<span style="color:#ae81ff">67</span>,<span style="color:#ae81ff">71</span>)
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">mean</span>(x)
-[1] <span style="color:#ae81ff">69.6</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">c</span>(<span style="color:#ae81ff">63</span>,<span style="color:#ae81ff">75</span>,<span style="color:#ae81ff">72</span>,<span style="color:#ae81ff">67</span>,<span style="color:#ae81ff">71</span>)
+<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">mean</span>(x)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">69.6</span></code></pre></div>
 <p>標本平均は69.6点とかなり高得点です．
 これは，どのくらい珍しいことなのでしょうか．
 標本平均の分布のグラフで確認してみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">curve</span>(<span style="color:#a6e22e">dnorm</span>(x,<span style="color:#ae81ff">60</span>,<span style="color:#a6e22e">sqrt</span>(<span style="color:#ae81ff">20</span>)),from<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>,to<span style="color:#f92672">=</span><span style="color:#ae81ff">90</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> curve(dnorm(x,<span style="color:#ae81ff">60</span>,<span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">20</span>)),from<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>,to<span style="color:#f92672">=</span><span style="color:#ae81ff">90</span>)</code></pre></div>
 <p><a href="https://gyazo.com/2b42b5e10118f35bd5188e237eaca866"><img src="https://i.gyazo.com/2b42b5e10118f35bd5188e237eaca866.png" alt="https://gyazo.com/2b42b5e10118f35bd5188e237eaca866" /></a></p>
 
 <p>グラフを確認すると，標本平均が69.6点以上になる確率は，非常に低いことが分かります．
 <strong>pnorm</strong>関数を利用して，標本平均が69.6点以上になる確率を計算してみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">-</span><span style="color:#a6e22e">pnorm</span>(<span style="color:#ae81ff">69.6</span>,<span style="color:#ae81ff">60</span>,<span style="color:#a6e22e">sqrt</span>(<span style="color:#ae81ff">20</span>))
-[1] <span style="color:#ae81ff">0.01591156</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>pnorm(<span style="color:#ae81ff">69.6</span>,<span style="color:#ae81ff">60</span>,<span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">20</span>))
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">0.01591156</span></code></pre></div>
 <p>よって，母集団からランダムサンプリングで抽出した標本の
 平均が69.6点以上になる確率は <strong>約1.6%</strong> という結果になりました．
 これは，「向研究室の学生は母集団とは異なる傾向を持っている」ということを意味します．
@@ -358,18 +358,18 @@ Zスコアは下記の式で求めます．
 </ul>
 
 <p>上記の式を基にZスコアを計算します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> z <span style="color:#f92672">&lt;-</span> (<span style="color:#ae81ff">69.6</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">60</span>)<span style="color:#f92672">/</span> <span style="color:#a6e22e">sqrt</span>(<span style="color:#ae81ff">20</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> z <span style="color:#f92672">&lt;-</span> (<span style="color:#ae81ff">69.6</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">60</span>)<span style="color:#f92672">/</span> <span style="color:#66d9ef">sqrt</span>(<span style="color:#ae81ff">20</span>)
 <span style="color:#f92672">&gt;</span> z
-[1] <span style="color:#ae81ff">2.146625</span></code></pre></div>
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">2.146625</span></code></pre></div>
 <p>Zスコアは<strong>2.14</strong>という結果になりました．
 標準正規分布を利用して，このZスコアが棄却域に含まれるかを確認しましょう．
 ここでは，5%棄却域を採用するため，<strong>下側確率</strong> が<strong>0.025</strong>，
 <strong>上側確率</strong> が <strong>0.975</strong>となるZスコアを探します．
 Zスコア（標準正規分布のパーセント点）を求めるには<strong>qnorm</strong>関数を利用します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">qnorm</span>(<span style="color:#ae81ff">0.025</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)
-[1] <span style="color:#ae81ff">-1.959964</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">qnorm</span>(<span style="color:#ae81ff">0.975</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)
-[1] <span style="color:#ae81ff">1.959964</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> qnorm(<span style="color:#ae81ff">0.025</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">-1.959964</span>
+<span style="color:#f92672">&gt;</span> qnorm(<span style="color:#ae81ff">0.975</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)
+[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">1.959964</span></code></pre></div>
 <p>上記より，<strong>z&lt;-1.96</strong>，また，<strong>z&gt;1.96</strong> となる確率は5%ということが分かります．
 これは，下図の左端と右端のグレーの範囲を表しています．</p>
 
@@ -468,7 +468,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-09 18:18:42.329396 &#43;0900 JST m=&#43;0.277791065">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-09 21:40:49.962647 &#43;0900 JST m=&#43;0.751026850">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

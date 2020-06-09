@@ -234,8 +234,7 @@ marker.detect(cam); marker.drawBackground(cam); 最後に，マーカーが検�
 また，今回もカメラ映像を利用するため，[スケッチ]-[ライブラリをインポート]-[Video]をクリックして，
 Videoライブラリをインポートしておきます．</p>
 
-<script type="application/javascript" src="https://gist.github.com/naoto-github/234cc5f58c5a26d3352a7ddfa9469bd7.js"></script>
-
+<script type="application/javascript" src="//gist.github.com/naoto-github/234cc5f58c5a26d3352a7ddfa9469bd7.js"></script>
 
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -249,8 +248,7 @@ Videoライブラリをインポートしておきます．</p>
 <strong>3</strong>番のカメラを使用していることに注意してください．
 ウィンドウにカメラ映像が表示されることを確認してください．</p>
 
-<script type="application/javascript" src="https://gist.github.com/naoto-github/c7c85dd9f7a5f8ba8e6208334a212246.js"></script>
-
+<script type="application/javascript" src="//gist.github.com/naoto-github/c7c85dd9f7a5f8ba8e6208334a212246.js"></script>
 
 <p><a href="https://gyazo.com/b74d10f276cb735c3ad41cd1e079f4c2"><img src="https://i.gyazo.com/b74d10f276cb735c3ad41cd1e079f4c2.gif" alt="https://gyazo.com/b74d10f276cb735c3ad41cd1e079f4c2" /></a></p>
 
@@ -273,26 +271,25 @@ Videoライブラリをインポートしておきます．</p>
 カメラのパラメータファイル（<strong>camera_para.dat</strong>）を指定します．
 また，対象のNyIDを登録するには，<code>addNyIDMarker()</code>関数を利用します．
 引数には「<strong>NyIDの番号</strong>」と「<strong>マーカーの物理サイズ（mm）</strong>」を指定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">marker <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MultiMarker(<span style="color:#66d9ef">this</span>, 320, 240, <span style="color:#e6db74">&#34;camera_para.dat&#34;</span>);
-marker.<span style="color:#a6e22e">addNyIdMarker</span>(1, 80);</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">marker <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> MultiMarker<span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> 320<span style="color:#f92672">,</span> 240<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;camera_para.dat&#34;</span><span style="color:#f92672">);</span>
+marker<span style="color:#f92672">.</span><span style="color:#a6e22e">addNyIdMarker</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> 80<span style="color:#f92672">);</span></code></pre></div>
 <p>次に，<code>detect()</code>関数で，カメラ映像からマーカーを検出し，
 <code>drawBackground()</code>関数でカメラ映像を背景に設定します．
 いずれの関数も引数には<strong>Capture</strong>クラスのインスタンスを渡します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">marker.<span style="color:#a6e22e">detect</span>(cam);
-marker.<span style="color:#a6e22e">drawBackground</span>(cam);</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">marker<span style="color:#f92672">.</span><span style="color:#a6e22e">detect</span><span style="color:#f92672">(</span>cam<span style="color:#f92672">);</span>
+marker<span style="color:#f92672">.</span><span style="color:#a6e22e">drawBackground</span><span style="color:#f92672">(</span>cam<span style="color:#f92672">);</span></code></pre></div>
 <p>最後に，マーカーが検出された場合に，立方体をマーカー上に配置します．
 ここで，<code>beginTransform()</code>関数によって，原点をカメラに映ったマーカーの中心に変更していることに注意してください．
 <code>endTransform()</code>関数で，元の座標系に戻ります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">if</span>(marker.<span style="color:#a6e22e">isExist</span>(0)){
-	marker.<span style="color:#a6e22e">beginTransform</span>(0);
-	box(50, 50, 50);
-	marker.<span style="color:#a6e22e">endTransform</span>();
-}</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>marker<span style="color:#f92672">.</span><span style="color:#a6e22e">isExist</span><span style="color:#f92672">(</span>0<span style="color:#f92672">)){</span>
+	marker<span style="color:#f92672">.</span><span style="color:#a6e22e">beginTransform</span><span style="color:#f92672">(</span>0<span style="color:#f92672">);</span>
+	box<span style="color:#f92672">(</span>50<span style="color:#f92672">,</span> 50<span style="color:#f92672">,</span> 50<span style="color:#f92672">);</span>
+	marker<span style="color:#f92672">.</span><span style="color:#a6e22e">endTransform</span><span style="color:#f92672">();</span>
+<span style="color:#f92672">}</span></code></pre></div>
 <p>下記を参考にコードを入力したら，Runボタンをクリックしてください．
 マーカーをカメラに映すと立方体が表示されることを確認してください．</p>
 
-<script type="application/javascript" src="https://gist.github.com/naoto-github/b340c2f05c2e00f5483ac26155e67990.js"></script>
-
+<script type="application/javascript" src="//gist.github.com/naoto-github/b340c2f05c2e00f5483ac26155e67990.js"></script>
 
 <p><a href="https://gyazo.com/cc1ef09628049dcee9c1dec23c903e41"><img src="https://i.gyazo.com/cc1ef09628049dcee9c1dec23c903e41.gif" alt="https://gyazo.com/cc1ef09628049dcee9c1dec23c903e41" /></a></p>
 
@@ -303,8 +300,7 @@ Z軸方向にずらしてみましょう．
 下記を参考にコードを入力したら，Runボタンをクリックしてください．
 立方体がマーカーの表面に乗っているように表示されることを確認してください．</p>
 
-<script type="application/javascript" src="https://gist.github.com/naoto-github/3d849dbbc53f15b76028e6815371e7fb.js"></script>
-
+<script type="application/javascript" src="//gist.github.com/naoto-github/3d849dbbc53f15b76028e6815371e7fb.js"></script>
 
 <p><a href="https://gyazo.com/055a9e37e204598b50098dae10ee4c8e"><img src="https://i.gyazo.com/055a9e37e204598b50098dae10ee4c8e.gif" alt="https://gyazo.com/055a9e37e204598b50098dae10ee4c8e" /></a></p>
 
@@ -382,7 +378,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-09 18:18:42.297649 &#43;0900 JST m=&#43;0.246042754">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-09 21:40:49.81028 &#43;0900 JST m=&#43;0.598664754">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
