@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    商品情報の更新 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="商品情報の更新" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/seminar_database/chapter7/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="商品情報の表示  ログインに成功したら，商品情報を画面に表示しましょう． main.py に商品情報を表示するためのshowItems関数を定義します． この関数では，SELECT文で商品の一覧を取得します．
+# 商品情報の表示 def showItems(user_id): sql = &#34;SELECT * from Items;&#34; records = cur.execute(sql) print(&#34;&lt;h2&gt;商品一覧&lt;/h2&gt;&#34;) for record in records: print(&#34;&lt;p&gt;&#34; &#43; str(record) &#43; &#34;&lt;/p&gt;&#34;) main.py の下記部分で，定義したshowItems関数を呼び出します．
+# ユーザ情報の検索・表示 showUserInfo(form_id) # ユーザの購買履歴の検索・表示 showUserHistory(form_id) # 商品情報の表示 showItems(form_id) ID:u01 ，パスワード:X2ng でログインしてみましょう． 下記のように表示されれば正しく動作しています．
+
+上記の方法では，pタグで表示しているだけなので読み取りにくいです． そこで，tableタグで見た目を整形しておきます． このとき，商品名(name)，価格(price)，在庫数(stock)のみを表示することにします．
+# 商品情報の表示 def showItems(user_id): sql = &#34;SELECT * from Items;&#34; records = cur.execute(sql) print(&#34;&lt;h2&gt;商品一覧&lt;/h2&gt;&#34;) table = &#34;&lt;table border=`1``&gt;&#34; table &#43;= &#34;&lt;tr&gt;&#34; table &#43;= &#34;&lt;th&gt;name&lt;/th&gt;&#34; table &#43;= &#34;&lt;th&gt;price&lt;/th&gt;&#34; table &#43;= &#34;&lt;th&gt;stock&lt;/th&gt;&#34; table &#43;= &#34;&lt;/tr&gt;&#34; for record in records: table &#43;= &#34;&lt;tr&gt;&#34; item_id = record[0] name = record[1] price = record[2] stock = record[3] table &#43;= &#34;&lt;td&gt;&#34; table &#43;= str(name) table &#43;= &#34;&lt;/td&gt;&#34; table &#43;= &#34;&lt;td&gt;&#34; table &#43;= str(price) table &#43;= &#34;&lt;/td&gt;&#34; table &#43;= &#34;&lt;td&gt;&#34; table &#43;= str(stock) table &#43;= &#34;&lt;/td&gt;&#34; table &#43;= &#34;&lt;/tr&gt;&#34; table &#43;= &#34;&lt;/table&gt;&#34; print(table)  この結果，下記のように表示されればOKです．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="商品情報の更新" />
+
+
+
+  <meta name="twitter:description" content="商品情報の表示  ログインに成功したら，商品情報を画面に表示しましょう． main.py に商品情報を表示するためのshowItems関数を定義します． この関数では，SELECT文で商品の一覧を取得します．
+# 商品情報の表示 def showItems(user_id): sql = &#34;SELECT * from Items;&#34; records = cur.execute(sql) print(&#34;&lt;h2&gt;商品一覧&lt;/h2&gt;&#34;) for record in records: print(&#34;&lt;p&gt;&#34; &#43; str(record) &#43; &#34;&lt;/p&gt;&#34;) main.py の下記部分で，定義したshowItems関数を呼び出します．
+# ユーザ情報の検索・表示 showUserInfo(form_id) # ユーザの購買履歴の検索・表示 showUserHistory(form_id) # 商品情報の表示 showItems(form_id) ID:u01 ，パスワード:X2ng でログインしてみましょう． 下記のように表示されれば正しく動作しています．
+
+上記の方法では，pタグで表示しているだけなので読み取りにくいです． そこで，tableタグで見た目を整形しておきます． このとき，商品名(name)，価格(price)，在庫数(stock)のみを表示することにします．
+# 商品情報の表示 def showItems(user_id): sql = &#34;SELECT * from Items;&#34; records = cur.execute(sql) print(&#34;&lt;h2&gt;商品一覧&lt;/h2&gt;&#34;) table = &#34;&lt;table border=`1``&gt;&#34; table &#43;= &#34;&lt;tr&gt;&#34; table &#43;= &#34;&lt;th&gt;name&lt;/th&gt;&#34; table &#43;= &#34;&lt;th&gt;price&lt;/th&gt;&#34; table &#43;= &#34;&lt;th&gt;stock&lt;/th&gt;&#34; table &#43;= &#34;&lt;/tr&gt;&#34; for record in records: table &#43;= &#34;&lt;tr&gt;&#34; item_id = record[0] name = record[1] price = record[2] stock = record[3] table &#43;= &#34;&lt;td&gt;&#34; table &#43;= str(name) table &#43;= &#34;&lt;/td&gt;&#34; table &#43;= &#34;&lt;td&gt;&#34; table &#43;= str(price) table &#43;= &#34;&lt;/td&gt;&#34; table &#43;= &#34;&lt;td&gt;&#34; table &#43;= str(stock) table &#43;= &#34;&lt;/td&gt;&#34; table &#43;= &#34;&lt;/tr&gt;&#34; table &#43;= &#34;&lt;/table&gt;&#34; print(table)  この結果，下記のように表示されればOKです．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+  <li>	
+    <a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target="_blank">学内専用</a>
+  </li>  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2020-06-09 11:29:37 &#43;0900 JST">June 9, 2020</time>
+</div>
+
+    <h1 class="post-title">商品情報の更新</h1>
+<div class="post-line"></div>
+
+    
+
+    <h1>
+  <img class="head-image" src="/logo/logo.png">
+  商品情報の表示
+</h1>
+
+
+<p>ログインに成功したら，商品情報を画面に表示しましょう．
+<strong>main.py</strong> に商品情報を表示するための<code>showItems</code>関数を定義します．
+この関数では，SELECT文で商品の一覧を取得します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 商品情報の表示</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">showItems</span>(user_id):
+    sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT * from Items;&#34;</span>
+    records <span style="color:#f92672">=</span> cur<span style="color:#f92672">.</span>execute(sql)
+
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h2&gt;商品一覧&lt;/h2&gt;&#34;</span>)
+
+    <span style="color:#66d9ef">for</span> record <span style="color:#f92672">in</span> records:
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;p&gt;&#34;</span> <span style="color:#f92672">+</span> str(record) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&lt;/p&gt;&#34;</span>)</code></pre></div>
+<p><strong>main.py</strong> の下記部分で，定義した<code>showItems</code>関数を呼び出します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"># ユーザ情報の検索・表示
+showUserInfo(form_id)
+
+# ユーザの購買履歴の検索・表示
+showUserHistory(form_id)
+	
+# 商品情報の表示
+showItems(form_id)</code></pre></div>
+<p>ID:u01 ，パスワード:X2ng でログインしてみましょう． 下記のように表示されれば正しく動作しています．</p>
+
+<p><a href="https://gyazo.com/40537eef50534fbc8a44881f9f864790"><img src="https://i.gyazo.com/40537eef50534fbc8a44881f9f864790.png" alt="Image from Gyazo" /></a></p>
+
+<p>上記の方法では，<code>p</code>タグで表示しているだけなので読み取りにくいです．
+そこで，<code>table</code>タグで見た目を整形しておきます．
+このとき，商品名(name)，価格(price)，在庫数(stock)のみを表示することにします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 商品情報の表示</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">showItems</span>(user_id):
+    sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT * from Items;&#34;</span>
+    records <span style="color:#f92672">=</span> cur<span style="color:#f92672">.</span>execute(sql)
+
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h2&gt;商品一覧&lt;/h2&gt;&#34;</span>)
+
+    table <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;table border=`1``&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;name&lt;/th&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;price&lt;/th&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;stock&lt;/th&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>
+
+    <span style="color:#66d9ef">for</span> record <span style="color:#f92672">in</span> records:
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
+
+        item_id <span style="color:#f92672">=</span> record[<span style="color:#ae81ff">0</span>]
+        name <span style="color:#f92672">=</span> record[<span style="color:#ae81ff">1</span>]
+        price <span style="color:#f92672">=</span> record[<span style="color:#ae81ff">2</span>]
+        stock <span style="color:#f92672">=</span> record[<span style="color:#ae81ff">3</span>]
+        
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span>
+        table <span style="color:#f92672">+=</span> str(name)
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>
+
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span>
+        table <span style="color:#f92672">+=</span> str(price)
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>
+
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span>
+        table <span style="color:#f92672">+=</span> str(stock)
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>        
+
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>    
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/table&gt;&#34;</span>
+    <span style="color:#66d9ef">print</span>(table)                </code></pre></div>
+<p>この結果，下記のように表示されればOKです．</p>
+
+<p><a href="https://gyazo.com/271ac1149bcf9677b4d24b5dd1152d8d"><img src="https://i.gyazo.com/271ac1149bcf9677b4d24b5dd1152d8d.png" alt="Image from Gyazo" /></a></p>
+
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  商品情報の更新
+</h1>
+
+
+<p>商品の購入ボタンを設置します．
+購入ボタンをクリックすると1つだけ商品を購入することにします．
+<code>table</code>タグに，<code>form</code>タグを新たに追加します．
+このとき，ユーザIDと商品IDを非表示データ(<code>hidden</code>に設定)としてフォームに追加します．
+また，購入ボタンをクリックすると <strong>buy.py</strong> というCGIのプログラムにデータは送信されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 商品情報の表示</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">showItems</span>(user_id):
+    sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT * from Items;&#34;</span>
+    records <span style="color:#f92672">=</span> cur<span style="color:#f92672">.</span>execute(sql)
+
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h2&gt;商品一覧&lt;/h2&gt;&#34;</span>)
+
+    table <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;table border=`1``&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;name&lt;/th&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;price&lt;/th&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;stock&lt;/th&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;buy&lt;/th&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>
+
+    <span style="color:#66d9ef">for</span> record <span style="color:#f92672">in</span> records:
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
+
+        item_id <span style="color:#f92672">=</span> record[<span style="color:#ae81ff">0</span>]
+        name <span style="color:#f92672">=</span> record[<span style="color:#ae81ff">1</span>]
+        price <span style="color:#f92672">=</span> record[<span style="color:#ae81ff">2</span>]
+        stock <span style="color:#f92672">=</span> record[<span style="color:#ae81ff">3</span>]
+        
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span>
+        table <span style="color:#f92672">+=</span> str(name)
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>
+
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span>
+        table <span style="color:#f92672">+=</span> str(price)
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>
+
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span>
+        table <span style="color:#f92672">+=</span> str(stock)
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>
+
+        form <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;form method=&#39;post&#39; target=&#39;_blank&#39; action=&#39;buy.py&#39;&gt;&#34;</span>
+        form <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;input type=&#39;hidden&#39; name=&#39;user&#39; value=&#39;&#34;</span> <span style="color:#f92672">+</span> user_id <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;&gt;&#34;</span>
+        form <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;input type=&#39;hidden&#39; name=&#39;item&#39; value=&#39;&#34;</span> <span style="color:#f92672">+</span> item_id <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;&gt;&#34;</span>
+        form <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;input type=&#39;submit&#39; value=&#39;購入&#39;&gt;&lt;/form&gt;&#34;</span>
+        
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;td&gt;&#34;</span>        
+        table <span style="color:#f92672">+=</span> form
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/td&gt;&#34;</span>                
+
+        table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>    
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/table&gt;&#34;</span>
+    <span style="color:#66d9ef">print</span>(table)                </code></pre></div>
+<p>商品一覧に購入ボタンが表示されていることが確認できます．</p>
+
+<p><a href="https://gyazo.com/3881f2a3002ad7d559d3662d50311499"><img src="https://i.gyazo.com/3881f2a3002ad7d559d3662d50311499.png" alt="Image from Gyazo" /></a></p>
+
+<p>新規に <strong>buy.py</strong> を作成し，cigi-binフォルダに配置します（<strong>buy.py</strong> にも実行権限が必要）．
+<strong>buy.py</strong> には下記のコードを記述します．
+フォームから送信されたユーザIDと商品IDを受け取っています．
+ここで，商品IDを基にItemsテーブルから商品の在庫を取得し，
+在庫数が1以上であれば，在庫数を1だけ減らします．
+もし在庫がない場合は，購入失敗となります．
+また，データベースの更新を確定するために，
+<code>con.commit()</code>が必要であることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
+
+<span style="color:#f92672">import</span> sqlite3
+<span style="color:#f92672">import</span> cgi
+
+<span style="color:#75715e"># フォームの取得</span>
+form <span style="color:#f92672">=</span> cgi<span style="color:#f92672">.</span>FieldStorage()
+
+form_user <span style="color:#f92672">=</span> form[<span style="color:#e6db74">&#34;user&#34;</span>]<span style="color:#f92672">.</span>value
+form_item <span style="color:#f92672">=</span> form[<span style="color:#e6db74">&#34;item&#34;</span>]<span style="color:#f92672">.</span>value
+
+<span style="color:#75715e"># データベースに接続</span>
+con <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#39;sugiten.db&#39;</span>)
+
+<span style="color:#75715e"># カーソルを取得</span>
+cur <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span>cursor()
+
+<span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;Content-type:text/html</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;!DOCTYPE html&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;html&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;head&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;meta charset=&#39;utf-8&#39;&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;title&gt;購入確認&lt;/title&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/head&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;body&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h1&gt;購入確認&lt;/h1&gt;&#34;</span>);
+
+<span style="color:#75715e"># 在庫数の取得</span>
+sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT stock FROM Items where id=&#39;&#34;</span> <span style="color:#f92672">+</span> form_item <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;;&#34;</span>
+records <span style="color:#f92672">=</span> cur<span style="color:#f92672">.</span>execute(sql)
+record <span style="color:#f92672">=</span> records<span style="color:#f92672">.</span>fetchone()
+stock <span style="color:#f92672">=</span> int(record[<span style="color:#ae81ff">0</span>])
+
+<span style="color:#75715e"># 在庫があるとき</span>
+<span style="color:#66d9ef">if</span> stock <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1</span>:
+
+	<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;p&gt;購入に成功しました&lt;/p&gt;&#34;</span>)
+
+	<span style="color:#75715e"># 在庫数を減らす</span>
+    sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;UPDATE items SET Stock=&#34;</span> <span style="color:#f92672">+</span> str(stock<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; where id=&#39;&#34;</span> <span style="color:#f92672">+</span> form_item <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;;&#34;</span>
+    cur<span style="color:#f92672">.</span>execute(sql)
+
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;p&gt;購入に失敗しました&lt;/p&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;p&gt;&lt;a href=&#39;#&#39; onclick=&#39;window.close()&#39;&gt;閉じる&lt;/a&gt;&lt;/p&gt;&#34;</span>)
+
+<span style="color:#75715e"># データベースの更新の確定</span>
+con<span style="color:#f92672">.</span>commit()
+
+<span style="color:#75715e"># データベースを切断</span>
+con<span style="color:#f92672">.</span>close() 
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/body&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/html&gt;&#34;</span>)</code></pre></div>
+<p>それでは，マウスの購入ボタンをクリックしてみましょう．
+在庫は10あるため，マウスの購入は成功となります．
+また，在庫数が1減って，残りが9になっていることも確認できます．</p>
+
+<p><a href="https://gyazo.com/1c59939f1358aa974db598a961924893"><img src="https://i.gyazo.com/1c59939f1358aa974db598a961924893.png" alt="Image from Gyazo" /></a></p>
+
+<p><a href="https://gyazo.com/427d8e491dd9b500d6a6798ce8991751"><img src="https://i.gyazo.com/427d8e491dd9b500d6a6798ce8991751.png" alt="Image from Gyazo" /></a></p>
+
+<p><a href="https://gyazo.com/32ea1c978f1be088fa844501ed5aadb4"><img src="https://i.gyazo.com/32ea1c978f1be088fa844501ed5aadb4.png" alt="Image from Gyazo" /></a></p>
+
+<p>購買履歴も記録しておきましょう．
+Historiesテーブルに，購入時刻，ユーザID，商品IDを追加します．
+現在の時刻を取得するには，<strong>datetime</strong> ライブラリを利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> datetime</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 在庫数を減らす</span>
+sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;UPDATE items SET Stock=&#34;</span> <span style="color:#f92672">+</span> str(stock<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; where id=&#39;&#34;</span> <span style="color:#f92672">+</span> form_item <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;;&#34;</span>
+cur<span style="color:#f92672">.</span>execute(sql)
+
+<span style="color:#75715e"># 購買履歴を記録</span>
+dt <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>now()
+time <span style="color:#f92672">=</span> dt<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#39;%Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> %H:%M:%S&#39;</span>)
+sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INSERT INTO Histories(time, user_id, item_id) VALUES(&#39;&#34;</span> <span style="color:#f92672">+</span> time <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;, &#39;&#34;</span> <span style="color:#f92672">+</span> form_user <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;, &#39;&#34;</span> <span style="color:#f92672">+</span> form_item  <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;);&#34;</span>
+cur<span style="color:#f92672">.</span>execute(sql)</code></pre></div>
+<p>もう一度，マウスを購入すると，購買履歴に新しくレコードが追加されていることが確認できます．</p>
+
+<p><a href="https://gyazo.com/17bfb2214af29c7c28957b0343fa035e"><img src="https://i.gyazo.com/17bfb2214af29c7c28957b0343fa035e.png" alt="Image from Gyazo" /></a></p>
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4877834621&linkId=1c194738150d2b5415587a94b093c534&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B017LQG9XC&linkId=ae295da41172fb287fc431f49c2d6acd&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4297103176&linkId=486b8eb79d1711554ad2fdd24fd2b995&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/seminar_database/chapter7/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-06-09 18:18:42.176605 &#43;0900 JST m=&#43;0.124993906">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>

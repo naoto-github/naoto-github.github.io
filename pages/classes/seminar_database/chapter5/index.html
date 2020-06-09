@@ -258,6 +258,12 @@ CGIのデータを処理するためのcgiモジュールをインポートし�
 <span style="color:#f92672">import</span> sqlite3
 <span style="color:#f92672">import</span> cgi
 
+<span style="color:#75715e"># フォームの取得</span>
+form <span style="color:#f92672">=</span> cgi<span style="color:#f92672">.</span>FieldStorage()
+
+form_id <span style="color:#f92672">=</span> form[<span style="color:#e6db74">&#34;id&#34;</span>]<span style="color:#f92672">.</span>value
+form_pw<span style="color:#f92672">=</span> form[<span style="color:#e6db74">&#34;password&#34;</span>]<span style="color:#f92672">.</span>value
+
 <span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;Content-type:text/html</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>)
 
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;!DOCTYPE html&gt;&#34;</span>)
@@ -270,12 +276,6 @@ CGIのデータを処理するためのcgiモジュールをインポートし�
 
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;body&gt;&#34;</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h1&gt;メイン&lt;/h1&gt;&#34;</span>);
-
-<span style="color:#75715e"># フォームの取得</span>
-form <span style="color:#f92672">=</span> cgi<span style="color:#f92672">.</span>FieldStorage()
-
-form_id <span style="color:#f92672">=</span> form[<span style="color:#e6db74">&#34;id&#34;</span>]<span style="color:#f92672">.</span>value
-form_pw<span style="color:#f92672">=</span> form[<span style="color:#e6db74">&#34;password&#34;</span>]<span style="color:#f92672">.</span>value
 
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;p&gt;&#34;</span> <span style="color:#f92672">+</span> form_id <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&lt;/p&gt;&#34;</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;p&gt;&#34;</span> <span style="color:#f92672">+</span> form_pw <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&lt;/p&gt;&#34;</span>)
@@ -293,10 +293,7 @@ Usersテーブルに対し，
 ユーザが入力したパスワードと，Usersテーブルから取得したパスワードが一致すればログインは成功です．
 また，入力されたIDが存在しないとき，また，入力されたパスワードが一致しないときは，
 それぞれエラーであることを表示しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#print(&#34;&lt;p&gt;&#34; + form_id + &#34;&lt;/p&gt;&#34;)</span>
-<span style="color:#75715e">#print(&#34;&lt;p&gt;&#34; + form_pw + &#34;&lt;/p&gt;&#34;)</span>
-
-<span style="color:#75715e"># データベースに接続</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># データベースに接続</span>
 con <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#39;sugiten.db&#39;</span>)
 
 <span style="color:#75715e"># カーソルを取得</span>
@@ -306,6 +303,19 @@ cur <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span>
 sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;SELECT password FROM Users WHERE id=&#39;&#34;</span> <span style="color:#f92672">+</span> form_id <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;&#39;;&#34;</span>
 records <span style="color:#f92672">=</span> cur<span style="color:#f92672">.</span>execute(sql)
 pw <span style="color:#f92672">=</span> records<span style="color:#f92672">.</span>fetchone()
+
+<span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;Content-type:text/html</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;!DOCTYPE html&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;html&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;head&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;meta charset=&#39;utf-8&#39;&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;title&gt;メイン&lt;/title&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/head&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;body&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h1&gt;メイン&lt;/h1&gt;&#34;</span>);
 
 <span style="color:#66d9ef">if</span> pw <span style="color:#f92672">==</span> None:
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;p&gt;IDが存在しません&lt;/p&gt;&#34;</span>)
@@ -389,7 +399,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-09 11:09:55.492224 &#43;0900 JST m=&#43;0.101378090">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-09 18:18:42.157427 &#43;0900 JST m=&#43;0.105815735">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
