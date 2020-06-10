@@ -239,12 +239,12 @@ hist(temp[,2],breaks=seq(25,32,0.5))
 <span style="color:#ae81ff">2016</span>,<span style="color:#ae81ff">29.3</span></code></pre></div>
 <p>ファイルをダウンロードしたら，<strong>read.csv</strong> 関数を利用して，
 変数*temp*にデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">temp <span style="color:#f92672">&lt;-</span> read.csv(<span style="color:#e6db74">&#34;temperature.csv&#34;</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">temp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">read.csv</span>(<span style="color:#e6db74">&#34;temperature.csv&#34;</span>)</code></pre></div>
 <p>次に，<strong>hist</strong>関数を利用して，最高気温のヒストグラムを表示しましょう．
 範囲は25から32までとし，区間は0.5とします．
 <strong>seq</strong>関数は，規則性のある数列ベクトルを生成する関数であり，
 ここでは，25から32まで，0.5ずつ増やした数列（{25.0,25.5,26.0,26.5,&hellip;,32}）を生成します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">hist(temp[,<span style="color:#ae81ff">2</span>],breaks<span style="color:#f92672">=</span><span style="color:#66d9ef">seq</span>(<span style="color:#ae81ff">25</span>,<span style="color:#ae81ff">32</span>,<span style="color:#ae81ff">0.5</span>))</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">hist</span>(temp[,<span style="color:#ae81ff">2</span>],breaks<span style="color:#f92672">=</span><span style="color:#a6e22e">seq</span>(<span style="color:#ae81ff">25</span>,<span style="color:#ae81ff">32</span>,<span style="color:#ae81ff">0.5</span>))</code></pre></div>
 <p><a href="https://gyazo.com/a87533e270dcb7c39cc4baca99c2e73a"><img src="https://i.gyazo.com/a87533e270dcb7c39cc4baca99c2e73a.png" alt="https://gyazo.com/a87533e270dcb7c39cc4baca99c2e73a" /></a></p>
 
 <p>グラフを確認すると， <strong>区間28-8.5</strong> が最頻値となっていることが分かります．
@@ -252,7 +252,7 @@ hist(temp[,2],breaks=seq(25,32,0.5))
 全体としては左右対称な <strong>釣鐘型</strong> と呼ばれる分布をしています．
 しかし，このグラフは，縦軸が頻度を表すヒストグラムであり，確率分布ではありません．
 そこで，<strong>hist</strong> 関数の引数に<strong>freq=FALSE</strong> を設定し，縦軸を <strong>確率密度</strong> に変更します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">hist(temp[,<span style="color:#ae81ff">2</span>],breaks<span style="color:#f92672">=</span><span style="color:#66d9ef">seq</span>(<span style="color:#ae81ff">25</span>,<span style="color:#ae81ff">32</span>,<span style="color:#ae81ff">0.5</span>),freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">hist</span>(temp[,<span style="color:#ae81ff">2</span>],breaks<span style="color:#f92672">=</span><span style="color:#a6e22e">seq</span>(<span style="color:#ae81ff">25</span>,<span style="color:#ae81ff">32</span>,<span style="color:#ae81ff">0.5</span>),freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)</code></pre></div>
 <p><a href="https://gyazo.com/aeacb64f1ec9534fdd8d2ab1eb4f36fe"><img src="https://i.gyazo.com/aeacb64f1ec9534fdd8d2ab1eb4f36fe.png" alt="https://gyazo.com/aeacb64f1ec9534fdd8d2ab1eb4f36fe" /></a></p>
 
 <p>ここでのポイントは，縦軸は <strong>確率</strong> ではなく <strong>確率密度</strong> を表しているということです．
@@ -262,9 +262,9 @@ hist(temp[,2],breaks=seq(25,32,0.5))
 例えば，<strong>区間28-28.5</strong>の確率は，下記のように求めます．
 ここで，0.5は区間（幅）を表し，d$density[7]は<strong>区間28-28.5</strong>の確率密度（高さ）を表しています．
 これを掛け合わせることで確率（面積）になるということです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> d <span style="color:#f92672">&lt;-</span> hist(temp[,<span style="color:#ae81ff">2</span>],breaks<span style="color:#f92672">=</span><span style="color:#66d9ef">seq</span>(<span style="color:#ae81ff">25</span>,<span style="color:#ae81ff">32</span>,<span style="color:#ae81ff">0.5</span>),freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)
-<span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> d<span style="color:#f92672">$</span>density[<span style="color:#ae81ff">7</span>]
-[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">0.1984127</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> d <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">hist</span>(temp[,<span style="color:#ae81ff">2</span>],breaks<span style="color:#f92672">=</span><span style="color:#a6e22e">seq</span>(<span style="color:#ae81ff">25</span>,<span style="color:#ae81ff">32</span>,<span style="color:#ae81ff">0.5</span>),freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)
+<span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> d<span style="color:#f92672">$</span>density[7]
+[1] <span style="color:#ae81ff">0.1984127</span></code></pre></div>
 <p><strong>正規分布</strong> は上記のような釣鐘型の連続グラフを近似する場合に利用されます．</p>
 
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">正規分布のグラフ -->
@@ -288,19 +288,19 @@ hist(temp[,2],breaks=seq(25,32,0.5))
 しかし，正規分布は対象のデータの<strong>平均</strong><script type="math/tex">\mu</script>と
 <strong>標準偏差</strong><script type="math/tex">\sigma</script>が分かれば求めることができます．
 そこで，下記のように，<strong>mean</strong> 関数，<strong>sd</strong> 関数で平均<script type="math/tex">\mu</script>と標準偏差<script type="math/tex">\sigma</script>を求めます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mu <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">mean</span>(temp[,<span style="color:#ae81ff">2</span>])  
-sigma <span style="color:#f92672">&lt;-</span> sd(temp[,<span style="color:#ae81ff">2</span>])  </code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mu <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">mean</span>(temp[,<span style="color:#ae81ff">2</span>])  
+sigma <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sd</span>(temp[,<span style="color:#ae81ff">2</span>])  </code></pre></div>
 <p>次に，この平均<script type="math/tex">\mu</script>と
 標準偏差<script type="math/tex">\sigma</script>に従う正規分布の確率密度を求めます．
 R言語では，<strong>dnorm</strong>関数を用いることで，正規分布の確率密度の計算が可能です．
 例えば，x=28の確率密度を求めるには，下記のように入力します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> dnorm(<span style="color:#ae81ff">28</span>,mu,sigma)
-[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">0.3013075</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">dnorm</span>(<span style="color:#ae81ff">28</span>,mu,sigma)
+[1] <span style="color:#ae81ff">0.3013075</span></code></pre></div>
 <p>それでは，先程描いたヒストグラムに，正規分布の確率密度のグラフを重ねてみましょう．
 <strong>curve</strong>関数を利用することで，特定の関数のグラフを描くことができます．
 また引数の<strong>add=TRUE</strong>はグラフを重ねて描くことを意味しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> hist(temp[,<span style="color:#ae81ff">2</span>],breaks<span style="color:#f92672">=</span><span style="color:#66d9ef">seq</span>(<span style="color:#ae81ff">25</span>,<span style="color:#ae81ff">32</span>,<span style="color:#ae81ff">0.5</span>), freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)
-<span style="color:#f92672">&gt;</span> curve(dnorm(x,mu,sigma),add<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">hist</span>(temp[,<span style="color:#ae81ff">2</span>],breaks<span style="color:#f92672">=</span><span style="color:#a6e22e">seq</span>(<span style="color:#ae81ff">25</span>,<span style="color:#ae81ff">32</span>,<span style="color:#ae81ff">0.5</span>), freq<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)
+<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">curve</span>(<span style="color:#a6e22e">dnorm</span>(x,mu,sigma),add<span style="color:#f92672">=</span><span style="color:#66d9ef">TRUE</span>)</code></pre></div>
 <p><a href="https://gyazo.com/64147023dc4c37a68515f749bbf49e06"><img src="https://i.gyazo.com/64147023dc4c37a68515f749bbf49e06.png" alt="https://gyazo.com/64147023dc4c37a68515f749bbf49e06" /></a></p>
 
 <p>ヒストグラムと正規分布の形状がとても良く似ており，正規分布で近似できそうだということが分かります．
@@ -310,12 +310,12 @@ R言語では，<strong>dnorm</strong>関数を用いることで，正規分布
 積分された面積の値は <strong>pnorm</strong>関数で求めることができます．
 このような関数を <strong>累積分布関数</strong> といいます．
 例えば，x=28以下となる確率は，下記のように入力します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> pnorm(<span style="color:#ae81ff">28</span>,mu,sigma)
-[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">0.4726962</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">pnorm</span>(<span style="color:#ae81ff">28</span>,mu,sigma)
+[1] <span style="color:#ae81ff">0.4726962</span></code></pre></div>
 <p>それでは，<strong>28.0-28.5</strong>の区間の確率を求めましょう．
 この確率は「28.5以下となる確率」から「28以下となる確率」を引くことで求められます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> pnorm(<span style="color:#ae81ff">28.5</span>,mu,sigma) <span style="color:#f92672">-</span> pnorm(<span style="color:#ae81ff">28</span>,mu,sigma)
-[<span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">0.1490331</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">pnorm</span>(<span style="color:#ae81ff">28.5</span>,mu,sigma) <span style="color:#f92672">-</span> <span style="color:#a6e22e">pnorm</span>(<span style="color:#ae81ff">28</span>,mu,sigma)
+[1] <span style="color:#ae81ff">0.1490331</span></code></pre></div>
 <p>この結果，最高気温が28.0～28.5になる確率は，
 正規分布に従うと<strong>14.9%</strong>になるということが分かります．
 下図では，赤色に塗り潰された箇所の面積が，全体に対して<strong>14.9%</strong>ということになります．</p>
@@ -400,7 +400,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-09 21:40:49.983294 &#43;0900 JST m=&#43;0.771673627">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-10 16:25:28.157229 &#43;0900 JST m=&#43;0.284779318">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
