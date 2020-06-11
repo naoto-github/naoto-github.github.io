@@ -80,8 +80,13 @@
 
 
 
-  <meta property="og:description" content="DBPediaとは   ウェブページの作成  &lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; 
- SPARQLで検索  SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) }#!/usr/bin/env python from SPARQLWrapper import SPARQLWrapper, JSON print (&#34;Content-type:text/html\n\n&#34;) print(&#34;&lt;!DOCTYPE html&gt;&#34;) print(&#34;&lt;html&gt;&#34;) print(&#34;&lt;head&gt;&#34;) print(&#34;&lt;meta charset=&#39;utf-8&#39;&gt;&#34;) print(&#34;&lt;title&gt;DBPedia&lt;/title&gt;&#34;) print(&#34;&lt;/head&gt;&#34;) print(&#34;&lt;body&gt;&#34;) print(&#34;&lt;h1&gt;DBPedia&lt;/h1&gt;&#34;); url = &#34;http://ja.dbpedia.org/sparql&#34; sparql = SPARQLWrapper(url) sparql.setReturnFormat(JSON) prefix = &#34;&#34;&#34; PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX rdfs: &lt;http://www." />
+  <meta property="og:description" content="DBPediaとは  DBPediaは Wikipediaから情報を抽出し， Linked Open Data(LOD) として公開するプロジェクトのことです． （LODはウェブでデータを公開・共有するための仕組みのこと）． DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲーム， 組織・団体，生物種，病気などのデータが多言語で管理されており， ジャパンサーチと同様にSPARQLのエンドポイントを介してデータの検索・取得が可能です． 今回はDBPediaから愛知県出身の日本のアーティストを検索してみましょう．
+ ウェブページの作成  SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，dbpedia.py というファイル名のCGIプログラムで作成します．
+&lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; 
+ SPARQLで検索  DBPediaのSPARQLのエンドポイントは下記のURLです．
+http://ja.dbpedia.org/sparql
+SPARQLの検索条件は下記のように記述します． 今回取得するのは，URL，名前(foaf:name)， 概要(dbpedia-owl:abstract)，出身地(prop-ja:origin)の4つのデータです． URLはジャンル(dbpedia-owl:genre) が　J-POP(dbpedia-ja:J-POP) であることを条件としています． また，検索結果から出身地に 愛知県 の文字が含まれるコンテンツだけを抽出しています．
+SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) } 新規に dbpedia.py を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）． dbpedia." />
 
 
 
@@ -96,8 +101,13 @@
 
 
 
-  <meta name="twitter:description" content="DBPediaとは   ウェブページの作成  &lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; 
- SPARQLで検索  SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) }#!/usr/bin/env python from SPARQLWrapper import SPARQLWrapper, JSON print (&#34;Content-type:text/html\n\n&#34;) print(&#34;&lt;!DOCTYPE html&gt;&#34;) print(&#34;&lt;html&gt;&#34;) print(&#34;&lt;head&gt;&#34;) print(&#34;&lt;meta charset=&#39;utf-8&#39;&gt;&#34;) print(&#34;&lt;title&gt;DBPedia&lt;/title&gt;&#34;) print(&#34;&lt;/head&gt;&#34;) print(&#34;&lt;body&gt;&#34;) print(&#34;&lt;h1&gt;DBPedia&lt;/h1&gt;&#34;); url = &#34;http://ja.dbpedia.org/sparql&#34; sparql = SPARQLWrapper(url) sparql.setReturnFormat(JSON) prefix = &#34;&#34;&#34; PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; PREFIX rdfs: &lt;http://www." />
+  <meta name="twitter:description" content="DBPediaとは  DBPediaは Wikipediaから情報を抽出し， Linked Open Data(LOD) として公開するプロジェクトのことです． （LODはウェブでデータを公開・共有するための仕組みのこと）． DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲーム， 組織・団体，生物種，病気などのデータが多言語で管理されており， ジャパンサーチと同様にSPARQLのエンドポイントを介してデータの検索・取得が可能です． 今回はDBPediaから愛知県出身の日本のアーティストを検索してみましょう．
+ ウェブページの作成  SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，dbpedia.py というファイル名のCGIプログラムで作成します．
+&lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; 
+ SPARQLで検索  DBPediaのSPARQLのエンドポイントは下記のURLです．
+http://ja.dbpedia.org/sparql
+SPARQLの検索条件は下記のように記述します． 今回取得するのは，URL，名前(foaf:name)， 概要(dbpedia-owl:abstract)，出身地(prop-ja:origin)の4つのデータです． URLはジャンル(dbpedia-owl:genre) が　J-POP(dbpedia-ja:J-POP) であることを条件としています． また，検索結果から出身地に 愛知県 の文字が含まれるコンテンツだけを抽出しています．
+SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) } 新規に dbpedia.py を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）． dbpedia." />
 
 
 
@@ -181,11 +191,24 @@
 </h1>
 
 
+<p><a href="http://ja.dbpedia.org/">DBPedia</a>は
+<a href="https://ja.wikipedia.org/">Wikipedia</a>から情報を抽出し，
+<strong>Linked Open Data(LOD)</strong> として公開するプロジェクトのことです．
+（LODはウェブでデータを公開・共有するための仕組みのこと）．
+DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲーム，
+組織・団体，生物種，病気などのデータが多言語で管理されており，
+ジャパンサーチと同様にSPARQLのエンドポイントを介してデータの検索・取得が可能です．
+今回はDBPediaから愛知県出身の日本のアーティストを検索してみましょう．</p>
+
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ウェブページの作成
 </h1>
 
+
+<p>SPARQLの検索結果を表示するページを作成しましょう．
+最初に <strong>index.html</strong> にリンクを追加します．
+検索結果を表示するページは，<strong>dbpedia.py</strong> というファイル名のCGIプログラムで作成します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">ul</span>&gt;
 	&lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/js-api.py&#34;</span>&gt;ジャパンサーチ 簡易Web API&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
 	&lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/js-sparql.py&#34;</span>&gt;ジャパンサーチ SPARQL&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
@@ -198,13 +221,26 @@
   SPARQLで検索
 </h1>
 
+
+<p>DBPediaのSPARQLのエンドポイントは下記のURLです．</p>
+
+<p><a href="http://ja.dbpedia.org/sparql">http://ja.dbpedia.org/sparql</a></p>
+
+<p>SPARQLの検索条件は下記のように記述します．
+今回取得するのは，URL，名前(foaf:name)，
+概要(dbpedia-owl:abstract)，出身地(prop-ja:origin)の4つのデータです．
+URLは<strong>ジャンル(dbpedia-owl:genre)</strong> が　<strong>J-POP(dbpedia-ja:J-POP)</strong> であることを条件としています．
+また，検索結果から出身地に <strong>愛知県</strong> の文字が含まれるコンテンツだけを抽出しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sparql" data-lang="sparql"><span style="color:#66d9ef">SELECT</span> ?url ?name ?abstract ?origin <span style="color:#66d9ef">WHERE</span>{
   ?url dbpedia-owl:<span style="color:#f92672">genre</span> dbpedia-ja:<span style="color:#f92672">J-POP</span>;
        foaf:<span style="color:#f92672">name</span> ?name;
        dbpedia-owl:<span style="color:#f92672">abstract</span> ?abstract;
        prop-ja:<span style="color:#f92672">origin</span> ?origin.
        <span style="color:#66d9ef">FILTER</span>(<span style="color:#a6e22e">CONTAINS</span>(<span style="color:#a6e22e">str</span>(?origin), <span style="color:#e6db74">&#34;愛知県&#34;</span>))
-}</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
+}</code></pre></div>
+<p>新規に <strong>dbpedia.py</strong> を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）．
+<strong>dbpedia.py</strong> には下記のコードを記述します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
 
 <span style="color:#f92672">from</span> SPARQLWrapper <span style="color:#f92672">import</span> SPARQLWrapper, JSON
 
@@ -270,6 +306,10 @@ table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/body&gt;&#34;</span>)
 
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/html&gt;&#34;</span>)</code></pre></div>
+<p>下記が検索結果です．
+愛知県出身の<a href="https://ja.wikipedia.org/wiki/%E5%8E%9F%E4%B8%80%E5%8D%9A">原一博</a>氏や
+<a href="https://ja.wikipedia.org/wiki/%E9%88%B4%E6%9C%A8%E6%97%A9%E6%99%BA%E5%AD%90">鈴木早智子</a>氏がリストに含まれていることが確認できます．</p>
+
 <p><a href="https://gyazo.com/ebeaa1828752b4c4e9a0f14c8521e24e"><img src="https://i.gyazo.com/ebeaa1828752b4c4e9a0f14c8521e24e.png" alt="Image from Gyazo" /></a></p>
 
 <h3>参考書籍</h3>
@@ -336,7 +376,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-11 16:31:02.296401 &#43;0900 JST m=&#43;0.100101401">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-11 21:11:38.158777 &#43;0900 JST m=&#43;0.122749042">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
