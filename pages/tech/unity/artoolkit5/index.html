@@ -80,23 +80,23 @@
 
 
 
-  <meta property="og:description" content="画像の準備  NyARToolkitのパッケージに含まれるサンプルSimpleNftは NFT(Natural Feature Tracking)を利用したマーカー認識のサンプルです。 NFTとは自然特徴点を利用した物体認識のことで、この技術を利用することで、一般的な画像をマーカーとして扱うことができます （詳しくはThe Sixwish Projectを参照）。 ここでは、下記の下記の「犬の画像（001.png）」と 「うさぎの画像（002.png）」を マーカーとして利用することに挑戦します。 画像サイズは300x300ピクセル、画像フォーマットは透過背景のPNGです。 また、犬の画像を認識すると赤色の立方体、うさぎの画像を認識すると青色の立方体を表示させることにします。
+  <meta property="og:description" content="画像の準備NyARToolkitのパッケージに含まれるサンプルSimpleNftは NFT(Natural Feature Tracking)を利用したマーカー認識のサンプルです。 NFTとは自然特徴点を利用した物体認識のことで、この技術を利用することで、一般的な画像をマーカーとして扱うことができます （詳しくはThe Sixwish Projectを参照）。 ここでは、下記の下記の「犬の画像（001.png）」と 「うさぎの画像（002.png）」を マーカーとして利用することに挑戦します。 画像サイズは300x300ピクセル、画像フォーマットは透過背景のPNGです。 また、犬の画像を認識すると赤色の立方体、うさぎの画像を認識すると青色の立方体を表示させることにします。
 
 
 SimpleNftフォルダをコピーし、フォルダに含まれるC#スクリプトをARPictureCamera、 シーンをARPictureSceneにファイル名を変更した状態を前提とします（詳細はNYARToolkit for Unityの導入を参照）。
- パターンファイルの作成  上記の２種類の画像から、マーカーのパターンファイルを作成します。 パターンファイルの作成には、NyARToolkitのパッケージに含まれるNftFileGeneratorを利用します （詳しくはNyARToolkit Projectを参照）。 [Data]-[Tools]にあるNftFileGeneratorをダブルクリックするとプログラムが起動します。 importをクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。 次に、Make Feature Setをクリックし、特徴点を抽出します。 このとき、Source DPIやIset DPIsなどのパラメータは特に変更する必要はないようですが、 特徴点数が多すぎたり、少なすぎる場合にはFSET parameterを調節すると良いようです。
+パターンファイルの作成上記の２種類の画像から、マーカーのパターンファイルを作成します。 パターンファイルの作成には、NyARToolkitのパッケージに含まれるNftFileGeneratorを利用します （詳しくはNyARToolkit Projectを参照）。 [Data]-[Tools]にあるNftFileGeneratorをダブルクリックするとプログラムが起動します。 importをクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。 次に、Make Feature Setをクリックし、特徴点を抽出します。 このとき、Source DPIやIset DPIsなどのパラメータは特に変更する必要はないようですが、 特徴点数が多すぎたり、少なすぎる場合にはFSET parameterを調節すると良いようです。
 
 抽出されたパターンは赤い四角や青い円で表示されます。 パターンを保存するにはExportをクリックし、適当なファイル名で保存します。 ここでは、「犬の画像」のパターンファイルをpatt_001.bytes、 「うさぎの画像」のパターンファイルをpatt_002.bytesというファイル名で保存します。 これらのパターンファイルは、AssetsのResourcesフォルダにコピーしておきます。
 
 
- マーカーオブジェクトの作成  SimpleNftはマーカーを認識すると赤色の立方体を表示します。 ここでは、２種類のマーカーに応じて、赤色の立方体に加え、青色の立方体を作成しておきます。
+マーカーオブジェクトの作成SimpleNftはマーカーを認識すると赤色の立方体を表示します。 ここでは、２種類のマーカーに応じて、赤色の立方体に加え、青色の立方体を作成しておきます。
 まずは、シーンのARPictureSceneをダブルクリックし、HierarchyにあるMarkerObjectを複製します。 スクリプトからこれのオブジェクトを操作するため、２つのマーカーオブジェクトには共通のタグ（Tag）を設定します （Gameobject.FindGameObjectsWithTag(String tag)メソッドでタグからオブジェクトを取得することが可能）。 タグ名は自由に設定することができますが、ここではMarkerObjectとしておきます。
 
 次に、Assetsで赤色と青色のマテリアルを作成します。 [Create]-[Materials]をクリックしてマテリアルを作成し、Albedoに赤色と青色を設定します。 ここでは、マテリアルの名前をRedとBlueにしておきます。 これらのマテリアルはMarkerObjectの直下にあるCubeのMaterialsに設定しておきます。
 
 マーカーが認識されたときに表示されるのは、上記のCubeオブジェクトです。 Cubeのサイズ（Scale）や位置（Position）はマーカーの大きさに合わせて調整する必要がありますが、 ここでは、サイズの値をX=80、Y=80、Z=80、位置をX=-80、Y=80、Z=40に修正しておきます。
 
- スクリプトの修正  最後にC#スクリプトのARPictureCameraを修正します。" />
+スクリプトの修正最後にC#スクリプトのARPictureCameraを修正します。" />
 
 
 
@@ -111,23 +111,23 @@ SimpleNftフォルダをコピーし、フォルダに含まれるC#スクリプ
 
 
 
-  <meta name="twitter:description" content="画像の準備  NyARToolkitのパッケージに含まれるサンプルSimpleNftは NFT(Natural Feature Tracking)を利用したマーカー認識のサンプルです。 NFTとは自然特徴点を利用した物体認識のことで、この技術を利用することで、一般的な画像をマーカーとして扱うことができます （詳しくはThe Sixwish Projectを参照）。 ここでは、下記の下記の「犬の画像（001.png）」と 「うさぎの画像（002.png）」を マーカーとして利用することに挑戦します。 画像サイズは300x300ピクセル、画像フォーマットは透過背景のPNGです。 また、犬の画像を認識すると赤色の立方体、うさぎの画像を認識すると青色の立方体を表示させることにします。
+  <meta name="twitter:description" content="画像の準備NyARToolkitのパッケージに含まれるサンプルSimpleNftは NFT(Natural Feature Tracking)を利用したマーカー認識のサンプルです。 NFTとは自然特徴点を利用した物体認識のことで、この技術を利用することで、一般的な画像をマーカーとして扱うことができます （詳しくはThe Sixwish Projectを参照）。 ここでは、下記の下記の「犬の画像（001.png）」と 「うさぎの画像（002.png）」を マーカーとして利用することに挑戦します。 画像サイズは300x300ピクセル、画像フォーマットは透過背景のPNGです。 また、犬の画像を認識すると赤色の立方体、うさぎの画像を認識すると青色の立方体を表示させることにします。
 
 
 SimpleNftフォルダをコピーし、フォルダに含まれるC#スクリプトをARPictureCamera、 シーンをARPictureSceneにファイル名を変更した状態を前提とします（詳細はNYARToolkit for Unityの導入を参照）。
- パターンファイルの作成  上記の２種類の画像から、マーカーのパターンファイルを作成します。 パターンファイルの作成には、NyARToolkitのパッケージに含まれるNftFileGeneratorを利用します （詳しくはNyARToolkit Projectを参照）。 [Data]-[Tools]にあるNftFileGeneratorをダブルクリックするとプログラムが起動します。 importをクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。 次に、Make Feature Setをクリックし、特徴点を抽出します。 このとき、Source DPIやIset DPIsなどのパラメータは特に変更する必要はないようですが、 特徴点数が多すぎたり、少なすぎる場合にはFSET parameterを調節すると良いようです。
+パターンファイルの作成上記の２種類の画像から、マーカーのパターンファイルを作成します。 パターンファイルの作成には、NyARToolkitのパッケージに含まれるNftFileGeneratorを利用します （詳しくはNyARToolkit Projectを参照）。 [Data]-[Tools]にあるNftFileGeneratorをダブルクリックするとプログラムが起動します。 importをクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。 次に、Make Feature Setをクリックし、特徴点を抽出します。 このとき、Source DPIやIset DPIsなどのパラメータは特に変更する必要はないようですが、 特徴点数が多すぎたり、少なすぎる場合にはFSET parameterを調節すると良いようです。
 
 抽出されたパターンは赤い四角や青い円で表示されます。 パターンを保存するにはExportをクリックし、適当なファイル名で保存します。 ここでは、「犬の画像」のパターンファイルをpatt_001.bytes、 「うさぎの画像」のパターンファイルをpatt_002.bytesというファイル名で保存します。 これらのパターンファイルは、AssetsのResourcesフォルダにコピーしておきます。
 
 
- マーカーオブジェクトの作成  SimpleNftはマーカーを認識すると赤色の立方体を表示します。 ここでは、２種類のマーカーに応じて、赤色の立方体に加え、青色の立方体を作成しておきます。
+マーカーオブジェクトの作成SimpleNftはマーカーを認識すると赤色の立方体を表示します。 ここでは、２種類のマーカーに応じて、赤色の立方体に加え、青色の立方体を作成しておきます。
 まずは、シーンのARPictureSceneをダブルクリックし、HierarchyにあるMarkerObjectを複製します。 スクリプトからこれのオブジェクトを操作するため、２つのマーカーオブジェクトには共通のタグ（Tag）を設定します （Gameobject.FindGameObjectsWithTag(String tag)メソッドでタグからオブジェクトを取得することが可能）。 タグ名は自由に設定することができますが、ここではMarkerObjectとしておきます。
 
 次に、Assetsで赤色と青色のマテリアルを作成します。 [Create]-[Materials]をクリックしてマテリアルを作成し、Albedoに赤色と青色を設定します。 ここでは、マテリアルの名前をRedとBlueにしておきます。 これらのマテリアルはMarkerObjectの直下にあるCubeのMaterialsに設定しておきます。
 
 マーカーが認識されたときに表示されるのは、上記のCubeオブジェクトです。 Cubeのサイズ（Scale）や位置（Position）はマーカーの大きさに合わせて調整する必要がありますが、 ここでは、サイズの値をX=80、Y=80、Z=80、位置をX=-80、Y=80、Z=40に修正しておきます。
 
- スクリプトの修正  最後にC#スクリプトのARPictureCameraを修正します。" />
+スクリプトの修正最後にC#スクリプトのARPictureCameraを修正します。" />
 
 
 
@@ -388,7 +388,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-11 21:11:38.624382 &#43;0900 JST m=&#43;0.588344829">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-12 13:47:39.6051329 &#43;0900 JST m=&#43;5.767767601">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
