@@ -80,8 +80,13 @@
 
 
 
-  <meta property="og:description" content="
-統計LODとはウェブページの作成SPARQLで検索参考書籍" />
+  <meta property="og:description" content="統計LODとは  統計LODとは， 政府統計の総合窓口であるe-Statの情報を Linked Open Dataの形式で提供するサービスのことです． 国勢調査，人口推計，住民基本台帳人口移動報告，経済センサスなど， 国が調査したデータが管理されており， SPARQLのエンドポイントを介してデータの検索・取得が可能です． 今回は統計LODから東海三県における国勢調査の人口データを取得してみましょう．
+ ウェブページの作成  SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，lod.py というファイル名のCGIプログラムで作成します．
+&lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/lod.py&#34;&gt;統計LOD&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; 
+ SPARQLで検索  統計LODのSPARQLのエンドポイントは下記のURLです．
+http://data.e-stat.go.jp/lod/sparql/alldata/query
+SPARQLの検索条件は下記のように記述します． 今回取得するのは，URL，ラベル(rdfs:label)， 人口(estat-measure:population)，年(cd-dimension:timePeriod)の4つのデータです． ここで，対象のデータセットとして， 2010年の国勢調査を対象としています． また，検索結果から 愛知県， 岐阜県，三重県の文字がラベルに含まれるコンテンツだけを抽出しています．
+SELECT ?url ?label ?population ?year WHERE{ ?url qb:dataSet &lt;http://data.e-stat.go.jp/lod/dataset/g00200521/d0003041389&gt;; g00200521-dimension-2010:area g00200521-code-2010:area-all; sdmx-dimension:refArea [ rdfs:label ?label ]; estat-measure:population ?population; cd-dimension:timePeriod ?year; cd-dimension:sex cd-code:sex-all; cd-dimension:nationality cd-code:nationality-japan; cd-dimension:age cd-code:age-all." />
 
 
 
@@ -96,8 +101,13 @@
 
 
 
-  <meta name="twitter:description" content="
-統計LODとはウェブページの作成SPARQLで検索参考書籍" />
+  <meta name="twitter:description" content="統計LODとは  統計LODとは， 政府統計の総合窓口であるe-Statの情報を Linked Open Dataの形式で提供するサービスのことです． 国勢調査，人口推計，住民基本台帳人口移動報告，経済センサスなど， 国が調査したデータが管理されており， SPARQLのエンドポイントを介してデータの検索・取得が可能です． 今回は統計LODから東海三県における国勢調査の人口データを取得してみましょう．
+ ウェブページの作成  SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，lod.py というファイル名のCGIプログラムで作成します．
+&lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/lod.py&#34;&gt;統計LOD&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; 
+ SPARQLで検索  統計LODのSPARQLのエンドポイントは下記のURLです．
+http://data.e-stat.go.jp/lod/sparql/alldata/query
+SPARQLの検索条件は下記のように記述します． 今回取得するのは，URL，ラベル(rdfs:label)， 人口(estat-measure:population)，年(cd-dimension:timePeriod)の4つのデータです． ここで，対象のデータセットとして， 2010年の国勢調査を対象としています． また，検索結果から 愛知県， 岐阜県，三重県の文字がラベルに含まれるコンテンツだけを抽出しています．
+SELECT ?url ?label ?population ?year WHERE{ ?url qb:dataSet &lt;http://data.e-stat.go.jp/lod/dataset/g00200521/d0003041389&gt;; g00200521-dimension-2010:area g00200521-code-2010:area-all; sdmx-dimension:refArea [ rdfs:label ?label ]; estat-measure:population ?population; cd-dimension:timePeriod ?year; cd-dimension:sex cd-code:sex-all; cd-dimension:nationality cd-code:nationality-japan; cd-dimension:age cd-code:age-all." />
 
 
 
@@ -183,17 +193,151 @@
 </h1>
 
 
+<p><a href="http://data.e-stat.go.jp/lodw/">統計LOD</a>とは，
+政府統計の総合窓口である<a href="https://www.e-stat.go.jp/">e-Stat</a>の情報を
+Linked Open Dataの形式で提供するサービスのことです．
+国勢調査，人口推計，住民基本台帳人口移動報告，経済センサスなど，
+国が調査したデータが管理されており，
+SPARQLのエンドポイントを介してデータの検索・取得が可能です．
+今回は統計LODから東海三県における国勢調査の人口データを取得してみましょう．</p>
+
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ウェブページの作成
 </h1>
 
 
+<p>SPARQLの検索結果を表示するページを作成しましょう．
+最初に <strong>index.html</strong> にリンクを追加します．
+検索結果を表示するページは，<strong>lod.py</strong> というファイル名のCGIプログラムで作成します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">ul</span>&gt;
+  &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/js-api.py&#34;</span>&gt;ジャパンサーチ 簡易Web API&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+  &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/js-sparql.py&#34;</span>&gt;ジャパンサーチ SPARQL&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+  &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/dbpedia.py&#34;</span>&gt;DBPedia&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+  &lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/lod.py&#34;</span>&gt;統計LOD&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;      
+&lt;/<span style="color:#f92672">ul</span>&gt;</code></pre></div>
+<p><a href="https://gyazo.com/cd46b1f80b06c87bf5c34b403434e3ef"><img src="https://i.gyazo.com/cd46b1f80b06c87bf5c34b403434e3ef.png" alt="Image from Gyazo" /></a></p>
+
 <h1>
   <img class="head-image" src="/logo/logo.png">
   SPARQLで検索
 </h1>
 
+
+<p>統計LODのSPARQLのエンドポイントは下記のURLです．</p>
+
+<p><a href="http://data.e-stat.go.jp/lod/sparql/alldata/query">http://data.e-stat.go.jp/lod/sparql/alldata/query</a></p>
+
+<p>SPARQLの検索条件は下記のように記述します．
+今回取得するのは，URL，ラベル(rdfs:label)，
+人口(estat-measure:population)，年(cd-dimension:timePeriod)の4つのデータです．
+ここで，対象のデータセットとして，
+<a href="http://data.e-stat.go.jp/lod/dataset/g00200521/d0003041389">2010年の国勢調査</a>を対象としています．
+また，検索結果から <strong>愛知県</strong>， <strong>岐阜県</strong>，<strong>三重県</strong>の文字がラベルに含まれるコンテンツだけを抽出しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sparql" data-lang="sparql"><span style="color:#66d9ef">SELECT</span> ?url ?label ?population ?year <span style="color:#66d9ef">WHERE</span>{
+  ?url qb:<span style="color:#f92672">dataSet</span> &lt;http://data.e-stat.go.jp/lod/dataset/g00200521/d0003041389&gt;;
+       g00200521-dimension-2010:<span style="color:#f92672">area</span> g00200521-code-2010:<span style="color:#f92672">area-all</span>;
+       sdmx-dimension:<span style="color:#f92672">refArea</span> [
+         rdfs:<span style="color:#f92672">label</span> ?label
+       ];
+       estat-measure:<span style="color:#f92672">population</span> ?population;
+       cd-dimension:<span style="color:#f92672">timePeriod</span> ?year;
+       cd-dimension:<span style="color:#f92672">sex</span> cd-code:<span style="color:#f92672">sex-all</span>;
+       cd-dimension:<span style="color:#f92672">nationality</span> cd-code:<span style="color:#f92672">nationality-japan</span>;
+       cd-dimension:<span style="color:#f92672">age</span> cd-code:<span style="color:#f92672">age-all</span>.
+       <span style="color:#66d9ef">FILTER</span>(
+          <span style="color:#a6e22e">CONTAINS</span>(<span style="color:#a6e22e">str</span>(?label), <span style="color:#e6db74">&#34;愛知県&#34;</span>) <span style="color:#f92672">||</span>
+          <span style="color:#a6e22e">CONTAINS</span>(<span style="color:#a6e22e">str</span>(?label), <span style="color:#e6db74">&#34;岐阜県&#34;</span>) <span style="color:#f92672">||</span>
+          <span style="color:#a6e22e">CONTAINS</span>(<span style="color:#a6e22e">str</span>(?label), <span style="color:#e6db74">&#34;三重県&#34;</span>)
+       )
+}</code></pre></div>
+<p>新規に <strong>lod.py</strong> を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）．
+<strong>lod.py</strong> には下記のコードを記述します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
+
+<span style="color:#f92672">from</span> SPARQLWrapper <span style="color:#f92672">import</span> SPARQLWrapper, JSON
+<span style="color:#f92672">import</span> encode
+
+<span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;Content-type:text/html</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;!DOCTYPE html&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;html&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;head&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;meta charset=&#39;utf-8&#39;&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;title&gt;統計LOD&lt;/title&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/head&gt;&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;body&gt;&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h1&gt;統計LOD&lt;/h1&gt;&#34;</span>);
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/body&gt;&#34;</span>)
+
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://data.e-stat.go.jp/lod/sparql/alldata/query&#34;</span>
+sparql <span style="color:#f92672">=</span> SPARQLWrapper(url)
+sparql<span style="color:#f92672">.</span>setReturnFormat(JSON)
+
+prefix <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">PREFIX qb: &lt;http://purl.org/linked-data/cube#&gt;
+</span><span style="color:#e6db74">PREFIX g00200521-dimension-2010: &lt;http://data.e-stat.go.jp/lod/ontology/g00200521/dimension/2010/&gt;
+</span><span style="color:#e6db74">PREFIX g00200521-code-2010: &lt;http://data.e-stat.go.jp/lod/ontology/g00200521/code/2010/&gt;
+</span><span style="color:#e6db74">PREFIX sdmx-dimension: &lt;http://purl.org/linked-data/sdmx/2009/dimension#&gt;
+</span><span style="color:#e6db74">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+</span><span style="color:#e6db74">PREFIX estat-measure: &lt;http://data.e-stat.go.jp/lod/ontology/measure/&gt;
+</span><span style="color:#e6db74">PREFIX cd-dimension: &lt;http://data.e-stat.go.jp/lod/ontology/crossDomain/dimension/&gt;
+</span><span style="color:#e6db74">PREFIX cd-code: &lt;http://data.e-stat.go.jp/lod/ontology/crossDomain/code/&gt;
+</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+
+query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">SELECT ?url ?label ?population ?year WHERE{
+</span><span style="color:#e6db74">  ?url qb:dataSet &lt;http://data.e-stat.go.jp/lod/dataset/g00200521/d0003041389&gt;;
+</span><span style="color:#e6db74">       g00200521-dimension-2010:area g00200521-code-2010:area-all;
+</span><span style="color:#e6db74">       sdmx-dimension:refArea [
+</span><span style="color:#e6db74">         rdfs:label ?label
+</span><span style="color:#e6db74">       ];
+</span><span style="color:#e6db74">       estat-measure:population ?population;
+</span><span style="color:#e6db74">       cd-dimension:timePeriod ?year;
+</span><span style="color:#e6db74">       cd-dimension:sex cd-code:sex-all;
+</span><span style="color:#e6db74">       cd-dimension:nationality cd-code:nationality-japan;
+</span><span style="color:#e6db74">       cd-dimension:age cd-code:age-all.
+</span><span style="color:#e6db74">       FILTER(
+</span><span style="color:#e6db74">          CONTAINS(str(?label), &#34;愛知県&#34;) ||
+</span><span style="color:#e6db74">          CONTAINS(str(?label), &#34;岐阜県&#34;) ||
+</span><span style="color:#e6db74">          CONTAINS(str(?label), &#34;三重県&#34;)
+</span><span style="color:#e6db74">       )
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+
+sparql<span style="color:#f92672">.</span>setQuery(prefix <span style="color:#f92672">+</span> query)
+results <span style="color:#f92672">=</span> sparql<span style="color:#f92672">.</span>query()<span style="color:#f92672">.</span>convert()
+
+table <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;table border=`1``&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;label&lt;/th&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;population&lt;/th&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;year&lt;/th&gt;&#34;</span>
+table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>
+
+<span style="color:#66d9ef">for</span> result <span style="color:#f92672">in</span> results[<span style="color:#e6db74">&#34;results&#34;</span>][<span style="color:#e6db74">&#34;bindings&#34;</span>]:
+
+    url <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;url&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]
+    label <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;label&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]
+    population <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;population&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]
+    year <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;year&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]
+
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> f<span style="color:#e6db74">&#34;&lt;td&gt;&lt;a href={url}&gt;{label}&lt;/a&gt;&lt;/td&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> f<span style="color:#e6db74">&#34;&lt;td&gt;{population}&lt;/td&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> f<span style="color:#e6db74">&#34;&lt;td&gt;{year}&lt;/td&gt;&#34;</span>
+    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>
+
+<span style="color:#66d9ef">print</span>(table)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/html&gt;&#34;</span>)</code></pre></div>
+<p>下記が検索結果です．
+岐阜県は2,037,175人，愛知県は7,174,451人，三重県は1,812,500人
+であることが確認できます．</p>
+
+<p><a href="https://gyazo.com/46f60934cc485c942ae95c0ff43a14c5"><img src="https://i.gyazo.com/46f60934cc485c942ae95c0ff43a14c5.png" alt="Image from Gyazo" /></a></p>
 
 <h3>参考書籍</h3>
 
@@ -259,7 +403,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-12 13:47:36.3699983 &#43;0900 JST m=&#43;2.532633001">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-12 16:43:13.538085 &#43;0900 JST m=&#43;0.105884278">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
