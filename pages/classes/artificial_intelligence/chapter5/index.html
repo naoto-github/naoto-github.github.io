@@ -179,28 +179,21 @@
 
     
 
-    
-
-<p><a href="https://gyazo.com/5f8c764414a7c17ceb49bffde3ed295a"><img src="https://i.gyazo.com/5f8c764414a7c17ceb49bffde3ed295a.png" alt="Image from Gyazo" /></a></p>
-
+    <p><a href="https://gyazo.com/5f8c764414a7c17ceb49bffde3ed295a"><img src="https://i.gyazo.com/5f8c764414a7c17ceb49bffde3ed295a.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ノートブックの作成
 </h1>
 
-
 <p>ノートブックのタイトルは <strong>AI-5</strong> とします．
 <strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ハノイの塔
 </h1>
 
-
 <p>今回は <strong>ハノイの塔（Tower of Hanoi）</strong> を取り上げましょう．</p>
-
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
@@ -223,9 +216,7 @@
   
 </div>
 
-
 <p>この問題を <strong>状態空間モデル</strong> で表現します．</p>
-
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
@@ -274,24 +265,21 @@ $$
   
 </div>
 
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   実装
 </h1>
 
-
 <h2 id="クラスの定義">クラスの定義</h2>
-
 <p>最初にライブラリをインポートします．
 前回と同様に，<strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
 <strong>幅優先探索</strong> を表す<code>breadth_first</code>をインポートします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, breadth_first</code></pre></div>
-<p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, breadth_first
+</code></pre></div><p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
 初期状態は$(1, 1, 1)$，目的状態は$(3, 3, 3)$です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
-GOAL  <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)</code></pre></div>
-<p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
+GOAL  <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)
+</code></pre></div><p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
 ハノイの塔を表す<code>HanoiProblem</code>を定義します．
 オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>is_goal</code>の3種類です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HanoiProblem</span>(SearchProblem):
@@ -303,9 +291,8 @@ GOAL  <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span>
         <span style="color:#f92672">...</span>
         
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-        <span style="color:#f92672">...</span></code></pre></div>
-<h3 id="actions-self-state">actions(self, state)</h3>
-
+        <span style="color:#f92672">...</span>
+</code></pre></div><h3 id="actionsself-state">actions(self, state)</h3>
 <p>実行可能な行動のリストを返します．
 行動は全部で18パターンが存在します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
@@ -360,44 +347,33 @@ GOAL  <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span>
         <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:                
             list<span style="color:#f92672">.</span>append((s, m, <span style="color:#ae81ff">2</span>)) 
 
-    <span style="color:#66d9ef">return</span> list</code></pre></div>
-<h3 id="result-self-state-action">result(self, state, action)</h3>
-
+    <span style="color:#66d9ef">return</span> list
+</code></pre></div><h3 id="resultself-state-action">result(self, state, action)</h3>
 <p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-    <span style="color:#66d9ef">return</span> action</code></pre></div>
-<h3 id="is-goal-self-state">is_goal(self, state)</h3>
-
+    <span style="color:#66d9ef">return</span> action
+</code></pre></div><h3 id="is_goalself-state">is_goal(self, state)</h3>
 <p>状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-    <span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
-<h2 id="解の探索">解の探索</h2>
-
+    <span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL
+</code></pre></div><h2 id="解の探索">解の探索</h2>
 <p>幅優先探索（探索木）<code>breadth_first</code>を用いて解を探索します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> HanoiProblem(initial_state<span style="color:#f92672">=</span>START)
-result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True)</code></pre></div>
-<p>探索が終了したら，最終状態，パス，コストを表示します．
+result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True)
+</code></pre></div><p>探索が終了したら，最終状態，パス，コストを表示します．
 最終状態は<code>(3, 3, 3)</code>となっており目的状態に到達できたことがわかります．
 このとき，初期状態から目的状態までのコスト（ステップ数）は7です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>state)
 <span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>path())
-<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>cost)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">(3, 3, 3)
+<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>cost)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">(3, 3, 3)
 [(None, (1, 1, 1)), ((3, 1, 1), (3, 1, 1)), ((3, 2, 1), (3, 2, 1)), ((2, 2, 1), (2, 2, 1)), ((2, 2, 3), (2, 2, 3)), ((1, 2, 3), (1, 2, 3)), ((1, 3, 3), (1, 3, 3)), ((3, 3, 3), (3, 3, 3))]
-7</code></pre></div>
-<p>上記の結果は下図と一致します．</p>
-
-<p><a href="https://gyazo.com/b7eebfe2a4553a9e53e2d92add412f60"><img src="https://i.gyazo.com/b7eebfe2a4553a9e53e2d92add412f60.png" alt="Image from Gyazo" /></a></p>
-
-<!-- <h1>
-  <img class="head-image" src="/logo/logo.png">
-  課題
-</h1>
- -->
-
-<!-- ハノイの塔を分割統治法を用いて解く方法を説明しなさい（マークダウンにしてセルに入力すること）． -->
-
-<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
-
+7
+</code></pre></div><p>上記の結果は下図と一致します．</p>
+<p><a href="https://gyazo.com/b7eebfe2a4553a9e53e2d92add412f60"><img src="https://i.gyazo.com/b7eebfe2a4553a9e53e2d92add412f60.png" alt="Image from Gyazo"></a></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 
 <h3>参考書籍</h3>
 
@@ -466,7 +442,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.825359 &#43;0900 JST m=&#43;0.146568680">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:44.881921 &#43;0900 JST m=&#43;0.380405924">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

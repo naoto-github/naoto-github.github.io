@@ -94,7 +94,7 @@ https://jpsearch.go.jp/rdf/sparql
 # ユーザ情報の検索・表示 showUserInfo(form_id) # ユーザの購買履歴の検索・表示 showUserHistory(form_id) # 商品情報の表示 showItems(form_id) ID:u01 ，パスワード:X2ng でログインしてみましょう． 下記のように表示されれば正しく動作しています．
 
 上記の方法では，pタグで表示しているだけなので読み取りにくいです． そこで，tableタグで見た目を整形しておきます． このとき，商品名(name)，価格(price)，在庫数(stock)のみを表示することにします．
-# 商品情報の表示 def showItems(user_id): sql = &amp;#34;SELECT * from Items;&amp;#34; records = cur.execute(sql) print(&amp;#34;&amp;lt;h2&amp;gt;商品一覧&amp;lt;/h2&amp;gt;&amp;#34;) table = &amp;#34;&amp;lt;table border=`1``&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;tr&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;th&amp;gt;name&amp;lt;/th&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;th&amp;gt;price&amp;lt;/th&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;th&amp;gt;stock&amp;lt;/th&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;/tr&amp;gt;&amp;#34; for record in records: table += &amp;#34;&amp;lt;tr&amp;gt;&amp;#34; item_id = record[0] name = record[1] price = record[2] stock = record[3] table += &amp;#34;&amp;lt;td&amp;gt;&amp;#34; table += str(name) table += &amp;#34;&amp;lt;/td&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;td&amp;gt;&amp;#34; table += str(price) table += &amp;#34;&amp;lt;/td&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;td&amp;gt;&amp;#34; table += str(stock) table += &amp;#34;&amp;lt;/td&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;/tr&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;/table&amp;gt;&amp;#34; print(table)  この結果，下記のように表示されればOKです．</description>
+# 商品情報の表示 def showItems(user_id): sql = &amp;#34;SELECT * from Items;&amp;#34; records = cur.execute(sql) print(&amp;#34;&amp;lt;h2&amp;gt;商品一覧&amp;lt;/h2&amp;gt;&amp;#34;) table = &amp;#34;&amp;lt;table border=`1``&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;tr&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;th&amp;gt;name&amp;lt;/th&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;th&amp;gt;price&amp;lt;/th&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;th&amp;gt;stock&amp;lt;/th&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;/tr&amp;gt;&amp;#34; for record in records: table += &amp;#34;&amp;lt;tr&amp;gt;&amp;#34; item_id = record[0] name = record[1] price = record[2] stock = record[3] table += &amp;#34;&amp;lt;td&amp;gt;&amp;#34; table += str(name) table += &amp;#34;&amp;lt;/td&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;td&amp;gt;&amp;#34; table += str(price) table += &amp;#34;&amp;lt;/td&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;td&amp;gt;&amp;#34; table += str(stock) table += &amp;#34;&amp;lt;/td&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;/tr&amp;gt;&amp;#34; table += &amp;#34;&amp;lt;/table&amp;gt;&amp;#34; print(table) この結果，下記のように表示されればOKです．</description>
     </item>
     
     <item>
@@ -104,7 +104,7 @@ https://jpsearch.go.jp/rdf/sparql
       
       <guid>https://mukai-lab.info/pages/classes/seminar_database/chapter6/</guid>
       <description>ユーザ情報の検索  ログインに成功したら， Usersテーブルからユーザの名前や電話番号などの情報を検索し， 画面に表示しましょう． main.py にユーザ情報を検索・表示するための showUserInfo関数を定義します． この関数では，SELECT文とWHERE句を利用して， 指定されたユーザIDの氏名，電話番号，メールアドレスを検索します． また，検索された情報はpタグで表示されます．
-# ユーザ情報の検索・表示 def showUserInfo(id): sql = &amp;#34;SELECT name,tel,mail FROM Users WHERE id=&amp;#39;&amp;#34; + id + &amp;#34;&amp;#39;;&amp;#34; records = cur.execute(sql) record = records.fetchone() name = record[0] tel = record[1] mail = record[2] print(&amp;#34;&amp;lt;p&amp;gt;氏名: &amp;#34; + name + &amp;#34;&amp;lt;/p&amp;gt;&amp;#34;) print(&amp;#34;&amp;lt;p&amp;gt;電話番号: &amp;#34; + tel + &amp;#34;&amp;lt;/p&amp;gt;&amp;#34;) print(&amp;#34;&amp;lt;p&amp;gt;メールアドレス: &amp;#34; + mail + &amp;#34;&amp;lt;/p&amp;gt;&amp;#34;)  main.py の下記部分で， 定義したshowUserInfo関数を呼び出します． ログインに成功したときだけ，ユーザの情報が表示されることに注意してください．
+# ユーザ情報の検索・表示 def showUserInfo(id): sql = &amp;#34;SELECT name,tel,mail FROM Users WHERE id=&amp;#39;&amp;#34; + id + &amp;#34;&amp;#39;;&amp;#34; records = cur.execute(sql) record = records.fetchone() name = record[0] tel = record[1] mail = record[2] print(&amp;#34;&amp;lt;p&amp;gt;氏名: &amp;#34; + name + &amp;#34;&amp;lt;/p&amp;gt;&amp;#34;) print(&amp;#34;&amp;lt;p&amp;gt;電話番号: &amp;#34; + tel + &amp;#34;&amp;lt;/p&amp;gt;&amp;#34;) print(&amp;#34;&amp;lt;p&amp;gt;メールアドレス: &amp;#34; + mail + &amp;#34;&amp;lt;/p&amp;gt;&amp;#34;) main.py の下記部分で， 定義したshowUserInfo関数を呼び出します． ログインに成功したときだけ，ユーザの情報が表示されることに注意してください．
 if pw == None: print(&amp;#34;&amp;lt;p&amp;gt;IDが存在しません&amp;lt;/p&amp;gt;&amp;#34;) print(&amp;#34;&amp;lt;p&amp;gt;&amp;lt;a href=&amp;#39;.</description>
     </item>
     
@@ -128,7 +128,7 @@ if pw == None: print(&amp;#34;&amp;lt;p&amp;gt;IDが存在しません&amp;lt;/p
       
       <guid>https://mukai-lab.info/pages/classes/seminar_database/chapter4/</guid>
       <description>SQLiteデータベースの確認  前回作成した sugiten フォルダに， SQLiteで作成したデータベースファイル sugiten.db をコピーします （cgi-binではないことに注意）． SQLite で sugiten.db を開き，保存されているテーブルを確認しましょう． ユーザの情報を保持するUsersには4件， 商品の情報を保持するItemsには6件， 購買履歴を保持するHistoriesには4件のレコードが登録されています．
-sqlite&amp;gt; .open sugiten.db sqlite&amp;gt; .database main: /sugiten/sugiten.db sqlite&amp;gt; .table Histories Items Userssqlite&amp;gt; .header on sqlite&amp;gt; select * from Users; id|password|name|tel|mail u01|X2ng|中谷俊介|090-1111-1111|shunsuke@mail.jp u02|fL4m|永松克也|090-2222-2222|katsuya@mail.jp u03|hY8W|神野愛美|090-3333-3333|aimi@mail.jp u04|jY4p|大久真鈴|090-4444-4444|masuzu@mail.jpsqlite&amp;gt; select * from Items; id|name|price|stock i01|マウス|2000|10 i02|パソコン|150000|5 i03|キーボード|3000|10 i04|モニタ|40000|3 i05|ウェブカメラ|6000|5 i06|ノートパソコン|170000|3sqlite&amp;gt; select * from Histories; id|time|user_id|item_id 1|2020-01-01 12:00:00|u01|i01 2|2020-01-02 14:00:00|u02|i02 3|2020-01-02 18:00:00|u01|i04 4|2020-01-03 12:00:00|u04|i02  データベースの表示  それではCGIを利用してデータベース sugiten.</description>
+sqlite&amp;gt; .open sugiten.db sqlite&amp;gt; .database main: /sugiten/sugiten.db sqlite&amp;gt; .table Histories Items Users sqlite&amp;gt; .header on sqlite&amp;gt; select * from Users; id|password|name|tel|mail u01|X2ng|中谷俊介|090-1111-1111|shunsuke@mail.jp u02|fL4m|永松克也|090-2222-2222|katsuya@mail.jp u03|hY8W|神野愛美|090-3333-3333|aimi@mail.jp u04|jY4p|大久真鈴|090-4444-4444|masuzu@mail.jp sqlite&amp;gt; select * from Items; id|name|price|stock i01|マウス|2000|10 i02|パソコン|150000|5 i03|キーボード|3000|10 i04|モニタ|40000|3 i05|ウェブカメラ|6000|5 i06|ノートパソコン|170000|3 sqlite&amp;gt; select * from Histories; id|time|user_id|item_id 1|2020-01-01 12:00:00|u01|i01 2|2020-01-02 14:00:00|u02|i02 3|2020-01-02 18:00:00|u01|i04 4|2020-01-03 12:00:00|u04|i02  データベースの表示  それではCGIを利用してデータベース sugiten.</description>
     </item>
     
     <item>
@@ -167,7 +167,8 @@ SQLiteのダウンロード
  データベースの作成  本講義では，架空のオンライン・ショッピングサイト 椙天市場 のサービス構築を想定して，下記の3種類のテーブルを作成します． usersは，サイトのユーザー情報を格納するテーブルです． ユーザID，パスワード，氏名，電話番号，メールアドレスの情報を管理します． itemsは，サイトで取り扱う商品の情報を格納するテーブルです． 商品ID，商品名，価格，在庫数の情報を管理します． historiesは，ユーザによる商品の購買履歴を格納するテーブルです． 取引ID，取引日，ユーザID，商品IDの情報を管理します．
  Users（ユーザの情報） Items（商品の情報） Histories（商品の購買履歴）  データベースの作成 まずはデータベースを作成します． .openコマンドで sugiten.db という名前のデータベースを作成します． .databaseコマンドでメインのデータベースがsugiten.dbになっていることを確認します．
 sqlite&amp;gt; .open sugiten.db sqlite&amp;gt; .database main: /Users/naoto/sugiten.db Usersテーブルの作成 ユーザの情報を格納するUsersテーブルをCREATE文で作成します． 主キーは id であることに注意してください．
-CREATE TABLE Users( id text primary key, password text, name text, tel text, mail text ); テーブルを作成したら，.tableコマンドで確認しましょう．</description>
+CREATE TABLE Users( id text primary key, password text, name text, tel text, mail text ); テーブルを作成したら，.tableコマンドで確認しましょう．
+sqlite&amp;gt; .</description>
     </item>
     
     <item>
@@ -191,14 +192,14 @@ import sqlite3 con = sqlite3.connect(&amp;#39;sample.db&amp;#39;) # データベ
       <pubDate>Thu, 04 Jun 2020 14:36:48 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/seminar_database/</guid>
-      <description> 授業科目区分： 専門教育科目
+      <description>授業科目区分： 専門教育科目
 単位数: 1単位
 開講学科: 文化情報学科
 学年: 3年次
 関連科目: データベースシステム
 授業テーマ: 関係データベースを利用したウェブサイトの構築
 授業内容 2年次に開講される「データベースシステム」の内容を踏まえ， 関係データベースとウェブサイトを連携して運用する方法を学ぶ．ウ ェブサーバにはPythonを採用し，CGI（Common Gate Interface）を利用してデータベースにアクセスする． また，オンライン上のデータベースにアクセス可能なSPARQLと呼ばれる問い合わせ言語についても学習する．
-授業計画  データベースとウェブサイトの連携 SQLiteデータベースの作成 Pythonでウェブサーバの構築 ウェブサイトでSQL（１）・データベースの表示 ウェブサイトでSQL（２）・ログインページの作成 ウェブサイトでSQL（３）・ユーザ情報の検索 ウェブサイトでSQL（４）・商品情報の更新 ウェブサイトでSQL（５）・商品管理ページの追加 ジャパンサーチで検索（１）・簡易Web API ジャパンサーチで検索（２）・SPARQL Linked Open Data（１）・DBPedia Linked Open Data（２）・統計LOD   課題提出方法 Google Classroomから提出すること． 提出の際は大学から提供されたユーザIDでログインが必要なことに注意すること．
+授業計画  データベースとウェブサイトの連携 SQLiteデータベースの作成 Pythonでウェブサーバの構築 ウェブサイトでSQL（１）・データベースの表示 ウェブサイトでSQL（２）・ログインページの作成 ウェブサイトでSQL（３）・ユーザ情報の検索 ウェブサイトでSQL（４）・商品情報の更新 ウェブサイトでSQL（５）・商品管理ページの追加 ジャパンサーチで検索（１）・簡易Web API ジャパンサーチで検索（２）・SPARQL Linked Open Data（１）・DBPedia Linked Open Data（２）・統計LOD  課題提出方法 Google Classroomから提出すること． 提出の際は大学から提供されたユーザIDでログインが必要なことに注意すること．
 参考書籍</description>
     </item>
     
@@ -208,7 +209,7 @@ import sqlite3 con = sqlite3.connect(&amp;#39;sample.db&amp;#39;) # データベ
       <pubDate>Wed, 18 Mar 2020 17:21:03 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/database_system/</guid>
-      <description> 授業科目区分： 専門教育科目
+      <description>授業科目区分： 専門教育科目
 単位数: 2単位
 開講学科: 文化情報学科
 学年: 2年次
@@ -291,7 +292,7 @@ import sqlite3 con = sqlite3.connect(&amp;#39;sample.db&amp;#39;) # データベ
  迷路問題  今回も前回と同じ 迷路問題を取り上げます．
 迷路問題   初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ． ただし，隣り合う状態への移動にかかるコストは$1$とする．   迷路問題の状態空間モデルを確認しておきましょう．
 状態空間モデル   $A$から$Y$までの25の状態から，冗長な状態を取り除く． 例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する． この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．  行動は移動可能な状態のペアとして定義する． 例えば，$S1$からは，$S2$と$S7$に移動可能なため， 下記のように表現できる．  $S1 \rightarrow S2$ $S1 \rightarrow S7$  同様に全ての状態について列挙すると， 合わせて31通りの行動が定義できる．   ヒューリスティック探索  前回紹介した幅優先探索と深さ優先探索は知識を用いない探索手法でした． ヒューリスティック探索とは，必ず正解に到達できるわけではないけれど， ある程度のレベルで正解に近い解を得ることが出来る知識（ヒューリスティックス） を利用した探索手法のことです．
-迷路問題におけるヒューリスティックス   -- 迷路問題におけるヒューリスティックスとしてマンハッタン距離を用います． マンハッタン距離とは，ある状態$S$から目的状態までの各座標（ここでは$x$座標と$y$座標）の 差の総和を距離とする指標であり， ここでは$h(S)$で表します． 例えば，$S1$から$S17$までのマンハッタン距離は， $x$座標の差は$4$，$y$座標の差は$4$であるため， これを合計して$8$になります． $$ h(S1) = 8 $$ 同様に，$S12$から$S17$までのマンハッタン距離は， $x$座標の差は$2$，$y$座標の差は$1$であるため， これを合計して$3$になります． $$ h(S12) = 3 $$  --  A*アルゴリズム  今回は，ヒューリスティック探索の一つである A*アルゴリズム（エースターアルゴリズム） を紹介します． A*アルゴリズムでは，下記の評価関数$f(S)$が最小となる状態を優先して探索します． $h(S)$は先に述べたマンハッタン距離を表し， $g(S)$は状態$S$に到達するまでにかかったコストを表しています． ここで注意すべきことは， $g(S)$は既に確定したコストであるのに対し， $h(S)$は将来のコストの推定値であるということです．</description>
+ A*アルゴリズム  今回は，ヒューリスティック探索の一つである A*アルゴリズム（エースターアルゴリズム） を紹介します． A*アルゴリズムでは，下記の評価関数$f(S)$が最小となる状態を優先して探索します． $h(S)$は先に述べたマンハッタン距離を表し， $g(S)$は状態$S$に到達するまでにかかったコストを表しています． ここで注意すべきことは， $g(S)$は既に確定したコストであるのに対し， $h(S)$は将来のコストの推定値であるということです．</description>
     </item>
     
     <item>
@@ -303,7 +304,8 @@ import sqlite3 con = sqlite3.connect(&amp;#39;sample.db&amp;#39;) # データベ
       <description>ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-6 とします． ノートブックの作成方法は第1回の資料を参照してください．
  迷路問題  今回は 迷路問題 を独自に設計します．
 迷路問題   初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ． ただし，隣り合う状態への移動にかかるコストは$1$とする．   この問題を 状態空間モデル で表現します．
-状態空間モデル   $A$から$Y$までの25の状態から，冗長な状態を取り除く． 例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する． この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．  行動は移動可能な状態のペアとして定義する． 例えば，$S1$からは，$S2$と$S7$に移動可能なため， 下記のように表現できる．  $S1 \rightarrow S2$ $S1 \rightarrow S7$  同様に全ての状態について列挙すると， 合わせて31通りの行動が定義できる．   探索アルゴリズム  探索木を用いて初期状態から目的状態を探索するための アルゴリズム（探索する手順） について紹介します． ここでは，ヒューリスティックスと呼ばれる知識を用いないで探索する 幅優先探索 と 深さ優先探索 を取り上げます． これまでに取り上げた，水差し問題，8パズル，ハノイの塔では， 実は幅優先探索を用いていました．</description>
+状態空間モデル   $A$から$Y$までの25の状態から，冗長な状態を取り除く． 例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する． この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．  行動は移動可能な状態のペアとして定義する． 例えば，$S1$からは，$S2$と$S7$に移動可能なため， 下記のように表現できる．  $S1 \rightarrow S2$ $S1 \rightarrow S7$  同様に全ての状態について列挙すると， 合わせて31通りの行動が定義できる．   探索アルゴリズム  探索木を用いて初期状態から目的状態を探索するための アルゴリズム（探索する手順） について紹介します． ここでは，ヒューリスティックスと呼ばれる知識を用いないで探索する 幅優先探索 と 深さ優先探索 を取り上げます． これまでに取り上げた，水差し問題，8パズル，ハノイの塔では， 実は幅優先探索を用いていました．
+幅優先探索(Breadth First Search) 幅優先探索は，探索木の同じ深さの状態を探索してから， 次の深さの状態を探索する手法のことです． ここで，深さ とは初期状態からのコスト（ステップ数）を意味しています． 例えば，上記の迷路問題では，初期状態$S1$から 1ステップで到達可能な$S2$と$S3$を探索します． その次に，2ステップで到達可能な$S6$，$S8$，$S14$を探索します． これを目的状態$S17$に到達するまで繰り返します．</description>
     </item>
     
     <item>
@@ -341,7 +343,7 @@ env.reset() # 環境のリセット for i in range(200): action = env.action_spa
       <pubDate>Wed, 11 Mar 2020 18:33:09 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/artificial_intelligence/chapter12/</guid>
-      <description>Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&amp;rsquo;, a&amp;rsquo;)$は，状態$s$から遷移した先の状態$s&amp;rsquo;$において，行動$a&amp;rsquo;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
+      <description>Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&amp;rsquo;, a&amp;rsquo;)$は，状態$s$から遷移した先の状態$s&#39;$において，行動$a&#39;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
 $$ Q&amp;rsquo;(s,a) = (1 - \alpha)Q(s,a) + \alpha(r + \gamma \max_{a&amp;rsquo; \in A(s&amp;rsquo;)} Q(s&amp;rsquo;, a&amp;rsquo;)) $$
    パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率     ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．</description>
     </item>
@@ -388,9 +390,9 @@ Windows版 Pythonのダウンロード
 MacOSの場合 MacOSでは，バージョン管理が容易な pyenv をインストールすると良いでしょう． pyenv のインストールはHomeBrewを利用します．
 % brew install pyenv pyenv をインストールしたら，利用可能なPythonのバージョンを調べます． ここでは，最新の3.8.0をインストールします（2020年1月21日時点）．
 % pyenv install --list % pyenv install 3.8.0 ソースファイルのダウンロード SQLiteを利用するためのPythonのソースファイルはGitHubで公開しています． 下記のプロジェクトページで， Download ZIP をクリックし，ダウンロードしたファイルを展開してください．
- naoto-github/WebSQLite
+naoto-github/WebSQLite
 データベースの確認 展開したフォルダにある db/students.db が今回利用するデータベース・ファイルです． sqlite3コマンドを用いて，データベースの内容を確認しておきましょう． データベースには，テーブル students が存在し，4件のレコードが登録されています． 各レコードは，id，name，grade という3つの属性で構成され，id が主キーです．
-% sqlite3 students.dbsqlite&amp;gt; .table students qlite&amp;gt; .header on sqlite&amp;gt; select * from students; id|name|grade A001|Iwashiro Hayato|2 A002|Iwamura Yuu|1 B003|Sugie Hiroko|3 C004|Senba Asuka|1  id name grade  A001 Iwashiro Hayato 2  A002 Iwamura Yuu 1  B003 Sugie Hiroko 3  C004 Senba Asuka 1   【students】</description>
+% sqlite3 students.db sqlite&amp;gt; .table students qlite&amp;gt; .header on sqlite&amp;gt; select * from students; id|name|grade A001|Iwashiro Hayato|2 A002|Iwamura Yuu|1 B003|Sugie Hiroko|3 C004|Senba Asuka|1  ウェブサーバの起動  Pythonのウェブサーバ機能（http.</description>
     </item>
     
     <item>
@@ -412,7 +414,7 @@ MacOSの場合 MacOSでは，バージョン管理が容易な pyenv をイン�
       
       <guid>https://mukai-lab.info/pages/classes/artificial_intelligence/chapter3/</guid>
       <description>Simple AIとは  Simple AIは，Stuart Russel氏とPeter Norvig氏が執筆した 「Artificial Intelligence: A Modern Approach」に掲載されている 人工知能で用いられる伝統的なアルゴリズムを提供するPythonのライブラリです． このライブラリを導入することで， 幅優先探索などの 探索アルゴリズム，遺伝的アルゴリズムなどの 進化的アルゴリズム， 決定木などの 機械学習アルゴリズム を簡単に実装することが可能です． ここでは，授業で紹介したアルゴリズムを Simple AI で実装することで， 知識を定着させ，様々な問題に応用できるようになることを目指します．
- 最初に，Simple AI をインストールします． pydotとflaskは探索過程を可視化ためのライブラリです． インストールには pip というパッケージ管理コマンドを利用します． インストールしたフォルダで，PowerShellを起動し，下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
+最初に，Simple AI をインストールします． pydotとflaskは探索過程を可視化ためのライブラリです． インストールには pip というパッケージ管理コマンドを利用します． インストールしたフォルダで，PowerShellを起動し，下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
 &amp;gt; .\Scripts\pip install simpleai &amp;gt; .\Scripts\pip install pydot &amp;gt; .\Scripts\pip install flask  ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします． ノートブックの作成方法は第1回の資料を参照してください．
  水差し問題  今回は 水差し問題（Jug Problem） を取り上げましょう．
 水差し問題   3リットルと4リットルのコップ（水差し）がある． 4リットルのコップに正確に2リットルの水を入れるにはどうしたらよいか．   この問題を 状態空間モデル で表現します． 状態空間モデルとは，探索過程の途中経過を 状態， またその状態間の遷移を 行動(操作) として表現したモデルです． 一般に，行動の結果，1通りに状態が定まるとき， 確定システム , 確率的に状態が変化するとき， 確率システム と呼ばれます． 現実世界の事象の多くは 確率システム となりますが， ここではシンプルな 確定システム のみを対象とします．</description>
@@ -424,7 +426,7 @@ MacOSの場合 MacOSでは，バージョン管理が容易な pyenv をイン�
       <pubDate>Sat, 04 Jan 2020 13:29:08 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/artificial_intelligence/</guid>
-      <description> 授業科目区分： 専門教育科目
+      <description>授業科目区分： 専門教育科目
 単位数: 2単位
 開講学科: 文化情報学科
 学年: 2年次
@@ -479,8 +481,7 @@ x = np.arange(-2, 2, 0.1) # 40点を生成 y = x ** 3 - 2* x r = np.random.rand(
       <description>ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook12 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot を導入しておいてください．
 import numpy as np import matplotlib.pyplot as plt  ガウス分布（正規分布）  ガウス分布（正規分布）は，ドイツの数学者のガウスに由来する確率・統計において最重要な確率分布の一つです． 自然界や社会の様々な現象を表現するモデルとして知られています． Pythonでは，Numpyを利用して，正規分布に従う乱数を生成することが可能です．
 例えば，平均0，標準偏差1の正規分布に従う乱数を生成してみます． 生成した乱数のヒストグラム（度数）は下図のようになります． このヒストグラムからも分かるように，正規分布には下記の特徴があります．
- 平均値がピークとなる 平均値を中心として左右対称 標準偏差が小さいと尖った形状，大きいと平らな形状
-x = np.random.normal(0, 1, 10000) # 10000の乱数を生成 plt.hist(x, bins=100) # 階級数を100に設定したヒストグラム plt.xlim(-5, 5) plt.xlabel(&amp;#34;x&amp;#34;) plt.ylabel(&amp;#34;Frequency&amp;#34;)  
+ 平均値がピークとなる 平均値を中心として左右対称 標準偏差が小さいと尖った形状，大きいと平らな形状  x = np.random.normal(0, 1, 10000) # 10000の乱数を生成 plt.hist(x, bins=100) # 階級数を100に設定したヒストグラム plt.xlim(-5, 5) plt.xlabel(&amp;#34;x&amp;#34;) plt.ylabel(&amp;#34;Frequency&amp;#34;) 
 正規分布に従う特徴量の一つに人間の身長があります． 例えば，日本人男性の平均は167.7cm，標準偏差は6.6cm， また，アメリカ人男性の平均は178.4cmで，標準偏差は7.6cmとされています． それでは，この特徴量を利用して日本人男性とアメリカ人男性の正規分布に従う乱数を生成しましょう． そして，これを重ね合わせてしまいます．
 x1 = np.random.normal(167.7, 6.6, 10000) x2 = np.random.normal(178.4, 7.6, 10000) x = np.concatenate((x1, x2)) # 結合（重ね合わせ） plt.</description>
     </item>
@@ -495,7 +496,7 @@ x1 = np.random.normal(167.7, 6.6, 10000) x2 = np.random.normal(178.4, 7.6, 10000
 
  OpenCVの導入  インテルが開発したオープンソースのライブラリであるOpenCVを導入することで， 画像処理・画像解析など様々な機能を利用することが可能となります． ここでは，Processing用のOpenCVを導入して，顔検出を試みてみましょう． まずは，メニューから[スケッチ]-[ライブラリをインポート]-[ライブラリを追加]をクリックして， 「Contribution Manager」を開きます． ここで，opencvをキーワードに検索すると， 「OpenCV for Processing | Computer vision with OpenCV.」が表示されるので， このライブラリを選択してインストールしましょう．
 
-次に，[スケッチ]-[ライブラリをインポート]-[OpenCV for Processing]をクリックして，OpenCVライブラリをインポートします． また，同様にVideoライブラリをインポートしてください． ソースコードの先頭に「import gab.opencv.&amp;lowast;;」と「import processing.video.&amp;lowast;;」が 表示されていることを確認してください．
+次に，[スケッチ]-[ライブラリをインポート]-[OpenCV for Processing]をクリックして，OpenCVライブラリをインポートします． また，同様にVideoライブラリをインポートしてください． ソースコードの先頭に「import gab.opencv.∗;」と「import processing.video.∗;」が 表示されていることを確認してください．
  動画ファイルの表示  今回はPixabayの動画ファイルを利用します． このサイトで配布されている素材は，商用・非商用において，コピー・改変・再配布が認められています． 下記の男性が平手打ちされている動画をダウンロードしましょう．
 「Slap in The Face」のダウンロード
 ダウンロードした動画ファイル（face.mp4）を，スケッチフォルダにコピーします． このとき，スケッチフォルダに新しく data という名前でフォルダを作成し，そのなかに動画ファイルを配置する必要があるので注意してください．
@@ -549,7 +550,7 @@ JSON JSON(JavaScript Object Notation) はJavaScriptのオブジェクト表現�
 NoSQLの主な用途は，リレーショナルデータベースが苦手とする ビッグデータ の処理です． ガートナーによると，ビッグデータは 「高ボリューム、高速度、高バラエティな情報資産」と定義され， 数十テラバイトから数ペタバイトまでの巨大なデータを指しています （Googleの一日に処理するデータ量は20ペタバイト以上 - GIGAZINE）． リレーショナルデータベースは， 事前にスキーマの定義が必要であることに加え， 分散処理が苦手なため， 構造化されていない大量なデータを高速に処理するのに適していません． NoSQLは，冗長な機能をそぎ落とし，対象のデータに最適化されたシンプルな構造にすることで， リレーショナルデータベースより，ビッグデータの処理において高いパフォーマンスを発揮することができます．
 現在は，様々なオープンソースのNoSQLが提供されており， 主要なサービスやアプリケーションを支える技術として普及しています． NoSQLは，そのデータモデルに基づき，4種類に分類されます （KVS系NoSQLのまとめ - ＠IT）． この授業では，Key-Valueストア型データベースと， ドキュメント指向データベースを取り上げます．
  Key-Valueストア型データベース ドキュメント指向データベース カラム指向データベース グラフ指向データベース   Key-Valueストア型データベース  Key-Valueストア型データベース(Key-Value Store: KVS) は， NoSQLの中でも最もシンプルな構造のデータベースです． キー（Key）とバリュー(Value)の組み合わせだけで表現され， 高いスケーラビリティ（データの規模に合わせて拡張可能なこと）を誇ります． ここでは，果物の英単語の辞書データベースを例に考えてみましょう．
-   キー バリュー     apricot アンズ   apple リンゴ   banana バナナ   cherry サクランボ   coconut ココナッツ   cranberry クランベリー    【果物の英単語】</description>
+   キー バリュー     apricot アンズ   apple リンゴ   banana バナナ   cherry サクランボ   coconut ココナッツ   cranberry クランベリー   【果物の英単語】     Key-Valueストア型データベースに対する問い合わせは，SQLとは異なり， 「特定のキーに対するバリュー」を取得することに特化しています． 例えば，キーが「apple」のレコードを検索すると， 対応するバリューの「リンゴ」が取得されることになります．</description>
     </item>
     
     <item>
@@ -559,7 +560,7 @@ NoSQLの主な用途は，リレーショナルデータベースが苦手とす
       
       <guid>https://mukai-lab.info/pages/classes/database/chapter11/</guid>
       <description>テーブルのレストア  前回までに作成したテーブルを .restore でレストアしましょう． また，.tableで【学生リスト】，【学部リスト】，【テニス部】，【サッカー部】，【商品リスト】，【八百屋】，【果物屋】があることを確認しましょう．
-sqlite&amp;gt; .restore db4.sqlite sqlite&amp;gt; .table サッカー部 八百屋 学生リスト 果物屋 テニス部 商品リスト 学部リスト    学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか   D006 山下隆 4 経営情報学部 やましたたかし    【学生リスト】</description>
+sqlite&amp;gt; .restore db4.sqlite sqlite&amp;gt; .table サッカー部 八百屋 学生リスト 果物屋 テニス部 商品リスト 学部リスト    学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか   D006 山下隆 4 経営情報学部 やましたたかし   【学生リスト】           学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25   【学部リスト】         学籍番号 氏名 学年 学部 よみがな     A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか   【テニス部】           学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   B003 杉江弘子 3 人文学部 すぎえひろこ   A005 内田弘 3 工学部 うちだひろし   【サッカー部】           商品ID 商品名 仕入れ値 売値     C01 テレビ 50000 65000   C02 エアコン 60000 70000   C03 冷蔵庫 80000 55000   C04 電卓 3000 2000   C05 炊飯器 20000 25000   【商品リスト】          商品番号 商品名 価格     G1 ニンジン 100   G2 トマト 200   G3 スイカ 500   【八百屋】         商品番号 商品名 価格     G4 イチゴ 300   G5 ブドウ 200   G3 スイカ 500   【果物屋】       トランザクション  先ずは，トランザクションについて見ていきましょう． トランザクションとは，データベースに対する分割不可能な一連の処理のことを意味しています． 例えば，学籍番号が$A002$の学生が$人文学部$に転学部したとします． このとき，下記の二つの処理が必要です．</description>
     </item>
     
     <item>
@@ -570,8 +571,7 @@ sqlite&amp;gt; .restore db4.sqlite sqlite&amp;gt; .table サッカー部 八百�
       <guid>https://mukai-lab.info/pages/tech/japan_search/japan_search/</guid>
       <description>ジャパンサーチとは  ジャパンサーチは，様々な分野のデジタルアーカイブと連携することで， 日本が保有するコンテンツを横断的に検索することができるポータルサイトのことです（現在はベータ版が公開）． コンテンツには，作品名，分類，品質形状，時代世紀，所蔵者などのメタデータ付与されており， 地方活性化，教育研究など様々な目的で活用することが可能となっています． 2019年10月現在においては，連携データベース数は50，また， 登録されているメタデータ件数（コンテンツ数）は17,959,770となっており， 今後も登録数は増加していくと考えられます．
 それでは，「名古屋城図」をキーワードに検索してみましょう． すると，国立国会図書館デジタルコレクションに所属される 名古屋城図がヒットします． このデジタル化された地図は パブリックドメイン であり，著作権による制限を受けず，自由に利用することができます． また，メタデータとして，下記に示すような情報が提供されます（一部のみを掲載）．
-   項目 値     名称/タイトル 名古屋城図[1]   名称/タイトルヨミ ナゴヤジョウズ   資料種別 和古書   著作権情報 インターネット公開(保護期間満了)   件名 城郭/尾張国/名古屋   提供者のURL http://dl.ndl.go.jp/info:ndljp/pid/2589695   サムネイル画像URL http://dl.ndl.go.jp/titleThumb/info:ndljp/pid/2589695    
-これらのレコード（メタデータ）を取得するには下記の2通りの方法があります．
+   項目 値     名称/タイトル 名古屋城図[1]   名称/タイトルヨミ ナゴヤジョウズ   資料種別 和古書   著作権情報 インターネット公開(保護期間満了)   件名 城郭/尾張国/名古屋   提供者のURL http://dl.ndl.go.jp/info:ndljp/pid/2589695   サムネイル画像URL http://dl.ndl.go.jp/titleThumb/info:ndljp/pid/2589695    これらのレコード（メタデータ）を取得するには下記の2通りの方法があります．
  簡易Web API SPARQL API  簡易Web API は，登録されているレコードを検索するための簡易的な機能です． プログラミングの必要はなく，ブラウザで指定する URL に一工夫するだけで検索が可能です． 一方，SPARQL APIは，問い合わせ言語であるSPARQL（スパークル）を利用して， 様々な条件を指定してレコードを取得する機能です．</description>
     </item>
     
@@ -582,8 +582,7 @@ sqlite&amp;gt; .restore db4.sqlite sqlite&amp;gt; .table サッカー部 八百�
       
       <guid>https://mukai-lab.info/pages/classes/database/chapter10/</guid>
       <description>テーブルのレストア  前回までに作成したテーブルを .restore でレストアしましょう． また，.tableで【学生リスト】，【学部リスト】，【テニス部】，【サッカー部】，【商品リスト】があることを確認しましょう．
-sqlite&amp;gt; .restore db3.sqlite sqlite&amp;gt; .table サッカー部 商品リスト 学部リスト テニス部 学生リスト    学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか    【学生リスト】
-   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】</description>
+sqlite&amp;gt; .restore db3.sqlite sqlite&amp;gt; .table サッカー部 商品リスト 学部リスト テニス部 学生リスト    学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか   【学生リスト】           学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25   【学部リスト】         学籍番号 氏名 学年 学部 よみがな     A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか   【テニス部】           学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   B003 杉江弘子 3 人文学部 すぎえひろこ   A005 内田弘 3 工学部 うちだひろし   【サッカー部】           商品ID 商品名 仕入れ値 売値     C01 テレビ 50000 65000   C02 エアコン 60000 70000   C03 冷蔵庫 80000 55000   C04 電卓 3000 2000   C05 炊飯器 20000 25000   【商品リスト】        集合演算  リレーションに対する4つの集合演算がSQLで表現可能であることを確認していきましょう．</description>
     </item>
     
     <item>
@@ -593,8 +592,7 @@ sqlite&amp;gt; .restore db3.sqlite sqlite&amp;gt; .table サッカー部 商品�
       
       <guid>https://mukai-lab.info/pages/classes/database/chapter9/</guid>
       <description>テーブルのレストア  前回までに作成したテーブルを .restore でレストアしましょう． また，.tableで【学生リスト】，【学部リスト】，【テニス部】，【サッカー部】があることを確認しましょう．
-sqlite&amp;gt; .restore db2.sqlite sqlite&amp;gt; .table サッカー部 テニス部 学生リスト 学部リスト    学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか    【学生リスト】
-   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】</description>
+sqlite&amp;gt; .restore db2.sqlite sqlite&amp;gt; .table サッカー部 テニス部 学生リスト 学部リスト    学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか   【学生リスト】           学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25   【学部リスト】         学籍番号 氏名 学年 学部 よみがな     A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか   【テニス部】           学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   B003 杉江弘子 3 人文学部 すぎえひろこ   A005 内田弘 3 工学部 うちだひろし   【サッカー部】         レコードの取得  検索の理解を助けるために .</description>
     </item>
     
     <item>
@@ -604,8 +602,7 @@ sqlite&amp;gt; .restore db2.sqlite sqlite&amp;gt; .table サッカー部 テニ�
       
       <guid>https://mukai-lab.info/pages/classes/database/chapter8/</guid>
       <description>テーブルのレストア  前回までに作成したテーブルを .restore でレストアしましょう． また，.tableで【学生リスト】と【学部リスト】があることを確認しましょう．
-sqlite&amp;gt; .restore db1.sqlite sqlite&amp;gt; .table 学生リスト 学部リスト    学籍番号 氏名 学年 学部     A001 岩城隼人 2 工学部   A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部    【学生リスト】
-   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】</description>
+sqlite&amp;gt; .restore db1.sqlite sqlite&amp;gt; .table 学生リスト 学部リスト    学籍番号 氏名 学年 学部     A001 岩城隼人 2 工学部   A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部   【学生リスト】          学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25   【学部リスト】       スキーマの変更  作成済みのテーブルのスキーマを変更するには ALTER文 を用います． テーブル名はスキーマを変更する対象のテーブルの名前です． ADD を指定すると属性の追加， RENAME TOを指定するとテーブル名の変更ができます．</description>
     </item>
     
     <item>
@@ -621,10 +618,10 @@ SQLで利用可能な問い合わせは，下記の３種類に分類されま�
 SQLiteのダウンロード
 インストールが完了したら，インストールされたフォルダに含まれる コマンドライン・ツール（sqlite3.exe）をダブルクリックして起動してください．
 
-コマンドラインツールでは，プロンプト（sqlite&amp;gt;）に， SQL文やSQLite独自のコマンドを入力することでテーブルを操作します． SQLite独自のコマンドは先頭に「.（ドット）」が付いています． 例えば，SQLiteを終了するには，.quitと入力します．
+コマンドラインツールでは，**プロンプト（sqlite&amp;gt;）**に， SQL文やSQLite独自のコマンドを入力することでテーブルを操作します． SQLite独自のコマンドは先頭に「.（ドット）」が付いています． 例えば，SQLiteを終了するには，.quitと入力します．
 
  SQLの記述ルール  SQLには様々な命令文がありますが，共通して下記のルールを守る必要があります． このルールを満たしていなければ，エラーとなり命令は実行されません．
- SQL文の最後に「;（セミコロン）」を付ける SQL文の大文字・小文字は区別されない（データは除く） 文字列データは「&amp;rdquo;（ダブルクオーテーション）」で囲む 単語の区切りは半角スペースを用いる（全角スペースは絶対に用いない）  例えば，テーブルからレコード（タプル）を取り出す SELECT文や， レコードを追加する INSERT文 は下記のように記述します． このとき，「SELECT」を「select」と記述しても問題ありません．</description>
+ SQL文の最後に「;（セミコロン）」を付ける SQL文の大文字・小文字は区別されない（データは除く） 文字列データは「&amp;quot;（ダブルクオーテーション）」で囲む 単語の区切りは半角スペースを用いる（全角スペースは絶対に用いない）  例えば，テーブルからレコード（タプル）を取り出す SELECT文や， レコードを追加する INSERT文 は下記のように記述します． このとき，「SELECT」を「select」と記述しても問題ありません．</description>
     </item>
     
     <item>
@@ -634,8 +631,7 @@ SQLiteのダウンロード
       
       <guid>https://mukai-lab.info/pages/classes/database/chapter6/</guid>
       <description>本日のリレーション  今回は下記の【履修リスト】と【学生リスト】を対象に解説します． 【履修リスト】は，学籍番号，科目名，成績，教室， 【学生リスト】は，学籍番号，氏名，学年，学部，キャンパスで構成されています． また，下線は主キーを表しています．
-   学籍番号 科目名 成績 教室     A001 情報処理演習 A 001   A001 プログラミング A 003   A002 情報処理演習 A 001   A002 プログラミング B 003   B003 データベース A 002   B003 プログラミング C 003    【履修リスト】
-   学籍番号 氏名 学年 学部 キャンパス     A001 岩城隼人 2 工学部 春日井   A002 岩村優 1 工学部 春日井   B003 杉江弘子 3 人文学部 春日井   C004 仙波あすか 1 国際関係学部 名古屋    【学生リスト】</description>
+   学籍番号 科目名 成績 教室     A001 情報処理演習 A 001   A001 プログラミング A 003   A002 情報処理演習 A 001   A002 プログラミング B 003   B003 データベース A 002   B003 プログラミング C 003   【履修リスト】          学籍番号 氏名 学年 学部 キャンパス     A001 岩城隼人 2 工学部 春日井   A002 岩村優 1 工学部 春日井   B003 杉江弘子 3 人文学部 春日井   C004 仙波あすか 1 国際関係学部 名古屋   【学生リスト】         完全関数従属  前回，関数従属性について学びました． 関数従属性は$A \rightarrow B$と記述し， 属性$A$の値に応じて，属性$B$の値が一意に定まることを意味しています．</description>
     </item>
     
     <item>
@@ -645,8 +641,7 @@ SQLiteのダウンロード
       
       <guid>https://mukai-lab.info/pages/classes/database/chapter5/</guid>
       <description>本日のリレーション  今回は下記の【履修リスト】を対象に解説します． 【履修リスト】は，学籍番号，科目名，成績，教室で構成されています． また，下線は主キーを表しています．
-   学籍番号 科目名 成績 教室     A001 情報処理演習 A 001   A001 プログラミング A 003   A002 情報処理演習 A 001   A002 プログラミング B 003   B003 データベース A 002   B003 プログラミング C 003    【履修リスト】
- 更新時異常  リレーションの設計に問題があると， タプルの挿入・削除・更新を行う際に， 更新時異常（Update Anomaly）が発生することがあります． 【履修リスト】を例に，どのような問題が発生するか考えてみましょう．
+   学籍番号 科目名 成績 教室     A001 情報処理演習 A 001   A001 プログラミング A 003   A002 情報処理演習 A 001   A002 プログラミング B 003   B003 データベース A 002   B003 プログラミング C 003   【履修リスト】        更新時異常  リレーションの設計に問題があると， タプルの挿入・削除・更新を行う際に， 更新時異常（Update Anomaly）が発生することがあります． 【履修リスト】を例に，どのような問題が発生するか考えてみましょう．
 タプル挿入時異常 カリキュラムが変更され 新規の科目「画像処理論」に関する情報を【履修リスト】に追加することを考えてみます． まだ履修する学生や成績は確定していないため，下記のタプルを追加することになります． このタプルは，主キーである学籍番号が空値であり，主キー制約に牴触してしまうため，追加することができません． これが，タプル挿入時異常 です．</description>
     </item>
     
@@ -657,8 +652,7 @@ SQLiteのダウンロード
       
       <guid>https://mukai-lab.info/pages/classes/database/chapter4/</guid>
       <description>本日のリレーション  今回は下記の【サッカー部】，【テニス部】，【学部リスト】を対象に解説します． 【サッカー部】と【テニス部】は，学籍番号，氏名，学年，学部，また， 【学部リスト】は，学部，キャンパス，教員数で構成されています． また，下線は主キーを表しています．
-   学籍番号 氏名 学年 学部     A001 岩城隼人 2 工学部   A003 内田弘 3 工学部   B003 杉江弘子 3 人文学部    【サッカー部】
-   学籍番号 氏名 学年 学部     A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部    【テニス部】</description>
+   学籍番号 氏名 学年 学部     A001 岩城隼人 2 工学部   A003 内田弘 3 工学部   B003 杉江弘子 3 人文学部   【サッカー部】          学籍番号 氏名 学年 学部     A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部   【テニス部】          学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25   【学部リスト】       リレーションに対する演算  数値に対して足算や掛算などの四則演算が定義できるように， リレーションにも演算を定義することができます． リレーションに対する演算は4つの集合演算と， 4つの**関係代数演算（リレーショナル代数演算）**で構成されています （商演算は殆ど用いることがないため，今回は割愛します）．</description>
     </item>
     
     <item>
@@ -668,8 +662,7 @@ SQLiteのダウンロード
       
       <guid>https://mukai-lab.info/pages/classes/database/chapter3/</guid>
       <description>本日のリレーション  今回は下記の 【学生リスト】 と 【学部リスト】 を対象に解説します． 【学生リスト】は，学籍番号，氏名，学年，学部，また， 【学部リスト】は，学部，キャンパス，教員数で構成されています．
-   学籍番号 氏名 学年 学部     A001 岩城隼人 2 工学部   A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部    【学生リスト】
-   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】</description>
+   学籍番号 氏名 学年 学部     A001 岩城隼人 2 工学部   A002 岩村優 1 工学部   B003 杉江弘子 3 人文学部   C004 仙波あすか 1 国際関係学部   【学生リスト】          学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25   【学部リスト】       主キー  リレーショナルデータベースの運用において タプル（レコード）の検索や更新などの処理は必須です． 検索や更新を正しく行うには， リレーションに含まれる所定のタプルを一意に同定する必要があります．</description>
     </item>
     
     <item>
@@ -685,7 +678,8 @@ $$ D_1 = \left( 高谷舞衣,福岡豊樹,西村朱音 \right) $$
 $$ D_2 = \left( 0786857519,0265723899,0178189244 \right) $$
 この他にも，アルファベットの集合や，整数の集合もドメインと考えることができます． ここでは，有限集合のみを対象としていますが，無限集合でも問題ありません．
 $$ D_3 = \left( a, b, c \right) $$
-$$ D_4 = \left( 1, 2, 3, 4, 5 \right) $$</description>
+$$ D_4 = \left( 1, 2, 3, 4, 5 \right) $$
+ドメインの直積 ドメインを対象として，直積 という演算が定義されます． 直積は $D_1 \times D_2$ のように表現され， 各ドメインから一つずつ要素を取り出して組にした新たなドメインになります． $D_1$と$D_2$の直積の場合，新たなドメインの要素数は$3 \times 3 = 9$ です．</description>
     </item>
     
     <item>
@@ -694,10 +688,11 @@ $$ D_4 = \left( 1, 2, 3, 4, 5 \right) $$</description>
       <pubDate>Fri, 20 Sep 2019 13:08:48 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/database/chapter1/</guid>
-      <description>データベースとは  データベース（DB: Database）とは何でしょうか． 広義の意味では単に「データの集まり」がデータベースであると言えます． 意識したことはあまりないかもしれませんが，身の回りにデータベースは多く存在しています． 例えば，スマートフォンで管理しているアドレス帳も，氏名，電話番号, メールアドレス を管理するためのデータベースと言えます． その他にも，Amazonや楽天などのショッピングサイトは顧客情報，商品情報，また，皆さんが所属する大学は学生情報，科目情報などをデータベースとして管理しています． このように考えると，皆さんは日常的にデータベースに囲まれながら生活していると考えることができますね．
+      <description>データベースとは  **データベース（DB: Database）**とは何でしょうか． 広義の意味では単に「データの集まり」がデータベースであると言えます． 意識したことはあまりないかもしれませんが，身の回りにデータベースは多く存在しています． 例えば，スマートフォンで管理しているアドレス帳も，氏名，電話番号, メールアドレス を管理するためのデータベースと言えます． その他にも，Amazonや楽天などのショッピングサイトは顧客情報，商品情報，また，皆さんが所属する大学は学生情報，科目情報などをデータベースとして管理しています． このように考えると，皆さんは日常的にデータベースに囲まれながら生活していると考えることができますね．
 課題1   身の回りにあるデータベースを3つ挙げなさい．   データベースで管理されるデータとは  次にデータベースで管理されるデータについて考えてみましょう． 一般に，データベースは，何かしらの目的を持って構築されます． 例えば，スマートフォンのアドレス帳は，氏名，電話番号, メールアドレス を収集することで， 特定の相手への電話やメールでのコンタクトを可能にしています（下記のデータはダミーです）． このように，データは目的に合わせ，一定の規則に従って収集されることになります． また，これらをまとめたデータの基地（ベース）が データベース と言えます．
    氏名 電話番号 メールアドレス     高谷舞衣 0786857519 mai@mctp.tubcn.pml   福岡豊樹 0265723899 toyoki@fhixe.lg   西村朱音 0178189244 akane@dpqknirhzo.sn     データベースの管理方法  さて，このようなデータベースを管理するにはどのような方法があるでしょうか． 古くは手帳などの紙媒体で記録していましたが，現代はコンピュータを用いて管理するのが一般的です（もちろんスマートフォンも含む）． 皆さんがコンピュータでデータを管理する時はどんなソフトウェアを用いるでしょうか． 最も身近なソフトウェアは Excel ではないでしょうか． それでは，Excelで上記のアドレス帳のデータを作成してみましょう．
-課題2   上記のアドレス帳のデータをExcelで作成し，xlsx形式とcsv形式で保存しなさい．  --</description>
+
+このようにExcelで作成したファイルもデータベースと言えます． この例では，たった3件のデータしか含まれておらず，データ入力や検索は容易に行うことができます． しかし，現代のデータベースでは，より多くのデータ（いわゆるビッグデータ）を対象とする必要があり， Excel で管理するには無理がありそうです．</description>
     </item>
     
     <item>
@@ -747,10 +742,10 @@ OpenSignalsを起ち上げると，下記のようにBuetoothで接続されたB
       <pubDate>Wed, 14 Aug 2019 13:07:59 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/tech/caffe/caffe/</guid>
-      <description> Caffe-Segnetのインストール ディープラーニングのライブラリである Caffe-Segnet をMacにインストールしたときのメモです． 基本的には公式のインストラクションに従います． このQiitaの記事や ブロクも参考にさせて頂きました．
+      <description>Caffe-Segnetのインストール ディープラーニングのライブラリである Caffe-Segnet をMacにインストールしたときのメモです． 基本的には公式のインストラクションに従います． このQiitaの記事や ブロクも参考にさせて頂きました．
 まずは依存ライブラリをインストールします．
 brew install -vd snappy leveldb gflags glog szip lmdb brew tap brewsci/science # homebrew-scienceは廃止 brew install hdf5 opencv 次に，ptofobufとboost-pythonをビルドしてインストールします． このビルドはかなりの時間を要します．
-brew install --build-from-source -vd protobuf # --with-pythonは除く brew install --build-from-source -vd boost boost-pythonCPU_ONLY := 1mkdir build cd build cmake .. make all make install make runtest</description>
+brew install --build-from-source -vd protobuf # --with-pythonは除く brew install --build-from-source -vd boost boost-python CPU_ONLY := 1 mkdir build cd build cmake .. make all make install make runtest </description>
     </item>
     
     <item>
@@ -762,21 +757,22 @@ brew install --build-from-source -vd protobuf # --with-pythonは除く brew inst
       <description>オープンストリートマップとは  オープンストリートマップ（OpenStreetMap: OSM）は， グーグルマップ（Google Maps）と同様のオンライン地図のサービスの一つです． グーグルマップは非営利であっても印刷物としての使用に制限がありますが， オープンストリートマップは適切にクレジットを表示すれば， 営利目的も含め，複製・再配布・改変が認められているという特徴があります（CC By-SA 2.0）．
 オープンストリートマップで表示される地図は， 地図タイル と呼ばれる格子状の画像を並べることで構成されます． 地図タイルは下記の REST API と呼ばれる方法を用いて取得することが可能です． 倍率Z，座標X，座標Yを指定することで，世界の地図タイルを自由に表示できます．
 https://a.tile.openstreetmap.org/{倍率:z}/{座標:X}/{座標:Y}.png 例えば，下記のように倍率Z=0，座標X=0，座標Y=0を指定してみましょう． これを表示すると，世界が一枚の地図タイルで表示されることがわかります．
- https://a.tile.openstreetmap.org/0/0/0.png
+https://a.tile.openstreetmap.org/0/0/0.png
 次に，倍率Z=1にして，地図タイルを取得します． 地図タイル数は $2^{2 \cdot z}$ で与えらるため， 倍率X=1のときは，4枚の地図タイルで世界を表現していることになります．
 【左上】
- https://a.tile.openstreetmap.org/1/0/0.png
+https://a.tile.openstreetmap.org/1/0/0.png
 【左下】
- https://a.tile.openstreetmap.org/1/0/1.png
+https://a.tile.openstreetmap.org/1/0/1.png
 【右上】
- https://a.tile.openstreetmap.org/1/1/0.png
+https://a.tile.openstreetmap.org/1/1/0.png
 【右下】
- https://a.tile.openstreetmap.org/1/1/1.png
+https://a.tile.openstreetmap.org/1/1/1.png
 現状で，オープンストリートマップは，倍率Z=18まで利用可能となっています． このため，倍率Z=18の地図タイル数は，なんと，$2^{2 \cdot 18} = 68719476736$となっています． 今回は，このオープンストリートマップを利用して，オリジナルの地図を作成しましょう．
  サンプルをダウンロードしよう  オープンストリートマップを利用して地図を作成するために， JavaScript というプログラミング言語のライブラリである Leafletを利用します． なんだかとても難しそうですが，今回はサンプル・ファイルをダウンロードして，一部を書き換えるだけなので，とっても簡単です． コンピュータが苦手な人も安心してください．
 下記がサンプル・ファイル（Sample.html）です． ダウンロードしたら Chrome などのブラウザで開いてみてください．
- Sample.html
-ブラウザで開くと，椙山女学園大学を中心とした地図が表示されます． マウスを使って，地図を自由に操作してみてください． マーカーをクリックすると「椙山女学園大学」や「星ヶ丘駅」と表示されます． また，地図上をクリックすると，クリックした位置の 緯度・経度 が表示されます．</description>
+Sample.html
+ブラウザで開くと，椙山女学園大学を中心とした地図が表示されます． マウスを使って，地図を自由に操作してみてください． マーカーをクリックすると「椙山女学園大学」や「星ヶ丘駅」と表示されます． また，地図上をクリックすると，クリックした位置の 緯度・経度 が表示されます．
+ オリジナルの地図を作成しよう  それでは，ダウンロードしたファイル（sample.</description>
     </item>
     
     <item>
@@ -799,11 +795,11 @@ https://a.tile.openstreetmap.org/{倍率:z}/{座標:X}/{座標:Y}.png 例えば�
       <guid>https://mukai-lab.info/pages/tech/carla/carla/</guid>
       <description>CARLA  近年，研究が急速に進む 自動運転車（Autonomous Car） のシミュレータの一つである CARLA Simulatorの導入に関して解説します． このCARLAはオープンソースとして開発されており， 自動運転車の実現に必須の，LiDAR（Light Detection and Ranging） ，多視点カメラ，深度カメラ などのセンサー群を利用することができます． この他にも，マップの自動生成や，交通シナリオの作成など，シミュレータに必要な要素も含まれています． このCARLAは，Alexey Dosovitskiy 氏らによって開発され， 2017年に Robot Learning の国際会議において，「CARLA: An Open Urban Driving Simulator」というタイトルで論文も発表されています．
  CARLAの導入  CARLAの導入はとても簡単で，Githubで公開されているビルドされたパッケージをダウンロードするだけです． 現時点（2019年8月）では，最新版は 0.9.6 ですが，ここでは安定版の 0.8.2 を利用することにします．
- CARLA 0.8.2(stable)
+CARLA 0.8.2(stable)
 ダウンロードしたファイルを解凍すると， CarlaUE4.exe というウィンドウズ用の実行ファイルがあります． これをダブルクリックすると，シミュレータが全画面表示されます（スタンドアロン・モード）． 画面左には，速度(Speed)やギア（Gear）などの情報が表示されていることがわかります．
 
 この画面では，キーボードで車両を操作することができます（操作一覧も参照のこと）． キーボードで操作するのはとても難しく，ぎこちない運転になってしまうので，オートパイロット を試してみると良いです．
-   キー 操作     W アクセル   A ステアリング（左）   S ブレーキ   D ステアリング（右）   Q ギアチェンジ   P オートパイロット</description>
+   キー 操作     W アクセル   A ステアリング（左）   S ブレーキ   D ステアリング（右）   Q ギアチェンジ   P オートパイロット     Pythonクライアントの接続  Python から，CARLAに接続し，環境をコントロールすることができます． Pythonのバージョン 3.</description>
     </item>
     
     <item>
@@ -817,7 +813,8 @@ https://a.tile.openstreetmap.org/{倍率:z}/{座標:X}/{座標:Y}.png 例えば�
 import numpy as np import matplotlib.pyplot as plt import pandas as pd  データの準備  ユニセフ・世界子供白書が公開している人口統計指標のデータを用います． ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します． 下記リンクからCSVファイルをダウンロードしてください．
 世界の出生率と死亡率（population2016.csv）
 ファイルをダウンロードしたら，Jupyter Notebookのフォルダにアップロードし， pandasのデータフレームとして読み込みます． 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．
-data = pd.read_csv(&amp;#34;population2016.csv&amp;#34;) data.head() #最初の5件だけ表示</description>
+data = pd.read_csv(&amp;#34;population2016.csv&amp;#34;) data.head() #最初の5件だけ表示 
+一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．</description>
     </item>
     
     <item>
@@ -873,11 +870,10 @@ Unityでの開発にはTobii Unity SDK for Desktopを利用します． この�
       <guid>https://mukai-lab.info/pages/classes/intelligence_information_system/chapter9/</guid>
       <description>ノートブックの作成  Anacondaを導入していない場合は，機械学習ライブラリ scikit-learn をpipでインストールする必要があります． インストールしたフォルダで，PowerShellを起動し，下記のコマンドを実行してください．
 &amp;gt; .\Scripts\pip install scikit-learn Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook9 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt  データの準備  あらかじめ用意された機械学習のための データセット を利用することができます． ここでは，scikit-learn ライブラリに収録されている アヤメ（iris） のデータセットを用います． アヤメは草地に生息している植物であり， setosa， versicolor， virginica などの種類があります（和名はよく分かりませんでした）． このデータセットには，上記３種類のアヤメの， がく片の長さ（Sepal Length），がく片の幅（Sepal Width）， 花弁の長さ（Petal Length），花弁の幅（Petal Width）を計測したデータが含まれています．
-
+import numpy as np import matplotlib.pyplot as plt  データの準備  あらかじめ用意された機械学習のための データセット を利用することができます． ここでは，scikit-learn ライブラリに収録されている アヤメ（iris） のデータセットを用います． アヤメは草地に生息している植物であり， setosa， versicolor， virginica などの種類があります（和名はよく分かりませんでした）． このデータセットには，上記３種類のアヤメの， がく片の長さ（Sepal Length），がく片の幅（Sepal Width）， 花弁の長さ（Petal Length），**花弁の幅（Petal Width）**を計測したデータが含まれています．
 各種類に50のサンプルがあり，例えば，最初のデータは[5.1,3.5,1.4, 0.2]となっています． これは，がく片の長さが5.1cm，がく片の幅が3.5cm，花弁の長さが1.4cm，花弁の幅が0.2cmを表しています． ラベルは0,1,2のいずれかで与えられ，それぞれsetosa，virsicolor, virginicaを表しています． 最初のサンプルのラベルは0であるため，これは setosa であることがわかります．
 [In:]
-from sklearn.datasets import load_iris iris = load_iris() print(iris.feature_names) #フィールド名 print(iris.</description>
+from sklearn.datasets import load_iris iris = load_iris() print(iris.feature_names) #フィールド名 print(iris.data[0:5]) #フィールド・データ print(iris.</description>
     </item>
     
     <item>
@@ -888,7 +884,8 @@ from sklearn.datasets import load_iris iris = load_iris() print(iris.feature_nam
       <guid>https://mukai-lab.info/pages/classes/intelligence_information_system/chapter8/</guid>
       <description>ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook8 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
 import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize  データの準備  これまでは，リンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） という2次元のデータを用いていました． 今回は単純化のため，大きさ（$x$） のみに注目して分類します． また，グラフで可視化するために，リンゴを$0$，メロンを$1$と表現することにします．
-x = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） label = np.array([0, 0, 0, 0, 1, 1, 1]) #カテゴリ x = (x - x.mean()) / x.std() #標準化 plt.scatter(x, label, c=label) plt.xlabel(&amp;#34;x&amp;#34;)</description>
+x = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） label = np.array([0, 0, 0, 0, 1, 1, 1]) #カテゴリ x = (x - x.mean()) / x.std() #標準化 plt.scatter(x, label, c=label) plt.xlabel(&amp;#34;x&amp;#34;) 
+ ロジスティック回帰  今回取り上げる手法は ロジスティック回帰 です． ”回帰”という文字列が含まれますが，実際は前回の線形判別分析と同様に 分類 を目的とした手法です． 確率モデルとして用いられる ロジスティック関数（シグモイド関数） に， 対象のデータを回帰させることから，その名前が付けられています．</description>
     </item>
     
     <item>
@@ -900,7 +897,7 @@ x = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） label
       <description>ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook7 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
 import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize  データの準備  前回と同じリンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） を用います（未知のデータ$u$をリンゴとしてデータに追加）． 各要素はベクトル${\bf x} = (x_1,x_2)$として表すことに注意してください． ここでは，あらかじめデータを標準化しておきます．
 [In:]
-x1 = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） x2 = np.array([278, 298, 382, 443, 1221, 1305, 1512]) #重さ（g） label = np.array([&amp;#34;red&amp;#34;,&amp;#34;red&amp;#34;,&amp;#34;red&amp;#34;,&amp;#34;red&amp;#34;,&amp;#34;green&amp;#34;,&amp;#34;green&amp;#34;,&amp;#34;green&amp;#34;]) #カテゴリ x1 = (x1 - x1.mean()) / x1.</description>
+x1 = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） x2 = np.array([278, 298, 382, 443, 1221, 1305, 1512]) #重さ（g） label = np.array([&amp;#34;red&amp;#34;,&amp;#34;red&amp;#34;,&amp;#34;red&amp;#34;,&amp;#34;red&amp;#34;,&amp;#34;green&amp;#34;,&amp;#34;green&amp;#34;,&amp;#34;green&amp;#34;]) #カテゴリ x1 = (x1 - x1.mean()) / x1.std() x2 = (x2 - x2.</description>
     </item>
     
     <item>
@@ -926,7 +923,7 @@ x1 = np.array([9.5, 11.2, 10.3, 13.4, 12.9, 14.2]) #大きさ（cm） x2 = np.ar
 https://takeout.google.com/
 tcx形式 は下記のように XML で記述されています． ここで， LatitudeDegrees が緯度， LongitudeDegrees は経度， AltitudeMeters は高度を表しています．
 &amp;lt;Trackpoint&amp;gt; &amp;lt;DistanceMeters&amp;gt;209.93287658691406&amp;lt;/DistanceMeters&amp;gt; &amp;lt;Time&amp;gt;2019-02-01T11:12:16.277Z&amp;lt;/Time&amp;gt; &amp;lt;Position&amp;gt; &amp;lt;LatitudeDegrees&amp;gt;35.1597349&amp;lt;/LatitudeDegrees&amp;gt; &amp;lt;LongitudeDegrees&amp;gt;136.9893828&amp;lt;/LongitudeDegrees&amp;gt; &amp;lt;/Position&amp;gt; &amp;lt;AltitudeMeters&amp;gt;126.15887451171875&amp;lt;/AltitudeMeters&amp;gt; &amp;lt;/Trackpoint&amp;gt; &amp;lt;Trackpoint&amp;gt; &amp;lt;DistanceMeters&amp;gt;209.93287658691406&amp;lt;/DistanceMeters&amp;gt; &amp;lt;Time&amp;gt;2019-02-01T11:12:17.267Z&amp;lt;/Time&amp;gt; &amp;lt;Position&amp;gt; &amp;lt;LatitudeDegrees&amp;gt;35.1597831&amp;lt;/LatitudeDegrees&amp;gt; &amp;lt;LongitudeDegrees&amp;gt;136.9894012&amp;lt;/LongitudeDegrees&amp;gt; &amp;lt;/Position&amp;gt; &amp;lt;AltitudeMeters&amp;gt;126.45513916015625&amp;lt;/AltitudeMeters&amp;gt; &amp;lt;/Trackpoint&amp;gt; 残念ながら，Tableauでは，この tcx形式 をサポートしていないため， csv形式 に変換が必要です． 変換のための様々なツールがありますが，ここでは備忘録で提供されているツールを利用します． 開発者に感謝です． ここでは，CSVに変換後に，冗長なデータを取り除き，下記のデータを用いることにします．
-Number,Longitude,Latitude,Altitude 1,136.9665898,35.1939918,58.8405151 2,136.9665682,35.1939896,59.8150635 3,136.9665054,35.1939806,59.0309448 4,136.9664823,35.1939769,58.8773193 5,136.9664522,35.1939796,60.03302 6,136.9664263,35.193978,59.5482788 7,136.9663482,35.1939649,60.1946411 8,136.</description>
+Number,Longitude,Latitude,Altitude1,136.9665898,35.1939918,58.84051512,136.9665682,35.1939896,59.81506353,136.9665054,35.1939806,59.03094484,136.9664823,35.1939769,58.87731935,136.9664522,35.1939796,60.033026,136.9664263,35.193978,59.54827887,136.9663482,35.1939649,60.19464118,136.</description>
     </item>
     
     <item>
@@ -1068,14 +1065,14 @@ x = [12, 20, 13, 24, 28, 30, 31, 24, 18, 33] # 気温 y = [21, 35, 22, 29, 37, 4
       <pubDate>Sat, 18 May 2019 12:38:55 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/intelligence_information_system/</guid>
-      <description> 授業科目区分： 専門教育科目
+      <description>授業科目区分： 専門教育科目
 単位数: 2単位
 開講学科: 文化情報学科
 学年: 3年次
 関連科目: 人工知能
 授業テーマ: 機械学習の理解と実装
 授業内容 人工知能の基礎となる機械学習を学び，実践的な問題に適用するための応用力を身に付ける． 機械学習はデータから法則や傾向を抽出するための手法であり，ディープラーニングと呼ばれる画像認識技術も機械学習の一つである. 機械学習の実装には，多様なライブラリが利用可能なPython（Jupyter Notebook）を採用する．
-授業計画  機械学習とは Pythonの基本 回帰①・線形回帰 回帰②・最急降下法 回帰③・基底関数 分類①・決定境界とベクトル 分類②・線形判別分析 分類③・ロジスティック回帰 分類④・k近傍法 分類⑤・決定木 クラスタリング①・K平均法 クラスタリング②・混合ガウスモデル オーバーフィッティングと交差検証   課題提出方法 Google Classroomから提出すること． 提出の際は大学から提供されたユーザIDでログインが必要なことに注意すること．
+授業計画  機械学習とは Pythonの基本 回帰①・線形回帰 回帰②・最急降下法 回帰③・基底関数 分類①・決定境界とベクトル 分類②・線形判別分析 分類③・ロジスティック回帰 分類④・k近傍法 分類⑤・決定木 クラスタリング①・K平均法 クラスタリング②・混合ガウスモデル オーバーフィッティングと交差検証  課題提出方法 Google Classroomから提出すること． 提出の際は大学から提供されたユーザIDでログインが必要なことに注意すること．
 参考書籍     </description>
     </item>
     
@@ -1093,7 +1090,7 @@ Neo Tree Atomのようにファイルやフォルダをツリーで表示する�
 (global-set-key &amp;#34;\C-t&amp;#34; &amp;#39;neotree-toggle) Markdown Mode マークダウン・ファイルのハイライトに用いる．
 テーマの設定 テーマをtango-darkに設定．
 (load-theme &amp;#39;tango-dark t) キーバインディングの設定 Ctr-uでUndo．
-(global-set-key &amp;#34;\C-u&amp;#34; &amp;#39;undo) Meta-/でComment．
+(global-set-key &amp;#34;\C-u&amp;#34; &amp;#39;undo) **Meta-/**でComment．
 (global-set-key &amp;#34;\M-/&amp;#34; &amp;#39;comment-line) キーバインディングの競合の解消 デフォルトのキーバインディングでは， set-mark-command にC-SPC が割り当てられていますが，マック標準のキーバインディングと競合しており動作しません． この場合，【システム環境設定】→【キーボード】→【ショートカット】→【入力ソース】で，チェックを外すと解消されます．</description>
     </item>
     
@@ -1117,8 +1114,8 @@ Alt + Shift + p (List Projects) markdown-writer 忘れがちなマークダウ�
       <pubDate>Tue, 07 May 2019 13:11:49 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/tech/hugo/2019-05-07-hugo_sed/</guid>
-      <description> JekyllからHugoに移行する際に，用いたsedワンライナーを記録しておきます． Hugoにはマークダウンの変換用のスクリプトが付属していますが，細かな修正はどうしても必要になります． sed を用いると効率的にテキストの置換が可能です． また，下記コマンドを実行すると結果は標準出力に流れますが， -i -e オプションを付けることでファイルを上書きします．
-H1要素を独自のショートコード（title-logo）に置換 % sed &amp;#34;s/^# .*&amp;gt;\(.*\)/\{\{&amp;lt; title-logo title=\&amp;#34;\1\&amp;#34; &amp;gt;\}\}/g&amp;#34; FILE JekyllのLiquid構文をショートコード（gist）に置換 % sed &amp;#34;s/^{% gist \(.*\)\/\(.*\)%}/ /g&amp;#34; FILE インデントを削除 % sed &amp;#34;s/^ \(.*\)/\1/g&amp;#34; FILE</description>
+      <description>JekyllからHugoに移行する際に，用いたsedワンライナーを記録しておきます． Hugoにはマークダウンの変換用のスクリプトが付属していますが，細かな修正はどうしても必要になります． sed を用いると効率的にテキストの置換が可能です． また，下記コマンドを実行すると結果は標準出力に流れますが， -i -e オプションを付けることでファイルを上書きします．
+H1要素を独自のショートコード（title-logo）に置換 % sed &amp;#34;s/^# .*&amp;gt;\(.*\)/\{\{&amp;lt; title-logo title=\&amp;#34;\1\&amp;#34; &amp;gt;\}\}/g&amp;#34; FILE JekyllのLiquid構文をショートコード（gist）に置換 % sed &amp;#34;s/^{% gist \(.*\)\/\(.*\)%}/ /g&amp;#34; FILE インデントを削除 % sed &amp;#34;s/^ \(.*\)/\1/g&amp;#34; FILE </description>
     </item>
     
     <item>
@@ -1127,7 +1124,7 @@ H1要素を独自のショートコード（title-logo）に置換 % sed &amp;#3
       <pubDate>Sun, 05 May 2019 21:10:11 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/</guid>
-      <description> 椙山女学園大学  基礎演習 基幹演習 人工知能 データベースシステム プログラミング1 プログラミング応用 展開演習2 知能情報システム データベース演習 卒業研究指導1  愛知大学  プログラミング  中部大学  データベース  </description>
+      <description>椙山女学園大学  基礎演習 基幹演習 人工知能 データベースシステム プログラミング1 プログラミング応用 展開演習2 知能情報システム データベース演習 卒業研究指導1  愛知大学  プログラミング  中部大学  データベース  </description>
     </item>
     
     <item>
@@ -1157,7 +1154,7 @@ Eclipseのツールバーから[ウィンドウ]-[設定]-[Java]-[コンパイ�
       <guid>https://mukai-lab.info/pages/tech/jekyll/2016-02-23-ogp/</guid>
       <description>フェイスブックでシェアされたときに表示される画像は，オープン・グラフ・プロトコル（OGP）で制御されています． OGPの設定がなければ，自動で適当な画像が選択されますが，意図しない画像が選択されることも多いです． そこで，Jekyllで採用されている「YAML Front Matter」を利用してOGPを設定する方法をメモしておきます．
 まずは，ブログ記事などのファイルの先頭に， 下記のようにimageという変数を用意して，参照する画像を設定しておきます．
---- layout: default image: &amp;#34;https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png&amp;#34; --- これで page.image という記述で設定された値を取得することができるようになります． 次に，&amp;rdquo;_includes/head.html&amp;rdquo;に下記のように page.image を利用してOGPの設定をします． このとき，条件文を利用することで page.image が設定されている場合に限ってOGPの設定を有効にしています． OGPは&amp;lt;meta property=&amp;quot;og:image&amp;quot; content=&amp;quot;参照画像&amp;quot;&amp;gt;と記述します．
+--- layout: default image: &amp;#34;https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png&amp;#34; --- これで page.image という記述で設定された値を取得することができるようになります． 次に，&amp;quot;_includes/head.html&amp;quot;に下記のように page.image を利用してOGPの設定をします． このとき，条件文を利用することで page.image が設定されている場合に限ってOGPの設定を有効にしています． OGPは&amp;lt;meta property=&amp;quot;og:image&amp;quot; content=&amp;quot;参照画像&amp;quot;&amp;gt;と記述します．
  これで，フェイスブックでシェアされたときの画像が設定されます． もし画像が反映されない場合は，フェイスブックのキャッシュが原因かもしれません． この場合は，Open Graph Object Debuggerでキャッシュを削除してみましょう．</description>
     </item>
     
@@ -1209,10 +1206,10 @@ HOME=/z/GitHub/ これで問題解決と思いきや，Git Bash を実行して�
       
       <guid>https://mukai-lab.info/pages/tech/jekyll/2016-02-05-highlight/</guid>
       <description>Jekyllが得意とするシンタックスハイライトですが，設定でつまずいたのでメモしておきます． シンタックスハイライトにはrougeやpygmentsが利用されるようですが，ここではrougeを適用してみたいと思います． まずは，下記のコマンドでrougeをインストールします．
-gem install rouge 次に，&amp;rdquo;_config.yml&amp;rdquo;でシンタックスハイライトにrougeを指定しておきます．
-highlighter: rouge ここまでは，何てことないのですが，ここからつまずきました． シンタックスハイライトのスタイルは&amp;rdquo;_syntax-highlighting.scss&amp;rdquo;で設定されているようです． 色などを変更したい場合は，このファイルを修正すれば良いはずですが，何故か変更が適用されません．
+gem install rouge 次に，&amp;quot;_config.yml&amp;quot;でシンタックスハイライトにrougeを指定しておきます．
+highlighter: rouge ここまでは，何てことないのですが，ここからつまずきました． シンタックスハイライトのスタイルは&amp;rdquo;_syntax-highlighting.scss&amp;quot;で設定されているようです． 色などを変更したい場合は，このファイルを修正すれば良いはずですが，何故か変更が適用されません．
 マークダウンでハイライトするときは，ソースコードを``で囲みます． 変換後のhtmlを確認すると，該当箇所は下記のように，クラス属性にhighlighter-rougeが設定されています．
-&amp;lt;code class=&amp;#34;highlighter-rouge&amp;#34;&amp;gt;&amp;lt;/code&amp;gt; 再度，&amp;rdquo;_syntax-highlighting.scss&amp;rdquo;を確認すると，クラス属性はhighlightとして設定されています． そこで，ファイル内のクラス属性をhighlighter-rougeに置換することで，シンタックスハイライトが適用されました． 試行錯誤の末，シンタックスハイライトの適用までこぎつけましたが，この辺り十分に理解できていないかもしれません．</description>
+&amp;lt;code class=&amp;#34;highlighter-rouge&amp;#34;&amp;gt;&amp;lt;/code&amp;gt; 再度，&amp;quot;_syntax-highlighting.scss&amp;quot;を確認すると，クラス属性はhighlightとして設定されています． そこで，ファイル内のクラス属性をhighlighter-rougeに置換することで，シンタックスハイライトが適用されました． 試行錯誤の末，シンタックスハイライトの適用までこぎつけましたが，この辺り十分に理解できていないかもしれません．</description>
     </item>
     
     <item>
@@ -1222,8 +1219,8 @@ highlighter: rouge ここまでは，何てことないのですが，ここか�
       
       <guid>https://mukai-lab.info/pages/tech/jekyll/2016-02-04-top_link/</guid>
       <description>Jekyllのデフォルトテンプレートでは， トップページのヘッダ部の右にサイトに含まれるページのリンクを自動的に追加してくれます． これはとても便利な機能ではあるのですが，ページ数が増えてくると，特定のページは除いて欲しいというケースが発生します．
-そこで，YAML Front Matterを利用して解決します． まずは，&amp;rdquo;_templates/page&amp;rdquo;に，top_linkという名前の変数を下記のように用意します． これで，新規に作成するページには，top_linkの行が自動的に追加されます．
- トップページに自動的にリンクを追加する場合は，ページを作成した後で，このtop_linkの値を&amp;rdquo;true&amp;rdquo;に設定しておきましょう． 次に，&amp;rdquo;_includes/header.html&amp;rdquo;に下記のようにtop_linkに関する条件文を追加します．
+そこで，YAML Front Matterを利用して解決します． まずは，&amp;quot;_templates/page&amp;quot;に，top_linkという名前の変数を下記のように用意します． これで，新規に作成するページには，top_linkの行が自動的に追加されます．
+ トップページに自動的にリンクを追加する場合は，ページを作成した後で，このtop_linkの値を&amp;quot;true&amp;quot;に設定しておきましょう． 次に，&amp;quot;_includes/header.html&amp;quot;に下記のようにtop_linkに関する条件文を追加します．
  これで，トップページの自動リンクをtop_linkという変数で制御できるようになります．</description>
     </item>
     
@@ -1233,9 +1230,9 @@ highlighter: rouge ここまでは，何てことないのですが，ここか�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter6/</guid>
-      <description>2項分布 --  2項分布  2項分布とは，結果が2通り（例，成功・失敗）となる試行を複数回行ったときの確率分布です． 例えば，「コインを投げる」という試行の結果は，表，または，裏のどちらかになります． 他にも，「サイコロを投げる」という試行の結果は，偶数，または，奇数のどちらかになります． このような試行はベルヌーイ試行と呼ばれ，ベルヌーイ試行を複数回行ったときの結果が2項分布に従います． 今回は，サンプルデータを基に2項分布のグラフを描く事から始め，2項分布を利用して生起確率を求める方法を学びます．
-スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter6としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます． このとき，グラフ描画に必要なggplot2も読み込んでおきましょう．
-library(ggplot2) 2項分布のグラフ --  2項分布のグラフ  まずは「コインを投げる」という試行に注目しましょう． 試行の結果は，表 と 裏 の2通りですが，ここでは便宜的に，1 と 0 で表現します． このとき，1 が出る確率は50%と仮定します．当然，0 が出る確率も50%です． この試行を10回繰り返して行ない，1 が出た数をカウントします．
+      <description>2項分布  2項分布とは，結果が2通り（例，成功・失敗）となる試行を複数回行ったときの確率分布です． 例えば，「コインを投げる」という試行の結果は，表，または，裏のどちらかになります． 他にも，「サイコロを投げる」という試行の結果は，偶数，または，奇数のどちらかになります． このような試行はベルヌーイ試行と呼ばれ，ベルヌーイ試行を複数回行ったときの結果が2項分布に従います． 今回は，サンプルデータを基に2項分布のグラフを描く事から始め，2項分布を利用して生起確率を求める方法を学びます．
+ スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter6としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます． このとき，グラフ描画に必要なggplot2も読み込んでおきましょう．
+library(ggplot2)  2項分布のグラフ  まずは「コインを投げる」という試行に注目しましょう． 試行の結果は，表 と 裏 の2通りですが，ここでは便宜的に，1 と 0 で表現します． このとき，1 が出る確率は50%と仮定します．当然，0 が出る確率も50%です． この試行を10回繰り返して行ない，1 が出た数をカウントします．
 乱数を生成するsample関数を用いて，上記の試行の結果を生成してみましょう． 引数には，「取り得る値のベクトル（ここでは，0または1）」，「乱数の個数（ここでは10回）」，「重複の許可」を設定します． 結果は下記のようになりました（乱数なので結果は毎回変わる）． 10回投げて，表が5回，裏も5回という結果です．
 &amp;gt; sample(0:1,10,replace=TRUE) [1] 0 1 1 1 0 0 1 0 0 1 さらに，この試行（「コインを10回投げる」）を1000回繰り返し，配列に変換して変数coinに代入しましょう．
 coin &amp;lt;- matrix(sample(0:1,10000,replace=TRUE),1000,10) coinは1000行，10列の配列になります． これが，試行を1000回繰り返した結果を表しています．
@@ -1280,7 +1277,7 @@ ambientLight(R, G, B); 下記を参考にコードを入力したら，Runボタ
 GitHubのリリースページから， 最新バージョンのNyARToolkitをダウンロードしましょう． ダウンロードしたファイルはZIPで圧縮されているので解凍し， 解凍後のlibraryフォルダをコピーして，「スケッチフォルダ（Project12）」の中に配置しましょう． コピーしたら，フォルダの名前をlibraryからcodeに変更します． 同様に，カメラの設定ファイルcamera_para.datも「スケッチフォルダ（Project12）」の中にコピーしておきます．
 
 
-次に，ソースコードの先頭に「import jp.nyatla.nyar4psg.&amp;lowast;;」を入力してください． また，今回もカメラ映像を利用するため，[スケッチ]-[ライブラリをインポート]-[Video]をクリックして， Videoライブラリをインポートしておきます．
+次に，ソースコードの先頭に「import jp.nyatla.nyar4psg.∗;」を入力してください． また，今回もカメラ映像を利用するため，[スケッチ]-[ライブラリをインポート]-[Video]をクリックして， Videoライブラリをインポートしておきます．
   カメラ映像の表示  Captureクラスを利用して，カメラから入力した画像を表示しましょう． 下記を参考にコードを入力したら，Runボタンをクリックしてください． ここでは，サイズ（size）が320x240，フレームレート（fps）が30となっている， 3番のカメラを使用していることに注意してください． ウィンドウにカメラ映像が表示されることを確認してください．
  
  拡張現実の表示  ARToolkitを利用すると，ARマーカーと呼ばれる特定のパターンをカメラで読み取ることにより， その位置を認識し，３Dオブジェクトを配置することができます． ここでは，NYARToolkitに標準搭載されているNyIDを利用します． NyIDには番号が設定されており， ここではMODEL2の1番のNyIDを利用します．
@@ -1298,7 +1295,7 @@ marker.detect(cam); marker.drawBackground(cam); 最後に，マーカーが検�
       <description>CodeCombatとは  CodeCombatはRPG風のゲームを遊びながらプログラミングを学ぶことができるプラットフォームです。 オープンソースのコミュニティで運営されており、2013年に公開されて以降、500人以上のプログラマーがこのプロジェクトに関わって開発が続けられています。 IEやChromeなどのウェブブラウザさえあれば、プラットフォームに参加できることが特徴であり、50以上の言語に翻訳され、世界で5,000,000人以上のプレイヤーがこのプラットフォームでプログラミングを学んでいます(2016年11月18日現在)。 本格的にプラットフォームを利用するには、アカウント登録が必要ですが、今回はアカウント登録はしないで、プログラミングの基本的な文法を学ぶ「キースガードのダンジョン」に挑戦してみましょう。 この授業を受ける多くの皆さんは「プログラミングは難しい」という先入観を持っているのではないでしょうか。 この授業が終わった頃には「プログラミングは楽しい」と思ってもらえることを期待します。
 
  学習コースの選択  早速、CodeCombatでプログラミング学習を始めましょう。 まずは、下記のリンクをクリックしてブラウザでCodeCombatを開きます。
-CodeCombat CodeCombatを開いたら、「今すぐプレイ」をクリックしましょう。 すると、学習コース（ダンジョン）を選択するページに遷移します。
+CodeCombatを開いたら、「今すぐプレイ」をクリックしましょう。 すると、学習コース（ダンジョン）を選択するページに遷移します。
 
 プログラミングに必要な、文法、メソッド、パラメータなどの基本的なスキルを学ぶことが出来る学習コースが「キースガードのダンジョン」です。 キースガードのダンジョンの「ゲームスタート」をクリックしましょう。
 
@@ -1351,13 +1348,13 @@ $ pip install websocket-client また，WebSocketsのポート番号は 54231 �
 
 それでは，ヘッドセットを頭に装着します． ヘッドセットを両手で持ち，頭上から下に向かってスライドさせます． このとき，左右の参照電極を，ちょうど耳たぶの裏の骨部分に配置します． 参照電極を用いた方法は単極導出と呼ばれ，この参照電極と他の電極との電位差が記録されます． この参照電極は，他の電極にも影響するため，正確な設置が必要です． また，前方の左右の電極は，眉毛から指３本だけ上にあるように配置します．
 
-この電極の設置の質（コンタクト・クオリティ）はEmotivProの下記の画面で確認できますが，・・・，非常に難しい． 緑色の電極はコンタクト・クオリティが高いことを示しています． 電極の位置を微調整しても，コンタクト・クオリティは全体で28%がやっとでした． このあたりのコツをご存知でしたら，お教えください．
+この電極の設置の質（コンタクト・クオリティ）はEmotivProの下記の画面で確認できますが，・・・，非常に難しい． 緑色の電極はコンタクト・クオリティが高いことを示しています． 電極の位置を微調整しても，コンタクト・クオリティは全体で**28%**がやっとでした． このあたりのコツをご存知でしたら，お教えください．
 
  脳波を可視化しよう  次は脳波を可視化してみましょう． ここで，脳波のサンプリングレートとA/D変換の分解能を確認しておきます． サンプリングレートは128Hz，また，分解能は16ビット（65536階調）です． 図中にEEGと表記がありますが，これはElectroencephalographの略で脳波（図）を意味しています （単に脳波をEEGと呼ぶことも多い）．
 
 次に電極の位置番号を確認しておきます． 上述したようにEpoc+では，14チャネルの電極があり， それぞれ，AF3，AF4，F3，F4，F7，F8，FC5，FC6，T7，T8，P7，P8，O1，O2です． 図中の赤い丸で表現されている電極は，耳たぶの裏にある参照電極です． ここでは，コンタクト・クオリティの高いAF4，F3，P8の３箇所に注目します．
 
-AF4，F3，P8の３箇所の電極の生データは下記です． 横軸は時間で単位は10[ms]，また，縦軸は電位を表し-100&amp;micro;V〜100&amp;micro;Vの範囲を取ります． 一般的にローデータから，脳波の意味を読み取ることは困難なため，高速フーリエ変換をして周波数成分を取り出します．
+AF4，F3，P8の３箇所の電極の生データは下記です． 横軸は時間で単位は10[ms]，また，縦軸は電位を表し**-100µV**〜**100µV**の範囲を取ります． 一般的にローデータから，脳波の意味を読み取ることは困難なため，高速フーリエ変換をして周波数成分を取り出します．
 
 EmotivProはフーリエ変換した周波数スペクトルの表示も可能です． P8にフーリエ変換をした結果は下記のようになります． 周波数に応じて脳波は分類され，4〜8Hzはシータ波，8〜12Hzはアルファ波，13Hz以上はベータ波と呼ばれます． この結果では，若干ですがシータ波が有意なように見えます． シータ波は眠い状態で発生する波とされ，いかに寝不足かが分かる結果となりました（笑）．
 
@@ -1443,7 +1440,9 @@ EmotivProはフーリエ変換した周波数スペクトルの表示も可能�
 
 このグラフは正規分布に近似することが可能です。 一般にデータサンプルが多いほど、理想的な正規分布の形状に近付きます。
  正規分布の公式  正規分布の確率密度は下記の式で与えられます。 2項分布よりも難しく感じると思いますが、この式の重要なパラメータはたった2つです。 １つは平均\mu、もう１つは標準偏差\sigmaです。 この2つのパラメータで正規分布の形状が決まります。
-\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(- \frac{(x - \mu)^2}{2 \sigma ^2} \right)  また、上記の計算はExcelではnorm.</description>
+また、上記の計算はExcelではnorm.dist関数を用いて求めることができます。 それでは、Excelで降水量を近似する正規分布を求めましょう。 まずは、平均\mu、標準偏差\sigmaを求めます。 平均は1588.5、標準偏差は269.0になります。
+ B128に、average関数で平均を求める B129に、stdev関数で標準偏差を求める。  
+次に、下記データを含むnorm.csvをダウンロードしてください。 ファイルをダウンロードしたらExcelでnorm.</description>
     </item>
     
     <item>
@@ -1452,9 +1451,9 @@ EmotivProはフーリエ変換した周波数スペクトルの表示も可能�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/seminar_core_areas_learning/chapter1/</guid>
-      <description>Microsoft Excelとは  Microsoft Excelはマイクロソフトが開発している表計算ソフトです． 表計算ソフトとは数値データの集計や分析を行うためのソフトウェアのことを指し， Excel以外にもOpenOfficeやGoogleドキュメントなどが存在しますが， Excelがデファクトスタンダード(事実上の標準)となっています． 一般に，Excelは，マス目状のセル（入力の単位）で構成されたスプレッドシート（単にシートと呼ぶことが多い）に， 数値，文字列，計算式などのデータを入力することで，財務管理や販売管理などに利用されています． 一方で，Excelには，分析ツール（統計処理） や ソルバー（最適化処理） などの機能が備えられており，統計学的な分析も可能です． この授業では，統計分析の基本である「相関係数」や「2項分布」などを，Excelを用いた実習形式で学ぶことを目的とします． マイクロソフトの認定資格であるマイクロソフト・オフィス・スペシャリスト（MOS）の取得も視野に入れて学習していきましょう．
+      <description>Microsoft Excelとは  Microsoft Excelはマイクロソフトが開発している表計算ソフトです． 表計算ソフトとは数値データの集計や分析を行うためのソフトウェアのことを指し， Excel以外にもOpenOfficeやGoogleドキュメントなどが存在しますが， Excelが**デファクトスタンダード(事実上の標準)**となっています． 一般に，Excelは，マス目状のセル（入力の単位）で構成されたスプレッドシート（単にシートと呼ぶことが多い）に， 数値，文字列，計算式などのデータを入力することで，財務管理や販売管理などに利用されています． 一方で，Excelには，分析ツール（統計処理） や ソルバー（最適化処理） などの機能が備えられており，統計学的な分析も可能です． この授業では，統計分析の基本である「相関係数」や「2項分布」などを，Excelを用いた実習形式で学ぶことを目的とします． マイクロソフトの認定資格であるマイクロソフト・オフィス・スペシャリスト（MOS）の取得も視野に入れて学習していきましょう．
  授業の準備  今回，分析対象とするデータは，20人の5教科（国語，算数，理科，英語，社会）の得点リストです．
-まずは，上記のデータを含むファイル seiseki.csv をダウンロードしましょう． ファイルをダウンロードするには，ファイルのリンクを右クリックをして，「名前を付けてリンク先を保存」を選択します（ブラウザによって異なる）． ここで，ファイルはCSV（Comma Separated Values）という形式で保存されていることに注意してください． CSV形式では，対象となるデータ（ここでは得点）が，「,（カンマ）」で区切って入力されています（メモ帳で開いて確認してみてください）．
+まずは，上記のデータを含むファイル seiseki.csv をダウンロードしましょう． ファイルをダウンロードするには，ファイルのリンクを右クリックをして，「名前を付けてリンク先を保存」を選択します（ブラウザによって異なる）． ここで，ファイルは**CSV（Comma Separated Values）**という形式で保存されていることに注意してください． CSV形式では，対象となるデータ（ここでは得点）が，「,（カンマ）」で区切って入力されています（メモ帳で開いて確認してみてください）．
 ファイルをダウンロードしたら，Excelでseiseki.csvを読み込んでみましょう． Excelを起動し，空白のブック を選択し，ファイルを新規作成します． 次にデータタブに切り替え，テキストまたはCSVから をクリックします． 表示された データの取り込み のダイアログでseiseki.csvを選択し，インポートをクリックします． 最後に，読み込まれるデータを確認したら，読み込みをクリックします．
 
 Excelで下記のように表示されていれば成功です． シートの1行目には項目名である氏名，国語，算数，理科，英語，社会が入力されています． また，2行目以降は，20人の生徒の得点リストが入力されています．
@@ -1496,7 +1495,7 @@ Excelで下記のように表示されていれば成功です． シートの1�
  準備  アプリの開発に当たり下記の機器を利用します。 ヘッドマウントディスプレイにはCardboardではなく、 サンワサプライが販売している「VR SHINECON」を利用します。 ヘッドホンが搭載されており、Cardboardに比べると高級感があるモデルです。
 また、360°画像（全天球画像）の撮影にはRICHO THETA Sを採用します。 静止画・動画に対応しており、動画のライブストリーミングも可能なモデルです。
  VR SHINECON RICHO THETA S  下記がRICHO THETA Sで撮影したサンプル画像です。 マウスを使って画像をスクロールすると、教室に一人で寂しそうに立っている向の姿が見えるはずです。 ここでは、ウェブで360°画像を表示するために「VR view on the web」を利用しています。 また、RICHO THETA Sで撮影された画像の解像度は5376x2688ですが、VR viewに最適な4096x2048に変換してあります。
-  プロジェクトの作成  Unityでプロジェクトを作成します。 Unityのバージョンは5.</description>
+ プロジェクトの作成  Unityでプロジェクトを作成します。 Unityのバージョンは5.</description>
     </item>
     
     <item>
@@ -1505,19 +1504,20 @@ Excelで下記のように表示されていれば成功です． シートの1�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter9/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project9”を入力します． また，JREは&amp;rdquo;プロジェクト固有のJREを使用&amp;ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
- 
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project9”を入力します． また，JREは&amp;rdquo;プロジェクト固有のJREを使用&amp;ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+
 本日取り上げるのJavaFXは，Eclipseの現バージョン（Mars）では， 「使用すべきではない制限されたAPI」に指定されているため， 事前に，JavaFXの利用を許可する必要があります（将来的には指定から取り除かれると思います）． メニューから[ウィンドウ]-[設定]をクリックして，「設定」のダイアログを開きます． さらに，ダイアログから[Java]-[コンパイラー]-[エラー/警告]を選択します． ここで，「使用すべきではないAPI」，「禁止された参照」，「阻止された参照」の３カ所を無視に設定してください．
 
-JavaFXとは --  JavaFXとは  従来，JavaにおけるGUI（Graphical User Interface）は， AWT（Abstract Window Toolkit）やSwingと呼ばれるGUIツールキットを利用するのが標準でした． 一方，JavaFXは2014年にリリースされたJava 8に統合された新しいGUIツールキットです． AWTやSwingに比べ，より洗練されたGUIアプリケーションの制作が可能です． それでは，このJavaFXを利用したGUIプログラミングを学習していきましょう．
-ウィンドウの表示 --  ウィンドウの表示  JavaFXを利用したGUIアプリケーションを作成するには， javafx.applicationパッケージに含まれるApplicationクラスを継承することから始めます． パッケージとはクラスをグループ分けして管理するためのフォルダのようなものです． パッケージ名も含めたクラス名はjavafx.application.Applicationと表記します．
+ JavaFXとは  従来，Javaにおける**GUI（Graphical User Interface）**は， AWT（Abstract Window Toolkit）やSwingと呼ばれるGUIツールキットを利用するのが標準でした． 一方，JavaFXは2014年にリリースされたJava 8に統合された新しいGUIツールキットです． AWTやSwingに比べ，より洗練されたGUIアプリケーションの制作が可能です． それでは，このJavaFXを利用したGUIプログラミングを学習していきましょう．
+ ウィンドウの表示  JavaFXを利用したGUIアプリケーションを作成するには， javafx.applicationパッケージに含まれるApplicationクラスを継承することから始めます． パッケージとはクラスをグループ分けして管理するためのフォルダのようなものです． パッケージ名も含めたクラス名はjavafx.application.Applicationと表記します．
 まずは，Applicationクラスを継承したMyApplicationクラスを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します． 次にスーパークラスを設定するために，[参照]ボタンから「スーパークラスの選択」を開き， 一致する項目からjavafx.application.Applicationを選択して，[OK]をクリックします． 最後に[完了]をクリックしましょう．
 
 
 MyApplicationクラスでは，Applicationクラスの抽象メソッドである startメソッドをオーバーライドする必要があります． また，他のパッケージのクラスを利用する場合は，ソースコードの先頭にimportという表記を用いて，import javafx.application.Application;のように記述します（Eclipseが自動的に補完してくれるはず）．
  startメソッドの引数であるStageクラスがウィンドウを表しています． 下記コードを参考にStageクラスのsetTitleメソッド，setWidthメソッド，setHeightメソッドを利用して，タイトルをProject 9，幅を320px，高さを240pxに設定しましょう． また，作成したウィンドウを表示するにはshowメソッドを利用します． プログラムの実行後にウィンドウが表示されることを確認してください．
-  
- プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．</description>
+ 
+ プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
+  テキストフィールド  テキストフィールドをウィンドウに設置してみましょう． テキストフィールドとは，ユーザが数値や文字列を入力できる1行のフィールドのことです． テキストフィールドや後述するボタンなど，ウィンドウに配置可能な部品をコントロールと呼びます．</description>
     </item>
     
     <item>
@@ -1526,16 +1526,19 @@ MyApplicationクラスでは，Applicationクラスの抽象メソッドであ�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter1/</guid>
-      <description>Javaとは --  Javaとは  Javaはサン・マイクロシステムズが1990年に開発したオブジェクト指向のプログラミング言語です． サン・マイクロシステムズは2010年にオラクルに吸収合併されたため， 現在，Javaはオラクルによって開発・提供されており， 無料でjava.comからダウンロードすることが可能です． Javaは下記の特徴を備えており，さまざまな分野で広く利用されています．
+      <description>Javaとは  Javaはサン・マイクロシステムズが1990年に開発したオブジェクト指向のプログラミング言語です． サン・マイクロシステムズは2010年にオラクルに吸収合併されたため， 現在，Javaはオラクルによって開発・提供されており， 無料でjava.comからダウンロードすることが可能です． Javaは下記の特徴を備えており，さまざまな分野で広く利用されています．
  オブジェクト指向であり，大規模なチームでの開発にも向いている ウィンドウズやマッキントッシュなどのプラットフォームに依存しない C，C++の文法を引き継いでおり，標準的で学びやすい  第1の特徴の「オブジェクト指向」という考え方は，Javaの重要なキーワードですが， プログラミング初心者にはちょっと難しい概念かもしれまん． 取り敢えず「もの（オブジェクト）」という考え方を中心にした開発手法と覚えておいてください． オブジェクト指向に関しては第8回で詳しく説明します．
 第2の特徴はJVM（Java Virtual Machine）という方法で実現しています． 一般にJavaで開発されたプログラムはバイトコードと呼ばれる独自の形式で配布されています． このバイトコードを実行するためには事前にJVMをウィンドウズやマッキントッシュなどのPCにインストールする必要があります． つまり，どんなプラットフォームでも，JVMさえインストールしておけば，Javaのプログラムは実行可能というわけです．
 第3の特徴は，Javaがオブジェクト指向を実現しつつ，C++よりもシンプルであることを目指して設計されたことが理由です． このため，JavaはCプログラマーには馴染みやすく，新人研修など教育向けのプログラミング言語としても広く利用されています．
-Javaの開発環境 --  Javaの開発環境  Javaのポピュラーな開発環境としてEclipseがあります． EclipseはIBMによって開発され，現在はオープンソースとして開発が継続されています． プログラミング初心者が開発環境を整えるには，日本語化プラグインを導入したパッケージPleiadesを利用するのがお薦めです． Eclipseにはバージョン管理システムのCVS，Gitなども組み込まれているため， チームで効率的にソースコードを管理することも可能です．
+ Javaの開発環境  Javaのポピュラーな開発環境としてEclipseがあります． EclipseはIBMによって開発され，現在はオープンソースとして開発が継続されています． プログラミング初心者が開発環境を整えるには，日本語化プラグインを導入したパッケージPleiadesを利用するのがお薦めです． Eclipseにはバージョン管理システムのCVS，Gitなども組み込まれているため， チームで効率的にソースコードを管理することも可能です．
 Eclipseを起動すると下記のメイン画面が表示されます． Eclipseのメイン画面はビューという区画で区切られています． 様々な機能を備えたビューがありますが，この授業で主に利用するのは「パッケージ・エクスプローラー」「エディタ」「問題・コンソール」の3つです． パッケージ・エクスプローラーは，プロジェクトに含まれるファイルやフォルダを階層的な構造で管理するためのビューです． エディタは，Javaのソースコードを編集・保存するためのビューです． 問題・コンソールは，コンパイル時に発生したエラーを確認したり，プログラムの実行結果を確認するためのビューです．
 
-プロジェクトの作成 --  プロジェクトの作成  Eclipseでは「プロジェクト」という単位でプログラムを管理します． プロジェクトを作成するには，メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクト」を開きます． ここでは，プロジェクト名に&amp;rdquo;Project1&amp;rdquo;を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください． プロジェクト内に生成された&amp;rdquo;src&amp;rdquo;フォルダに，Javaのソースファイルは保存されます．
+ プロジェクトの作成  Eclipseでは「プロジェクト」という単位でプログラムを管理します． プロジェクトを作成するには，メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクト」を開きます． ここでは，プロジェクト名に&amp;quot;Project1&amp;quot;を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください． プロジェクト内に生成された&amp;quot;src&amp;quot;フォルダに，Javaのソースファイルは保存されます．
 
-ソースファイルの作成 --  ソースファイルの作成  作成したプロジェクトにJavaソースファイルを作成します． Javaのプログラムはクラスという単位で構成され，ファイル名は&amp;rdquo;クラス名.java&amp;rdquo;となります． Javaソースファイルを作成するには，メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に&amp;rdquo;MyClass&amp;rdquo;を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．</description>
+ ソースファイルの作成  作成したプロジェクトにJavaソースファイルを作成します． Javaのプログラムはクラスという単位で構成され，ファイル名は&amp;quot;クラス名.java&amp;quot;となります． Javaソースファイルを作成するには，メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に&amp;quot;MyClass&amp;quot;を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
+
+エディタには作成した下記のソースコードが表示されています． ソースコードの詳しい説明はここでは省略します．
+  文字列の出力  文字列を出力するにはSystem.out.println()という命令文を用います． ここでは，「Hello World!</description>
     </item>
     
     <item>
@@ -1547,10 +1550,10 @@ Eclipseを起動すると下記のメイン画面が表示されます． Eclips
       <description>MOONBlockとは  MOOBlockは株式会社ユビキタスエンターテインメントが 開発する教育用のプログラミング言語です。 普通のプログラミング言語（C言語など）は複雑な命令や制御を理解する必要がありますが、 MOONBlockではブロックを並べるだけで簡単にプログラミングできるという特徴があります （同様の方法でプログラミングが可能なMITメディアラボ開発のSCRATCHも有名です）。 事前にソフトウェアをインストールする必要もなく、 ウェブブラウザ（IE、Chromeなど）がインストールされていれば動作させることが可能です。 今回はこのMOONBlockを利用して簡単なゲームを制作することを目指しましょう。
  MOONBlockの基本  MOONBlockはゲームエンジンの一つであるenchant.jsがベースとなっています。 このため、MOONBlockで作成したプログラムを基にPC、Mac、iOS、Androidなど様々なプラットフォームで動作するアプリケーションを開発することが可能です。 enchant.jsはMITライセンスであり、ソースコードの著作権の表示を条件に、 「ソースコードの改変」「再配布」が認められています （詳細はenchant.jsのライセンスを参照）。
 また、制作したゲームをゲーム投稿サイトの9leapに投稿することで、 ゲームを体験したユーザから様々なフィードバックを得ることができます（コンテストに応募して賞金を狙うことも）。 下記は研究室の学生が制作し9leapに応募した作品です。 時間があるときに遊んでみてください。
-星を集めようはスライムを避けながら星（スター）を３つ集めるゲームです。 
-イライラ棒アプリは木、森などの障害物に当たることなく、ゴールを目指すゲームです。 
-ひよこマンは、３種類に変身するひよこを操りながら、鍵を集めてゴールに向かうゲームです。 
- MOONBlockのゲーム素材画像  ゲームを制作する際に必要なアイコン、キャラクター、背景などの素材画像は、 MOONBlockであらかじめ用意されています（非営利目的であれば自由に利用可能）。 アイコンは16&amp;times;16ピクセル、キャラクターは32&amp;times32;ピクセル、 背景は320&amp;times;320ピクセルで構成されています。 これらの素材画像を重ねて表示することでゲーム画面は構成されます。
+星を集めようはスライムを避けながら星（スター）を３つ集めるゲームです。
+イライラ棒アプリは木、森などの障害物に当たることなく、ゴールを目指すゲームです。
+ひよこマンは、３種類に変身するひよこを操りながら、鍵を集めてゴールに向かうゲームです。
+ MOONBlockのゲーム素材画像  ゲームを制作する際に必要なアイコン、キャラクター、背景などの素材画像は、 MOONBlockであらかじめ用意されています（非営利目的であれば自由に利用可能）。 アイコンは16×16ピクセル、キャラクターは32&amp;amp;times32;ピクセル、 背景は320×320ピクセルで構成されています。 これらの素材画像を重ねて表示することでゲーム画面は構成されます。
 ここでキャラクターの素材画像（chara1.png）に注目してみましょう。 少しずつ異なるクマの画像が横に並んでいることが分かります。 これらの画像を、パラパラ漫画の要領で、素早く切り替えることでクマが動いているように見せることができます。
 
 Chara1.png
@@ -1561,7 +1564,7 @@ rpg.png
  MOONBlockの開発画面  下記のリンクをクリックして、MOONBlockのサイトを開きましょう！
 http://www.moonblock.jp/
 画面上に並んでいる「パペット」「ビヘイビア」などの箱を「キット」と呼びます。 キットにはプログラミングに必要なブロックが使用目的に合わせて別れて入っています。 キットは左右にドラッグすることで全ての種類を確認できます。
-画面右上にある青い正方形は実行画面です。 プログラムの実行結果はここで確認できます。 大きさは背景画像と同じ320&amp;times;320ピクセルです。
+画面右上にある青い正方形は実行画面です。 プログラムの実行結果はここで確認できます。 大きさは背景画像と同じ320×320ピクセルです。
 画面左下にあるボタンをクリックすると、プログラムの保存や、プログラムの実行ができます。 一端保存して自宅でプログラミングの続きをしたり、9leapに作品を投稿するときに利用しましょう。
 画面右下にあるゴミ箱には、不要になったブロックを入れます。 一度捨てたブロックは復元できないので注意してください。
 
@@ -1604,13 +1607,13 @@ Idle状態のInspectorを確認すると、 MotionにWAIT00が設定されてい
       <description>
  3Dモデルの準備  NyARToolkitのパッケージに含まれる サンプルSimpleLiteはマーカーを検出すると赤色の立方体（Cube）を表示するプログラムです。 このSimpleLiteを修正し、3Dモデルを立体的に表示できるよう改良します。
 SimpleLiteフォルダをコピーし、フォルダに含まれるC#スクリプトをARPictureCamera、 シーンをARPictureSceneにファイル名を変更した状態を前提とします （詳細はNyARToolkit for Unityの導入を参照）。
-Unityでは.3ds、.objなどの一般的な3Dモデルのファイル形式を利用できますが、 今回はUnityのオリジナルキャラクターである「ユニティちゃん」を利用してみます。 「ユニティちゃん」はUnityのアセット（素材）として配布されているので導入はとても簡単です。 また、このキャラクターは、ラインセンスロゴもしくはライセンス表記があれば、キャラクターの二次創作物の制作が認められています （詳細は「ユニティちゃんライセンス条項」を参照）。
+Unityでは**.3ds**、**.obj**などの一般的な3Dモデルのファイル形式を利用できますが、 今回はUnityのオリジナルキャラクターである「ユニティちゃん」を利用してみます。 「ユニティちゃん」はUnityの**アセット（素材）**として配布されているので導入はとても簡単です。 また、このキャラクターは、ラインセンスロゴもしくはライセンス表記があれば、キャラクターの二次創作物の制作が認められています （詳細は「ユニティちゃんライセンス条項」を参照）。
 
 まずは、「ユニティちゃん」の公式ページから、ライセンスに同意し、データをダウンロードします。 データをダウンロードしたら、ツールバーから[Assets]-[Import package]-[Custom package]をクリックして、 ダウンロードしたパッケージを選択します。 ファイルの読込み後に、ダイアログが表示されたら、全てのファイルにチェックを入れた状態でimportをクリックしましょう。 ファイルの取り込みが終わると、プロジェクトのAssetsに新しくUnityChanフォルダが展開されます。
 
  3Dモデルの表示  [UnityChan]-[Models]に「ユニティちゃん」の3Dモデルであるunitychanがあります。 これを、ドラッグし、HierarchyにあるMarkerObjectの直下に配置します。 すると下記のようにx=0、y=0、ｚ=0の位置に「ユニティちゃん」が配置されます。
 
-次に、「ユニティちゃん」のサイズ（Scale）や座標（Position）を調整します。 ここでは、Inspectorから、サイズの値をX=80、Y=80、Z=80、位置をX=0、Y=-40、Z=-20に修正しましょう。
+次に、「ユニティちゃん」の**サイズ（Scale）や座標（Position）**を調整します。 ここでは、Inspectorから、サイズの値をX=80、Y=80、Z=80、位置をX=0、Y=-40、Z=-20に修正しましょう。
 
 再生ボタンをクリックすると、「ユニティちゃん」が表示されることを確認してください。 説明文なしに下記の画像だけだと完全に変な人かもしれません。
 
@@ -1638,7 +1641,7 @@ SimpleNftフォルダをコピーし、フォルダに含まれるC#スクリプ
 
 次に、Assetsで赤色と青色のマテリアルを作成します。 [Create]-[Materials]をクリックしてマテリアルを作成し、Albedoに赤色と青色を設定します。 ここでは、マテリアルの名前をRedとBlueにしておきます。 これらのマテリアルはMarkerObjectの直下にあるCubeのMaterialsに設定しておきます。
 
-マーカーが認識されたときに表示されるのは、上記のCubeオブジェクトです。 Cubeのサイズ（Scale）や位置（Position）はマーカーの大きさに合わせて調整する必要がありますが、 ここでは、サイズの値をX=80、Y=80、Z=80、位置をX=-80、Y=80、Z=40に修正しておきます。
+マーカーが認識されたときに表示されるのは、上記のCubeオブジェクトです。 Cubeの**サイズ（Scale）や位置（Position）**はマーカーの大きさに合わせて調整する必要がありますが、 ここでは、サイズの値をX=80、Y=80、Z=80、位置をX=-80、Y=80、Z=40に修正しておきます。
 
  スクリプトの修正  最後にC#スクリプトのARPictureCameraを修正します。</description>
     </item>
@@ -1661,9 +1664,9 @@ SimpleLiteフォルダをコピーし、フォルダに含まれるC#スクリ�
 
 
 次に、シーンのARPictureSceneをダブルクリックします。 ここで、Hierarchyから[Create]-[3D Object]-[Cube]を選択し、新規に立方体（Cube）のオブジェクトを作成します。 オブジェクトの名前はDogObjectに変更しておきます。 このDogObjectをドラッグして、MarkerObjectの直下に配置します。 このとき、デフォルトで設定されている、Cubeオブジェクトは削除しておきます。
-DogObjectのInspectorから、オブジェクトの位置（Position）やサイズ（Scale）を修正します。 位置はX=0、Y=0、Z=20とし、サイズはX=80、Y=80、Z=0とします（Z=0とすることで幅がなくなり平面となります）。
+DogObjectのInspectorから、オブジェクトの**位置（Position）やサイズ（Scale）**を修正します。 位置はX=0、Y=0、Z=20とし、サイズはX=80、Y=80、Z=0とします（Z=0とすることで幅がなくなり平面となります）。
 
-最後に、DogObjectのMaterialsをクリックして、作成したDogを選択しておきます。 再生ボタンをクリックすると、犬の画像（001.png）が表示されることを確認してください。 テクスチャ画像が上下反対に張り付けられる場合は、 TilingのYの値を-1に変更します（Direct3DかOpenGLで振る舞いが異なるようです）。
+最後に、DogObjectのMaterialsをクリックして、作成したDogを選択しておきます。 再生ボタンをクリックすると、犬の画像（001.png）が表示されることを確認してください。 テクスチャ画像が上下反対に張り付けられる場合は、 TilingのYの値を**-1**に変更します（Direct3DかOpenGLで振る舞いが異なるようです）。
 
 
 次回は画像の代わりに3Dオブジェクトを表示することにに挑戦してみます。
@@ -1676,7 +1679,7 @@ DogObjectのInspectorから、オブジェクトの位置（Position）やサイ
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/tech/unity/artoolkit/</guid>
-      <description>NYARtoolkitとは  ARToolkitをベースに開発された拡張現実ライブラリがNyARToolkitです． ゲーム開発環境であるUnityで利用可能なNyARToolkit for Unityの導入方法を紹介します． ここでは，Unityのバージョンは5.3.5，NyARToolkit for Unity のバージョンは5.0.8を対象とします． また，NyARToolkitのライセンスはLGPLv3**となっています（商用ライセンスもあるようです）． このライセンスは，「著作権の表示」を条件に，商用利用や配布が認められています（詳細はWikipediaを参照）．
+      <description>NYARtoolkitとは  ARToolkitをベースに開発された拡張現実ライブラリが**NyARToolkit**です． ゲーム開発環境である**Unity**で利用可能な**NyARToolkit for Unity**の導入方法を紹介します． ここでは，**Unity**のバージョンは**5.3.5**，**NyARToolkit for Unity** **のバージョンは**5.0.8**を対象とします． また，NyARToolkitのライセンスは**LGPLv3**となっています（商用ライセンスもあるようです）． このライセンスは，「著作権の表示」を条件に，商用利用や配布が認められています（詳細はWikipediaを参照）．
  プロジェクトの作成  Unityで新しいプロジェクトを作成します． ここでは，プロジェクト名を「ARPictureBook」としています． また，ゲーム環境は「3D」を選択しておきます．
 
 次に，「NyARToolkit for Unity」のパッケージをインストールします． パッケージは下記URLからダウンロードできます．
@@ -1702,12 +1705,13 @@ SimpleLiteを実行する前に下記の準備が必要です． ウェブカメ
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter1/</guid>
-      <description>HTML5とは  HTML5とは --
-HTML5とは，HTML(Hyper Text Markup Language)のバージョン5のことを指し， W3C(World Wide Web Consortium)と呼ばれる非営利団体が2014年10月28日に勧告した技術のことです． HTML5では，文書構造を表すタグが追加されており，例えば，ヘッダを表すheaderタグ，フッタを表すfooterなどが利用できます． また，動画や音声などのマルチメディアファイルも，Flashなどのプラグインを必要とせず， videoタグや，audioタグを利用してページに埋め込むことが可能になりました． その他，ブラウザにデータの保存が可能なWeb Storage， サーバー・クライアント間の双方向通信が可能なWeb SocketなどもHTML5の一部として認識されています．
-HTML5ハイブリッドアプリとは --  HTML5ハイブリッドアプリとは  スマートフォンに搭載されているiOSやAndroidは， ウェブブラウザのようにウェブページを取得・表示するための，Web Viewという機能が利用できます． この，Web Viewを利用して，HTML，CSS，JavaScriptなどの技術で， ネイティブ・アプリと同等の機能を提供する方法がHTML5ハイブリッドアプリです． 一般に，ネイティブ・アプリを開発するには，iOSであればObjective-CやSwift， AndroidであればJavaで実装する必要があり，学生が気軽に開発を初めることは困難です． 一方，HTML5ハイブリッドアプリであれば，ウェブページを制作するための技術が中心であり， HTMLの基本を学んでいれば取り組むことが可能です． 本授業では，HTML5ハイブリッドアプリのプラットフォームであるMonacaを利用して， 様々なアプリを開発するためのプログラミング技術を身に着けます．
-Monaca --  Monaca  Monacaはアシアル株式会社が提供する HTML5ハイブリッドアプリ専用の開発プラットフォームです． Chromeで動作するクラウドサービスとして提供されているため， ウェブに接続出来る環境であれば，どこでも開発が可能という特徴があります （Monaca Localkitを利用すればローカルの環境でも開発可能）． Apacheが提供しているハイブリッドアプリのフレームワークである Cordovaを採用しているため，ネイティブ・アプリと同様に， スマートフォンのカメラやセンサーの機能を利用することも可能です．
+      <description>HTML5とは  HTML5とは，HTML(Hyper Text Markup Language)のバージョン5のことを指し， W3C(World Wide Web Consortium)と呼ばれる非営利団体が2014年10月28日に勧告した技術のことです． HTML5では，文書構造を表すタグが追加されており，例えば，ヘッダを表すheaderタグ，フッタを表すfooterなどが利用できます． また，動画や音声などのマルチメディアファイルも，Flashなどのプラグインを必要とせず， videoタグや，audioタグを利用してページに埋め込むことが可能になりました． その他，ブラウザにデータの保存が可能なWeb Storage， サーバー・クライアント間の双方向通信が可能なWeb SocketなどもHTML5の一部として認識されています．
+ HTML5ハイブリッドアプリとは  スマートフォンに搭載されているiOSやAndroidは， ウェブブラウザのようにウェブページを取得・表示するための，Web Viewという機能が利用できます． この，Web Viewを利用して，HTML，CSS，JavaScriptなどの技術で， ネイティブ・アプリと同等の機能を提供する方法がHTML5ハイブリッドアプリです． 一般に，ネイティブ・アプリを開発するには，iOSであればObjective-CやSwift， AndroidであればJavaで実装する必要があり，学生が気軽に開発を初めることは困難です． 一方，HTML5ハイブリッドアプリであれば，ウェブページを制作するための技術が中心であり， HTMLの基本を学んでいれば取り組むことが可能です． 本授業では，HTML5ハイブリッドアプリのプラットフォームであるMonacaを利用して， 様々なアプリを開発するためのプログラミング技術を身に着けます．
+ Monaca  Monacaはアシアル株式会社が提供する HTML5ハイブリッドアプリ専用の開発プラットフォームです． Chromeで動作するクラウドサービスとして提供されているため， ウェブに接続出来る環境であれば，どこでも開発が可能という特徴があります （Monaca Localkitを利用すればローカルの環境でも開発可能）． Apacheが提供しているハイブリッドアプリのフレームワークである **Cordova**を採用しているため，ネイティブ・アプリと同様に， スマートフォンのカメラやセンサーの機能を利用することも可能です．
 また，開発中のアプリをスマートフォンで動作テストすることが可能な Monacaデバッガーというアプリを利用することが可能です． iOS版，Android版がともにリリースされており，アプリ・マーケットから取得が可能です． ブラウザのプレビューでは動作するけど，スマートフォンでは動作しないという現象が， まれに発生するので，こまめにMonacaデバッガーで動作確認すると良いでしょう． 加えて，Monacaデバッガーにはチャットやスクリーンショットなどのコミュニケーション機能が搭載されており， チームでのアプリ開発もサポートしてくれます（有料のようですが）． ブラウザでMonacaを開く前に，Monacaデバッガーを自身のスマートフォンにインストールしておきましょう．
-プロジェクトの作成 --  プロジェクトの作成  Monacaを開き，ログインしてみましょう． このとき，ブラウザはChromeを利用することに注意してください （IEなど他のブラウザでの動作は保証されていないようです）． ログインすると下図のようにプロジェクトを管理するためのダッシュボードが表示されます． プロジェクトはプロジェクト名，プロジェクトの説明に加え，タグを付けて管理することができます．</description>
+ プロジェクトの作成  Monacaを開き，ログインしてみましょう． このとき，ブラウザはChromeを利用することに注意してください （IEなど他のブラウザでの動作は保証されていないようです）． ログインすると下図のようにプロジェクトを管理するためのダッシュボードが表示されます． プロジェクトはプロジェクト名，プロジェクトの説明に加え，タグを付けて管理することができます．
+
+今回は，Onsen UI ver.2というSPA（Single Page App）の フレームワークを利用して簡単な自己紹介アプリを作成してみましょう． Onsen UI ver.</description>
     </item>
     
     <item>
@@ -1716,18 +1720,19 @@ Monaca --  Monaca  Monacaはアシアル株式会社が提供する HTML5ハイ�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter2/</guid>
-      <description>Onsen UIとは --  Onsen UIとは  Onsen UIはアシアル株式会社が提供するSPA(Single Page App)のためのフレームワークです． このOnsenという名称は，英単語Spaの日本語訳が温泉であることから名付けられたようです． 旧バージョンの1.0は，GoogleのフレームワークであるAngularJSに依存していましたが， 最新バージョンの2.0では依存を切り離すことで，AngularJSだけでなく， ReactやVue.jsなどのフレームワークでも開発が可能になりました． 本授業では，最新のバージョン2.0を採用しますが， 特定のフレームワークは用いず，標準的なJavaScriptで実装することを基本とします．
-プロジェクトの作成 --  プロジェクトの作成  今回は，テキスト入力の機能を利用して，クイズアプリを作成してみましょう． ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Navigation】を選択します． プロジェクト名をクイズアプリ，説明をテキスト入力を利用したクイズアプリとします． プロジェクトを作成したらMonacaクラウドIDEの画面を開きましょう．
+      <description>Onsen UIとは  Onsen UIはアシアル株式会社が提供するSPA(Single Page App)のためのフレームワークです． このOnsenという名称は，英単語Spaの日本語訳が温泉であることから名付けられたようです． 旧バージョンの1.0は，GoogleのフレームワークであるAngularJSに依存していましたが， 最新バージョンの2.0では依存を切り離すことで，AngularJSだけでなく， ReactやVue.jsなどのフレームワークでも開発が可能になりました． 本授業では，最新のバージョン2.0を採用しますが， 特定のフレームワークは用いず，標準的なJavaScriptで実装することを基本とします．
+ プロジェクトの作成  今回は，テキスト入力の機能を利用して，クイズアプリを作成してみましょう． ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Navigation】を選択します． プロジェクト名をクイズアプリ，説明をテキスト入力を利用したクイズアプリとします． プロジェクトを作成したらMonacaクラウドIDEの画面を開きましょう．
 
-テキスト入力 --  テキスト入力  最初にindex.htmlのpage1.htmlを下記のように修正していきましょう （基本構造は「Onsen UI(1) コンポーネント」を参照）．
+ テキスト入力  最初にindex.htmlのpage1.htmlを下記のように修正していきましょう （基本構造は「Onsen UI(1) コンポーネント」を参照）．
  テキスト入力にはons-inputタグを利用します． ここでは，id属性にanswer，modifier属性にunderbarを設定しています． modifier属性は，コンポーネントの外見を設定するために用いられます． ons-inputタグであれば，マテリアルデザインのmaterialと， 下線が表示されるunderbarの２種類が設定可能です．
 このテキスト入力にクイズの答えを入力し，回答ボタンをクリックすると， 入力された答えが正しいかを判定し，それぞれ正解，または，不正解ページに遷移することにします． ここで，正解のページはpage2.html，不正解のページはpage3.htmlとします．
--- 
+
 次に，ons-templateタグと，ons-pageタグを利用して， 正解と不正解のページを下記のように作成します． page2.htmlは入力された回答が正解のときに表示されるページです． ツールバーに正解，中央にpタグで「向先生は射手座です！」と表示します． また，page3.htmlは入力された回答が不正解のときに表示されるページです． ツールバーに不正解，中央にpタグで「向先生は違う星座だよ！」と表示します．
- -- 
--- 
-最後にscript要素のJavaScriptのコードを下記のように修正します． フォームに入力されたテキストはgetElementById()関数でID属性を参照して取得します．
-var answer = document.getElementById(&amp;#34;answer&amp;#34;); 次に，if文を利用して，入力されたテキストが射手座と一致するときに， page2.</description>
+ 
+
+最後にscript要素のJavaScriptのコードを下記のように修正します． フォームに入力されたテキストは**getElementById()**関数でID属性を参照して取得します．
+var answer = document.getElementById(&amp;#34;answer&amp;#34;); 次に，if文を利用して，入力されたテキストが射手座と一致するときに， page2.htmlに遷移し，一致しないときは，page3.htmlに遷移するようにします． ここで，ページの遷移は**pushPage()**関数を利用していることに注意してください．
+  課題  index.htmlを修正し，オリジナルのクイズ問題を作成してください． アプリが完成したらプロジェクトをエクスポートして提出してください． エクスポートは【ファイル】-【プロジェクトをエクスポート】から可能です．</description>
     </item>
     
     <item>
@@ -1736,12 +1741,12 @@ var answer = document.getElementById(&amp;#34;answer&amp;#34;); 次に，if文�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter3/</guid>
-      <description>Onsenテーマローラーとは --  テーマローラーとは  Onsen UIでは Onsenテーマローラー というテーマ機能を利用できます． CSSファイルを直接編集しなくても，Onsenテーマーローラーで，各コンポーネントのデザインを変更することが可能です． また，Onsen UIを利用したデザインパターン（プロフィールやコンタクトリストなど）も用意されており， デザインパターンのソースコードを参考にしながら，オリジナルのデザインが可能です． アプリのデザインは個人のセンスが問われる要素です． 一からデザインを組み立てるよりも既存のデザインを流用する方が簡単かつ美しくなることが多いです．
-プロジェクトの作成 --  プロジェクトの作成  今回は，Onsenテーマローラを利用しながら，お店紹介アプリを作成してみましょう． ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Minimum】を選択します． プロジェクト名を お店紹介アプリ ，説明を Onsenテーマローラーを利用したお店紹介アプリ とします． プロジェクトを作成したら MonacaクラウドIDE の画面を開きましょう．
+      <description>テーマローラーとは  Onsen UIでは Onsenテーマローラー というテーマ機能を利用できます． CSSファイルを直接編集しなくても，Onsenテーマーローラーで，各コンポーネントのデザインを変更することが可能です． また，Onsen UIを利用したデザインパターン（プロフィールやコンタクトリストなど）も用意されており， デザインパターンのソースコードを参考にしながら，オリジナルのデザインが可能です． アプリのデザインは個人のセンスが問われる要素です． 一からデザインを組み立てるよりも既存のデザインを流用する方が簡単かつ美しくなることが多いです．
+ プロジェクトの作成  今回は，Onsenテーマローラを利用しながら，お店紹介アプリを作成してみましょう． ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Minimum】を選択します． プロジェクト名を お店紹介アプリ ，説明を Onsenテーマローラーを利用したお店紹介アプリ とします． プロジェクトを作成したら MonacaクラウドIDE の画面を開きましょう．
 
-デザインパターンの利用 --  デザインパターンの利用  今回は， Onsenテーマローラー にリストアップされているパターンの中から， 「Shop Details」を利用します． まずは， Show Source をクリックして，ソースコードを表示します． 表示されたダイアログの左には HTML ファイルのソースコード， 右には CSS ファイルのソースコードが表示されます． そこで，この HTML ファイルのソースコードの body 要素をコピーして， お店紹介アプリ の index.html の body 要素を上書きします．
+ デザインパターンの利用  今回は， Onsenテーマローラー にリストアップされているパターンの中から， 「Shop Details」を利用します． まずは， Show Source をクリックして，ソースコードを表示します． 表示されたダイアログの左には HTML ファイルのソースコード， 右には CSS ファイルのソースコードが表示されます． そこで，この HTML ファイルのソースコードの body 要素をコピーして， お店紹介アプリ の index.html の body 要素を上書きします．
 
-すると，プレビュー表示は下記のようになります． 次に， CSS ファイルのソースコードを全てコピーして， お店紹介アプリ の css/style.</description>
+すると，プレビュー表示は下記のようになります． 次に， CSS ファイルのソースコードを全てコピーして， お店紹介アプリ の css/style.css に貼り付けます （貼り付ける前は css/style.</description>
     </item>
     
     <item>
@@ -1750,10 +1755,10 @@ var answer = document.getElementById(&amp;#34;answer&amp;#34;); 次に，if文�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter4/</guid>
-      <description>ジェスチャー操作とは --  ジェスチャー操作とは  スマートフォンなどの画面に対して，指やタッチペンなどで行う動作が ジェスチャー操作 です． 例えば，画面を１回叩く操作を タップ（Tap） ，画面を平行に動かす操作を スワイプ（Swipe） と呼びます． Onsen UIでは ons-gesture-detector 要素を利用することで，ジェスチャー操作を検出することができます． また，Onsen UIにおけるジェスチャー操作の検出は，HAMMER.JSのカスタマイズ版をベースにしているとのことです．
-プロジェクトの作成 --  プロジェクトの作成  今回は，ジェスチャー操作を利用した簡単なゲームを作成してみましょう． 特定のジェスチャー操作をすることで，ブロック要素（div要素）を消去するゲームです． ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Minimum】を選択します． プロジェクト名を ジェスチャー・ゲーム ，説明を ジェスチャー操作を利用したゲームアプリ とします． プロジェクトを作成したら MonacaクラウドIDE の画面を開きましょう．
+      <description>ジェスチャー操作とは  スマートフォンなどの画面に対して，指やタッチペンなどで行う動作が ジェスチャー操作 です． 例えば，画面を１回叩く操作を タップ（Tap） ，画面を平行に動かす操作を スワイプ（Swipe） と呼びます． Onsen UIでは ons-gesture-detector 要素を利用することで，ジェスチャー操作を検出することができます． また，Onsen UIにおけるジェスチャー操作の検出は，HAMMER.JSのカスタマイズ版をベースにしているとのことです．
+ プロジェクトの作成  今回は，ジェスチャー操作を利用した簡単なゲームを作成してみましょう． 特定のジェスチャー操作をすることで，ブロック要素（div要素）を消去するゲームです． ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Minimum】を選択します． プロジェクト名を ジェスチャー・ゲーム ，説明を ジェスチャー操作を利用したゲームアプリ とします． プロジェクトを作成したら MonacaクラウドIDE の画面を開きましょう．
 
-ブロック要素とイベントの検出 --  ブロック要素とイベントの検出  ここでは，下記表の３つのジェスチャー操作を検出することとします．
+ ブロック要素とイベントの検出  ここでは，下記表の３つのジェスチャー操作を検出することとします．
    ジェスチャー イベント名 説明     タップ tap 画面を１回叩く   ホールド hold 画面を長く押す   スワイプ swipe 画面に平行に動かす    まずは，イベントを処理するためにjQueryを導入します． ツールバーから [設定]-[JS/CSSコンポーネントの追加と削除] をクリックします． 次に，コンポーネントの一覧から jQuery(Monaca Version) を選択し 追加 をクリックします． これで，対象のプロジェクトで jQuery が利用可能になります．</description>
     </item>
     
@@ -1781,7 +1786,7 @@ var answer = document.getElementById(&amp;#34;answer&amp;#34;); 次に，if文�
 
  OpenCVの導入  インテルが開発したオープンソースのライブラリであるOpenCVを導入することで， 画像処理・画像解析など様々な機能を利用することが可能となります． ここでは，Processing用のOpenCVを導入して，顔検出を試みてみましょう． まずは，メニューから[スケッチ]-[ライブラリをインポート]-[ライブラリを追加]をクリックして， 「Contribution Manager」を開きます． ここで，opencvをキーワードに検索すると， 「OpenCV for Processing | Computer vision with OpenCV.」が表示されるので， このライブラリを選択してインストールしましょう．
 
-次に，[スケッチ]-[ライブラリをインポート]-[OpenCV for Processing]をクリックして，OpenCVライブラリをインポートします． また，同様にVideoライブラリをインポートしてください． ソースコードの先頭に「import gab.opencv.&amp;lowast;;」と「import processing.video.&amp;lowast;;」が 表示されていることを確認してください．
+次に，[スケッチ]-[ライブラリをインポート]-[OpenCV for Processing]をクリックして，OpenCVライブラリをインポートします． また，同様にVideoライブラリをインポートしてください． ソースコードの先頭に「import gab.opencv.∗;」と「import processing.video.∗;」が 表示されていることを確認してください．
   カメラ映像の表示  Captureクラスを利用して，カメラから入力した画像を表示しましょう． 下記を参考にコードを入力したら，Runボタンをクリックしてください． ここでは，サイズ（size）が320x240，フレームレート（fps）が30となっている， 3番のカメラを使用していることに注意してください． ウィンドウにカメラ映像が表示されることを確認してください．
  
  顔位置の検出  顔位置の検出にはOpenCVクラスを利用して下記のように記述します． 例えば，OpenCV.CASCADE_FRONTALFACEは顔を検出することを意味します． この他にOpenCV.CASCADE_PEDESTRIANSは歩行者，OpenCV.CASCADE_EYEは目を検出することが可能です （詳細はOpenCVのドキュメントを参照してください）． 検出された顔位置はRectangleクラスとして返されます． Rectangleクラスは矩形を表しており，フィールドとしてx, y, width, heightを持ちます． x，yで左上の座標，width，heigthで幅と高さを表します．
@@ -1802,9 +1807,9 @@ OpenProcessing
 まずは、公開されているスケッチを閲覧してみましょう。 「Activity」のタブをクリックすると、右下に評価の高い作品の一覧が表示されます。 これらのスケッチはOpenProcessingの登録者が制作した作品です。 自由にスケッチを選んでプログラムを実行してみましょう。 下記のは2017日6月9日現在のスケッチのリストです。
 
 幾つか人気のある作品を取り上げてみましょう。 まずは、aadebdeb氏のrainbow spinという作品です。 マウスの動きに合わせて、描かれている虹色の渦巻きの回転方向や倍率が変化します。
- 次は、Victor Galve氏のPractica 2という作品です。 マウスでクリックすると、様々な色や形の花火が打ちあがります。
- 最後は、Raven Kwok氏のNoise Turbulence Doodlesという作品です。 マウスをドラッグすると円が重なりながら奇妙な形に成長します。
-  スケッチの作成  新しいスケッチを作成してみましょう。 サイトのトップから「+Create a Sketch」をクリックしてください。 下記のようにソースコードを入力する画面になります（デフォルトで記述されているコードは削除しておきましょう）。 ソースコードを記述した後で、をクリックすると、記述されたコードを実行することができます。
+次は、Victor Galve氏のPractica 2という作品です。 マウスでクリックすると、様々な色や形の花火が打ちあがります。
+最後は、Raven Kwok氏のNoise Turbulence Doodlesという作品です。 マウスをドラッグすると円が重なりながら奇妙な形に成長します。
+ スケッチの作成  新しいスケッチを作成してみましょう。 サイトのトップから「+Create a Sketch」をクリックしてください。 下記のようにソースコードを入力する画面になります（デフォルトで記述されているコードは削除しておきましょう）。 ソースコードを記述した後で、をクリックすると、記述されたコードを実行することができます。
 
 Processingをウェブ上で実行するには「P5js」、または、「Processing.js」というライブラリを利用します。 今回は後者の Processing.js を利用するため、画面右の Settings で、 Mode を Processing.js に変更してください。
 
@@ -1827,7 +1832,7 @@ Processingを起動すると下記のメイン画面が表示されます（バ�
 
  コンソールへの出力  コンソールに文字列を出力するにはprintln()という命令文を用います。 ここでは、「Hello World!」という文字列をコンソールに出力してみます。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 命令文の最後にはセミコロン（;）が必要なことに注意してください。 コンソールに「Hello World!」が出力されていることを確認してください。
 
-もし入力したコードにエラーがある場合は、エラータブに切り替えることで、エラーの詳細を確認することができます。 例えば、下記のコードの場合は「Missing right parenthesis &amp;ldquo;)&amp;ldquo;」と表示されます。
+もし入力したコードにエラーがある場合は、エラータブに切り替えることで、エラーの詳細を確認することができます。 例えば、下記のコードの場合は「Missing right parenthesis &amp;ldquo;)&amp;quot;」と表示されます。
 
  課題  println()を使用して、「本日の授業の感想」をコンソールに出力させてください。 課題が完成したら、作成したスケッチをZIPアーカイブ形式で保存します。 ZIPアーカイブを作成するには、メニューから[ツール]-[スケッチをアーカイブ]をクリックして、「スケッチを名前を付けてアーカイブする」を開きます。 保存するファイル名を確認した上で、[保存]をクリックします。 保存先に「Project1-日付a.zip」というファイルが作成されていることを確認してください。</description>
     </item>
@@ -1840,7 +1845,7 @@ Processingを起動すると下記のメイン画面が表示されます（バ�
       <guid>https://mukai-lab.info/pages/tech/robohon/robohon3/</guid>
       <description>ロボホンのカメラ  ロボホンの開発キットRoBoHoN Software Development Kitに 同梱されているカメラ用のアプリ SampleCamera を基にQRコードの読み取り機能を実装します。 QRコードの読み取りには、オープンソースとして提供されているZXingを採用します。 ちなみに、 ZXing の名称は Zebra Crossing が基になっているようです。 ZXing の実装方法はNAVERまとめの記事「Java QRコード読み取り」を参考にし、 ライブラリはMaven RepositoryからダウンロードしたJARファイルを利用します。 現時点での最新バージョンは 3.3.0 です（2017年9月20日現在）。
  カメラの利用  まずは、SampleCamera のプロジェクトを Android Studio で開き確認しましょう。 MainActivity.javaがこのサンプルの中心となるソースファイルです。
-ロボホンのカメラを利用した撮影には、静止画、動画、また、顔認識の有無などの設定が可能です。 ここでは、写真撮影 顔認識無ボタン の挙動にQRコードの読み取り機能を加えます。 下記が該当部分のソースコードです。 背面のモニタにある*cameraButton*をタップすると、getIntentForPhoto メソッドの 返り値（Intent クラスのインスタンス）が、sendBroadcast メソッドで通知される処理となっていることが分かります。
+ロボホンのカメラを利用した撮影には、静止画、動画、また、顔認識の有無などの設定が可能です。 ここでは、写真撮影 顔認識無ボタン の挙動にQRコードの読み取り機能を加えます。 下記が該当部分のソースコードです。 背面のモニタにあるcameraButtonをタップすると、getIntentForPhoto メソッドの 返り値（Intent クラスのインスタンス）が、sendBroadcast メソッドで通知される処理となっていることが分かります。
  次に、getIntentForPhoto メソッドを確認します。 ここで、登場する ShootMediaUtil クラスが重要な役割を担います。 Intent クラスのコンストラクタの引数には静止画撮影用のアクション名であるShotMediaUtil.ACTION_SHOOT_IMAGEを指定します。 また、アクション（撮影）終了後の結果通知を得るために、putExtraメソッドで ShotMediaUtil.EXTRA_REPLYTO_ACTIONを指定し、 ACTION_RESULT_TAKE_PICTURE をその返り値としています。 このインテントを sendBroadcast で通知することで、カメラの撮影機能が実行されます。
  カメラの撮影後には、結果通知として ACTION_RESULT_TAKE_PICTURE を CameraResultReceiver クラスの onReceive メソッドで受け取ります。 ここでは、ACTION_RESULT_TAKE_PICTURE に該当するコードのみを抜き出してみます。 撮影が成功していれば、インテントから ShootMediaUtil.</description>
     </item>
@@ -1851,13 +1856,13 @@ Processingを起動すると下記のメイン画面が表示されます（バ�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter3/</guid>
-      <description>データの可視化 --  データの可視化  データの特徴を理解するには，グラフなどを利用してデータを可視化することが重要です． R言語には散布図やヒストグラムなどで可視化するための機能がありますが， ここでは，よりリッチな可視化を実現するために，拡張パッケージのggplot2を採用します． ggplot2には，簡単に素早く描画するqplot関数と，複雑な描画が可能なggplot関数があります． 今回は，qplot関数に注目します．
-スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter3としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-ggplot2のインストール --  ggplot2のインストール  まずは，ggplot2パッケージをインストールしましょう． ツールバーから[パッケージ]-[パッケージの読み込み]をクリックし， パッケージの一覧からggplot2を選択します． これで対応するパッケージがダウンロードされます．
+      <description>データの可視化  データの特徴を理解するには，グラフなどを利用してデータを可視化することが重要です． R言語には散布図やヒストグラムなどで可視化するための機能がありますが， ここでは，よりリッチな可視化を実現するために，拡張パッケージのggplot2を採用します． ggplot2には，簡単に素早く描画するqplot関数と，複雑な描画が可能なggplot関数があります． 今回は，qplot関数に注目します．
+ スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter3としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+ ggplot2のインストール  まずは，ggplot2パッケージをインストールしましょう． ツールバーから[パッケージ]-[パッケージの読み込み]をクリックし， パッケージの一覧からggplot2を選択します． これで対応するパッケージがダウンロードされます．
 
 このパッケージを利用可能な状態にするには， library関数を利用します． ここでは，スクリプトに下記のように記述しておきます．
 library(ggplot2) これで，ggplot2を利用する準備が整いました．
-ヒストグラム --  ヒストグラム  まず，ヒストグラムを描いてみましょう． 対象となるデータフレームは下記のように生成しましょう． ここで，data.frameは，引数のベクトルを列とするデータフレームを生成する関数です． また，value は列名を表しています．
+ ヒストグラム  まず，ヒストグラムを描いてみましょう． 対象となるデータフレームは下記のように生成しましょう． ここで，data.frameは，引数のベクトルを列とするデータフレームを生成する関数です． また，value は列名を表しています．
 y &amp;lt;- c(1,1,2,3,5,6,6,6,7,9) d1 &amp;lt;- data.frame(value=y) プロンプトでデータフレームd1の要素を確認します． 要素はvalueの列だけで構成された１次元のデータとなります．
 &amp;gt; d1 value 1 1 2 1 3 2 4 3 5 5 6 6 7 6 8 6 9 7 10 9 qplot()関数を利用して，このデータフレームのヒストグラムを描きます． 引数には，Y軸の列名，data=データフレーム名 を与えます． ここでは，下記のようにvalue，data=d1 が引数となります．</description>
     </item>
@@ -1868,13 +1873,13 @@ y &amp;lt;- c(1,1,2,3,5,6,6,6,7,9) d1 &amp;lt;- data.frame(value=y) プロンプ
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter2/</guid>
-      <description>データ構造 --  データ構造  一般にプログラミング言語には，整数型，実数型，文字列型などデータの型が存在します． データの型を調べるにはtypeof関数を使用します． プロンプトで下記のように入力してみましょう．
+      <description>データ構造  一般にプログラミング言語には，整数型，実数型，文字列型などデータの型が存在します． データの型を調べるにはtypeof関数を使用します． プロンプトで下記のように入力してみましょう．
 &amp;gt; typeof(10) [1] &amp;#34;double&amp;#34; &amp;gt; typeof(&amp;#34;a&amp;#34;) [1] &amp;#34;character&amp;#34; すると，10 は double型であることが分かります． このdouble型は実数であることを表しています． 同様に，a は character型であることが分かります． このcharacter型は文字（もしくは文字列）であることを表しています． これらのデータ型は自動的に設定されるため，普段は特に意識する必要はありません．
 R言語では，これらの基本的なデータ型に加えて，数値処理に適したベクトル，行列，データフレーム といった構造が存在します． これらは，基本的に複数の値をまとめて処理するときに利用し，他のプログラミング言語における配列と同じような使い方をされます． 今回は，これらデータ構造に注目していきます．
-スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter2としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-変数 --  変数  上述した実数や文字列は変数と呼ばれるオブジェクトに記録し，参照することができます． 変数に値を代入するには，&amp;lt;- という演算子を利用します． スクリプトに下記を入力して，スクリプトを読み込み実行してください（実行は「source(&amp;ldquo;chapter2.R&amp;rdquo;)」）．
+ スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter2としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+ 変数  上述した実数や文字列は変数と呼ばれるオブジェクトに記録し，参照することができます． 変数に値を代入するには，&amp;lt;- という演算子を利用します． スクリプトに下記を入力して，スクリプトを読み込み実行してください（実行は「source(&amp;ldquo;chapter2.R&amp;rdquo;)」）．
 x &amp;lt;- 10 y &amp;lt;- 2 z &amp;lt;- x * y これで，変数x，y，zに，それぞれ値が代入されました． 変数に代入された値を確認するには，プロンプトで下記のように，変数名をそのまま入力します．
-&amp;gt; x [1] 10 &amp;gt; y [1] 2 &amp;gt; z [1] 20 x に10， y に2，z に20が代入されていることが確認できます． このように，演算子&amp;lt;-の後方に，代入したい値や式を記述します．</description>
+&amp;gt; x [1] 10 &amp;gt; y [1] 2 &amp;gt; z [1] 20 x に10， y に2，z に20が代入されていることが確認できます． このように，演算子**&amp;lt;-**の後方に，代入したい値や式を記述します．</description>
     </item>
     
     <item>
@@ -1883,12 +1888,12 @@ x &amp;lt;- 10 y &amp;lt;- 2 z &amp;lt;- x * y これで，変数x，y，zに，
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter1/</guid>
-      <description>R言語とは --  R言語とは  Rは，AT &amp;amp; Tベル研究所が開発したS言語を基本に開発された統計解析向けのプログラミング言語です． オープンソースとして開発されており，誰でも自由に利用，改変，再配布が可能なフリーソフトウェアです． 統計用のソフトウェアには，マイクロソフトのExcelや， IBMのSPSSなどがありますが， R言語はプログラミング言語として統計処理が可能なことが大きな特徴となっています． 一方でGUI（グラフィカル・ユーザ・インターフェイス）は弱く，文化系の学生には取っ付きにくい印象を与えるかもしれません． しかし，Rの基本を学べば，データマイニングなどの高度な統計解析手法を利用することが可能です． この授業ではRの基本から学び，多変量解析やデータマイニングなどの応用を学習することを目標とします．
-R言語のインストール --  R言語のインストール  まずはRを公式サイトからダウンロードしてインストールしましょう． 現在のところ公式サイトは英語表記しかないので注意してください． この資料では，2017年3月8日の時点の最新バージョンであるR 3.3.3を利用して説明していきます． Rをインストールするとデスクトップに32ビット版の「R i386 3.3.3」と 64ビット版の「R x64 3.3.3」のショートカットが作成されます． 各自のPC環境に合わせてプログラムを実行してください． 実行すると下記のような「R console」というウィンドウが表示されます（ここでは64ビット版を使用）．
+      <description>R言語とは  Rは，AT &amp;amp; Tベル研究所が開発したS言語を基本に開発された統計解析向けのプログラミング言語です． オープンソースとして開発されており，誰でも自由に利用，改変，再配布が可能なフリーソフトウェアです． 統計用のソフトウェアには，マイクロソフトのExcelや， IBMのSPSSなどがありますが， R言語はプログラミング言語として統計処理が可能なことが大きな特徴となっています． 一方でGUI（グラフィカル・ユーザ・インターフェイス）は弱く，文化系の学生には取っ付きにくい印象を与えるかもしれません． しかし，Rの基本を学べば，データマイニングなどの高度な統計解析手法を利用することが可能です． この授業ではRの基本から学び，多変量解析やデータマイニングなどの応用を学習することを目標とします．
+ R言語のインストール  まずはRを公式サイトからダウンロードしてインストールしましょう． 現在のところ公式サイトは英語表記しかないので注意してください． この資料では，2017年3月8日の時点の最新バージョンであるR 3.3.3を利用して説明していきます． Rをインストールするとデスクトップに32ビット版の「R i386 3.3.3」と 64ビット版の「R x64 3.3.3」のショートカットが作成されます． 各自のPC環境に合わせてプログラムを実行してください． 実行すると下記のような「R console」というウィンドウが表示されます（ここでは64ビット版を使用）．
 
 Rによる統計処理は，この「R console」に命令文を入力することが基本となります． 行頭の「&amp;gt;」はプロンプトと呼ばれ，この後にコマンド（命令）を入力して， エンターキーを押すとコマンドが実行されます． これを繰り返して，特定の処理を実現します．
-四則演算 --  四則演算  まずは，加算，減算などの算術演算を実行してみましょう． Rでは，下記表の算術演算子が利用可能です．
-   演算 演算子 例     加算 + 2+3   減算 - 2-3   乗算 * 2*3   除算 / 2&amp;frasl;3   べき乗 ^ 2^3   剰余 %% 2%%3    では，プロンプトの後に，「2 + 3」と入力してみましょう． すると下記のような加算の結果が得られます． ここで，[1]は出力される結果の1番目であることを意味しています． （今回は5のみが結果となるので，必然的に1番目になる）</description>
+ 四則演算  まずは，加算，減算などの算術演算を実行してみましょう． Rでは，下記表の算術演算子が利用可能です．
+   演算 演算子 例     加算 + 2+3   減算 - 2-3   乗算 * 2*3   除算 / 2/3   べき乗 ^ 2^3   剰余 %% 2%%3    では，プロンプトの後に，「2 + 3」と入力してみましょう． すると下記のような加算の結果が得られます． ここで，[1]は出力される結果の1番目であることを意味しています． （今回は5のみが結果となるので，必然的に1番目になる）</description>
     </item>
     
     <item>
@@ -1910,13 +1915,16 @@ $ python -m pip install opencv-python Collecting opencv-python Downloading openc
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter10/</guid>
-      <description>検定とは --  検定とは  第8回で示したように，母数は標本からある程度は推定することができます． しかし，標本のサンプル数nが少ないときは， 標本分散から母分散を推定することは難しくなります． このため，前回学んだ 標準正規分布を用いた検定（Z検定） を適用することができません．
+      <description>検定とは  第8回で示したように，母数は標本からある程度は推定することができます． しかし，標本のサンプル数nが少ないときは， 標本分散から母分散を推定することは難しくなります． このため，前回学んだ 標準正規分布を用いた検定（Z検定） を適用することができません．
  母平均\hat{\mu}は標本平均\muで推定できる 母分散\hat{\sigma}^2は標本分散（不偏分散）\sigma^2で推定できる  そこで，利用するのがt検定です． t検定では，母分散の推定値に，標本分散を用いて検定を行います． すなわち，母分散\hat{\sigma}^2が未知の場合です． このような場合は，t分布 と呼ばれる正規分布によく似た釣鐘状の分布を利用します． 今回は，t検定 の基本を解説した上で，R言語の関数を利用した検定を行います．
-スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter10としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-t検定 --  t検定  具体例として，前回と同じ問題を取り上げていきます． 前回と異なるのは母集団の分散が未知というところです．
-文化情報学部の学生Xに情報数学に関するテストを行ったところ， その得点の平均\hat{\mu}は60であった． このうち，向研究室に所属する5人の学生xの得点は下記であった． 向研究室に所属する学生xは， 文化情報学部の学生Xと， 同様の傾向があるか（母集団からランダムサンプリングした学生だろうか）． x = \{63,75,72,67,71\}   上記の問題を t検定 で考えます． 準備として，標本の分散を求めておきましょう．
+ スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter10としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+ t検定  具体例として，前回と同じ問題を取り上げていきます． 前回と異なるのは母集団の分散が未知というところです．
+文化情報学部の学生Xに情報数学に関するテストを行ったところ， その得点の平均\hat{\mu}は60であった． このうち，向研究室に所属する5人の学生xの得点は下記であった． 向研究室に所属する学生xは， 文化情報学部の学生Xと， 同様の傾向があるか（母集団からランダムサンプリングした学生だろうか）．
+上記の問題を t検定 で考えます． 準備として，標本の分散を求めておきましょう．
 x &amp;lt;- c(63,75,72,67,71) &amp;gt; var(x) [1] 21.8 母集団は「文化情報学部の学生X」， 標本は「向研究室に所属する学生x」と考えることができます． また，「標本平均の分布」をmとします． いずれも正規分布に従うと仮定すると，母集団の分布と，標本平均の分布は下記のようになります． ここで，母分散\hat{\sigma}^2は未知であることに注意してください．
-X \sim N(60,\hat{\sigma}^2)  m \sim N(60,\hat{\sigma}^2/5)  帰無仮説 と 対立仮説 は前回と同じです． 信頼区間も前回と同じ「95%信頼度（5%棄却域）」を用いることにしましょう．</description>
+帰無仮説 と 対立仮説 は前回と同じです． 信頼区間も前回と同じ「95%信頼度（5%棄却域）」を用いることにしましょう．
+ 帰無仮説：標本（向研究室に所属する学生）の母平均\hat{\mu}は60である 対立仮説：標本（向研究室に所属する学生）の母平均\hat{\mu}は60ではない  それでは，t検定の検定統計量であるtスコアを計算します． tスコアは下記の式で求めます． この式は前回と同じですが，標本平均の標準偏差\acute{\sigma}の算出方法が異なります．
+母分散\hat{\sigma}が未知のため， 標本平均の標準偏差\acute{\sigma}は下記の式で求めます． ここで，\sigmaは，標本の標準偏差 です（Z検定では母集団の標準偏差\hat{\sigma}を用いた）．</description>
     </item>
     
     <item>
@@ -1925,20 +1933,20 @@ X \sim N(60,\hat{\sigma}^2)  m \sim N(60,\hat{\sigma}^2/5)  帰無仮説 と 対
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter12/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project12”を入力ます． また，JREは&amp;rdquo;プロジェクト固有のJREを使用&amp;ldquo;を選択します． 最後に，[完了]をクリックしましょう．
- 
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project12”を入力ます． また，JREは&amp;rdquo;プロジェクト固有のJREを使用&amp;ldquo;を選択します． 最後に，[完了]をクリックしましょう．
+
 Applicationクラスを継承したMyApplicationクラスを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します． 次にスーパークラスを設定するために，[参照]ボタンから「スーパークラスの選択」を開き， 一致する項目からjavafx.application.Applicationを選択して，[OK]をクリックします． 最後に[完了]をクリックしましょう．
 
 Applicationクラスの抽象メソッドであるstartメソッドをオーバーライドしておきます． 下記コードを参考に，タイトルをProject 12，幅を800px，高さを500pxに設定しましょう． プログラムの実行後にウィンドウが表示されることを確認してください．
  
  プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
- イメージの描画 --  イメージの描画  今回はイメージをキャンバスに描画し，パラパラ漫画の要領でアニメーションさせることに挑戦していきましょう． 前準備として，下記のコードを参考にCanvasクラスをウィンドウに配置してください． レイアウトペインとしてVBoxクラスを利用しています． プログラムの実行後に表示されるウィンドウを確認してください．
+  イメージの描画  今回はイメージをキャンバスに描画し，パラパラ漫画の要領でアニメーションさせることに挑戦していきましょう． 前準備として，下記のコードを参考にCanvasクラスをウィンドウに配置してください． レイアウトペインとしてVBoxクラスを利用しています． プログラムの実行後に表示されるウィンドウを確認してください．
  
 まずは，下記の「歩いている女性のイメージ（png画像）」をキャンバスに表示してみます． この２つのイメージを交互に表示することで歩いている様子の表現が可能です． walking1.pngとwalking2.pngをダウンロードしたら， プロジェクトのsrcフォルダにコピーしてください．
  
 保存したイメージを読み込むには，下記のようにImageクラスを利用します （Imageクラスのコンストラクタの引数には，画像ファイルの位置を表すURLを指定します）． ここでは，２つのイメージを利用するため，Imageクラスの配列walkingを宣言して， walking[0]にwalking1.png，walking[1]にwalking2.pngをそれぞれ読み込みます．
 Image walking[] = new Image[2]; walking[0] = new Image(this.getClass().getResource(&amp;#34;walking1.png&amp;#34;).toString()); walking[1] = new Image(this.getClass().getResource(&amp;#34;walking2.png&amp;#34;).toString()); キャンバスにイメージを表示するには，GraphicsContextクラスのdrawImage()メソッドを利用します． drawImage()メソッドの３つの引数は，表示するイメージ，X座標，Y座標を表しています．
-gc.drawImage(walking[0], 0, 0); 下記のコードを参考に，新たにpaint()メソッドを定義して，walking1.</description>
+gc.drawImage(walking[0], 0, 0); 下記のコードを参考に，新たにpaint()メソッドを定義して，walking1.pngの画像を表示してください． プログラムの実行後に表示されるウィンドウを確認してください．</description>
     </item>
     
     <item>
@@ -1960,8 +1968,10 @@ void setup(){ 1回だけ実行する処理; } void draw(){ 繰り返し実行す
  
 同様に、左端に到達したら、右方向に進むようにします。 if文を利用してxの値が左端に到達したらspeedの正負を反転します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 円が左端に到達すると跳ね返ることを確認してください。
  
-円運動 次は、円運動するアニメーションを設定してみましょう。 円運動を表現するにはsin()関数とcos()関数を利用します。 sin()関数とcos()関数の引数には角度を指定しますが、 ラジアン角を用いることに注意が必要です（ラジアン角は0から2&amp;pi;）。
-円運動の半径を表す変数lとラジアン角を表す変数angleを宣言します。 また、座標を表すxとyはfloat型に変更します。 sin()関数とcos()関数を利用して、座標（x,y）を更新することで円運動を表現します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 円が円運動していることを確認してください。</description>
+円運動 次は、円運動するアニメーションを設定してみましょう。 円運動を表現するにはsin()関数とcos()関数を利用します。 sin()関数とcos()関数の引数には角度を指定しますが、 ラジアン角を用いることに注意が必要です（ラジアン角は0から2π）。
+円運動の半径を表す変数lとラジアン角を表す変数angleを宣言します。 また、座標を表すxとyはfloat型に変更します。 sin()関数とcos()関数を利用して、座標（x,y）を更新することで円運動を表現します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 円が円運動していることを確認してください。
+ 
+上記のコードを少し修正して、螺旋運動のアニメーションを設定してみましょう。 円運動の半径を表す変数lの値を徐々に大きくします。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 円が螺旋運動していることを確認してください。</description>
     </item>
     
     <item>
@@ -1994,11 +2004,11 @@ void setup(){ 1回だけ実行する処理; } void draw(){ 繰り返し実行す
 オブジェクト指向の中心となるのはクラスと呼ばれる概念です。 これまでに使用したStringやPImageもクラスに該当します。 クラスは、int型やdouble型などのプリミティブなデータ型の変数（フィールド）と、 幾つかの処理をまとめて実行する関数（メソッド）を、一つにまとめて扱うことができるという特徴があります。
  クラスの定義  ここでは、クラスを利用してウィンドウに雪を降らせるアニメーションを設定しましょう。 雪を表現するにはどんなフィールドやメソッドが必要でしょうか。
 フィールドの宣言 まずは、雪を表すSnowクラスを定義して、その位置を表すxとyをフィールドとして宣言します。 クラスを定義するには、「class」の文字列の後にスペースを空けて、クラス名を指定します（ここではSnow）。 また、「{}」で括られた内部に、フィールドの宣言やメソッドの定義を記述します。 ここでは、float型のxとyを宣言しています。
-class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを定義してみましょう。 setup()関数では、Snowクラスの実体（インスタンス）を生成しています。 インスタンスの生成は、クラス名 変数名 = new クラス名();と記述します。 また、フィールドに値を代入したり、保存されている値を取り出すには、 変数名.フィールド名と記述します。 ここでは、xには0～640のランダムな値、yには0を設定します。
- メソッドの定義 次に、雪を表示するためのdisp()メソッドを定義します。 メソッドは下記のように記述します。 返値とは、メソッド実行後に、呼び出し元に返す値のことを指します。 返値が不要な場合は、返値の型をvoidと表記し、return 返値;を省略することができます。
-返値の型 メソッド名(){ 実行する命令 return 返値; } 下記のコードを参考にdisp()メソッドを定義してみましょう。 disp()メソッドでは、白く塗りつぶした半径5の円を描いています。 また、draw()関数で、定義したdisp()メソッドを呼び出しています。 メソッドを呼び出すには変数名.メソッド名()と記述します。 プログラムの実行後に、ウィンドウ上部に白い円が描画されていることを確認してください。
+class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを定義してみましょう。 **setup()**関数では、Snowクラスの実体（インスタンス）を生成しています。 インスタンスの生成は、クラス名 変数名 = new クラス名();と記述します。 また、フィールドに値を代入したり、保存されている値を取り出すには、 変数名.フィールド名と記述します。 ここでは、xには0～640のランダムな値、yには0を設定します。
+ メソッドの定義 次に、雪を表示するためのdisp()メソッドを定義します。 メソッドは下記のように記述します。 返値とは、メソッド実行後に、呼び出し元に返す値のことを指します。 返値が不要な場合は、返値の型をvoidと表記し、**return 返値;**を省略することができます。
+返値の型 メソッド名(){ 実行する命令 return 返値; } 下記のコードを参考に**disp()**メソッドを定義してみましょう。 disp()メソッドでは、白く塗りつぶした半径5の円を描いています。 また、**draw()**関数で、定義したdisp()メソッドを呼び出しています。 メソッドを呼び出すには変数名.メソッド名()と記述します。 プログラムの実行後に、ウィンドウ上部に白い円が描画されていることを確認してください。
  
-さらに、雪が降るアニメーションをfall()メソッドで定義します。 fall()メソッドでは、フィールドyの値を1だけ増加させます。 また、draw()関数では、定義したfall()メソッドを呼び出すとともに、 背景を黒で塗りつぶしていることに注意してください。 下記を参考にコードを入力したら、Runボタンをクリックしてくだい。 上から下に白い円がアニメーションしていることを確認しださい。</description>
+さらに、雪が降るアニメーションを**fall()**メソッドで定義します。 fall()メソッドでは、フィールドyの値を1だけ増加させます。 また、**draw()**関数では、定義したfall()メソッドを呼び出すとともに、 背景を黒で塗りつぶしていることに注意してください。 下記を参考にコードを入力したら、Runボタンをクリックしてくだい。 上から下に白い円がアニメーションしていることを確認しださい。</description>
     </item>
     
     <item>
@@ -2007,19 +2017,20 @@ class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter7/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project7”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project7”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
 
-オブジェクト指向 --  オブジェクト指向  今回はJavaの本質とも言えるオブジェクト指向について学びます． オブジェクト指向は，大規模なプログラムを作成する際の開発者の負担を減らすためのコンセプトであり， オブジェクト指向に沿ってプログラミングすることでプログラムの「柔軟性」「保守性」「再利用性」の向上が期待できます． しかし，オブジェクト指向はあくまでコンセプトであり，たとえ経験豊かなエンジニアであっても， 一言で「オブジェクト指向が何か」を言い表すことは難しく， Javaプログラミング初心者にとっては大きな障壁となりがちです．
-極論すれば，オブジェクト指向とは「現実世界のオブジェクト（もの）を， そのままプログラムの世界のオブジェクト（もの）に置き換えること」と言えます． 例えば，サッカー選手をプログラムの世界に置き換えることを考えてみます （ウイニングイレブンなどのサッカーゲームを想像してください）． サッカー選手をプログラムの世界で表現するには，サッカー選手の特徴を数値化したり，それぞれの役割や操作を定義する必要があります． 例えばサッカーゲームの本田圭佑選手は，キック力は80，ドリブルスピードは76などのように，個々の特徴を数値で特徴化していますね． 他にも，ポジションはフォワードやミッドフィールダー，操作はドリブルやシュートなどを設定する必要がありそうです．
+ オブジェクト指向  今回はJavaの本質とも言えるオブジェクト指向について学びます． オブジェクト指向は，大規模なプログラムを作成する際の開発者の負担を減らすためのコンセプトであり， オブジェクト指向に沿ってプログラミングすることでプログラムの「柔軟性」「保守性」「再利用性」の向上が期待できます． しかし，オブジェクト指向はあくまでコンセプトであり，たとえ経験豊かなエンジニアであっても， 一言で「オブジェクト指向が何か」を言い表すことは難しく， Javaプログラミング初心者にとっては大きな障壁となりがちです．
+極論すれば，オブジェクト指向とは「現実世界の**オブジェクト（もの）を， そのままプログラムの世界のオブジェクト（もの）**に置き換えること」と言えます． 例えば，サッカー選手をプログラムの世界に置き換えることを考えてみます （ウイニングイレブンなどのサッカーゲームを想像してください）． サッカー選手をプログラムの世界で表現するには，サッカー選手の特徴を数値化したり，それぞれの役割や操作を定義する必要があります． 例えばサッカーゲームの本田圭佑選手は，キック力は80，ドリブルスピードは76などのように，個々の特徴を数値で特徴化していますね． 他にも，ポジションはフォワードやミッドフィールダー，操作はドリブルやシュートなどを設定する必要がありそうです．
 オブジェクト指向では，オブジェクト（サッカー選手）を表現する型のことをクラス，そして， 型を実体化したもの（本田圭佑選手）をインスタンスと呼びます． また，個々の特徴をフィールド，操作をメソッドと呼びます． 一方，オブジェクトは実は曖昧な表現で，クラスとインスタンスの両方の意味で用いられることがあるので注意が必要です．
-クラスの定義 --  クラスの定義  ここでは，現実世界の「色画用紙」をクラスで表現することを考えてみましょう． 画用紙に必要な特徴は何でしょうか． ここでは，幅（width），高さ（height），色（color）を色画用紙を表す特徴として考えていきましょう．
+ クラスの定義  ここでは，現実世界の「色画用紙」をクラスで表現することを考えてみましょう． 画用紙に必要な特徴は何でしょうか． ここでは，幅（width），高さ（height），**色（color）**を色画用紙を表す特徴として考えていきましょう．
 
 クラスはファイルに１つだけ定義するのが基本です． まずは，色画用紙を表すPaperクラスを新規に作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”Paper”を入力し，[完了]をクリックしましょう．
 
 クラスの宣言部に当たるpublic class クラス名{}は既に記述されています． この宣言の{}内に，画用紙の特徴を表すフィールドを定義します． ここでは，width，height，colorの3つのフィールドです． 下記のコードを参考に，色画用紙を表すクラスPaperのフィールドを宣言してみましょう．
- 次に，下記のコードを参考にPaperクラスをインスタンス化してみましょう． ここでは，幅182[mm]，高さ257[mm]，赤色の画用紙を想定しています． インスタンス化はクラス名 変数名 = new クラス名()と記述します． また，フィールドに値を代入したり，保存されている値を取り出すには変数名.</description>
+ 次に，下記のコードを参考にPaperクラスをインスタンス化してみましょう． ここでは，幅182[mm]，高さ257[mm]，赤色の画用紙を想定しています． インスタンス化はクラス名 変数名 = new クラス名()と記述します． また，フィールドに値を代入したり，保存されている値を取り出すには変数名.フィールド名と記述します． このコードはMyClassクラスに記述していることに注意してください． プログラムの実行後にコンソール出力を確認してください．
+  メソッドの定義  Paperクラスのメソッドを定義してみましょう． ここでは，画用紙の面積を計算するメソッドを考えてみます． メソッドは下記のように記述します． 返値とは，メソッド実行後に，呼び出し元に返す値のことを指します． この場合，返値の型はint，返値は面積となります．</description>
     </item>
     
     <item>
@@ -2028,22 +2039,23 @@ class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter8/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project8”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project8”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
 
-継承とは --  継承とは  前回はオブジェクト指向について学習しました． オブジェクト指向とは「現実世界のオブジェクト（もの）を，そのままプログラムの世界のオブジェクト（もの）に置き換えること」を意味しているんでしたね． そして，オブジェクトの型をクラスで表現することも理解したかと思います． 今回は，オブジェクト指向における重要な機能の１つクラスの継承について学びます． クラスの継承とは，「クラスの持つフィールドやメソッドを引き継ぎながら新しいクラスを作成すること」を意味しています． この継承という機能を利用することで，コードの冗長性を排除し，スッキリとした表現で記述することが可能になります．
+ 継承とは  前回はオブジェクト指向について学習しました． オブジェクト指向とは「現実世界のオブジェクト（もの）を，そのままプログラムの世界のオブジェクト（もの）に置き換えること」を意味しているんでしたね． そして，オブジェクトの型をクラスで表現することも理解したかと思います． 今回は，オブジェクト指向における重要な機能の１つクラスの継承について学びます． クラスの継承とは，「クラスの持つフィールドやメソッドを引き継ぎながら新しいクラスを作成すること」を意味しています． この継承という機能を利用することで，コードの冗長性を排除し，スッキリとした表現で記述することが可能になります．
 ここでは，会話が出来るロボットを表すRobotクラスを作成してみましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”Robot”を入力し，[完了]をクリックしましょう．
 
 下記のコードを参考に，nameフィールドと，speakメソッドを定義してください． コンストラクタでnameフィールドを初期化していることに注意してください．
  下記のコード参考にRobotクラスをインスタンス化してみましょう． ここでは，ロボットの名前をロボット1号とします． プログラムの実行後にコンソール出力を確認してください．
  上記で作成したロボット１号は一方的に話すだけで面白くありません． そこで，次に対話が可能なロボットに改良してみましょう． このようなときに利用すると便利な機能が継承です． Robotクラスを継承してTalkRobotを作成してみます．
-メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”TalkRobot”，スーパクラスに&amp;rdquo;Robot&amp;rdquo;を入力し，[完了]をクリックしましょう． このスーパークラスとは，継承元となるクラスを意味し，「スーパークラス」の他にも「親クラス」などと呼びます． 一方，継承したクラスは，「サブクラス」や「子クラス」と呼びます．
+メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”TalkRobot”，スーパクラスに&amp;quot;Robot&amp;quot;を入力し，[完了]をクリックしましょう． このスーパークラスとは，継承元となるクラスを意味し，「スーパークラス」の他にも「親クラス」などと呼びます． 一方，継承したクラスは，「サブクラス」や「子クラス」と呼びます．
 
 継承するとクラス宣言部のextendsの後に継承元のクラス名が記述されます． 下記のコードを参考に，talkメソッドを定義してください． talkメソッドでは，キーボードから名前を入力すると，ロボットが入力された名前を話します． コンストラクタ内のsuper(name)は，スーパークラスであるRobotクラスのコンストラクタと同じ処理をします．
  下記のコードを参考にTalkRobotクラスをインスタンス化してみましょう． ここでは，ロボットの名前をロボット2号とします． プログラムの実行後にコンソール出力を確認してください． Robotクラスを継承することで，Robotクラスのnameフィールドやspeakメソッドを， TalkRobotでも利用できることが分かります．
  TalkRobotクラスで，speakメソッドを修正することもできます． これをオーバーライドと呼びます． ここでは，下記のコードを参考にspeakメソッドをオーバライドして， 男らしい話し方をするロボットに修正しましょう． プログラムの実行後にコンソール出力を確認してください．
- インターフェイスとは 継承する際にスーパークラスは1つしか指定することはできません． 複数の継承元の機能を引き継ぎたい場合はどうすれば良いでしょうか（多重継承と呼びます）． このような場合に利用するのがインターフェイスです． インターフェイスは下記の点がクラスとは異なります．</description>
+ インターフェイスとは 継承する際にスーパークラスは1つしか指定することはできません． 複数の継承元の機能を引き継ぎたい場合はどうすれば良いでしょうか（多重継承と呼びます）． このような場合に利用するのがインターフェイスです． インターフェイスは下記の点がクラスとは異なります．
+ すべてのメソッドは抽象メソッド フィールドは持てない（例外有）  ここで，抽象メソッドとは「メソッド名はあるけど内容は未定義」という特徴を持ちます． このため，インターフェイスで定義されているメソッドは，継承したクラスで必ずオーバーライドする必要があります． また，インターフェイスを継承することを実装と呼ぶことが多いので注意が必要です．</description>
     </item>
     
     <item>
@@ -2052,7 +2064,7 @@ class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter13/</guid>
-      <description>オリジナル作品の条件 --  オリジナル作品の条件  
+      <description> オリジナル作品の条件  
 これまでに学習した技術を活かして，自由なテーマでオリジナルのJavaプログラムを制作してください． テーマは，「ユーティリティ」「ゲーム」「アート」「写真・画像編集」など自由に選んでください． これまでに制作したプログラムに新しい要素を追加して自身の作品としても構いません． ただし，作品は下記の条件を必ず満たして下さい． また，Javaの書籍やウェブサイトを参考にすることも問題ありませんが， 必ず発表の際に参考にした書籍やウェブサイトを紹介してください．
  JavaFXを利用したGUIアプリケーションであること ボタン，マウス，キーボードなどのイベント処理，または，タイムラインを利用したアニメーション処理を含むこと 実行可能JARファイルとしてエクスポートし，JARファイルのみで実行可能であること  参考書籍</description>
     </item>
@@ -2074,7 +2086,7 @@ class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter14/</guid>
-      <description>オリジナル作品の条件 --  オリジナル作品の条件  
+      <description> オリジナル作品の条件  
 これまでに学習した技術を活かして，自由なテーマでオリジナルのJavaプログラムを制作してください． テーマは，「ユーティリティ」「ゲーム」「アート」「写真・画像編集」など自由に選んでください． これまでに制作したプログラムに新しい要素を追加して自身の作品としても構いません． ただし，作品は下記の条件を必ず満たして下さい． また，Javaの書籍やウェブサイトを参考にすることも問題ありませんが， 必ず発表の際に参考にした書籍やウェブサイトを紹介してください．
  JavaFXを利用したGUIアプリケーションであること ボタン，マウス，キーボードなどのイベント処理，または，タイムラインを利用したアニメーション処理を含むこと 実行可能JARファイルとしてエクスポートし，JARファイルのみで実行可能であること  参考書籍</description>
     </item>
@@ -2096,7 +2108,7 @@ class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter15/</guid>
-      <description>オリジナル作品の発表 --  オリジナル作品の発表  
+      <description> オリジナル作品の発表  
 １人につき１分程度で制作したオリジナル作品を紹介してください． 紹介の際には下記の４項目を必ず含めて下さい．
  作品タイトル 作品の概要 操作方法（実演しながら） 苦労した点，工夫した点 （参考にした書籍やウェブサイトなど）  参考書籍</description>
     </item>
@@ -2120,7 +2132,7 @@ class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを�
       <guid>https://mukai-lab.info/pages/classes/seminar_fundamental_areas/chapter5/</guid>
       <description>
  オリジナル地図の作成  オリジナルのオンライン地図を作成してください． 対象とするエリアは住んでいる街やお気に入りの街など自由に設定してください（日進市は除く）． また，テーマに関しても，観光に限らず，書店，図書館，美容院など自由です． ただし，作成する地図は下記の条件を満たす必要があります． ポップアップ表示する写真（画像）は事前に撮影しておくことが望ましいです．
- Leafletを利用すること 3箇所以上のマーカーを設定すること マーカーのポップアップ表示で写真（画像）を表示すること   オリジナル地図の発表  作成したオンライン地図を紹介してください． 紹介する際は下記の情報を含めてください．
+ Leafletを利用すること 3箇所以上のマーカーを設定すること マーカーのポップアップ表示で**写真（画像）**を表示すること   オリジナル地図の発表  作成したオンライン地図を紹介してください． 紹介する際は下記の情報を含めてください．
  対象としたエリアはどこか（例，日進市） 対象としたテーマは何か（例，観光） 表示したマーカーの詳細   課題  Leafletで作成したHTMLファイルを，画像を含めたフォルダごとZIPで圧縮し，提出しなさい．
 参考書籍</description>
     </item>
@@ -2133,12 +2145,12 @@ class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを�
       <guid>https://mukai-lab.info/pages/classes/seminar_fundamental_areas/chapter3/</guid>
       <description>オープンストリートマップとは  行政が公開しているオープンデータには， 施設の位置を表す緯度，経度の情報が含まれることが多くあります． 前回利用した日進市の子育て支援施設のオープンデータにも，施設の名称や住所に加えて，緯度・経度の情報が含まれていました． オンライン地図を利用して，これらの位置情報を可視化することで，新たな気付きを得ることが可能です．
 オンライン地図として最も有名なサービスはGoogleが提供しているGoogle Mapsでしょう． Google Mapsは，滑らかな地図の表示はもちろん，ストリートビュー，ジオコーディング，ルート検索などの機能も充実しています． ここで，ジオコーディングとは住所や地名などを緯度・経度に変換する技術を指しています． 例えば，椙山女学園大学の地図をGoogle Mapで表示してみます． ウェブページにGoogle Mapsを埋め込むには，共有をクリックし， 地図を埋め込むのタブに表示されているソースコードをコピペするだけで完成です．
- Google Mapsはとても便利なのですが，利用規約が厳しいことが知られています． クレジット表示が必要なことは当然ですが，非営利であっても印刷物での使用には大きな制限があります． 新聞，雑誌，レポートなどの目的では問題ありませんが，ガイドブックや印刷広告には使用することができません． これは，行政にとっては致命的であり，自治体を紹介する印刷広告を作成しようとしても，Google Mapsを掲載することができません． そこで，代わりに用いられるのがオープンストリートマップ(OpenStreetMap: OSM)です． オープストリートマップはクリエイティブ・コモンズ CC-BY-SA 2.0と呼ばれる ライセンスで提供されており，適切にクレジットを表示すれば，営利目的の使用も含め，複製・再配布・改変が認められています． 例えば，椙山女学園大学の地図をオープンストリートマップで表示してみます． 上記のGoogle Mapsと比較しても，遜色ないことが分かるでしょう．
- 加えて，オープンストリートマップの最も大きな特徴は，オープンストリートマップのアカウント登録さえすれば， 誰しもが自由に地図を編集することができるという点です． つまり，オープンストリートマップは，オンライン地図のサービスであることに加え，無料地図の共同作成プロジェクトでもあるわけです． オープンストリートマップを編集する人のことをマッパーと呼び， 複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントをマッピングパーティと呼びます． 全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします． 日進市においては，平成29年12月9日に「ブラニッシン〜いまのにっしん，世界に発信！〜」という マッピングパーティが開催され，向も参加しました．
+Google Mapsはとても便利なのですが，利用規約が厳しいことが知られています． クレジット表示が必要なことは当然ですが，非営利であっても印刷物での使用には大きな制限があります． 新聞，雑誌，レポートなどの目的では問題ありませんが，ガイドブックや印刷広告には使用することができません． これは，行政にとっては致命的であり，自治体を紹介する印刷広告を作成しようとしても，Google Mapsを掲載することができません． そこで，代わりに用いられるのがオープンストリートマップ(OpenStreetMap: OSM)です． オープストリートマップはクリエイティブ・コモンズ CC-BY-SA 2.0と呼ばれる ライセンスで提供されており，適切にクレジットを表示すれば，営利目的の使用も含め，複製・再配布・改変が認められています． 例えば，椙山女学園大学の地図をオープンストリートマップで表示してみます． 上記のGoogle Mapsと比較しても，遜色ないことが分かるでしょう．
+加えて，オープンストリートマップの最も大きな特徴は，オープンストリートマップのアカウント登録さえすれば， 誰しもが自由に地図を編集することができるという点です． つまり，オープンストリートマップは，オンライン地図のサービスであることに加え，無料地図の共同作成プロジェクトでもあるわけです． オープンストリートマップを編集する人のことをマッパーと呼び， 複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントをマッピングパーティと呼びます． 全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします． 日進市においては，平成29年12月9日に「ブラニッシン〜いまのにっしん，世界に発信！〜」という マッピングパーティが開催され，向も参加しました．
 今回は日進市のオープンデータとオープンストリートマップを組み合わせ， 独自のオンライン地図を作成する方法について学習していきましょう．
- GeoJSON  ここで，オープンデータの条件である「機械判読に適したデータ形式」について考えてみます． オンライン地図にオープンデータを表示するには，当然，コンピュータが読み取ることが出来る形式を用いる必要があります． これまでに，xlsx形式，csv形式を紹介しましたが，よりウェブに相性が良いデータ形式があります． それが，JSON形式（.json）です． JSONは，「じぇいそん」と読み，ブラウザで動作するプログラミング言語のJavaScriptで用いられるデータ形式です （JavaScript以外のプログラミング言語でも対応していることが多い）．
+ GeoJSON  ここで，オープンデータの条件である「機械判読に適したデータ形式」について考えてみます． オンライン地図にオープンデータを表示するには，当然，コンピュータが読み取ることが出来る形式を用いる必要があります． これまでに，xlsx形式，csv形式を紹介しましたが，よりウェブに相性が良いデータ形式があります． それが，**JSON形式（.json）**です． JSONは，「じぇいそん」と読み，ブラウザで動作するプログラミング言語のJavaScriptで用いられるデータ形式です （JavaScript以外のプログラミング言語でも対応していることが多い）．
 下記のCSV形式のデータを例に考えてみましょう．
-町名,男,女,総数,世帯数 赤池町,1693,1647,3340,1315 浅田町,2593,2431,5024,2086 上記のデータをJSON形式に変換すると下記になります． JSON形式では，データはstring（文字列）とvalue（値）の組で表現されます． 例えば，&amp;rdquo;町名&amp;rdquo;という文字列と，&amp;rdquo;赤池町&amp;rdquo;という値が組になっていることがわかります． また，[ ]は配列を表しており，0番目の要素に赤池町のデータ，1番目の要素に浅田町のデータが格納されます． 要素は「,（カンマ）」で区切られますが，最後の要素には必要ありません（間違えやすいので要注意）．
+町名,男,女,総数,世帯数赤池町,1693,1647,3340,1315浅田町,2593,2431,5024,2086上記のデータをJSON形式に変換すると下記になります． JSON形式では，データは**string（文字列）とvalue（値）の組で表現されます． 例えば，&amp;ldquo;町名&amp;quot;という文字列と，&amp;ldquo;赤池町&amp;quot;という値が組になっていることがわかります． また，[ ]**は配列を表しており，0番目の要素に赤池町のデータ，1番目の要素に浅田町のデータが格納されます． 要素は「,（カンマ）」で区切られますが，最後の要素には必要ありません（間違えやすいので要注意）．
 [ { &amp;#34;町名&amp;#34;: &amp;#34;赤池町&amp;#34;, &amp;#34;男&amp;#34;: 1693, &amp;#34;女&amp;#34;: 1647, &amp;#34;総数&amp;#34;: 3340, &amp;#34;世帯数&amp;#34;: 1315 }, { &amp;#34;町名&amp;#34;: &amp;#34;浅田町&amp;#34;, &amp;#34;男&amp;#34;: 2593, &amp;#34;女&amp;#34;: 2431, &amp;#34;総数&amp;#34;: 5042, &amp;#34;世帯数&amp;#34;: 2086 }	] このJSON形式を基本として，点，線，多角形などの空間データを表現するために用いられるのが， GeoJSON形式です． GeoJSONは，「じおじぇいそん」と読み， uMap，Leeflet， OpenLayersなどの様々な地図サービスで利用可能です．</description>
     </item>
     
@@ -2150,7 +2162,7 @@ class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを�
       <guid>https://mukai-lab.info/pages/classes/seminar_fundamental_areas/chapter4/</guid>
       <description>Leafletとは  前回はuMAPというサービスを利用して， 日進市のオープンデータをオープンストリートマップに重ねて表示しました． uMAPを用いると，ブラウザ上で手軽にオリジナルの地図を作成することができますが， 作成された地図は静的で，ユーザとのインタラクションに応じて動的に変化させることはできません． そこで，今回はLeafletを利用して，オリジナルの地図を作成することに挑戦しましょう． Leafletは，「りーふれっと」と読み，プログラミング言語であるJavaScriptのライブラリの一つです． オープンソースで開発されており，BSD 2-Clauseライセンスであるため， クレジットさえ表示すれば，商用利用・改変・配布が可能です． Leafletを用いると，デスクトップPCやモバイル環境に適したオンライン地図を表示することができます． JavaScriptで制御可能であるため，ユーザとのインタラクションに応じて動的に地図を変更することが可能です． もちろん，前回紹介したGeoJSON形式のデータの取り込みも可能です． 今回は，このLeafletを用いて日進市の観光マップを作成します．
  オープンデータの準備  日進市のオープンデータミュージアムにある 観光情報データを利用します． ここでは，名称と緯度・経度の情報を利用することにします． 下記はCSV形式で表現されたデータです．
-名称,緯度,経度 岩崎城址公園,35.1455654,137.0420547 愛知牧場,35.1306941,137.0876883 五色園,35.1557573,137.0682229 レトロでんしゃ館,35.1228602,137.0221455 旧市川家住宅,35.12896,137.033636 今回は，上記のテキスト情報だけでなく，下記の5つの画像ファイルを利用します． これらは日進市のイベント情報を提供しているぐるぐるNISSHINに掲載されていますが， オープンデータではないことに注意してください（授業向けに許可を得て利用しています）． 全ての画像ファイルをダウンロードしておいてください．
+名称,緯度,経度岩崎城址公園,35.1455654,137.0420547愛知牧場,35.1306941,137.0876883五色園,35.1557573,137.0682229レトロでんしゃ館,35.1228602,137.0221455旧市川家住宅,35.12896,137.033636今回は，上記のテキスト情報だけでなく，下記の5つの画像ファイルを利用します． これらは日進市のイベント情報を提供しているぐるぐるNISSHINに掲載されていますが， オープンデータではないことに注意してください（授業向けに許可を得て利用しています）． 全ての画像ファイルをダウンロードしておいてください．
 上記の観光情報と画像ファイル名を，下記のようにGeoJSON形式に変換します． 画像ファイル名はpropertiesに記載しています． ここでは，経度・緯度の順番で指定することに注意してください．
 { &amp;#34;type&amp;#34;: &amp;#34;FeatureCollection&amp;#34;, &amp;#34;features&amp;#34;: [ { &amp;#34;type&amp;#34;: &amp;#34;Feature&amp;#34;, &amp;#34;geometry&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;Point&amp;#34;, &amp;#34;coordinates&amp;#34;: [137.0420547,35.1455654] }, &amp;#34;properties&amp;#34;: { &amp;#34;名称&amp;#34;: &amp;#34;岩崎城址公園&amp;#34;, &amp;#34;画像&amp;#34;: &amp;#34;iwasaki.jpg&amp;#34; } }, { &amp;#34;type&amp;#34;: &amp;#34;Feature&amp;#34;, &amp;#34;geometry&amp;#34;: { &amp;#34;type&amp;#34;: &amp;#34;Point&amp;#34;, &amp;#34;coordinates&amp;#34;: [137.0876883,35.1306941] }, &amp;#34;properties&amp;#34;: { &amp;#34;名称&amp;#34;: &amp;#34;愛知牧場&amp;#34;, &amp;#34;画像&amp;#34;: &amp;#34;bokujyou.</description>
     </item>
@@ -2167,7 +2179,7 @@ class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを�
 
 次に，[スケッチ]-[ライブラリをインポート]-[Video]をクリックして， Videoライブラリをインポート（プログラムで利用可能な状態にすること）します． ソースコードの１行目に「import processing.video.*;」と表示されていることを確認してください．
   カメラ映像の表示  カメラから入力した映像はCaptureクラスを利用します． まずは，setup()関数において，Captureクラスのlist()関数を呼び出し， 利用可能なカメラの一覧をString型の配列で取得します． これをコンソールに出力し，利用可能なカメラの種類を確認してください．
- 例えば，コンソールには下記のような一覧が表示されます． この中から，サイズ（size）が320x240となっているカメラ番号を覚えておいてください． この例では，3番が該当します． ウィンドウのサイズも320x240に合わせます． ちなみに，フレームレート（fps）は，1秒間に更新される画像（フレーム）数を意味しています． つまり，フレームレートが高いほど，滑らかな動画となります．
+ 例えば，コンソールには下記のような一覧が表示されます． この中から，サイズ（size）が320x240となっているカメラ番号を覚えておいてください． この例では，3番が該当します． ウィンドウのサイズも320x240に合わせます． ちなみに，**フレームレート（fps）**は，1秒間に更新される画像（フレーム）数を意味しています． つまり，フレームレートが高いほど，滑らかな動画となります．
 [0] name=FULL HD 1080P Webcam,size=640x480,fps=30 [1] name=FULL HD 1080P Webcam,size=160x120,fps=30 [2] name=FULL HD 1080P Webcam,size=176x144,fps=30 [3] name=FULL HD 1080P Webcam,size=320x240,fps=30 [4] name=FULL HD 1080P Webcam,size=352x288,fps=30 [5] name=FULL HD 1080P Webcam,size=640x360,fps=30 [6] name=FULL HD 1080P Webcam,size=800x600,fps=30 [7] name=FULL HD 1080P Webcam,size=960x720,fps=30 [8] name=FULL HD 1080P Webcam,size=1024x576,fps=30 [9] name=FULL HD 1080P Webcam,size=1280x720,fps=30 次に，Captureクラスのインスタンスcamを下記のように初期化します． 引数には先程確認したカメラ番号を指定することに注意してください． start()関数を呼び出すことで，カメラ映像の取得を開始します．</description>
     </item>
     
@@ -2177,8 +2189,8 @@ class Snow{ float x; float y; } 下記のコードを参考にSnowクラスを�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter6/</guid>
-      <description>グラフ表示 --  グラフ表示  今回はオープンソースのグラフ描画ライブラリであるChart.jsを利用して，グラフを描くことに挑戦してみましょう． Chart.jsは HTML5 の Canvas要素 にグラフを描くことが可能なライブラリで，「折れ線グラフ」「縦棒グラフ」「円グラフ」などの８種類がグラフが利用できます（2016年12月16日現在）． また，レスポンシブにも対応しているため，PCだけでなくスマーフォンでも美しく描画されるという特徴があります． まずは，導入用のパッケージをGitHubからダウンロードしましょう． ダウンロードしたら sampleフォルダ にある様々なグラフを表示してみましょう． グリグリとアニメーションしながらグラフが表示されると思います．
-JSON形式 --  JSON形式  グラフの元となるデータは JSON(Javascript Object Notation) と呼ばれる形式で記述します． JSONで表されたデータは，JavaScriptのオブジェクトに対応していて，JSON形式のテキストからオブジェクトを生成することができます． 一般にデータはCSVなどの形式で記述されることが多いですが， JavaScriptでテキストファイルを読み込むことは仕様上難しいことが多いため， JSONを利用する方法が採用されます．
+      <description>グラフ表示  今回はオープンソースのグラフ描画ライブラリであるChart.jsを利用して，グラフを描くことに挑戦してみましょう． Chart.jsは HTML5 の Canvas要素 にグラフを描くことが可能なライブラリで，「折れ線グラフ」「縦棒グラフ」「円グラフ」などの８種類がグラフが利用できます（2016年12月16日現在）． また，レスポンシブにも対応しているため，PCだけでなくスマーフォンでも美しく描画されるという特徴があります． まずは，導入用のパッケージをGitHubからダウンロードしましょう． ダウンロードしたら sampleフォルダ にある様々なグラフを表示してみましょう． グリグリとアニメーションしながらグラフが表示されると思います．
+ JSON形式  グラフの元となるデータは JSON(Javascript Object Notation) と呼ばれる形式で記述します． JSONで表されたデータは，JavaScriptのオブジェクトに対応していて，JSON形式のテキストからオブジェクトを生成することができます． 一般にデータはCSVなどの形式で記述されることが多いですが， JavaScriptでテキストファイルを読み込むことは仕様上難しいことが多いため， JSONを利用する方法が採用されます．
 ここでは，日進市のオープンデータミュージアムに掲載されているオープンデータからJSON形式のデータを作成することにします． 下記はオープンデータミュージアムで公開されていた 町別人口推移 から一部を抜粋したCSV形式のデータです．
 city,population 赤池町,1195 浅田町,1899 梅森町,804 野方町,133 蟹甲町,158 一行目の「city」「population」は項目名であり，二行目からが実際のデータです． 例えば，赤池町は1,195人，浅田町は1,899人です． このCSV形式のデータをJSON形式に変換するには，iPentec が提供しているオンラインの変換ツールを利用すると簡単です．
 変換ツールのページを開いたら「入力（CSV）」に上記のCSVデータを張り付けて， 「CSV➡JSON変換」のボタンをクリックします． すると下記のようなJSON形式のデータが出力されます．
@@ -2191,7 +2203,7 @@ city,population 赤池町,1195 浅田町,1899 梅森町,804 野方町,133 蟹甲
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/database/</guid>
-      <description> 科目名: データベース
+      <description>科目名: データベース
 開講学期: 秋学期
 科目種別: 講義
 テーマ: データベースの基本概念の習得とシステム構築
@@ -2210,9 +2222,9 @@ city,population 赤池町,1195 浅田町,1899 梅森町,804 野方町,133 蟹甲
  SampleSimple 音声UIを使った基本的な機能のアプリ SampleScenario シナリオで使える変数やタグなどのアプリ SampleProjector プロジェクターを利用したアプリ SampleAddressBook 電話帳を利用したアプリ SampleCamera カメラを利用したアプリ SampleDance ダンスを利用したアプリ SampleMultilingual 多言語対応を実装したアプリ  まずは、Android Studio で上記のサンプルを読み込み、プロジェクトとして展開します。 Android Studioを起動したら、[File]-[Open]-[Open File or Project]を選択し、 開発キットに含まれる SampleSimple のフォルダをクリックします。 ビルドが終了したら、Run Appをクリックして実行してみましょう。
 実行するとロボホンの背面には「ACCOST」「RESOLVE VARIABLE」「SET_MEMORY_P」「GET_MEMORY_P」「FINISH APP」の５つのボタンが表示されています。 ここで、「ACCOST」ボタンをタップすると、「アプリから発話開始するサンプルだよ」とロボホンが発話します。 ちなみに、ACCOSTとは、アプリから強制的にトピック（発話やモーション）を実行することを意味します。
 
-  アプリトリガによる発話  最初に、ボタンなどアプリからのアクションをトリガとして、トピックを実行するアプリトリガによる発話について学びます。 まずは「ACCOST」ボタンに該当するソースコードを確認していきましょう。 一般にアンドロイドのアプリはActivityクラスを継承して開発します。 Activityクラスにはライフサイクルがあり、アプリを起動すると下図のようにメソッドを実行します。
+ アプリトリガによる発話  最初に、ボタンなどアプリからのアクションをトリガとして、トピックを実行するアプリトリガによる発話について学びます。 まずは「ACCOST」ボタンに該当するソースコードを確認していきましょう。 一般にアンドロイドのアプリはActivityクラスを継承して開発します。 Activityクラスにはライフサイクルがあり、アプリを起動すると下図のようにメソッドを実行します。
 
-ここで、「ACCOST」ボタンに関する振る舞いは、onCreate()メソッドの内部にあり、下記のように記述されています。 最初に、リソースIDを利用して、変数*voiceAccostButton*に、Buttonクラスのオブジェクトを代入し、ボタンをタップしたときのイベントリスナーを登録しています。 ボタンがタップされると、VoiceUIVariableListHelper クラスのインスタンスに実行したいACCOSTを登録し、VoiceUIManagerUtil クラスのupdateAppInfoメソッドで発話を実行しています。 ここで、ScenarioDefinitions.ACC_ACCOST には、実行するACCOSTの名称である jp.co.sharp.sample.simple.accost.t1 が代入されています。
+ここで、「ACCOST」ボタンに関する振る舞いは、onCreate()メソッドの内部にあり、下記のように記述されています。 最初に、リソースIDを利用して、変数voiceAccostButtonに、Buttonクラスのオブジェクトを代入し、ボタンをタップしたときのイベントリスナーを登録しています。 ボタンがタップされると、VoiceUIVariableListHelper クラスのインスタンスに実行したいACCOSTを登録し、VoiceUIManagerUtil クラスのupdateAppInfoメソッドで発話を実行しています。 ここで、ScenarioDefinitions.ACC_ACCOST には、実行するACCOSTの名称である jp.co.sharp.sample.simple.accost.t1 が代入されています。
  ここでのポイントは、実行するACCOSTの定義です。 具体的な定義は、シャープ株式会社が独自に定義している HVML(Hyper Voice Markup Language) というXMLファイルに記述します。 ここでは、assetsフォルダに含まれるjp_co_sharp_sample_simple_accost.</description>
     </item>
     
@@ -2222,15 +2234,15 @@ city,population 赤池町,1195 浅田町,1899 梅森町,804 野方町,133 蟹甲
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter6/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
 
-ストリーム --  ストリーム  プログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます． ファイルに何かしらの操作を行う場合は，ストリームという仕組みを利用します． ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています． ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです． ここでは，10人の身長と体重が保存されたファイルからデータを読み込んでみましょう． データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください． このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます． ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．
- ファイルの読み込み --  ファイルの読み込み  measure.csvから文字列データを読み込むには下記のように記述します． ファイルの読み込みにはFileReaderクラスとBufferedReaderクラスを利用しますが， ここではファイルに取り付ける蛇口がFileReader， 蛇口から流れてくるホースの役割がBufferedReaderクラスと考えてください． line=br.readLine()でファイルから1行ずつ読み込み，System.out.println(line)でコンソール出力しています． ファイルの終端に到達すると，readLine()はnullという値を返すため， while文でlineがnullになるまで，ファイルからの読み込みを繰り返しています．
+ ストリーム  プログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます． ファイルに何かしらの操作を行う場合は，ストリームという仕組みを利用します． ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています． ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです． ここでは，10人の身長と体重が保存されたファイルからデータを読み込んでみましょう． データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください． このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます． ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．
+  ファイルの読み込み  measure.csvから文字列データを読み込むには下記のように記述します． ファイルの読み込みにはFileReaderクラスとBufferedReaderクラスを利用しますが， ここではファイルに取り付ける蛇口がFileReader， 蛇口から流れてくるホースの役割がBufferedReaderクラスと考えてください． line=br.readLine()でファイルから1行ずつ読み込み，System.out.println(line)でコンソール出力しています． ファイルの終端に到達すると，readLine()はnullという値を返すため， while文でlineがnullになるまで，ファイルからの読み込みを繰り返しています．
  実は上記のコードだけではエラーが残ったままです． このエラーを取り除くには例外処理が必要です． 例外とはプログラムの実行中に発生する想定外の事態を意味しており， 例えば「対象のファイルが存在しない」「空っぽ（null）の変数を利用しようとした」などの状態が該当します． ファイル読込に利用するFileReaderとBufferedReaderはこの例外処理が必要なクラスです． 例外処理は下記のように，例外の発生の可能性のある命令をtry{}で囲み，例外発生時の命令をcatch(例外の種類){}に記述します．
 try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する命令 } 下記のコードを参考に例外処理を施してmeasure.csvから文字列データを読み込んでみましょう． ここで，e.printStackTrace();は例外の原因を突き止めるために，例外に関する情報を遡って表示する命令です． また，IOExceptionは入出力に関する例外を意味しています． プログラムの実行後に，コンソールの出力結果を確認してください．
- CSV形式の処理 --  CSV形式の処理  前述したようにCSV形式のファイルは「,（カンマ）」で区切られています． カンマで区切られた文字列（トークン）を取り出すにはStringTokenizerというクラスを利用します． 下記のコードを参考にトークン毎に取り出して，コンソールに出力してみましょう． ここで，new StringTokenizer(line, &amp;quot;,&amp;quot;)は， 変数lineに代入されている文字列を「,（カンマ）」で分割して取得することを表しています． また，身長と体重は整数のため，Integer.</description>
+  CSV形式の処理  前述したようにCSV形式のファイルは「,（カンマ）」で区切られています． カンマで区切られた文字列（トークン）を取り出すにはStringTokenizerというクラスを利用します． 下記のコードを参考にトークン毎に取り出して，コンソールに出力してみましょう． ここで，new StringTokenizer(line, &amp;quot;,&amp;quot;)は， 変数lineに代入されている文字列を「,（カンマ）」で分割して取得することを表しています． また，身長と体重は整数のため，Integer.parseInt(st.nextToken())を用いて， String型からint型に変換しています． プログラムの実行後に，コンソールの出力結果を確認してください．</description>
     </item>
     
     <item>
@@ -2239,7 +2251,7 @@ try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/programming/</guid>
-      <description> 科目名: プログラミング
+      <description>科目名: プログラミング
 講義室: 名古屋校舎教室
 開講学期: 春学期
 科目種別: 講義
@@ -2255,7 +2267,7 @@ try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/programming_1/</guid>
-      <description> 授業科目区分: 専門教育科目
+      <description>授業科目区分: 専門教育科目
 単位数: 2単位
 開講学科: 文化情報学科/メディア情報学科
 学年: 2年次
@@ -2272,7 +2284,7 @@ try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/</guid>
-      <description> 授業科目区分: 専門教育科目
+      <description>授業科目区分: 専門教育科目
 単位数: 2単位
 開講学科: 文化情報学科 学年: 3年次
 関連科目: プログラミング1，プログラミング2
@@ -2288,19 +2300,20 @@ try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter11/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project11”を入力ます． また，JREは&amp;rdquo;プロジェクト固有のJREを使用&amp;ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
- 
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project11”を入力ます． また，JREは&amp;rdquo;プロジェクト固有のJREを使用&amp;ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+
 Applicationクラスを継承したMyApplicationクラスを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します． 次にスーパークラスを設定するために，[参照]ボタンから「スーパークラスの選択」を開き， 一致する項目からjavafx.application.Applicationを選択して，[OK]をクリックします． 最後に[完了]をクリックしましょう．
 
 Applicationクラスの抽象メソッドであるstartメソッドをオーバーライドしておきます． 下記コードを参考に，タイトルをProject 11，幅を500px，高さを500pxに設定しましょう． プログラムの実行後にウィンドウが表示されることを確認してください．
  
  プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
- マウス・イベント --  マウス・イベント  今回はマウス操作に応じてキャンバスに絵を描くことに挑戦していきましょう． 前準備として，下記のコードを参考にCanvasクラスをウィンドウに配置してください． レイアウトペインとしてVBoxクラスを利用しています． プログラムの実行後に表示されるウィンドウを確認してください．
+  マウス・イベント  今回はマウス操作に応じてキャンバスに絵を描くことに挑戦していきましょう． 前準備として，下記のコードを参考にCanvasクラスをウィンドウに配置してください． レイアウトペインとしてVBoxクラスを利用しています． プログラムの実行後に表示されるウィンドウを確認してください．
  
 キャンバス上でのマウスのクリックを検知するには， setOnMouseClicked()メソッドを利用します． このメソッドの引数にはラムダ式を利用して下記のように記述します． ラムダ式の左側のeventはMouseEventクラスのインスタンスで， マウスの状態や位置などの情報を保持しています． 一方，ラムダ式の右側のpaint(event);はマウスがクリックされたときに呼び出されるメソッドです．
 canvas.setOnMouseClicked(event -&amp;gt; paint(event)); 下記のコードを参考に，マウスがクリックされると，クリックされた位置に塗りつぶしの円を描いてみましょう（色はデフォルトの黒）． 円を描くコードはpaint(event)メソッドとして定義していることに注意してください． マウスの位置はMouseEventクラスのgetX()メソッドとgetY()メソッドで取得しています． プログラムの実行後に，キャンバスをクリックすると，円が描かれることに確認してください．
-  
-キーボード・イベント --  キーボード・イベント  ウィンドウ上でのキー入力を検知するには，setOnKeyPressed()メソッドを利用します． このメソッドの引数にはラムダ式を利用して下記のように記述します． ラムダ式の左側のeventはKeyEventクラスのインスタンスで， 押されたキーの状態や種類などの情報を保持しています． 一方，ラムダ式の右側のchange(event)はキーが押されたときに呼び出されるメソッドです．</description>
+ 
+ キーボード・イベント  ウィンドウ上でのキー入力を検知するには，setOnKeyPressed()メソッドを利用します． このメソッドの引数にはラムダ式を利用して下記のように記述します． ラムダ式の左側のeventはKeyEventクラスのインスタンスで， 押されたキーの状態や種類などの情報を保持しています． 一方，ラムダ式の右側のchange(event)はキーが押されたときに呼び出されるメソッドです．
+scene.setOnKeyPressed(event -&amp;gt; change(event)); 下記のコードを参考に，塗りつぶしの色を，F1を押すと赤，F2を押すと青，F3を押すと黒に切り替えられるようにしましょう． 押されたキーの種類は列挙型KeyCodeで表され，getCode()メソッドで取得することができます（例，F1キーはF1という表記になる）． setFill()メソッドを利用して，キーがF1のときColor.RED，F2のときColor.BLUE，F3のときColor.BLACKを設定します． プログラムの実行後に，塗りつぶしの色を切り替えられることを確認してください．</description>
     </item>
     
     <item>
@@ -2309,20 +2322,20 @@ canvas.setOnMouseClicked(event -&amp;gt; paint(event)); 下記のコードを参
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter10/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project10”を入力します． また，JREは&amp;rdquo;プロジェクト固有のJREを使用&amp;ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
- 
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project10”を入力します． また，JREは&amp;rdquo;プロジェクト固有のJREを使用&amp;ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+
 Applicationクラスを継承したMyApplicationクラスを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します． 次にスーパークラスを設定するために，[参照]ボタンから「スーパークラスの選択」を開き， 一致する項目からjavafx.application.Applicationを選択して，[OK]をクリックします． 最後に[完了]をクリックしましょう．
 
 Applicationクラスの抽象メソッドであるstartメソッドをオーバーライドしておきます． 下記コードを参考に，タイトルをProject 10，幅を500px，高さを500pxに設定しましょう． プログラムの実行後にウィンドウが表示されることを確認してください．
  
  プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
- レイアウト --  レイアウト  テキストフィールドやボタンなどのコントロールをレイアウトするにはレイアウトペインを利用します． 前回は垂直に並べるVBoxクラスを利用しましたが， 今回はアプリケーションのレイアウトに向いているBorderPaneクラスを利用してみましょう． BorderPaneクラスはウィンドウを中央，上，下，左，右に5分割してコントロールを配置します．
+  レイアウト  テキストフィールドやボタンなどのコントロールをレイアウトするにはレイアウトペインを利用します． 前回は垂直に並べるVBoxクラスを利用しましたが， 今回はアプリケーションのレイアウトに向いているBorderPaneクラスを利用してみましょう． BorderPaneクラスはウィンドウを中央，上，下，左，右に5分割してコントロールを配置します．
 ここでは，ウィンドウの左右にボタン， そして，ウィンドウの中央にキャンバスを配置します． キャンバスを作成するには，下記のようにCanvasクラスをインスタンス化します（Canvasクラスの詳細は後述）． キャンバスの幅と高さを400pxに設定しています．
 Canvas canvas = new Canvas(400, 400); 次に，下記のようにBorderPaneクラスをインスタンス化し，中央にコントロールを配置します． 中央，上，下，左，右に配置するにには，それぞれ，setCenter()メソッド，setTop()メソッド， setBottom()メソッド，SetLeft()メソッド，setRight()メソッドを利用します．
 BorderPane pane = new BorderPane(); pane.setCenter(canvas); 下記のコードを参考に，ウィンドウの左右のボタン，ウィンドウの中央にキャンバスを配置してください． プログラムの実行後に表示されるウィンドウを確認してください．
  
 これまでに紹介したVBox，BorderPane以外にも，水平に配置するHBox， 左から右に配置するFlowPane，行列に分割して配置するGridPaneなどのレイアウトペインがあります． 詳細はオラクルが提供するドキュメントを参考にしてください．
-グラフィックス --  グラフィックス  ウィンドウに文字や図形などのグラフィックスを表示するにはCanvasクラスを利用します． キャンバスに何かを描くときは，getGraphicsContext2D()メソッドを利用してGraphicsContextクラスのインスタンスを取得します． GraphicsContextクラスには下記のようなメソッドが用意されています．</description>
+ グラフィックス  ウィンドウに文字や図形などのグラフィックスを表示するにはCanvasクラスを利用します． キャンバスに何かを描くときは，getGraphicsContext2D()メソッドを利用してGraphicsContextクラスのインスタンスを取得します． GraphicsContextクラスには下記のようなメソッドが用意されています．</description>
     </item>
     
     <item>
@@ -2348,10 +2361,10 @@ Android Studioのインストール・パッケージをダウンロードした
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter5/</guid>
-      <description>ローカルストレージとは --  ローカルストレージとは  従来のウェブブラウザでは，データを保存する仕組みとして， クッキー(Cookie) と呼ばれる方法が主に利用されていました． しかし， クッキー は保存できるデータサイズが4キロバイトしかなく，ウェブページの更新毎に読込む必要がありました． そこで，HTML5では，クッキーに代わる新たな仕組みとして ウェブストレージ（Web Strage） が導入されました． ウェブストレージでは，5メガバイトのデータの保存が可能であり，クッキーのように自動で読込みが行われないため， より安全なデータの送受信が可能です． ウェブストレージ には下記の２種類があります．
+      <description>ローカルストレージとは  従来のウェブブラウザでは，データを保存する仕組みとして， クッキー(Cookie) と呼ばれる方法が主に利用されていました． しかし， クッキー は保存できるデータサイズが4キロバイトしかなく，ウェブページの更新毎に読込む必要がありました． そこで，HTML5では，クッキーに代わる新たな仕組みとして ウェブストレージ（Web Strage） が導入されました． ウェブストレージでは，5メガバイトのデータの保存が可能であり，クッキーのように自動で読込みが行われないため， より安全なデータの送受信が可能です． ウェブストレージ には下記の２種類があります．
  セッションストレージ（Session Storage） ローカルストレージ（Local Storage）  前者の セッションストレージ は，ブラウザのウィンドウ毎に，データが記録されるストレージであり，ウィンドウが閉じられると，そのデータは失われるという特徴があります． 後者の ローカルストレージ は，永続的にブラウザにデータが記録されるストレージであり，オリジン（ドメインとポートの組み合わせ）で区別されるという特徴があります． Monacaのアプリでは，このローカルストレージを利用することで，データを永続的に保存しておくことができます． つまり，ローカルストレージにデータを記録しておけば，アプリを終了してもデータが失われることがありません． そこで，今回はローカルストレージを利用した辞書アプリを作成してみましょう．
-キー・バリュー・ストア型データベース（KVS） --  キー・バリュー・ストア型データベース  企業等で利用されているデータベースの大部分は 関係データベース と呼ばれる仕組みを採用しています． 一方で，関係データベース はSNSなど膨大な情報を高速に処理するには不向きです． そこで，キー・バリュー・ストア型データベース に代表されるNoSQLと呼ばれる仕組みが部分的に利用されるようになってきました． ローカルストレージ も，この キー・バリュー・ストア型データベース と同じ構造を持ちます． その構造は極めてシンプルで，キー（Key） と バリュー（Value） の一対のペアでデータを記録するという方法です． 例えば，下記のように英単語を キー ，そして，その和訳を バリュー として記録しておければ， 英単語（キー） から， 和訳（バリュー） を検索することができます．
-   Key Value     Apple りんご   Banana バナナ   Grapes ぶどう    プロジェクトの作成 --  プロジェクトの作成  今回は，英単語 と 和訳 を登録するオリジナルの辞書アプリを作成しましょう． ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Navigation】を選択します． プロジェクト名を 辞書アプリ ，説明を ローカルストレージを利用した辞書アプリ とします． プロジェクトを作成したら MonacaクラウドIDE の画面を開きましょう．</description>
+ キー・バリュー・ストア型データベース  企業等で利用されているデータベースの大部分は 関係データベース と呼ばれる仕組みを採用しています． 一方で，関係データベース はSNSなど膨大な情報を高速に処理するには不向きです． そこで，キー・バリュー・ストア型データベース に代表されるNoSQLと呼ばれる仕組みが部分的に利用されるようになってきました． ローカルストレージ も，この キー・バリュー・ストア型データベース と同じ構造を持ちます． その構造は極めてシンプルで，キー（Key） と バリュー（Value） の一対のペアでデータを記録するという方法です． 例えば，下記のように英単語を キー ，そして，その和訳を バリュー として記録しておければ， 英単語（キー） から， 和訳（バリュー） を検索することができます．
+   Key Value     Apple りんご   Banana バナナ   Grapes ぶどう     プロジェクトの作成  今回は，英単語 と 和訳 を登録するオリジナルの辞書アプリを作成しましょう． ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Navigation】を選択します． プロジェクト名を 辞書アプリ ，説明を ローカルストレージを利用した辞書アプリ とします． プロジェクトを作成したら MonacaクラウドIDE の画面を開きましょう．</description>
     </item>
     
     <item>
@@ -2360,11 +2373,11 @@ Android Studioのインストール・パッケージをダウンロードした
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter13/</guid>
-      <description>主成分分析とは --  主成分分析とは  展開演習２の多変量解析と呼ばれる手法を取り上げます． その名が示すように複数の変数を対象に相関や共通性を見つけることが目的となります． 今回は，その中でも，複数の変数を合成して，次元（要素数）を圧縮する主成分分析に注目します． 主成分分析を完全に理解するには数学的な知識が必要となりますが，ここではR言語を利用して直観的に理解することを目指します． このような分析手法は，理解 も重要ですが，使える ことが最も重要です． 対象のデータとして，算数と理科の成績のデータ（CSV形式）を使用するので，事前にダウンロードしておきましょう．
+      <description>主成分分析とは  展開演習２の多変量解析と呼ばれる手法を取り上げます． その名が示すように複数の変数を対象に相関や共通性を見つけることが目的となります． 今回は，その中でも，複数の変数を合成して，次元（要素数）を圧縮する主成分分析に注目します． 主成分分析を完全に理解するには数学的な知識が必要となりますが，ここではR言語を利用して直観的に理解することを目指します． このような分析手法は，理解 も重要ですが，使える ことが最も重要です． 対象のデータとして，算数と理科の成績のデータ（CSV形式）を使用するので，事前にダウンロードしておきましょう．
  ファイルをダウンロードしたら，read.csv関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう．
-score &amp;lt;- read.csv(&amp;#34;score2.csv&amp;#34;) スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter13としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-合成変数 --  合成変数  主成分分析では，分散を最大化するような合成変数を求めることが目的となります． 合成変数f(X)は，算数の得点をx_1， 理科の得点をx_2とすると， 下記の式で与えられます．
-f(X) = w_1 \times x_1 + w_2 \times x_2  それぞれの得点に，重みw_1，w_2を掛けただけの簡単な式です． それでは，この重みの意味を考えていましょう． まずは，w_1=1，w_2=0の場合はどうでしょうか．
+score &amp;lt;- read.csv(&amp;#34;score2.csv&amp;#34;)  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter13としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+ 合成変数  主成分分析では，分散を最大化するような合成変数を求めることが目的となります． 合成変数f(X)は，算数の得点をx_1， 理科の得点をx_2とすると， 下記の式で与えられます．
+それぞれの得点に，重みw_1，w_2を掛けただけの簡単な式です． それでは，この重みの意味を考えていましょう． まずは，w_1=1，w_2=0の場合はどうでしょうか．
 x &amp;lt;- as.matrix(score[,2:3]) w1 &amp;lt;- matrix(c(1,0),nrow=2,ncol=1) &amp;gt; x %*% w1 [,1] [1,] 68 [2,] 78 [3,] 59 [4,] 65 [5,] 74 [6,] 29 [7,] 40 [8,] 71 [9,] 33 [10,] 53 [11,] 46 [12,] 27 [13,] 57 [14,] 48 [15,] 90 結果は算数の得点となります． これは理科の得点という情報を削って，新しい合成変数を生成したと考えることができます． これは，下記のように，本来は２次元のデータを，算数という１次元の軸に射影したとみなせます．</description>
     </item>
     
@@ -2374,16 +2387,17 @@ x &amp;lt;- as.matrix(score[,2:3]) w1 &amp;lt;- matrix(c(1,0),nrow=2,ncol=1) &am
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter5/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project5”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project5”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
 
-乱数生成 --  乱数生成  サイコロの出た目のように規則性がなく予測不能な数値のことを乱数と呼びます． コンピュータではその性質から完全な乱数を生成することは出来ないため， 擬似乱数と呼ばれる乱数とほぼ同じ特徴を持った値を生成します． 0以上，かつ，n未満を条件とした整数の乱数を生成するには下記のように記述します． RandomはJavaのライブラリに含まれるクラスの1つですが詳細は省略します．
+ 乱数生成  サイコロの出た目のように規則性がなく予測不能な数値のことを乱数と呼びます． コンピュータではその性質から完全な乱数を生成することは出来ないため， 擬似乱数と呼ばれる乱数とほぼ同じ特徴を持った値を生成します． 0以上，かつ，n未満を条件とした整数の乱数を生成するには下記のように記述します． RandomはJavaのライブラリに含まれるクラスの1つですが詳細は省略します．
 Random r = new Random(); int x = r.nextInt(n); 下記のコードを参考に，int型の変数xを宣言し，0～2までの乱数を代入してみましょう． プログラムの実行後に，コンソールの出力結果を確認してください． 実行毎に出力される値が変化することが分かります．
  乱数を利用しておみくじを作成してみましょう． 下記のコードを参考に，変数xの値に応じて，ランダムに”大吉”，”吉”，”凶”をコンソールに出力させてみましょう． プログラムの実行後に，コンソールの出力結果を確認してください．
- キーボード入力 --  キーボード入力  ユーザから入力を受け取る方法の1つがキーボードです． キーボードから文字列を受け取るには下記のように記述します． ScannerはJavaのライブラリに含まれるクラスの1つですが詳細は省略します．
+  キーボード入力  ユーザから入力を受け取る方法の1つがキーボードです． キーボードから文字列を受け取るには下記のように記述します． ScannerはJavaのライブラリに含まれるクラスの1つですが詳細は省略します．
 Scanner s = new Scanner(System.in); String text = s.nextLine(); s.close(); 下記のコードを参考に，変数nameにキーボードから入力した文字列を代入してみましょう． ここで，System.out.print()は，System.out.println()と同様に文字列をコンソールに出力する命令ですが，改行しないという点が異なります． また，コンソールへの出力の際には，文字列を連結するための演算子「+」を利用していることに注意が必要です．
- キーボードから整数を受け取るには下記のように記述します．</description>
+ キーボードから整数を受け取るには下記のように記述します．
+Scanner s = new Scanner(System.in); int number = s.</description>
     </item>
     
     <item>
@@ -2392,9 +2406,9 @@ Scanner s = new Scanner(System.in); String text = s.nextLine(); s.close(); 下�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/graduation_preperation_1/</guid>
-      <description> 授業科目区分: 専門教育科目 単位数: 2単位 開講学科: 文化情報学科 学年: 4年次 関連科目: 卒業研究指導2，卒業研究 授業テーマ: Monacaを利用したスマートフォンアプリの制作
+      <description>授業科目区分: 専門教育科目 単位数: 2単位 開講学科: 文化情報学科 学年: 4年次 関連科目: 卒業研究指導2，卒業研究 授業テーマ: Monacaを利用したスマートフォンアプリの制作
 授業内容 Monacaはクラウドで「HTML5ハイブリッドアプリ」を開発する環境の一つである． アプリの開発に必要な「コーディング」「デバッグ」「ビルド」などの一連の作業を ブラウザ（Chrome）で実行することが可能となっている 本授業では，Monacaを利用して，位置情報アプリやカメラアプリなどの 開発を経験しながら，オリジナル・アプリの制作を目指す． 事前に，Monacaのアカウントを作成し， 各自のスマートフォンにMonacaデバッガーをインストールしておくこと．
-授業計画  Onsen UI① コンポーネント Onsen UI② テキスト入力 Onsen UI③ テーマローラー Onsen UI④ ジェスチャー操作 ローカルストレージ グラフの表示 地図の表示   課題提出方法 Glexaから提出すること．S*mapからログインすることも可能．
+授業計画  Onsen UI① コンポーネント Onsen UI② テキスト入力 Onsen UI③ テーマローラー Onsen UI④ ジェスチャー操作 ローカルストレージ グラフの表示 地図の表示  課題提出方法 Glexaから提出すること．S*mapからログインすることも可能．
 参考書籍</description>
     </item>
     
@@ -2404,13 +2418,15 @@ Scanner s = new Scanner(System.in); String text = s.nextLine(); s.close(); 下�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter14/</guid>
-      <description>因子分析とは --  因子分析とは  因子分析は，主成分分析と同じ多変量解析の手法の一つです． 主成分分析は観測された変数を合成することが目的であるのに対し， 因子分析は観測された変数そのものが 潜在変数（因子） の合成であるとみなします． 下図は，主成分分析と因子分析の違いを表しています． 主成分は，全ての変数を合成することで求められます． 一方，因子は，独自因子 と 共通因子 に分かれており， 独自因子 は特定の変数に影響するのに対し，共通因子 は複数の変数に影響を与えます．
+      <description>因子分析とは  因子分析は，主成分分析と同じ多変量解析の手法の一つです． 主成分分析は観測された変数を合成することが目的であるのに対し， 因子分析は観測された変数そのものが 潜在変数（因子） の合成であるとみなします． 下図は，主成分分析と因子分析の違いを表しています． 主成分は，全ての変数を合成することで求められます． 一方，因子は，独自因子 と 共通因子 に分かれており， 独自因子 は特定の変数に影響するのに対し，共通因子 は複数の変数に影響を与えます．
 
-主成分分析は，次元を圧縮することで，データを可視化することに向いていますが，変数間の関係を分析することは苦手です． 一方，因子分析は得られた 因子 は変数間の関係を表しており，データの分析に適しています． しかし，因子分析は，主成分分析より数学的に難解であり，その仕組を完全に理解することは容易ではありません． 因子分析だけで本が一冊書けてしまう程であり，統計だけではなく，行列，ベクトルなどの知識が不可欠です． 今回も，理解 より 使える ことを重要視して，因子分析を学びましょう． 対象のデータとして，５教科の 成績のデータ（CSV形式）を使用するので，事前にダウンロードしておきましょう．
+主成分分析は，次元を圧縮することで，データを可視化することに向いていますが，変数間の関係を分析することは苦手です． 一方，因子分析は得られた 因子 は変数間の関係を表しており，データの分析に適しています． しかし，因子分析は，主成分分析より数学的に難解であり，その仕組を完全に理解することは容易ではありません． 因子分析だけで本が一冊書けてしまう程であり，統計だけではなく，行列，ベクトルなどの知識が不可欠です． 今回も，理解 より 使える ことを重要視して，因子分析を学びましょう． 対象のデータとして，５教科の **成績のデータ（CSV形式）**を使用するので，事前にダウンロードしておきましょう．
  ファイルをダウンロードしたら，read.csv関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう．
-score &amp;lt;- read.csv(&amp;#34;score.csv&amp;#34;) スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタ を表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter14としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-主成分得点と因子得点 --  主成分得点と因子  ここで，もう一度，主成分分析と因子分析の違いを整理しておきましょう． 主成分得点は下記の式で表すことができます． ここで，x_1，x_2は， 国語や算数の得点など 変数 を表しており， w_1，w_2は， それら変数の 重み であると共に，主成分を表すベクトルでした．
-f(X) = w_1 \times x_1 + w_2 \times x_2  一方，因子分析は下記の式で表すことができます． ここで，f_1(X)，f_2(X)は因子得点と呼ばれます． この因子得点は，共通因子の影響を得点に換算した推定値であり，個体ごとに得点が決まります． また，w_1，w_2は，因子得点の重みであり，因子負荷量 と呼びます． 主成分を表すベクトルとは異なり，||w|| = 1という条件は満たしません（ベクトルの長さにも意味があります）． 注意すべきは，独自因子のeであり，これが主成分分析との大きな違いを生みます （e=0とすると主成分分析と同じアプローチになる）．</description>
+score &amp;lt;- read.csv(&amp;#34;score.csv&amp;#34;)  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタ を表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter14としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+ 主成分得点と因子  ここで，もう一度，主成分分析と因子分析の違いを整理しておきましょう． 主成分得点は下記の式で表すことができます． ここで，x_1，x_2は， 国語や算数の得点など 変数 を表しており，
+それら変数の 重み であると共に，主成分を表すベクトルでした．
+一方，因子分析は下記の式で表すことができます． ここで，f_1(X)，f_2(X)は因子得点と呼ばれます． この因子得点は，共通因子の影響を得点に換算した推定値であり，個体ごとに得点が決まります． また，w_1，w_2は，因子得点の重みであり，因子負荷量 と呼びます． 主成分を表すベクトルとは異なり，||w|| = 1という条件は満たしません（ベクトルの長さにも意味があります）． 注意すべきは，独自因子のeであり，これが主成分分析との大きな違いを生みます （e=0とすると主成分分析と同じアプローチになる）．
+ データの標準化  因子分析を始める前にデータを標準化します． 標準化とは，対象となるデータの平均\muを0， 分散\sigma^2を1にすることを意味します．</description>
     </item>
     
     <item>
@@ -2419,14 +2435,15 @@ f(X) = w_1 \times x_1 + w_2 \times x_2  一方，因子分析は下記の式で�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter7/</guid>
-      <description>地図の表示 --  地図の表示  今回は地図サービスとして有名なGoogle MapsのウェブAPIであるGoogle Maps Javascript APIを利用して地図アプリを制作してみましょう． 現在のAPIのバージョンは3.27であり，APIを利用するには，Googleアカウントにログインした状態で，Google API Consoleで認証情報を登録する必要があります（2017年1月7日時点）． まずは，Google API Consoleにアクセスし，ライブラリのリンクをクリックし， Google Maps JavaScript API を有効にします
+      <description>地図の表示  今回は地図サービスとして有名なGoogle MapsのウェブAPIであるGoogle Maps Javascript APIを利用して地図アプリを制作してみましょう． 現在のAPIのバージョンは3.27であり，APIを利用するには，Googleアカウントにログインした状態で，Google API Consoleで認証情報を登録する必要があります（2017年1月7日時点）． まずは，Google API Consoleにアクセスし，ライブラリのリンクをクリックし， Google Maps JavaScript API を有効にします
 
 次にAPIを利用するための認証情報である APIキー を作成します． 認証情報のリンクをクリックし，APIキー を選択します．
 
 生成された APIキー をコピーしておきましょう． 後でウェブページに埋め込みます．
-プロジェクトの作成 --  プロジェクトの作成  今回も日進市のオープンデータミュージアムを利用して世帯数のデータを地図上に表示するアプリを作成しましょう． ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Minimum】を選択します． プロジェクト名を 地図アプリ ，説明を Google Maps APIを利用した日進市の世帯数の地図 とします． プロジェクトを作成したら MonacaクラウドIDE の画面を開きましょう．
+ プロジェクトの作成  今回も日進市のオープンデータミュージアムを利用して世帯数のデータを地図上に表示するアプリを作成しましょう． ダッシュボードから【新規プロジェクトの作成】-【Onsen UI】-【Onsen UI V2 JS Minimum】を選択します． プロジェクト名を 地図アプリ ，説明を Google Maps APIを利用した日進市の世帯数の地図 とします． プロジェクトを作成したら MonacaクラウドIDE の画面を開きましょう．
 
-Google Maps APIを利用した地図の表示 --  Google Maps APIを利用した地図の表示  それでは，Google Maps Javascript APIを利用して地図を表示させましょう． まずは地図を表示するための div要素 を作成します．</description>
+ Google Maps APIを利用した地図の表示  それでは，Google Maps Javascript APIを利用して地図を表示させましょう． まずは地図を表示するための div要素 を作成します．
+&amp;lt;div id=&amp;#34;map&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; 上記のdiv要素に加え，html要素，body要素のサイズを明確に指定しておく必要があります． そこで， style.css に下記のように記述しておきます．</description>
     </item>
     
     <item>
@@ -2435,7 +2452,7 @@ Google Maps APIを利用した地図の表示 --  Google Maps APIを利用した
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/seminar_fundamental_areas/</guid>
-      <description> 授業科目区分: 専門教育科目
+      <description>授業科目区分: 専門教育科目
 単位数: 1単位
 開講学科: 文化情報学科
 学年: 2年次
@@ -2472,7 +2489,7 @@ ellipse(x, y, width, height);</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/seminar_core_areas_learning/</guid>
-      <description> 授業科目区分: 専門教育科目
+      <description>授業科目区分: 専門教育科目
 単位数: 1単位
 開講学科: 文化情報学科
 学年: 1年次
@@ -2502,12 +2519,18 @@ ellipse(x, y, width, height);</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter12/</guid>
-      <description>対応のある2群とは --  対応のある2群とは  前回は独立な2群（対応のない2群）の検定を考えました． 今回は，対応のある2群 の検定に注目します． 対応のある2群 とは，2つの標本に含まれる対象に，何らかの対応関係があることを意味しています． 例えば，下記のように，同じ4人の被験者に対して，2種類の条件下で測定された2群のデータは，「対応のある2群」です．
-条件1: x_1 = \{a,b,c,d\} \\ 条件2: x_2 = \{a&#39;,b&#39;,c&#39;,d&#39;\}  「独立な2群の検定」には，新しい検定統計量が必要でしたが， 「対応のある2群の検定」では，2群のデータの「変化量」に着目することで， 標準的なt検定の検定統計量を適用することが可能です．
-スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter12としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-対応のある2群のt検定 --  対応のある2群のt検定  それでは，下記の問題について考えていきましょう．
-向研究室の学生を対象に実施した情報数学に関するテストの得点はx_1であった． その後，向による熱心な指導を行い，再度，情報数学に関するテストを実施したところ， その得点はx_2となった． 指導の前後における得点の平均値に有意な差はあるか． （どちらも同じ母集団からランダムサンプリングした標本だろうか）． 指導前: x_1 = \{63,75,72,67,71\} \\ 指導後: x_2 = \{82,70,78,81,79\}   ここでは，指導の前後という対応関係があることから，得点の 変化量 に注目します． 変化量はD = X_2 - X_1で与えられます．
-変化量の母集団: D = X_2 - X_1\\ 変化量の標本: d = x_2 - x_1 = \{19,-5,6,14,8\}  この変化量が，平均\hat{\mu}， 分散\hat{\sigma}^2の正規分布に従うと仮定します．</description>
+      <description>対応のある2群とは  前回は独立な2群（対応のない2群）の検定を考えました． 今回は，対応のある2群 の検定に注目します． 対応のある2群 とは，2つの標本に含まれる対象に，何らかの対応関係があることを意味しています． 例えば，下記のように，同じ4人の被験者に対して，2種類の条件下で測定された2群のデータは，「対応のある2群」です．
+「独立な2群の検定」には，新しい検定統計量が必要でしたが， 「対応のある2群の検定」では，2群のデータの「変化量」に着目することで， 標準的なt検定の検定統計量を適用することが可能です．
+ スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter12としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+ 対応のある2群のt検定  それでは，下記の問題について考えていきましょう．
+向研究室の学生を対象に実施した情報数学に関するテストの得点はx_1であった． その後，向による熱心な指導を行い，再度，情報数学に関するテストを実施したところ， その得点はx_2となった． 指導の前後における得点の平均値に有意な差はあるか． （どちらも同じ母集団からランダムサンプリングした標本だろうか）．
+ここでは，指導の前後という対応関係があることから，得点の 変化量 に注目します． 変化量はD = X_2 - X_1で与えられます．
+この変化量が，平均\hat{\mu}， 分散\hat{\sigma}^2の正規分布に従うと仮定します．
+すると，この変化量（標本）の平均の分布\bar{d}は， 平均\hat{\mu}， 分散\frac{\hat{\sigma}^2}{n}の正規分布に従うことになります． これは，「母集団」と「標本平均の分布」の関係ですね．
+これを標準化することで，t分布の検定統計量になります． このとき，母集団の標準偏差\hat{\sigma}は未知のため， 代わりに標本の標準偏差\sigma_dを用いることに注意してください．
+ 母平均\hat{\mu} 標本の平均\mu_d 標本の標準偏差\sigma_d 標本のサンプル数n=5  また，対象が変化量であることから， 帰無仮説は\hat{\mu}=0とおくため， 上記の式は下記のようになります． 随分とスッキリした検定統計量になりました．
+それでは，検定の手順に従って，上記の問題を解いていきましょう． まずは，帰無仮説 と 対立仮説 を立てます．
+ 帰無仮説：変化量の母平均は0である \hat{\mu} = 0 対立仮説：変化量の母平均は0ではない \hat{\mu} \neq 0  次に，検定統計量 と，信頼区間(棄却域) を定めます． 今回は，検定統計量は上記のtスコアとし，信頼度には「95%信頼度（5%棄却域）」を用いることにしましょう．</description>
     </item>
     
     <item>
@@ -2516,7 +2539,7 @@ ellipse(x, y, width, height);</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/</guid>
-      <description> 授業科目区分: 専門教育科目
+      <description>授業科目区分: 専門教育科目
 単位数: 1単位
 開講学科: 文化情報学科
 学年: 3年次
@@ -2533,10 +2556,10 @@ ellipse(x, y, width, height);</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter4/</guid>
-      <description>基本統計量 --  基本統計量  統計量とは，観測したデータそのものではなく，それらのデータの特徴を代表的に表す値のことを表します． そのなかでも，基本統計量 は，平均，中央値，分散，標準偏差 などを指し， データの特徴を把握するための基本的な指標となります． 今回は，これら基本統計量を，公式や関数を利用して計算してみましょう． 対象のデータとして成績のデータ（CSV形式）を使用します． このデータは15人の生徒の国語，算数，理科，英語，社会の得点で構成されています．
+      <description>基本統計量  統計量とは，観測したデータそのものではなく，それらのデータの特徴を代表的に表す値のことを表します． そのなかでも，基本統計量 は，平均，中央値，分散，標準偏差 などを指し， データの特徴を把握するための基本的な指標となります． 今回は，これら基本統計量を，公式や関数を利用して計算してみましょう． 対象のデータとして成績のデータ（CSV形式）を使用します． このデータは15人の生徒の国語，算数，理科，英語，社会の得点で構成されています．
  ファイルをダウンロードしたら，read.csv関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．
 score &amp;lt;- read.csv(&amp;#34;score.csv&amp;#34;) 変数scoreの出力は下記のようになります．
-&amp;gt; score 氏名 国語 算数 理科 英語 社会 1 青木 達也 60 68 72 39 71 2 石井 健二 65 78 82 37 75 3 北村 真子 84 59 85 87 84 4 河野 尚子 50 65 65 39 78 5 高木 健 72 74 83 30 83 6 西川 知里 50 29 67 62 72 7 福島 萌子 84 40 65 86 66 8 古川 翔太 78 71 82 34 88 9 山内 香菜 77 33 65 73 88 10 渡辺 太郎 76 53 75 60 71 11 浅野 渉 68 46 77 66 86 12 星野 弘 61 27 74 70 67 13 中谷 章 86 57 72 73 65 14 小泉 美沙 68 48 73 51 68 15 木下 萌子 78 90 100 53 79 スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter4としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．</description>
+&amp;gt; score 氏名 国語 算数 理科 英語 社会 1 青木 達也 60 68 72 39 71 2 石井 健二 65 78 82 37 75 3 北村 真子 84 59 85 87 84 4 河野 尚子 50 65 65 39 78 5 高木 健 72 74 83 30 83 6 西川 知里 50 29 67 62 72 7 福島 萌子 84 40 65 86 66 8 古川 翔太 78 71 82 34 88 9 山内 香菜 77 33 65 73 88 10 渡辺 太郎 76 53 75 60 71 11 浅野 渉 68 46 77 66 86 12 星野 弘 61 27 74 70 67 13 中谷 章 86 57 72 73 65 14 小泉 美沙 68 48 73 51 68 15 木下 萌子 78 90 100 53 79  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter4としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．</description>
     </item>
     
     <item>
@@ -2545,12 +2568,12 @@ score &amp;lt;- read.csv(&amp;#34;score.csv&amp;#34;) 変数scoreの出力は下
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter2/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project2”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project2”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
 
-リテラルとは --  リテラルとは  Javaに限らず一般的なプログラム言語では，「1」や「2」などの 数値，「ABC」や「あいう」などの 文字列 をデータとして扱うことが可能です． ソースコードにおいて使用されるこれらの数値や文字列のデータを リテラル と呼びます． Javaでは，整数 や 小数 など，リテラルの種類を表す データ型 が存在します． 例えば，「1」や「2」などの整数は，int というデータ型に該当します． 下記表に利用頻度の高いデータ型をまとめるので確認してください．
-   リテラルの種類 データ型 例     整数 int 1, 2, 3   小数 double 0.1, 1.1, 10.1   真理値 boolean true, false   文字列 String &amp;ldquo;ABC&amp;rdquo;, &amp;ldquo;あいう&amp;rdquo;    この他にも，64ビットの大きさの整数を表すlongや，32ビットの大きさの小数を表すfloatなどのデータ型がありますが， 取り敢えずは表中のint，double，boolean，Stringだけはしっかりと覚えておきましょう（正確にはStringはクラスでありデータ型ではない）． 文字列データを表記する際は，対象となる文字列を「&amp;ldquo;（ダブルクォート）」で囲む必要がありますので注意が必要です．</description>
+ リテラルとは  Javaに限らず一般的なプログラム言語では，「1」や「2」などの 数値，「ABC」や「あいう」などの 文字列 をデータとして扱うことが可能です． ソースコードにおいて使用されるこれらの数値や文字列のデータを リテラル と呼びます． Javaでは，整数 や 小数 など，リテラルの種類を表す データ型 が存在します． 例えば，「1」や「2」などの整数は，int というデータ型に該当します． 下記表に利用頻度の高いデータ型をまとめるので確認してください．
+   リテラルの種類 データ型 例     整数 int 1, 2, 3   小数 double 0.1, 1.1, 10.1   真理値 boolean true, false   文字列 String &amp;ldquo;ABC&amp;rdquo;, &amp;ldquo;あいう&amp;rdquo;    この他にも，64ビットの大きさの整数を表すlongや，32ビットの大きさの小数を表すfloatなどのデータ型がありますが， 取り敢えずは表中のint，double，boolean，Stringだけはしっかりと覚えておきましょう（正確にはStringはクラスでありデータ型ではない）． 文字列データを表記する際は，対象となる文字列を「&amp;quot;（ダブルクォート）」で囲む必要がありますので注意が必要です．</description>
     </item>
     
     <item>
@@ -2559,13 +2582,13 @@ score &amp;lt;- read.csv(&amp;#34;score.csv&amp;#34;) 変数scoreの出力は下
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter3/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project3”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project3”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
 
-制御構文とは --  制御構文とは  制御構文とは実行する命令文の順序を変化させるための構文です． 一般的に命令文はソースコードの「上から順に１つずつ」実行されるのが基本です． この「上から順に１つずつ」実行する制御を順次と呼びます． この他，条件によって異なる命令文を実行する制御を条件分岐， 条件を満たすまで同じ命令文を繰り返す制御を繰り返しと呼びます． 今回はこの条件分岐に関して学習します． 条件分岐を理解するには，条件を表現するための条件式を学ぶ必要があります． 次章では，まず条件式に関して確認していきましょう．
-条件式とは --  条件式とは  条件式とは，主に比較演算子や論理演算子を用いて表現され， 真（true）または偽（false）のどちらかの値を返す論理式のことです． この真（true）や偽（false）という値はboolean型となることに注意してください． 例えば，int型の変数xに代入されている値が数値3と一致するかどうかを条件式で表現するには，x == 3と表します． ここで，「==」は左辺と右辺が等しいかを判定する比較演算子です． 条件式で用いられる比較演算子を下記にまとめます．
-   比較演算子 意味 例     A\=\=B AとBは等しい x\=\=3   A!=B AとBは等しくない x!=3   A&amp;gt;B AはBより大きい x&amp;gt;3   A&amp;gt;=B AはBと等しいか大きい x&amp;gt;=3   A&amp;lt;B AはBより小さい x&amp;lt;3   A&amp;lt;=B AはBと等しいか小さい A&amp;lt;=3    下記のコードを参考にint型の変数xを宣言して3を代入し， 上記の比較演算子の結果を確認してみましょう． プログラムの実行後に，コンソールの出力結果を確認してください．</description>
+ 制御構文とは  制御構文とは実行する命令文の順序を変化させるための構文です． 一般的に命令文はソースコードの「上から順に１つずつ」実行されるのが基本です． この「上から順に１つずつ」実行する制御を順次と呼びます． この他，条件によって異なる命令文を実行する制御を条件分岐， 条件を満たすまで同じ命令文を繰り返す制御を繰り返しと呼びます． 今回はこの条件分岐に関して学習します． 条件分岐を理解するには，条件を表現するための条件式を学ぶ必要があります． 次章では，まず条件式に関して確認していきましょう．
+ 条件式とは  条件式とは，主に比較演算子や論理演算子を用いて表現され， 真（true）または偽（false）のどちらかの値を返す論理式のことです． この真（true）や偽（false）という値はboolean型となることに注意してください． 例えば，int型の変数xに代入されている値が数値3と一致するかどうかを条件式で表現するには，x == 3と表します． ここで，「==」は左辺と右辺が等しいかを判定する比較演算子です． 条件式で用いられる比較演算子を下記にまとめます．
+   比較演算子 意味 例     A==B AとBは等しい x==3   A!=B AとBは等しくない x!=3   A&amp;gt;B AはBより大きい x&amp;gt;3   A&amp;gt;=B AはBと等しいか大きい x&amp;gt;=3   A&amp;lt;B AはBより小さい x&amp;lt;3   A&amp;lt;=B AはBと等しいか小さい A&amp;lt;=3    下記のコードを参考にint型の変数xを宣言して3を代入し， 上記の比較演算子の結果を確認してみましょう． プログラムの実行後に，コンソールの出力結果を確認してください．</description>
     </item>
     
     <item>
@@ -2576,7 +2599,7 @@ score &amp;lt;- read.csv(&amp;#34;score.csv&amp;#34;) 変数scoreの出力は下
       <guid>https://mukai-lab.info/pages/classes/programming_1/chapter4/</guid>
       <description>スケッチの作成  Processingを起動して、新規にスケッチを保存しましょう。 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。 ファイル名に「Project4」を入力し、[保存]をクリックしましょう。 保存先に「Project4」という名前のフォルダが作成されていることを確認してください。
 
- 乱数の生成  規則性がないランダムな値のことを乱数と呼びます。 コンピュータは完全な乱数を生成することは出来ないため、 アルゴリズムに従って疑似的な乱数を生成します（疑似乱数と呼ばれます）。 コンピュータゲームにおける「トランプを配る」「サイコロを振る」などはこの疑似乱数を利用しています。 Processingで疑似乱数を先生するにはrandom()関数を利用します。 random()関数の引数には、生成する乱数の下限（low）と上限（high）を指定します。 また、生成された乱数はfloat型のデータとなることに注意が必要です。
+ 乱数の生成  規則性がないランダムな値のことを乱数と呼びます。 コンピュータは完全な乱数を生成することは出来ないため、 アルゴリズムに従って疑似的な乱数を生成します（疑似乱数と呼ばれます）。 コンピュータゲームにおける「トランプを配る」「サイコロを振る」などはこの疑似乱数を利用しています。 Processingで疑似乱数を先生するにはrandom()関数を利用します。 random()関数の引数には、生成する乱数の**下限（low）と上限（high）**を指定します。 また、生成された乱数はfloat型のデータとなることに注意が必要です。
 random(low, high); ここでは、for文を利用して、半径10の円を10箇所に描きましょう。 各円は、random()関数を利用して、ランダムな位置に配置します。 下記を参考にコードを入力したら、Runボタンをクリックしてください。 実行毎に配置が変わる円が描かれていることを確認してください。
  
  比較演算子  for文の繰り返し条件に記述されるi&amp;lt;10などは条件式と呼ばれます。 また、「&amp;lt;」は比較演算子と呼ばれ、左辺と右辺を比較した結果、 真（true）または偽（false）のどちらかを返す論理演算の一つです。 この真（true）や偽（false）はboolean型であることに注意してください。 例えば、変数aの値が5であるとき「a &amp;lt; 3」の結果はfalseとなります。 比較演算子を下記表にまとめます。
@@ -2589,18 +2612,22 @@ random(low, high); ここでは、for文を利用して、半径10の円を10箇
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter9/</guid>
-      <description>検定とは --  t検定とは  検定とは「標本から推定された母数が，確率的に正しいかどうか」を判断することを意味します． 検定は，統計的仮説検定とも呼ばれ，推測統計でも利用頻度の高い重要なテクニックです． 検定を行うための手順は下記のようになります．
+      <description>t検定とは  検定とは「標本から推定された母数が，確率的に正しいかどうか」を判断することを意味します． 検定は，統計的仮説検定とも呼ばれ，推測統計でも利用頻度の高い重要なテクニックです． 検定を行うための手順は下記のようになります．
 1．母数に関する帰無仮説と対立仮説を立てる．
 2. 検定統計量を選択する．
 3. 信頼区間（棄却域）を決める．
 4. 標本から検定統計量を計算する．
 5. 検定統計量が棄却域に含まれれば，帰無仮説を棄却して，対立仮説を採用する．棄却域に含まれなければ，帰無仮説を採択する．
 難しい単語がたくさん出てきましたが，これは追々説明していきます． ここでは，母集団が正規分布であり，母平均，母分散が既知であるときに適用可能な標準正規分布を用いた検定を考えます． この，標準正規分布を用いた検定 は Z検定 とも呼ばれます．
-スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter9としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-検定の目的 --  検定の目的  まずは下記の具体例を考えていきましょう．
-文化情報学部の学生Xに情報数学に関するテストを行ったところ， その得点の平均\hat{\mu}は60， 分散\hat{\sigma}^2は100であった． このうち，向研究室に所属する5人の学生xの得点は下記であった． 向研究室に所属する学生xは， 文化情報学部の学生Xと， 同様の傾向があるか（母集団からランダムサンプリングした学生だろうか）． x = \{63,75,72,67,71\}   母集団は「文化情報学部の学生X」， 標本は「向研究室に所属する学生x」と考えることができます． また，「標本平均の分布」をmとします． いずれも正規分布に従うと仮定すると，母集団の分布と，標本平均の分布は下記のようになります．
-X \sim N(60,100)  m \sim N(60,100/5) = N(60,20)  ここで，標本の平均を求めてみましょう．
-x &amp;lt;- c(63,75,72,67,71) &amp;gt; mean(x) [1] 69.</description>
+ スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter9としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+ 検定の目的  まずは下記の具体例を考えていきましょう．
+文化情報学部の学生Xに情報数学に関するテストを行ったところ， その得点の平均\hat{\mu}は60， 分散\hat{\sigma}^2は100であった． このうち，向研究室に所属する5人の学生xの得点は下記であった． 向研究室に所属する学生xは， 文化情報学部の学生Xと， 同様の傾向があるか（母集団からランダムサンプリングした学生だろうか）．
+母集団は「文化情報学部の学生X」， 標本は「向研究室に所属する学生x」と考えることができます． また，「標本平均の分布」をmとします． いずれも正規分布に従うと仮定すると，母集団の分布と，標本平均の分布は下記のようになります．
+ここで，標本の平均を求めてみましょう．
+x &amp;lt;- c(63,75,72,67,71) &amp;gt; mean(x) [1] 69.6 標本平均は69.6点とかなり高得点です． これは，どのくらい珍しいことなのでしょうか． 標本平均の分布のグラフで確認してみましょう．
+&amp;gt; curve(dnorm(x,60,sqrt(20)),from=30,to=90) 
+グラフを確認すると，標本平均が69.6点以上になる確率は，非常に低いことが分かります． pnorm関数を利用して，標本平均が69.6点以上になる確率を計算してみましょう．
+&amp;gt; 1-pnorm(69.6,60,sqrt(20)) [1] 0.01591156 よって，母集団からランダムサンプリングで抽出した標本の 平均が69.6点以上になる確率は 約1.6% という結果になりました． これは，「向研究室の学生は母集団とは異なる傾向を持っている」ということを意味します． ようするに凄く優秀な学生が向研究室に集まっているということです（本当にこうなるといいなぁ）．</description>
     </item>
     
     <item>
@@ -2609,13 +2636,15 @@ x &amp;lt;- c(63,75,72,67,71) &amp;gt; mean(x) [1] 69.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter7/</guid>
-      <description>正規分布 --  正規分布  正規分布 は，ガウス分布 とも呼ばれ，平均値に近い値の頻度が高く， 平均値から離れるほど頻度が低くなるという特徴を持った確率分布のことです． 例えば，「身長」や「体重」などの分布が正規分布に従うことが知られており， その他にも様々な社会現象や自然現象に当てはまると考えられています． また，分布が数学的に扱いやすい性質を持っていることから， 統計分析によく用いられ，最も重要な 確率分布 と言っても間違いありません． 今回は，サンプルデータを基に正規分布のグラフを描く事から始め，正規分布を利用して特定の区間の生起確率を求める方法を学びます．
-スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter7としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-正規分布のグラフ --  正規分布のグラフ  気象庁が公開している 愛知県名古屋市の９月の最高気温のデータを対象に考えていきます． このデータは，1891年から2016年までの，愛知県名古屋市の9月の最高気温を表しています．
-年,最高気温 1891,28.7 1892,28.1 1893,28.6 1894,28.4 1895,28.3 1896,27.7 1897,27.3 1898,28 1899,25.4 1900,28.9 ...,... 2016,29.3 ファイルをダウンロードしたら，read.csv 関数を利用して， 変数*temp*にデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．
+      <description>正規分布  正規分布 は，ガウス分布 とも呼ばれ，平均値に近い値の頻度が高く， 平均値から離れるほど頻度が低くなるという特徴を持った確率分布のことです． 例えば，「身長」や「体重」などの分布が正規分布に従うことが知られており， その他にも様々な社会現象や自然現象に当てはまると考えられています． また，分布が数学的に扱いやすい性質を持っていることから， 統計分析によく用いられ，最も重要な 確率分布 と言っても間違いありません． 今回は，サンプルデータを基に正規分布のグラフを描く事から始め，正規分布を利用して特定の区間の生起確率を求める方法を学びます．
+ スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter7としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+ 正規分布のグラフ  気象庁が公開している 愛知県名古屋市の９月の最高気温のデータを対象に考えていきます． このデータは，1891年から2016年までの，愛知県名古屋市の9月の最高気温を表しています．
+年,最高気温 1891,28.7 1892,28.1 1893,28.6 1894,28.4 1895,28.3 1896,27.7 1897,27.3 1898,28 1899,25.4 1900,28.9 ...,... 2016,29.3 ファイルをダウンロードしたら，read.csv 関数を利用して， 変数tempにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．
 temp &amp;lt;- read.csv(&amp;#34;temperature.csv&amp;#34;) 次に，hist関数を利用して，最高気温のヒストグラムを表示しましょう． 範囲は25から32までとし，区間は0.5とします． seq関数は，規則性のある数列ベクトルを生成する関数であり， ここでは，25から32まで，0.5ずつ増やした数列（{25.0,25.5,26.0,26.5,&amp;hellip;,32}）を生成します．
 hist(temp[,2],breaks=seq(25,32,0.5)) 
-グラフを確認すると， 区間28-8.5 が最頻値となっていることが分かります． また，この区間から離れるにつれて緩やかに頻度が減り， 全体としては左右対称な 釣鐘型 と呼ばれる分布をしています． しかし，このグラフは，縦軸が頻度を表すヒストグラムであり，確率分布ではありません． そこで，hist 関数の引数にfreq=FALSE を設定し，縦軸を 確率密度 に変更します．</description>
+グラフを確認すると， 区間28-8.5 が最頻値となっていることが分かります． また，この区間から離れるにつれて緩やかに頻度が減り， 全体としては左右対称な 釣鐘型 と呼ばれる分布をしています． しかし，このグラフは，縦軸が頻度を表すヒストグラムであり，確率分布ではありません． そこで，hist 関数の引数にfreq=FALSE を設定し，縦軸を 確率密度 に変更します．
+hist(temp[,2],breaks=seq(25,32,0.5),freq=FALSE) 
+ここでのポイントは，縦軸は 確率 ではなく 確率密度 を表しているということです． 前回の2項分布では，「コインの表が出る回数」は非連続の値をとることから，離散分布であり，縦軸が表す値は 確率 になります． 一方，「気温」は連続的な値をとることから， 連続分布 であり，縦軸が表す値は 確率密度 になります． このため，連続分布において 確率 は，グラフの面積で表されます（面積の和が1になる）． 例えば，区間28-28.</description>
     </item>
     
     <item>
@@ -2624,12 +2653,13 @@ hist(temp[,2],breaks=seq(25,32,0.5))
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter8/</guid>
-      <description>母集団と標本 --  母集団と標本  統計の醍醐味の一つが「推測統計」です． 推測統計では，対象となるデータが大規模であるために，その一部を取り出したデータから推測するということを行います． このとき，対象となるデータ全体のことを母集団，取り出した一部のデータのことを標本といいます． 例えば，日本国民全体の平均身長を調べるためには，莫大な費用と時間がかかってしまいます． そこで，多少の正確さは犠牲にして，一部の国民を対象として調査し，全体を予測するということが現実的な方法です． ここでは，母集団が正規分布であると仮定して，母集団と標本の関係を明らかにしていきます． これからは，ある母集団（または標本）Xが， 平均\mu，分散\sigma^2に従うとき， 下記のように表記しますので注意してください． ここで，Nは，Normal Distribution（正規分布）の頭文字です．
-X \sim N(\mu,\sigma^2)  スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter8としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-母数の推定 --  母数の推定  母集団の特徴を表す基本統計量は母数と呼ばれます． 平均，分散などがその代表であり，母集団の平均を母平均\hat{\mu}， 母集団の分散を母分散 \hat{\sigma}^2と呼びます． また，母集団から抽出された標本の平均を標本平均 \mu， 標本の分散（不偏分散）を標本分散 \sigma^2と呼びます． テキストによっては，これらの定義が異なることもあるので注意してください．
+      <description>母集団と標本  統計の醍醐味の一つが「推測統計」です． 推測統計では，対象となるデータが大規模であるために，その一部を取り出したデータから推測するということを行います． このとき，対象となるデータ全体のことを母集団，取り出した一部のデータのことを標本といいます． 例えば，日本国民全体の平均身長を調べるためには，莫大な費用と時間がかかってしまいます． そこで，多少の正確さは犠牲にして，一部の国民を対象として調査し，全体を予測するということが現実的な方法です． ここでは，母集団が正規分布であると仮定して，母集団と標本の関係を明らかにしていきます． これからは，ある母集団（または標本）Xが， 平均\mu，分散\sigma^2に従うとき， 下記のように表記しますので注意してください． ここで，Nは，Normal Distribution（正規分布）の頭文字です．
+ スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter8としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+ 母数の推定  母集団の特徴を表す基本統計量は母数と呼ばれます． 平均，分散などがその代表であり，母集団の平均を母平均\hat{\mu}， 母集団の分散を母分散 \hat{\sigma}^2と呼びます． また，母集団から抽出された標本の平均を標本平均 \mu， 標本の分散（不偏分散）を標本分散 \sigma^2と呼びます． テキストによっては，これらの定義が異なることもあるので注意してください．
 それでは，母集団から抽出した標本を用いて，母数の値を推定してみましょう． このとき，推定する母数が「1つの値」となっている場合は，点推定 と呼びます． ここでは，平均\hat{\mu}=100， 分散\hat{\sigma}^2=100に従う母集団を考えます （標準偏差は\hat{\sigma}=10）．
-X \sim N(100,100)  上記の正規分布に従った下記の10000の乱数を生成し，母集団Xとします． ファイル をダウンロードしたら，read.csv関数を利用して， 変数Xにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．
-89.74776 96.49404 98.46421 98.99935 93.35153 105.0311 123.9603 98.72574 105.1024 83.61765 ... ファイルを読み込んだら，母集団Xの平均と分散を求めてみましょう．</description>
+上記の正規分布に従った下記の10000の乱数を生成し，母集団Xとします． ファイル をダウンロードしたら，read.csv関数を利用して， 変数Xにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．
+89.74776 96.49404 98.46421 98.99935 93.35153 105.0311 123.9603 98.72574 105.1024 83.61765 ... ファイルを読み込んだら，母集団Xの平均と分散を求めてみましょう．
+X &amp;lt;- read.csv(&amp;#34;N-100-10.csv&amp;#34;) &amp;gt; mean(X[,1]) [1] 100.1837 &amp;gt; var(X[,1]) [1] 99.70016 この結果から，母平均\hat{\mu}=100.18 \simeq 100， 母分散\hat{\sigma}^2=99.</description>
     </item>
     
     <item>
@@ -2638,14 +2668,20 @@ X \sim N(100,100)  上記の正規分布に従った下記の10000の乱数を�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter11/</guid>
-      <description>平均値差の検定とは --  平均値差の検定とは  これまでは，母集団Xと標本xの関係に注目して検定を行いました． これからは，２つの標本（標本x_1，標本x_2）の関係に注目し， それぞれの平均値の有意な差があるかどうかを検定します． ２つの標本を検定する場合，下記の条件によって適用する手法が異なります．
- 独立な2群（対応のない2群） 対応のある2群  独立な2群（対応のない2群）とは，ある母集団から２つの標本を抽出したとき， それぞれの標本に含まれる対象が互いに無関係であることを意味しています． 例えば，下記のように，母集団Xから8人の被験者を抽出して， これをランダムに4人の2群に分けた場合は，「独立な2群」です．
-x_1 = \{a,b,c,d\} \\ x_2 = \{e,f,g,h\}  一方，対応のある2群 とは，2つの標本に含まれる対象に，何らかの対応関係があることを意味しています． 例えば，下記のように，同じ4人の被験者に対して，2種類の条件下で測定された2群のデータは，「対応のある2群」です．
-条件1: x_1 = \{a,b,c,d\} \\ 条件2: x_2 = \{a&#39;,b&#39;,c&#39;,d&#39;\}  今回は，前者の独立な2群（対応のない2群）のt検定を解説します．
-スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter11としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-t検定の前提条件 --  t検定の前提条件  独立な2群の平均値差の検定にもt検定を利用します． ただし，t検定を適用するには，下記の条件を満たす必要があります．
+      <description>平均値差の検定とは  これまでは，母集団Xと標本xの関係に注目して検定を行いました． これからは，２つの標本（標本x_1，標本x_2）の関係に注目し， それぞれの平均値の有意な差があるかどうかを検定します． ２つの標本を検定する場合，下記の条件によって適用する手法が異なります．
+ 独立な2群（対応のない2群） 対応のある2群  **独立な2群（対応のない2群）**とは，ある母集団から２つの標本を抽出したとき， それぞれの標本に含まれる対象が互いに無関係であることを意味しています． 例えば，下記のように，母集団Xから8人の被験者を抽出して， これをランダムに4人の2群に分けた場合は，「独立な2群」です．
+一方，対応のある2群 とは，2つの標本に含まれる対象に，何らかの対応関係があることを意味しています． 例えば，下記のように，同じ4人の被験者に対して，2種類の条件下で測定された2群のデータは，「対応のある2群」です．
+今回は，前者の**独立な2群（対応のない2群）**のt検定を解説します．
+ スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter11としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+ t検定の前提条件  独立な2群の平均値差の検定にもt検定を利用します． ただし，t検定を適用するには，下記の条件を満たす必要があります．
  ランダムサンプリングにより標本が抽出されている 母集団の分布が正規分布である 母集団の分散が等質である  上記の条件1，2はこれまでの前提と同じですが，条件3が新しく追加されました． もし，条件3を満たさない場合は，t検定の代わりに，Welchの検定 を利用する必要があります． Welchの検定に関しては割愛します． ここでは，上記の全ての条件を満たしていると仮定して話を進めます．
-独立な2群のt検定 --  独立な2群のt検定  それでは，下記の問題について考えていきましょう．</description>
+ 独立な2群のt検定  それでは，下記の問題について考えていきましょう．
+向研究室と見田研究室に所属する学生を対象に情報数学に関するテストを行った． 向研究室に所属する5人の学生x_1と， 見田研究室に所属する5人の学生x_2の得点は下記であった． 向研究室に所属する学生x_1と， 見田研究室の学生x_2の平均値に有意な差はあるか （どちらも同じ母集団からランダムサンプリングした標本だろうか）．
+ここでは，2つの標本の平均値の差が問題となるため，
+この\mu_1 - \mu_2は下記の正規分布に従います．
+ 母集団の平均\hat{\mu_1}，\hat{\mu_2} 母集団の標準偏差\hat{\sigma} 標本のサンプル数n_1=5，n_2=5  ここで，母集団の平均\hat{\mu_1}，\hat{\mu_2}と 母集団の標準偏差\hat{\sigma}が出現します． 先に述べたように「母集団の分散が等質である」ことを前提としているため， 母集団の標準偏差は同じ値を用いることに注意してください．また，一般に母集団の分散は未知であることから， 標本の標準偏差\sigma_1，\sigma_2を含む下記の式を用いて推定します． この分散の推定値をプールした分散と呼びます．
+上記の分布を標準化すると，検定統計量であるtスコアは下記の式で表されます．
+一般に，帰無仮説は\hat{\mu_1}=\hat{\mu_2}であることから，</description>
     </item>
     
     <item>
@@ -2656,18 +2692,18 @@ t検定の前提条件 --  t検定の前提条件  独立な2群の平均値差�
       <guid>https://mukai-lab.info/pages/classes/programming_1/chapter7/</guid>
       <description>スケッチの作成  Processingを起動して、新規にスケッチを保存しましょう。 メニューから[ファイル]-[名前を付けて保存]をクリックして、「スケッチフォルダを名前を付けて保存」を開きます。 ファイル名に「Project7」を入力し、[保存]をクリックしましょう。 保存先に「Project7」という名前のフォルダが作成されていることを確認してください。
 
- 画像の準備  ProcessingはJPG形式やPNG形式などの画像ファイルを取り込んで表示することができます。 下記の三種類の画像（hana.jpg、night.jpg、umi.jpg）の内から一つを選び、画像をダウンロードしてください（画像提供：フリー写真素材 Futta.NET）。 いずれの画像もサイズは640&amp;times;480ピクセルです。 また、ダウンロードした画像は「スケッチフォルダ（Project7）」の中に配置しましょう。 これ以降、本資料ではhana.jpgを例に取り説明していきます。
+ 画像の準備  ProcessingはJPG形式やPNG形式などの画像ファイルを取り込んで表示することができます。 下記の三種類の画像（hana.jpg、night.jpg、umi.jpg）の内から一つを選び、画像をダウンロードしてください（画像提供：フリー写真素材 Futta.NET）。 いずれの画像もサイズは640×480ピクセルです。 また、ダウンロードした画像は「スケッチフォルダ（Project7）」の中に配置しましょう。 これ以降、本資料ではhana.jpgを例に取り説明していきます。
  画像の表示  画像ファイルを読み込むには、PImageという型（本当はクラス）で変数を宣言し、 loadIMage()関数を利用して、変数に画像データを代入します。
-PImage img; img = loadImage(ファイル名); また、ウィンドウに画像を表示するにはimage()関数を用います。 image()関数の引数には、PImage型の変数に加え、表示する位置(x,y)を指定します。 初期設定では、画像の表示位置は、画像の左上隅の座標が基準となることに注意してください。
-image(img, x, y); 下記を参考にコードを入力したら、Runボタンをクリックしてくだい。 ウィンドウに指定した画像が表示されることを確認してください（ウィンドウのサイズは画像サイズと同じ640&amp;times;480ピクセルとします）。
+PImage img; img = loadImage(ファイル名); また、ウィンドウに画像を表示するにはimage()関数を用います。 image()関数の引数には、PImage型の変数に加え、表示する位置**(x,y)**を指定します。 初期設定では、画像の表示位置は、画像の左上隅の座標が基準となることに注意してください。
+image(img, x, y); 下記を参考にコードを入力したら、Runボタンをクリックしてくだい。 ウィンドウに指定した画像が表示されることを確認してください（ウィンドウのサイズは画像サイズと同じ640×480ピクセルとします）。
  
 画像をクリッピング（画像の一部を切り取ること）するには、copy()関数を利用します。 例えば、画像の左上の1/4の領域を切り取り、幅・高さを2倍にするには下記のように記述します。 (0,0)は元画像の左上隅の座標、(320,240)は切り取る領域の幅と高さを意味しており、これらの値で指定された領域が切り取られます。 また、2度目の(0,0)は切り取った画像を表示する位置、(640, 480)は切り取った画像の幅と高さ（この場合は拡大）を意味しています。
 
 copy(img, 0, 0, 320, 240, 0, 0, 640, 480); 下記を参考にコードを入力したら、Runボタンをクリックしてくだい。 ウィンドウに切り取られた画像が拡大して表示されることを確認してください。
  
-クリッピング機能を利用して虫眼鏡を実現してみましょう。 マウスをドラッグすると、マウス位置にある画像部分だけがズームして表示されます。 mouseDragged()関数では、image()関数で画像を表示した後に、 copy()関数を利用して100&amp;times;100ピクセルの領域を切り取り、 200&amp;times;200ピクセル（2倍）に拡大して表示しています。 また、mouseReleased()関数では、image()関数を実行し、元の画像を表示しています。 下記を参考にコードを入力したら、Runボタンをクリックしてくだい。 ドラッグすると画像が拡大して表示されることを確認してください。
+クリッピング機能を利用して虫眼鏡を実現してみましょう。 マウスをドラッグすると、マウス位置にある画像部分だけがズームして表示されます。 mouseDragged()関数では、image()関数で画像を表示した後に、 copy()関数を利用して100×100ピクセルの領域を切り取り、 200×200ピクセル（2倍）に拡大して表示しています。 また、mouseReleased()関数では、image()関数を実行し、元の画像を表示しています。 下記を参考にコードを入力したら、Runボタンをクリックしてくだい。 ドラッグすると画像が拡大して表示されることを確認してください。
  
- 配列と画像の色情報  loadPixels()関数を実行することで、 画像データを構成する各ピクセルの色情報を取得することができます。 取得された色情報はpixels[]という名前の配列に記録されます。 配列は1つの名前で複数のデータを記録することが可能な特殊な変数と言えます。 例えば、pixels[0]、pixels[1]のように、配列名の後ろに[要素番号]を指定することで、 記録されている値を参照したり、新しい値を代入することができます（要素番号は0から始まることに注意してください）。 ここでは、640&amp;times;480ピクセルの画像を対象としているため、要素番号は0～307199(＝640&amp;times;480-1)となります。 また、配列の長さは配列名.</description>
+ 配列と画像の色情報  loadPixels()関数を実行することで、 画像データを構成する各ピクセルの色情報を取得することができます。 取得された色情報はpixels[]という名前の配列に記録されます。 配列は1つの名前で複数のデータを記録することが可能な特殊な変数と言えます。 例えば、pixels[0]、pixels[1]のように、配列名の後ろに[要素番号]を指定することで、 記録されている値を参照したり、新しい値を代入することができます（要素番号は0から始まることに注意してください）。 ここでは、640×480ピクセルの画像を対象としているため、要素番号は0～307199(＝640×480-1)となります。 また、配列の長さは配列名.</description>
     </item>
     
     <item>
@@ -2676,10 +2712,10 @@ copy(img, 0, 0, 320, 240, 0, 0, 640, 480); 下記を参考にコードを入力�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter5/</guid>
-      <description>相関分析 --  相関分析  相関分析とは，2種類のデータの関係性を測るための方法を指します． 例えば，夏の熱い日には，アイスクリームがよく売れるとします． このとき，温度と，アイスクリームの売上には相関があると言えます． 今回は，このようなデータの相関を調べるに共分散と相関係数を学びましょう． 対象のデータは，前回と同じ成績のデータ（CSV形式）を使用します． このデータは15人の生徒の国語，算数，理科，英語，社会の得点で構成されています．
+      <description>相関分析  相関分析とは，2種類のデータの関係性を測るための方法を指します． 例えば，夏の熱い日には，アイスクリームがよく売れるとします． このとき，温度と，アイスクリームの売上には相関があると言えます． 今回は，このようなデータの相関を調べるに共分散と相関係数を学びましょう． 対象のデータは，前回と同じ成績のデータ（CSV形式）を使用します． このデータは15人の生徒の国語，算数，理科，英語，社会の得点で構成されています．
  ファイルをダウンロードしたら，read.csv関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．
 score &amp;lt;- read.csv(&amp;#34;score.csv&amp;#34;) 変数scoreの出力は下記のようになります．
-&amp;gt; score 氏名 国語 算数 理科 英語 社会 1 青木 達也 60 68 72 39 71 2 石井 健二 65 78 82 37 75 3 北村 真子 84 59 85 87 84 4 河野 尚子 50 65 65 39 78 5 高木 健 72 74 83 30 83 6 西川 知里 50 29 67 62 72 7 福島 萌子 84 40 65 86 66 8 古川 翔太 78 71 82 34 88 9 山内 香菜 77 33 65 73 88 10 渡辺 太郎 76 53 75 60 71 11 浅野 渉 68 46 77 66 86 12 星野 弘 61 27 74 70 67 13 中谷 章 86 57 72 73 65 14 小泉 美沙 68 48 73 51 68 15 木下 萌子 78 90 100 53 79 スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter5としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．</description>
+&amp;gt; score 氏名 国語 算数 理科 英語 社会 1 青木 達也 60 68 72 39 71 2 石井 健二 65 78 82 37 75 3 北村 真子 84 59 85 87 84 4 河野 尚子 50 65 65 39 78 5 高木 健 72 74 83 30 83 6 西川 知里 50 29 67 62 72 7 福島 萌子 84 40 65 86 66 8 古川 翔太 78 71 82 34 88 9 山内 香菜 77 33 65 73 88 10 渡辺 太郎 76 53 75 60 71 11 浅野 渉 68 46 77 66 86 12 星野 弘 61 27 74 70 67 13 中谷 章 86 57 72 73 65 14 小泉 美沙 68 48 73 51 68 15 木下 萌子 78 90 100 53 79  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter5としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．</description>
     </item>
     
     <item>
@@ -2693,7 +2729,7 @@ score &amp;lt;- read.csv(&amp;#34;score.csv&amp;#34;) 変数scoreの出力は下
 
 これを，フーリエ変換（高速フーリエ変換）すると下記のグラフになります． このグラフの横軸は 周波数 であり，このデータは 周波数領域 に存在しています． 周波数 が 3 のところに，縦棒がありますよね． この結果は，先のグラフには 周期3 の信号が含まれていることを表しています．
 
-フーリエ変換の凄いところは，異なる周期の信号が混ざっていても，それぞれの周波数成分の強さが取得できることです． 次に，下記のグラフの信号を考えます この信号には，1秒間に 5周期分 のSin関数が含まれています． また，その振幅は先の信号と比べて 1&amp;frasl;2 の大きさです．
+フーリエ変換の凄いところは，異なる周期の信号が混ざっていても，それぞれの周波数成分の強さが取得できることです． 次に，下記のグラフの信号を考えます この信号には，1秒間に 5周期分 のSin関数が含まれています． また，その振幅は先の信号と比べて 1/2 の大きさです．
 
 この信号を，先の周期3の信号に加えます（本当に足し算するだけ）． すると，下図のようなグラフになります． これだけで，複雑なグラフになり，人間には理解できないレベルに到達します．
 
@@ -2708,16 +2744,17 @@ score &amp;lt;- read.csv(&amp;#34;score.csv&amp;#34;) 変数scoreの出力は下
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming/chapter4/</guid>
-      <description>プロジェクトの準備 --  プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project4”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+      <description>プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project4”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
 
-配列とは --  配列とは  変数は数値や文字列などのデータを1つだけしか記憶できません． しかし，複数のデータを一つのグループとして扱いたい場合があります． 例えば，5人の学生が受けた試験の得点を記憶することを考えてみましょう． 変数を利用して記録する場合は，5つの変数を用意しなければならず面倒です． このようなときに便利なのが配列です． 配列は同じデータ型の複数の値を1つの配列名で記憶することができます． 配列を宣言するにはデータ型[] 配列名 = new データ型[要素数];と記述します． 配列に記憶されるデータは要素と呼ばれ，各要素には添え字という番号で参照します．
+ 配列とは  変数は数値や文字列などのデータを1つだけしか記憶できません． しかし，複数のデータを一つのグループとして扱いたい場合があります． 例えば，5人の学生が受けた試験の得点を記憶することを考えてみましょう． 変数を利用して記録する場合は，5つの変数を用意しなければならず面倒です． このようなときに便利なのが配列です． 配列は同じデータ型の複数の値を1つの配列名で記憶することができます． 配列を宣言するにはデータ型[] 配列名 = new データ型[要素数];と記述します． 配列に記憶されるデータは要素と呼ばれ，各要素には添え字という番号で参照します．
 下記のコードを参考に，配列scoreを宣言して，5人の得点を記録してみましょう． 配列の添え字は0番から始まることに注意してください． プログラムの実行後に，コンソールの出力結果を確認してください．
  配列の要素を初期化するには，上記のように各要素に値を代入する方法の他に， 「{}」を利用してデータ型[] 配列名 = {78, 84, 94, 64, 82};と記述する方法もあります．
 下記のコードを参考に，配列scoreの初期化を行いましょう． プログラムの実行後に，コンソールの出力結果を確認してください．
  また，配列の要素数を取得するには配列名.lengthと記述します． 下記のコードを参考に，配列scoreの要素数をコンソールに出力してください． プログラムの実行後に，コンソールの出力結果を確認してください．
- for文 --  for文  制御構文の1つであり，条件を満たすまで同じ命令文を繰り返す制御が繰り返しです． 今回はこの繰り返しについて学習します． 指定した回数だけ命令を繰り返すにはfor文を利用します． for文は下記のように記述します． 「()」内には，変数の初期化，繰り返し条件，変数の更新を記述します． 例えば，int型の変数iを宣言し，iの値を1ずつ増やしながら，10回同じ命令を繰り返すには， for(int i=0; i&amp;lt;10; i++)と記述します． ここでi++は値を1だけ増やすという演算子であり，i=i+1と同じ処理です．</description>
+  for文  制御構文の1つであり，条件を満たすまで同じ命令文を繰り返す制御が繰り返しです． 今回はこの繰り返しについて学習します． 指定した回数だけ命令を繰り返すにはfor文を利用します． for文は下記のように記述します． 「()」内には，変数の初期化，繰り返し条件，変数の更新を記述します． 例えば，int型の変数iを宣言し，iの値を1ずつ増やしながら，10回同じ命令を繰り返すには， for(int i=0; i&amp;lt;10; i++)と記述します． ここでi++は値を1だけ増やすという演算子であり，i=i+1と同じ処理です．
+for(変数の初期化;繰り返し条件;変数の更新){ 繰り返す命令 } for文は配列との相性はバッチリです． 下記のコードを参考に，配列scoreの全要素の値をコンソールに出力してみましょう． プログラムの実行後に，コンソールの出力結果を確認してください．</description>
     </item>
     
   </channel>

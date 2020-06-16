@@ -185,47 +185,39 @@ import sqlite3 con = sqlite3.connect(&#39;sample.db&#39;) # データベース�
 
     
 
-    <p><a href="https://gyazo.com/1212fbf47485127dabe323eaf0517253"><img src="https://i.gyazo.com/1212fbf47485127dabe323eaf0517253.png" alt="Image from Gyazo" /></a></p>
-
+    <p><a href="https://gyazo.com/1212fbf47485127dabe323eaf0517253"><img src="https://i.gyazo.com/1212fbf47485127dabe323eaf0517253.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   履修者に望むこと
 </h1>
-
 
 <p>本講義は，<a href="https://mukai-lab.info/pages/classes/database/">データベースシステム</a>で解説した
 データベースに関連する知識や技術を習得済みであることを前提としています．
 特に<strong>データベース管理システム</strong>の一つである<a href="https://www.sqlite.org/index.html">SQLite</a>と，
 <strong>問い合わせ言語</strong>である <strong>SQL</strong> を中心にコンテンツは構成されていますので，
 データベースシステムの未履修者は，独学でこれらの技術を習得することを強く望みます．</p>
-
 <p>この講義の目的は「<strong>データベースと連携したウェブサイトを構築する</strong>」ことです．
 この目的を達成するには，上述の知識や技術に加えて，下記の技術要素が必要となります．
 複数の技術要素を組み合わせた難易度が高い講義となりますので，
 毎回の予習・復習を怠らず，授業に臨んでください．</p>
-
 <ul>
 <li><a href="https://www.python.org/">Python</a>（ウェブサーバの構築）</li>
 <li>HTML &amp; CSS（ウェブページの記述）</li>
 <li>オープンデータ（<a href="https://jpsearch.go.jp/">Japan Search</a>や<a href="http://data.e-stat.go.jp/lodw/">統計LOD</a>など）</li>
 <li>SPARQL（LODへの問い合わせ）</li>
 </ul>
-
 <p>また，この授業では，作成した環境（サーバやファイルなど）を継続して利用します．
 このため，欠席すると，次回からの授業についていけなくなることが予想されます．
 止むを得ない事情で欠席することがあると思いますが，遅れた分は自力で取り返す努力をしてください．</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ウェブサイトとの連携
 </h1>
 
-
 <p>本講義ではデータベース管理システムの<a href="https://www.sqlite.org/index.html">SQLite</a>で，
 テーブルの作成・更新などの操作を行います．
 Pythonの<a href="https://github.com/ghaering/pysqlite">SQLite3モジュール</a>を利用することで，
 Pythonからこれらの操作を実行することが可能です．</p>
-
 <p>例えば，下記のPythonのソースコードは，
 データベース <strong>sample.db</strong> に接続し，
 SQLを用いてテーブル <strong>students</strong> のレコードを取得しています．
@@ -236,38 +228,31 @@ SQLを用いてテーブル <strong>students</strong> のレコードを取得�
 con <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#39;sample.db&#39;</span>) <span style="color:#75715e"># データベースに接続</span>
 cur <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span>cursor() <span style="color:#75715e"># カーソルを取得</span>
 cur<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;SELECT * FROM students&#34;</span>) <span style="color:#75715e"># SQL文を実行</span>
-con<span style="color:#f92672">.</span>close() <span style="color:#75715e"># データベースを切断</span></code></pre></div>
-<p>また，Pythonにはウェブサーバを実装するための
+con<span style="color:#f92672">.</span>close() <span style="color:#75715e"># データベースを切断</span>
+</code></pre></div><p>また，Pythonにはウェブサーバを実装するための
 <a href="https://docs.python.org/ja/3.7/library/http.server.html#module-http.server">http.serverモジュール</a>があります．
 このモジュールを利用することで，<a href="https://httpd.apache.org/">Apache</a>や<a href="https://nginx.org/">Nginx</a>
 などの専用のサーバソフトウェアを導入せずに，簡易なローカルのウェブサーバを構築することができます．</p>
-
 <p>例えば，ターミナル（コマンドプロンプトなど）で，
 下記のコマンドを実行することで，8000番ポートにウェブサーバが起動します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% python -m http.server 8000</code></pre></div>
-<p>ブラウザを開き<a href="http://localhost:8000">http://localhost:8000</a>を入力してみましょう．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% python -m http.server 8000
+</code></pre></div><p>ブラウザを開き<a href="http://localhost:8000">http://localhost:8000</a>を入力してみましょう．
 下記のようにコマンドを実行したフォルダのファイル一覧が表示されます．</p>
-
-<p><a href="https://gyazo.com/791b15c1d78b09a8359c7305567bda4b"><img src="https://i.gyazo.com/791b15c1d78b09a8359c7305567bda4b.png" alt="Image from Gyazo" /></a></p>
-
+<p><a href="https://gyazo.com/791b15c1d78b09a8359c7305567bda4b"><img src="https://i.gyazo.com/791b15c1d78b09a8359c7305567bda4b.png" alt="Image from Gyazo"></a></p>
 <p>これらの機能を活用することで，データベースを連携したウェブサイトを構築します．
 完成したウェブサイトのソースコードは下記URLで公開しています．
 作業を進める上で参考にしてください．</p>
-
-<p><a href="https://github.com/naoto-github/seminar_database"><i class="fas fa-cloud-download-alt"></i> naoto-github/seminar_database</a></p>
-
+<p><a href="https://github.com/naoto-github/seminar_database"><!-- raw HTML omitted --><!-- raw HTML omitted --> naoto-github/seminar_database</a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   最終課題の概要
 </h1>
-
 
 <p>本講義の第13回〜第15回は最終課題として
 「データベースと連携したオリジナルのウェブサイト」を制作してもらいます．
 第15回は発表も兼ねており，制作したオリジナルのウェブサイトの特徴を解説してもらいます．
 最終課題では，<a href="https://jpsearch.go.jp/">Japan Search</a>や<a href="http://data.e-stat.go.jp/lodw/">統計LOD</a>などの
 オープンデータを活用したウェブサイトの構築を目指しましょう．</p>
-
 <h3>参考書籍</h3>
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4877834621&linkId=1c194738150d2b5415587a94b093c534&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
@@ -332,7 +317,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.793007 &#43;0900 JST m=&#43;0.114215266">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:45.113096 &#43;0900 JST m=&#43;0.611575945">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

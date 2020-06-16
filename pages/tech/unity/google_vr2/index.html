@@ -187,13 +187,11 @@
 
     
 
-    <p><a href="https://gyazo.com/94f1fd7ba2ea456b3500e3e87b9e8947"><img src="https://i.gyazo.com/94f1fd7ba2ea456b3500e3e87b9e8947.png" alt="https://gyazo.com/94f1fd7ba2ea456b3500e3e87b9e8947" /></a></p>
-
+    <p><a href="https://gyazo.com/94f1fd7ba2ea456b3500e3e87b9e8947"><img src="https://i.gyazo.com/94f1fd7ba2ea456b3500e3e87b9e8947.png" alt="https://gyazo.com/94f1fd7ba2ea456b3500e3e87b9e8947"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   視線の検知
 </h1>
-
 
 <p>VR環境では、<strong>タップ</strong>などスマートフォンで一般に用いられる操作が出来ません。
 そこで、<a href="https://vr.google.com/intl/ja_jp/">Google VR</a>では、
@@ -201,31 +199,25 @@
 今回は、視線を利用したオブジェクトの選択を実現してみましょう。
 事前に準備が必要なプロジェクトの作成やパッケージの導入などは、
 <a href="google_vr.html">Google VR SDKを利用した360°画像ビューアー</a>を参考にしてください。</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   シーンの作成
 </h1>
 
-
 <p>シーンを新規に作成します。
 ここでは、シーンの名前は[MenuScene]とします。
 まずは、<a href="google_vr.html">Google VR SDKを利用した360°画像ビューアー</a>を参考に、
 <strong>空のオブジェクト</strong>である<strong>VR Camera</strong>を作成し、直下に<strong>Main Camera</strong>と<strong>GvrEditorEmulator</strong>を設定します。</p>
-
 <p>次に対象となる<strong>Quadオブジェクト</strong>をシーンに配置します。
 <strong>Quadオブジェクト</strong>を配置するには、[GameObject]-[3D]-[Quad]を選択します。
 Quadオブジェクトのインスペクターを開き、<strong>Position</strong> の <strong>Z座標</strong> を<strong>5</strong>に設定しましょう。
 また、新規にマテリアルを作成し、Quadオブジェクトに追加しておきます（マテリアルに関しては割愛します）。
 シーンを再生すると下記のように表示されます。</p>
-
-<p><a href="https://gyazo.com/c3f40bd4fbddf7a69081f656f82b0195"><img src="https://i.gyazo.com/c3f40bd4fbddf7a69081f656f82b0195.png" alt="https://gyazo.com/c3f40bd4fbddf7a69081f656f82b0195" /></a></p>
-
+<p><a href="https://gyazo.com/c3f40bd4fbddf7a69081f656f82b0195"><img src="https://i.gyazo.com/c3f40bd4fbddf7a69081f656f82b0195.png" alt="https://gyazo.com/c3f40bd4fbddf7a69081f656f82b0195"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   視線の検知
 </h1>
-
 
 <p>上記で作成した<strong>Quadオブジェクト</strong>を視線に捉えていることを検出してみましょう。
 まずは、ヒエラルキーに<strong>GvrEventSystem</strong>をドラッグ＆ドロップで配置します。
@@ -236,54 +228,39 @@ GvrReticlePointerは、ユーザが見つめている一点を<strong>ポイン�
 シーンを再生すると下記のように表示されます。
 中央に視点を表す<strong>ポインタ</strong>が表示されていることが分かります。
 現時点ではQuadオブジェクトを見続けても<strong>ポインタ</strong>に変化はありません。</p>
-
-<p><a href="https://gyazo.com/d859cc5fff9a2bd88d78b65a23b7bc30"><img src="https://i.gyazo.com/d859cc5fff9a2bd88d78b65a23b7bc30.gif" alt="https://gyazo.com/d859cc5fff9a2bd88d78b65a23b7bc30" /></a></p>
-
+<p><a href="https://gyazo.com/d859cc5fff9a2bd88d78b65a23b7bc30"><img src="https://i.gyazo.com/d859cc5fff9a2bd88d78b65a23b7bc30.gif" alt="https://gyazo.com/d859cc5fff9a2bd88d78b65a23b7bc30"></a></p>
 <p>次に、視線を検出するためのスクリプトを<strong>Main Camera</strong>に設定します。
 Main Cameraのインスペクターで<strong>Add Component</strong>を選び、<strong>Physics Raycaster</strong> を選択します（Physics Raycasterはスクリプトであることに注意）。</p>
-
-<p><a href="https://gyazo.com/faff19a2b6e19350e92d9925e8439f60"><img src="https://i.gyazo.com/faff19a2b6e19350e92d9925e8439f60.png" alt="https://gyazo.com/faff19a2b6e19350e92d9925e8439f60" /></a></p>
-
+<p><a href="https://gyazo.com/faff19a2b6e19350e92d9925e8439f60"><img src="https://i.gyazo.com/faff19a2b6e19350e92d9925e8439f60.png" alt="https://gyazo.com/faff19a2b6e19350e92d9925e8439f60"></a></p>
 <p>また、対象となるQuadオブジェクトに<strong>Event Trigger</strong>を設定します。
 Quadオブジェクトのインスペクターで<strong>Add Component</strong>を選び、<strong>Event Trigger</strong> を選択します（Event Triggerもスクリプト）。</p>
-
 <p>シーンを再生すると下記のように表示されます。
 中央にある<strong>ポインタ</strong>がQuadオブジェクトを捉えると、
 <strong>ポインタ</strong>が大きな円に変形することが分かります。</p>
-
-<p><a href="https://gyazo.com/7e1fe35aa02b1a31347f117b95615cda"><img src="https://i.gyazo.com/7e1fe35aa02b1a31347f117b95615cda.gif" alt="https://gyazo.com/7e1fe35aa02b1a31347f117b95615cda" /></a></p>
-
+<p><a href="https://gyazo.com/7e1fe35aa02b1a31347f117b95615cda"><img src="https://i.gyazo.com/7e1fe35aa02b1a31347f117b95615cda.gif" alt="https://gyazo.com/7e1fe35aa02b1a31347f117b95615cda"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   シーンの切替
 </h1>
 
-
 <p>Quadオブジェクトを2秒間見続けるとシーンを切り替えるようにします。
 Quadオブジェクトのインスペクターで<strong>Add Component</strong>を選び、<strong>Net Script</strong> を選択します（C#で記述する）。
 ここでは、スクリプト名は<strong>Cntrol Scene</strong>とします。</p>
-
 <p>スクリプトには下記のコードを記述します。
 <strong>enterPointer</strong>メソッドはポインタがオブジェクトを捉えたときの処理、
 <strong>exitPointer</strong>メソッドはポインタがオブジェクトから外れたときの処理です。
 シーンの遷移は<strong>Update</strong>メソッドに記述します。
 ポインタが2秒以上オブジェクトを捉えたことを条件に、
 <strong>Panorama Viewer</strong>という名前のシーンに切り替えています。</p>
-
 <script type="application/javascript" src="https://gist.github.com/naoto-github/3a2c7f921d5bbaff67b4743156f1c564.js"></script>
-
 
 <p>上記で定義したメソッドをQuadオブジェクトの<strong>Event Trigger</strong>に設定します。
 <strong>Pointer Enter</strong>には、enterPointerメソッド、
 <strong>Pointer Exit</strong>には、exitPointerメソッドをそれぞれ設定します。</p>
-
-<p><a href="https://gyazo.com/54824c1feb448adbfe54657bd5e11f3b"><img src="https://i.gyazo.com/54824c1feb448adbfe54657bd5e11f3b.png" alt="https://gyazo.com/54824c1feb448adbfe54657bd5e11f3b" /></a></p>
-
+<p><a href="https://gyazo.com/54824c1feb448adbfe54657bd5e11f3b"><img src="https://i.gyazo.com/54824c1feb448adbfe54657bd5e11f3b.png" alt="https://gyazo.com/54824c1feb448adbfe54657bd5e11f3b"></a></p>
 <p>シーンを再生すると下記のように表示されます。
 <strong>ポインタ</strong>をQuadオブジェクトで捉えると、2秒後にシーンを遷移しています。</p>
-
-<p><a href="https://gyazo.com/7da50bba9cad73a36f565be409f7c2bb"><img src="https://i.gyazo.com/7da50bba9cad73a36f565be409f7c2bb.gif" alt="https://gyazo.com/7da50bba9cad73a36f565be409f7c2bb" /></a></p>
-
+<p><a href="https://gyazo.com/7da50bba9cad73a36f565be409f7c2bb"><img src="https://i.gyazo.com/7da50bba9cad73a36f565be409f7c2bb.gif" alt="https://gyazo.com/7da50bba9cad73a36f565be409f7c2bb"></a></p>
 <h3>参考書籍</h3>
 
 <iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=F8F8F8&IS2=1&nou=1&bg1=F8F8F8&fc1=000000&lc1=0000FF&t=naotoassociat-22&o=9&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=4797384433" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
@@ -345,7 +322,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.932965 &#43;0900 JST m=&#43;0.254178187">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:45.2047 &#43;0900 JST m=&#43;0.703178607">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

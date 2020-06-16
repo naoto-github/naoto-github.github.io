@@ -181,83 +181,63 @@ import numpy as np import matplotlib.pyplot as plt  最急降下法  最急降�
 
     
 
-    
-
-<p><a href="https://gyazo.com/1d11800d6ff0e9c08574623da07440ad"><img src="https://i.gyazo.com/1d11800d6ff0e9c08574623da07440ad.png" alt="Image from Gyazo" /></a></p>
-
+    <p><a href="https://gyazo.com/1d11800d6ff0e9c08574623da07440ad"><img src="https://i.gyazo.com/1d11800d6ff0e9c08574623da07440ad.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   解析解と数値解
 </h1>
-
 
 <p>前回は2変数の関係性を表す <strong>回帰式</strong> と，
 その回帰式の当てはまり具合を評価するための <strong>最小二乗法</strong> について学びました．
 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は，
 <strong>numpy</strong> の <strong>polyfit</strong> 関数を利用して求めましたが，どのように最適値を求めているのでしょうか．
 今回はその秘密に迫ってみたいと思います．</p>
-
 <p>回帰式のパラメータ（$a$と$b$のこと）を求める方法には２通りあり，
 方程式を解くことによって得られる厳密な解を <strong>解析解</strong>，
 繰り返しの計算によって得られる近似的な解を <strong>数値解</strong> と呼びます．
 特定の処理を繰り返すことが得意なコンピュータでは，
 後者の <strong>数値解</strong> を求める方法が良く用いられます．
 ここでは，数値解を求めるための最もシンプルな方法である <strong>最急降下法（Steepest Descent Method）</strong> について学びます．</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ノートブックの作成
 </h1>
-
 
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>Notebook4</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．
 また，<strong>numpy</strong> と <strong>matplotlib.pyplot</strong> を導入しておいてください．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt</code></pre></div>
-<h1>
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+</code></pre></div><h1>
   <img class="head-image" src="/logo/logo.png">
   最急降下法
 </h1>
-
 
 <p>最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め，
 誤差が小さくなる方向へパラメータを更新するという手法です．
 理解するためには <strong>微分</strong> が必要となりますが，
 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．</p>
-
 <h3 id="データ">データ</h3>
-
 <p>対象とするデータは前回と同じ，<strong>気温</strong> と <strong>アイスクリーム</strong> のデータを用います．
 いずれも，numpyのndarray型でリストを作成しておきます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">33</span>]) <span style="color:#75715e"># 気温</span>
-y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">49</span>]) <span style="color:#75715e"># アイスクリームの売上</span></code></pre></div>
-<h3 id="回帰式">回帰式</h3>
-
+y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">49</span>]) <span style="color:#75715e"># アイスクリームの売上</span>
+</code></pre></div><h3 id="回帰式">回帰式</h3>
 <p>今回も，線形回帰（一次式）を考えますが，
 回帰式は下記のように，一般化した表現で表すことにします（$a$を$w_0$，$b$を$w_1$に置き換えた）．
 この$w_0$と$w_1$の最適値を求めることが目的です．</p>
-
 <p>$$f(x_n) = w_0 + w_1 x_n $$</p>
-
 <h3 id="目的関数">目的関数</h3>
-
 <p>目的関数$E$を下記のように定義します．
 $N$はデータの長さを表しています（ここでは，$N=10$）．
 $y_n - f(x_n)$は誤差であり，その2乗を計算していることが分かります．
 $1 / 2$が係数となっていますが，これは後ほどの微分計算で役立ちます（得られる結果に影響はない）．</p>
-
 <p>$$E=\frac{1}{2} \sum_{n=0}^{N-1} (y_n - f(x_n))^2$$</p>
-
 <p>式中の$f(x)$を展開すると下記のようになります．</p>
-
 <p>$$E=\frac{1}{2} \sum_{n=0}^{N-1} (y_n - w_0 - w_1 x_n)^2$$</p>
-
 <p>この目的関数が最小となったとき，$w_0$と$w_1$は最適値とみなします．</p>
-
 <h3 id="目的関数とパラメータの関係">目的関数とパラメータの関係</h3>
-
 <p>では，この$E$と$w_0$と$w_1$の関係をグラフ化してみましょう．
 同時に２つのパラメータ（$w_0$と$w_1$）を考えると難しいため，
 まずは$w_0=2.52$を固定して考えます（2.52は前回求めた最適値）．
@@ -271,9 +251,8 @@ w0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.52</span> 
     E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2乗誤差</span>
     y_<span style="color:#f92672">.</span>append(E) <span style="color:#75715e"># リストに要素を追加</span>
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w1&#34;</span>) <span style="color:#75715e"># 水平軸のラベル  </span>
-plt<span style="color:#f92672">.</span>plot(x_, y_)</code></pre></div>
-<p><a href="https://gyazo.com/67a72d8cb7002155c4761f2aa95f0888"><img src="https://i.gyazo.com/67a72d8cb7002155c4761f2aa95f0888.png" alt="Image from Gyazo" /></a></p>
-
+plt<span style="color:#f92672">.</span>plot(x_, y_)
+</code></pre></div><p><a href="https://gyazo.com/67a72d8cb7002155c4761f2aa95f0888"><img src="https://i.gyazo.com/67a72d8cb7002155c4761f2aa95f0888.png" alt="Image from Gyazo"></a></p>
 <p>同様に，$w_1=1.36$に固定して考えます（1.36は前回求めた最適値）．
 $w_0$を-5から5まで変化させたときの，目的関数の値は下記のグラフとなります．
 グラフは下に凸のお椀型の形状をしており，
@@ -285,50 +264,38 @@ w1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.36</span> 
     E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2乗誤差</span>
     y_<span style="color:#f92672">.</span>append(E) <span style="color:#75715e"># リストに要素を追加</span>
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w0&#34;</span>) <span style="color:#75715e"># 水平軸のラベル  </span>
-plt<span style="color:#f92672">.</span>plot(x_, y_)</code></pre></div>
-<p><a href="https://gyazo.com/c98203e828305e9daa0ccb82c15e4ece"><img src="https://i.gyazo.com/c98203e828305e9daa0ccb82c15e4ece.png" alt="Image from Gyazo" /></a></p>
-
+plt<span style="color:#f92672">.</span>plot(x_, y_)
+</code></pre></div><p><a href="https://gyazo.com/c98203e828305e9daa0ccb82c15e4ece"><img src="https://i.gyazo.com/c98203e828305e9daa0ccb82c15e4ece.png" alt="Image from Gyazo"></a></p>
 <h3 id="学習則">学習則</h3>
-
 <p>目的関数$E$は，$w_0$と$w_1$に対して，下に凸のお椀型の形状をしていることがわかりました．
 最急降下法では，初期値として$w_0$と$w_1$に適当な値を設定し，坂を下る方向に$w_0$と$w_1$を更新することで最適値を探します．
 このためには，誤差$E$を$w_0$と$w_1$で偏微分し，接線の傾きを計算します．</p>
-
 <p>$$ \frac{\partial E}{\partial w_0} = 2 \cdot \frac{1}{2} \sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -1 $$
 $$ =  -\sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) $$</p>
-
 <p>$$ \frac{\partial E}{\partial w_1} = 2 \cdot \frac{1}{2} \sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -x_n $$
 $$ =  -\sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) x_n $$</p>
-
 <p>接線の傾き$\frac{\partial E}{\partial w_0} &lt; 0$のときは，
 $w_0$を増加させることで，より誤差を小さくすることができます．
 逆に，接線の傾き$\frac{\partial E}{\partial w_0} &gt; 0$のときは，
 $w_0$を減少させることで，より誤差を小さくすることができます．</p>
-
-<p><a href="https://gyazo.com/feca05208995373f4df80f1f0139867b"><img src="https://i.gyazo.com/feca05208995373f4df80f1f0139867b.png" alt="Image from Gyazo" /></a></p>
-
+<p><a href="https://gyazo.com/feca05208995373f4df80f1f0139867b"><img src="https://i.gyazo.com/feca05208995373f4df80f1f0139867b.png" alt="Image from Gyazo"></a></p>
 <p>この$w_0$と$w_1$の更新を下記の式で与えます．
 この式は <strong>学習則</strong> と呼ばれます．
 ここで，$\alpha$は <strong>学習率</strong> と呼ばれ，$w_0$と$w_1$の更新の幅を調整するパラメータです．
 大きな値を設定すると収束は早くなりますが，結果に大きな誤差が含まれる可能性が高くなります．
 一方，小さな値を設定すると，結果に含まれる誤差は小さくなりますが，収束が遅くなってしまいます．
 このため，収束速度と誤差のバランスを調整した適切な値を設定する必要があります．</p>
-
 <p>$$ w_0&rsquo; = w_0 - \alpha \frac{\partial E}{\partial w_0} $$</p>
-
 <p>$$ w_1&rsquo; = w_1 - \alpha \frac{\partial E}{\partial w_1} $$</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   数値解の導出
 </h1>
 
-
 <p>それでは，最急降下法を利用して，$w_0$と$w_1$の数値解を求めてみましょう．
 パラメータの初期値は$w_0=0$，$w_1=0$，学習率は$\alpha=0.0001$とします．
 パラメータの更新を10万回繰り返した後に，$w_0$，$w_1$の値と，目的関数の値を出力しています．
 この結果，$w_0 \simeq 2.52$，$w_1 \simeq 1.36$となり，前回にpolyfit関数で求めた値とほぼ一致していることが分かります．</p>
-
 <p><strong>[In:]</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">w0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># w0の初期値</span>
 w1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># w1の初期値</span>
@@ -343,23 +310,21 @@ alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0001</s
 E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 目的関数の計算</span>
 <span style="color:#66d9ef">print</span>(w0)
 <span style="color:#66d9ef">print</span>(w1)
-<span style="color:#66d9ef">print</span>(E)</code></pre></div>
-<p><strong>[Out:]</strong></p>
+<span style="color:#66d9ef">print</span>(E)
+</code></pre></div><p><strong>[Out:]</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">2.518733969947924</span>
 <span style="color:#ae81ff">1.3554170191576644</span>
-<span style="color:#ae81ff">97.5964381152417</span></code></pre></div>
-<h1>
+<span style="color:#ae81ff">97.5964381152417</span>
+</code></pre></div><h1>
   <img class="head-image" src="/logo/logo.png">
   課題
 </h1>
 
-
 <p>下記のデータの回帰式を最急降下法で求めよ．
 ただし，$\alpha=0.00001$，繰り返し回数を100万回とすること．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">75</span>, <span style="color:#ae81ff">88</span>, <span style="color:#ae81ff">90</span>, <span style="color:#ae81ff">92</span>, <span style="color:#ae81ff">94</span>, <span style="color:#ae81ff">99</span>])
-y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">89</span>, <span style="color:#ae81ff">86</span>, <span style="color:#ae81ff">77</span>, <span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">73</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">60</span>])</code></pre></div>
-<p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
-
+y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">89</span>, <span style="color:#ae81ff">86</span>, <span style="color:#ae81ff">77</span>, <span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">73</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">60</span>])
+</code></pre></div><p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
 
 <h3>参考書籍</h3>
 
@@ -428,7 +393,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.897352 &#43;0900 JST m=&#43;0.218563868">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:45.025736 &#43;0900 JST m=&#43;0.524217518">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

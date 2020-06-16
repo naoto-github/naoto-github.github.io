@@ -82,7 +82,7 @@
 
   <meta property="og:description" content="Leafletとは  前回はuMAPというサービスを利用して， 日進市のオープンデータをオープンストリートマップに重ねて表示しました． uMAPを用いると，ブラウザ上で手軽にオリジナルの地図を作成することができますが， 作成された地図は静的で，ユーザとのインタラクションに応じて動的に変化させることはできません． そこで，今回はLeafletを利用して，オリジナルの地図を作成することに挑戦しましょう． Leafletは，「りーふれっと」と読み，プログラミング言語であるJavaScriptのライブラリの一つです． オープンソースで開発されており，BSD 2-Clauseライセンスであるため， クレジットさえ表示すれば，商用利用・改変・配布が可能です． Leafletを用いると，デスクトップPCやモバイル環境に適したオンライン地図を表示することができます． JavaScriptで制御可能であるため，ユーザとのインタラクションに応じて動的に地図を変更することが可能です． もちろん，前回紹介したGeoJSON形式のデータの取り込みも可能です． 今回は，このLeafletを用いて日進市の観光マップを作成します．
  オープンデータの準備  日進市のオープンデータミュージアムにある 観光情報データを利用します． ここでは，名称と緯度・経度の情報を利用することにします． 下記はCSV形式で表現されたデータです．
-名称,緯度,経度 岩崎城址公園,35.1455654,137.0420547 愛知牧場,35.1306941,137.0876883 五色園,35.1557573,137.0682229 レトロでんしゃ館,35.1228602,137.0221455 旧市川家住宅,35.12896,137.033636 今回は，上記のテキスト情報だけでなく，下記の5つの画像ファイルを利用します． これらは日進市のイベント情報を提供しているぐるぐるNISSHINに掲載されていますが， オープンデータではないことに注意してください（授業向けに許可を得て利用しています）． 全ての画像ファイルをダウンロードしておいてください．
+名称,緯度,経度岩崎城址公園,35.1455654,137.0420547愛知牧場,35.1306941,137.0876883五色園,35.1557573,137.0682229レトロでんしゃ館,35.1228602,137.0221455旧市川家住宅,35.12896,137.033636今回は，上記のテキスト情報だけでなく，下記の5つの画像ファイルを利用します． これらは日進市のイベント情報を提供しているぐるぐるNISSHINに掲載されていますが， オープンデータではないことに注意してください（授業向けに許可を得て利用しています）． 全ての画像ファイルをダウンロードしておいてください．
 上記の観光情報と画像ファイル名を，下記のようにGeoJSON形式に変換します． 画像ファイル名はpropertiesに記載しています． ここでは，経度・緯度の順番で指定することに注意してください．
 { &#34;type&#34;: &#34;FeatureCollection&#34;, &#34;features&#34;: [ { &#34;type&#34;: &#34;Feature&#34;, &#34;geometry&#34;: { &#34;type&#34;: &#34;Point&#34;, &#34;coordinates&#34;: [137.0420547,35.1455654] }, &#34;properties&#34;: { &#34;名称&#34;: &#34;岩崎城址公園&#34;, &#34;画像&#34;: &#34;iwasaki.jpg&#34; } }, { &#34;type&#34;: &#34;Feature&#34;, &#34;geometry&#34;: { &#34;type&#34;: &#34;Point&#34;, &#34;coordinates&#34;: [137.0876883,35.1306941] }, &#34;properties&#34;: { &#34;名称&#34;: &#34;愛知牧場&#34;, &#34;画像&#34;: &#34;bokujyou." />
 
@@ -101,7 +101,7 @@
 
   <meta name="twitter:description" content="Leafletとは  前回はuMAPというサービスを利用して， 日進市のオープンデータをオープンストリートマップに重ねて表示しました． uMAPを用いると，ブラウザ上で手軽にオリジナルの地図を作成することができますが， 作成された地図は静的で，ユーザとのインタラクションに応じて動的に変化させることはできません． そこで，今回はLeafletを利用して，オリジナルの地図を作成することに挑戦しましょう． Leafletは，「りーふれっと」と読み，プログラミング言語であるJavaScriptのライブラリの一つです． オープンソースで開発されており，BSD 2-Clauseライセンスであるため， クレジットさえ表示すれば，商用利用・改変・配布が可能です． Leafletを用いると，デスクトップPCやモバイル環境に適したオンライン地図を表示することができます． JavaScriptで制御可能であるため，ユーザとのインタラクションに応じて動的に地図を変更することが可能です． もちろん，前回紹介したGeoJSON形式のデータの取り込みも可能です． 今回は，このLeafletを用いて日進市の観光マップを作成します．
  オープンデータの準備  日進市のオープンデータミュージアムにある 観光情報データを利用します． ここでは，名称と緯度・経度の情報を利用することにします． 下記はCSV形式で表現されたデータです．
-名称,緯度,経度 岩崎城址公園,35.1455654,137.0420547 愛知牧場,35.1306941,137.0876883 五色園,35.1557573,137.0682229 レトロでんしゃ館,35.1228602,137.0221455 旧市川家住宅,35.12896,137.033636 今回は，上記のテキスト情報だけでなく，下記の5つの画像ファイルを利用します． これらは日進市のイベント情報を提供しているぐるぐるNISSHINに掲載されていますが， オープンデータではないことに注意してください（授業向けに許可を得て利用しています）． 全ての画像ファイルをダウンロードしておいてください．
+名称,緯度,経度岩崎城址公園,35.1455654,137.0420547愛知牧場,35.1306941,137.0876883五色園,35.1557573,137.0682229レトロでんしゃ館,35.1228602,137.0221455旧市川家住宅,35.12896,137.033636今回は，上記のテキスト情報だけでなく，下記の5つの画像ファイルを利用します． これらは日進市のイベント情報を提供しているぐるぐるNISSHINに掲載されていますが， オープンデータではないことに注意してください（授業向けに許可を得て利用しています）． 全ての画像ファイルをダウンロードしておいてください．
 上記の観光情報と画像ファイル名を，下記のようにGeoJSON形式に変換します． 画像ファイル名はpropertiesに記載しています． ここでは，経度・緯度の順番で指定することに注意してください．
 { &#34;type&#34;: &#34;FeatureCollection&#34;, &#34;features&#34;: [ { &#34;type&#34;: &#34;Feature&#34;, &#34;geometry&#34;: { &#34;type&#34;: &#34;Point&#34;, &#34;coordinates&#34;: [137.0420547,35.1455654] }, &#34;properties&#34;: { &#34;名称&#34;: &#34;岩崎城址公園&#34;, &#34;画像&#34;: &#34;iwasaki.jpg&#34; } }, { &#34;type&#34;: &#34;Feature&#34;, &#34;geometry&#34;: { &#34;type&#34;: &#34;Point&#34;, &#34;coordinates&#34;: [137.0876883,35.1306941] }, &#34;properties&#34;: { &#34;名称&#34;: &#34;愛知牧場&#34;, &#34;画像&#34;: &#34;bokujyou." />
 
@@ -177,13 +177,11 @@
 
     
 
-    <p><a href="https://gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe"><img src="https://i.gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe.png" alt="https://gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe" /></a></p>
-
+    <p><a href="https://gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe"><img src="https://i.gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe.png" alt="https://gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   Leafletとは
 </h1>
-
 
 <p>前回は<a href="http://umap.openstreetmap.fr/ja/">uMAP</a>というサービスを利用して，
 日進市のオープンデータをオープンストリートマップに重ねて表示しました．
@@ -197,34 +195,30 @@ Leafletを用いると，デスクトップPCやモバイル環境に適した�
 JavaScriptで制御可能であるため，ユーザとのインタラクションに応じて動的に地図を変更することが可能です．
 もちろん，前回紹介した<strong>GeoJSON</strong>形式のデータの取り込みも可能です．
 今回は，このLeafletを用いて日進市の観光マップを作成します．</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   オープンデータの準備
 </h1>
 
-
 <p><a href="http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/index.html">日進市のオープンデータミュージアム</a>にある
 <strong>観光情報</strong>データを利用します．
 ここでは，<strong>名称</strong>と<strong>緯度・経度</strong>の情報を利用することにします．
 下記はCSV形式で表現されたデータです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csv" data-lang="csv">名称,緯度,経度
+<pre><code class="language-csv" data-lang="csv">名称,緯度,経度
 岩崎城址公園,35.1455654,137.0420547
 愛知牧場,35.1306941,137.0876883
 五色園,35.1557573,137.0682229
 レトロでんしゃ館,35.1228602,137.0221455
-旧市川家住宅,35.12896,137.033636</code></pre></div>
-<p>今回は，上記のテキスト情報だけでなく，下記の5つの画像ファイルを利用します．
+旧市川家住宅,35.12896,137.033636
+</code></pre><p>今回は，上記のテキスト情報だけでなく，下記の5つの画像ファイルを利用します．
 これらは日進市のイベント情報を提供している<a href="https://glglnisshin.jp/">ぐるぐるNISSHIN</a>に掲載されていますが，
 オープンデータではないことに注意してください（授業向けに許可を得て利用しています）．
 全ての画像ファイルをダウンロードしておいてください．</p>
-
-<p><img src="/classes/seminar_fundamental_areas/data5/iwasaki.jpg" alt="iwasaki" />
-<img src="/classes/seminar_fundamental_areas/data5/bokujyou.jpg" alt="bokujyou" />
-<img src="/classes/seminar_fundamental_areas/data5/goshikien.jpg" alt="goshikien" />
-<img src="/classes/seminar_fundamental_areas/data5/retro.jpg" alt="retro" />
-<img src="/classes/seminar_fundamental_areas/data5/ichikawa.jpg" alt="ichikawa" /></p>
-
+<p><img src="/classes/seminar_fundamental_areas/data5/iwasaki.jpg" alt="iwasaki">
+<img src="/classes/seminar_fundamental_areas/data5/bokujyou.jpg" alt="bokujyou">
+<img src="/classes/seminar_fundamental_areas/data5/goshikien.jpg" alt="goshikien">
+<img src="/classes/seminar_fundamental_areas/data5/retro.jpg" alt="retro">
+<img src="/classes/seminar_fundamental_areas/data5/ichikawa.jpg" alt="ichikawa"></p>
 <p>上記の観光情報と画像ファイル名を，下記のようにGeoJSON形式に変換します．
 画像ファイル名は<strong>properties</strong>に記載しています．
 ここでは，経度・緯度の順番で指定することに注意してください．</p>
@@ -297,24 +291,21 @@ JavaScriptで制御可能であるため，ユーザとのインタラクショ�
 				}
 		}			
 	]
-}</code></pre></div>
-<p>特定の住所やランドマークの緯度・経度を知りたい場合は，
+}
+</code></pre></div><p>特定の住所やランドマークの緯度・経度を知りたい場合は，
 ジオコーディングのサービス<a href="https://www.geocoding.jp/">Geocoding</a>を利用すると良いです．
 例えば， <strong>椙山女学園大学</strong> で検索すると，
 <strong>緯度:35.15937</strong>，<strong>経度: 136.987185</strong>であることが分かります．</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   Leafletでオンライン地図
 </h1>
-
 
 <p>それでは，Leafletを利用して，上記のGeoJSON形式の観光情報を表示するオンライン地図を作成していきましょう．
 LeafletはJavaScriptのライブラリであるため，HTMLファイルを作成し，JavaScriptで内部に地図を埋め込む形になります．
 まずは，<strong>index.html</strong>を作成します．
 このとき，index.htmlと同じフォルダに，上記の5つの画像ファイルを配置してください．
 ファイルの編集には<a href="https://atom.io/">Atom</a>を用いると良いでしょう（メディア棟のPCにインストールされています）．</p>
-
 <p>下記のソースコードをindex.htmlに入力してください．
 コーディングが苦手な場合は，ソースコードをコピー・ペーストで構いません（HTMLはコンピュータと情報Ⅱで学習します）．
 <strong>id</strong>属性に<strong>mapid</strong>が指定されている<strong>div</strong>要素が，Leafletで地図を表示する箇所になります．
@@ -345,9 +336,8 @@ LeafletはJavaScriptのライブラリであるため，HTMLファイルを作�
   &lt;/<span style="color:#f92672">script</span>&gt;
 &lt;/<span style="color:#f92672">body</span>&gt;
 
-&lt;/<span style="color:#f92672">html</span>&gt;</code></pre></div>
-<iframe src="/classes/seminar_fundamental_areas/data5/index_1.html" width="520px" height="520px"></iframe>
-
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><!-- raw HTML omitted -->
 <p>次に，GeoJSON形式の観光情報を読み込みます．
 読み込まれたデータは変数に格納して扱うことができます．
 ここでは，<strong>data</strong>という名前の変数を用いています．
@@ -437,17 +427,9 @@ LeafletはJavaScriptのライブラリであるため，HTMLファイルを作�
         )
     }
 }).<span style="color:#a6e22e">addTo</span>(<span style="color:#a6e22e">mymap</span>);
-</code></pre></div>
-<iframe src="/classes/seminar_fundamental_areas/data5/index_2.html" width="520px" height="520px"></iframe>
-
-<!-- <h1>
-  <img class="head-image" src="/logo/logo.png">
-  課題
-</h1>
- -->
-
-<!-- Leafletで作成したHTMLファイルを，画像を含めたフォルダごとZIPで圧縮し，提出しなさい． -->
-
+</code></pre></div><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 <h3>参考書籍</h3>
 
 
@@ -510,7 +492,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.986219 &#43;0900 JST m=&#43;0.307434291">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:45.159697 &#43;0900 JST m=&#43;0.658175873">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

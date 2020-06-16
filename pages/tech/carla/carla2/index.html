@@ -179,35 +179,27 @@
 
     
 
-    
-
-<p><a href="https://gyazo.com/2255f50589e9a31d36b0983b2e2adb7a"><img src="https://i.gyazo.com/2255f50589e9a31d36b0983b2e2adb7a.png" alt="Image from Gyazo" /></a></p>
-
+    <p><a href="https://gyazo.com/2255f50589e9a31d36b0983b2e2adb7a"><img src="https://i.gyazo.com/2255f50589e9a31d36b0983b2e2adb7a.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   セマンティック・セグメンテーション
 </h1>
 
-
 <p><strong>セマンティック・セグメンテーション</strong> は人間の目の役割を担う技術のことであり，自動運転車の実現のために必須です．
 具体的には，車両に取り付けられたカメラから取得される画像の，
 各ピクセル（画素）に対し，「自動車」「人」「道路」などラベルを設定する仕組みのことです．</p>
-
 <p>一般にセマンティック・セグメンテーションを実現するには，<strong>ディープラーニング</strong> が用いられます．
 特にケンブリッジ大学のAlex Kendall氏が提案した<a href="http://mi.eng.cam.ac.uk/projects/segnet/#demo">SegNet</a>が有名です．
 SegNetはRGB画像を入力とし，画像に存在する物体にラベルを設定することが出来ます．
 下記はSegNetのデモ動画です．</p>
 
-
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
   <iframe src="https://www.youtube.com/embed/CxanE_W46ts" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 
-
 <p>CARLA Simulatorのセマンティック・セグメンテーションはあくまで疑似センサーであり，正確なラベル付けが可能です．
 各画素のラベルは，赤・緑・青（RGB）の <strong>赤（R）</strong> の値として表現されます．
 設定されるラベルは下記の13種類です．</p>
-
 <table>
 <thead>
 <tr>
@@ -215,95 +207,76 @@ SegNetはRGB画像を入力とし，画像に存在する物体にラベルを�
 <th>ラベル</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>0</td>
 <td>なし</td>
 </tr>
-
 <tr>
 <td>1</td>
 <td>建物</td>
 </tr>
-
 <tr>
 <td>2</td>
 <td>フェンス</td>
 </tr>
-
 <tr>
 <td>3</td>
 <td>その他</td>
 </tr>
-
 <tr>
 <td>4</td>
 <td>歩行者</td>
 </tr>
-
 <tr>
 <td>5</td>
 <td>柱</td>
 </tr>
-
 <tr>
 <td>6</td>
 <td>道路線</td>
 </tr>
-
 <tr>
 <td>7</td>
 <td>道路</td>
 </tr>
-
 <tr>
 <td>8</td>
 <td>歩道</td>
 </tr>
-
 <tr>
 <td>9</td>
 <td>街路樹</td>
 </tr>
-
 <tr>
 <td>10</td>
 <td>車両</td>
 </tr>
-
 <tr>
 <td>11</td>
 <td>壁</td>
 </tr>
-
 <tr>
 <td>12</td>
 <td>信号</td>
 </tr>
 </tbody>
 </table>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   Pythonクライアントの実装
 </h1>
 
-
 <h2 id="クライアントの初期化">クライアントの初期化</h2>
-
 <p>それでは，セマンティック・セグメンテーションのラベルを得るためのPythonクライアントを実装しましょう．
 サーバーに接続するためのクライアントは <strong>with構文</strong> を利用して生成します．
 このとき，サーバのIPアドレスとポート（デフォルトでは2000番）を指定します．</p>
-
 <p>次にサーバの環境を設定します．
 ここでは，クライアントの同期（SynchronousMode），非プレイヤーの情報取得（SendNonPlayerAgentsInfo），
 車両数（NumberOfVehicles），歩行者数（NumberOfPedestrians），天候（WeatherId），画質（QualityLevel）を設定しています．
 天候は下記の15種類から選択可能です．</p>
-
 <p>最後に，自車両のスタート位置を設定します．
 選択可能な位置はマップに依存しますが，ここでは0番を指定しています．</p>
-
 <table>
 <thead>
 <tr>
@@ -311,78 +284,63 @@ SegNetはRGB画像を入力とし，画像に存在する物体にラベルを�
 <th>ラベル</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>0</td>
 <td>デフォルト</td>
 </tr>
-
 <tr>
 <td>1</td>
 <td>晴・昼</td>
 </tr>
-
 <tr>
 <td>2</td>
 <td>雲・昼</td>
 </tr>
-
 <tr>
 <td>3</td>
 <td>晴・昼（湿潤）</td>
 </tr>
-
 <tr>
 <td>4</td>
 <td>雲・昼（湿潤）</td>
 </tr>
-
 <tr>
 <td>5</td>
 <td>雨・昼</td>
 </tr>
-
 <tr>
 <td>6</td>
 <td>強い雨・昼</td>
 </tr>
-
 <tr>
 <td>7</td>
 <td>弱い雨・昼</td>
 </tr>
-
 <tr>
 <td>8</td>
 <td>晴・夜</td>
 </tr>
-
 <tr>
 <td>9</td>
 <td>曇・夜</td>
 </tr>
-
 <tr>
 <td>10</td>
 <td>晴・夜（湿潤）</td>
 </tr>
-
 <tr>
 <td>11</td>
 <td>曇・夜（湿潤）</td>
 </tr>
-
 <tr>
 <td>12</td>
 <td>雨・夜</td>
 </tr>
-
 <tr>
 <td>13</td>
 <td>強い雨・夜</td>
 </tr>
-
 <tr>
 <td>14</td>
 <td>弱い雨・夜</td>
@@ -410,13 +368,10 @@ PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">2000</span
     settings<span style="color:#f92672">.</span>randomize_seeds()
 
     client<span style="color:#f92672">.</span>load_settings(settings)
-    client<span style="color:#f92672">.</span>start_episode(<span style="color:#ae81ff">0</span>)</code></pre></div>
-<p><a href="https://gyazo.com/541294db14faf39262cc4338ab808054"><img src="https://i.gyazo.com/541294db14faf39262cc4338ab808054.jpg" alt="Image from Gyazo" /></a></p>
-
-<p><a href="https://gyazo.com/981c544c4126ac262ab888ce05bb5b2b"><img src="https://i.gyazo.com/981c544c4126ac262ab888ce05bb5b2b.jpg" alt="Image from Gyazo" /></a></p>
-
+    client<span style="color:#f92672">.</span>start_episode(<span style="color:#ae81ff">0</span>)
+</code></pre></div><p><a href="https://gyazo.com/541294db14faf39262cc4338ab808054"><img src="https://i.gyazo.com/541294db14faf39262cc4338ab808054.jpg" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/981c544c4126ac262ab888ce05bb5b2b"><img src="https://i.gyazo.com/981c544c4126ac262ab888ce05bb5b2b.jpg" alt="Image from Gyazo"></a></p>
 <h2 id="カメラの実装">カメラの実装</h2>
-
 <p>セマンティック・セグメンテーションのためのカメラを環境に追加します．
 ここでは，カメラの視野角（FOV），サイズ（image_size），位置（position），向き（rotation）を設定しています．
 この設定は，車両の前方に向けて水平にカメラを設置していることになります．</p>
@@ -426,9 +381,8 @@ camera<span style="color:#f92672">.</span>set(FOV<span style="color:#f92672">=</
 camera<span style="color:#f92672">.</span>set_image_size(<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">600</span>)
 camera<span style="color:#f92672">.</span>set_position(x<span style="color:#f92672">=</span><span style="color:#ae81ff">0.30</span>, y<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, z<span style="color:#f92672">=</span><span style="color:#ae81ff">1.30</span>)
 camera<span style="color:#f92672">.</span>set_rotation(pitch<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, yaw<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, roll<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-settings<span style="color:#f92672">.</span>add_sensor(camera)</code></pre></div>
-<h2 id="画像の保存">画像の保存</h2>
-
+settings<span style="color:#f92672">.</span>add_sensor(camera)
+</code></pre></div><h2 id="画像の保存">画像の保存</h2>
 <p>カメラからデータを取得して，画像として保存します．
 取得されるデータはNumPyのndarray型であり，上述したように，赤・緑・青（RGB）の <strong>赤（R）</strong> の値として取得されます．
 このため，このままPNG画像として保存すると，真っ暗な画像になってしまいます．</p>
@@ -440,27 +394,23 @@ measurements, sensor_data <span style="color:#f92672">=</span> client<span style
 image <span style="color:#f92672">=</span> sensor_data[<span style="color:#e6db74">&#34;SemanticCamera&#34;</span>]
 r_array <span style="color:#f92672">=</span> image_converter<span style="color:#f92672">.</span>to_rgb_array(image)
 pil_image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(r_array)
-pil_image<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;screen.png&#34;</span>)</code></pre></div>
-<p><a href="https://gyazo.com/ebe8cf0922cde1317ca36f93a79ba49d"><img src="https://i.gyazo.com/ebe8cf0922cde1317ca36f93a79ba49d.png" alt="Image from Gyazo" /></a></p>
-
+pil_image<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;screen.png&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/ebe8cf0922cde1317ca36f93a79ba49d"><img src="https://i.gyazo.com/ebe8cf0922cde1317ca36f93a79ba49d.png" alt="Image from Gyazo"></a></p>
 <p>これを解決するための方法もCARLAでは用意されており，
 <strong>image_converter</strong> のメソッドを用いることで，それぞれのラベルを色分けしたデータを取得することができます．
 結果を確認すると，人物や道路が色分けされていることがわかります．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">rgb_array <span style="color:#f92672">=</span> image_converter<span style="color:#f92672">.</span>labels_to_cityscapes_palette(image)
 pil_image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
-pil_image<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;screen.png&#34;</span>)</code></pre></div>
-<p><a href="https://gyazo.com/64af238082a7610ddf26e08cea171b1d"><img src="https://i.gyazo.com/64af238082a7610ddf26e08cea171b1d.png" alt="Image from Gyazo" /></a></p>
-
+pil_image<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#34;screen.png&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/64af238082a7610ddf26e08cea171b1d"><img src="https://i.gyazo.com/64af238082a7610ddf26e08cea171b1d.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   リアルタイム処理
 </h1>
 
-
 <p>PyGameを利用してリアルタイムにセマンティック・セグメンテーションの結果を描画してみます．
 フレームレートを維持するため，カメラは320x180のサイズとしました．</p>
-
-<p><a href="https://gyazo.com/315b97fea759e116a13f1520ad702226"><video alt="Video from Gyazo" width="800" autoplay muted loop playsinline controls><source src="https://i.gyazo.com/315b97fea759e116a13f1520ad702226.mp4" type="video/mp4" /></video></a></p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
 
 
     
@@ -514,7 +464,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.864829 &#43;0900 JST m=&#43;0.186040198">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:45.169308 &#43;0900 JST m=&#43;0.667786576">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

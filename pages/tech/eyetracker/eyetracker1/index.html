@@ -177,13 +177,11 @@ $ python -m pip install opencv-python Collecting opencv-python Downloading openc
 
     
 
-    <p><a href="https://gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373"><img src="https://i.gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373.png" alt="https://gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373" /></a></p>
-
+    <p><a href="https://gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373"><img src="https://i.gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373.png" alt="https://gyazo.com/7278ccfa8d68bdb1ff12fc50372c2373"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   Tobii Eye Trackerとは
 </h1>
-
 
 <p>近年、ユーザの視線を検出する<strong>アイトラッキング</strong>という技術が注目されています。
 アイトラッキングはマウスやキーボードの代替となりうるヒューマンインターフェイスの一つであり、
@@ -201,20 +199,16 @@ $ python -m pip install opencv-python Collecting opencv-python Downloading openc
 また、開発用の言語には <strong>Python</strong>、<strong>Matlab</strong>、<strong>C</strong>、<strong>Unity</strong> などに対応していますが、
 ここでは、機械学習に適した<a href="https://www.python.org/">Python</a>を採用します。
 <strong>Tobii Pro SDK</strong> の<a href="http://developer.tobiipro.com/index.html">ドキュメント</a>が公開されおり、この情報を参考にしながら開発を進めることになります。</p>
-
-<p><a href="https://gyazo.com/3d9120766d6fada3edbed98010181f83"><img src="https://i.gyazo.com/3d9120766d6fada3edbed98010181f83.jpg" alt="https://gyazo.com/3d9120766d6fada3edbed98010181f83" /></a></p>
-
+<p><a href="https://gyazo.com/3d9120766d6fada3edbed98010181f83"><img src="https://i.gyazo.com/3d9120766d6fada3edbed98010181f83.jpg" alt="https://gyazo.com/3d9120766d6fada3edbed98010181f83"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   開発環境の準備
 </h1>
 
-
 <p>まずは、<a href="https://www.python.org/">Python</a>をインストールします。
 Pythonのバージョンには<strong>3.x</strong>と<strong>2.x</strong>の２通り存在しますが、
 <strong>Tobii Pro SDK</strong> に対応している <strong>2.x</strong> を選択する必要があることに注意してください。
 ここでは、現時点での最新バージョンである<strong>2.7.14</strong>を利用します(2017年10月17日)。</p>
-
 <p>Pythonの本体に加えて、画像処理ライブラリの<a href="http://labs.eecs.tottori-u.ac.jp/sd/Member/oyamada/OpenCV/html/index.html">OpenCV</a>と、
 数値計算ライブラリの<a href="http://www.numpy.org/">NumPy</a>を追加でインストールします。
 インストール方法はPythonのパッケージ管理システムである<strong>pip</strong>を利用すれば簡単です。
@@ -231,22 +225,19 @@ $ python -m pip install numpy
 Collecting numpy
   Downloading numpy-1.13.3-2-cp27-none-win32.whl (6.7MB)
 Installing collected packages: numpy
-Successfully installed numpy-1.13.3</code></pre></div>
-<p>さらに、<strong>Tobii Pro SDK</strong>　のライブラリを導入します。
-ここでは、<a href="https://www.tobiipro.com/ja/product-listing/tobii-pro-sdk/#ダウンロード">Tobii Pro SDK Python for Windows</a>の
+Successfully installed numpy-1.13.3
+</code></pre></div><p>さらに、<strong>Tobii Pro SDK</strong>　のライブラリを導入します。
+ここでは、<a href="https://www.tobiipro.com/ja/product-listing/tobii-pro-sdk/#%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89">Tobii Pro SDK Python for Windows</a>の
 最新バージョンである <strong>1.2</strong> を利用します。
 ダウンロードしたZIPファイルは解凍し、<strong>tobiiresearch.py</strong> と <strong>tobiiresearch</strong>フォルダを
 Pythonの開発用のフォルダにコピーしておきます。</p>
-
 <p>また、上述したように、<strong>Tobii Eye Tracker 4C</strong> で <strong>Tobii Pro SDK</strong> を用いるには、
 <strong>プロアップグレードキー</strong> が必要であり、このキーはファイルとして提供されます。
 このファイルもSDKと同様にPythonの開発用のフォルダにコピーしておきます。</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   アイトラッキングの実装
 </h1>
-
 
 <p>それではPythonでアイトラッキングを実装していきましょう。
 ファイル名は <strong>MyEyeTrack.py</strong> とします。
@@ -256,22 +247,16 @@ Pythonの開発用のフォルダにコピーしておきます。</p>
 また、<strong>time</strong> は時間関連のモジュールであり、スレッドを待機させるときに用います。
 <strong>tobii_research</strong> のモジュールに関しては、<strong>tr</strong> という別名を付けていることに注意してください。
 （OpenCVのモジュールは次回利用します）</p>
-
 <script type="application/javascript" src="https://gist.github.com/naoto-github/9ee4cb865d0135badb3dd7a5a70fab0b.js"></script>
-
 
 <p>次に接続されている <strong>Tobii Eye Tracker 4C</strong> を認識します。
 認識には、<strong>find_all_eyetrackers</strong> メソッドを利用して、<strong>EyeTracker</strong> オブジェクトのリストとして取得します。
 接続されている <strong>Tobii Eye Tracker 4C</strong> は１つであるため、リストの最初の要素を取得しています。</p>
-
 <script type="application/javascript" src="https://gist.github.com/naoto-github/409d12fe1f6b65d17c2bfe0cb330ac89.js"></script>
-
 
 <p>認識した<strong>EyeTracker</strong>オブジェクトにプロダクトキーを登録します。
 登録には<strong>apply_licenses</strong>メソッドを利用し、引数としてプロダクトキーのファイルデータを渡します。</p>
-
 <script type="application/javascript" src="https://gist.github.com/naoto-github/ca893fa8c80f5f1ab537098dce465408.js"></script>
-
 
 <p>次にコールバックメソッドを実装します。
 これは、<strong>Eye Tracker 4C</strong> がユーザの視線情報を取得した際に、
@@ -280,15 +265,11 @@ Pythonの開発用のフォルダにコピーしておきます。</p>
 左目の視線情報 <strong>left_eye</strong>、
 右目の視線情報<strong>right_eye</strong> をフィールドとして持ちます。
 ここでは、タイムスタンプに加え、ディスプレイに対する両目の視線位置をコンソールに出力しています。</p>
-
 <script type="application/javascript" src="https://gist.github.com/naoto-github/d83000f3711e8c6fe14d3bf90d1737c3.js"></script>
-
 
 <p>最後にコールバックメソッドを<strong>EyeTracker</strong>オブジェクトに登録します。
 登録後に2秒間待機して、登録したコールバックメソッドを解除します。</p>
-
 <script type="application/javascript" src="https://gist.github.com/naoto-github/6cfa7beaf1fcd5c220c3277d9cffb894.js"></script>
-
 
 <p>では、プログラムを実行してみましょう。
 実行すると下記のように両目の視線位置がコンソールに出力されます。
@@ -302,9 +283,8 @@ Left Eye:0.218198925257 0.671267986298
 Right Eye:0.233092829585 0.647686421871
 Time:1085393924
 Left Eye:0.219358816743 0.66589474678
-Right Eye:0.230099588633 0.645437598228</code></pre></div>
-<p>次回はOpenCVを利用して、ウィンドウを作成し、視線位置に図形を描画することに挑戦してみます。</p>
-
+Right Eye:0.230099588633 0.645437598228
+</code></pre></div><p>次回はOpenCVを利用して、ウィンドウを作成し、視線位置に図形を描画することに挑戦してみます。</p>
 <h3>参考書籍</h3>
 
 
@@ -370,7 +350,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.943729 &#43;0900 JST m=&#43;0.264942552">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:45.177473 &#43;0900 JST m=&#43;0.675951584">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

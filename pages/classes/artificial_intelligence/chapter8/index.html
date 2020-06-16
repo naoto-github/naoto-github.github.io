@@ -179,30 +179,23 @@
 
     
 
-    
-
-<p><a href="https://gyazo.com/df278146ff99bcad3a71d62b53e88a27"><img src="https://i.gyazo.com/df278146ff99bcad3a71d62b53e88a27.png" alt="Image from Gyazo" /></a></p>
-
+    <p><a href="https://gyazo.com/df278146ff99bcad3a71d62b53e88a27"><img src="https://i.gyazo.com/df278146ff99bcad3a71d62b53e88a27.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ノートブックの作成
 </h1>
 
-
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-8</strong> とします．
 ノートブックの作成方法に関しては<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参考にしてください．</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   最適化問題
 </h1>
 
-
 <p>今回は <strong>最適化問題</strong> を取り上げます．
 最適化問題は，対象となる関数について，
 その値が最大（もしくは最小）となる状態を見つけることが目的となります．</p>
-
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
@@ -227,9 +220,7 @@ $$
   
 </div>
 
-
 <p>最適化問題の状態空間モデルを定義します．</p>
-
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
@@ -257,31 +248,25 @@ $$
   
 </div>
 
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   山登り法（Hill Climbing Method）
 </h1>
 
-
 <p>現在の状態の近傍の中で最も評価の高い状態を選択することを，
 評価の改善がなくなるまで繰り返す手法です．
 局所探索アルゴリズムの一つであり，最もシンプルでポピュラーな手法です．</p>
-
 <p>例えば，初期状態として$x=0.5$が選ばれたとします．
 この$x$の近傍である$x=4.9$と$x=5.1$において，評価が改善されるかを調べます．
 $f(5)=-25.0$に対し，$f(4.9) \simeq -26.1$，$f(5.1) \simeq -24.0$であり，
 $x=5.1$のときに評価が改善されることが分かります．
 この操作を評価の改善がなくなるまで繰り返します．
 最終的に$x=10$，$f(10)=0$を見つけることができれば成功です．</p>
-
-<p><a href="https://gyazo.com/b8a5dcf0b52379a01997a098f3ee893c"><img src="https://i.gyazo.com/b8a5dcf0b52379a01997a098f3ee893c.png" alt="Image from Gyazo" /></a></p>
-
+<p><a href="https://gyazo.com/b8a5dcf0b52379a01997a098f3ee893c"><img src="https://i.gyazo.com/b8a5dcf0b52379a01997a098f3ee893c.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   実装
 </h1>
-
 
 <p>最初にライブラリをインポートします．
 <strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と，
@@ -291,36 +276,34 @@ $x=5.1$のときに評価が改善されることが分かります．
 <span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
 <span style="color:#f92672">import</span> random
 
-<span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, hill_climbing</code></pre></div>
-<p>最初に関数$f(x)$を定義します．
+<span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, hill_climbing
+</code></pre></div><p>最初に関数$f(x)$を定義します．
 ここでは，$f(x)=-(x -10)^2$とします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(x):
     y <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>(x<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
-    <span style="color:#66d9ef">return</span> y</code></pre></div>
-<p>関数をグラフに描画してみましょう．
+    <span style="color:#66d9ef">return</span> y
+</code></pre></div><p>関数をグラフに描画してみましょう．
 グラフの描画には<code>Matplotlib</code>を用います．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">0.1</span>)
 y <span style="color:#f92672">=</span> fx(x)
 plt<span style="color:#f92672">.</span>plot(x, y)
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)</code></pre></div>
-<p><a href="https://gyazo.com/68e9721e2656962d0325e82d943ea62c"><img src="https://i.gyazo.com/68e9721e2656962d0325e82d943ea62c.png" alt="Image from Gyazo" /></a></p>
-
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/68e9721e2656962d0325e82d943ea62c"><img src="https://i.gyazo.com/68e9721e2656962d0325e82d943ea62c.png" alt="Image from Gyazo"></a></p>
 <p>次に <strong>初期状態</strong> を定義します．
 初期状態は$0$から$20$の範囲の整数とします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> float(random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span>))</code></pre></div>
-<p>初期状態も合わせてグラフに描画します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> float(random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span>))
+</code></pre></div><p>初期状態も合わせてグラフに描画します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">0.1</span>)
 y <span style="color:#f92672">=</span> fx(x)
 plt<span style="color:#f92672">.</span>plot(x, y)
 plt<span style="color:#f92672">.</span>plot(START,  fx(START),  marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;o&#34;</span>, markersize<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)</code></pre></div>
-<p><a href="https://gyazo.com/52eb94061a2d5aab3115fcae9e630ff9"><img src="https://i.gyazo.com/52eb94061a2d5aab3115fcae9e630ff9.png" alt="Image from Gyazo" /></a></p>
-
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/52eb94061a2d5aab3115fcae9e630ff9"><img src="https://i.gyazo.com/52eb94061a2d5aab3115fcae9e630ff9.png" alt="Image from Gyazo"></a></p>
 <p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
 最適化問題を表す<code>HillProblem</code>を定義します．
-オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>value</code>`の3種類です．</p>
+オーバライドするメソッドは，<code>actions</code>，<code>result</code>，`value``の3種類です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HillProblem</span>(SearchProblem):
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
@@ -331,9 +314,8 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y
         
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
         <span style="color:#f92672">...</span>
-        </code></pre></div>
-<h3 id="actions-self-state">actions(self, state)</h3>
-
+        
+</code></pre></div><h3 id="actionsself-state">actions(self, state)</h3>
 <p>実行可能な行動のリストを返します．
 行動は$+0.1$と$-0.1$の2パターンです．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
@@ -345,22 +327,21 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y
         
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{:.3f} -&gt; [{:.3f} {:.3f}]&#34;</span><span style="color:#f92672">.</span>format(state, list[<span style="color:#ae81ff">0</span>], list[<span style="color:#ae81ff">1</span>]))
         
-    <span style="color:#66d9ef">return</span> list</code></pre></div>
-<h3 id="result-self-state-action">result(self, state, action)</h3>
-
+    <span style="color:#66d9ef">return</span> list
+</code></pre></div><h3 id="resultself-state-action">result(self, state, action)</h3>
 <p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-    <span style="color:#66d9ef">return</span> action</code></pre></div>
-<h3 id="value-self-state">value(self, state)</h3>
+    <span style="color:#66d9ef">return</span> action
+</code></pre></div><h3 id="valueself-state">value(self, state)</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
     v <span style="color:#f92672">=</span> fx(state)
-    <span style="color:#66d9ef">return</span> v</code></pre></div>
-<h2 id="解の探索">解の探索</h2>
-
+    <span style="color:#66d9ef">return</span> v
+</code></pre></div><h2 id="解の探索">解の探索</h2>
 <p>山登り法<code>hill_climbing</code>を用いて探索します．
 初期状態が$x=2$だったため，$x$を増加させる方向に探索が進んでいることがわかります．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> HillProblem(initial_state<span style="color:#f92672">=</span>START)
-result <span style="color:#f92672">=</span> hill_climbing(problem)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">2.000 -&gt; [2.100 1.900]
+result <span style="color:#f92672">=</span> hill_climbing(problem)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">2.000 -&gt; [2.100 1.900]
 2.100 -&gt; [2.200 2.000]
 2.200 -&gt; [2.300 2.100]
 2.300 -&gt; [2.400 2.200]
@@ -368,40 +349,29 @@ result <span style="color:#f92672">=</span> hill_climbing(problem)</code></pre><
 9.700 -&gt; [9.800 9.600]
 9.800 -&gt; [9.900 9.700]
 9.900 -&gt; [10.000 9.800]
-10.000 -&gt; [10.100 9.900]</code></pre></div>
-<p>最終状態と評価を確認してみましょう．
+10.000 -&gt; [10.100 9.900]
+</code></pre></div><p>最終状態と評価を確認してみましょう．
 最終状態は$x=10$，また，その評価は$f(10)=0$であることがわかります．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{:.3f}&#34;</span><span style="color:#f92672">.</span>format(result<span style="color:#f92672">.</span>state))
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{:.3f}&#34;</span><span style="color:#f92672">.</span>format(result<span style="color:#f92672">.</span>value))</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">10.000
--0.000</code></pre></div>
-<p>最終状態も合わせてグラフに描画します．
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{:.3f}&#34;</span><span style="color:#f92672">.</span>format(result<span style="color:#f92672">.</span>value))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">10.000
+-0.000
+</code></pre></div><p>最終状態も合わせてグラフに描画します．
 関数のピークを発見できていることがわかります．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">0.1</span>)
 y <span style="color:#f92672">=</span> fx(x)
 plt<span style="color:#f92672">.</span>plot(x, y)
 plt<span style="color:#f92672">.</span>plot(result<span style="color:#f92672">.</span>state,  result<span style="color:#f92672">.</span>value,  marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;o&#34;</span>, markersize<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>)
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)</code></pre></div>
-<p><a href="https://gyazo.com/ea40eeea9b97e2a8837dee48fd8cbf33"><img src="https://i.gyazo.com/ea40eeea9b97e2a8837dee48fd8cbf33.png" alt="Image from Gyazo" /></a></p>
-
-<!-- <h1>
-  <img class="head-image" src="/logo/logo.png">
-  課題
-</h1>
- -->
-
-<!-- 下記の関数に対して山登り法を適用し，その結果を考察しなさい． -->
-
-<!-- $$ -->
-
-<!-- f(x) = | \cos(x) \cdot x| -->
-
-<!-- $$ -->
-
-<!-- [![Image from Gyazo](https://i.gyazo.com/627fbc02f93784fed3731cc89f4fdff8.png)](https://gyazo.com/627fbc02f93784fed3731cc89f4fdff8) -->
-
-<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
-
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/ea40eeea9b97e2a8837dee48fd8cbf33"><img src="https://i.gyazo.com/ea40eeea9b97e2a8837dee48fd8cbf33.png" alt="Image from Gyazo"></a></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 
 <h3>参考書籍</h3>
 
@@ -470,7 +440,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.816442 &#43;0900 JST m=&#43;0.137650888">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:44.897601 &#43;0900 JST m=&#43;0.396085268">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

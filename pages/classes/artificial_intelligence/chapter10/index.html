@@ -177,28 +177,21 @@
 
     
 
-    
-
-<p><a href="https://gyazo.com/3d91d3d8392e40f736740f4ee9168354"><img src="https://i.gyazo.com/3d91d3d8392e40f736740f4ee9168354.png" alt="Image from Gyazo" /></a></p>
-
+    <p><a href="https://gyazo.com/3d91d3d8392e40f736740f4ee9168354"><img src="https://i.gyazo.com/3d91d3d8392e40f736740f4ee9168354.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ノートブックの作成
 </h1>
 
-
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-10</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   フロイド問題
 </h1>
 
-
 <p>今回は <strong>フロイド問題(Floyd Problem)</strong> を取り上げましょう．</p>
-
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
@@ -240,12 +233,10 @@ $$
   
 </div>
 
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   遺伝的アルゴリズム
 </h1>
-
 
 <p>フロイド問題を <strong>遺伝的アルゴリズム(Genetic Algorithm)</strong> で解きます．
 遺伝的アルゴリズムは，進化的アルゴリズムの一つに分類され，
@@ -254,46 +245,35 @@ $$
 問題の解は，数値の列で構成される <strong>個体</strong> として表現され，この個体を複数生成し <strong>世代</strong> と呼びます．
 この世代で，<strong>突然変異</strong> と <strong>交叉</strong> と呼ばれるオペレータ（操作）を適用して，
 新しい個体を生成し，次の世代とすることを繰り返します．</p>
-
 <p>フロイド問題では，整数がグループAに属するとき$0$，
 グループBに属するとき$1$とする数値列を個体とします．
 例えば，グループ$A$を奇数，グループ$B$を偶数とするとき，
 個体$I_1$は下記のように表現されます．</p>
-
 <p>$$
 I_1 = (0, 1, 0, 1, 0, 1, 0, 1, 0, 1)
 $$</p>
-
 <p>この他にも，グループ$A$を1〜5，グループ$B$を6〜10とするとき，
 個体$I_2$は下記のように表現されます．</p>
-
 <p>$$
 I_2 = (0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
 $$</p>
-
 <p><strong>突然変異</strong> は個体に含まれる$n$番目の数値をランダムに変化させ，
 新しい個体を生成する操作のことです．
 例えば，個体$I_1$の5番目の数値を$0$から$1$に変化させます．</p>
-
 <p>$$
 (0, 1, 0, 1, 0, 1, 0, 1, 0, 1) \rightarrow (0, 1, 0, 1, 1, 1, 0, 1, 0, 1)
 $$</p>
-
 <p><strong>交叉</strong> は複数の個体を繋ぎ合わせて，新しい個体を生成する操作のことです．
 例えば，個体$I_1$の前半と，個体$I_2$の後半の数値を繋ぎ合わせます．</p>
-
 <p>$$
 (0, 1, 0, 1, 0, 1, 0, 1, 0, 1) \times (0, 0, 0, 0, 0, 1, 1, 1, 1, 1) \rightarrow (0, 1, 0, 1, 0, 1, 1, 1, 1, 1)
 $$</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   実装
 </h1>
 
-
 <h2 id="クラスの定義">クラスの定義</h2>
-
 <p>最初にライブラリをインポートします．
 <strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
 <strong>遺伝的アルゴリズム</strong> を表す <code>genetic</code> をインポートします．
@@ -302,12 +282,12 @@ $$</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 <span style="color:#f92672">import</span> copy
 <span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem
-<span style="color:#f92672">from</span> simpleai.search.local <span style="color:#f92672">import</span> genetic</code></pre></div>
-<p>次に <strong>対象とする整数</strong> と，<strong>初期状態</strong> を定義します．
+<span style="color:#f92672">from</span> simpleai.search.local <span style="color:#f92672">import</span> genetic
+</code></pre></div><p>次に <strong>対象とする整数</strong> と，<strong>初期状態</strong> を定義します．
 初期状態は，全ての整数がグループ$A$に属することとします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">NUMBERS <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>]
-START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]</code></pre></div>
-<p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
+START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]
+</code></pre></div><p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
 フロイド問題を表す <code>FloydProblem</code>  を定義します．
 オーバライドするメソッドは，<code>value</code>，<code>generate_random_state</code>，
 <code>crossover</code>，<code>mutate</code> の4種類です．</p>
@@ -323,9 +303,9 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
         <span style="color:#f92672">...</span>
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mutate</span>(self, state):
-        <span style="color:#f92672">...</span></code></pre></div>
-<h3 id="value-self-state">value(self, state)</h3>
+        <span style="color:#f92672">...</span>
 
+</code></pre></div><h3 id="valueself-state">value(self, state)</h3>
 <p>状態<code>state</code> の目的関数を実装します．
 フロイド問題は目的関数を<strong>最小化</strong>する必要がありますが，
 ここでは目的関数を負の値で表し，<strong>最大化</strong>を目的とした問題として扱います．</p>
@@ -342,9 +322,9 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
 
     value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>abs(value0 <span style="color:#f92672">-</span> value1) <span style="color:#75715e"># 負の値</span>
 
-    <span style="color:#66d9ef">return</span> value</code></pre></div>
-<h3 id="generate-random-state-self">generate_random_state(self)</h3>
+    <span style="color:#66d9ef">return</span> value
 
+</code></pre></div><h3 id="generate_random_stateself">generate_random_state(self)</h3>
 <p>ランダムに状態を生成します．
 生成した乱数が0.5未満であればグループA，
 0.5以上であればグループBとします．</p>
@@ -358,9 +338,8 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">else</span>:
             state<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">1</span>)        
 
-    <span style="color:#66d9ef">return</span> state</code></pre></div>
-<h3 id="crossover-self-state1-state2">crossover(self, state1, state2)</h3>
-
+    <span style="color:#66d9ef">return</span> state
+</code></pre></div><h3 id="crossoverself-state1-state2">crossover(self, state1, state2)</h3>
 <p>状態<code>state1</code>と状態<code>state2</code>を交叉し，新しい状態を生成します．
 交差する位置は乱数で決定します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossover</span>(self, state1, state2):
@@ -375,9 +354,8 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(index, len(state2)):
         child<span style="color:#f92672">.</span>append(state2[i])                
 
-    <span style="color:#66d9ef">return</span> child</code></pre></div>
-<h3 id="mutate-self-state">mutate(self, state)</h3>
-
+    <span style="color:#66d9ef">return</span> child
+</code></pre></div><h3 id="mutateself-state">mutate(self, state)</h3>
 <p>状態<code>state</code>を突然変異させ，新しい状態を生成します，
 突然変異する位置は乱数で決定します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mutate</span>(self, state):
@@ -391,9 +369,8 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">else</span>:
         mutated[index] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>                                     
 
-    <span style="color:#66d9ef">return</span> mutated</code></pre></div>
-<h2 id="解の探索">解の探索</h2>
-
+    <span style="color:#66d9ef">return</span> mutated
+</code></pre></div><h2 id="解の探索">解の探索</h2>
 <p>上記の実装だと最良解の推移がわからないため，下記のコードを<code>value</code>関数に追加します．
 目的関数が最大の状態と値を記録し，更新があったときに表示します，</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
@@ -410,8 +387,8 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
         <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;max state: {}({:.3f})&#34;</span><span style="color:#f92672">.</span>format(max_state, max_value))
     <span style="color:#75715e"># ここまで追加</span>
 
-    <span style="color:#66d9ef">return</span> value</code></pre></div>
-<p>遺伝的アルゴリズム<code>genetic</code>を用いて解を探索します
+    <span style="color:#66d9ef">return</span> value
+</code></pre></div><p>遺伝的アルゴリズム<code>genetic</code>を用いて解を探索します
 ここで，<code>population_size</code>は1世代の個体の数，<code>mutation_chance</code>は突然変異の確率，<code>iterations_limit</code>は世代交代の数です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">max_state <span style="color:#f92672">=</span> START
 max_value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
@@ -420,14 +397,12 @@ max_value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</sp
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;max state: {}({:.3f})&#34;</span><span style="color:#f92672">.</span>format(max_state, max_value))
 
 problem <span style="color:#f92672">=</span> FloydProblem(initial_state<span style="color:#f92672">=</span>START)
-result <span style="color:#f92672">=</span> genetic(problem, population_size<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, mutation_chance<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, iterations_limit<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)</code></pre></div>
-<p>この結果，目的関数が$-0.015$に収束します．
+result <span style="color:#f92672">=</span> genetic(problem, population_size<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, mutation_chance<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, iterations_limit<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</code></pre></div><p>この結果，目的関数が$-0.015$に収束します．
 これは，下記のグループに分けられたことを意味しています（AとBが逆の場合も同じ）．</p>
-
 <p>$$
 A = \{ 1, 2, 3, 4, 6, 7 \}
 $$</p>
-
 <p>$$
 B = \{ 5, 8, 9, 10 \}
 $$</p>
@@ -438,17 +413,10 @@ max state: [1, 1, 1, 0, 1, 0, 0, 0, 0, 1](-3.379)
 max state: [1, 0, 0, 1, 1, 0, 1, 1, 0, 0](-1.048)
 max state: [1, 1, 0, 0, 0, 0, 1, 0, 1, 1](-0.024)
 max state: [1, 0, 0, 1, 1, 0, 0, 1, 0, 1](-0.015)
-max state: [0, 0, 0, 0, 1, 0, 0, 1, 1, 1](-0.015)</code></pre></div>
-<!-- <h1>
-  <img class="head-image" src="/logo/logo.png">
-  課題
-</h1>
- -->
-
-<!-- 1〜20の整数で構成されたフロイド問題を解きなさい． -->
-
-<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
-
+max state: [0, 0, 0, 0, 1, 0, 0, 1, 1, 1](-0.015)
+</code></pre></div><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 
 <h3>参考書籍</h3>
 
@@ -517,7 +485,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.81882 &#43;0900 JST m=&#43;0.140029341">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:44.844497 &#43;0900 JST m=&#43;0.342982717">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

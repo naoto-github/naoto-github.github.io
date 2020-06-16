@@ -179,30 +179,22 @@
 
     
 
-    
-
-<p><a href="https://gyazo.com/d9c458606aeaa73df9890d7221dd1b8c"><img src="https://i.gyazo.com/d9c458606aeaa73df9890d7221dd1b8c.png" alt="Image from Gyazo" /></a></p>
-
+    <p><a href="https://gyazo.com/d9c458606aeaa73df9890d7221dd1b8c"><img src="https://i.gyazo.com/d9c458606aeaa73df9890d7221dd1b8c.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ノートブックの作成
 </h1>
 
-
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-4</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
-
-<!-- [![Image from Gyazo](https://i.gyazo.com/54d5cced235882d26a3a323388173139.png)](https://gyazo.com/54d5%cced235882d26a3a323388173139) -->
-
+<!-- raw HTML omitted -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   8パズル
 </h1>
 
-
 <p>今回は <strong>8パズル（8 Puzzle）</strong> を取り上げましょう．</p>
-
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
@@ -223,9 +215,7 @@
   
 </div>
 
-
 <p>この問題を <strong>状態空間モデル</strong> で表現します．</p>
-
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
@@ -274,20 +264,17 @@ $$
   
 </div>
 
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   実装
 </h1>
 
-
 <h2 id="クラスの定義">クラスの定義</h2>
-
 <p>最初にライブラリをインポートします．
 前回と同様に，<strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
 <strong>幅優先探索</strong> を表す<code>breadth_first</code>をインポートします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, breadth_first</code></pre></div>
-<p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, breadth_first
+</code></pre></div><p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
 初期状態は$(3, 1, 5, b, 7, 4, 6, 8, 2)$，
 目的状態は$(b, 1, 2, 3, 4, 5, 6, 7, 8)$です．
 ここでは，$b$を$0$で表現していることに注意してください．</p>
@@ -301,8 +288,8 @@ GOAL <span style="color:#f92672">=</span> (
     <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>,
     <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>,
     <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>
-)</code></pre></div>
-<p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
+)
+</code></pre></div><p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
 8パズルを表す<code>EightPuzzle</code>を定義します．
 オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>is_goal</code>の3種類です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">EightPuzzle</span>(SearchProblem):
@@ -314,9 +301,8 @@ GOAL <span style="color:#f92672">=</span> (
         <span style="color:#f92672">...</span>
         
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-        <span style="color:#f92672">...</span></code></pre></div>
-<h3 id="actions-self-state">actions(self, state)</h3>
-
+        <span style="color:#f92672">...</span>
+</code></pre></div><h3 id="actionsself-state">actions(self, state)</h3>
 <p>ブランクの位置に応じた行動のリストを返します．
 行動は全部で24パターンが存在します．
 また，リストのインデックスは0番から始まることに注意してください．
@@ -454,32 +440,29 @@ GOAL <span style="color:#f92672">=</span> (
             state[<span style="color:#ae81ff">6</span>], state[<span style="color:#ae81ff">8</span>], state[<span style="color:#ae81ff">7</span>]
         ))
         
-    <span style="color:#66d9ef">return</span> list</code></pre></div>
-<h3 id="result-self-state-action">result(self, state, action)</h3>
-
+    <span style="color:#66d9ef">return</span> list
+</code></pre></div><h3 id="resultself-state-action">result(self, state, action)</h3>
 <p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-    <span style="color:#66d9ef">return</span> action</code></pre></div>
-<h3 id="is-goal-self-state">is_goal(self, state)</h3>
-
+    <span style="color:#66d9ef">return</span> action
+</code></pre></div><h3 id="is_goalself-state">is_goal(self, state)</h3>
 <p>状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-    <span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL</code></pre></div>
-<h2 id="解の探索">解の探索</h2>
-
+    <span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL
+</code></pre></div><h2 id="解の探索">解の探索</h2>
 <p>幅優先探索（探索木）<code>breadth_first</code>を用いて解を探索します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> EightPuzzle(initial_state<span style="color:#f92672">=</span>START)
-result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True)</code></pre></div>
-<p>探索が終了したら，最終状態，パス，コストを表示します．
+result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True)
+</code></pre></div><p>探索が終了したら，最終状態，パス，コストを表示します．
 最終状態は<code>(0, 1, 2, 3, 4, 5, 6, 7, 8)</code>となっており目的状態に到達できたことがわかります．
 このとき，初期状態から目的状態までのコスト（ステップ数）は13です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;State:&#34;</span>, result<span style="color:#f92672">.</span>state)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Path:&#34;</span>, result<span style="color:#f92672">.</span>path())
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Cost:&#34;</span>, result<span style="color:#f92672">.</span>cost)</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">State: (0, 1, 2, 3, 4, 5, 6, 7, 8)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Cost:&#34;</span>, result<span style="color:#f92672">.</span>cost)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">State: (0, 1, 2, 3, 4, 5, 6, 7, 8)
 Path: [(None, (3, 1, 5, 0, 7, 4, 6, 8, 2)), ((0, 1, 5, 3, 7, 4, 6, 8, 2), (0, 1, 5, 3, 7, 4, 6, 8, 2)), ((1, 0, 5, 3, 7, 4, 6, 8, 2), (1, 0, 5, 3, 7, 4, 6, 8, 2)), ((1, 5, 0, 3, 7, 4, 6, 8, 2), (1, 5, 0, 3, 7, 4, 6, 8, 2)), ((1, 5, 4, 3, 7, 0, 6, 8, 2), (1, 5, 4, 3, 7, 0, 6, 8, 2)), ((1, 5, 4, 3, 7, 2, 6, 8, 0), (1, 5, 4, 3, 7, 2, 6, 8, 0)), ((1, 5, 4, 3, 7, 2, 6, 0, 8), (1, 5, 4, 3, 7, 2, 6, 0, 8)), ((1, 5, 4, 3, 0, 2, 6, 7, 8), (1, 5, 4, 3, 0, 2, 6, 7, 8)), ((1, 0, 4, 3, 5, 2, 6, 7, 8), (1, 0, 4, 3, 5, 2, 6, 7, 8)), ((1, 4, 0, 3, 5, 2, 6, 7, 8), (1, 4, 0, 3, 5, 2, 6, 7, 8)), ((1, 4, 2, 3, 5, 0, 6, 7, 8), (1, 4, 2, 3, 5, 0, 6, 7, 8)), ((1, 4, 2, 3, 0, 5, 6, 7, 8), (1, 4, 2, 3, 0, 5, 6, 7, 8)), ((1, 0, 2, 3, 4, 5, 6, 7, 8), (1, 0, 2, 3, 4, 5, 6, 7, 8)), ((0, 1, 2, 3, 4, 5, 6, 7, 8), (0, 1, 2, 3, 4, 5, 6, 7, 8))]
-Cost: 13</code></pre></div>
-<h2 id="探索過程の可視化-任意">探索過程の可視化（任意）</h2>
-
+Cost: 13
+</code></pre></div><h2 id="探索過程の可視化任意">探索過程の可視化（任意）</h2>
 <p>最後に探索過程を可視化してみましょう．
 8パズルは前回の水差し問題に比べると，非常に複雑な問題であり，
 とても大きな探索木になってしまいます（探索した状態数は2116）．
@@ -487,19 +470,11 @@ Cost: 13</code></pre></div>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search.viewers <span style="color:#f92672">import</span> WebViewer
 
 web_viewer <span style="color:#f92672">=</span> WebViewer()
-result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True, viewer<span style="color:#f92672">=</span>web_viewer)</code></pre></div>
-<p><a href="https://gyazo.com/6893e43131955778143518f6ba052de7"><img src="https://i.gyazo.com/6893e43131955778143518f6ba052de7.png" alt="Image from Gyazo" /></a></p>
-
-<!-- <h1>
-  <img class="head-image" src="/logo/logo.png">
-  課題
-</h1>
- -->
-
-<!-- 探索数を減らすためにはどうしたら良いかアイデアを述べなさい（マークダウンにしてセルに入力すること）． -->
-
-<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
-
+result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True, viewer<span style="color:#f92672">=</span>web_viewer)
+</code></pre></div><p><a href="https://gyazo.com/6893e43131955778143518f6ba052de7"><img src="https://i.gyazo.com/6893e43131955778143518f6ba052de7.png" alt="Image from Gyazo"></a></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 
 <h3>参考書籍</h3>
 
@@ -568,7 +543,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.870088 &#43;0900 JST m=&#43;0.191298570">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:44.903186 &#43;0900 JST m=&#43;0.401669969">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

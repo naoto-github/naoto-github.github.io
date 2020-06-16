@@ -94,7 +94,9 @@
 
 このグラフは正規分布に近似することが可能です。 一般にデータサンプルが多いほど、理想的な正規分布の形状に近付きます。
  正規分布の公式  正規分布の確率密度は下記の式で与えられます。 2項分布よりも難しく感じると思いますが、この式の重要なパラメータはたった2つです。 １つは平均\mu、もう１つは標準偏差\sigmaです。 この2つのパラメータで正規分布の形状が決まります。
-\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(- \frac{(x - \mu)^2}{2 \sigma ^2} \right)  また、上記の計算はExcelではnorm." />
+また、上記の計算はExcelではnorm.dist関数を用いて求めることができます。 それでは、Excelで降水量を近似する正規分布を求めましょう。 まずは、平均\mu、標準偏差\sigmaを求めます。 平均は1588.5、標準偏差は269.0になります。
+ B128に、average関数で平均を求める B129に、stdev関数で標準偏差を求める。  
+次に、下記データを含むnorm.csvをダウンロードしてください。 ファイルをダウンロードしたらExcelでnorm." />
 
 
 
@@ -123,7 +125,9 @@
 
 このグラフは正規分布に近似することが可能です。 一般にデータサンプルが多いほど、理想的な正規分布の形状に近付きます。
  正規分布の公式  正規分布の確率密度は下記の式で与えられます。 2項分布よりも難しく感じると思いますが、この式の重要なパラメータはたった2つです。 １つは平均\mu、もう１つは標準偏差\sigmaです。 この2つのパラメータで正規分布の形状が決まります。
-\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(- \frac{(x - \mu)^2}{2 \sigma ^2} \right)  また、上記の計算はExcelではnorm." />
+また、上記の計算はExcelではnorm.dist関数を用いて求めることができます。 それでは、Excelで降水量を近似する正規分布を求めましょう。 まずは、平均\mu、標準偏差\sigmaを求めます。 平均は1588.5、標準偏差は269.0になります。
+ B128に、average関数で平均を求める B129に、stdev関数で標準偏差を求める。  
+次に、下記データを含むnorm.csvをダウンロードしてください。 ファイルをダウンロードしたらExcelでnorm." />
 
 
 
@@ -197,136 +201,99 @@
 
     
 
-    <p><a href="https://gyazo.com/6088d23bcc2f780ba3cfa51379206455"><img src="https://i.gyazo.com/6088d23bcc2f780ba3cfa51379206455.png" alt="https://gyazo.com/6088d23bcc2f780ba3cfa51379206455" /></a></p>
-
+    <p><a href="https://gyazo.com/6088d23bcc2f780ba3cfa51379206455"><img src="https://i.gyazo.com/6088d23bcc2f780ba3cfa51379206455.png" alt="https://gyazo.com/6088d23bcc2f780ba3cfa51379206455"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   授業の準備
 </h1>
 
-
 <p>今回、分析対象とするデータは、<a href="http://www.jma.go.jp/jma/index.html">気象庁</a>が公開している「名古屋の降水量（1891年～2016年）」です。
 下記のデータは各年度の降水量（mm）の合計を表しています（1911年以降は省略）。
 気象庁では降水量に加え、気圧、気温、湿度など天候に纏わるデータを公開しているので様々なデータを対象に分析すると面白いです。</p>
-
 <p>上記のデータを含むファイル<a href="/classes/seminar_core_areas_learning/precipitation.csv">precipitation.csv</a>をダウンロードしましょう。
 ファイルをダウンロードしたら、前回と同様にExcelで<strong>precipitation.csv</strong>を読み込んでください。</p>
-
-<p><a href="https://gyazo.com/65cd4caa1815191e409f4d4295720ac5"><img src="https://i.gyazo.com/65cd4caa1815191e409f4d4295720ac5.png" alt="https://gyazo.com/65cd4caa1815191e409f4d4295720ac5" /></a></p>
-
+<p><a href="https://gyazo.com/65cd4caa1815191e409f4d4295720ac5"><img src="https://i.gyazo.com/65cd4caa1815191e409f4d4295720ac5.png" alt="https://gyazo.com/65cd4caa1815191e409f4d4295720ac5"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   正規分布
 </h1>
 
-
 <p><strong>正規分布</strong>は、平均値に近い値の頻度が高く、平均値から離れるほど頻度が低くなる特徴を持った<strong>確率分布</strong>のことです。
 前回学んだ<strong>2項分布</strong>も上記と同じような特徴を持ちますが、<strong>２項分布</strong> は離散値（例、コインの表が出る回数）を対象としますが、
 <strong>正規分布</strong> は連続値（例、降水量）を対象とする点が大きく異なります（実際、２項分布の試行回数nを無限大に近づけると正規分布に一致する）。
 一般に、正規分布は様々な自然現象や社会現象に当てはまると考えられており、上記の降水量も例外ではありません。</p>
-
 <p>まずは、降水量の分布を確認するために <strong>分析ツール</strong> を利用して <strong>ヒストグラム（頻度分布）</strong> を求めましょう。
 最初に、下図のようにD列に1100から2500までのデータ区間（幅は200）を入力します。</p>
-
-<p><a href="https://gyazo.com/646ee5b2f60157400d86db48e22ee837"><img src="https://i.gyazo.com/646ee5b2f60157400d86db48e22ee837.png" alt="https://gyazo.com/646ee5b2f60157400d86db48e22ee837" /></a></p>
-
+<p><a href="https://gyazo.com/646ee5b2f60157400d86db48e22ee837"><img src="https://i.gyazo.com/646ee5b2f60157400d86db48e22ee837.png" alt="https://gyazo.com/646ee5b2f60157400d86db48e22ee837"></a></p>
 <p>次に、<strong>データ</strong> タブに切り替え、<strong>データ分析</strong> をクリックします。
 一覧から<strong>ヒストグラム</strong>を選択し、OKをクリックすると、ダイアログが表示されます。
 ダイアログに下記の設定をしてから、<strong>ヒストグラム</strong>を求めて下さい。</p>
-
 <ul>
 <li>入力範囲はB2:B128を設定する</li>
 <li>データ区間はD2:D9を設定する</li>
 <li>出力オプションで<strong>新規ワークシート</strong>にチェックを入れる</li>
 </ul>
-
-<p><a href="https://gyazo.com/e3e4ea7fa8f0eee1e7f23a505cce7d30"><img src="https://i.gyazo.com/e3e4ea7fa8f0eee1e7f23a505cce7d30.png" alt="https://gyazo.com/e3e4ea7fa8f0eee1e7f23a505cce7d30" /></a></p>
-
+<p><a href="https://gyazo.com/e3e4ea7fa8f0eee1e7f23a505cce7d30"><img src="https://i.gyazo.com/e3e4ea7fa8f0eee1e7f23a505cce7d30.png" alt="https://gyazo.com/e3e4ea7fa8f0eee1e7f23a505cce7d30"></a></p>
 <p>新規に作成されたシートには、1100から2500の範囲で降水量のヒストグラムがまとめられます。
 1700-1900が最頻値となっており、この範囲から離れるほど頻度が小さくなることが分かります。
 ここで、頻度を基に各データ区間の<strong>確率密度</strong>を求めましょう（<strong>確率</strong> ではないことに注意）。
 実際の降水量は連続値ですが、ヒストグラムは離散値であるため、データ区間の幅を考慮しなくてはいけません。
 そこで、C列に頻度を、頻度の合計である<strong>126</strong>と、データ区間の幅<strong>200</strong>を掛けた<strong>25200</strong> で割った値を入力します。
 このとき、データ区間も<strong>1700-1900</strong>のように区間を含めた表現に修正しておきましょう。</p>
-
-<p><a href="https://gyazo.com/d383a3991ab538d1f3807d3b04477729"><img src="https://i.gyazo.com/d383a3991ab538d1f3807d3b04477729.png" alt="https://gyazo.com/d383a3991ab538d1f3807d3b04477729" /></a></p>
-
+<p><a href="https://gyazo.com/d383a3991ab538d1f3807d3b04477729"><img src="https://i.gyazo.com/d383a3991ab538d1f3807d3b04477729.png" alt="https://gyazo.com/d383a3991ab538d1f3807d3b04477729"></a></p>
 <p>さらに、求めた確率密度で棒グラフを描きます。C列をマウスで選択し、<strong>挿入</strong> タブの棒グラフをクリックします。
 すると、下図のように、横軸が「降水量」、縦軸が「確率密度」である棒グラフが描けます（タイトル、軸ラベル、軸の書式設定を図に合わせて修正してください）。
 確率密度を表していることから、棒グラフの<strong>面積</strong>の総和が<strong>1</strong>になることが分かります。</p>
-
-<p><a href="https://gyazo.com/17b400e242361db35c0180ca324575cc"><img src="https://i.gyazo.com/17b400e242361db35c0180ca324575cc.png" alt="https://gyazo.com/17b400e242361db35c0180ca324575cc" /></a></p>
-
+<p><a href="https://gyazo.com/17b400e242361db35c0180ca324575cc"><img src="https://i.gyazo.com/17b400e242361db35c0180ca324575cc.png" alt="https://gyazo.com/17b400e242361db35c0180ca324575cc"></a></p>
 <p>このグラフは<strong>正規分布</strong>に近似することが可能です。
 一般にデータサンプルが多いほど、理想的な正規分布の形状に近付きます。</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   正規分布の公式
 </h1>
 
-
 <p>正規分布の確率密度は下記の式で与えられます。
 2項分布よりも難しく感じると思いますが、この式の重要なパラメータはたった2つです。
-１つは平均<script type="math/tex">\mu</script>、もう１つは標準偏差<script type="math/tex">\sigma</script>です。
+１つは平均<!-- raw HTML omitted -->\mu<!-- raw HTML omitted -->、もう１つは標準偏差<!-- raw HTML omitted -->\sigma<!-- raw HTML omitted -->です。
 この2つのパラメータで正規分布の形状が決まります。</p>
-
-<p style="text-align:center">
-    <script type="math/tex">
-    \frac{1}{\sqrt{2 \pi} \sigma} \exp \left(- \frac{(x - \mu)^2}{2 \sigma ^2} \right)
-    </script>
-</p>
-
+<!-- raw HTML omitted -->
 <p>また、上記の計算はExcelでは<strong>norm.dist関数</strong>を用いて求めることができます。
 それでは、Excelで降水量を近似する正規分布を求めましょう。
-まずは、平均<script type="math/tex">\mu</script>、標準偏差<script type="math/tex">\sigma</script>を求めます。
+まずは、平均<!-- raw HTML omitted -->\mu<!-- raw HTML omitted -->、標準偏差<!-- raw HTML omitted -->\sigma<!-- raw HTML omitted -->を求めます。
 平均は<strong>1588.5</strong>、標準偏差は<strong>269.0</strong>になります。</p>
-
 <ul>
 <li>B128に、<strong>average関数</strong>で平均を求める</li>
 <li>B129に、<strong>stdev関数</strong>で標準偏差を求める。</li>
 </ul>
-
-<p><a href="https://gyazo.com/12385099547aad0a56e9412a7ad7b164"><img src="https://i.gyazo.com/12385099547aad0a56e9412a7ad7b164.png" alt="https://gyazo.com/12385099547aad0a56e9412a7ad7b164" /></a></p>
-
+<p><a href="https://gyazo.com/12385099547aad0a56e9412a7ad7b164"><img src="https://i.gyazo.com/12385099547aad0a56e9412a7ad7b164.png" alt="https://gyazo.com/12385099547aad0a56e9412a7ad7b164"></a></p>
 <p>次に、下記データを含む<a href="/classes/seminar_core_areas_learning/norm.csv">norm.csv</a>をダウンロードしてください。
 ファイルをダウンロードしたらExcelでnorm.csvを読み込んで下さい。</p>
-
-<p><a href="https://gyazo.com/dc1eb04e831c1a65c83d435a470e45f9"><img src="https://i.gyazo.com/dc1eb04e831c1a65c83d435a470e45f9.png" alt="https://gyazo.com/dc1eb04e831c1a65c83d435a470e45f9" /></a></p>
-
+<p><a href="https://gyazo.com/dc1eb04e831c1a65c83d435a470e45f9"><img src="https://i.gyazo.com/dc1eb04e831c1a65c83d435a470e45f9.png" alt="https://gyazo.com/dc1eb04e831c1a65c83d435a470e45f9"></a></p>
 <p>セルB2:B42に<strong>norm.dist関数</strong>を用いて確率密度を求めます。
 セルB2を選択した状態で、<strong>関数の挿入</strong>ボタンをクリックし、ダイアログを表示します。
 ダイアログで<strong>norm.dist関数</strong>を検索し、OKをクリックします。
 <strong>norm.dist関数</strong>の引数には、下図のように3つの引数を指定します（関数形式にtrueを指定すると累積分布になる）。</p>
-
-<p><a href="https://gyazo.com/521dbc04e3118aec9b449cabb1d21f33"><img src="https://i.gyazo.com/521dbc04e3118aec9b449cabb1d21f33.png" alt="https://gyazo.com/521dbc04e3118aec9b449cabb1d21f33" /></a></p>
-
+<p><a href="https://gyazo.com/521dbc04e3118aec9b449cabb1d21f33"><img src="https://i.gyazo.com/521dbc04e3118aec9b449cabb1d21f33.png" alt="https://gyazo.com/521dbc04e3118aec9b449cabb1d21f33"></a></p>
 <p>この結果、下記のように連続値を対象とした確率密度が求められます。
 上記と同じ手順で<strong>面グラフ</strong>も描きましょう。
 このグラフが理想的な正規分布の形状です。
 平均の1588が確率密度のピークとなっています。
 また、平均を中心に左右対称のグラフとなっていることも分かります。</p>
-
-<p><a href="https://gyazo.com/0429adf6464d99e17a6bbfc6a82761f9"><img src="https://i.gyazo.com/0429adf6464d99e17a6bbfc6a82761f9.png" alt="https://gyazo.com/0429adf6464d99e17a6bbfc6a82761f9" /></a></p>
-
-<p><a href="https://gyazo.com/9cac7df3bade390a27fd3007a31499d1"><img src="https://i.gyazo.com/9cac7df3bade390a27fd3007a31499d1.png" alt="https://gyazo.com/9cac7df3bade390a27fd3007a31499d1" /></a></p>
-
+<p><a href="https://gyazo.com/0429adf6464d99e17a6bbfc6a82761f9"><img src="https://i.gyazo.com/0429adf6464d99e17a6bbfc6a82761f9.png" alt="https://gyazo.com/0429adf6464d99e17a6bbfc6a82761f9"></a></p>
+<p><a href="https://gyazo.com/9cac7df3bade390a27fd3007a31499d1"><img src="https://i.gyazo.com/9cac7df3bade390a27fd3007a31499d1.png" alt="https://gyazo.com/9cac7df3bade390a27fd3007a31499d1"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   課題
 </h1>
 
-
 <p>累積分布を利用することで正規分布の確率を求めることが可能です。
 Excelでは、<strong>norm.dist関数</strong> の関数形式をtrueにすることで累積分布になります。
 降水量の累積分布を利用して下記の設問に答えなさい。</p>
-
 <ul>
 <li>降水量が1200[mm]以下になる確率[%]</li>
 <li>降水量が1800[mm]以上になる確率[%]</li>
 <li>降水量が1200[mm]～1600[mm]の範囲に含まれる確率[%]</li>
 </ul>
-
 <h3>参考書籍</h3>
 
 
@@ -392,7 +359,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.93435 &#43;0900 JST m=&#43;0.255563617">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:45.106074 &#43;0900 JST m=&#43;0.604554360">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

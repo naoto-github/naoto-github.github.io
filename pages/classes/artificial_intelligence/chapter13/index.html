@@ -191,69 +191,53 @@ env.reset() # 環境のリセット for i in range(200): action = env.action_spa
 
     
 
-    
-
-<p><a href="https://gyazo.com/6357d8a28d99610207123448f3eb799a"><img src="https://i.gyazo.com/6357d8a28d99610207123448f3eb799a.png" alt="Image from Gyazo" /></a></p>
-
+    <p><a href="https://gyazo.com/6357d8a28d99610207123448f3eb799a"><img src="https://i.gyazo.com/6357d8a28d99610207123448f3eb799a.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ノートブックの作成
 </h1>
 
-
 <p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-3</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
-
 <h1>
   <img class="head-image" src="/logo/logo.png">
   山登りゲーム（MountainCar）
 </h1>
 
-
 <p>山登りゲームは，車両を山の上の旗がある場所まで移動させることが目的です（旗の位置は0.5）．
 ユーザは，下記の状態を観測することが出来ます．</p>
-
 <ul>
 <li>車両の位置（-1.2 〜 0.6）</li>
 <li>車両の速度（-0.07 〜 0.07）</li>
 </ul>
-
 <p>また，ユーザは，車両に対し，下記のいずれかの行動をとることが出来ます．</p>
-
 <ul>
 <li>後方に加速（0）</li>
 <li>加速なし（1）</li>
 <li>前方に加速（2）</li>
 </ul>
-
 <p>下記の条件を満たしたとき，ゲームは失敗となります．</p>
-
 <ul>
 <li>旗に到達できず200ステップが経過する</li>
 </ul>
-
 <p>今回は，この山登りゲームをQ学習で解いてみましょう．
 基本的には前回のバランスゲームの実装方法と同じです．</p>
-
 <p><strong>[学習前]</strong>
-<a href="https://gyazo.com/32d02f4759157860ece14f06590baefd"><img src="https://i.gyazo.com/32d02f4759157860ece14f06590baefd.gif" alt="Image from Gyazo" /></a></p>
-
+<a href="https://gyazo.com/32d02f4759157860ece14f06590baefd"><img src="https://i.gyazo.com/32d02f4759157860ece14f06590baefd.gif" alt="Image from Gyazo"></a></p>
 <p><strong>[学習後]</strong>
-<a href="https://gyazo.com/960bd92b1c260d91c5ced82ccf7e7ca8"><img src="https://i.gyazo.com/960bd92b1c260d91c5ced82ccf7e7ca8.gif" alt="Image from Gyazo" /></a></p>
-
+<a href="https://gyazo.com/960bd92b1c260d91c5ced82ccf7e7ca8"><img src="https://i.gyazo.com/960bd92b1c260d91c5ced82ccf7e7ca8.gif" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   山登りゲームの実装
 </h1>
 
-
 <p>まずは必要なライブラリの導入と，山登りゲーム（MountainCar-v0）の初期化をします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gym
 <span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 
-env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;MountainCar-v0&#39;</span>) <span style="color:#75715e"># 環境の初期化</span></code></pre></div>
-<p>次に，200ステップに限定して，ランダムな行動選択を行なった結果を確認しましょう．
+env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;MountainCar-v0&#39;</span>) <span style="color:#75715e"># 環境の初期化</span>
+</code></pre></div><p>次に，200ステップに限定して，ランダムな行動選択を行なった結果を確認しましょう．
 車両は谷底をウロウロするだけで，山を登ることはありません．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
 
@@ -265,17 +249,14 @@ env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
     
-    env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span></code></pre></div>
-<p><a href="https://gyazo.com/dd845bdbbdd2136f120f023868e1b4ad"><img src="https://i.gyazo.com/dd845bdbbdd2136f120f023868e1b4ad.gif" alt="Image from Gyazo" /></a></p>
-
+    env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
+</code></pre></div><p><a href="https://gyazo.com/dd845bdbbdd2136f120f023868e1b4ad"><img src="https://i.gyazo.com/dd845bdbbdd2136f120f023868e1b4ad.gif" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   Q学習の実装
 </h1>
 
-
 <h3 id="qテーブルの作成">Qテーブルの作成</h3>
-
 <p>最初に <strong>価値$Q(s,a)$</strong> を記録しておくQテーブル（辞書型）を作成します．
 前回のバランスゲームと全く同じです．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">q_table <span style="color:#f92672">=</span> {} <span style="color:#75715e"># Qテーブル</span>
@@ -291,9 +272,8 @@ env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>
     <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span>(state, action) <span style="color:#f92672">in</span> q_table:
         q_table[(state, action)] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
-    <span style="color:#66d9ef">return</span> q_table[(state, action)]</code></pre></div>
-<h3 id="状態の離散化">状態の離散化</h3>
-
+    <span style="color:#66d9ef">return</span> q_table[(state, action)]
+</code></pre></div><h3 id="状態の離散化">状態の離散化</h3>
 <p>次に状態の離散化を行います．
 山登りゲームでは，車両の位置，車両の速度の2つの状態を <strong>連続値</strong> で取得します．
 しかし，このままではQテーブルに記録できないため，区間を定め <strong>離散値</strong> に変換します．
@@ -313,8 +293,8 @@ bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</
     state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">0</span>], bins[<span style="color:#ae81ff">0</span>]))
     state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">1</span>], bins[<span style="color:#ae81ff">1</span>]))
     
-    <span style="color:#66d9ef">return</span> tuple(state)</code></pre></div>
-<p>どのように離散値に変換されるか確認してみましょう．
+    <span style="color:#66d9ef">return</span> tuple(state)
+</code></pre></div><p>どのように離散値に変換されるか確認してみましょう．
 この例では，$(17,20)$ -&gt; $(17,20)$ -&gt; $(17,19)$と状態が変化していることが確認できます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
 
@@ -323,14 +303,14 @@ bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</
     observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
 
     <span style="color:#66d9ef">print</span>(observation)
-    <span style="color:#66d9ef">print</span>(digitize(observation))</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[-4.21336289e-01  2.46770426e-04]
+    <span style="color:#66d9ef">print</span>(digitize(observation))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[-4.21336289e-01  2.46770426e-04]
 (17, 20)
 [-0.42184451 -0.00050822]
 (17, 20)
 [-0.4241041  -0.00225958]
-(17, 19)</code></pre></div>
-<h3 id="報酬と更新式">報酬と更新式</h3>
-
+(17, 19)
+</code></pre></div><h3 id="報酬と更新式">報酬と更新式</h3>
 <p>報酬を<code>getReward</code>関数で定義します．
 200ステップ以内に旗に到達できれば$r=200$を与えます．
 一方，旗に到達できない場合は常に$r=-1$のペナルティを与えます．</p>
@@ -345,8 +325,8 @@ bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</
     <span style="color:#66d9ef">else</span>:
         reward <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
 
-    <span style="color:#66d9ef">return</span> reward</code></pre></div>
-<p>Qテーブルの更新式を<code>updateQTable</code>関数で定義します．
+    <span style="color:#66d9ef">return</span> reward
+</code></pre></div><p>Qテーブルの更新式を<code>updateQTable</code>関数で定義します．
 このとき，学習率$\alpha=0.1$，割引率$\gamma=0.9$とします．
 ここで，Qテーブルのキーは状態$s$と行動$a$のペアとなることに注意してください．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span> <span style="color:#75715e"># 学習率</span>
@@ -359,9 +339,8 @@ gamma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span
 
     value <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> getQ(state, action) <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (reward <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> max_value)
 
-    setQ(state, action, value)</code></pre></div>
-<h3 id="行動の選択">行動の選択</h3>
-
+    setQ(state, action, value)
+</code></pre></div><h3 id="行動の選択">行動の選択</h3>
 <p>行動の選択には前回と同じ$\epsilon$グリーティ手法を採用します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># εグリーディ手法で行動選択</span>
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">greedyAction</span>(state, epsilon):    
@@ -371,9 +350,8 @@ gamma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span
     <span style="color:#66d9ef">else</span>:
         action <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax([getQ(state, <span style="color:#ae81ff">0</span>), getQ(state, <span style="color:#ae81ff">1</span>), getQ(state, <span style="color:#ae81ff">2</span>)])
 
-    <span style="color:#66d9ef">return</span> action</code></pre></div>
-<h3 id="qテーブルの学習">Qテーブルの学習</h3>
-
+    <span style="color:#66d9ef">return</span> action
+</code></pre></div><h3 id="qテーブルの学習">Qテーブルの学習</h3>
 <p>これで準備が整いました．
 200ステップのエピソード（ゲーム）を10000回繰り返してQテーブルを学習します．
 このとき，$\epsilon=0.2$に設定しておきましょう．</p>
@@ -408,8 +386,8 @@ q_table <span style="color:#f92672">=</span> {}
 
         <span style="color:#66d9ef">if</span> done:
             <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))        
-            <span style="color:#66d9ef">break</span>  </code></pre></div>
-<p>学習したQテーブルを用いて実行しましょう．
+            <span style="color:#66d9ef">break</span>  
+</code></pre></div><p>学習したQテーブルを用いて実行しましょう．
 このとき，$\epsilon=0$に設定しておきましょう．
 うまく学習できていれば200ステップ以内に山を登り旗に到達出来るはずです．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
@@ -434,19 +412,11 @@ observation <span style="color:#f92672">=</span> env<span style="color:#f92672">
     env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
     
     <span style="color:#66d9ef">if</span> done:
-        <span style="color:#66d9ef">break</span></code></pre></div>
-<p><a href="https://gyazo.com/57db372642952fe2b9a0bdc5eaeab09a"><img src="https://i.gyazo.com/57db372642952fe2b9a0bdc5eaeab09a.gif" alt="Image from Gyazo" /></a></p>
-
-<!-- <h1>
-  <img class="head-image" src="/logo/logo.png">
-  課題
-</h1>
- -->
-
-<!-- より早く車両が旗に到達する工夫を考え実装しなさい． -->
-
-<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
-
+        <span style="color:#66d9ef">break</span>
+</code></pre></div><p><a href="https://gyazo.com/57db372642952fe2b9a0bdc5eaeab09a"><img src="https://i.gyazo.com/57db372642952fe2b9a0bdc5eaeab09a.gif" alt="Image from Gyazo"></a></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
 
 <h3>参考書籍</h3>
 
@@ -515,7 +485,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-15 15:21:16.833039 &#43;0900 JST m=&#43;0.154248172">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-16 21:31:44.850093 &#43;0900 JST m=&#43;0.348578315">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

@@ -29,7 +29,7 @@ Eclipseのツールバーから[ウィンドウ]-[設定]-[Java]-[コンパイ�
       <guid>https://mukai-lab.info/pages/tech/jekyll/2016-02-23-ogp/</guid>
       <description>フェイスブックでシェアされたときに表示される画像は，オープン・グラフ・プロトコル（OGP）で制御されています． OGPの設定がなければ，自動で適当な画像が選択されますが，意図しない画像が選択されることも多いです． そこで，Jekyllで採用されている「YAML Front Matter」を利用してOGPを設定する方法をメモしておきます．
 まずは，ブログ記事などのファイルの先頭に， 下記のようにimageという変数を用意して，参照する画像を設定しておきます．
---- layout: default image: &amp;#34;https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png&amp;#34; --- これで page.image という記述で設定された値を取得することができるようになります． 次に，&amp;rdquo;_includes/head.html&amp;rdquo;に下記のように page.image を利用してOGPの設定をします． このとき，条件文を利用することで page.image が設定されている場合に限ってOGPの設定を有効にしています． OGPは&amp;lt;meta property=&amp;quot;og:image&amp;quot; content=&amp;quot;参照画像&amp;quot;&amp;gt;と記述します．
+--- layout: default image: &amp;#34;https://i.gyazo.com/cdf2b2e7be4e80421f55152a4b348a7a.png&amp;#34; --- これで page.image という記述で設定された値を取得することができるようになります． 次に，&amp;quot;_includes/head.html&amp;quot;に下記のように page.image を利用してOGPの設定をします． このとき，条件文を利用することで page.image が設定されている場合に限ってOGPの設定を有効にしています． OGPは&amp;lt;meta property=&amp;quot;og:image&amp;quot; content=&amp;quot;参照画像&amp;quot;&amp;gt;と記述します．
  これで，フェイスブックでシェアされたときの画像が設定されます． もし画像が反映されない場合は，フェイスブックのキャッシュが原因かもしれません． この場合は，Open Graph Object Debuggerでキャッシュを削除してみましょう．</description>
     </item>
     
@@ -81,10 +81,10 @@ HOME=/z/GitHub/ これで問題解決と思いきや，Git Bash を実行して�
       
       <guid>https://mukai-lab.info/pages/tech/jekyll/2016-02-05-highlight/</guid>
       <description>Jekyllが得意とするシンタックスハイライトですが，設定でつまずいたのでメモしておきます． シンタックスハイライトにはrougeやpygmentsが利用されるようですが，ここではrougeを適用してみたいと思います． まずは，下記のコマンドでrougeをインストールします．
-gem install rouge 次に，&amp;rdquo;_config.yml&amp;rdquo;でシンタックスハイライトにrougeを指定しておきます．
-highlighter: rouge ここまでは，何てことないのですが，ここからつまずきました． シンタックスハイライトのスタイルは&amp;rdquo;_syntax-highlighting.scss&amp;rdquo;で設定されているようです． 色などを変更したい場合は，このファイルを修正すれば良いはずですが，何故か変更が適用されません．
+gem install rouge 次に，&amp;quot;_config.yml&amp;quot;でシンタックスハイライトにrougeを指定しておきます．
+highlighter: rouge ここまでは，何てことないのですが，ここからつまずきました． シンタックスハイライトのスタイルは&amp;rdquo;_syntax-highlighting.scss&amp;quot;で設定されているようです． 色などを変更したい場合は，このファイルを修正すれば良いはずですが，何故か変更が適用されません．
 マークダウンでハイライトするときは，ソースコードを``で囲みます． 変換後のhtmlを確認すると，該当箇所は下記のように，クラス属性にhighlighter-rougeが設定されています．
-&amp;lt;code class=&amp;#34;highlighter-rouge&amp;#34;&amp;gt;&amp;lt;/code&amp;gt; 再度，&amp;rdquo;_syntax-highlighting.scss&amp;rdquo;を確認すると，クラス属性はhighlightとして設定されています． そこで，ファイル内のクラス属性をhighlighter-rougeに置換することで，シンタックスハイライトが適用されました． 試行錯誤の末，シンタックスハイライトの適用までこぎつけましたが，この辺り十分に理解できていないかもしれません．</description>
+&amp;lt;code class=&amp;#34;highlighter-rouge&amp;#34;&amp;gt;&amp;lt;/code&amp;gt; 再度，&amp;quot;_syntax-highlighting.scss&amp;quot;を確認すると，クラス属性はhighlightとして設定されています． そこで，ファイル内のクラス属性をhighlighter-rougeに置換することで，シンタックスハイライトが適用されました． 試行錯誤の末，シンタックスハイライトの適用までこぎつけましたが，この辺り十分に理解できていないかもしれません．</description>
     </item>
     
     <item>
@@ -94,8 +94,8 @@ highlighter: rouge ここまでは，何てことないのですが，ここか�
       
       <guid>https://mukai-lab.info/pages/tech/jekyll/2016-02-04-top_link/</guid>
       <description>Jekyllのデフォルトテンプレートでは， トップページのヘッダ部の右にサイトに含まれるページのリンクを自動的に追加してくれます． これはとても便利な機能ではあるのですが，ページ数が増えてくると，特定のページは除いて欲しいというケースが発生します．
-そこで，YAML Front Matterを利用して解決します． まずは，&amp;rdquo;_templates/page&amp;rdquo;に，top_linkという名前の変数を下記のように用意します． これで，新規に作成するページには，top_linkの行が自動的に追加されます．
- トップページに自動的にリンクを追加する場合は，ページを作成した後で，このtop_linkの値を&amp;rdquo;true&amp;rdquo;に設定しておきましょう． 次に，&amp;rdquo;_includes/header.html&amp;rdquo;に下記のようにtop_linkに関する条件文を追加します．
+そこで，YAML Front Matterを利用して解決します． まずは，&amp;quot;_templates/page&amp;quot;に，top_linkという名前の変数を下記のように用意します． これで，新規に作成するページには，top_linkの行が自動的に追加されます．
+ トップページに自動的にリンクを追加する場合は，ページを作成した後で，このtop_linkの値を&amp;quot;true&amp;quot;に設定しておきましょう． 次に，&amp;quot;_includes/header.html&amp;quot;に下記のようにtop_linkに関する条件文を追加します．
  これで，トップページの自動リンクをtop_linkという変数で制御できるようになります．</description>
     </item>
     
