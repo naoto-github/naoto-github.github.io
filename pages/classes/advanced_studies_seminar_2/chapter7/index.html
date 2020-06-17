@@ -26,7 +26,8 @@
   <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
 
   
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
 
   
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -80,15 +81,13 @@
 
 
 
-  <meta property="og:description" content="正規分布  正規分布 は，ガウス分布 とも呼ばれ，平均値に近い値の頻度が高く， 平均値から離れるほど頻度が低くなるという特徴を持った確率分布のことです． 例えば，「身長」や「体重」などの分布が正規分布に従うことが知られており， その他にも様々な社会現象や自然現象に当てはまると考えられています． また，分布が数学的に扱いやすい性質を持っていることから， 統計分析によく用いられ，最も重要な 確率分布 と言っても間違いありません． 今回は，サンプルデータを基に正規分布のグラフを描く事から始め，正規分布を利用して特定の区間の生起確率を求める方法を学びます．
- スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter7としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
- 正規分布のグラフ  気象庁が公開している 愛知県名古屋市の９月の最高気温のデータを対象に考えていきます． このデータは，1891年から2016年までの，愛知県名古屋市の9月の最高気温を表しています．
+  <meta property="og:description" content="正規分布 --  正規分布  正規分布 は，ガウス分布 とも呼ばれ，平均値に近い値の頻度が高く， 平均値から離れるほど頻度が低くなるという特徴を持った確率分布のことです． 例えば，「身長」や「体重」などの分布が正規分布に従うことが知られており， その他にも様々な社会現象や自然現象に当てはまると考えられています． また，分布が数学的に扱いやすい性質を持っていることから， 統計分析によく用いられ，最も重要な 確率分布 と言っても間違いありません． 今回は，サンプルデータを基に正規分布のグラフを描く事から始め，正規分布を利用して特定の区間の生起確率を求める方法を学びます．
+スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter7としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+正規分布のグラフ --  正規分布のグラフ  気象庁が公開している 愛知県名古屋市の９月の最高気温のデータを対象に考えていきます． このデータは，1891年から2016年までの，愛知県名古屋市の9月の最高気温を表しています．
 年,最高気温 1891,28.7 1892,28.1 1893,28.6 1894,28.4 1895,28.3 1896,27.7 1897,27.3 1898,28 1899,25.4 1900,28.9 ...,... 2016,29.3 ファイルをダウンロードしたら，read.csv 関数を利用して， 変数tempにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．
 temp &lt;- read.csv(&#34;temperature.csv&#34;) 次に，hist関数を利用して，最高気温のヒストグラムを表示しましょう． 範囲は25から32までとし，区間は0.5とします． seq関数は，規則性のある数列ベクトルを生成する関数であり， ここでは，25から32まで，0.5ずつ増やした数列（{25.0,25.5,26.0,26.5,&hellip;,32}）を生成します．
 hist(temp[,2],breaks=seq(25,32,0.5)) 
-グラフを確認すると， 区間28-8.5 が最頻値となっていることが分かります． また，この区間から離れるにつれて緩やかに頻度が減り， 全体としては左右対称な 釣鐘型 と呼ばれる分布をしています． しかし，このグラフは，縦軸が頻度を表すヒストグラムであり，確率分布ではありません． そこで，hist 関数の引数にfreq=FALSE を設定し，縦軸を 確率密度 に変更します．
-hist(temp[,2],breaks=seq(25,32,0.5),freq=FALSE) 
-ここでのポイントは，縦軸は 確率 ではなく 確率密度 を表しているということです． 前回の2項分布では，「コインの表が出る回数」は非連続の値をとることから，離散分布であり，縦軸が表す値は 確率 になります． 一方，「気温」は連続的な値をとることから， 連続分布 であり，縦軸が表す値は 確率密度 になります． このため，連続分布において 確率 は，グラフの面積で表されます（面積の和が1になる）． 例えば，区間28-28." />
+グラフを確認すると， 区間28-8.5 が最頻値となっていることが分かります． また，この区間から離れるにつれて緩やかに頻度が減り， 全体としては左右対称な 釣鐘型 と呼ばれる分布をしています． しかし，このグラフは，縦軸が頻度を表すヒストグラムであり，確率分布ではありません． そこで，hist 関数の引数にfreq=FALSE を設定し，縦軸を 確率密度 に変更します．" />
 
 
 
@@ -103,15 +102,13 @@ hist(temp[,2],breaks=seq(25,32,0.5),freq=FALSE)
 
 
 
-  <meta name="twitter:description" content="正規分布  正規分布 は，ガウス分布 とも呼ばれ，平均値に近い値の頻度が高く， 平均値から離れるほど頻度が低くなるという特徴を持った確率分布のことです． 例えば，「身長」や「体重」などの分布が正規分布に従うことが知られており， その他にも様々な社会現象や自然現象に当てはまると考えられています． また，分布が数学的に扱いやすい性質を持っていることから， 統計分析によく用いられ，最も重要な 確率分布 と言っても間違いありません． 今回は，サンプルデータを基に正規分布のグラフを描く事から始め，正規分布を利用して特定の区間の生起確率を求める方法を学びます．
- スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter7としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
- 正規分布のグラフ  気象庁が公開している 愛知県名古屋市の９月の最高気温のデータを対象に考えていきます． このデータは，1891年から2016年までの，愛知県名古屋市の9月の最高気温を表しています．
+  <meta name="twitter:description" content="正規分布 --  正規分布  正規分布 は，ガウス分布 とも呼ばれ，平均値に近い値の頻度が高く， 平均値から離れるほど頻度が低くなるという特徴を持った確率分布のことです． 例えば，「身長」や「体重」などの分布が正規分布に従うことが知られており， その他にも様々な社会現象や自然現象に当てはまると考えられています． また，分布が数学的に扱いやすい性質を持っていることから， 統計分析によく用いられ，最も重要な 確率分布 と言っても間違いありません． 今回は，サンプルデータを基に正規分布のグラフを描く事から始め，正規分布を利用して特定の区間の生起確率を求める方法を学びます．
+スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter7としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+正規分布のグラフ --  正規分布のグラフ  気象庁が公開している 愛知県名古屋市の９月の最高気温のデータを対象に考えていきます． このデータは，1891年から2016年までの，愛知県名古屋市の9月の最高気温を表しています．
 年,最高気温 1891,28.7 1892,28.1 1893,28.6 1894,28.4 1895,28.3 1896,27.7 1897,27.3 1898,28 1899,25.4 1900,28.9 ...,... 2016,29.3 ファイルをダウンロードしたら，read.csv 関数を利用して， 変数tempにデータフレームとして読み込んでおきましょう（作業ディレクトリはデスクトップに変更）．
 temp &lt;- read.csv(&#34;temperature.csv&#34;) 次に，hist関数を利用して，最高気温のヒストグラムを表示しましょう． 範囲は25から32までとし，区間は0.5とします． seq関数は，規則性のある数列ベクトルを生成する関数であり， ここでは，25から32まで，0.5ずつ増やした数列（{25.0,25.5,26.0,26.5,&hellip;,32}）を生成します．
 hist(temp[,2],breaks=seq(25,32,0.5)) 
-グラフを確認すると， 区間28-8.5 が最頻値となっていることが分かります． また，この区間から離れるにつれて緩やかに頻度が減り， 全体としては左右対称な 釣鐘型 と呼ばれる分布をしています． しかし，このグラフは，縦軸が頻度を表すヒストグラムであり，確率分布ではありません． そこで，hist 関数の引数にfreq=FALSE を設定し，縦軸を 確率密度 に変更します．
-hist(temp[,2],breaks=seq(25,32,0.5),freq=FALSE) 
-ここでのポイントは，縦軸は 確率 ではなく 確率密度 を表しているということです． 前回の2項分布では，「コインの表が出る回数」は非連続の値をとることから，離散分布であり，縦軸が表す値は 確率 になります． 一方，「気温」は連続的な値をとることから， 連続分布 であり，縦軸が表す値は 確率密度 になります． このため，連続分布において 確率 は，グラフの面積で表されます（面積の和が1になる）． 例えば，区間28-28." />
+グラフを確認すると， 区間28-8.5 が最頻値となっていることが分かります． また，この区間から離れるにつれて緩やかに頻度が減り， 全体としては左右対称な 釣鐘型 と呼ばれる分布をしています． しかし，このグラフは，縦軸が頻度を表すヒストグラムであり，確率分布ではありません． そこで，hist 関数の引数にfreq=FALSE を設定し，縦軸を 確率密度 に変更します．" />
 
 
 
@@ -186,7 +183,7 @@ hist(temp[,2],breaks=seq(25,32,0.5),freq=FALSE)
     
 
     <p><a href="https://gyazo.com/f8df5bb67952b6c51b0195afaaac78d8"><img src="https://i.gyazo.com/f8df5bb67952b6c51b0195afaaac78d8.png" alt="https://gyazo.com/f8df5bb67952b6c51b0195afaaac78d8"></a></p>
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">正規分布 -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   正規分布
@@ -199,7 +196,7 @@ hist(temp[,2],breaks=seq(25,32,0.5),freq=FALSE)
 また，分布が数学的に扱いやすい性質を持っていることから，
 統計分析によく用いられ，最も重要な <strong>確率分布</strong> と言っても間違いありません．
 今回は，サンプルデータを基に正規分布のグラフを描く事から始め，正規分布を利用して特定の区間の生起確率を求める方法を学びます．</p>
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スクリプトの作成 -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   スクリプトの作成
@@ -210,7 +207,7 @@ hist(temp[,2],breaks=seq(25,32,0.5),freq=FALSE)
 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します．
 このとき，ファイル名は<strong>chapter7</strong>としてください．
 また，ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます．</p>
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">正規分布のグラフ -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   正規分布のグラフ
@@ -259,7 +256,7 @@ hist(temp[,2],breaks=seq(25,32,0.5),freq=FALSE)
 <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> d<span style="color:#f92672">$</span>density[7]
 [1] <span style="color:#ae81ff">0.1984127</span>
 </code></pre></div><p><strong>正規分布</strong> は上記のような釣鐘型の連続グラフを近似する場合に利用されます．</p>
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">正規分布のグラフ -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   正規分布の公式
@@ -267,15 +264,19 @@ hist(temp[,2],breaks=seq(25,32,0.5),freq=FALSE)
 
 <p>それでは正規分布の公式を利用して，先程の最高気温のヒストグラムを近似してみます．
 正規分布の <strong>確率密度</strong> は下記の式で定義されます．</p>
-<!-- raw HTML omitted -->
+<p style="text-align:center">
+    <script type="math/tex">
+    \frac{1}{\sqrt{2 \pi} \sigma} \exp \left(- \frac{(x - \mu)^2}{2 \sigma ^2} \right)
+    </script>
+</p>
 <p>2項分布に比べると，とても難しい式にみえます．
-しかし，正規分布は対象のデータの<strong>平均</strong><!-- raw HTML omitted -->\mu<!-- raw HTML omitted -->と
-<strong>標準偏差</strong><!-- raw HTML omitted -->\sigma<!-- raw HTML omitted -->が分かれば求めることができます．
-そこで，下記のように，<strong>mean</strong> 関数，<strong>sd</strong> 関数で平均<!-- raw HTML omitted -->\mu<!-- raw HTML omitted -->と標準偏差<!-- raw HTML omitted -->\sigma<!-- raw HTML omitted -->を求めます．</p>
+しかし，正規分布は対象のデータの<strong>平均</strong><script type="math/tex">\mu</script>と
+<strong>標準偏差</strong><script type="math/tex">\sigma</script>が分かれば求めることができます．
+そこで，下記のように，<strong>mean</strong> 関数，<strong>sd</strong> 関数で平均<script type="math/tex">\mu</script>と標準偏差<script type="math/tex">\sigma</script>を求めます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">mu <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">mean</span>(temp[,<span style="color:#ae81ff">2</span>])  
 sigma <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sd</span>(temp[,<span style="color:#ae81ff">2</span>])  
-</code></pre></div><p>次に，この平均<!-- raw HTML omitted -->\mu<!-- raw HTML omitted -->と
-標準偏差<!-- raw HTML omitted -->\sigma<!-- raw HTML omitted -->に従う正規分布の確率密度を求めます．
+</code></pre></div><p>次に，この平均<script type="math/tex">\mu</script>と
+標準偏差<script type="math/tex">\sigma</script>に従う正規分布の確率密度を求めます．
 R言語では，<strong>dnorm</strong>関数を用いることで，正規分布の確率密度の計算が可能です．
 例えば，x=28の確率密度を求めるには，下記のように入力します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">dnorm</span>(<span style="color:#ae81ff">28</span>,mu,sigma)
@@ -303,16 +304,16 @@ R言語では，<strong>dnorm</strong>関数を用いることで，正規分布
 正規分布に従うと**14.9%<strong>になるということが分かります．
 下図では，赤色に塗り潰された箇所の面積が，全体に対して</strong>14.9%**ということになります．</p>
 <p><a href="https://gyazo.com/06e4c21bca20482326b0d1e2e6cabeb9"><img src="https://i.gyazo.com/06e4c21bca20482326b0d1e2e6cabeb9.png" alt="https://gyazo.com/06e4c21bca20482326b0d1e2e6cabeb9"></a></p>
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   課題
 </h1>
 
-<p>平均<!-- raw HTML omitted -->\mu=0<!-- raw HTML omitted -->，標準偏差<!-- raw HTML omitted -->\sigma=1<!-- raw HTML omitted -->の
+<p>平均<script type="math/tex">\mu=0</script>，標準偏差<script type="math/tex">\sigma=1</script>の
 正規分布を <strong>標準正規分布</strong> と呼びます．
 xの範囲が-3から3までの，標準正規分布のグラフを描いてください（<strong>curve</strong> 関数で <strong>from=-3,to=3</strong> を引数に設定）．
-また，<!-- raw HTML omitted -->-\sigma<!-- raw HTML omitted -->から<!-- raw HTML omitted -->+\sigma<!-- raw HTML omitted -->までの区間の確率をもとめてください．
+また，<script type="math/tex">-\sigma</script>から<script type="math/tex">+\sigma</script>までの区間の確率をもとめてください．
 ソースは<strong>chapter7.R</strong>に記述し，グラフ（標準正規分布）の画像ファイル，<strong>chapter7.R</strong> を提出すること．</p>
 <p><a href="https://gyazo.com/406faca4b265a41e9d9d1c164e601090"><img src="https://i.gyazo.com/406faca4b265a41e9d9d1c164e601090.png" alt="https://gyazo.com/406faca4b265a41e9d9d1c164e601090"></a></p>
 <h3>参考書籍</h3>
@@ -377,7 +378,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-17 15:52:37.206056 &#43;0900 JST m=&#43;0.116466456">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-17 16:25:13.962595 &#43;0900 JST m=&#43;0.112235808">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

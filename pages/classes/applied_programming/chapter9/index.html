@@ -26,7 +26,8 @@
   <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
 
   
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
 
   
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -80,20 +81,19 @@
 
 
 
-  <meta property="og:description" content="プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project9”を入力します． また，JREは&rdquo;プロジェクト固有のJREを使用&ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+  <meta property="og:description" content="プロジェクトの準備 -- プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project9”を入力します． また，JREは&rdquo;プロジェクト固有のJREを使用&ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 本日取り上げるのJavaFXは，Eclipseの現バージョン（Mars）では， 「使用すべきではない制限されたAPI」に指定されているため， 事前に，JavaFXの利用を許可する必要があります（将来的には指定から取り除かれると思います）． メニューから[ウィンドウ]-[設定]をクリックして，「設定」のダイアログを開きます． さらに，ダイアログから[Java]-[コンパイラー]-[エラー/警告]を選択します． ここで，「使用すべきではないAPI」，「禁止された参照」，「阻止された参照」の３カ所を無視に設定してください．
 
- JavaFXとは  従来，Javaにおける**GUI（Graphical User Interface）**は， AWT（Abstract Window Toolkit）やSwingと呼ばれるGUIツールキットを利用するのが標準でした． 一方，JavaFXは2014年にリリースされたJava 8に統合された新しいGUIツールキットです． AWTやSwingに比べ，より洗練されたGUIアプリケーションの制作が可能です． それでは，このJavaFXを利用したGUIプログラミングを学習していきましょう．
- ウィンドウの表示  JavaFXを利用したGUIアプリケーションを作成するには， javafx.applicationパッケージに含まれるApplicationクラスを継承することから始めます． パッケージとはクラスをグループ分けして管理するためのフォルダのようなものです． パッケージ名も含めたクラス名はjavafx.application.Applicationと表記します．
+JavaFXとは -- JavaFXとは  従来，Javaにおける**GUI（Graphical User Interface）**は， AWT（Abstract Window Toolkit）やSwingと呼ばれるGUIツールキットを利用するのが標準でした． 一方，JavaFXは2014年にリリースされたJava 8に統合された新しいGUIツールキットです． AWTやSwingに比べ，より洗練されたGUIアプリケーションの制作が可能です． それでは，このJavaFXを利用したGUIプログラミングを学習していきましょう．
+ウィンドウの表示 -- ウィンドウの表示  JavaFXを利用したGUIアプリケーションを作成するには， javafx.applicationパッケージに含まれるApplicationクラスを継承することから始めます． パッケージとはクラスをグループ分けして管理するためのフォルダのようなものです． パッケージ名も含めたクラス名はjavafx.application.Applicationと表記します．
 まずは，Applicationクラスを継承したMyApplicationクラスを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します． 次にスーパークラスを設定するために，[参照]ボタンから「スーパークラスの選択」を開き， 一致する項目からjavafx.application.Applicationを選択して，[OK]をクリックします． 最後に[完了]をクリックしましょう．
 
 
 MyApplicationクラスでは，Applicationクラスの抽象メソッドである startメソッドをオーバーライドする必要があります． また，他のパッケージのクラスを利用する場合は，ソースコードの先頭にimportという表記を用いて，import javafx.application.Application;のように記述します（Eclipseが自動的に補完してくれるはず）．
  startメソッドの引数であるStageクラスがウィンドウを表しています． 下記コードを参考にStageクラスのsetTitleメソッド，setWidthメソッド，setHeightメソッドを利用して，タイトルをProject 9，幅を320px，高さを240pxに設定しましょう． また，作成したウィンドウを表示するにはshowメソッドを利用します． プログラムの実行後にウィンドウが表示されることを確認してください．
  
- プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
-  テキストフィールド  テキストフィールドをウィンドウに設置してみましょう． テキストフィールドとは，ユーザが数値や文字列を入力できる1行のフィールドのことです． テキストフィールドや後述するボタンなど，ウィンドウに配置可能な部品をコントロールと呼びます．" />
+ プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．" />
 
 
 
@@ -108,20 +108,19 @@ MyApplicationクラスでは，Applicationクラスの抽象メソッドであ�
 
 
 
-  <meta name="twitter:description" content="プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project9”を入力します． また，JREは&rdquo;プロジェクト固有のJREを使用&ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+  <meta name="twitter:description" content="プロジェクトの準備 -- プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project9”を入力します． また，JREは&rdquo;プロジェクト固有のJREを使用&ldquo;を選択します． 最後に，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
 
 本日取り上げるのJavaFXは，Eclipseの現バージョン（Mars）では， 「使用すべきではない制限されたAPI」に指定されているため， 事前に，JavaFXの利用を許可する必要があります（将来的には指定から取り除かれると思います）． メニューから[ウィンドウ]-[設定]をクリックして，「設定」のダイアログを開きます． さらに，ダイアログから[Java]-[コンパイラー]-[エラー/警告]を選択します． ここで，「使用すべきではないAPI」，「禁止された参照」，「阻止された参照」の３カ所を無視に設定してください．
 
- JavaFXとは  従来，Javaにおける**GUI（Graphical User Interface）**は， AWT（Abstract Window Toolkit）やSwingと呼ばれるGUIツールキットを利用するのが標準でした． 一方，JavaFXは2014年にリリースされたJava 8に統合された新しいGUIツールキットです． AWTやSwingに比べ，より洗練されたGUIアプリケーションの制作が可能です． それでは，このJavaFXを利用したGUIプログラミングを学習していきましょう．
- ウィンドウの表示  JavaFXを利用したGUIアプリケーションを作成するには， javafx.applicationパッケージに含まれるApplicationクラスを継承することから始めます． パッケージとはクラスをグループ分けして管理するためのフォルダのようなものです． パッケージ名も含めたクラス名はjavafx.application.Applicationと表記します．
+JavaFXとは -- JavaFXとは  従来，Javaにおける**GUI（Graphical User Interface）**は， AWT（Abstract Window Toolkit）やSwingと呼ばれるGUIツールキットを利用するのが標準でした． 一方，JavaFXは2014年にリリースされたJava 8に統合された新しいGUIツールキットです． AWTやSwingに比べ，より洗練されたGUIアプリケーションの制作が可能です． それでは，このJavaFXを利用したGUIプログラミングを学習していきましょう．
+ウィンドウの表示 -- ウィンドウの表示  JavaFXを利用したGUIアプリケーションを作成するには， javafx.applicationパッケージに含まれるApplicationクラスを継承することから始めます． パッケージとはクラスをグループ分けして管理するためのフォルダのようなものです． パッケージ名も含めたクラス名はjavafx.application.Applicationと表記します．
 まずは，Applicationクラスを継承したMyApplicationクラスを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します． 次にスーパークラスを設定するために，[参照]ボタンから「スーパークラスの選択」を開き， 一致する項目からjavafx.application.Applicationを選択して，[OK]をクリックします． 最後に[完了]をクリックしましょう．
 
 
 MyApplicationクラスでは，Applicationクラスの抽象メソッドである startメソッドをオーバーライドする必要があります． また，他のパッケージのクラスを利用する場合は，ソースコードの先頭にimportという表記を用いて，import javafx.application.Application;のように記述します（Eclipseが自動的に補完してくれるはず）．
  startメソッドの引数であるStageクラスがウィンドウを表しています． 下記コードを参考にStageクラスのsetTitleメソッド，setWidthメソッド，setHeightメソッドを利用して，タイトルをProject 9，幅を320px，高さを240pxに設定しましょう． また，作成したウィンドウを表示するにはshowメソッドを利用します． プログラムの実行後にウィンドウが表示されることを確認してください．
  
- プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
-  テキストフィールド  テキストフィールドをウィンドウに設置してみましょう． テキストフィールドとは，ユーザが数値や文字列を入力できる1行のフィールドのことです． テキストフィールドや後述するボタンなど，ウィンドウに配置可能な部品をコントロールと呼びます．" />
+ プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．" />
 
 
 
@@ -196,7 +195,7 @@ MyApplicationクラスでは，Applicationクラスの抽象メソッドであ�
     
 
     <p><a href="https://gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d"><img src="https://i.gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d.png" alt="https://gyazo.com/f8e326a614ff2469eabf4a0ce1761d3d"></a></p>
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">プロジェクトの準備 -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   プロジェクトの準備
@@ -208,7 +207,7 @@ MyApplicationクラスでは，Applicationクラスの抽象メソッドであ�
 また，JREは&rdquo;<strong>プロジェクト固有のJREを使用</strong>&ldquo;を選択します．
 最後に，[完了]をクリックしましょう．
 パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．</p>
-<!-- raw HTML omitted -->
+<!--[![https://gyazo.com/755c69e202b26b04368d53b8ae935ae9](https://i.gyazo.com/755c69e202b26b04368d53b8ae935ae9.png)](https://gyazo.com/755c69e202b26b04368d53b8ae935ae9)-->
 <p><a href="https://gyazo.com/d33e69582bbb382b7ce8bd738842e80a"><img src="https://i.gyazo.com/d33e69582bbb382b7ce8bd738842e80a.png" alt="https://gyazo.com/d33e69582bbb382b7ce8bd738842e80a"></a></p>
 <p>本日取り上げるの<strong>JavaFX</strong>は，Eclipseの現バージョン（Mars）では，
 「<strong>使用すべきではない制限されたAPI</strong>」に指定されているため，
@@ -217,7 +216,7 @@ MyApplicationクラスでは，Applicationクラスの抽象メソッドであ�
 さらに，ダイアログから[Java]-[コンパイラー]-[エラー/警告]を選択します．
 ここで，「使用すべきではないAPI」，「禁止された参照」，「阻止された参照」の３カ所を<strong>無視</strong>に設定してください．</p>
 <p><a href="https://gyazo.com/545efc79168eb636288567424290a32a"><img src="https://i.gyazo.com/545efc79168eb636288567424290a32a.png" alt="https://gyazo.com/545efc79168eb636288567424290a32a"></a></p>
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">JavaFXとは -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   JavaFXとは
@@ -228,7 +227,7 @@ MyApplicationクラスでは，Applicationクラスの抽象メソッドであ�
 一方，<a href="http://www.oracle.com/technetwork/jp/java/javafx/overview/index.html">JavaFX</a>は2014年にリリースされたJava 8に統合された新しいGUIツールキットです．
 AWTやSwingに比べ，より洗練されたGUIアプリケーションの制作が可能です．
 それでは，このJavaFXを利用したGUIプログラミングを学習していきましょう．</p>
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">ウィンドウの表示 -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ウィンドウの表示
@@ -256,9 +255,12 @@ AWTやSwingに比べ，より洗練されたGUIアプリケーションの制作
 プログラムの実行後にウィンドウが表示されることを確認してください．</p>
 <script type="application/javascript" src="https://gist.github.com/naoto-github/38daf4808cc3d042e97c.js"></script>
 
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<!--JavaFXはmainメソッドが不要という特徴があるため，
+このプログラムを実行するには**実行の構成**の設定が必要です．
+プロジェクトで右クリックして[実行]-[実行の構成]をクリックして，「実行の構成」を開きます．
+ここで，**メイン・クラス**にMyApplicationを入力します．
+プログラムの実行後にウィンドウが表示されることを確認してください．-->
+<!--[![https://gyazo.com/cdb59291518f232c459d75114220c8fe](https://i.gyazo.com/cdb59291518f232c459d75114220c8fe.png)](https://gyazo.com/cdb59291518f232c459d75114220c8fe)-->
 <p><a href="https://gyazo.com/2f7607d6c08c3bf8615117eac4051ffc"><img src="https://i.gyazo.com/2f7607d6c08c3bf8615117eac4051ffc.png" alt="https://gyazo.com/2f7607d6c08c3bf8615117eac4051ffc"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
@@ -270,7 +272,7 @@ AWTやSwingに比べ，より洗練されたGUIアプリケーションの制作
 プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．</p>
 <script type="application/javascript" src="https://gist.github.com/naoto-github/d88625751b695e660adb.js"></script>
 
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">テキストフィールド -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   テキストフィールド
@@ -303,7 +305,7 @@ tf，vbox，sceneはフィールドとして宣言していることに注意し
 <script type="application/javascript" src="https://gist.github.com/naoto-github/d6280c4b00733aa86c73.js"></script>
 
 <p><a href="https://gyazo.com/7b130c7c5ed47fd4913cfba740fcfaa3"><img src="https://i.gyazo.com/7b130c7c5ed47fd4913cfba740fcfaa3.png" alt="https://gyazo.com/7b130c7c5ed47fd4913cfba740fcfaa3"></a></p>
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">ボタン -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   ボタン
@@ -340,7 +342,7 @@ Buttonクラスの<strong>setOnMouseClicked()メソッド</strong>に対して�
 <script type="application/javascript" src="https://gist.github.com/naoto-github/e48f9fcfd44df9de6310.js"></script>
 
 <p><a href="https://gyazo.com/50da434d6d52f7b704d91fa2f5f695fd"><img src="https://i.gyazo.com/50da434d6d52f7b704d91fa2f5f695fd.gif" alt="https://gyazo.com/50da434d6d52f7b704d91fa2f5f695fd"></a></p>
-<!-- raw HTML omitted -->
+<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
 <h1>
   <img class="head-image" src="/logo/logo.png">
   課題
@@ -412,7 +414,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-17 15:52:37.226923 &#43;0900 JST m=&#43;0.137334573">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-17 16:25:13.980506 &#43;0900 JST m=&#43;0.130147219">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
