@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Vue.jsを利用したクイズアプリ | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="Vue.jsを利用したクイズアプリ" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/vue/vue2/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/75396645aa13f07cf05a90da596c344a.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="ルーティングとはルーティング（Routing） とはVue.jsにおいて， リクエストされたURLに応じて，コンポーネントを選択して表示する仕組みのことです． シングルページアプリケーション（Single Page Application: SPA） と呼ばれる 単一のWebページで動的にコンテンツを切り替える設計方法を実現するために用いられます． Webページの遷移が発生しないため，サーバとの通信を減らし高速なコンテンツの遷移が可能になることに加え， ネイティブアプリ（JavaやSwiftで開発されたアプリ）の代替としても採用されます． 今回はこのルーティングを利用してクイズアプリを実装してみましょう．
+クイズアプリそれでは， クイズアプリ を実装して行きましょう． 下記が完成したソースコードです． 「問題」をクリックするとクイズの問題が表示され， 「解答」をクリックすると対応するクイズの解答が表示されます．
+See the Pen クイズアプリ by Naoto Mukai (@nmukai)on CodePen.CDNのリンク ルーティングを実装するには，vue.js に加え， vue-route.js を導入する必要があります． CodePenのSettingsで下記のようにCDNを追加してください．
+
+ルータの作成 それではルーティングの役割を担う VueRouter クラスのインスタンスをを作成しましょう． このルータには，2つのコンポーネント（component）を登録します． コンポーネントの実体は，変数のQuizBlockとAnsBlockで宣言しています． それぞれのコンポーネントには，pathとnameのプロパティを設定します． pathはリクエストされるURL，nameはルートの名前を表します． また，Vue クラスに router をプロパティとして登録しておきます．
+var QuizBlock = { template: &#34;&lt;div&gt; question &lt;/div&gt;&#34; } var AnsBlock = { template: &#34;&lt;div&gt; answer &lt;/div&gt;&#34; } var router = new VueRouter({ routes: [ { path: &#34;/quiz&#34;, name: &#34;quiz&#34;, component: QuizBlock }, { path: &#34;/answer&#34;, name: &#34;answer&#34;, component: AnsBlock } ] }) new Vue({ el: &#34;#main&#34;, router }) ルーティングを利用するにはrouter-linkタグを利用します． to属性は表示したいコンポーネントのpathを指定します． router-linkタグは，リンクを表すaタグとして表示されます． また，router-viewタグは，コンポーネントを表示する領域です．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Vue.jsを利用したクイズアプリ" />
+
+
+
+  <meta name="twitter:description" content="ルーティングとはルーティング（Routing） とはVue.jsにおいて， リクエストされたURLに応じて，コンポーネントを選択して表示する仕組みのことです． シングルページアプリケーション（Single Page Application: SPA） と呼ばれる 単一のWebページで動的にコンテンツを切り替える設計方法を実現するために用いられます． Webページの遷移が発生しないため，サーバとの通信を減らし高速なコンテンツの遷移が可能になることに加え， ネイティブアプリ（JavaやSwiftで開発されたアプリ）の代替としても採用されます． 今回はこのルーティングを利用してクイズアプリを実装してみましょう．
+クイズアプリそれでは， クイズアプリ を実装して行きましょう． 下記が完成したソースコードです． 「問題」をクリックするとクイズの問題が表示され， 「解答」をクリックすると対応するクイズの解答が表示されます．
+See the Pen クイズアプリ by Naoto Mukai (@nmukai)on CodePen.CDNのリンク ルーティングを実装するには，vue.js に加え， vue-route.js を導入する必要があります． CodePenのSettingsで下記のようにCDNを追加してください．
+
+ルータの作成 それではルーティングの役割を担う VueRouter クラスのインスタンスをを作成しましょう． このルータには，2つのコンポーネント（component）を登録します． コンポーネントの実体は，変数のQuizBlockとAnsBlockで宣言しています． それぞれのコンポーネントには，pathとnameのプロパティを設定します． pathはリクエストされるURL，nameはルートの名前を表します． また，Vue クラスに router をプロパティとして登録しておきます．
+var QuizBlock = { template: &#34;&lt;div&gt; question &lt;/div&gt;&#34; } var AnsBlock = { template: &#34;&lt;div&gt; answer &lt;/div&gt;&#34; } var router = new VueRouter({ routes: [ { path: &#34;/quiz&#34;, name: &#34;quiz&#34;, component: QuizBlock }, { path: &#34;/answer&#34;, name: &#34;answer&#34;, component: AnsBlock } ] }) new Vue({ el: &#34;#main&#34;, router }) ルーティングを利用するにはrouter-linkタグを利用します． to属性は表示したいコンポーネントのpathを指定します． router-linkタグは，リンクを表すaタグとして表示されます． また，router-viewタグは，コンポーネントを表示する領域です．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/75396645aa13f07cf05a90da596c344a.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+  <li>	
+    <a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target="_blank">学内専用</a>
+  </li>  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2020-06-23 15:13:21 &#43;0900 JST">June 23, 2020</time>
+</div>
+
+    <h1 class="post-title">Vue.jsを利用したクイズアプリ</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/75396645aa13f07cf05a90da596c344a"><img src="https://i.gyazo.com/75396645aa13f07cf05a90da596c344a.png" alt="Image from Gyazo"></a></p>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  ルーティングとは
+</h1>
+
+<p><strong>ルーティング（Routing）</strong> とはVue.jsにおいて，
+リクエストされたURLに応じて，コンポーネントを選択して表示する仕組みのことです．
+<strong>シングルページアプリケーション（Single Page Application: SPA）</strong> と呼ばれる
+単一のWebページで動的にコンテンツを切り替える設計方法を実現するために用いられます．
+Webページの遷移が発生しないため，サーバとの通信を減らし高速なコンテンツの遷移が可能になることに加え，
+ネイティブアプリ（JavaやSwiftで開発されたアプリ）の代替としても採用されます．
+今回はこのルーティングを利用してクイズアプリを実装してみましょう．</p>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  クイズアプリ
+</h1>
+
+<p>それでは， <strong>クイズアプリ</strong> を実装して行きましょう．
+下記が完成したソースコードです．
+「問題」をクリックするとクイズの問題が表示され，
+「解答」をクリックすると対応するクイズの解答が表示されます．</p>
+<p class="codepen" data-height="265" data-theme-id="light" data-default-tab="js,result" data-user="nmukai" data-slug-hash="dyGWMVp" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="クイズアプリ">
+  <span>See the Pen <a href="https://codepen.io/nmukai/pen/dyGWMVp">
+  クイズアプリ</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<h3 id="cdnのリンク">CDNのリンク</h3>
+<p>ルーティングを実装するには，<strong>vue.js</strong> に加え， <strong>vue-route.js</strong> を導入する必要があります．
+CodePenのSettingsで下記のようにCDNを追加してください．</p>
+<p><a href="https://gyazo.com/c67339b2947cd22667eb66465b8af2bf"><img src="https://i.gyazo.com/c67339b2947cd22667eb66465b8af2bf.png" alt="Image from Gyazo"></a></p>
+<h3 id="ルータの作成">ルータの作成</h3>
+<p>それではルーティングの役割を担う <strong>VueRouter</strong> クラスのインスタンスをを作成しましょう．
+このルータには，2つのコンポーネント（<code>component</code>）を登録します．
+コンポーネントの実体は，変数の<code>QuizBlock</code>と<code>AnsBlock</code>で宣言しています．
+それぞれのコンポーネントには，<code>path</code>と<code>name</code>のプロパティを設定します．
+<code>path</code>はリクエストされるURL，<code>name</code>はルートの名前を表します．
+また，<strong>Vue</strong> クラスに <code>router</code> をプロパティとして登録しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">QuizBlock</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&lt;div&gt; question &lt;/div&gt;&#34;</span>
+}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">AnsBlock</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&lt;div&gt; answer &lt;/div&gt;&#34;</span>
+}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">router</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">VueRouter</span>({
+  <span style="color:#a6e22e">routes</span><span style="color:#f92672">:</span> [
+    {
+      <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/quiz&#34;</span>,
+      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;quiz&#34;</span>,
+      <span style="color:#a6e22e">component</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">QuizBlock</span>
+    },
+    {
+      <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/answer&#34;</span>,
+      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;answer&#34;</span>,
+      <span style="color:#a6e22e">component</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">AnsBlock</span>
+    }
+  ]
+})
+
+<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#main&#34;</span>,
+  <span style="color:#a6e22e">router</span>
+})
+</code></pre></div><p>ルーティングを利用するには<code>router-link</code>タグを利用します．
+<code>to</code>属性は表示したいコンポーネントの<code>path</code>を指定します．
+<code>router-link</code>タグは，リンクを表す<code>a</code>タグとして表示されます．
+また，<code>router-view</code>タグは，コンポーネントを表示する領域です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main&#34;</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;クイズ&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">router-link</span> <span style="color:#a6e22e">to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/quiz&#34;</span> &gt;問題&lt;/<span style="color:#f92672">router-link</span>&gt;
+  &lt;<span style="color:#f92672">router-link</span> <span style="color:#a6e22e">to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/answer&#34;</span> &gt;解答&lt;/<span style="color:#f92672">router-link</span>&gt;
+  &lt;<span style="color:#f92672">router-view</span> /&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p>ここまで実装すると，下記のようになります．
+問題をクリックすると<code>router-view</code>タグに，<code>QuizBlock</code>のコンポーネントが表示されます．
+同様に解答をクリックすると<code>router-view</code>タグに，<code>AnsBlock</code>のコンポーネントが表示されます．</p>
+<p><a href="https://gyazo.com/c54989f922624368f140ce972d43702e"><img src="https://i.gyazo.com/c54989f922624368f140ce972d43702e.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/e51a7475ae79c79c59e4b8b9dcccfdf4"><img src="https://i.gyazo.com/e51a7475ae79c79c59e4b8b9dcccfdf4.png" alt="Image from Gyazo"></a></p>
+<h3 id="ルートパラメータ">ルートパラメータ</h3>
+<p><code>router-link</code>タグで表示するコンポーネントにデータを渡すには <strong>ルートパラメータ</strong> という方法を用います．
+この方法では，<code>path</code>属性にパラメータ（キーと値のペア）が埋め込まれ，表示されるコンポーネントでデータを受け取ることができます．</p>
+<p>まず，ルータの<code>path</code>プロパティに，パラメータのキーを記述します．
+例えば，<code>quiz</code>という名前のキーであれば，<code>:quiz</code>を最後に追加します．</p>
+<p>次に<code>router-link</code>タグの<code>to</code>属性を修正します．
+<code>v-bind</code>ディレクティブを利用して，<code>to</code>属性にはオブジェクトを指定します．
+このオブジェクトには，<code>name</code>と<code>params</code> を指定します．
+<code>name</code> はルートの名前，<code>params</code>はコンポーネントに渡すパラメータ（キーと値のペア）を指定します．</p>
+<p>コンポーネントでは，ルートパラメータで取得したデータを
+<code>$route.params.[パラメータのキー]</code>で参照できます．
+ここでは，<code>$route.params.quiz</code>を参照し，&ldquo;question&quot;と&quot;answer&quot;の文字列を表示しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">QuizBlock</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&lt;div&gt; {{ $route.params.quiz }} &lt;/div&gt;&#34;</span>
+}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">AnsBlock</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&lt;div&gt; {{ $route.params.quiz }} &lt;/div&gt;&#34;</span>
+}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">router</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">VueRouter</span>({
+  <span style="color:#a6e22e">routes</span><span style="color:#f92672">:</span> [
+    {
+      <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/quiz/:quiz&#34;</span>,
+      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;quiz&#34;</span>,
+      <span style="color:#a6e22e">component</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">QuizBlock</span>
+    },
+    {
+      <span style="color:#a6e22e">path</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;/answer/:quiz&#34;</span>,
+      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;answer&#34;</span>,
+      <span style="color:#a6e22e">component</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">AnsBlock</span>
+    }
+  ]
+})
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main&#34;</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;クイズ&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">router-link</span> <span style="color:#a6e22e">v-bind:to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{name: &#39;quiz&#39;, params: {&#39;quiz&#39;: &#39;question&#39;}}&#34;</span> &gt;問題&lt;/<span style="color:#f92672">router-link</span>&gt;
+  &lt;<span style="color:#f92672">router-link</span> <span style="color:#a6e22e">v-bind:to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{name: &#39;answer&#39;, params: {&#39;quiz&#39;: &#39;answer&#39;}}&#34;</span> &gt;解答&lt;/<span style="color:#f92672">router-link</span>&gt;
+  &lt;<span style="color:#f92672">router-view</span> /&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><h3 id="クイズの作成">クイズの作成</h3>
+<p>最後にクイズの問題と解答を作成しましょう．
+Vueクラスの<code>data</code>プロパティで<code>quizzes</code>に問題と解答のデータを保持させます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#main&#34;</span>,
+  <span style="color:#a6e22e">router</span>,
+  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">quizzes</span><span style="color:#f92672">:</span> [
+      {
+        <span style="color:#a6e22e">question</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Q. ぼうしの中に入っている動物はなに？&#34;</span>,
+        <span style="color:#a6e22e">answer</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;A. うし&#34;</span>
+      },
+      {
+        <span style="color:#a6e22e">question</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Q. 飲むとおこられるジュースってなに？&#34;</span>,
+        <span style="color:#a6e22e">answer</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;A. コーラ&#34;</span>        
+      }
+    ]
+  }
+})
+</code></pre></div><p><code>v-for</code>ディレクティブを利用して，<code>quizzes</code>の要素数だけ繰り返して，問題と解答のリンクを表示します．
+このとき，Mustache構文を利用して，問題番号を表示しています．
+また，ルートパラメータのパラメータとして，文字列ではなくオブジェクト（<code>quizzes</code>の要素）を指定していることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main&#34;</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;クイズ&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">template</span> <span style="color:#a6e22e">v-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(quiz, i) in quizzes&#34;</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;
+      &lt;<span style="color:#f92672">router-link</span> <span style="color:#a6e22e">v-bind:to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{name: &#39;quiz&#39;, params: {&#39;quiz&#39;: quiz}}&#34;</span> &gt;問題{{ i }}&lt;/<span style="color:#f92672">router-link</span>&gt;
+      &lt;<span style="color:#f92672">router-link</span> <span style="color:#a6e22e">v-bind:to</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;{name: &#39;answer&#39;, params: {&#39;quiz&#39;: quiz}}&#34;</span> &gt;解答{{ i }}&lt;/<span style="color:#f92672">router-link</span>&gt;
+    &lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;/<span style="color:#f92672">template</span>&gt;
+
+  &lt;<span style="color:#f92672">router-view</span> /&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p>ルートパラメータはオブジェクトであり，<code>question</code>と<code>answer</code>を参照することができます．
+問題や解答のリンクをクリックすると対応する文字列が表示されれば完成です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">QuizBlock</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&lt;div&gt; {{ $route.params.quiz.question }} &lt;/div&gt;&#34;</span>
+}
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">AnsBlock</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&lt;div&gt; {{ $route.params.quiz.answer }} &lt;/div&gt;&#34;</span>
+}
+</code></pre></div><p><a href="https://gyazo.com/ba8680b591bfc1f7a041646d2e9eb887"><img src="https://i.gyazo.com/ba8680b591bfc1f7a041646d2e9eb887.gif" alt="Image from Gyazo"></a></p>
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07D9BYHMZ&linkId=8cb42abafd17d766d05aa2e617988991&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4297113775&linkId=afde60eced00730030a97756222a645f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07J6FP6NQ&linkId=16d772a04d23febd27088b178985ad2c&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/vue/vue2/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-06-23 16:12:46.7236428 &#43;0900 JST m=&#43;9.426758601">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
