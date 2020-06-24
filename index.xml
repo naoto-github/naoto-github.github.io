@@ -6,10 +6,38 @@
     <description>Recent content on MLAB</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja</language>
-    <lastBuildDate>Tue, 23 Jun 2020 15:13:21 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2020 16:03:21 +0900</lastBuildDate>
     
 	<atom:link href="https://mukai-lab.info/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Vue.jsを利用した地図アプリ（後編）</title>
+      <link>https://mukai-lab.info/pages/tech/vue/vue4/</link>
+      <pubDate>Wed, 24 Jun 2020 16:03:21 +0900</pubDate>
+      
+      <guid>https://mukai-lab.info/pages/tech/vue/vue4/</guid>
+      <description>親子コンポーネントのイベント処理地図アプリに配置した上下左右のボタンのイベント処理を実装します． このアプリは3つのコンポーネントで構成されています． 親コンポーネントは main.vue ，子コンポーネントは vmap.vue と vcontroller.vue です． 親子コンポーネント間でメソッドを呼び出したり，データを受け渡すには幾つか方法がありますが， 子から親 ，親から子 ではその方法が異なります． 今回の地図アプリでは下記の流れでイベント処理を行います．
+ vcontroller.vue（子） のボタンをクリックすると，main.vue（親） のmoveメソッドを呼び出す（子から親）． main.vue（親） のmoveメソッドが呼び出されると，vmap.vue（子） のmoveメソッドを呼び出す（親から子）．  
+子から親のメソッドを実行子コンポーネントから親コンポーネントのメソッドを呼び出すには$emitを利用します．
+main.vue（親） 親コンポーネントで moveメソッドを定義します． このmoveメソッドはアラートを表示するだけです． このメソッドを v-onディレクティブを利用して，vcontorllerタグの属性として指定します． このとき，move-eventという属性名になっていることに注意してください．
+&amp;lt;template&amp;gt; &amp;lt;div&amp;gt; &amp;lt;h1&amp;gt;Vue.jsで地図アプリ&amp;lt;/h1&amp;gt; &amp;lt;vmap&amp;gt;&amp;lt;/vmap&amp;gt; &amp;lt;vcontroller v-on:move-event=&amp;#34;move&amp;#34;&amp;gt;&amp;lt;/vcontroller&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/template&amp;gt; &amp;lt;script&amp;gt; import vmap from &amp;#34;./vmap&amp;#34; import vcontroller from &amp;#34;./vcontroller&amp;#34; export default{ components:{ vmap, vcontroller }, methods:{ move(direction){ // アラートを表示  alert(direction); } } } &amp;lt;/script&amp;gt; vcontroller.</description>
+    </item>
+    
+    <item>
+      <title>Vue.jsを利用した地図アプリ（前編）</title>
+      <link>https://mukai-lab.info/pages/tech/vue/vue3/</link>
+      <pubDate>Wed, 24 Jun 2020 16:03:19 +0900</pubDate>
+      
+      <guid>https://mukai-lab.info/pages/tech/vue/vue3/</guid>
+      <description>Vue CLIとはVue.jsを利用した本格的なアプリ開発のためのツールとしてVue CLIが公開されています． Vue CLIはNode.jsにおいて動作し， テンプレートを利用したプロジェクトの作成や，プラグインによる拡張などが利用可能です． ここではWindows環境を想定して，Vue CLIやNode.jsのインストール方法を示します．
+まずは，Node.jsをインストールしましょう． パッケージマネージャのChocolateyを利用すると簡単です． PowerShellなどを起動して下記のコマンドを入力します．
+&amp;gt; choco install nodejs Node.jsをインストールしたら，次はVue CLIをインストールします． 同様にPowerShellで下記のコマンドを入力します． この-gオプションはグローバルにインストールすることを意味しており， どのディレクトリ（フォルダ）でも利用が可能になります（ローカルのnode_modulesにはインストールされない）．
+&amp;gt; npm install -g @vue/cli Vue CLIをインストールしたら，vueコマンドを実行してみましょう． -Vオプションでバージョンを確認することができます．
+&amp;gt; vue -V @vue/cli 4.4.5 Vue CLIを利用したプロジェクトのビルド（公開可能なファイルに変換する）に失敗する場合， フォルダに下記のコードを記述した vue.config.js というファイルを配置してください（ビルド方法は後述）．
+module.exports = { publicPath: &amp;#39;./&amp;#39; } 単一ファイルコンポーネントとはVue Cliでは，これまでのように，HTMLファイル（.html），JavaScriptファイル（.js），CSSファイル（.css）にコードを記述しません． これらの代わりに，全ての機能をまとめた単一ファイルコンポーネント（.vue）にコードを記述します． 単一ファイルコンポーネントは下記の構成になっています．
+ templateタグはHTMLで記述し，Vueコンポーネントのtemplateオプションとして用いられます． scriptタグはJavaScriptで記述し，Vueコンポーネントとして利用されます（外部から利用可能になる）． styleタグはCSSで記述し，scpedを指定することで，templateタグの内部に限定してスタイルが適用されます．  &amp;lt;template&amp;gt; &amp;lt;/tempalte&amp;gt; &amp;lt;script&amp;gt; export default{ } &amp;lt;/script&amp;gt; &amp;lt;style scoped&amp;gt; &amp;lt;/style&amp;gt; 単一ファイルコンポーネントは階層的に 親コンポーネントから子コンポーネントをインポートすることができます． 例えば，child1.</description>
+    </item>
     
     <item>
       <title>Vue.jsを利用したクイズアプリ</title>
@@ -1302,7 +1330,7 @@ H1要素を独自のショートコード（title-logo）に置換 % sed &amp;#3
       <pubDate>Sat, 04 May 2019 19:13:02 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/tech/</guid>
-      <description>Vue.js  Vue.jsを利用したWebアプリの開発・サイコロアプリ Vue.jsを利用したWebアプリの開発・クイズアプリ  CARLA Simulator  CARLAシミュレータの導入 CARLAでセマンティック・セグメンテーション  Tableau  Tableauでオープンデータを可視化 Tableauで色々なグラフを作成しよう Tableauのダッシュボードを活用しよう Tableauのマップ機能でGoogle Fitを可視化  Emotiv  Emotivで脳波を可視化 Cotexで脳波データを取得 脳波データをフーリエ解析  BITalino  BITalinoで光センサー BITalinoで筋電位センサー  Tobii Eyetracker  Tobii Eye Trackerを利用した視線の認識 OpenCVを利用した視線位置の描画  RoBoHoN  ロボホンの開発環境の構築 トリガを用いた発話 QRコードの読み取り  Unity  NyARToolkit for Unityの導入 NyARToolkit for Unityで画像を表示 NyARToolkit for Unityで3Dモデルを表示 NyARToolkit for Unityで3Dモデルのアニメーション NyARToolkit for UnityでNFTを利用したマーカーの認識 Google VR SDKを利用した360°画像ビューアー Google VR SDKで視線の検知 Tobii Eye Trackerで視線検出 Tobii Eye Trackerでシューティング  Japan Search  ジャパンサーチからSPARQLでデータ取得  Codecomabat  CodeCombatでプログラミング学習  enchant.</description>
+      <description>Vue.js  Vue.jsを利用したWebアプリの開発・サイコロアプリ Vue.jsを利用したWebアプリの開発・クイズアプリ Vue.jsを利用したWebアプリの開発・地図アプリ（前編） Vue.jsを利用したWebアプリの開発・地図アプリ（後編）  CARLA Simulator  CARLAシミュレータの導入 CARLAでセマンティック・セグメンテーション  Tableau  Tableauでオープンデータを可視化 Tableauで色々なグラフを作成しよう Tableauのダッシュボードを活用しよう Tableauのマップ機能でGoogle Fitを可視化  Emotiv  Emotivで脳波を可視化 Cotexで脳波データを取得 脳波データをフーリエ解析  BITalino  BITalinoで光センサー BITalinoで筋電位センサー  Tobii Eyetracker  Tobii Eye Trackerを利用した視線の認識 OpenCVを利用した視線位置の描画  RoBoHoN  ロボホンの開発環境の構築 トリガを用いた発話 QRコードの読み取り  Unity  NyARToolkit for Unityの導入 NyARToolkit for Unityで画像を表示 NyARToolkit for Unityで3Dモデルを表示 NyARToolkit for Unityで3Dモデルのアニメーション NyARToolkit for UnityでNFTを利用したマーカーの認識 Google VR SDKを利用した360°画像ビューアー Google VR SDKで視線の検知 Tobii Eye Trackerで視線検出 Tobii Eye Trackerでシューティング  Japan Search  ジャパンサーチからSPARQLでデータ取得  Codecomabat  CodeCombatでプログラミング学習  enchant.</description>
     </item>
     
     <item>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Vue.jsを利用した地図アプリ（前編） | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="Vue.jsを利用した地図アプリ（前編）" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/vue/vue3/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/c6e9110f35b1ffc04a4c24b5b2aa53d3.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="Vue CLIとはVue.jsを利用した本格的なアプリ開発のためのツールとしてVue CLIが公開されています． Vue CLIはNode.jsにおいて動作し， テンプレートを利用したプロジェクトの作成や，プラグインによる拡張などが利用可能です． ここではWindows環境を想定して，Vue CLIやNode.jsのインストール方法を示します．
+まずは，Node.jsをインストールしましょう． パッケージマネージャのChocolateyを利用すると簡単です． PowerShellなどを起動して下記のコマンドを入力します．
+&gt; choco install nodejs Node.jsをインストールしたら，次はVue CLIをインストールします． 同様にPowerShellで下記のコマンドを入力します． この-gオプションはグローバルにインストールすることを意味しており， どのディレクトリ（フォルダ）でも利用が可能になります（ローカルのnode_modulesにはインストールされない）．
+&gt; npm install -g @vue/cli Vue CLIをインストールしたら，vueコマンドを実行してみましょう． -Vオプションでバージョンを確認することができます．
+&gt; vue -V @vue/cli 4.4.5 Vue CLIを利用したプロジェクトのビルド（公開可能なファイルに変換する）に失敗する場合， フォルダに下記のコードを記述した vue.config.js というファイルを配置してください（ビルド方法は後述）．
+module.exports = { publicPath: &#39;./&#39; } 単一ファイルコンポーネントとはVue Cliでは，これまでのように，HTMLファイル（.html），JavaScriptファイル（.js），CSSファイル（.css）にコードを記述しません． これらの代わりに，全ての機能をまとめた単一ファイルコンポーネント（.vue）にコードを記述します． 単一ファイルコンポーネントは下記の構成になっています．
+ templateタグはHTMLで記述し，Vueコンポーネントのtemplateオプションとして用いられます． scriptタグはJavaScriptで記述し，Vueコンポーネントとして利用されます（外部から利用可能になる）． styleタグはCSSで記述し，scpedを指定することで，templateタグの内部に限定してスタイルが適用されます．  &lt;template&gt; &lt;/tempalte&gt; &lt;script&gt; export default{ } &lt;/script&gt; &lt;style scoped&gt; &lt;/style&gt; 単一ファイルコンポーネントは階層的に 親コンポーネントから子コンポーネントをインポートすることができます． 例えば，child1." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Vue.jsを利用した地図アプリ（前編）" />
+
+
+
+  <meta name="twitter:description" content="Vue CLIとはVue.jsを利用した本格的なアプリ開発のためのツールとしてVue CLIが公開されています． Vue CLIはNode.jsにおいて動作し， テンプレートを利用したプロジェクトの作成や，プラグインによる拡張などが利用可能です． ここではWindows環境を想定して，Vue CLIやNode.jsのインストール方法を示します．
+まずは，Node.jsをインストールしましょう． パッケージマネージャのChocolateyを利用すると簡単です． PowerShellなどを起動して下記のコマンドを入力します．
+&gt; choco install nodejs Node.jsをインストールしたら，次はVue CLIをインストールします． 同様にPowerShellで下記のコマンドを入力します． この-gオプションはグローバルにインストールすることを意味しており， どのディレクトリ（フォルダ）でも利用が可能になります（ローカルのnode_modulesにはインストールされない）．
+&gt; npm install -g @vue/cli Vue CLIをインストールしたら，vueコマンドを実行してみましょう． -Vオプションでバージョンを確認することができます．
+&gt; vue -V @vue/cli 4.4.5 Vue CLIを利用したプロジェクトのビルド（公開可能なファイルに変換する）に失敗する場合， フォルダに下記のコードを記述した vue.config.js というファイルを配置してください（ビルド方法は後述）．
+module.exports = { publicPath: &#39;./&#39; } 単一ファイルコンポーネントとはVue Cliでは，これまでのように，HTMLファイル（.html），JavaScriptファイル（.js），CSSファイル（.css）にコードを記述しません． これらの代わりに，全ての機能をまとめた単一ファイルコンポーネント（.vue）にコードを記述します． 単一ファイルコンポーネントは下記の構成になっています．
+ templateタグはHTMLで記述し，Vueコンポーネントのtemplateオプションとして用いられます． scriptタグはJavaScriptで記述し，Vueコンポーネントとして利用されます（外部から利用可能になる）． styleタグはCSSで記述し，scpedを指定することで，templateタグの内部に限定してスタイルが適用されます．  &lt;template&gt; &lt;/tempalte&gt; &lt;script&gt; export default{ } &lt;/script&gt; &lt;style scoped&gt; &lt;/style&gt; 単一ファイルコンポーネントは階層的に 親コンポーネントから子コンポーネントをインポートすることができます． 例えば，child1." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/c6e9110f35b1ffc04a4c24b5b2aa53d3.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+  <li>	
+    <a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target="_blank">学内専用</a>
+  </li>  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2020-06-24 16:03:19 &#43;0900 JST">June 24, 2020</time>
+</div>
+
+    <h1 class="post-title">Vue.jsを利用した地図アプリ（前編）</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/c6e9110f35b1ffc04a4c24b5b2aa53d3"><img src="https://i.gyazo.com/c6e9110f35b1ffc04a4c24b5b2aa53d3.png" alt="Image from Gyazo"></a></p>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Vue CLIとは
+</h1>
+
+<p>Vue.jsを利用した本格的なアプリ開発のためのツールとして<a href="https://cli.vuejs.org/">Vue CLI</a>が公開されています．
+Vue CLIは<a href="https://nodejs.org/ja/">Node.js</a>において動作し，
+テンプレートを利用したプロジェクトの作成や，プラグインによる拡張などが利用可能です．
+ここではWindows環境を想定して，Vue CLIやNode.jsのインストール方法を示します．</p>
+<p>まずは，Node.jsをインストールしましょう．
+パッケージマネージャの<a href="https://chocolatey.org/">Chocolatey</a>を利用すると簡単です．
+PowerShellなどを起動して下記のコマンドを入力します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; choco install nodejs
+</code></pre></div><p>Node.jsをインストールしたら，次はVue CLIをインストールします．
+同様にPowerShellで下記のコマンドを入力します．
+この<code>-g</code>オプションはグローバルにインストールすることを意味しており，
+どのディレクトリ（フォルダ）でも利用が可能になります（ローカルの<code>node_modules</code>にはインストールされない）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; npm install -g @vue/cli
+</code></pre></div><p>Vue CLIをインストールしたら，<code>vue</code>コマンドを実行してみましょう．
+<code>-V</code>オプションでバージョンを確認することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; vue -V
+@vue/cli 4.4.5
+</code></pre></div><p>Vue CLIを利用したプロジェクトのビルド（公開可能なファイルに変換する）に失敗する場合，
+フォルダに下記のコードを記述した <strong>vue.config.js</strong> というファイルを配置してください（ビルド方法は後述）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">module.exports = {
+    publicPath: &#39;./&#39;
+}
+</code></pre></div><h1>
+  <img class="head-image" src="/logo/logo.png">
+  単一ファイルコンポーネントとは
+</h1>
+
+<p>Vue Cliでは，これまでのように，HTMLファイル（.html），JavaScriptファイル（.js），CSSファイル（.css）にコードを記述しません．
+これらの代わりに，全ての機能をまとめた単一ファイルコンポーネント（.vue）にコードを記述します．
+単一ファイルコンポーネントは下記の構成になっています．</p>
+<ul>
+<li><code>template</code>タグはHTMLで記述し，Vueコンポーネントのtemplateオプションとして用いられます．</li>
+<li><code>script</code>タグはJavaScriptで記述し，Vueコンポーネントとして利用されます（外部から利用可能になる）．</li>
+<li><code>style</code>タグはCSSで記述し，<code>scped</code>を指定することで，templateタグの内部に限定してスタイルが適用されます．</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">template</span>&gt;
+&lt;/<span style="color:#f92672">tempalte</span>&gt;
+
+&lt;<span style="color:#f92672">script</span>&gt;
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
+}
+&lt;/<span style="color:#f92672">script</span>&gt;
+
+&lt;<span style="color:#f92672">style</span> <span style="color:#a6e22e">scoped</span>&gt;
+&lt;/<span style="color:#f92672">style</span>&gt;
+</code></pre></div><p>単一ファイルコンポーネントは階層的に
+親コンポーネントから子コンポーネントをインポートすることができます．
+例えば，child1.vueとchild2.vueを子コンポーネントとして，
+親コンポーネントからインポートするには下記のように記述します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">child1</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./child1&#34;</span>
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">child2</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./child2&#34;</span>
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
+  <span style="color:#a6e22e">components</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">child1</span>,
+    <span style="color:#a6e22e">child2</span>
+  }
+}
+</code></pre></div><h1>
+  <img class="head-image" src="/logo/logo.png">
+  地図アプリのデザイン
+</h1>
+
+<p><a href="https://leafletjs.com/">Leeflet</a>を利用して，地図アプリを実装してみましょう．
+完成したソースは下記URLで公開していますので参考にしてください．</p>
+<p><a href="https://github.com/naoto-github/SampleMapVue"><i class="fas fa-external-link-alt"></i> https://github.com/naoto-github/SampleMapVue</a></p>
+<p>作成するファイルは <strong>main.vue</strong> ，<strong>vmap.vue</strong> ， <strong>vcontroller.vue</strong> の3つです．
+main.vueは親コンポーネント，vmap.vueとvcontroller.vueは子コンポーネントの関係です．
+vmap.vueはLeeflet地図を表示するために用いられ，vcontroller.vueは地図を操作するためのコントローラとして用います．
+今回は地図とコントローラの表示に取り組み，次回はコントローラの操作を実装することにします．</p>
+<p>まずは，Leefletをインストールします．
+LeefletはCDNでも利用可能ですが，ここではNode.jsのモジュールとしてインストールします（<code>node_modules</code>にインストールされます）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&gt; npm install leaflet
+</code></pre></div><p>コントローラのアイコンとして<a href="https://fontawesome.com/">Fontawesome</a>を利用します．
+Fontawesomeも，Leefletと同様に，Node.jsのモジュールとしてインストールします．
+インストール方法の<a href="https://zukucode.com/2018/11/vuejs-fontawesome.html">「Vue.js FontAwesome5を導入する(zukucode)」</a>に詳しく記載されていますので参考にしましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&gt; npm install @fortawesome/fontawesome-svg-core @fortawesome/vue-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/free-regular-svg-icons @fortawesome/free-brands-svg-icons
+</code></pre></div><h2 id="mainvue">main.vue</h2>
+<p>親コンポーネントの <strong>main.vue</strong> です．
+<code>components</code>プロパティで，子コンポーネントの<code>vmap</code>と<code>vcontroller</code>を導入しています．
+これらの子コンポーネントは<code>template</code>タグで配置されています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">template</span>&gt;
+  &lt;<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">h1</span>&gt;<span style="color:#a6e22e">Vue</span>.<span style="color:#a6e22e">jsで地図アプリ</span>&lt;/<span style="color:#f92672">h1</span>&gt;
+    &lt;<span style="color:#f92672">vmap</span>&gt;&lt;/<span style="color:#f92672">vmap</span>&gt;
+    &lt;<span style="color:#f92672">vcontroller</span>&gt;&lt;/<span style="color:#f92672">vcontroller</span>&gt;
+  &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">template</span>&gt;
+
+&lt;<span style="color:#f92672">script</span>&gt;
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">vmap</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./vmap&#34;</span>
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">vcontroller</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./vcontroller&#34;</span>
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
+  <span style="color:#a6e22e">components</span><span style="color:#f92672">:</span>{
+    <span style="color:#a6e22e">vmap</span>,
+    <span style="color:#a6e22e">vcontroller</span>
+  }
+}
+&lt;/<span style="color:#f92672">script</span>&gt;
+
+&lt;<span style="color:#f92672">style</span> <span style="color:#a6e22e">scoped</span>&gt;
+<span style="color:#a6e22e">div</span>{
+  <span style="color:#a6e22e">width</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">640</span><span style="color:#a6e22e">px</span>;
+}
+<span style="color:#a6e22e">h1</span>{
+  <span style="color:#a6e22e">text</span><span style="color:#f92672">-</span><span style="color:#a6e22e">align</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">center</span>;
+}
+&lt;/<span style="color:#f92672">style</span>&gt;
+</code></pre></div><h2 id="vmapvue">vmap.vue</h2>
+<p>子コンポーネントの <strong>vmap.vue</strong> です．
+Leefletを利用するために，<code>import</code>でleaflet.jsとleaflet.cssを読み込んでいます．
+地図の緯度経度（<code>latlng</code>）と倍率（<code>scale</code>）は，それぞれ<code>data</code>プロパティで宣言しています．
+この緯度経度と倍率を用いて，オープンストリートマップの地図を表示しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">template</span>&gt;
+  &lt;<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mymap&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+  &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">template</span>&gt;
+
+&lt;<span style="color:#f92672">script</span>&gt;
+
+<span style="color:#75715e">// Leeflet
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">L</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;leaflet&#39;</span>;
+<span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;leaflet/dist/leaflet.css&#34;</span>;
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
+  <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;vmap&#34;</span>,
+  <span style="color:#a6e22e">mounted</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(){
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">L</span>.<span style="color:#a6e22e">map</span>(<span style="color:#e6db74">&#34;mymap&#34;</span>);
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">setView</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">scale</span>);
+    <span style="color:#a6e22e">L</span>.<span style="color:#a6e22e">tileLayer</span>(<span style="color:#e6db74">&#39;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&#39;</span>, {
+      <span style="color:#a6e22e">attribution</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&amp;copy; &lt;a href=&#34;https://www.openstreetmap.org/copyright&#34;&gt;OpenStreetMap&lt;/a&gt; contributors&#39;</span>
+    }).<span style="color:#a6e22e">addTo</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>);
+  },
+  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(){
+    <span style="color:#66d9ef">return</span>{
+      <span style="color:#a6e22e">latlng</span><span style="color:#f92672">:</span> [<span style="color:#ae81ff">35.159399</span>, <span style="color:#ae81ff">136.987255</span>],
+      <span style="color:#a6e22e">scale</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">16</span>
+    }
+  }
+}
+&lt;/<span style="color:#f92672">script</span>&gt;
+
+&lt;<span style="color:#f92672">style</span> <span style="color:#a6e22e">scoped</span>&gt;
+<span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">mymap</span>{
+  <span style="color:#a6e22e">width</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">480</span><span style="color:#a6e22e">px</span>;
+  <span style="color:#a6e22e">height</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">480</span><span style="color:#a6e22e">px</span>;
+  <span style="color:#a6e22e">margin</span><span style="color:#f92672">-</span><span style="color:#a6e22e">left</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">auto</span>;
+  <span style="color:#a6e22e">margin</span><span style="color:#f92672">-</span><span style="color:#a6e22e">right</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">auto</span>;
+}
+&lt;/<span style="color:#f92672">style</span>&gt;
+</code></pre></div><h2 id="vcontrollervue">vcontroller.vue</h2>
+<p>子コンポーネントの <strong>vcontroller.vue</strong> です．
+Fontawesomeを利用するために，<code>import</code>で必要なライブラリを導入しています．
+また，アイコンは<code>v-fa</code>タグを記述することで利用することができます．
+例えば下記のコードは左向きの矢印のアイコン<i class="fas fa-long-arrow-alt-left"></i>を表示します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">v</span><span style="color:#f92672">-</span><span style="color:#a6e22e">fa</span> <span style="color:#66d9ef">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pad&#34;</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;long-arrow-alt-left&#34;</span> <span style="color:#f92672">/&gt;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">template</span>&gt;
+  &lt;<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mycontroller&#34;</span>&gt;
+      &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mypad&#34;</span>&gt;
+        &lt;<span style="color:#f92672">v-fa</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pad&#34;</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;long-arrow-alt-left&#34;</span> /&gt;
+        &lt;<span style="color:#f92672">v-fa</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pad&#34;</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;long-arrow-alt-up&#34;</span> /&gt;
+        &lt;<span style="color:#f92672">v-fa</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pad&#34;</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;long-arrow-alt-right&#34;</span> /&gt;
+        &lt;<span style="color:#f92672">v-fa</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pad&#34;</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;long-arrow-alt-down&#34;</span> /&gt;
+      &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+  &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">template</span>&gt;
+
+&lt;<span style="color:#f92672">script</span>&gt;
+
+<span style="color:#75715e">// Fontawesome
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">Vue</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;vue&#34;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">library</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;@fortawesome/fontawesome-svg-core&#39;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">fas</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;@fortawesome/free-solid-svg-icons&#39;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">far</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;@fortawesome/free-regular-svg-icons&#39;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">fab</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;@fortawesome/free-brands-svg-icons&#39;</span>;
+<span style="color:#66d9ef">import</span> { <span style="color:#a6e22e">FontAwesomeIcon</span> } <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;@fortawesome/vue-fontawesome&#39;</span>;
+<span style="color:#a6e22e">library</span>.<span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">fas</span>, <span style="color:#a6e22e">far</span>, <span style="color:#a6e22e">fab</span>);
+<span style="color:#a6e22e">Vue</span>.<span style="color:#a6e22e">component</span>(<span style="color:#e6db74">&#39;v-fa&#39;</span>, <span style="color:#a6e22e">FontAwesomeIcon</span>);
+
+<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
+  <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;vcontroller&#34;</span>
+}
+&lt;/<span style="color:#f92672">script</span>&gt;
+
+&lt;<span style="color:#f92672">style</span> <span style="color:#a6e22e">scoped</span>&gt;
+<span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">mycontroller</span>{
+  <span style="color:#a6e22e">width</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">480</span><span style="color:#a6e22e">px</span>;
+  <span style="color:#a6e22e">margin</span><span style="color:#f92672">-</span><span style="color:#a6e22e">top</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">20</span><span style="color:#a6e22e">px</span>;
+  <span style="color:#a6e22e">margin</span><span style="color:#f92672">-</span><span style="color:#a6e22e">left</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">auto</span>;
+  <span style="color:#a6e22e">margin</span><span style="color:#f92672">-</span><span style="color:#a6e22e">right</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">auto</span>;
+}
+<span style="color:#960050;background-color:#1e0010">#</span><span style="color:#a6e22e">mypad</span>{
+  <span style="color:#a6e22e">display</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">flex</span>;
+  <span style="color:#a6e22e">justify</span><span style="color:#f92672">-</span><span style="color:#a6e22e">content</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">space</span><span style="color:#f92672">-</span><span style="color:#a6e22e">around</span>;
+}
+.<span style="color:#a6e22e">pad</span>{
+  <span style="color:#a6e22e">display</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">block</span>;
+  <span style="color:#a6e22e">width</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">30</span><span style="color:#a6e22e">px</span>;
+  <span style="color:#a6e22e">height</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">30</span><span style="color:#a6e22e">px</span>;
+  <span style="color:#a6e22e">border</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span><span style="color:#a6e22e">px</span> <span style="color:#a6e22e">solid</span> <span style="color:#a6e22e">black</span>;
+}
+&lt;/<span style="color:#f92672">style</span>&gt;
+</code></pre></div><h2 id="ローカルサーバでの実行とビルド">ローカルサーバでの実行とビルド</h2>
+<p>それではローカルサーバで実行してみましょう．
+ローカルサーバで実行するには，<code>vue serve</code>コマンドで
+親コンポーネントの <strong>main.vue</strong> を指定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&gt; vue serve main.vue
+</code></pre></div><p>また，公開用にビルドするには，<code>vue build</code>コマンドを用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&gt; vue build main.vue
+</code></pre></div><p>下記のように表示されれば完成です．
+次回，コントローラのイベント処理を実装します．</p>
+<p><a href="https://gyazo.com/69318b7a5ef0156689e2ddfde4824496"><img src="https://i.gyazo.com/69318b7a5ef0156689e2ddfde4824496.png" alt="Image from Gyazo"></a></p>
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07D9BYHMZ&linkId=8cb42abafd17d766d05aa2e617988991&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4297113775&linkId=afde60eced00730030a97756222a645f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07J6FP6NQ&linkId=16d772a04d23febd27088b178985ad2c&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/vue/vue3/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-06-24 18:32:28.8362099 &#43;0900 JST m=&#43;9.941420501">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
