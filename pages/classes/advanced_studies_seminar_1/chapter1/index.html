@@ -81,7 +81,20 @@
 
 
 
-  <meta property="og:description" content=" ニューラルネットワークとは  " />
+  <meta property="og:description" content="ニューラルネットワークとは  ニューラルネットワーク（Neural Netowork） とは， 生物の脳を数理的に表現したモデルのことであり， 1943年に外科医であったウォーレン・マカロック（Warren McCulloch）氏と， 数学者であったウォルター・ピッツ（Walter Pitts）氏が考案した形式ニューロンが起源とされています．
+1940年代~60年代の第1次AIブームに大きく注目され， 単純パーセプトロン と呼ばれるニューラルネットワークが提案されます． その後，1980年代の第2次AIブームにおいて， ニューラルネットワークの学習アルゴリズムである バックプロパゲーション（誤差逆伝播法） が確立し， 多層パーセプトロン へ発展します．
+近年は第3次AIブームであり，ニューラルネットワークをさらに多層化させた ディープラーニング（深層学習） が提案され，画像認識などの分野で高い性能を示しています． 今後もディープラーニングは進化し，自動運転やロボット技術に応用され， 我々の生活を支える必要不可欠な技術になると予想されます． 本授業では，ニューラルネットワークの歴史を追いながら， Python（Jupyter Notebook） で実装することで，その技術を理解することを目標とします． また，ディープラーニングの実装には，Pytorch を採用します．
+ Jupyter Notebookのインストール  Jupyetr Notebookをインストールします． 過去に人工知能などの授業で既にインストール済みの場合はスキップして構いません．
+Python　のインストール・パッケージをダウンロードしましよう． このとき，Pythonのバージョンは3.xを選択してください． インストールを始める前に，ファイルをインストールするためのフォルダを作成します． 大学で環境を構築する場合は，Hドライブ に，MyPython という名前でフォルダを作成してください．
+それでは，インストーラを実行しましょう． Customize installation を選択し， パッケージ管理システムの pip が同時にインストールされることを確認してください．
+
+
+このとき，インストールするフォルダは，上記で作成したH:\MyPythonとすることに注意してください．
+
+インストールが終了すると，下記のダイアログが表示されます． Close を選択して，ダイアログを閉じてください．
+
+次にインストールしたフォルダに移動し， シフトを押しながら右クリックして PowerShell を起動し，下記のコマンドを実行します． PowerShellは，マイクロソフト製のコマンドラインインターフェイスです． これで，Jupyter Notebookのインストールは完了です．
+&gt; .\Scripts\pip install jupyter &gt; ." />
 
 
 
@@ -96,7 +109,20 @@
 
 
 
-  <meta name="twitter:description" content=" ニューラルネットワークとは  " />
+  <meta name="twitter:description" content="ニューラルネットワークとは  ニューラルネットワーク（Neural Netowork） とは， 生物の脳を数理的に表現したモデルのことであり， 1943年に外科医であったウォーレン・マカロック（Warren McCulloch）氏と， 数学者であったウォルター・ピッツ（Walter Pitts）氏が考案した形式ニューロンが起源とされています．
+1940年代~60年代の第1次AIブームに大きく注目され， 単純パーセプトロン と呼ばれるニューラルネットワークが提案されます． その後，1980年代の第2次AIブームにおいて， ニューラルネットワークの学習アルゴリズムである バックプロパゲーション（誤差逆伝播法） が確立し， 多層パーセプトロン へ発展します．
+近年は第3次AIブームであり，ニューラルネットワークをさらに多層化させた ディープラーニング（深層学習） が提案され，画像認識などの分野で高い性能を示しています． 今後もディープラーニングは進化し，自動運転やロボット技術に応用され， 我々の生活を支える必要不可欠な技術になると予想されます． 本授業では，ニューラルネットワークの歴史を追いながら， Python（Jupyter Notebook） で実装することで，その技術を理解することを目標とします． また，ディープラーニングの実装には，Pytorch を採用します．
+ Jupyter Notebookのインストール  Jupyetr Notebookをインストールします． 過去に人工知能などの授業で既にインストール済みの場合はスキップして構いません．
+Python　のインストール・パッケージをダウンロードしましよう． このとき，Pythonのバージョンは3.xを選択してください． インストールを始める前に，ファイルをインストールするためのフォルダを作成します． 大学で環境を構築する場合は，Hドライブ に，MyPython という名前でフォルダを作成してください．
+それでは，インストーラを実行しましょう． Customize installation を選択し， パッケージ管理システムの pip が同時にインストールされることを確認してください．
+
+
+このとき，インストールするフォルダは，上記で作成したH:\MyPythonとすることに注意してください．
+
+インストールが終了すると，下記のダイアログが表示されます． Close を選択して，ダイアログを閉じてください．
+
+次にインストールしたフォルダに移動し， シフトを押しながら右クリックして PowerShell を起動し，下記のコマンドを実行します． PowerShellは，マイクロソフト製のコマンドラインインターフェイスです． これで，Jupyter Notebookのインストールは完了です．
+&gt; .\Scripts\pip install jupyter &gt; ." />
 
 
 
@@ -179,6 +205,271 @@
   ニューラルネットワークとは
 </h1>
 
+<p><strong>ニューラルネットワーク（Neural Netowork）</strong> とは，
+生物の脳を数理的に表現したモデルのことであり，
+1943年に外科医であったウォーレン・マカロック（Warren McCulloch）氏と，
+数学者であったウォルター・ピッツ（Walter Pitts）氏が考案した形式ニューロンが起源とされています．</p>
+<p>1940年代~60年代の第1次AIブームに大きく注目され，
+<strong>単純パーセプトロン</strong> と呼ばれるニューラルネットワークが提案されます．
+その後，1980年代の第2次AIブームにおいて，
+ニューラルネットワークの学習アルゴリズムである <strong>バックプロパゲーション（誤差逆伝播法）</strong> が確立し，
+<strong>多層パーセプトロン</strong> へ発展します．</p>
+<p>近年は第3次AIブームであり，ニューラルネットワークをさらに多層化させた
+<strong>ディープラーニング（深層学習）</strong> が提案され，画像認識などの分野で高い性能を示しています．
+今後もディープラーニングは進化し，自動運転やロボット技術に応用され，
+我々の生活を支える必要不可欠な技術になると予想されます．
+本授業では，ニューラルネットワークの歴史を追いながら，
+<a href="https://jupyter.org/">Python（Jupyter Notebook）</a> で実装することで，その技術を理解することを目標とします．
+また，ディープラーニングの実装には，<a href="https://pytorch.org/">Pytorch</a> を採用します．</p>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Jupyter Notebookのインストール
+</h1>
+
+<p>Jupyetr Notebookをインストールします．
+過去に人工知能などの授業で既にインストール済みの場合はスキップして構いません．</p>
+<p><a href="https://www.python.org">Python</a>　のインストール・パッケージをダウンロードしましよう．
+このとき，Pythonのバージョンは<strong>3.x</strong>を選択してください．
+インストールを始める前に，ファイルをインストールするためのフォルダを作成します．
+大学で環境を構築する場合は，<strong>Hドライブ</strong> に，<strong>MyPython</strong> という名前でフォルダを作成してください．</p>
+<p>それでは，インストーラを実行しましょう．
+<strong>Customize installation</strong> を選択し，
+パッケージ管理システムの <strong>pip</strong> が同時にインストールされることを確認してください．</p>
+<p><a href="https://gyazo.com/e1fc572f43e771cb3901a76e927a84bd"><img src="https://i.gyazo.com/e1fc572f43e771cb3901a76e927a84bd.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/294b8b48f53df91303d1c26bfaf7ada8"><img src="https://i.gyazo.com/294b8b48f53df91303d1c26bfaf7ada8.png" alt="Image from Gyazo"></a></p>
+<p>このとき，インストールするフォルダは，上記で作成した<strong>H:\MyPython</strong>とすることに注意してください．</p>
+<p><a href="https://gyazo.com/d59ad4a8259cd08233c53a23fce576b2"><img src="https://i.gyazo.com/d59ad4a8259cd08233c53a23fce576b2.png" alt="Image from Gyazo"></a></p>
+<p>インストールが終了すると，下記のダイアログが表示されます．
+<strong>Close</strong> を選択して，ダイアログを閉じてください．</p>
+<p><a href="https://gyazo.com/ac9e747d8ee0cdeab324b5a0b1cabd43"><img src="https://i.gyazo.com/ac9e747d8ee0cdeab324b5a0b1cabd43.png" alt="Image from Gyazo"></a></p>
+<p>次にインストールしたフォルダに移動し，
+シフトを押しながら右クリックして <strong>PowerShell</strong> を起動し，下記のコマンドを実行します．
+PowerShellは，マイクロソフト製のコマンドラインインターフェイスです．
+これで，Jupyter Notebookのインストールは完了です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&gt; .\Scripts\pip install jupyter
+&gt; .\Scripts\pip install &#34;ipython[notebook]&#34;
+</code></pre></div><p>最後に，PowerShellから下記のコマンドを実行し，Jupyter Notebookを起動してください（エクスプローラでダブルクリックでもOK）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&gt; .\Scripts\jupyter-notebook.exe
+</code></pre></div><h1>
+  <img class="head-image" src="/logo/logo.png">
+  PyTorchのインストール
+</h1>
+
+<p>ディープラーニングのフレームワークとして<a href="https://pytorch.org/">Pytorch</a> を採用します．
+PyTorchはFacebookが中心になり開発されたオープンソースのソフトウェアです．
+Pythonで実装が可能であり，下記の特徴があります．</p>
+<ul>
+<li>強力な <strong>テンソル（多次元配列）演算</strong> が可能</li>
+<li>テンソルを処理する計算グラフの <strong>自動微分</strong> が可能</li>
+</ul>
+<p>ここでは，関連するライブラリもまとめてインストールしておきましょう．</p>
+<ul>
+<li><a href="https://pytorch.org/">PyTorch</a>（ディープラーニングのフレームワーク）</li>
+<li><a href="http://www.pythonware.com/products/pil/">Pillow</a>（画像処理ライブラリ）</li>
+<li><a href="https://matplotlib.org/">Matplotlib</a>（グラフ描画ライブラリ）</li>
+<li><a href="https://pandas.pydata.org/">Pandas</a>（データ解析ライブラリ）</li>
+<li><a href="https://scikit-learn.org/stable/">scikit-learn</a>（機械学習ライブラリ）</li>
+</ul>
+<p>シフトを押しながら右クリックして <strong>PowerShell</strong> を起動し，下記のコマンドを実行します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">&gt; .\Scripts\pip install torch torchvision
+&gt; .\Scripts\pip install pillow
+&gt; .\Scripts\pip install matplotlib
+&gt; .\Scripts\pip install pandas
+&gt; .\Scripts\pip install scikit-learn
+</code></pre></div><h1>
+  <img class="head-image" src="/logo/logo.png">
+  Jupyter Notebookの基本
+</h1>
+
+<h2 id="ノートブックの作成">ノートブックの作成</h2>
+<p>Jupyter Notebookuを起動したら，<strong>New</strong> ボタンをクリックして，新規にノートブックを作成しましょう．</p>
+<p><a href="https://gyazo.com/2956baf444b9e3bb21d6f145033f5ef5"><img src="https://i.gyazo.com/2956baf444b9e3bb21d6f145033f5ef5.png" alt="Image from Gyazo"></a></p>
+<p>ノートブックを作成したら，ノートブックのタイトルを設定します．
+<strong>Untitled</strong> をクリックし，タイトル <strong>NN-1</strong> を入力します．</p>
+<p><a href="https://gyazo.com/314797c278cf43d8296218f013599795"><img src="https://i.gyazo.com/314797c278cf43d8296218f013599795.png" alt="Image from Gyazo"></a></p>
+<h2 id="ライブラリのインポート">ライブラリのインポート</h2>
+<p>インストールしたPyTorchをインポートしてみましょう．
+下記のコードを入力したら，<strong>Run</strong> ボタンをクリックします（Shift + EnterでもOK）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+</code></pre></div><h2 id="テンソルの演算">テンソルの演算</h2>
+<p>1次元のテンソルを作成してみます．</p>
+<p>$$
+\left(
+\begin{array}{ccc}
+0 &amp; 1 &amp; 2
+\end{array}
+\right)\<br>
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
+tensor([0, 1, 2])
+</code></pre></div><p>2次元のテンソルを作成してみます．</p>
+<p>$$
+\left(
+\begin{array}{ccc}
+0 &amp; 1 &amp; 2 \\\<br>
+3 &amp; 4 &amp; 5<br>
+\end{array}
+\right)\<br>
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
+tensor([[0, 1, 2],
+        [3, 4, 5]])
+</code></pre></div><p>テンソルの軸を<code>transpose()</code>で入れ替えます（行列の転置）．</p>
+<p>$$
+\left(
+\begin{array}{ccc}
+0 &amp; 1 &amp; 2 \\\<br>
+3 &amp; 4 &amp; 5<br>
+\end{array}
+\right)^T =
+\left(
+\begin{array}{ccc}
+0 &amp; 3 \\\<br>
+1 &amp; 4 \\\<br>
+2 &amp; 5
+\end{array}
+\right)
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
+tensor([[0, 3],
+        [1, 4],
+        [2, 5]])
+</code></pre></div><p>テンソルの加算を<code>add()</code>で求めます．</p>
+<p>$$
+\left(
+\begin{array}{ccc}
+0 &amp; 1 &amp; 2 \\\<br>
+3 &amp; 4 &amp; 5
+\end{array}
+\right) + 1 = \left(
+\begin{array}{ccc}
+1 &amp; 2 &amp; 3 \\\<br>
+4 &amp; 5 &amp; 6
+\end{array}
+\right)\<br>
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">torch<span style="color:#f92672">.</span>add(t, <span style="color:#ae81ff">1</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
+tensor([[1, 2, 3],
+        [4, 5, 6]])
+</code></pre></div><p>テンソルの乗算を<code>mul()</code>で求めます．</p>
+<p>$$
+\left(
+\begin{array}{ccc}
+0 &amp; 1 &amp; 2 \\\<br>
+3 &amp; 4 &amp; 5
+\end{array}
+\right) \times 2 = \left(
+\begin{array}{ccc}
+0 &amp; 2 &amp; 4 \\\<br>
+6 &amp; 8 &amp; 10
+\end{array}
+\right)\<br>
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">torch<span style="color:#f92672">.</span>mul(t, <span style="color:#ae81ff">2</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
+tensor([[ 0,  2,  4],
+        [ 6,  8, 10]])
+</code></pre></div><p>テンソル同士の乗算を<code>mm()</code>で求めます．</p>
+<p>$$
+t_1 = \left(
+\begin{array}{ccc}
+0 &amp; 1 &amp; 2 \\\<br>
+3 &amp; 4 &amp; 5
+\end{array}
+\right)\<br>
+$$</p>
+<p>$$
+t_2 = \left(
+\begin{array}{ccc}
+1 &amp; 1 \\\<br>
+2 &amp; 2 \\\<br>
+3 &amp; 3
+\end{array}
+\right)\<br>
+$$</p>
+<p>$$
+t_1 \times t_2 = \left(
+\begin{array}{ccc}
+0 \cdot 1 + 1 \cdot 2 + 2 \cdot 3 &amp; 0 \cdot 1 + 1 \cdot 2 + 2 \cdot 3 \\\<br>
+3 \cdot 1 + 4 \cdot 2 + 5 \cdot 3 &amp; 3 \cdot 1 + 4 \cdot 2 + 5 \cdot 3
+\end{array}
+\right) = \left(
+\begin{array}{ccc}
+8 &amp; 8 \\\<br>
+26 &amp; 26
+\end{array}
+\right)\<br>
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t1 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]])
+t2 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>]])
+torch<span style="color:#f92672">.</span>mm(t1, t2)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
+tensor([[ 8,  8],
+        [26, 26]])
+</code></pre></div><p>行列とベクトルのテンソルの乗算を<code>mv()</code>で求めます．</p>
+<p>$$
+t_3 = \left(
+\begin{array}{ccc}
+2 &amp; 2 &amp; 2
+\end{array}
+\right)\<br>
+$$</p>
+<p>$$
+t_1 \times t_3 = \left(
+\begin{array}{ccc}
+0 \cdot 2 + 1 \cdot 2 + 2 \cdot 2 &amp; 3 \cdot 2 + 4 \cdot 2 + 5 \cdot 2
+\end{array}
+\right) = \left(
+\begin{array}{ccc}
+6 &amp; 24
+\end{array}
+\right)\<br>
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t3 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>])
+torch<span style="color:#f92672">.</span>mv(t1, t3)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
+tensor([ 6, 24])
+</code></pre></div><h2 id="テンソルの形状">テンソルの形状</h2>
+<p>テンソルの形状を<code>shape</code>で確認します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(t1<span style="color:#f92672">.</span>shape)
+<span style="color:#66d9ef">print</span>(t2<span style="color:#f92672">.</span>shape)
+<span style="color:#66d9ef">print</span>(t3<span style="color:#f92672">.</span>shape)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
+torch.Size([2, 3])
+torch.Size([3, 2])
+torch.Size([3])
+</code></pre></div><h2 id="テンソルのデータ型">テンソルのデータ型</h2>
+<p>テンソルのデータ型を<code>type()</code>で確認します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>((torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]))<span style="color:#f92672">.</span>type())
+<span style="color:#66d9ef">print</span>((torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.2</span>]))<span style="color:#f92672">.</span>type())
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
+torch.LongTensor #64ビット符号付き整数
+torch.FloatTensor #32ビット浮動小数点
+</code></pre></div><h3>参考書籍</h3>
+
+
+
+
+
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07GWHP9YM&linkId=08226226a8fb428fe7bc7d48e47ff8a0&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07FVJKP1L&linkId=9f5d740609362f2de596d41b9b060b30&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07VPDVNKW&linkId=ab58ead321f3b247b4b658408f167d43&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07SPZ4Z82&linkId=dcc9a4aec3676eac587eb38f0412ccdd&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
 
 
     
@@ -232,7 +523,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-25 16:33:30.791193 &#43;0900 JST m=&#43;0.112560569">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-26 17:02:14.526326 &#43;0900 JST m=&#43;0.140718196">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
