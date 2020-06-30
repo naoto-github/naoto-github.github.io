@@ -81,7 +81,16 @@
 
 
 
-  <meta property="og:description" content=" 単純パーセプトロン   単純パーセプトロンの実装  import torch import torch.nn as nn # 単純パーセプトロン network = nn.Sequential( nn.Linear(2, 1), nn.Sigmoid() ) print(network) #出力 Sequential( (0): Linear(in_features=2, out_features=1, bias=True) (1): Sigmoid() ) # 重みの変更 network[0].weight.data[0][0].fill_(0) network[0].weight.data[0][1].fill_(1) print(network[0].weight) #出力 Parameter containing: tensor([[0., 1.]], requires_grad=True) # バイアスの変更 network[0].bias.data.fill_(-0.5) print(network[0].bias) #出力 Parameter containing: tensor([-0.5000], requires_grad=True) # 入力 input = torch.tensor([1, 1], dtype=torch.float) print(input) #出力 tensor([1., 1.]) output = network(input) print(output) #出力 tensor([0.6225], grad_fn=&lt;SigmoidBackward&gt;) 参考書籍" />
+  <meta property="og:description" content="単純パーセプトロン  パーセプトロン とは，動物の神経細胞（ニューロン）の発火現象を数理的に表現したモデルのことです． ウォーレン・マカロック氏とウォルター・ピッツ氏が提案した 形式ニューロン を2層のネットワーク状に接続したものは 単純パーセプトロン と呼ばれます． 単純パーセプトロンの1層目のニューロンは，入力データを伝えるだけの役割であるため，実質的には1つの形式ニューロンと考えることができます．
+
+ここでは，2入力，1出力の単純パーセプトロンを考えます． 下記の式に従って，入力された$x_1$と$x_2$から，中間出力$y$を得ます． ここで，$w_1$と$w_2$は入力に対する 重み です． また，$w_0$は バイアス と呼ばれ，出力の閾値として用いられます．
+$$ y = w_1 \times x_1 &#43; w_2 \times x_2 &#43; w_0 $$
+この中間出力$y$に対して，活性化関数 $f$と呼ばれる特殊な関数を適用して， 得られた値を最終的なニューロンの出力$z$とします．
+$$ z = f(y) $$
+一般に$n$入力の単純パーセプトロンは，入力${\bf x}$と重み${\bf w}$は下記のようにベクトルで表現されます． ここで，$x_0=1$はバイアス$w_0$を導入するために用いられます． パーセプトロンが多層になると，ベクトル表現が必須となりますので，慣れておきましょう．
+$$ {\bf x} = (1, x_1, \cdots, x_n) \\
+{\bf w} = (w_0, w_1, \cdots, w_n) \\
+y = {\bf x} \cdot {\bf w} \\" />
 
 
 
@@ -96,7 +105,16 @@
 
 
 
-  <meta name="twitter:description" content=" 単純パーセプトロン   単純パーセプトロンの実装  import torch import torch.nn as nn # 単純パーセプトロン network = nn.Sequential( nn.Linear(2, 1), nn.Sigmoid() ) print(network) #出力 Sequential( (0): Linear(in_features=2, out_features=1, bias=True) (1): Sigmoid() ) # 重みの変更 network[0].weight.data[0][0].fill_(0) network[0].weight.data[0][1].fill_(1) print(network[0].weight) #出力 Parameter containing: tensor([[0., 1.]], requires_grad=True) # バイアスの変更 network[0].bias.data.fill_(-0.5) print(network[0].bias) #出力 Parameter containing: tensor([-0.5000], requires_grad=True) # 入力 input = torch.tensor([1, 1], dtype=torch.float) print(input) #出力 tensor([1., 1.]) output = network(input) print(output) #出力 tensor([0.6225], grad_fn=&lt;SigmoidBackward&gt;) 参考書籍" />
+  <meta name="twitter:description" content="単純パーセプトロン  パーセプトロン とは，動物の神経細胞（ニューロン）の発火現象を数理的に表現したモデルのことです． ウォーレン・マカロック氏とウォルター・ピッツ氏が提案した 形式ニューロン を2層のネットワーク状に接続したものは 単純パーセプトロン と呼ばれます． 単純パーセプトロンの1層目のニューロンは，入力データを伝えるだけの役割であるため，実質的には1つの形式ニューロンと考えることができます．
+
+ここでは，2入力，1出力の単純パーセプトロンを考えます． 下記の式に従って，入力された$x_1$と$x_2$から，中間出力$y$を得ます． ここで，$w_1$と$w_2$は入力に対する 重み です． また，$w_0$は バイアス と呼ばれ，出力の閾値として用いられます．
+$$ y = w_1 \times x_1 &#43; w_2 \times x_2 &#43; w_0 $$
+この中間出力$y$に対して，活性化関数 $f$と呼ばれる特殊な関数を適用して， 得られた値を最終的なニューロンの出力$z$とします．
+$$ z = f(y) $$
+一般に$n$入力の単純パーセプトロンは，入力${\bf x}$と重み${\bf w}$は下記のようにベクトルで表現されます． ここで，$x_0=1$はバイアス$w_0$を導入するために用いられます． パーセプトロンが多層になると，ベクトル表現が必須となりますので，慣れておきましょう．
+$$ {\bf x} = (1, x_1, \cdots, x_n) \\
+{\bf w} = (w_0, w_1, \cdots, w_n) \\
+y = {\bf x} \cdot {\bf w} \\" />
 
 
 
@@ -179,14 +197,66 @@
   単純パーセプトロン
 </h1>
 
+<p><strong>パーセプトロン</strong> とは，動物の神経細胞（ニューロン）の発火現象を数理的に表現したモデルのことです．
+ウォーレン・マカロック氏とウォルター・ピッツ氏が提案した
+<strong>形式ニューロン</strong> を2層のネットワーク状に接続したものは <strong>単純パーセプトロン</strong> と呼ばれます．
+単純パーセプトロンの1層目のニューロンは，入力データを伝えるだけの役割であるため，実質的には1つの形式ニューロンと考えることができます．</p>
+<p><a href="https://gyazo.com/f91bcd6ecf9e7f301b49fa3b947bff75"><img src="https://i.gyazo.com/f91bcd6ecf9e7f301b49fa3b947bff75.png" alt="Image from Gyazo"></a></p>
+<p>ここでは，2入力，1出力の単純パーセプトロンを考えます．
+下記の式に従って，入力された$x_1$と$x_2$から，中間出力$y$を得ます．
+ここで，$w_1$と$w_2$は入力に対する <strong>重み</strong> です．
+また，$w_0$は <strong>バイアス</strong> と呼ばれ，出力の閾値として用いられます．</p>
+<p>$$
+y = w_1 \times x_1 + w_2 \times x_2 + w_0
+$$</p>
+<p>この中間出力$y$に対して，<strong>活性化関数</strong> $f$と呼ばれる特殊な関数を適用して，
+得られた値を最終的なニューロンの出力$z$とします．</p>
+<p>$$
+z = f(y)
+$$</p>
+<p>一般に$n$入力の単純パーセプトロンは，入力${\bf x}$と重み${\bf w}$は下記のようにベクトルで表現されます．
+ここで，$x_0=1$はバイアス$w_0$を導入するために用いられます．
+パーセプトロンが多層になると，ベクトル表現が必須となりますので，慣れておきましょう．</p>
+<p>$$
+{\bf x} = (1, x_1, \cdots, x_n) \\<br>
+{\bf w} = (w_0, w_1, \cdots, w_n) \\<br>
+y = {\bf x} \cdot {\bf w} \\<br>
+z = f(y)
+$$</p>
+<p>活性化関数$f$には下記のような種類があります．</p>
+<ul>
+<li>ステップ関数</li>
+<li>シグモイド関数</li>
+<li>ReLU(Rectified Linear Unit)関数</li>
+</ul>
+<p>下図はステップ関数のグラフです．
+ステップ関数は入力$y$が0以上なら1，0未満であれば0を出力する関数です．</p>
+<p><a href="https://gyazo.com/5c370bbf48a57be928ac113e3c6d5c0d"><img src="https://i.gyazo.com/5c370bbf48a57be928ac113e3c6d5c0d.png" alt="Image from Gyazo"></a></p>
+<p>下図はシグモイド関数のグラフです．
+シグモイド関数は，ステップ関数とは異なり滑らかに変化する連続関数であり，
+0から1の範囲を出力します．</p>
+<p>$$
+f(y) = \frac{1}{1 + e^{-y}}
+$$</p>
+<p><a href="https://gyazo.com/e3f577d0c7f3e27ffb068120584170e1"><img src="https://i.gyazo.com/e3f577d0c7f3e27ffb068120584170e1.png" alt="Image from Gyazo"></a></p>
+<p>下図はReLU関数のグラフです．
+ReLU関数は入力$y$が0以上なら入力$y$をそのまま出力し，
+0未満であれば0を出力する関数です．</p>
+<p><a href="https://gyazo.com/f7cf68061c120cfc53001ef8b7edc961"><img src="https://i.gyazo.com/f7cf68061c120cfc53001ef8b7edc961.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   単純パーセプトロンの実装
 </h1>
 
+<p>それでは，単純パーセプトロンを <strong>PyTorch</strong> を利用して実装してみましょう．
+まずは，PyTorchをインポートします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
 <span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 単純パーセプトロン</span>
+</code></pre></div><p>単純パーセプトロンを作成します．
+<code>nn.Sequential</code>は，パーセプトロンの層を追加した順番に並べ，パーセプトロンを生成します．
+最初に2入力・1出力の層<code>nn.Linear(2, 1）</code>を作成します．
+その出力をシグモイド関数<code>nn.Sigmoid()</code>に伝え，最終的な出力を得ています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 単純パーセプトロン</span>
 network <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
     nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>),
     nn<span style="color:#f92672">.</span>Sigmoid()
@@ -197,28 +267,54 @@ Sequential(
   (0): Linear(in_features=2, out_features=1, bias=True)
   (1): Sigmoid()
 )
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 重みの変更</span>
+</code></pre></div><p>重みやバイアスなどのパラメータ$w$は，ランダムに初期化されています．
+ここでは，下記のようにパラメータを強制的に変更します．</p>
+<p>$$
+{\bf w} = (w_0, w_1, w_2) = (-0.5, 0, 1)
+$$</p>
+<p>パーセプトロンの各層には，配列として参照することが可能です．
+<code>network[0]</code>は先程作成した2入力・1出力の層です．
+重みを変更するには，<code>network[0].weight.data</code>の<code>fill_</code>メソッドを利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 重みの変更</span>
 network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>data[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>fill_(<span style="color:#ae81ff">0</span>)
 network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>data[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>fill_(<span style="color:#ae81ff">1</span>)
 <span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
 Parameter containing:
 tensor([[0., 1.]], requires_grad=True)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># バイアスの変更</span>
+</code></pre></div><p>バイアスを変更するには，<code>network[0].bias.data</code>の<code>fill_</code>メソッドを利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># バイアスの変更</span>
 network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>fill_(<span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span>)
 <span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
 Parameter containing:
 tensor([-0.5000], requires_grad=True)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 入力</span>
-input <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float)
-<span style="color:#66d9ef">print</span>(input)
+</code></pre></div><p>単純パーセプトロンの入力$x$をテンソルとして作成します．</p>
+<p>$$
+{\bf x} = (1, 1)
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 入力</span>
+x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float)
+<span style="color:#66d9ef">print</span>(x)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
 tensor([1., 1.])
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">output <span style="color:#f92672">=</span> network(input)
-<span style="color:#66d9ef">print</span>(output)
+</code></pre></div><p>単純パーセプトロンに$x$を入力し，出力$z$を得ます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">z <span style="color:#f92672">=</span> network(x)
+<span style="color:#66d9ef">print</span>(z)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
 tensor([0.6225], grad_fn=&lt;SigmoidBackward&gt;)
+</code></pre></div><p>出力$z$は <strong>0.6225</strong> になりました．
+この値が正しいか確認してみましょう．
+定義に従って計算すると，PyTorchで作成した単純パーセプトロンと出力が一致していることが分かります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sigmoid</span>(x):
+    <span style="color:#66d9ef">return</span>  <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> np<span style="color:#f92672">.</span>exp(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> x))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>])
+w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>])
+y <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>dot(w)
+z <span style="color:#f92672">=</span> sigmoid(y)
+<span style="color:#66d9ef">print</span>(z)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">#出力
+0.6224593312018546
 </code></pre></div><h3>参考書籍</h3>
 
 
@@ -293,7 +389,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-28 11:24:20.0138819 &#43;0900 JST m=&#43;1.484642701">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-06-30 17:34:19.73341 &#43;0900 JST m=&#43;0.129473762">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
