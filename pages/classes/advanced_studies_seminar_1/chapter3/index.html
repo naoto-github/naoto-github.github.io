@@ -81,7 +81,13 @@
 
 
 
-  <meta property="og:description" content=" 自動微分  import torch import torch.nn as nn import numpy as np x = torch.tensor([2.0], requires_grad=True) # x=2 print(x) #出力 tensor([2.], requires_grad=True) y = x * x &#43; 2 * x &#43; 1 #x^2 &#43; 2*x &#43; 1 print(y) #出力 tensor([9.], grad_fn=&lt;AddBackward0&gt;) y.backward() #微分 print(f&#34;dy/dx = {x.grad}&#34;) # 2*x &#43; 2 #出力 dy/dx = tensor([6.])  誤差関数   パーセプトロンの学習  参考書籍" />
+  <meta property="og:description" content="自動微分  PyTorchでは 自動微分 という機能が実装されており， テンソルで作成した式（ 計算グラフ と呼ぶ）の傾き（勾配）が保持されます． この自動微分はパーセプトロンの重みやバイアスの学習に欠かせない機能です．
+まずは，PyTorch，Numpy，Mtplotlibをインポートします．
+import torch import torch.nn as nn import numpy as np import matplotlib.pyplot as plt テンソルxを2.0で初期化します． このxを自動微分の対象とするためrequires_grad=Trueをオプションとして設定します．
+x = torch.tensor([2.0], requires_grad=True) # x=2 print(x) #出力 tensor([2.], requires_grad=True) 定義したxを用いて計算グラフyを定義します． ここで，$x=2$であるため，$y=9$となります．
+$$ y = x^2 &#43; 2x &#43; 1 $$
+y = x * x &#43; 2 * x &#43; 1 print(y) #出力 tensor([9.], grad_fn=&lt;AddBackward0&gt;) yをxで微分します． 計算グラフが複数のテンソルで構成される場合は， 全てのテンソルに対する偏微分が計算されます． ここで，$x=2$であるため，$\frac{dy}{dx}=6$となります．
+$$ \frac{dy}{dx} = 2x &#43; 2 $$" />
 
 
 
@@ -96,7 +102,13 @@
 
 
 
-  <meta name="twitter:description" content=" 自動微分  import torch import torch.nn as nn import numpy as np x = torch.tensor([2.0], requires_grad=True) # x=2 print(x) #出力 tensor([2.], requires_grad=True) y = x * x &#43; 2 * x &#43; 1 #x^2 &#43; 2*x &#43; 1 print(y) #出力 tensor([9.], grad_fn=&lt;AddBackward0&gt;) y.backward() #微分 print(f&#34;dy/dx = {x.grad}&#34;) # 2*x &#43; 2 #出力 dy/dx = tensor([6.])  誤差関数   パーセプトロンの学習  参考書籍" />
+  <meta name="twitter:description" content="自動微分  PyTorchでは 自動微分 という機能が実装されており， テンソルで作成した式（ 計算グラフ と呼ぶ）の傾き（勾配）が保持されます． この自動微分はパーセプトロンの重みやバイアスの学習に欠かせない機能です．
+まずは，PyTorch，Numpy，Mtplotlibをインポートします．
+import torch import torch.nn as nn import numpy as np import matplotlib.pyplot as plt テンソルxを2.0で初期化します． このxを自動微分の対象とするためrequires_grad=Trueをオプションとして設定します．
+x = torch.tensor([2.0], requires_grad=True) # x=2 print(x) #出力 tensor([2.], requires_grad=True) 定義したxを用いて計算グラフyを定義します． ここで，$x=2$であるため，$y=9$となります．
+$$ y = x^2 &#43; 2x &#43; 1 $$
+y = x * x &#43; 2 * x &#43; 1 print(y) #出力 tensor([9.], grad_fn=&lt;AddBackward0&gt;) yをxで微分します． 計算グラフが複数のテンソルで構成される場合は， 全てのテンソルに対する偏微分が計算されます． ここで，$x=2$であるため，$\frac{dy}{dx}=6$となります．
+$$ \frac{dy}{dx} = 2x &#43; 2 $$" />
 
 
 
@@ -179,31 +191,243 @@
   自動微分
 </h1>
 
+<p>PyTorchでは <strong>自動微分</strong> という機能が実装されており，
+テンソルで作成した式（ <strong>計算グラフ</strong> と呼ぶ）の傾き（勾配）が保持されます．
+この自動微分はパーセプトロンの重みやバイアスの学習に欠かせない機能です．</p>
+<p>まずは，PyTorch，Numpy，Mtplotlibをインポートします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
 <span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
 <span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">2.0</span>], requires_grad<span style="color:#f92672">=</span>True) <span style="color:#75715e"># x=2</span>
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+</code></pre></div><p>テンソル<code>x</code>を2.0で初期化します．
+この<code>x</code>を自動微分の対象とするため<code>requires_grad=True</code>をオプションとして設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">2.0</span>], requires_grad<span style="color:#f92672">=</span>True) <span style="color:#75715e"># x=2</span>
 <span style="color:#66d9ef">print</span>(x)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
 tensor([<span style="color:#ae81ff">2.</span>], requires_grad<span style="color:#f92672">=</span>True)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e">#x^2 + 2*x + 1</span>
+</code></pre></div><p>定義した<code>x</code>を用いて計算グラフ<code>y</code>を定義します．
+ここで，$x=2$であるため，$y=9$となります．</p>
+<p>$$
+y = x^2 + 2x + 1
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
 <span style="color:#66d9ef">print</span>(y)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
 tensor([<span style="color:#ae81ff">9.</span>], grad_fn<span style="color:#f92672">=&lt;</span>AddBackward0<span style="color:#f92672">&gt;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y<span style="color:#f92672">.</span>backward() <span style="color:#75715e">#微分</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;dy/dx = {x.grad}&#34;</span>) <span style="color:#75715e"># 2*x + 2</span>
+</code></pre></div><p><code>y</code>を<code>x</code>で微分します．
+計算グラフが複数のテンソルで構成される場合は，
+全てのテンソルに対する偏微分が計算されます．
+ここで，$x=2$であるため，$\frac{dy}{dx}=6$となります．</p>
+<p>$$
+\frac{dy}{dx} = 2x + 2
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y<span style="color:#f92672">.</span>backward() <span style="color:#75715e">#微分</span>
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;dy/dx = {x.grad}&#34;</span>)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
 dy<span style="color:#f92672">/</span>dx <span style="color:#f92672">=</span> tensor([<span style="color:#ae81ff">6.</span>])
-</code></pre></div><h1>
-  <img class="head-image" src="/logo/logo.png">
-  誤差関数
-</h1>
-
+</code></pre></div><p>図で確認してみましょう．
+微分は接線の傾きを求める操作です．
+$y = x^2 + 2x + 1$の$x=2$における接線の傾きが$6$となります．</p>
+<p><a href="https://gyazo.com/9e120824a1ab92d5d8a80f55914d1282"><img src="https://i.gyazo.com/9e120824a1ab92d5d8a80f55914d1282.png" alt="Image from Gyazo"></a></p>
 <h1>
   <img class="head-image" src="/logo/logo.png">
   パーセプトロンの学習
 </h1>
 
+<h2 id="分類問題">分類問題</h2>
+<p>パーセプトロンは <strong>分類</strong> や <strong>回帰</strong> と呼ばれる問題を解くことができます．
+ここでは，サンプル$x=(x_1, x_2)$を2つのカテゴリ(0または1)に分類することに挑戦します．</p>
+<p>例えば，リストの最初にある$(0.28, 0.34)$はカテゴリ$0$に分類されます．
+同様にリストの最後の$(0.94, 0.91)$はカテゴリ$1$に分類されます．
+このサンプルをパーセプトロンに学習させることで，任意のサンプルに対するカテゴリを推定します．
+このようなサンプルデータは <strong>学習データ（教師データ，訓練データ）</strong> と呼ばれます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x1 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0.28</span>, <span style="color:#ae81ff">0.35</span>, <span style="color:#ae81ff">0.41</span>, <span style="color:#ae81ff">0.78</span>, <span style="color:#ae81ff">0.89</span>, <span style="color:#ae81ff">0.94</span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float) 
+x2 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0.34</span>, <span style="color:#ae81ff">0.21</span>, <span style="color:#ae81ff">0.39</span>, <span style="color:#ae81ff">0.87</span>, <span style="color:#ae81ff">0.76</span>, <span style="color:#ae81ff">0.91</span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float) 
+x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack([x1, x2], <span style="color:#ae81ff">1</span>) <span style="color:#75715e">#入力</span>
+label <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float)  <span style="color:#75715e">#正解の出力</span>
+<span style="color:#66d9ef">print</span>(x)
+<span style="color:#66d9ef">print</span>(label)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+tensor([[<span style="color:#ae81ff">0.2800</span>, <span style="color:#ae81ff">0.3400</span>],
+        [<span style="color:#ae81ff">0.3500</span>, <span style="color:#ae81ff">0.2100</span>],
+        [<span style="color:#ae81ff">0.4100</span>, <span style="color:#ae81ff">0.3900</span>],
+        [<span style="color:#ae81ff">0.7800</span>, <span style="color:#ae81ff">0.8700</span>],
+        [<span style="color:#ae81ff">0.8900</span>, <span style="color:#ae81ff">0.7600</span>],
+        [<span style="color:#ae81ff">0.9400</span>, <span style="color:#ae81ff">0.9100</span>]])
+tensor([<span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">0.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>, <span style="color:#ae81ff">1.</span>])
+</code></pre></div><p>学習データを可視化してみます．
+左下の3つのサンプルがカテゴリ$0$，右上の3つのサンプルがカテゴリ$1$です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>scatter(x1, x2, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x1&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y2&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/88cf1322f04c1beaa2d550f5e2a93d66"><img src="https://i.gyazo.com/88cf1322f04c1beaa2d550f5e2a93d66.png" alt="Image from Gyazo"></a></p>
+<h2 id="損失関数誤差関数">損失関数（誤差関数）</h2>
+<p>パーセプトロンに学習データを用いて <strong>学習</strong> させるには，
+パーセプトロンの出力$z$と正しい出力（ここでは$0$または$1$）との
+誤差を測る必要があります．</p>
+<p>この誤差を測るための関数は <strong>損失関数（誤差関数）</strong> と呼ばれます．
+損失関数には下記のような種類があります．</p>
+<ul>
+<li>平均2乗誤差(Mean Square Error : MSE)</li>
+<li>交差エントロピー(Cross Entropy : CE)</li>
+</ul>
+<p>ここでは下記の式で表される平均2乗誤差を採用します．
+ここで，$z_i$は$i$番目のパーセプトロンの出力，$\hat{z_i}$は正しい出力です．
+また，$n$は学習データのサンプル数です．</p>
+<p>$$
+L = \frac{1}{n} \sum_i (z_i - \hat{z_i})^2
+$$</p>
+<p>それでは，2入力・1出力の単純パーセプトロンを作成します．
+活性化関数にはシグモイド関数を採用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 単純パーセプトロン</span>
+network <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>),
+    nn<span style="color:#f92672">.</span>Sigmoid()
+)
+<span style="color:#66d9ef">print</span>(network)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+Sequential(
+  (<span style="color:#ae81ff">0</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, bias<span style="color:#f92672">=</span>True)
+  (<span style="color:#ae81ff">1</span>): Sigmoid()
+)
+</code></pre></div><p>学習データをパーセプトロンに入力し，出力を確認してみます．
+パーセプトロンの重みやバイアスはランダムな値で初期化されているため，
+正解の出力とは大きく異ることが分かります．
+例えば，$(0.28, 0.34)$を入力すると，$0.4417$が出力されています（正解の出力は$0$）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">z <span style="color:#f92672">=</span> network(x)
+z <span style="color:#f92672">=</span> z<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>] <span style="color:#75715e"># リストに変形</span>
+<span style="color:#66d9ef">print</span>(z)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+tensor([<span style="color:#ae81ff">0.4417</span>, <span style="color:#ae81ff">0.4198</span>, <span style="color:#ae81ff">0.4390</span>, <span style="color:#ae81ff">0.4758</span>, <span style="color:#ae81ff">0.4533</span>, <span style="color:#ae81ff">0.4696</span>],
+       grad_fn<span style="color:#f92672">=&lt;</span>SelectBackward<span style="color:#f92672">&gt;</span>)	   
+</code></pre></div><p>平均2乗誤差の計算グラフを<code>nn.MSELoss()</code>で作成します．
+この計算グラフにパーセプトロンの出力$z$と，正しい出力$\hat{z}$(ここでは<code>label</code>)を与えると，
+平均2乗誤差は$0.2365$と計算されました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>MSELoss()
+loss <span style="color:#f92672">=</span> criterion(z, label)
+<span style="color:#66d9ef">print</span>(loss)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+tensor(<span style="color:#ae81ff">0.2365</span>, grad_fn<span style="color:#f92672">=&lt;</span>MseLossBackward<span style="color:#f92672">&gt;</span>)
+
+</code></pre></div><p>公式に従って計算し，上記の値が正しいか確認してみましょう．
+平均2乗誤差は$0.2365$となり，一致していることが分かります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(torch<span style="color:#f92672">.</span>sum((z <span style="color:#f92672">-</span> label) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">6</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+tensor(<span style="color:#ae81ff">0.2365</span>, grad_fn<span style="color:#f92672">=&lt;</span>DivBackward0<span style="color:#f92672">&gt;</span>)
+</code></pre></div><h2 id="勾配降下法">勾配降下法</h2>
+<p>平均2乗誤差$L$を微分（偏微分）し，
+パーセプトロンの重み$(w_1, w_2)$やバイアス$(w_0)$に応じた <strong>傾き（勾配）</strong> を求めます．</p>
+<p>$$
+\frac{dL}{dw_0}, \frac{dL}{dw_1}, \frac{dL}{dw_2}
+$$</p>
+<p>正しい出力$\hat{z}$を得るために，導出した傾きに応じて重みやバイアスを微調整します．
+この方法は <strong>勾配降下法</strong> と呼ばれます．</p>
+<p>平均2乗誤差の計算グラフを<code>backward()</code>で微分します．
+導出された傾きは下記のようになりました．</p>
+<p>$$
+\frac{dL}{dw_0} = -0.0264 \\<br>
+\frac{dL}{dw_1} = -0.0787 \\<br>
+\frac{dL}{dw_2} = -0.0788
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss<span style="color:#f92672">.</span>backward()
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight)
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>grad)
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias)
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias<span style="color:#f92672">.</span>grad)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+Parameter containing:
+tensor([[<span style="color:#f92672">-</span><span style="color:#ae81ff">0.2890</span>,  <span style="color:#ae81ff">0.5321</span>]], requires_grad<span style="color:#f92672">=</span>True)
+tensor([[<span style="color:#f92672">-</span><span style="color:#ae81ff">0.0787</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.0788</span>]])
+Parameter containing:
+tensor([<span style="color:#f92672">-</span><span style="color:#ae81ff">0.3343</span>], requires_grad<span style="color:#f92672">=</span>True)
+tensor([<span style="color:#f92672">-</span><span style="color:#ae81ff">0.0264</span>])
+</code></pre></div><p>導出した傾きに応じてパーセプトロンの重みやバイアスを下記の更新式に従って微調整します．
+ここで，$\alpha=0.1$は <strong>学習率</strong> と呼ばれるパラメータで，学習の収束をコントールする役割を担っています．
+この微調整により平均2乗誤差$L$を最小化することができます．</p>
+<p>$$
+w_0 = w_0 - \alpha \cdot \frac{dL}{dw_0} \\<br>
+w_1 = w_1 - \alpha \cdot \frac{dL}{dw_1} \\<br>
+w_2 = w_2 - \alpha \cdot \frac{dL}{dw_2}
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>():
+    alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>
+    weight <span style="color:#f92672">=</span> network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight <span style="color:#f92672">-</span> alpha <span style="color:#f92672">*</span> network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>grad
+    bias <span style="color:#f92672">=</span> network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias <span style="color:#f92672">-</span> alpha <span style="color:#f92672">*</span> network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias<span style="color:#f92672">.</span>grad
+    network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> weight
+    network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias<span style="color:#f92672">.</span>data <span style="color:#f92672">=</span> bias
+	
+update()
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight)
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+Parameter containing:
+tensor([[<span style="color:#f92672">-</span><span style="color:#ae81ff">0.2811</span>,  <span style="color:#ae81ff">0.5399</span>]], requires_grad<span style="color:#f92672">=</span>True)
+Parameter containing:
+tensor([<span style="color:#f92672">-</span><span style="color:#ae81ff">0.3317</span>], requires_grad<span style="color:#f92672">=</span>True)
+</code></pre></div><p>それでは，1000回繰り返して重みとバイアスの更新を行います．
+この結果，重みとバイアスは下記の値に収束しました．</p>
+<p>$$
+w_0 = -130.2439 \\<br>
+w_1 = 117.0642 \\<br>
+w_2 = 122.1144
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss_history <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1000</span>):
+    z <span style="color:#f92672">=</span> network(x)
+    z <span style="color:#f92672">=</span> z<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>]
+    
+    criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>MSELoss()
+    loss <span style="color:#f92672">=</span> criterion(z, label)
+    loss_history<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>data)
+    
+    loss<span style="color:#f92672">.</span>backward()
+    
+    update()
+
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight)
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+Parameter containing:
+tensor([[<span style="color:#ae81ff">117.0642</span>, <span style="color:#ae81ff">122.1144</span>]], requires_grad<span style="color:#f92672">=</span>True)
+Parameter containing:
+tensor([<span style="color:#f92672">-</span><span style="color:#ae81ff">130.2439</span>], requires_grad<span style="color:#f92672">=</span>True)
+</code></pre></div><p>更新の過程における平均2乗誤差$L$の推移を可視化してみましょう．
+100回程度の繰り返しで，$L \simeq 0$に収束していることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(loss_history)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;steps&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;loss&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/15339ad568810cd1f7544daa986521d7"><img src="https://i.gyazo.com/15339ad568810cd1f7544daa986521d7.png" alt="Image from Gyazo"></a></p>
+<p>学習したパーセプトロンが正しく分類できているか確認しましょう．
+前方の3つのサンプルの出力は$0$，後方の3つのサンプルの出力は$1$になっていることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">z <span style="color:#f92672">=</span> network(x)
+z <span style="color:#f92672">=</span> z<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>]
+<span style="color:#66d9ef">print</span>(z)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+tensor([<span style="color:#ae81ff">5.0410e-25</span>, <span style="color:#ae81ff">2.3279e-28</span>, <span style="color:#ae81ff">9.1925e-16</span>, <span style="color:#ae81ff">1.0000e+00</span>, <span style="color:#ae81ff">1.0000e+00</span>, <span style="color:#ae81ff">1.0000e+00</span>],
+       grad_fn<span style="color:#f92672">=&lt;</span>SelectBackward<span style="color:#f92672">&gt;</span>)
+</code></pre></div><p>最後に決定境界を求めてみましょう．
+途中出力$y$が$0$のときに決定境界となるため下記の式を解きます（シグモイド関数の出力が$0.5$のとき）．
+導出された式は2つのカテゴリを分ける直線となっていることが分かります．</p>
+<p>$$
+0 = w_1 \cdot x_1 + w_2 \cdot x_2 + w_0 \\<br>
+x_2 = -\frac{w_1}{w_2} x_1 - \frac{w_0}{w_2}
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">0.01</span>)
+y_ <span style="color:#f92672">=</span> []
+
+w0 <span style="color:#f92672">=</span> network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias<span style="color:#f92672">.</span>data[<span style="color:#ae81ff">0</span>]
+w1 <span style="color:#f92672">=</span> network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>data[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>]
+w2 <span style="color:#f92672">=</span> network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>data[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>]
+
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> x_:
+    y_<span style="color:#f92672">.</span>append(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> (w1 <span style="color:#f92672">/</span> w2) <span style="color:#f92672">*</span> x <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> (w0 <span style="color:#f92672">/</span> w2))
+
+plt<span style="color:#f92672">.</span>plot(x_, y_)
+plt<span style="color:#f92672">.</span>scatter(x1, x2, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x1&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;x2&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/604a316cdcfcf713f7fd797d5a556895"><img src="https://i.gyazo.com/604a316cdcfcf713f7fd797d5a556895.png" alt="Image from Gyazo"></a></p>
 <h3>参考書籍</h3>
 
 
@@ -278,7 +502,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-06-30 22:44:29.676166 &#43;0900 JST m=&#43;0.312305852">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-07-01 17:47:10.939125 &#43;0900 JST m=&#43;0.153832727">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

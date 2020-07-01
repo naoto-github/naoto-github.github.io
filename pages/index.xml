@@ -17,7 +17,13 @@
       <pubDate>Tue, 30 Jun 2020 22:05:29 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_1/chapter3/</guid>
-      <description> 自動微分  import torch import torch.nn as nn import numpy as np x = torch.tensor([2.0], requires_grad=True) # x=2 print(x) #出力 tensor([2.], requires_grad=True) y = x * x + 2 * x + 1 #x^2 + 2*x + 1 print(y) #出力 tensor([9.], grad_fn=&amp;lt;AddBackward0&amp;gt;) y.backward() #微分 print(f&amp;#34;dy/dx = {x.grad}&amp;#34;) # 2*x + 2 #出力 dy/dx = tensor([6.])  誤差関数   パーセプトロンの学習  参考書籍</description>
+      <description>自動微分  PyTorchでは 自動微分 という機能が実装されており， テンソルで作成した式（ 計算グラフ と呼ぶ）の傾き（勾配）が保持されます． この自動微分はパーセプトロンの重みやバイアスの学習に欠かせない機能です．
+まずは，PyTorch，Numpy，Mtplotlibをインポートします．
+import torch import torch.nn as nn import numpy as np import matplotlib.pyplot as plt テンソルxを2.0で初期化します． このxを自動微分の対象とするためrequires_grad=Trueをオプションとして設定します．
+x = torch.tensor([2.0], requires_grad=True) # x=2 print(x) #出力 tensor([2.], requires_grad=True) 定義したxを用いて計算グラフyを定義します． ここで，$x=2$であるため，$y=9$となります．
+$$ y = x^2 + 2x + 1 $$
+y = x * x + 2 * x + 1 print(y) #出力 tensor([9.], grad_fn=&amp;lt;AddBackward0&amp;gt;) yをxで微分します． 計算グラフが複数のテンソルで構成される場合は， 全てのテンソルに対する偏微分が計算されます． ここで，$x=2$であるため，$\frac{dy}{dx}=6$となります．
+$$ \frac{dy}{dx} = 2x + 2 $$</description>
     </item>
     
     <item>
