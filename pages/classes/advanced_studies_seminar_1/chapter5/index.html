@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    手書き文字の認識 | MLAB
+    物体画像（CIFAR-10）の分類 | MLAB
   </title>
 
   
@@ -61,7 +61,7 @@
   
   
 
-  <meta property="og:title" content="手書き文字の認識" />
+  <meta property="og:title" content="物体画像（CIFAR-10）の分類" />
 
 
 
@@ -81,7 +81,8 @@
 
 
 
-  <meta property="og:description" content=" 手書き文字の認識  参考書籍" />
+  <meta property="og:description" content="物体画像(CIFAR-10)  import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib.pyplot as plt dataset = torchvision.datasets.CIFAR10(root=&#34;./data&#34;, download=True) print(dataset) #出力 Files already downloaded and verified Dataset CIFAR10 Number of datapoints: 50000 Root location: ./data Split: Train label_names = np.array([ &#34;airplane&#34;, &#34;automobile&#34;, &#34;bird&#34;, &#34;cat&#34;, &#34;deer&#34;, &#34;dog&#34;, &#34;frog&#34;, &#34;horse&#34;, &#34;ship&#34;, &#34;truck&#34;]) image, label = dataset[0] plt.imshow(image) 
+dataset = torchvision." />
 
 
 
@@ -92,11 +93,12 @@
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="手書き文字の認識" />
+  <meta name="twitter:title" content="物体画像（CIFAR-10）の分類" />
 
 
 
-  <meta name="twitter:description" content=" 手書き文字の認識  参考書籍" />
+  <meta name="twitter:description" content="物体画像(CIFAR-10)  import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib.pyplot as plt dataset = torchvision.datasets.CIFAR10(root=&#34;./data&#34;, download=True) print(dataset) #出力 Files already downloaded and verified Dataset CIFAR10 Number of datapoints: 50000 Root location: ./data Split: Train label_names = np.array([ &#34;airplane&#34;, &#34;automobile&#34;, &#34;bird&#34;, &#34;cat&#34;, &#34;deer&#34;, &#34;dog&#34;, &#34;frog&#34;, &#34;horse&#34;, &#34;ship&#34;, &#34;truck&#34;]) image, label = dataset[0] plt.imshow(image) 
+dataset = torchvision." />
 
 
 
@@ -169,17 +171,167 @@
   <span>on&nbsp;</span><time datetime="2020-07-03 14:14:15 &#43;0900 JST">July 3, 2020</time>
 </div>
 
-    <h1 class="post-title">手書き文字の認識</h1>
+    <h1 class="post-title">物体画像（CIFAR-10）の分類</h1>
 <div class="post-line"></div>
 
     
 
     <h1>
   <img class="head-image" src="/logo/logo.png">
-  手書き文字の認識
+  物体画像(CIFAR-10)
 </h1>
 
-<h3>参考書籍</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
+<span style="color:#f92672">import</span> torch.optim <span style="color:#f92672">as</span> optim
+<span style="color:#f92672">import</span> torchvision
+<span style="color:#f92672">import</span> torchvision.transforms <span style="color:#f92672">as</span> transforms
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, download<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">print</span>(dataset)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+Files already downloaded <span style="color:#f92672">and</span> verified
+Dataset CIFAR10
+    Number of datapoints: <span style="color:#ae81ff">50000</span>
+    Root location: <span style="color:#f92672">./</span>data
+    Split: Train
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">label_names <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([
+    <span style="color:#e6db74">&#34;airplane&#34;</span>,
+    <span style="color:#e6db74">&#34;automobile&#34;</span>,
+    <span style="color:#e6db74">&#34;bird&#34;</span>,
+    <span style="color:#e6db74">&#34;cat&#34;</span>,
+    <span style="color:#e6db74">&#34;deer&#34;</span>,
+    <span style="color:#e6db74">&#34;dog&#34;</span>,
+    <span style="color:#e6db74">&#34;frog&#34;</span>,
+    <span style="color:#e6db74">&#34;horse&#34;</span>,
+    <span style="color:#e6db74">&#34;ship&#34;</span>,
+    <span style="color:#e6db74">&#34;truck&#34;</span>])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
+plt<span style="color:#f92672">.</span>imshow(image)
+</code></pre></div><p><a href="https://gyazo.com/21413c3097a0728fcab718c478301227"><img src="https://i.gyazo.com/21413c3097a0728fcab718c478301227.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor())
+<span style="color:#66d9ef">print</span>(dataset)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+Files already downloaded <span style="color:#f92672">and</span> verified
+Dataset CIFAR10
+    Number of datapoints: <span style="color:#ae81ff">50000</span>
+    Root location: <span style="color:#f92672">./</span>data
+    Split: Train
+    StandardTransform
+Transform: ToTensor()
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
+<span style="color:#66d9ef">print</span>(image<span style="color:#f92672">.</span>size())
+<span style="color:#66d9ef">print</span>(label)
+<span style="color:#66d9ef">print</span>(label_names[label])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">32</span>])
+<span style="color:#ae81ff">6</span>
+frog
+</code></pre></div><h1>
+  <img class="head-image" src="/logo/logo.png">
+  ミニバッチ学習
+</h1>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">my_dataset <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> dataset:
+    <span style="color:#66d9ef">if</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+        my_dataset<span style="color:#f92672">.</span>append((image, label))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">image, label <span style="color:#f92672">=</span> my_dataset[<span style="color:#ae81ff">0</span>]
+<span style="color:#66d9ef">print</span>(image<span style="color:#f92672">.</span>size())
+<span style="color:#66d9ef">print</span>(label)
+<span style="color:#66d9ef">print</span>(label_names[label])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">32</span>])
+<span style="color:#ae81ff">1</span>
+automobile
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(dataset<span style="color:#f92672">=</span>my_dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>)
+</code></pre></div><h1>
+  <img class="head-image" src="/logo/logo.png">
+  パーセプトロンの分類
+</h1>
+
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">network <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">600</span>),
+    nn<span style="color:#f92672">.</span>ReLU(),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">600</span>, <span style="color:#ae81ff">600</span>),
+    nn<span style="color:#f92672">.</span>ReLU(),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">600</span>, <span style="color:#ae81ff">3</span>),
+    nn<span style="color:#f92672">.</span>Softmax()
+)
+
+<span style="color:#66d9ef">print</span>(network)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+Sequential(
+  (<span style="color:#ae81ff">0</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">3072</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bias<span style="color:#f92672">=</span>True)
+  (<span style="color:#ae81ff">1</span>): ReLU()
+  (<span style="color:#ae81ff">2</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bias<span style="color:#f92672">=</span>True)
+  (<span style="color:#ae81ff">3</span>): ReLU()
+  (<span style="color:#ae81ff">4</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, bias<span style="color:#f92672">=</span>True)
+  (<span style="color:#ae81ff">5</span>): Softmax(dim<span style="color:#f92672">=</span>None)
+)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
+    image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+    z <span style="color:#f92672">=</span> network(image)
+    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
+    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
+
+acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(my_dataset)
+<span style="color:#66d9ef">print</span>(acc)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+<span style="color:#ae81ff">0.321</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>Adam(network<span style="color:#f92672">.</span>parameters())
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss_history <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+    
+    loss_epoch <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    
+    <span style="color:#66d9ef">for</span> i, (images, labels) <span style="color:#f92672">in</span> enumerate(loader):
+        
+        images <span style="color:#f92672">=</span> images<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+        
+        optimizer<span style="color:#f92672">.</span>zero_grad()
+        z <span style="color:#f92672">=</span> network(images)
+        
+        loss <span style="color:#f92672">=</span> criterion(z, labels)
+        loss<span style="color:#f92672">.</span>backward()
+        
+        loss_epoch <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+        
+        optimizer<span style="color:#f92672">.</span>step()
+    
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{epoch} {loss_epoch / i}&#34;</span>)
+    loss_history<span style="color:#f92672">.</span>append(loss_epoch <span style="color:#f92672">/</span> i)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+<span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1.2192253230983376</span>
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0.9285253609856988</span>
+<span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0.8595439547147506</span>
+<span style="color:#ae81ff">3</span> <span style="color:#ae81ff">0.846264493261647</span>
+<span style="color:#ae81ff">4</span> <span style="color:#ae81ff">0.840729504568964</span>
+<span style="color:#ae81ff">5</span> <span style="color:#ae81ff">0.8289006696297572</span>
+<span style="color:#ae81ff">6</span> <span style="color:#ae81ff">0.8255122416039817</span>
+<span style="color:#ae81ff">7</span> <span style="color:#ae81ff">0.8172445302335625</span>
+<span style="color:#ae81ff">8</span> <span style="color:#ae81ff">0.8131960273807884</span>
+<span style="color:#ae81ff">9</span> <span style="color:#ae81ff">0.8121428805538732</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(loss_history)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;epoch&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;loss&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/68f20188e9f59491c8ccac72b0ec5e59"><img src="https://i.gyazo.com/68f20188e9f59491c8ccac72b0ec5e59.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
+    image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+    z <span style="color:#f92672">=</span> network(image)
+    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
+    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
+
+acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(my_dataset)
+<span style="color:#66d9ef">print</span>(acc)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+<span style="color:#ae81ff">0.7523333333333333</span>
+</code></pre></div><h3>参考書籍</h3>
 
 
 
@@ -253,7 +405,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-07-03 14:16:20.619901 &#43;0900 JST m=&#43;0.110360486">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-07-03 17:37:20.270629 &#43;0900 JST m=&#43;0.145766014">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
