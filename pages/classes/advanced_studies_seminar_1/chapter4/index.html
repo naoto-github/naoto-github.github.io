@@ -81,7 +81,7 @@
 
 
 
-  <meta property="og:description" content="多層パーセプトロン前回，単純パーセプトロンは分類問題に適用できることを確認しました． しかし，線形分離不可能問題（非線形な決定境界） を解くことが出来ないことが知られています． まずは，線形分離不可能問題（非線形な決定境界）について考えましょう． 前回と同様にPyTorch，Numpy，Matplotlibをインポートします．
+  <meta property="og:description" content="多層パーセプトロン  前回，単純パーセプトロンは分類問題に適用できることを確認しました． しかし，線形分離不可能問題（非線形な決定境界） を解くことが出来ないことが知られています． まずは，線形分離不可能問題（非線形な決定境界）について考えましょう． 前回と同様にPyTorch，Numpy，Matplotlibをインポートします．
 import torch import torch.nn as nn import torch.optim as optim import numpy as np import matplotlib.pyplot as plt サンプル$x=(x_1, x_2)$を2つのカテゴリに分類します． 下記が今回の学習データであり， 決定境界を 直線 で引くことができないことが分かります． このような分類問題は単純パーセプトロンでは解くことが出来ません．
 x1 = torch.tensor([0.28, 0.35, 0.36, 0.37, 0.62, 0.66, 0.78, 0.81, 0.89, 0.94], dtype=torch.float) x2 = torch.tensor([0.34, 0.21, 0.65, 0.87, 0.73, 0.23, 0.87, 0.34, 0.76, 0.91], dtype=torch.float) x = torch.stack([x1, x2], 1) label = torch.tensor([0, 0, 0, 1, 0, 0, 1, 1, 1, 1], dtype=torch." />
 
@@ -98,7 +98,7 @@ x1 = torch.tensor([0.28, 0.35, 0.36, 0.37, 0.62, 0.66, 0.78, 0.81, 0.89, 0.94], 
 
 
 
-  <meta name="twitter:description" content="多層パーセプトロン前回，単純パーセプトロンは分類問題に適用できることを確認しました． しかし，線形分離不可能問題（非線形な決定境界） を解くことが出来ないことが知られています． まずは，線形分離不可能問題（非線形な決定境界）について考えましょう． 前回と同様にPyTorch，Numpy，Matplotlibをインポートします．
+  <meta name="twitter:description" content="多層パーセプトロン  前回，単純パーセプトロンは分類問題に適用できることを確認しました． しかし，線形分離不可能問題（非線形な決定境界） を解くことが出来ないことが知られています． まずは，線形分離不可能問題（非線形な決定境界）について考えましょう． 前回と同様にPyTorch，Numpy，Matplotlibをインポートします．
 import torch import torch.nn as nn import torch.optim as optim import numpy as np import matplotlib.pyplot as plt サンプル$x=(x_1, x_2)$を2つのカテゴリに分類します． 下記が今回の学習データであり， 決定境界を 直線 で引くことができないことが分かります． このような分類問題は単純パーセプトロンでは解くことが出来ません．
 x1 = torch.tensor([0.28, 0.35, 0.36, 0.37, 0.62, 0.66, 0.78, 0.81, 0.89, 0.94], dtype=torch.float) x2 = torch.tensor([0.34, 0.21, 0.65, 0.87, 0.73, 0.23, 0.87, 0.34, 0.76, 0.91], dtype=torch.float) x = torch.stack([x1, x2], 1) label = torch.tensor([0, 0, 0, 1, 0, 0, 1, 1, 1, 1], dtype=torch." />
 
@@ -365,7 +365,25 @@ z <span style="color:#f92672">=</span> z<span style="color:#f92672">.</span>deta
 <span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>round(z))
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
 [<span style="color:#ae81ff">0.</span> <span style="color:#ae81ff">0.</span> <span style="color:#ae81ff">0.</span> <span style="color:#ae81ff">1.</span> <span style="color:#ae81ff">0.</span> <span style="color:#ae81ff">0.</span> <span style="color:#ae81ff">1.</span> <span style="color:#ae81ff">1.</span> <span style="color:#ae81ff">1.</span> <span style="color:#ae81ff">1.</span>]
-</code></pre></div><h3>参考書籍</h3>
+</code></pre></div><p>最後に決定境界を確認します．
+$0&lt;x1&lt;1$，$0&lt;x2&lt;1$の範囲で多層パーセプトロンの出力を計算し，
+その値に応じてラベルを設定します．
+下図のように非線形の決定境界が得られていることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> itertools
+
+boundary <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">for</span> x1_, x2_ <span style="color:#f92672">in</span> itertools<span style="color:#f92672">.</span>product(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.01</span>), np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.01</span>)):
+    x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([x1_, x2_])
+    z <span style="color:#f92672">=</span> network(x)
+    t <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> z<span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>
+    boundary<span style="color:#f92672">.</span>append([x1_, x2_, t])            
+
+boundary <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(boundary)<span style="color:#f92672">.</span>T
+
+plt<span style="color:#f92672">.</span>scatter(boundary[<span style="color:#ae81ff">0</span>], boundary[<span style="color:#ae81ff">1</span>], c<span style="color:#f92672">=</span>boundary[<span style="color:#ae81ff">2</span>])
+</code></pre></div><p><a href="https://gyazo.com/95123d153a917f1bcb0b2ade01d13583"><img src="https://i.gyazo.com/95123d153a917f1bcb0b2ade01d13583.png" alt="Image from Gyazo"></a></p>
+<h3>参考書籍</h3>
 
 
 
@@ -439,7 +457,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-07-03 12:55:48.0649318 &#43;0900 JST m=&#43;7.527955301">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-07-03 14:16:20.637955 &#43;0900 JST m=&#43;0.128415002">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
