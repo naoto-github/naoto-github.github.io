@@ -17,7 +17,13 @@
       <pubDate>Sun, 05 Jul 2020 12:55:03 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/advanced_studies_seminar_1/chapter6/</guid>
-      <description> 畳み込みニューラルネットワーク   ネットワークの学習  参考書籍</description>
+      <description>畳み込みニューラルネットワーク  畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
+入力画像は，畳み込み層に入力され，プーリング層を経て， 全結合層で集約され，最終的に画像の分類を出力します． この畳み込み層とプーリング層の処理は，複数回繰り返されることがあります． 畳み込み層では複数のフィルタを用いて画像の特徴量を抽出します． プーリング層では特徴を失わないように画像サイズを縮小します（ダウンサンプリング）． 全結合層は多層パーセプトロンで用いられる一般的な層と同じです．
+
+畳み込み層 畳み込み層の仕組みを確認しましょう． 畳み込み層の目的は入力された複数の画像の特徴量をフィルタを利用して抽出することです． 下図は$4 \times 4$の入力画像に，$2 \times 2$のフィルタを適用した様子です． 入力画像からフィルタと同じ$2 \times 2$の画素を取り出し，フィルタの値と掛け合わせることで特徴量となります． この操作を1ピクセルだけずらしながら画像全体に適用すると$3 \times 3$の画像に変換されます． フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．
+
+それでは，この畳み込み層の振る舞いを再現してみましょう． まずは，ライブラリをインポートします． 画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
+import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib.pyplot as plt from scipy import signal from PIL import Image 前回と同じCIFAR-10データセットを利用します． また，簡単化のためRGB画像をグレースケール画像に変換します．</description>
     </item>
     
     <item>
