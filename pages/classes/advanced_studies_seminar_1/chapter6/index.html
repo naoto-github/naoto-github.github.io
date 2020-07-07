@@ -87,7 +87,7 @@
 畳み込み層 畳み込み層の仕組みを確認しましょう． 畳み込み層の目的は入力された複数の画像の特徴量をフィルタを利用して抽出することです． 下図は$4 \times 4$の入力画像に，$2 \times 2$のフィルタを適用した様子です． 入力画像からフィルタと同じ$2 \times 2$の画素を取り出し，フィルタの値と掛け合わせることで特徴量となります． この操作を1ピクセルだけずらしながら画像全体に適用すると$3 \times 3$の画像に変換されます． フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．
 
 それでは，この畳み込み層の振る舞いを再現してみましょう． まずは，ライブラリをインポートします． 画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
-import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib.pyplot as plt from scipy import signal from PIL import Image 前回と同じCIFAR-10データセットを利用します． また，簡単化のためRGB画像をグレースケール画像に変換します．" />
+import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib." />
 
 
 
@@ -108,7 +108,7 @@ import torch import torch.nn as nn import torch.optim as optim import torchvisio
 畳み込み層 畳み込み層の仕組みを確認しましょう． 畳み込み層の目的は入力された複数の画像の特徴量をフィルタを利用して抽出することです． 下図は$4 \times 4$の入力画像に，$2 \times 2$のフィルタを適用した様子です． 入力画像からフィルタと同じ$2 \times 2$の画素を取り出し，フィルタの値と掛け合わせることで特徴量となります． この操作を1ピクセルだけずらしながら画像全体に適用すると$3 \times 3$の画像に変換されます． フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．
 
 それでは，この畳み込み層の振る舞いを再現してみましょう． まずは，ライブラリをインポートします． 画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
-import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib.pyplot as plt from scipy import signal from PIL import Image 前回と同じCIFAR-10データセットを利用します． また，簡単化のためRGB画像をグレースケール画像に変換します．" />
+import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib." />
 
 
 
@@ -216,6 +216,7 @@ CNNは， <strong>畳み込み層(Convolutional Layer)</strong> ， <strong>プ�
 数値計算ライブラリの<a href="https://www.scipy.org/">Scipy</a>も追加します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
 <span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
+<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#f92672">as</span> F
 <span style="color:#f92672">import</span> torch.optim <span style="color:#f92672">as</span> optim
 <span style="color:#f92672">import</span> torchvision
 <span style="color:#f92672">import</span> torchvision.transforms <span style="color:#f92672">as</span> transforms
@@ -315,7 +316,7 @@ MAXプーリングは対象領域の最大値を代表値とする方法です�
 <p>畳み込み層は<code>conv2d()</code>で定義します．
 畳み込み層1は，入力チャネル（RGBの3色）が$3$，出力チャネル（フィルタ数）が$6$，フィルタサイズが$5 \times 5$です．
 畳み込み層2は，入力チャネル（フィルタ数）が$6$，出力チャネル（フィルタ数）が$16$，フィルタサイズが$5 \times 5$です．
-また，MAXプーリングは`F.max_pool2d()&lsquo;で定義します．
+また，MAXプーリングは<code>F.max_pool2d()</code>で定義します．
 プーリングのサイズは$2 \times 2$に設定しています．</p>
 <p>ここで，畳み込み層が出力する画像のサイズを考えます．
 元の画像は$32 \times 32$ですが，畳み込み層1で$5 \times 5$のフィルタを適用することで，
@@ -497,7 +498,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-07-07 12:49:25.309827 &#43;0900 JST m=&#43;0.148950139">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-07-07 18:50:50.939265 &#43;0900 JST m=&#43;0.141349057">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

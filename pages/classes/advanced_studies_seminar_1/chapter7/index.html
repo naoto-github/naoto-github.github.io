@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    深層学習データセットとクラウド環境 | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="深層学習データセットとクラウド環境" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/advanced_studies_seminar_1/chapter7/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="データセットの紹介  TorchvisionにはCIFAR-10以外にも様々なデータセットが用意されています． ここでは，MNIST ，Fashion-MNIST ，KMNIST ，COCO ， Cityscapes を取り上げて紹介します．
+import torchvision import matplotlib.pyplot as plt MNIST MNISTは 手書きの数字文字 のデータセットです． グレースケール画像で，サイズは$28 \times 28$です．
+dataset = torchvision.datasets.MNIST(root=&#34;./data&#34;, download=True) image, label = dataset[0] plt.imshow(image) 
+Fashion-MNIST Fashion-MNISTは 衣服などの ファッション のデータセットです． グレースケール画像で，サイズは$28 \times 28$です．
+dataset = torchvision.datasets.FashionMNIST(root=&#34;./data&#34;, download=True) image, label = dataset[0] plt.imshow(image, cmap=&#34;gray&#34;) 
+KMNIST KMNISTは くずし字（ひらがなや漢字） のデータセットです． グレースケール画像で，サイズは$28 \times 28$です．
+dataset = torchvision.datasets.KMNIST(root=&#34;./data&#34;, download=True) image, label = dataset[0] plt.imshow(image, cmap=&#34;gray&#34;)" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="深層学習データセットとクラウド環境" />
+
+
+
+  <meta name="twitter:description" content="データセットの紹介  TorchvisionにはCIFAR-10以外にも様々なデータセットが用意されています． ここでは，MNIST ，Fashion-MNIST ，KMNIST ，COCO ， Cityscapes を取り上げて紹介します．
+import torchvision import matplotlib.pyplot as plt MNIST MNISTは 手書きの数字文字 のデータセットです． グレースケール画像で，サイズは$28 \times 28$です．
+dataset = torchvision.datasets.MNIST(root=&#34;./data&#34;, download=True) image, label = dataset[0] plt.imshow(image) 
+Fashion-MNIST Fashion-MNISTは 衣服などの ファッション のデータセットです． グレースケール画像で，サイズは$28 \times 28$です．
+dataset = torchvision.datasets.FashionMNIST(root=&#34;./data&#34;, download=True) image, label = dataset[0] plt.imshow(image, cmap=&#34;gray&#34;) 
+KMNIST KMNISTは くずし字（ひらがなや漢字） のデータセットです． グレースケール画像で，サイズは$28 \times 28$です．
+dataset = torchvision.datasets.KMNIST(root=&#34;./data&#34;, download=True) image, label = dataset[0] plt.imshow(image, cmap=&#34;gray&#34;)" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+  <li>	
+    <a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target="_blank">学内専用</a>
+  </li>  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2020-07-07 13:04:55 &#43;0900 JST">July 7, 2020</time>
+</div>
+
+    <h1 class="post-title">深層学習データセットとクラウド環境</h1>
+<div class="post-line"></div>
+
+    
+
+    <h1>
+  <img class="head-image" src="/logo/logo.png">
+  データセットの紹介
+</h1>
+
+<p>Torchvisionには<a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10</a>以外にも様々な<a href="https://pytorch.org/docs/stable/torchvision/datasets.html">データセット</a>が用意されています．
+ここでは，<strong>MNIST</strong> ，<strong>Fashion-MNIST</strong> ，<strong>KMNIST</strong> ，<strong>COCO</strong> ， <strong>Cityscapes</strong> を取り上げて紹介します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torchvision
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+</code></pre></div><h2 id="mnist">MNIST</h2>
+<p><a href="http://yann.lecun.com/exdb/mnist/">MNIST</a>は <strong>手書きの数字文字</strong> のデータセットです．
+グレースケール画像で，サイズは$28 \times 28$です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>MNIST(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, download<span style="color:#f92672">=</span>True)
+image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
+plt<span style="color:#f92672">.</span>imshow(image)
+</code></pre></div><p><a href="https://gyazo.com/d44f447952ce627aa20297e8e190b836"><img src="https://i.gyazo.com/d44f447952ce627aa20297e8e190b836.png" alt="Image from Gyazo"></a></p>
+<h2 id="fashion-mnist">Fashion-MNIST</h2>
+<p><a href="https://github.com/zalandoresearch/fashion-mnist">Fashion-MNIST</a>は
+衣服などの <strong>ファッション</strong> のデータセットです．
+グレースケール画像で，サイズは$28 \times 28$です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>FashionMNIST(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, download<span style="color:#f92672">=</span>True)
+image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
+plt<span style="color:#f92672">.</span>imshow(image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/045a700957e6cb561e5714e86501525f"><img src="https://i.gyazo.com/045a700957e6cb561e5714e86501525f.png" alt="Image from Gyazo"></a></p>
+<h2 id="kmnist">KMNIST</h2>
+<p><a href="https://github.com/rois-codh/kmnist">KMNIST</a>は <strong>くずし字（ひらがなや漢字）</strong> のデータセットです．
+グレースケール画像で，サイズは$28 \times 28$です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>KMNIST(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, download<span style="color:#f92672">=</span>True)
+image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
+plt<span style="color:#f92672">.</span>imshow(image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/ab408ddd45c9e52513986ebd2767e162"><img src="https://i.gyazo.com/ab408ddd45c9e52513986ebd2767e162.png" alt="Image from Gyazo"></a></p>
+<h2 id="coco">COCO</h2>
+<p><a href="https://cocodataset.org/">COCO</a>は物体検出やセグメンテーションなどに利用されるデータセットです．
+33万枚以上の画像で構成され，80種類のラベルが存在します．
+画像のアノテーションはJSON形式で配布されています．</p>
+<h2 id="cityscapes">Cityscapes</h2>
+<p><a href="https://www.cityscapes-dataset.com/">Cityscapes</a>は，人や車両のセグメンテーションなどに利用されるデータセットです．
+50の市街における5000枚の高精度なアノテーション付きの画像と，20000枚の粗いアノテーション付きの画像が提供されます．</p>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  クラウド環境
+</h1>
+
+<p>これまで深層学習の仕組みを学んできましたが，
+最適化が必要な手法（損失関数，最適化関数など）や
+パラメータ（重み，バイアス，学習率など）が多く存在することが分かりました．
+これらは， <strong>ハイパーパラメータ</strong> と呼ばれ，
+学習データと評価データを基に，試行錯誤を繰り返しながら決定するしか方法がなく，
+調整に膨大な時間を必要とします．</p>
+<p>深層学習の計算を短縮する一つの方法として，
+<strong>GPU(Graphics Processing Unit)</strong> の利用があります．
+一般にコンピュータの計算には <strong>CPU(Central Processing Unit)</strong> が用いられますが，
+深層学習は単純な行列計算が多く，並列計算が得意なGPUの方が適しています．
+<a href="https://www.kabuku.co.jp/developers/gpu-performance-for-deep-learning">株式会社KABUKUの報告</a>では，
+手書き文字データセットのMNISTに対する畳み込みニューラルネットワークの学習において，
+CPUは1147.53秒，GPUは58.75sと約20倍の差があったことが示されています．</p>
+<p>しかし，GPUは高価である上に，<a href="https://developer.nvidia.com/cuda-toolkit">CUDA(Compute Unified Device Architecture)</a>などの
+専用のツールキットを導入する必要があり，初学者にはハードルが高いです．
+そこで，GPUが利用可能なクラウドサービスを利用してみましょう．
+代表的なクラウドサービスは下記です．</p>
+<ul>
+<li><a href="https://colab.research.google.com/">Google Colaboratory</a></li>
+<li><a href="https://aws.amazon.com/jp/">Amazon Web Services</a></li>
+<li><a href="https://azure.microsoft.com/">Microsoft Azure</a></li>
+</ul>
+<p>この中でも，<a href="https://colab.research.google.com/">Google Colaboratory</a>は特に注目です．
+Jupyter Notebookと似た使用感であり，12時間まではGPUを無料で利用できます．
+ブラウザ上で動作するウェブアプリであり，データをGoogle Driveに保存することも可能です．</p>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  Google Colaboratoryで深層学習
+</h1>
+
+<p>それでは，<a href="https://colab.research.google.com/">Google Colaboratory</a>で
+手書き文字データセットのMNISTの学習を試してみましょう．
+Google Colaboratoryにアクセスしたら，<strong>ランタイムのタイプを変更</strong> をクリックし，
+<strong>ハードウェアアクセラレータ</strong> を<strong>GPU</strong> に変更します( <strong>None</strong> はCPU)．</p>
+<p><a href="https://gyazo.com/f0c6cbb51d736a43610b86d85fde9ff8"><img src="https://i.gyazo.com/f0c6cbb51d736a43610b86d85fde9ff8.png" alt="Image from Gyazo"></a></p>
+<p>まずはライブラリを導入します．
+今回は計算時間を計測するため<code>time</code>ライブラリを追加します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
+<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#f92672">as</span> F
+<span style="color:#f92672">import</span> torch.optim <span style="color:#f92672">as</span> optim
+<span style="color:#f92672">import</span> torchvision
+<span style="color:#f92672">import</span> torchvision.transforms <span style="color:#f92672">as</span> transforms
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<span style="color:#f92672">import</span> time
+</code></pre></div><p>MNISTのデータセットをダウンロードします．
+これを，そのままバッチサイズ$n=64$のミニバッチ学習に用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>MNIST(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, download<span style="color:#f92672">=</span>True, transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor())
+loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(dataset<span style="color:#f92672">=</span>dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>)
+</code></pre></div><p>4層の畳み込みニューラルネットワークを定義します．
+2層の畳み込み層と2層の結合層で構成されています．
+最初の結合層の入力数は$16 \times 4 \times 4=256$です．
+このとき，<code>to(device)</code>でGPUで計算することを宣言します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(nn<span style="color:#f92672">.</span>Module):
+	<span style="color:#66d9ef">def</span> __init__(self):
+        super(Net, self)<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)
+        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">64</span>)
+        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">10</span>)
+        
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv1(x)), <span style="color:#ae81ff">2</span>)
+        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv2(x)), <span style="color:#ae81ff">2</span>)
+        x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span>)
+        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>fc1(x))
+        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(self<span style="color:#f92672">.</span>fc2(x), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> x
+
+device <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;cuda&#34;</span> <span style="color:#66d9ef">if</span> torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available() <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;cpu&#34;</span>
+network <span style="color:#f92672">=</span> Net()<span style="color:#f92672">.</span>to(device) <span style="color:#75715e">#GPUで計算</span>
+</code></pre></div><p>損失関数は ソフトマックス交差エントロピー ， 最適化関数は Adam を採用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>Adam(network<span style="color:#f92672">.</span>parameters())
+</code></pre></div><p>10エポックのミニバッチ学習を行い，計算時間を計測します．
+ここでも，<code>images</code>と<code>labels</code>は<code>to(device)</code>でGPUで計算することを宣言します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss_history <span style="color:#f92672">=</span> []
+
+network<span style="color:#f92672">.</span>train() <span style="color:#75715e">#学習モード</span>
+
+time_start <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+
+<span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+    
+    loss_epoch <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    
+    <span style="color:#66d9ef">for</span> i, (images, labels) <span style="color:#f92672">in</span> enumerate(loader):
+
+        images <span style="color:#f92672">=</span> images<span style="color:#f92672">.</span>to(device) <span style="color:#75715e">#GPUで計算</span>
+        labels <span style="color:#f92672">=</span> labels<span style="color:#f92672">.</span>to(device) <span style="color:#75715e">#GPUで計算</span>
+
+        optimizer<span style="color:#f92672">.</span>zero_grad()
+        z <span style="color:#f92672">=</span> network(images)
+        
+        loss <span style="color:#f92672">=</span> criterion(z, labels)
+        loss<span style="color:#f92672">.</span>backward()
+        
+        loss_epoch <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+        
+        optimizer<span style="color:#f92672">.</span>step()
+    
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{epoch} {loss_epoch / i}&#34;</span>)
+    loss_history<span style="color:#f92672">.</span>append(loss_epoch <span style="color:#f92672">/</span> i)
+
+time_end <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>time()
+elapsed_time <span style="color:#f92672">=</span> time_end <span style="color:#f92672">-</span> time_start
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{elapsed_time:.2f} sec.&#34;</span>)
+</code></pre></div><p>CPUは <strong>183.36秒</strong> ，GPUは <strong>96.55秒</strong> となり，計算時間が約半分に短縮されることが確認できました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 出力[CPUで計算]</span>
+<span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1.7720158409283535</span>
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1.6003098847899138</span>
+<span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1.5854766999899133</span>
+<span style="color:#ae81ff">3</span> <span style="color:#ae81ff">1.5807246369257044</span>
+<span style="color:#ae81ff">4</span> <span style="color:#ae81ff">1.5493033736339883</span>
+<span style="color:#ae81ff">5</span> <span style="color:#ae81ff">1.4842953522915265</span>
+<span style="color:#ae81ff">6</span> <span style="color:#ae81ff">1.4814846912595734</span>
+<span style="color:#ae81ff">7</span> <span style="color:#ae81ff">1.4795333463837776</span>
+<span style="color:#ae81ff">8</span> <span style="color:#ae81ff">1.4774807449847682</span>
+<span style="color:#ae81ff">9</span> <span style="color:#ae81ff">1.4766922878735602</span>
+<span style="color:#ae81ff">183.36</span> sec<span style="color:#f92672">.</span>
+
+<span style="color:#75715e"># 出力[GPUで計算]</span>
+<span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1.6751040738064045</span>
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1.591748113438821</span>
+<span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1.5490432127817209</span>
+<span style="color:#ae81ff">3</span> <span style="color:#ae81ff">1.4937925009233848</span>
+<span style="color:#ae81ff">4</span> <span style="color:#ae81ff">1.4887989914658992</span>
+<span style="color:#ae81ff">5</span> <span style="color:#ae81ff">1.4852294785744862</span>
+<span style="color:#ae81ff">6</span> <span style="color:#ae81ff">1.4827559923031541</span>
+<span style="color:#ae81ff">7</span> <span style="color:#ae81ff">1.481329872488594</span>
+<span style="color:#ae81ff">8</span> <span style="color:#ae81ff">1.4796693687632345</span>
+<span style="color:#ae81ff">9</span> <span style="color:#ae81ff">1.4787192031693432</span>
+<span style="color:#ae81ff">96.55</span> sec<span style="color:#f92672">.</span>
+</code></pre></div><p>学習データに対する正解率を確認すると，98.56%という非常に高い精度で分類できたことが分かります（評価用データではないことに注意）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> dataset:
+    image <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>unsqueeze(image, <span style="color:#ae81ff">0</span>)
+    image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>to(device) <span style="color:#75715e">#GPUで計算</span>
+    z <span style="color:#f92672">=</span> network(image)
+    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
+    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
+
+acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(dataset)
+<span style="color:#66d9ef">print</span>(acc)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+<span style="color:#ae81ff">0.9855666666666667</span>
+</code></pre></div><h3>参考書籍</h3>
+
+
+
+
+
+
+
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07GWHP9YM&linkId=08226226a8fb428fe7bc7d48e47ff8a0&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07FVJKP1L&linkId=9f5d740609362f2de596d41b9b060b30&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07VPDVNKW&linkId=ab58ead321f3b247b4b658408f167d43&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07SPZ4Z82&linkId=dcc9a4aec3676eac587eb38f0412ccdd&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/advanced_studies_seminar_1/chapter7/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-07-07 18:50:50.934433 &#43;0900 JST m=&#43;0.136517011">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
