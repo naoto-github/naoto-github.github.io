@@ -296,25 +296,49 @@ MAXプーリングは対象領域の最大値を代表値とする方法です�
   ネットワークの学習
 </h1>
 
-<p>それでは，畳込みニューラルネットワークを利用して，CIFAR-10の分類に挑戦しましょう．</p>
+<p>それでは，畳込みニューラルネットワークを利用して，CIFAR-10の分類に挑戦しましょう．
+<code>transform=Transforms.ToTensor()</code>オプションを設定して，データセットを読み込みます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor())
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">my_dataset <span style="color:#f92672">=</span> []
+</code></pre></div><p>今回も分類問題の難易度を下げるため，
+ラベルが0(airplane)，1(automobile)，2(bird)のみを対象とします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">my_dataset <span style="color:#f92672">=</span> []
 <span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> dataset:
     <span style="color:#66d9ef">if</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
         my_dataset<span style="color:#f92672">.</span>append((image, label))
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(dataset<span style="color:#f92672">=</span>my_dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(nn<span style="color:#f92672">.</span>Module):
+</code></pre></div><p>これをバッチサイズ$n=64$のミニバッチ用のデータセットとします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(dataset<span style="color:#f92672">=</span>my_dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>)
+</code></pre></div><p>4層で構成される畳み込みニューラルネットワークを定義します．
+これまでの方法とは異なり<code>nn.Module</code>を継承した新しいクラスとして定義します．
+コンストラクタである<code>__init__</code>で，畳み込み層1(<code>conv1</code>)，畳み込み層2(<code>conv2</code>)，
+結合層1(<code>fc1</code>)，結合層2(<code>fc2</code>)の順でネットワークの層を定義しています．
+また，<code>forward()</code>でネットワークの順伝播の方法を定義しています．</p>
+<p>畳み込み層は<code>conv2d()</code>で定義します．
+畳み込み層1は，入力チャネル（RGBの3色）が$3$，出力チャネル（フィルタ数）が$6$，フィルタサイズが$5 \times 5$です．
+畳み込み層2は，入力チャネル（フィルタ数）が$6$，出力チャネル（フィルタ数）が$16$，フィルタサイズが$5 \times 5$です．
+また，MAXプーリングは`F.max_pool2d()&lsquo;で定義します．
+プーリングのサイズは$2 \times 2$に設定しています．</p>
+<p>ここで，畳み込み層が出力する画像のサイズを考えます．
+元の画像は$32 \times 32$ですが，畳み込み層1で$5 \times 5$のフィルタを適用することで，
+画像の大きさは$28 \times 28$に縮小します．
+これを$2 \times 2$でプーリングすると，画像は$1/2$のサイズの$14 \times 14$に縮小します．
+さらに，畳み込み層2で$5 \times $5のフィルタを適用すると，画像の大きさは$10 \times 10$に縮小し，
+$2 \times 2$でプーリングすると$1/2$のサイズの$5 \times 5$に縮小します．
+この畳み込み層2の出力が，結合層1の入力となります．</p>
+<p><a href="https://gyazo.com/d9cf6509b5c4234e6abf80f891a8d736"><img src="https://i.gyazo.com/d9cf6509b5c4234e6abf80f891a8d736.png" alt="Image from Gyazo"></a></p>
+<p>結果的に，$16(フィルタ数) \times 5 \times 5 = 400$が結合層1の入力数になります(<code>view()</code>で1次元に変換してから入力)．
+これをもう一度，結合層2に伝搬・集約し，最終的にソフトマックスで各ラベルの確率を出力します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(nn<span style="color:#f92672">.</span>Module):
     <span style="color:#66d9ef">def</span> __init__(self):
         super(Net, self)<span style="color:#f92672">.</span>__init__()
-        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>))
-        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>))
-        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">64</span>)
-        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">3</span>)
+        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>))　<span style="color:#75715e"># 入力チャネル，出力チャネル，フィルタサイズ</span>
+        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>))　<span style="color:#75715e"># 入力チャネル，出力チャネル，フィルタサイズ</span>
+        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">64</span>) <span style="color:#75715e"># 入力数，出力数</span>
+        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">3</span>)  <span style="color:#75715e"># 入力数，出力数</span>
         
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
-        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv1(x)), <span style="color:#ae81ff">2</span>)
-        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv2(x)), <span style="color:#ae81ff">2</span>)
-        x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>)
+        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv1(x)), <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2x2でMAXプーリング</span>
+        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv2(x)), <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2x2でMAXプーリング</span>
+        x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>) <span style="color:#75715e"># 1次元に整形</span>
         x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>fc1(x))
         x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(self<span style="color:#f92672">.</span>fc2(x), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
         <span style="color:#66d9ef">return</span> x
@@ -328,7 +352,11 @@ Net(
   (fc1): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">400</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, bias<span style="color:#f92672">=</span>True)
   (fc2): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, bias<span style="color:#f92672">=</span>True)
 )
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</code></pre></div><p>ここで，学習データに対する正解率を確認してみます．
+畳み込みニューラルネットワークの入力の形状は <strong>[バッチサイズ][チャネル数][縦][横]</strong> というテンソルになっている必要があるため，
+<code>torch.unsqueeze</code>で次元を拡張し，バッチサイズ$n=1$のデータセットとして，入力していることに注意してください．
+学習前であるため，$0.33$という低い正解率でした．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 <span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
     image <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>unsqueeze(image, <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#次元を増やす</span>
     z <span style="color:#f92672">=</span> network(image)
@@ -339,9 +367,14 @@ acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</
 <span style="color:#66d9ef">print</span>(acc)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
 <span style="color:#ae81ff">0.3333333333333333</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+</code></pre></div><p>損失関数と最適化関数を定義します．
+損失関数は <strong>ソフトマックス交差エントロピー</strong> ，
+最適化関数は <strong>Adam</strong> を採用しました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
 optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>Adam(network<span style="color:#f92672">.</span>parameters())
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss_history <span style="color:#f92672">=</span> []
+</code></pre></div><p>ミニバッチ学習を10エポック繰り返します．
+損失の推移を可視化すると，エポックごとに損失が減少していることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss_history <span style="color:#f92672">=</span> []
 
 <span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
     
@@ -376,6 +409,9 @@ optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;epoch&#34;</span>)
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;loss&#34;</span>)
 </code></pre></div><p><a href="https://gyazo.com/3b6fad087fa4adef57e38843a46501cd"><img src="https://i.gyazo.com/3b6fad087fa4adef57e38843a46501cd.png" alt="Image from Gyazo"></a></p>
+<p>最後に正解率を再度計算してみましょう．
+あくまで学習データに対する正解率であり，評価用のデータではないことに注意）．
+正解率は0.846となり，前回の多層パーセプトロンよりも，高い正解率を実現できました．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 <span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
     image <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>unsqueeze(image, <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#次元を増やす</span>
@@ -461,7 +497,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-07-06 17:09:27.161216 &#43;0900 JST m=&#43;0.146988034">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-07-07 12:49:25.309827 &#43;0900 JST m=&#43;0.148950139">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
