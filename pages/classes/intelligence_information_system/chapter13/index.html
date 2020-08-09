@@ -366,38 +366,38 @@ plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;d
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;error&#34;</span>)
 plt<span style="color:#f92672">.</span>legend()
 </code></pre></div><p><a href="https://gyazo.com/ca9e6c07656ba67003547944de93c427"><img src="https://i.gyazo.com/ca9e6c07656ba67003547944de93c427.png" alt="Image from Gyazo"></a></p>
-<h1>
+<!-- <h1>
   <img class="head-image" src="/logo/logo.png">
   課題
 </h1>
-
-<p>下記のデータセットを利用し，k-分割交差検証で多項式回帰の精度を評価しなさい．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#f92672">-</span><span style="color:#ae81ff">2.00000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.90000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.80000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.70000000e+00</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">1.60000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.50000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.40000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.30000000e+00</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">1.20000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.10000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.00000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">9.00000000e-01</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">8.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5.00000000e-01</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">4.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.00000000e-01</span>,
-        <span style="color:#ae81ff">1.77635684e-15</span>,  <span style="color:#ae81ff">1.00000000e-01</span>,  <span style="color:#ae81ff">2.00000000e-01</span>,  <span style="color:#ae81ff">3.00000000e-01</span>,
-        <span style="color:#ae81ff">4.00000000e-01</span>,  <span style="color:#ae81ff">5.00000000e-01</span>,  <span style="color:#ae81ff">6.00000000e-01</span>,  <span style="color:#ae81ff">7.00000000e-01</span>,
-        <span style="color:#ae81ff">8.00000000e-01</span>,  <span style="color:#ae81ff">9.00000000e-01</span>,  <span style="color:#ae81ff">1.00000000e+00</span>,  <span style="color:#ae81ff">1.10000000e+00</span>,
-        <span style="color:#ae81ff">1.20000000e+00</span>,  <span style="color:#ae81ff">1.30000000e+00</span>,  <span style="color:#ae81ff">1.40000000e+00</span>,  <span style="color:#ae81ff">1.50000000e+00</span>,
-        <span style="color:#ae81ff">1.60000000e+00</span>,  <span style="color:#ae81ff">1.70000000e+00</span>,  <span style="color:#ae81ff">1.80000000e+00</span>,  <span style="color:#ae81ff">1.90000000e+00</span>])
-		
-y2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([ <span style="color:#ae81ff">4.39898556e+00</span>,  <span style="color:#ae81ff">3.93435081e+00</span>,  <span style="color:#ae81ff">2.61498259e+00</span>,  <span style="color:#ae81ff">2.72044213e+00</span>,
-        <span style="color:#ae81ff">1.30362037e+00</span>,  <span style="color:#ae81ff">2.08098975e+00</span>,  <span style="color:#ae81ff">1.85633410e+00</span>,  <span style="color:#ae81ff">1.44865881e+00</span>,
-        <span style="color:#ae81ff">7.29089005e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">9.42380345e-02</span>,  <span style="color:#ae81ff">8.39806492e-01</span>,  <span style="color:#ae81ff">9.13725511e-01</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">6.89556978e-02</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.88622122e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.17447107e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8.50096595e-02</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">5.10447688e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.18019152e-03</span>,  <span style="color:#ae81ff">1.36162277e-01</span>,  <span style="color:#ae81ff">8.31331709e-01</span>,
-        <span style="color:#ae81ff">9.37694167e-02</span>,  <span style="color:#ae81ff">1.68726072e+00</span>,  <span style="color:#ae81ff">4.71255186e-01</span>,  <span style="color:#ae81ff">2.02384997e+00</span>,
-        <span style="color:#ae81ff">1.12543648e+00</span>,  <span style="color:#ae81ff">2.23950532e+00</span>,  <span style="color:#ae81ff">2.69476804e+00</span>,  <span style="color:#ae81ff">1.50769218e+00</span>,
-        <span style="color:#ae81ff">2.86140345e+00</span>,  <span style="color:#ae81ff">2.46208705e+00</span>,  <span style="color:#ae81ff">2.46640709e+00</span>,  <span style="color:#ae81ff">2.40690140e+00</span>,
-        <span style="color:#ae81ff">1.29052071e+00</span>,  <span style="color:#ae81ff">7.78084009e-01</span>,  <span style="color:#ae81ff">1.01201918e+00</span>,  <span style="color:#ae81ff">5.94619852e-01</span>,
-        <span style="color:#ae81ff">1.27863784e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.80496436e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.75028230e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.54273399e+00</span>])		
-
-data2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>stack([x2, y2])
-</code></pre></div><p><a href="https://gyazo.com/c3b122c99c004d9f7ba915d117858e92"><img src="https://i.gyazo.com/c3b122c99c004d9f7ba915d117858e92.png" alt="Image from Gyazo"></a></p>
-<p><a href="https://gyazo.com/4589eebf892e43a067313ce66fa87b9e"><img src="https://i.gyazo.com/4589eebf892e43a067313ce66fa87b9e.png" alt="Image from Gyazo"></a></p>
-<p>作成したノートブックを <strong>HTML(.html)</strong> 形式でダウンロードし提出しなさい．</p>
+ -->
+<!-- 下記のデータセットを利用し，k-分割交差検証で多項式回帰の精度を評価しなさい． -->
+<!-- ```python -->
+<!-- x2 = np.array([-2.00000000e+00, -1.90000000e+00, -1.80000000e+00, -1.70000000e+00, -->
+<!--        -1.60000000e+00, -1.50000000e+00, -1.40000000e+00, -1.30000000e+00, -->
+<!--        -1.20000000e+00, -1.10000000e+00, -1.00000000e+00, -9.00000000e-01, -->
+<!--        -8.00000000e-01, -7.00000000e-01, -6.00000000e-01, -5.00000000e-01, -->
+<!--        -4.00000000e-01, -3.00000000e-01, -2.00000000e-01, -1.00000000e-01, -->
+<!--         1.77635684e-15,  1.00000000e-01,  2.00000000e-01,  3.00000000e-01, -->
+<!--         4.00000000e-01,  5.00000000e-01,  6.00000000e-01,  7.00000000e-01, -->
+<!--         8.00000000e-01,  9.00000000e-01,  1.00000000e+00,  1.10000000e+00, -->
+<!--         1.20000000e+00,  1.30000000e+00,  1.40000000e+00,  1.50000000e+00, -->
+<!--         1.60000000e+00,  1.70000000e+00,  1.80000000e+00,  1.90000000e+00]) -->
+<!-- y2 = np.array([ 4.39898556e+00,  3.93435081e+00,  2.61498259e+00,  2.72044213e+00, -->
+<!--         1.30362037e+00,  2.08098975e+00,  1.85633410e+00,  1.44865881e+00, -->
+<!--         7.29089005e-01, -9.42380345e-02,  8.39806492e-01,  9.13725511e-01, -->
+<!--        -6.89556978e-02, -1.88622122e-01, -4.17447107e-01, -8.50096595e-02, -->
+<!--        -5.10447688e-01, -1.18019152e-03,  1.36162277e-01,  8.31331709e-01, -->
+<!--         9.37694167e-02,  1.68726072e+00,  4.71255186e-01,  2.02384997e+00, -->
+<!--         1.12543648e+00,  2.23950532e+00,  2.69476804e+00,  1.50769218e+00, -->
+<!--         2.86140345e+00,  2.46208705e+00,  2.46640709e+00,  2.40690140e+00, -->
+<!--         1.29052071e+00,  7.78084009e-01,  1.01201918e+00,  5.94619852e-01, -->
+<!--         1.27863784e-01, -4.80496436e-01, -1.75028230e+00, -2.54273399e+00])		 -->
+<!-- data2 = np.stack([x2, y2]) -->
+<!-- ``` -->
+<!-- [![Image from Gyazo](https://i.gyazo.com/c3b122c99c004d9f7ba915d117858e92.png)](https://gyazo.com/c3b122c99c004d9f7ba915d117858e92) -->
+<!-- [![Image from Gyazo](https://i.gyazo.com/4589eebf892e43a067313ce66fa87b9e.png)](https://gyazo.com/4589eebf892e43a067313ce66fa87b9e) -->
+<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
 
 <h3>参考書籍</h3>
 
@@ -466,7 +466,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-07-12 15:37:25.109209 &#43;0900 JST m=&#43;0.242094291">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-08-09 10:22:44.977392 &#43;0900 JST m=&#43;0.565955645">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
