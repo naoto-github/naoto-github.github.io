@@ -81,12 +81,13 @@
 
 
 
-  <meta property="og:description" content="畳み込みニューラルネットワーク畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
+  <meta property="og:description" content="畳み込みニューラルネットワーク  畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
 入力画像は，畳み込み層に入力され，プーリング層を経て， 全結合層で集約され，最終的に画像の分類を出力します． この畳み込み層とプーリング層の処理は，複数回繰り返されることがあります． 畳み込み層では複数のフィルタを用いて画像の特徴量を抽出します． プーリング層では特徴を失わないように画像サイズを縮小します（ダウンサンプリング）． 全結合層は多層パーセプトロンで用いられる一般的な層と同じです．
 
 畳み込み層 畳み込み層の仕組みを確認しましょう． 畳み込み層の目的は入力された複数の画像の特徴量をフィルタを利用して抽出することです． 下図は$4 \times 4$の入力画像に，$2 \times 2$のフィルタを適用した様子です． 入力画像からフィルタと同じ$2 \times 2$の画素を取り出し，フィルタの値と掛け合わせることで特徴量となります． この操作を1ピクセルだけずらしながら画像全体に適用すると$3 \times 3$の画像に変換されます． フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．
 
-それでは，この畳み込み層の振る舞いを再現してみましょう． まずは，ライブラリをインポートします． 画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
+それでは，この畳み込み層の振る舞いを再現してみましょう．
+ノートブックを作成し，ノートブックのタイトルをNN-6 に設定します． まずは，ライブラリをインポートします． 画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
 import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib." />
 
 
@@ -102,12 +103,13 @@ import torch import torch.nn as nn import torch.nn.functional as F import torch.
 
 
 
-  <meta name="twitter:description" content="畳み込みニューラルネットワーク畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
+  <meta name="twitter:description" content="畳み込みニューラルネットワーク  畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
 入力画像は，畳み込み層に入力され，プーリング層を経て， 全結合層で集約され，最終的に画像の分類を出力します． この畳み込み層とプーリング層の処理は，複数回繰り返されることがあります． 畳み込み層では複数のフィルタを用いて画像の特徴量を抽出します． プーリング層では特徴を失わないように画像サイズを縮小します（ダウンサンプリング）． 全結合層は多層パーセプトロンで用いられる一般的な層と同じです．
 
 畳み込み層 畳み込み層の仕組みを確認しましょう． 畳み込み層の目的は入力された複数の画像の特徴量をフィルタを利用して抽出することです． 下図は$4 \times 4$の入力画像に，$2 \times 2$のフィルタを適用した様子です． 入力画像からフィルタと同じ$2 \times 2$の画素を取り出し，フィルタの値と掛け合わせることで特徴量となります． この操作を1ピクセルだけずらしながら画像全体に適用すると$3 \times 3$の画像に変換されます． フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．
 
-それでは，この畳み込み層の振る舞いを再現してみましょう． まずは，ライブラリをインポートします． 画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
+それでは，この畳み込み層の振る舞いを再現してみましょう．
+ノートブックを作成し，ノートブックのタイトルをNN-6 に設定します． まずは，ライブラリをインポートします． 画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
 import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib." />
 
 
@@ -211,7 +213,8 @@ CNNは， <strong>畳み込み層(Convolutional Layer)</strong> ， <strong>プ�
 この操作を1ピクセルだけずらしながら画像全体に適用すると$3 \times 3$の画像に変換されます．
 フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．</p>
 <p><a href="https://gyazo.com/07d6ec107bd1478b64775030d3de4964"><img src="https://i.gyazo.com/07d6ec107bd1478b64775030d3de4964.png" alt="Image from Gyazo"></a></p>
-<p>それでは，この畳み込み層の振る舞いを再現してみましょう．
+<p>それでは，この畳み込み層の振る舞いを再現してみましょう．</p>
+<p>ノートブックを作成し，ノートブックのタイトルを<strong>NN-6</strong> に設定します．
 まずは，ライブラリをインポートします．
 画像処理ライブラリの<a href="http://www.pythonware.com/products/pil/">Pillow</a>と
 数値計算ライブラリの<a href="https://www.scipy.org/">Scipy</a>も追加します．</p>
@@ -503,7 +506,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2020-09-11 15:09:51.3085434 &#43;0900 JST m=&#43;8.484696701">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2020-09-15 11:59:45.947956 &#43;0900 JST m=&#43;0.151923620">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
