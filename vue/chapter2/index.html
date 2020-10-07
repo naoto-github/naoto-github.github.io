@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Vue.jsを利用したお絵かきアプリ | MLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="MLAB" />
+
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:500&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+
+  
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  <meta property="og:title" content="Vue.jsを利用したお絵かきアプリ" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/vue/chapter2/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/e129d2c8ad0181d26e9e3d467a3751fc.png" />
+
+
+
+  <meta property="og:site_name" content="MLAB" />
+
+
+
+  <meta property="og:description" content="キャンバス（Canvas）とは  キャンバス（Canvas） は HTML5から導入された JavaScript でグラフィックやアニメーションを描画するための要素（タグ）です． 描画にはCanvas APIが用いられ，Canvasに関連付けられたコンテキストに対して，JavaScriptで描画を指示します． 例えば，下記のコードは，キャンバスを設置し，青色で塗りつぶした正方形を描いています． 今回はこのCanvasとVue.jsを組み合わせて，簡易なお絵かきアプリを実装してみます．
+&lt;canvas id=&#34;canvas&#34;&gt;&lt;/canvas&gt; &lt;script&gt; canvas = document.getElementById(&#34;canvas&#34;); context = canvas.getContext(&#34;2d&#34;); context.fillStyle = &#34;blue&#34;; context.fillRect(10, 10, 150, 150); &lt;/script&gt; 
+ canvas = document.getElementById(&#34;canvas&#34;); context = canvas.getContext(&#34;2d&#34;); context.fillStyle = &#34;blue&#34;; context.fillRect(10, 10, 150, 150);   お絵かきアプリ  それでは お絵かきアプリ を実装して行きましょう． 下記が完成したソースコードです． キャンバス上でマウスを動かすと小さな四角形が描画される仕組みとなっています．
+See the Pen 基礎演習 第2回 by Naoto Mukai (@nmukai) on CodePen.  新規Penの作成 開発環境であるCodePenを開き，新規にPen（プロジェクト）を作成してください． Penを作成したらタイトルに 基礎演習 第2回 と入力しましょう．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Vue.jsを利用したお絵かきアプリ" />
+
+
+
+  <meta name="twitter:description" content="キャンバス（Canvas）とは  キャンバス（Canvas） は HTML5から導入された JavaScript でグラフィックやアニメーションを描画するための要素（タグ）です． 描画にはCanvas APIが用いられ，Canvasに関連付けられたコンテキストに対して，JavaScriptで描画を指示します． 例えば，下記のコードは，キャンバスを設置し，青色で塗りつぶした正方形を描いています． 今回はこのCanvasとVue.jsを組み合わせて，簡易なお絵かきアプリを実装してみます．
+&lt;canvas id=&#34;canvas&#34;&gt;&lt;/canvas&gt; &lt;script&gt; canvas = document.getElementById(&#34;canvas&#34;); context = canvas.getContext(&#34;2d&#34;); context.fillStyle = &#34;blue&#34;; context.fillRect(10, 10, 150, 150); &lt;/script&gt; 
+ canvas = document.getElementById(&#34;canvas&#34;); context = canvas.getContext(&#34;2d&#34;); context.fillStyle = &#34;blue&#34;; context.fillRect(10, 10, 150, 150);   お絵かきアプリ  それでは お絵かきアプリ を実装して行きましょう． 下記が完成したソースコードです． キャンバス上でマウスを動かすと小さな四角形が描画される仕組みとなっています．
+See the Pen 基礎演習 第2回 by Naoto Mukai (@nmukai) on CodePen.  新規Penの作成 開発環境であるCodePenを開き，新規にPen（プロジェクト）を作成してください． Penを作成したらタイトルに 基礎演習 第2回 と入力しましょう．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/e129d2c8ad0181d26e9e3d467a3751fc.png" />
+
+
+
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    <p class="nav-info">Mukai's Lab. at Sugiyama Women's University</p>    
+    <a href="/">
+    <h2 class="nav-title">
+	     <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+	     <span>MLAB</span>
+        
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/classes/">授業資料</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/pages/tech/">技術メモ</a>
+  </li>
+  
+  
+  <li>	
+    <a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target="_blank">学内専用</a>
+  </li>  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    <div class="post-info">
+  <span>written by</span>
+  Naoto Mukai
+  
+  
+  
+  <span>on&nbsp;</span><time datetime="2020-06-17 15:20:48 &#43;0900 JST">June 17, 2020</time>
+</div>
+
+    <h1 class="post-title">Vue.jsを利用したお絵かきアプリ</h1>
+<div class="post-line"></div>
+
+    
+
+    <p><a href="https://gyazo.com/e129d2c8ad0181d26e9e3d467a3751fc"><img src="https://i.gyazo.com/e129d2c8ad0181d26e9e3d467a3751fc.png" alt="Image from Gyazo"></a></p>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  キャンバス（Canvas）とは
+</h1>
+
+<p><strong>キャンバス（Canvas）</strong> は HTML5から導入された <strong>JavaScript</strong> でグラフィックやアニメーションを描画するための要素（タグ）です．
+描画にはCanvas APIが用いられ，Canvasに関連付けられたコンテキストに対して，JavaScriptで描画を指示します．
+例えば，下記のコードは，キャンバスを設置し，青色で塗りつぶした正方形を描いています．
+今回はこのCanvasとVue.jsを組み合わせて，簡易なお絵かきアプリを実装してみます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML">&lt;<span style="color:#f92672">canvas</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;canvas&#34;</span>&gt;&lt;/<span style="color:#f92672">canvas</span>&gt;
+
+&lt;<span style="color:#f92672">script</span>&gt;
+<span style="color:#a6e22e">canvas</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;canvas&#34;</span>);
+<span style="color:#a6e22e">context</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">canvas</span>.<span style="color:#a6e22e">getContext</span>(<span style="color:#e6db74">&#34;2d&#34;</span>);
+
+<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">fillStyle</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;blue&#34;</span>;
+<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">fillRect</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">150</span>);
+&lt;/<span style="color:#f92672">script</span>&gt;
+</code></pre></div><p><canvas id="canvas"></canvas></p>
+<script>
+canvas = document.getElementById("canvas");
+context = canvas.getContext("2d");
+
+context.fillStyle = "blue";
+context.fillRect(10, 10, 150, 150);
+</script>
+<h1>
+  <img class="head-image" src="/logo/logo.png">
+  お絵かきアプリ
+</h1>
+
+<p>それでは <strong>お絵かきアプリ</strong> を実装して行きましょう．
+下記が完成したソースコードです．
+キャンバス上でマウスを動かすと小さな四角形が描画される仕組みとなっています．</p>
+<p class="codepen" data-height="265" data-theme-id="light" data-default-tab="js,result" data-user="nmukai" data-slug-hash="mdVrxVd" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="基礎演習 第2回">
+  <span>See the Pen <a href="https://codepen.io/nmukai/pen/mdVrxVd">
+  基礎演習 第2回</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+<h2 id="新規penの作成">新規Penの作成</h2>
+<p>開発環境である<a href="https://codepen.io/">CodePen</a>を開き，新規にPen（プロジェクト）を作成してください．
+Penを作成したらタイトルに 基礎演習 第2回 と入力しましょう．</p>
+<p><a href="https://gyazo.com/6bf85c978a73c316b39c244a815e99ab"><img src="https://i.gyazo.com/6bf85c978a73c316b39c244a815e99ab.png" alt="Image from Gyazo"></a></p>
+<p>次にVue.jsをPenに導入してください．
+導入方法は前回と同じです．</p>
+<p><a href="https://gyazo.com/d7418cebfbc6722e2c40713f1134edfa"><img src="https://i.gyazo.com/d7418cebfbc6722e2c40713f1134edfa.png" alt="Image from Gyazo"></a></p>
+<h2 id="vueクラスの作成">Vueクラスの作成</h2>
+<p>それでは，HTMLのコードを入力しましょう．
+前回と同じ様にsubject，id，nameをVue.jsのデータバインディングで設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;title&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h1</span>&gt;{{ subject }}&lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;学籍番号: {{ id }}&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;氏名: {{ name }}&lt;/<span style="color:#f92672">p</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#title&#34;</span>,
+  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">subject</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;基礎演習 第2回&#34;</span>,
+    <span style="color:#a6e22e">id</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;a20da000&#34;</span>,
+    <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;向 直人&#34;</span>
+  }
+})
+</code></pre></div><p><a href="https://gyazo.com/b3197081849e1bf49c858a40a5942bdb"><img src="https://i.gyazo.com/b3197081849e1bf49c858a40a5942bdb.png" alt="Image from Gyazo"></a></p>
+<h2 id="キャンバスの設置">キャンバスの設置</h2>
+<p>次にキャンバスを設置します．
+<code>div</code>タグに<code>main</code>というIDを設定していることに注意してください．
+<code>p</code>タグではMustache構文で，マウスの座標である<code>mouseX</code>と<code>mouseY</code>を表示しています．
+また，<code>canvas</code>タグでは，幅と高さを300ピクセルに設定し，
+<code>ref</code>属性に<code>canvas</code>を指定しています．
+この<code>ref</code>属性は，Vue.jsでCanvasのDOMノードを取得するために用いられます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main&#34;</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;X: {{ mouseX }} Y: {{ mouseY }}&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">canvas</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;border:1px solid black&#34;</span>
+          <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;canvas&#34;</span> <span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;300&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;300&#34;</span>&gt;          
+  &lt;/<span style="color:#f92672">canvas</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p><code>Vue</code>クラスでは，<code>data</code>オプションで<code>mouseX</code>と<code>mouseY</code>の初期値をデータバインディングしています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#main&#34;</span>,
+  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span>{
+    <span style="color:#a6e22e">mouseX</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>,
+    <span style="color:#a6e22e">mouseY</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>
+  }
+})
+</code></pre></div><p><a href="https://gyazo.com/ab4336a1fce93f678ee033765189dcba"><img src="https://i.gyazo.com/ab4336a1fce93f678ee033765189dcba.png" alt="Image from Gyazo"></a></p>
+<h2 id="マウスイベントの検知">マウスイベントの検知</h2>
+<p>マウスイベントを検知して，マウスの座標を表示します．
+イベント処理には，<code>v-on</code>ディレクティブを用います．
+<code>mousemove</code>イベントを検知すると，<code>paint</code>メソッドを呼び出します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;main&#34;</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;X: {{ mouseX }} Y: {{ mouseY }}&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">canvas</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;border:1px solid black&#34;</span>
+          <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;canvas&#34;</span> <span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;300&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;300&#34;</span>
+          <span style="color:#a6e22e">v-on:mousemove</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;paint&#34;</span>&gt;          
+  &lt;/<span style="color:#f92672">canvas</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p><code>Vue</code>クラスで，<code>paint</code>メソッドを定義します．
+<code>mouseX</code>と<code>mouseY</code>に，マウスのX座標とY座標を代入しています．
+この座標は，キャンバスではなく，ページの左上を原点とした値となっていることに注意が必要です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#main&#34;</span>,
+  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span>{
+    <span style="color:#a6e22e">mouseX</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>,
+    <span style="color:#a6e22e">mouseY</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>
+  },
+   <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
+    <span style="color:#a6e22e">paint</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">e</span>){
+      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">mouseX</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">clientX</span>;
+      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">mouseY</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">clientY</span>;
+    }
+  }
+})
+</code></pre></div><p><a href="https://gyazo.com/b5a1192e31a2c336dd069db592d6aa73"><img src="https://i.gyazo.com/b5a1192e31a2c336dd069db592d6aa73.png" alt="Image from Gyazo"></a></p>
+<h2 id="キャンバスに描画">キャンバスに描画</h2>
+<p>マウスの座標に合わせてキャンバスに正方形を描画します．
+<code>Canvas</code>タグに<code>ref</code>属性を指定していることで，
+DOMノードを<code>this.$refs.canvas</code>として参照することができます．
+これに関連付けられた<code>context</code>を取得し，<code>fillRect</code>メソッドで四角形を描画します．
+このとき，マウスの座標は，キャンバスの左上を原点とするように変換する必要があります．
+そこで，<code>getBoundingClientRect</code>メソッドで，キャンバスの左上の座標を取得し，
+位置座標の変換を行っています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#main&#34;</span>,
+  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span>{
+    <span style="color:#a6e22e">mouseX</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>,
+    <span style="color:#a6e22e">mouseY</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>
+  },
+  <span style="color:#a6e22e">mounted</span>(){
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">canvas</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$refs</span>.<span style="color:#a6e22e">canvas</span>;
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">context</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">canvas</span>.<span style="color:#a6e22e">getContext</span>(<span style="color:#e6db74">&#34;2d&#34;</span>);
+  },
+  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
+    <span style="color:#a6e22e">paint</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">e</span>){
+      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">rect</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">canvas</span>.<span style="color:#a6e22e">getBoundingClientRect</span>();
+      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">mouseX</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">clientX</span> <span style="color:#f92672">-</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">rect</span>.<span style="color:#a6e22e">left</span>;
+      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">mouseY</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">clientY</span> <span style="color:#f92672">-</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">rect</span>.<span style="color:#a6e22e">top</span>;
+      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">fillRect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">mouseX</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">mouseY</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>);
+    }
+  }
+})
+</code></pre></div><p>キャンバス上でマウスを動かすと，マウスの位置に四角形が連続して表示されれば完成です．</p>
+<p><a href="https://gyazo.com/8134990f120c74af8efeb16832af9e58"><img src="https://i.gyazo.com/8134990f120c74af8efeb16832af9e58.gif" alt="Image from Gyazo"></a></p>
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07D9BYHMZ&linkId=8cb42abafd17d766d05aa2e617988991&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4297113775&linkId=afde60eced00730030a97756222a645f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07J6FP6NQ&linkId=16d772a04d23febd27088b178985ad2c&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    <div class="horizontal">
+
+  
+  <div class="fb-share-button" data-href="https://mukai-lab.info/vue/chapter2/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+  
+  
+  <div style="padding: 6px; margin-top:1px">
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
+
+  
+  
+</div>
+
+
+
+  </div>
+
+  <div class="pagination">
+    <a href="/" class="top" ><span>Top</span></a>
+    <a href='javascript:history.back()' class="top" style="margin-left: 30px"><span>Back</span></a>
+  </div>
+
+  
+
+  
+  
+
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; <time datetime="2020-10-07 11:45:01.016961 &#43;0900 JST m=&#43;0.287075945">2020</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+  </div>
+</footer>
+
+
+    </body>
+</html>
