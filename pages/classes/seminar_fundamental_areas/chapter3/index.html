@@ -90,7 +90,7 @@
 Google Mapsはとても便利なのですが，利用規約が厳しいことが知られています． クレジット表示が必要なことは当然ですが，非営利であっても印刷物での使用には大きな制限があります． 新聞，雑誌，レポートなどの目的では問題ありませんが，ガイドブックや印刷広告には使用することができません． これは，行政にとっては致命的であり，自治体を紹介する印刷広告を作成しようとしても，Google Mapsを掲載することができません． そこで，代わりに用いられるのがオープンストリートマップ(OpenStreetMap: OSM)です． オープストリートマップはクリエイティブ・コモンズ CC-BY-SA 2.0と呼ばれる ライセンスで提供されており，適切にクレジットを表示すれば，営利目的の使用も含め，複製・再配布・改変が認められています． 例えば，椙山女学園大学の地図をオープンストリートマップで表示してみます． 上記のGoogle Mapsと比較しても，遜色ないことが分かるでしょう．
 加えて，オープンストリートマップの最も大きな特徴は，オープンストリートマップのアカウント登録さえすれば， 誰しもが自由に地図を編集することができるという点です． つまり，オープンストリートマップは，オンライン地図のサービスであることに加え，無料地図の共同作成プロジェクトでもあるわけです． オープンストリートマップを編集する人のことをマッパーと呼び， 複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントをマッピングパーティと呼びます． 全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします． 日進市においては，平成29年12月9日に「ブラニッシン〜いまのにっしん，世界に発信！〜」という マッピングパーティが開催され，向も参加しました．
 今回は日進市のオープンデータとオープンストリートマップを組み合わせ， 独自のオンライン地図を作成する方法について学習していきましょう．
- GeoJSON  ここで，オープンデータの条件である「機械判読に適したデータ形式」について考えてみます． オンライン地図にオープンデータを表示するには，当然，コンピュータが読み取ることが出来る形式を用いる必要があります． これまでに，xlsx形式，csv形式を紹介しましたが，よりウェブに相性が良いデータ形式があります． それが，**JSON形式（.json）**です． JSONは，「じぇいそん」と読み，ブラウザで動作するプログラミング言語のJavaScriptで用いられるデータ形式です （JavaScript以外のプログラミング言語でも対応していることが多い）．
+GeoJSON  ここで，オープンデータの条件である「機械判読に適したデータ形式」について考えてみます． オンライン地図にオープンデータを表示するには，当然，コンピュータが読み取ることが出来る形式を用いる必要があります． これまでに，xlsx形式，csv形式を紹介しましたが，よりウェブに相性が良いデータ形式があります． それが，**JSON形式（.json）**です． JSONは，「じぇいそん」と読み，ブラウザで動作するプログラミング言語のJavaScriptで用いられるデータ形式です （JavaScript以外のプログラミング言語でも対応していることが多い）．
 下記のCSV形式のデータを例に考えてみましょう．
 町名,男,女,総数,世帯数赤池町,1693,1647,3340,1315浅田町,2593,2431,5024,2086上記のデータをJSON形式に変換すると下記になります． JSON形式では，データは**string（文字列）とvalue（値）の組で表現されます． 例えば，&ldquo;町名&quot;という文字列と，&ldquo;赤池町&quot;という値が組になっていることがわかります． また，[ ]**は配列を表しており，0番目の要素に赤池町のデータ，1番目の要素に浅田町のデータが格納されます． 要素は「,（カンマ）」で区切られますが，最後の要素には必要ありません（間違えやすいので要注意）．
 [ { &#34;町名&#34;: &#34;赤池町&#34;, &#34;男&#34;: 1693, &#34;女&#34;: 1647, &#34;総数&#34;: 3340, &#34;世帯数&#34;: 1315 }, { &#34;町名&#34;: &#34;浅田町&#34;, &#34;男&#34;: 2593, &#34;女&#34;: 2431, &#34;総数&#34;: 5042, &#34;世帯数&#34;: 2086 }	] このJSON形式を基本として，点，線，多角形などの空間データを表現するために用いられるのが， GeoJSON形式です． GeoJSONは，「じおじぇいそん」と読み， uMap，Leeflet， OpenLayersなどの様々な地図サービスで利用可能です．" />
@@ -113,7 +113,7 @@
 Google Mapsはとても便利なのですが，利用規約が厳しいことが知られています． クレジット表示が必要なことは当然ですが，非営利であっても印刷物での使用には大きな制限があります． 新聞，雑誌，レポートなどの目的では問題ありませんが，ガイドブックや印刷広告には使用することができません． これは，行政にとっては致命的であり，自治体を紹介する印刷広告を作成しようとしても，Google Mapsを掲載することができません． そこで，代わりに用いられるのがオープンストリートマップ(OpenStreetMap: OSM)です． オープストリートマップはクリエイティブ・コモンズ CC-BY-SA 2.0と呼ばれる ライセンスで提供されており，適切にクレジットを表示すれば，営利目的の使用も含め，複製・再配布・改変が認められています． 例えば，椙山女学園大学の地図をオープンストリートマップで表示してみます． 上記のGoogle Mapsと比較しても，遜色ないことが分かるでしょう．
 加えて，オープンストリートマップの最も大きな特徴は，オープンストリートマップのアカウント登録さえすれば， 誰しもが自由に地図を編集することができるという点です． つまり，オープンストリートマップは，オンライン地図のサービスであることに加え，無料地図の共同作成プロジェクトでもあるわけです． オープンストリートマップを編集する人のことをマッパーと呼び， 複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントをマッピングパーティと呼びます． 全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします． 日進市においては，平成29年12月9日に「ブラニッシン〜いまのにっしん，世界に発信！〜」という マッピングパーティが開催され，向も参加しました．
 今回は日進市のオープンデータとオープンストリートマップを組み合わせ， 独自のオンライン地図を作成する方法について学習していきましょう．
- GeoJSON  ここで，オープンデータの条件である「機械判読に適したデータ形式」について考えてみます． オンライン地図にオープンデータを表示するには，当然，コンピュータが読み取ることが出来る形式を用いる必要があります． これまでに，xlsx形式，csv形式を紹介しましたが，よりウェブに相性が良いデータ形式があります． それが，**JSON形式（.json）**です． JSONは，「じぇいそん」と読み，ブラウザで動作するプログラミング言語のJavaScriptで用いられるデータ形式です （JavaScript以外のプログラミング言語でも対応していることが多い）．
+GeoJSON  ここで，オープンデータの条件である「機械判読に適したデータ形式」について考えてみます． オンライン地図にオープンデータを表示するには，当然，コンピュータが読み取ることが出来る形式を用いる必要があります． これまでに，xlsx形式，csv形式を紹介しましたが，よりウェブに相性が良いデータ形式があります． それが，**JSON形式（.json）**です． JSONは，「じぇいそん」と読み，ブラウザで動作するプログラミング言語のJavaScriptで用いられるデータ形式です （JavaScript以外のプログラミング言語でも対応していることが多い）．
 下記のCSV形式のデータを例に考えてみましょう．
 町名,男,女,総数,世帯数赤池町,1693,1647,3340,1315浅田町,2593,2431,5024,2086上記のデータをJSON形式に変換すると下記になります． JSON形式では，データは**string（文字列）とvalue（値）の組で表現されます． 例えば，&ldquo;町名&quot;という文字列と，&ldquo;赤池町&quot;という値が組になっていることがわかります． また，[ ]**は配列を表しており，0番目の要素に赤池町のデータ，1番目の要素に浅田町のデータが格納されます． 要素は「,（カンマ）」で区切られますが，最後の要素には必要ありません（間違えやすいので要注意）．
 [ { &#34;町名&#34;: &#34;赤池町&#34;, &#34;男&#34;: 1693, &#34;女&#34;: 1647, &#34;総数&#34;: 3340, &#34;世帯数&#34;: 1315 }, { &#34;町名&#34;: &#34;浅田町&#34;, &#34;男&#34;: 2593, &#34;女&#34;: 2431, &#34;総数&#34;: 5042, &#34;世帯数&#34;: 2086 }	] このJSON形式を基本として，点，線，多角形などの空間データを表現するために用いられるのが， GeoJSON形式です． GeoJSONは，「じおじぇいそん」と読み， uMap，Leeflet， OpenLayersなどの様々な地図サービスで利用可能です．" />
@@ -191,8 +191,7 @@
     
 
     <p><a href="https://gyazo.com/0cc18d7ba4f7db56959e985acc851378"><img src="https://i.gyazo.com/0cc18d7ba4f7db56959e985acc851378.png" alt="https://gyazo.com/0cc18d7ba4f7db56959e985acc851378"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   オープンストリートマップとは
 </h1>
 
@@ -227,8 +226,7 @@ Google Mapsは，滑らかな地図の表示はもちろん，ストリートビ
 マッピングパーティが開催され，向も参加しました．</p>
 <p>今回は日進市のオープンデータとオープンストリートマップを組み合わせ，
 独自のオンライン地図を作成する方法について学習していきましょう．</p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   GeoJSON
 </h1>
 
@@ -310,8 +308,7 @@ Pointの他にも，<strong>LineString（線）</strong>，<strong>Polygon（多
 		}
 	]
 }
-</code></pre></div><h1>
-  <img class="head-image" src="/logo/logo.png">
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   uMap
 </h1>
 
@@ -343,8 +340,7 @@ uMapはオープンストリートマップを加工して，ウェブページ�
 <!-- <iframe width="100%" height="500px" frameBorder="0" src="http://umap.openstreetmap.fr/ja/map/map_202304?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=undefined&captionBar=false&datalayers=505797#15/35.1301/137.0302"></iframe> -->
 <!-- <iframe width="100%" height="500px" frameborder="0" allowfullscreen src="https://umap.openstreetmap.fr/ja/map/map_333887?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=undefined&captionBar=false#13/35.1318/137.0457"></iframe> -->
 <iframe width="100%" height="300px" frameborder="0" allowfullscreen src="https://umap.openstreetmap.fr/ja/map/map_334386?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=undefined&captionBar=false&datalayers=893103#13/35.1248/137.0381"></iframe>
-<!-- <h1>
-  <img class="head-image" src="/logo/logo.png">
+<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
  -->
@@ -365,22 +361,7 @@ uMapはオープンストリートマップを加工して，ウェブページ�
 
     
 
-    <div class="horizontal">
-
-  
-  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/seminar_fundamental_areas/chapter3/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
-  
-  
-  <div style="padding: 6px; margin-top:1px">
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
-
-  
-  
-</div>
-
-
-
+    
   </div>
 
   <div class="pagination">
@@ -414,7 +395,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2021-01-10 21:58:30.570967 &#43;0900 JST m=&#43;0.855304694">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2021-01-10 22:20:12.23615 &#43;0900 JST m=&#43;0.687132173">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

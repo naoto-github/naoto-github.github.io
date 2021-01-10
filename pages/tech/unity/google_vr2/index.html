@@ -86,15 +86,17 @@
 
 
   <meta property="og:description" content="視線の検知  VR環境では、タップなどスマートフォンで一般に用いられる操作が出来ません。 そこで、Google VRでは、 ユーザの視線による操作を可能としたGoogle VR Pointer System が用意されています。 今回は、視線を利用したオブジェクトの選択を実現してみましょう。 事前に準備が必要なプロジェクトの作成やパッケージの導入などは、 Google VR SDKを利用した360°画像ビューアーを参考にしてください。
- シーンの作成  シーンを新規に作成します。 ここでは、シーンの名前は[MenuScene]とします。 まずは、Google VR SDKを利用した360°画像ビューアーを参考に、 空のオブジェクトであるVR Cameraを作成し、直下にMain CameraとGvrEditorEmulatorを設定します。
+シーンの作成  シーンを新規に作成します。 ここでは、シーンの名前は[MenuScene]とします。 まずは、Google VR SDKを利用した360°画像ビューアーを参考に、 空のオブジェクトであるVR Cameraを作成し、直下にMain CameraとGvrEditorEmulatorを設定します。
 次に対象となるQuadオブジェクトをシーンに配置します。 Quadオブジェクトを配置するには、[GameObject]-[3D]-[Quad]を選択します。 Quadオブジェクトのインスペクターを開き、Position の Z座標 を5に設定しましょう。 また、新規にマテリアルを作成し、Quadオブジェクトに追加しておきます（マテリアルに関しては割愛します）。 シーンを再生すると下記のように表示されます。
 
- 視線の検知  上記で作成したQuadオブジェクトを視線に捉えていることを検出してみましょう。 まずは、ヒエラルキーにGvrEventSystemをドラッグ＆ドロップで配置します。 GvrEventSystemは視線に関するイベントの包括的な処理を行います。 また、ヒエラルキーのMain Cameraの直下に、GvrReticlePointer を配置します。 GvrReticlePointerは、ユーザが見つめている一点をポインタで表します。 対象となるオブジェクトを見続けているとポインタが拡大します。 シーンを再生すると下記のように表示されます。 中央に視点を表すポインタが表示されていることが分かります。 現時点ではQuadオブジェクトを見続けてもポインタに変化はありません。
+視線の検知  上記で作成したQuadオブジェクトを視線に捉えていることを検出してみましょう。 まずは、ヒエラルキーにGvrEventSystemをドラッグ＆ドロップで配置します。 GvrEventSystemは視線に関するイベントの包括的な処理を行います。 また、ヒエラルキーのMain Cameraの直下に、GvrReticlePointer を配置します。 GvrReticlePointerは、ユーザが見つめている一点をポインタで表します。 対象となるオブジェクトを見続けているとポインタが拡大します。 シーンを再生すると下記のように表示されます。 中央に視点を表すポインタが表示されていることが分かります。 現時点ではQuadオブジェクトを見続けてもポインタに変化はありません。
 
 次に、視線を検出するためのスクリプトをMain Cameraに設定します。 Main CameraのインスペクターでAdd Componentを選び、Physics Raycaster を選択します（Physics Raycasterはスクリプトであることに注意）。
 
 また、対象となるQuadオブジェクトにEvent Triggerを設定します。 QuadオブジェクトのインスペクターでAdd Componentを選び、Event Trigger を選択します（Event Triggerもスクリプト）。
-シーンを再生すると下記のように表示されます。 中央にあるポインタがQuadオブジェクトを捉えると、 ポインタが大きな円に変形することが分かります。" />
+シーンを再生すると下記のように表示されます。 中央にあるポインタがQuadオブジェクトを捉えると、 ポインタが大きな円に変形することが分かります。
+
+シーンの切替  Quadオブジェクトを2秒間見続けるとシーンを切り替えるようにします。 QuadオブジェクトのインスペクターでAdd Componentを選び、Net Script を選択します（C#で記述する）。 ここでは、スクリプト名はCntrol Sceneとします。" />
 
 
 
@@ -110,15 +112,17 @@
 
 
   <meta name="twitter:description" content="視線の検知  VR環境では、タップなどスマートフォンで一般に用いられる操作が出来ません。 そこで、Google VRでは、 ユーザの視線による操作を可能としたGoogle VR Pointer System が用意されています。 今回は、視線を利用したオブジェクトの選択を実現してみましょう。 事前に準備が必要なプロジェクトの作成やパッケージの導入などは、 Google VR SDKを利用した360°画像ビューアーを参考にしてください。
- シーンの作成  シーンを新規に作成します。 ここでは、シーンの名前は[MenuScene]とします。 まずは、Google VR SDKを利用した360°画像ビューアーを参考に、 空のオブジェクトであるVR Cameraを作成し、直下にMain CameraとGvrEditorEmulatorを設定します。
+シーンの作成  シーンを新規に作成します。 ここでは、シーンの名前は[MenuScene]とします。 まずは、Google VR SDKを利用した360°画像ビューアーを参考に、 空のオブジェクトであるVR Cameraを作成し、直下にMain CameraとGvrEditorEmulatorを設定します。
 次に対象となるQuadオブジェクトをシーンに配置します。 Quadオブジェクトを配置するには、[GameObject]-[3D]-[Quad]を選択します。 Quadオブジェクトのインスペクターを開き、Position の Z座標 を5に設定しましょう。 また、新規にマテリアルを作成し、Quadオブジェクトに追加しておきます（マテリアルに関しては割愛します）。 シーンを再生すると下記のように表示されます。
 
- 視線の検知  上記で作成したQuadオブジェクトを視線に捉えていることを検出してみましょう。 まずは、ヒエラルキーにGvrEventSystemをドラッグ＆ドロップで配置します。 GvrEventSystemは視線に関するイベントの包括的な処理を行います。 また、ヒエラルキーのMain Cameraの直下に、GvrReticlePointer を配置します。 GvrReticlePointerは、ユーザが見つめている一点をポインタで表します。 対象となるオブジェクトを見続けているとポインタが拡大します。 シーンを再生すると下記のように表示されます。 中央に視点を表すポインタが表示されていることが分かります。 現時点ではQuadオブジェクトを見続けてもポインタに変化はありません。
+視線の検知  上記で作成したQuadオブジェクトを視線に捉えていることを検出してみましょう。 まずは、ヒエラルキーにGvrEventSystemをドラッグ＆ドロップで配置します。 GvrEventSystemは視線に関するイベントの包括的な処理を行います。 また、ヒエラルキーのMain Cameraの直下に、GvrReticlePointer を配置します。 GvrReticlePointerは、ユーザが見つめている一点をポインタで表します。 対象となるオブジェクトを見続けているとポインタが拡大します。 シーンを再生すると下記のように表示されます。 中央に視点を表すポインタが表示されていることが分かります。 現時点ではQuadオブジェクトを見続けてもポインタに変化はありません。
 
 次に、視線を検出するためのスクリプトをMain Cameraに設定します。 Main CameraのインスペクターでAdd Componentを選び、Physics Raycaster を選択します（Physics Raycasterはスクリプトであることに注意）。
 
 また、対象となるQuadオブジェクトにEvent Triggerを設定します。 QuadオブジェクトのインスペクターでAdd Componentを選び、Event Trigger を選択します（Event Triggerもスクリプト）。
-シーンを再生すると下記のように表示されます。 中央にあるポインタがQuadオブジェクトを捉えると、 ポインタが大きな円に変形することが分かります。" />
+シーンを再生すると下記のように表示されます。 中央にあるポインタがQuadオブジェクトを捉えると、 ポインタが大きな円に変形することが分かります。
+
+シーンの切替  Quadオブジェクトを2秒間見続けるとシーンを切り替えるようにします。 QuadオブジェクトのインスペクターでAdd Componentを選び、Net Script を選択します（C#で記述する）。 ここでは、スクリプト名はCntrol Sceneとします。" />
 
 
 
@@ -193,8 +197,7 @@
     
 
     <p><a href="https://gyazo.com/94f1fd7ba2ea456b3500e3e87b9e8947"><img src="https://i.gyazo.com/94f1fd7ba2ea456b3500e3e87b9e8947.png" alt="https://gyazo.com/94f1fd7ba2ea456b3500e3e87b9e8947"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   視線の検知
 </h1>
 
@@ -204,8 +207,7 @@
 今回は、視線を利用したオブジェクトの選択を実現してみましょう。
 事前に準備が必要なプロジェクトの作成やパッケージの導入などは、
 <a href="google_vr.html">Google VR SDKを利用した360°画像ビューアー</a>を参考にしてください。</p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   シーンの作成
 </h1>
 
@@ -219,8 +221,7 @@ Quadオブジェクトのインスペクターを開き、<strong>Position</stro
 また、新規にマテリアルを作成し、Quadオブジェクトに追加しておきます（マテリアルに関しては割愛します）。
 シーンを再生すると下記のように表示されます。</p>
 <p><a href="https://gyazo.com/c3f40bd4fbddf7a69081f656f82b0195"><img src="https://i.gyazo.com/c3f40bd4fbddf7a69081f656f82b0195.png" alt="https://gyazo.com/c3f40bd4fbddf7a69081f656f82b0195"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   視線の検知
 </h1>
 
@@ -243,8 +244,7 @@ Quadオブジェクトのインスペクターで<strong>Add Component</strong>�
 中央にある<strong>ポインタ</strong>がQuadオブジェクトを捉えると、
 <strong>ポインタ</strong>が大きな円に変形することが分かります。</p>
 <p><a href="https://gyazo.com/7e1fe35aa02b1a31347f117b95615cda"><img src="https://i.gyazo.com/7e1fe35aa02b1a31347f117b95615cda.gif" alt="https://gyazo.com/7e1fe35aa02b1a31347f117b95615cda"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   シーンの切替
 </h1>
 
@@ -278,22 +278,7 @@ Quadオブジェクトのインスペクターで<strong>Add Component</strong>�
 
     
 
-    <div class="horizontal">
-
-  
-  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/unity/google_vr2/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
-  
-  
-  <div style="padding: 6px; margin-top:1px">
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
-
-  
-  
-</div>
-
-
-
+    
   </div>
 
   <div class="pagination">
@@ -327,7 +312,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2021-01-10 21:58:30.607767 &#43;0900 JST m=&#43;0.892104736">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2021-01-10 22:20:12.299747 &#43;0900 JST m=&#43;0.750728705">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

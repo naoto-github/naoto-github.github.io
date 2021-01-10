@@ -89,19 +89,20 @@
 
 
 SimpleNftフォルダをコピーし、フォルダに含まれるC#スクリプトをARPictureCamera、 シーンをARPictureSceneにファイル名を変更した状態を前提とします（詳細はNYARToolkit for Unityの導入を参照）。
- パターンファイルの作成  上記の２種類の画像から、マーカーのパターンファイルを作成します。 パターンファイルの作成には、NyARToolkitのパッケージに含まれるNftFileGeneratorを利用します （詳しくはNyARToolkit Projectを参照）。 [Data]-[Tools]にあるNftFileGeneratorをダブルクリックするとプログラムが起動します。 importをクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。 次に、Make Feature Setをクリックし、特徴点を抽出します。 このとき、Source DPIやIset DPIsなどのパラメータは特に変更する必要はないようですが、 特徴点数が多すぎたり、少なすぎる場合にはFSET parameterを調節すると良いようです。
+パターンファイルの作成  上記の２種類の画像から、マーカーのパターンファイルを作成します。 パターンファイルの作成には、NyARToolkitのパッケージに含まれるNftFileGeneratorを利用します （詳しくはNyARToolkit Projectを参照）。 [Data]-[Tools]にあるNftFileGeneratorをダブルクリックするとプログラムが起動します。 importをクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。 次に、Make Feature Setをクリックし、特徴点を抽出します。 このとき、Source DPIやIset DPIsなどのパラメータは特に変更する必要はないようですが、 特徴点数が多すぎたり、少なすぎる場合にはFSET parameterを調節すると良いようです。
 
 抽出されたパターンは赤い四角や青い円で表示されます。 パターンを保存するにはExportをクリックし、適当なファイル名で保存します。 ここでは、「犬の画像」のパターンファイルをpatt_001.bytes、 「うさぎの画像」のパターンファイルをpatt_002.bytesというファイル名で保存します。 これらのパターンファイルは、AssetsのResourcesフォルダにコピーしておきます。
 
 
- マーカーオブジェクトの作成  SimpleNftはマーカーを認識すると赤色の立方体を表示します。 ここでは、２種類のマーカーに応じて、赤色の立方体に加え、青色の立方体を作成しておきます。
+マーカーオブジェクトの作成  SimpleNftはマーカーを認識すると赤色の立方体を表示します。 ここでは、２種類のマーカーに応じて、赤色の立方体に加え、青色の立方体を作成しておきます。
 まずは、シーンのARPictureSceneをダブルクリックし、HierarchyにあるMarkerObjectを複製します。 スクリプトからこれのオブジェクトを操作するため、２つのマーカーオブジェクトには共通のタグ（Tag）を設定します （Gameobject.FindGameObjectsWithTag(String tag)メソッドでタグからオブジェクトを取得することが可能）。 タグ名は自由に設定することができますが、ここではMarkerObjectとしておきます。
 
 次に、Assetsで赤色と青色のマテリアルを作成します。 [Create]-[Materials]をクリックしてマテリアルを作成し、Albedoに赤色と青色を設定します。 ここでは、マテリアルの名前をRedとBlueにしておきます。 これらのマテリアルはMarkerObjectの直下にあるCubeのMaterialsに設定しておきます。
 
 マーカーが認識されたときに表示されるのは、上記のCubeオブジェクトです。 Cubeの**サイズ（Scale）や位置（Position）**はマーカーの大きさに合わせて調整する必要がありますが、 ここでは、サイズの値をX=80、Y=80、Z=80、位置をX=-80、Y=80、Z=40に修正しておきます。
 
- スクリプトの修正  最後にC#スクリプトのARPictureCameraを修正します。" />
+スクリプトの修正  最後にC#スクリプトのARPictureCameraを修正します。
+まずは、2つのマーカーオブジェクトを配列で取得します。 マーカーオブジェクトはMarkerObjectというタグが設定されていることを利用します。" />
 
 
 
@@ -120,19 +121,20 @@ SimpleNftフォルダをコピーし、フォルダに含まれるC#スクリプ
 
 
 SimpleNftフォルダをコピーし、フォルダに含まれるC#スクリプトをARPictureCamera、 シーンをARPictureSceneにファイル名を変更した状態を前提とします（詳細はNYARToolkit for Unityの導入を参照）。
- パターンファイルの作成  上記の２種類の画像から、マーカーのパターンファイルを作成します。 パターンファイルの作成には、NyARToolkitのパッケージに含まれるNftFileGeneratorを利用します （詳しくはNyARToolkit Projectを参照）。 [Data]-[Tools]にあるNftFileGeneratorをダブルクリックするとプログラムが起動します。 importをクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。 次に、Make Feature Setをクリックし、特徴点を抽出します。 このとき、Source DPIやIset DPIsなどのパラメータは特に変更する必要はないようですが、 特徴点数が多すぎたり、少なすぎる場合にはFSET parameterを調節すると良いようです。
+パターンファイルの作成  上記の２種類の画像から、マーカーのパターンファイルを作成します。 パターンファイルの作成には、NyARToolkitのパッケージに含まれるNftFileGeneratorを利用します （詳しくはNyARToolkit Projectを参照）。 [Data]-[Tools]にあるNftFileGeneratorをダブルクリックするとプログラムが起動します。 importをクリックし、特徴点を抽出したいJPGやPNGなどの画像を指定します（透過より背景白の方が認識精度が高いようです）。 次に、Make Feature Setをクリックし、特徴点を抽出します。 このとき、Source DPIやIset DPIsなどのパラメータは特に変更する必要はないようですが、 特徴点数が多すぎたり、少なすぎる場合にはFSET parameterを調節すると良いようです。
 
 抽出されたパターンは赤い四角や青い円で表示されます。 パターンを保存するにはExportをクリックし、適当なファイル名で保存します。 ここでは、「犬の画像」のパターンファイルをpatt_001.bytes、 「うさぎの画像」のパターンファイルをpatt_002.bytesというファイル名で保存します。 これらのパターンファイルは、AssetsのResourcesフォルダにコピーしておきます。
 
 
- マーカーオブジェクトの作成  SimpleNftはマーカーを認識すると赤色の立方体を表示します。 ここでは、２種類のマーカーに応じて、赤色の立方体に加え、青色の立方体を作成しておきます。
+マーカーオブジェクトの作成  SimpleNftはマーカーを認識すると赤色の立方体を表示します。 ここでは、２種類のマーカーに応じて、赤色の立方体に加え、青色の立方体を作成しておきます。
 まずは、シーンのARPictureSceneをダブルクリックし、HierarchyにあるMarkerObjectを複製します。 スクリプトからこれのオブジェクトを操作するため、２つのマーカーオブジェクトには共通のタグ（Tag）を設定します （Gameobject.FindGameObjectsWithTag(String tag)メソッドでタグからオブジェクトを取得することが可能）。 タグ名は自由に設定することができますが、ここではMarkerObjectとしておきます。
 
 次に、Assetsで赤色と青色のマテリアルを作成します。 [Create]-[Materials]をクリックしてマテリアルを作成し、Albedoに赤色と青色を設定します。 ここでは、マテリアルの名前をRedとBlueにしておきます。 これらのマテリアルはMarkerObjectの直下にあるCubeのMaterialsに設定しておきます。
 
 マーカーが認識されたときに表示されるのは、上記のCubeオブジェクトです。 Cubeの**サイズ（Scale）や位置（Position）**はマーカーの大きさに合わせて調整する必要がありますが、 ここでは、サイズの値をX=80、Y=80、Z=80、位置をX=-80、Y=80、Z=40に修正しておきます。
 
- スクリプトの修正  最後にC#スクリプトのARPictureCameraを修正します。" />
+スクリプトの修正  最後にC#スクリプトのARPictureCameraを修正します。
+まずは、2つのマーカーオブジェクトを配列で取得します。 マーカーオブジェクトはMarkerObjectというタグが設定されていることを利用します。" />
 
 
 
@@ -207,8 +209,7 @@ SimpleNftフォルダをコピーし、フォルダに含まれるC#スクリプ
     
 
     <p><a href="https://gyazo.com/399be0179fc2bc72d21c82d597d18d35"><img src="https://i.gyazo.com/399be0179fc2bc72d21c82d597d18d35.png" alt="https://gyazo.com/399be0179fc2bc72d21c82d597d18d35"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   画像の準備
 </h1>
 
@@ -225,8 +226,7 @@ NFTとは自然特徴点を利用した物体認識のことで、この技術�
 <p><a href="https://gyazo.com/5ad97af3ed708c91251ef897ca34d73a"><img src="https://i.gyazo.com/5ad97af3ed708c91251ef897ca34d73a.png" alt="https://gyazo.com/5ad97af3ed708c91251ef897ca34d73a"></a></p>
 <p><strong>SimpleNft</strong>フォルダをコピーし、フォルダに含まれるC#スクリプトを<strong>ARPictureCamera</strong>、
 シーンを<strong>ARPictureScene</strong>にファイル名を変更した状態を前提とします（詳細は<a href="artoolkit.html"><strong>NYARToolkit for Unityの導入</strong></a>を参照）。</p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   パターンファイルの作成
 </h1>
 
@@ -246,8 +246,7 @@ NFTとは自然特徴点を利用した物体認識のことで、この技術�
 これらのパターンファイルは、<strong>Assets</strong>の<strong>Resources</strong>フォルダにコピーしておきます。</p>
 <p><a href="https://gyazo.com/5c7da4b00d6c7139796c4c21b2f84c53"><img src="https://i.gyazo.com/5c7da4b00d6c7139796c4c21b2f84c53.png" alt="https://gyazo.com/5c7da4b00d6c7139796c4c21b2f84c53"></a></p>
 <p><a href="https://gyazo.com/c306e5bf17af2bceb25bc0967b23cfa5"><img src="https://i.gyazo.com/c306e5bf17af2bceb25bc0967b23cfa5.png" alt="https://gyazo.com/c306e5bf17af2bceb25bc0967b23cfa5"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   マーカーオブジェクトの作成
 </h1>
 
@@ -267,8 +266,7 @@ NFTとは自然特徴点を利用した物体認識のことで、この技術�
 <strong>Cube</strong>の**サイズ（Scale）<strong>や</strong>位置（Position）**はマーカーの大きさに合わせて調整する必要がありますが、
 ここでは、サイズの値をX=80、Y=80、Z=80、位置をX=-80、Y=80、Z=40に修正しておきます。</p>
 <p><a href="https://gyazo.com/5d1a3c61b18ceb85e4cf06bd3b504851"><img src="https://i.gyazo.com/5d1a3c61b18ceb85e4cf06bd3b504851.png" alt="https://gyazo.com/5d1a3c61b18ceb85e4cf06bd3b504851"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   スクリプトの修正
 </h1>
 
@@ -315,22 +313,7 @@ mids[<span style="color:#ae81ff">1</span>] = <span style="color:#66d9ef">this</s
 
     
 
-    <div class="horizontal">
-
-  
-  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/unity/artoolkit5/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
-  
-  
-  <div style="padding: 6px; margin-top:1px">
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
-
-  
-  
-</div>
-
-
-
+    
   </div>
 
   <div class="pagination">
@@ -364,7 +347,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2021-01-10 21:58:30.610053 &#43;0900 JST m=&#43;0.894391102">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2021-01-10 22:20:12.301275 &#43;0900 JST m=&#43;0.752256632">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

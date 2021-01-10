@@ -86,12 +86,12 @@
 
 
   <meta property="og:description" content="DBPediaとは  DBPediaは Wikipediaから情報を抽出し， Linked Open Data(LOD) として公開するプロジェクトのことです （LODはウェブでデータを公開・共有するための仕組みのこと）． DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲーム， 組織・団体，生物種，病気などのデータが多言語で管理されており， ジャパンサーチと同様にSPARQLのエンドポイントを介してデータの検索・取得が可能です． 今回はDBPediaから愛知県出身の日本のアーティストを検索してみましょう．
- ウェブページの作成  SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，dbpedia.py というファイル名のCGIプログラムで作成します．
+ウェブページの作成  SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，dbpedia.py というファイル名のCGIプログラムで作成します．
 &lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; 
- SPARQLで検索  DBPediaのSPARQLのエンドポイントは下記のURLです．
+SPARQLで検索  DBPediaのSPARQLのエンドポイントは下記のURLです．
 http://ja.dbpedia.org/sparql
 SPARQLの検索条件は下記のように記述します． 今回取得するのは，URL，名前(foaf:name)， 概要(dbpedia-owl:abstract)，出身地(prop-ja:origin)の4つのデータです． URLはジャンル(dbpedia-owl:genre) が　J-POP(dbpedia-ja:J-POP) であることを条件としています． また，検索結果から出身地に 愛知県 の文字が含まれるコンテンツだけを抽出しています．
-SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) } 新規に dbpedia." />
+SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) } 新規に dbpedia.py を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）． dbpedia.py には下記のコードを記述します．" />
 
 
 
@@ -107,12 +107,12 @@ SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-P
 
 
   <meta name="twitter:description" content="DBPediaとは  DBPediaは Wikipediaから情報を抽出し， Linked Open Data(LOD) として公開するプロジェクトのことです （LODはウェブでデータを公開・共有するための仕組みのこと）． DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲーム， 組織・団体，生物種，病気などのデータが多言語で管理されており， ジャパンサーチと同様にSPARQLのエンドポイントを介してデータの検索・取得が可能です． 今回はDBPediaから愛知県出身の日本のアーティストを検索してみましょう．
- ウェブページの作成  SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，dbpedia.py というファイル名のCGIプログラムで作成します．
+ウェブページの作成  SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，dbpedia.py というファイル名のCGIプログラムで作成します．
 &lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; 
- SPARQLで検索  DBPediaのSPARQLのエンドポイントは下記のURLです．
+SPARQLで検索  DBPediaのSPARQLのエンドポイントは下記のURLです．
 http://ja.dbpedia.org/sparql
 SPARQLの検索条件は下記のように記述します． 今回取得するのは，URL，名前(foaf:name)， 概要(dbpedia-owl:abstract)，出身地(prop-ja:origin)の4つのデータです． URLはジャンル(dbpedia-owl:genre) が　J-POP(dbpedia-ja:J-POP) であることを条件としています． また，検索結果から出身地に 愛知県 の文字が含まれるコンテンツだけを抽出しています．
-SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) } 新規に dbpedia." />
+SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) } 新規に dbpedia.py を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）． dbpedia.py には下記のコードを記述します．" />
 
 
 
@@ -191,8 +191,7 @@ SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-P
     
 
     <p><a href="https://gyazo.com/e48efc4d400b03f41bc5befdb1a810ba"><img src="https://i.gyazo.com/e48efc4d400b03f41bc5befdb1a810ba.png" alt="Image from Gyazo"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   DBPediaとは
 </h1>
 
@@ -204,8 +203,7 @@ DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲ�
 組織・団体，生物種，病気などのデータが多言語で管理されており，
 ジャパンサーチと同様にSPARQLのエンドポイントを介してデータの検索・取得が可能です．
 今回はDBPediaから愛知県出身の日本のアーティストを検索してみましょう．</p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ウェブページの作成
 </h1>
 
@@ -218,8 +216,7 @@ DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲ�
 	&lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/dbpedia.py&#34;</span>&gt;DBPedia&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;      
 &lt;/<span style="color:#f92672">ul</span>&gt;
 </code></pre></div><p><a href="https://gyazo.com/c3c05f7a14ac9acafb5696349680bdd0"><img src="https://i.gyazo.com/c3c05f7a14ac9acafb5696349680bdd0.png" alt="Image from Gyazo"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   SPARQLで検索
 </h1>
 
@@ -324,22 +321,7 @@ table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt
 
     
 
-    <div class="horizontal">
-
-  
-  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/seminar_database/chapter11/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
-  
-  
-  <div style="padding: 6px; margin-top:1px">
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
-
-  
-  
-</div>
-
-
-
+    
   </div>
 
   <div class="pagination">
@@ -373,7 +355,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2021-01-10 21:58:30.506867 &#43;0900 JST m=&#43;0.791205944">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2021-01-10 22:20:12.175907 &#43;0900 JST m=&#43;0.626889633">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

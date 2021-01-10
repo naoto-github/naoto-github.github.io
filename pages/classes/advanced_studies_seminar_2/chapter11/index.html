@@ -85,14 +85,15 @@
 
 
 
-  <meta property="og:description" content="平均値差の検定とは --  平均値差の検定とは  これまでは，母集団Xと標本xの関係に注目して検定を行いました． これからは，２つの標本（標本x_1，標本x_2）の関係に注目し， それぞれの平均値の有意な差があるかどうかを検定します． ２つの標本を検定する場合，下記の条件によって適用する手法が異なります．
+  <meta property="og:description" content="平均値差の検定とは -- 平均値差の検定とは  これまでは，母集団Xと標本xの関係に注目して検定を行いました． これからは，２つの標本（標本x_1，標本x_2）の関係に注目し， それぞれの平均値の有意な差があるかどうかを検定します． ２つの標本を検定する場合，下記の条件によって適用する手法が異なります．
  独立な2群（対応のない2群） 対応のある2群  **独立な2群（対応のない2群）**とは，ある母集団から２つの標本を抽出したとき， それぞれの標本に含まれる対象が互いに無関係であることを意味しています． 例えば，下記のように，母集団Xから8人の被験者を抽出して， これをランダムに4人の2群に分けた場合は，「独立な2群」です．
 x_1 = \{a,b,c,d\} \\ x_2 = \{e,f,g,h\}  一方，対応のある2群 とは，2つの標本に含まれる対象に，何らかの対応関係があることを意味しています． 例えば，下記のように，同じ4人の被験者に対して，2種類の条件下で測定された2群のデータは，「対応のある2群」です．
 条件1: x_1 = \{a,b,c,d\} \\ 条件2: x_2 = \{a&#39;,b&#39;,c&#39;,d&#39;\}  今回は，前者の**独立な2群（対応のない2群）**のt検定を解説します．
-スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter11としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-t検定の前提条件 --  t検定の前提条件  独立な2群の平均値差の検定にもt検定を利用します． ただし，t検定を適用するには，下記の条件を満たす必要があります．
+スクリプトの作成 -- スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter11としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+t検定の前提条件 -- t検定の前提条件  独立な2群の平均値差の検定にもt検定を利用します． ただし，t検定を適用するには，下記の条件を満たす必要があります．
  ランダムサンプリングにより標本が抽出されている 母集団の分布が正規分布である 母集団の分散が等質である  上記の条件1，2はこれまでの前提と同じですが，条件3が新しく追加されました． もし，条件3を満たさない場合は，t検定の代わりに，Welchの検定 を利用する必要があります． Welchの検定に関しては割愛します． ここでは，上記の全ての条件を満たしていると仮定して話を進めます．
-独立な2群のt検定 --  独立な2群のt検定  それでは，下記の問題について考えていきましょう．" />
+独立な2群のt検定 -- 独立な2群のt検定  それでは，下記の問題について考えていきましょう．
+向研究室と見田研究室に所属する学生を対象に情報数学に関するテストを行った． 向研究室に所属する5人の学生x_1と， 見田研究室に所属する5人の学生x_2の得点は下記であった． 向研究室に所属する学生x_1と， 見田研究室の学生x_2の平均値に有意な差はあるか （どちらも同じ母集団からランダムサンプリングした標本だろうか）．" />
 
 
 
@@ -107,14 +108,15 @@ t検定の前提条件 --  t検定の前提条件  独立な2群の平均値差�
 
 
 
-  <meta name="twitter:description" content="平均値差の検定とは --  平均値差の検定とは  これまでは，母集団Xと標本xの関係に注目して検定を行いました． これからは，２つの標本（標本x_1，標本x_2）の関係に注目し， それぞれの平均値の有意な差があるかどうかを検定します． ２つの標本を検定する場合，下記の条件によって適用する手法が異なります．
+  <meta name="twitter:description" content="平均値差の検定とは -- 平均値差の検定とは  これまでは，母集団Xと標本xの関係に注目して検定を行いました． これからは，２つの標本（標本x_1，標本x_2）の関係に注目し， それぞれの平均値の有意な差があるかどうかを検定します． ２つの標本を検定する場合，下記の条件によって適用する手法が異なります．
  独立な2群（対応のない2群） 対応のある2群  **独立な2群（対応のない2群）**とは，ある母集団から２つの標本を抽出したとき， それぞれの標本に含まれる対象が互いに無関係であることを意味しています． 例えば，下記のように，母集団Xから8人の被験者を抽出して， これをランダムに4人の2群に分けた場合は，「独立な2群」です．
 x_1 = \{a,b,c,d\} \\ x_2 = \{e,f,g,h\}  一方，対応のある2群 とは，2つの標本に含まれる対象に，何らかの対応関係があることを意味しています． 例えば，下記のように，同じ4人の被験者に対して，2種類の条件下で測定された2群のデータは，「対応のある2群」です．
 条件1: x_1 = \{a,b,c,d\} \\ 条件2: x_2 = \{a&#39;,b&#39;,c&#39;,d&#39;\}  今回は，前者の**独立な2群（対応のない2群）**のt検定を解説します．
-スクリプトの作成 --  スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter11としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-t検定の前提条件 --  t検定の前提条件  独立な2群の平均値差の検定にもt検定を利用します． ただし，t検定を適用するには，下記の条件を満たす必要があります．
+スクリプトの作成 -- スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter11としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+t検定の前提条件 -- t検定の前提条件  独立な2群の平均値差の検定にもt検定を利用します． ただし，t検定を適用するには，下記の条件を満たす必要があります．
  ランダムサンプリングにより標本が抽出されている 母集団の分布が正規分布である 母集団の分散が等質である  上記の条件1，2はこれまでの前提と同じですが，条件3が新しく追加されました． もし，条件3を満たさない場合は，t検定の代わりに，Welchの検定 を利用する必要があります． Welchの検定に関しては割愛します． ここでは，上記の全ての条件を満たしていると仮定して話を進めます．
-独立な2群のt検定 --  独立な2群のt検定  それでは，下記の問題について考えていきましょう．" />
+独立な2群のt検定 -- 独立な2群のt検定  それでは，下記の問題について考えていきましょう．
+向研究室と見田研究室に所属する学生を対象に情報数学に関するテストを行った． 向研究室に所属する5人の学生x_1と， 見田研究室に所属する5人の学生x_2の得点は下記であった． 向研究室に所属する学生x_1と， 見田研究室の学生x_2の平均値に有意な差はあるか （どちらも同じ母集団からランダムサンプリングした標本だろうか）．" />
 
 
 
@@ -190,8 +192,7 @@ t検定の前提条件 --  t検定の前提条件  独立な2群の平均値差�
 
     <p><a href="https://gyazo.com/63ddd77d5b31e97fd199a7706d1f3c60"><img src="https://i.gyazo.com/63ddd77d5b31e97fd199a7706d1f3c60.png" alt="https://gyazo.com/63ddd77d5b31e97fd199a7706d1f3c60"></a></p>
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">平均値差の検定とは -->
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   平均値差の検定とは
 </h1>
 
@@ -223,8 +224,7 @@ t検定の前提条件 --  t検定の前提条件  独立な2群の平均値差�
 </p>
 <p>今回は，前者の**独立な2群（対応のない2群）**のt検定を解説します．</p>
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スクリプトの作成 -->
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   スクリプトの作成
 </h1>
 
@@ -234,8 +234,7 @@ t検定の前提条件 --  t検定の前提条件  独立な2群の平均値差�
 このとき，ファイル名は<strong>chapter11</strong>としてください．
 また，ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます．</p>
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">t検定の前提条件 -->
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   t検定の前提条件
 </h1>
 
@@ -251,8 +250,7 @@ t検定の前提条件 --  t検定の前提条件  独立な2群の平均値差�
 Welchの検定に関しては割愛します．
 ここでは，上記の全ての条件を満たしていると仮定して話を進めます．</p>
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">独立な2群のt検定 -->
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   独立な2群のt検定
 </h1>
 
@@ -370,8 +368,7 @@ qt関数を用いると，95%信頼度のとき，<strong>t&lt;-2.3</strong>，�
 これは，向研究室の学生と見田研究室の学生の間には<strong>有意な差がない</strong>ということを意味しています．
 これぐらいの差は偶然に起こり得るというわけです．</p>
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">関数を利用したt検定 -->
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   関数を利用したt検定
 </h1>
 
@@ -395,8 +392,7 @@ p値が0.05（5%）であることから，ぎりぎり95%信頼度に含まれ�
 また，母集団の平均値差の信頼区間は**-0.24**から**15.44**となっており，
 帰無仮説である<script type="math/tex">\hat{\mu_1} - \hat{\mu_2}=0</script>が含まれていることが分かります．</p>
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
@@ -418,22 +414,7 @@ p値が0.05（5%）であることから，ぎりぎり95%信頼度に含まれ�
 
     
 
-    <div class="horizontal">
-
-  
-  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter11/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
-  
-  
-  <div style="padding: 6px; margin-top:1px">
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
-
-  
-  
-</div>
-
-
-
+    
   </div>
 
   <div class="pagination">
@@ -467,7 +448,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2021-01-10 21:58:29.907931 &#43;0900 JST m=&#43;0.192272746">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2021-01-10 22:20:11.857454 &#43;0900 JST m=&#43;0.308438604">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

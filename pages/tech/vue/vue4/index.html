@@ -87,9 +87,9 @@
 
   <meta property="og:description" content="親子コンポーネントのイベント処理  地図アプリに配置した上下左右のボタンのイベント処理を実装します． このアプリは3つのコンポーネントで構成されています． 親コンポーネントは main.vue ，子コンポーネントは vmap.vue と vcontroller.vue です． 親子コンポーネント間でメソッドを呼び出したり，データを受け渡すには幾つか方法がありますが， 子から親 ，親から子 ではその方法が異なります． 今回の地図アプリでは下記の流れでイベント処理を行います．
  vcontroller.vue（子） のボタンをクリックすると，main.vue（親） のmoveメソッドを呼び出す（子から親）． main.vue（親） のmoveメソッドが呼び出されると，vmap.vue（子） のmoveメソッドを呼び出す（親から子）．  
- 子から親のメソッドを実行  子コンポーネントから親コンポーネントのメソッドを呼び出すには$emitを利用します．
+子から親のメソッドを実行  子コンポーネントから親コンポーネントのメソッドを呼び出すには$emitを利用します．
 main.vue（親） 親コンポーネントで moveメソッドを定義します． このmoveメソッドはアラートを表示するだけです． このメソッドを v-onディレクティブを利用して，vcontorllerタグの属性として指定します． このとき，move-eventという属性名になっていることに注意してください．
-&lt;template&gt; &lt;div&gt; &lt;h1&gt;Vue.jsで地図アプリ&lt;/h1&gt; &lt;vmap&gt;&lt;/vmap&gt; &lt;vcontroller v-on:move-event=&#34;move&#34;&gt;&lt;/vcontroller&gt; &lt;/div&gt; &lt;/template&gt; &lt;script&gt; import vmap from &#34;./vmap&#34; import vcontroller from &#34;./vcontroller&#34; export default{ components:{ vmap, vcontroller }, methods:{ move(direction){ // アラートを表示  alert(direction); } } } &lt;/script&gt; vcontroller." />
+&lt;template&gt; &lt;div&gt; &lt;h1&gt;Vue.jsで地図アプリ&lt;/h1&gt; &lt;vmap&gt;&lt;/vmap&gt; &lt;vcontroller v-on:move-event=&#34;move&#34;&gt;&lt;/vcontroller&gt; &lt;/div&gt; &lt;/template&gt; &lt;script&gt; import vmap from &#34;./vmap&#34; import vcontroller from &#34;./vcontroller&#34; export default{ components:{ vmap, vcontroller }, methods:{ move(direction){ // アラートを表示  alert(direction); } } } &lt;/script&gt; vcontroller.vue（子） 子コンポーネントでも moveメソッドを定義しています． このmoveメソッドは，$emitを利用してmove-eventとして登録されている親コンポーネントの moveメソッドを呼び出します． また，moveメソッドは，v-onディレクティブを利用して，ボタンのクリックがトリガーとなっています． このとき，メソッドの引数としてleft, up, right, downのいずれかの文字列が渡されることに注意してください．" />
 
 
 
@@ -106,9 +106,9 @@ main.vue（親） 親コンポーネントで moveメソッドを定義します
 
   <meta name="twitter:description" content="親子コンポーネントのイベント処理  地図アプリに配置した上下左右のボタンのイベント処理を実装します． このアプリは3つのコンポーネントで構成されています． 親コンポーネントは main.vue ，子コンポーネントは vmap.vue と vcontroller.vue です． 親子コンポーネント間でメソッドを呼び出したり，データを受け渡すには幾つか方法がありますが， 子から親 ，親から子 ではその方法が異なります． 今回の地図アプリでは下記の流れでイベント処理を行います．
  vcontroller.vue（子） のボタンをクリックすると，main.vue（親） のmoveメソッドを呼び出す（子から親）． main.vue（親） のmoveメソッドが呼び出されると，vmap.vue（子） のmoveメソッドを呼び出す（親から子）．  
- 子から親のメソッドを実行  子コンポーネントから親コンポーネントのメソッドを呼び出すには$emitを利用します．
+子から親のメソッドを実行  子コンポーネントから親コンポーネントのメソッドを呼び出すには$emitを利用します．
 main.vue（親） 親コンポーネントで moveメソッドを定義します． このmoveメソッドはアラートを表示するだけです． このメソッドを v-onディレクティブを利用して，vcontorllerタグの属性として指定します． このとき，move-eventという属性名になっていることに注意してください．
-&lt;template&gt; &lt;div&gt; &lt;h1&gt;Vue.jsで地図アプリ&lt;/h1&gt; &lt;vmap&gt;&lt;/vmap&gt; &lt;vcontroller v-on:move-event=&#34;move&#34;&gt;&lt;/vcontroller&gt; &lt;/div&gt; &lt;/template&gt; &lt;script&gt; import vmap from &#34;./vmap&#34; import vcontroller from &#34;./vcontroller&#34; export default{ components:{ vmap, vcontroller }, methods:{ move(direction){ // アラートを表示  alert(direction); } } } &lt;/script&gt; vcontroller." />
+&lt;template&gt; &lt;div&gt; &lt;h1&gt;Vue.jsで地図アプリ&lt;/h1&gt; &lt;vmap&gt;&lt;/vmap&gt; &lt;vcontroller v-on:move-event=&#34;move&#34;&gt;&lt;/vcontroller&gt; &lt;/div&gt; &lt;/template&gt; &lt;script&gt; import vmap from &#34;./vmap&#34; import vcontroller from &#34;./vcontroller&#34; export default{ components:{ vmap, vcontroller }, methods:{ move(direction){ // アラートを表示  alert(direction); } } } &lt;/script&gt; vcontroller.vue（子） 子コンポーネントでも moveメソッドを定義しています． このmoveメソッドは，$emitを利用してmove-eventとして登録されている親コンポーネントの moveメソッドを呼び出します． また，moveメソッドは，v-onディレクティブを利用して，ボタンのクリックがトリガーとなっています． このとき，メソッドの引数としてleft, up, right, downのいずれかの文字列が渡されることに注意してください．" />
 
 
 
@@ -187,8 +187,7 @@ main.vue（親） 親コンポーネントで moveメソッドを定義します
     
 
     <p><a href="https://gyazo.com/cf717dd1f1e48506a06d8bc044c115d7"><img src="https://i.gyazo.com/cf717dd1f1e48506a06d8bc044c115d7.png" alt="Image from Gyazo"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   親子コンポーネントのイベント処理
 </h1>
 
@@ -203,8 +202,7 @@ main.vue（親） 親コンポーネントで moveメソッドを定義します
 <li><strong>main.vue（親）</strong> の<code>move</code>メソッドが呼び出されると，<strong>vmap.vue（子）</strong> の<code>move</code>メソッドを呼び出す（親から子）．</li>
 </ol>
 <p><a href="https://gyazo.com/69318b7a5ef0156689e2ddfde4824496"><img src="https://i.gyazo.com/69318b7a5ef0156689e2ddfde4824496.png" alt="Image from Gyazo"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   子から親のメソッドを実行
 </h1>
 
@@ -272,8 +270,7 @@ main.vue（親） 親コンポーネントで moveメソッドを定義します
 &lt;/<span style="color:#f92672">script</span>&gt;
 </code></pre></div><p>ボタンをクリックすると，対応した文字列がアラートに表示されます．</p>
 <p><a href="https://gyazo.com/cad8c841eab6d01c3efd6d0643308fbc"><img src="https://i.gyazo.com/cad8c841eab6d01c3efd6d0643308fbc.png" alt="Image from Gyazo"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   親から子のメソッドを実行
 </h1>
 
@@ -363,22 +360,7 @@ main.vue（親） 親コンポーネントで moveメソッドを定義します
 
     
 
-    <div class="horizontal">
-
-  
-  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/vue/vue4/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
-  
-  
-  <div style="padding: 6px; margin-top:1px">
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
-
-  
-  
-</div>
-
-
-
+    
   </div>
 
   <div class="pagination">
@@ -412,7 +394,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2021-01-10 21:58:30.755549 &#43;0900 JST m=&#43;1.039886507">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2021-01-10 22:20:12.578987 &#43;0900 JST m=&#43;1.029967074">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 

@@ -86,9 +86,9 @@
 
 
   <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-4 とします． ノートブックの作成方法は第1回の資料を参照してください．
- 8パズル  今回は 8パズル（8 Puzzle） を取り上げましょう．
+8パズル  今回は 8パズル（8 Puzzle） を取り上げましょう．
 8パズル   1から8の数字が書いてあるタイルが不規則に3 $\times$ 3のマス目に並べてある． タイルをスライドさせ，左上から順番に1から8まで並び替えるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．
-状態空間モデル   タイルの数字を$x_i$で表します（$i$はタイルの位置）． 例えば初期状態と目的状態を下記で与える． タイルがないマスは$b（ブランク）$と表していることに注意すること．  $$ 初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2) $$ $$ 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8) $$ タイルに対する行動（操作）はブランクの位置に応じて決まる． 例えば，ブランクが 左上（$x_1$） にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができる．  A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$  同様に，ブランクが 上（$x_2$） にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．  A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$ A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$  上記に沿って全てを列挙すると24の行動が定義できる．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+状態空間モデル   タイルの数字を$x_i$で表します（$i$はタイルの位置）． 例えば初期状態と目的状態を下記で与える． タイルがないマスは$b（ブランク）$と表していることに注意すること．  $$ 初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2) $$ $$ 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8) $$ タイルに対する行動（操作）はブランクの位置に応じて決まる． 例えば，ブランクが 左上（$x_1$） にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができる．  A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$  同様に，ブランクが 上（$x_2$） にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．  A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$ A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$  上記に沿って全てを列挙すると24の行動が定義できる．  実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
 
 
 
@@ -104,9 +104,9 @@
 
 
   <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-4 とします． ノートブックの作成方法は第1回の資料を参照してください．
- 8パズル  今回は 8パズル（8 Puzzle） を取り上げましょう．
+8パズル  今回は 8パズル（8 Puzzle） を取り上げましょう．
 8パズル   1から8の数字が書いてあるタイルが不規則に3 $\times$ 3のマス目に並べてある． タイルをスライドさせ，左上から順番に1から8まで並び替えるにはどうしたらよいか．   この問題を 状態空間モデル で表現します．
-状態空間モデル   タイルの数字を$x_i$で表します（$i$はタイルの位置）． 例えば初期状態と目的状態を下記で与える． タイルがないマスは$b（ブランク）$と表していることに注意すること．  $$ 初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2) $$ $$ 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8) $$ タイルに対する行動（操作）はブランクの位置に応じて決まる． 例えば，ブランクが 左上（$x_1$） にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができる．  A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$  同様に，ブランクが 上（$x_2$） にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．  A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$ A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$  上記に沿って全てを列挙すると24の行動が定義できる．   実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+状態空間モデル   タイルの数字を$x_i$で表します（$i$はタイルの位置）． 例えば初期状態と目的状態を下記で与える． タイルがないマスは$b（ブランク）$と表していることに注意すること．  $$ 初期状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (3, 1, 5, b, 7, 4, 6, 8, 2) $$ $$ 目的状態: (x_1, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) = (b, 1, 2, 3, 4, 5, 6, 7, 8) $$ タイルに対する行動（操作）はブランクの位置に応じて決まる． 例えば，ブランクが 左上（$x_1$） にあるときは，上（$x_2$）と左（$x_4$）のタイルと入れ替えることができる．  A1: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_2, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A2: $(b, x_2, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_4, x_2, x_3, b, x_5, x_6, x_7, x_8, x_9)$  同様に，ブランクが 上（$x_2$） にあるときは，左上（$x_1$），右上（$x_3$），中央（$x_5$）と入れ替えることができます．  A3: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (b, x_1, x_3, x_4, x_5, x_6, x_7, x_8, x_9)$ A4: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_3, b, x_4, x_5, x_6, x_7, x_8, x_9)$ A5: $(x_1, b, x_3, x_4, x_5, x_6, x_7, x_8, x_9) \rightarrow (x_1, x_5, x_3, x_4, b, x_6, x_7, x_8, x_9)$  上記に沿って全てを列挙すると24の行動が定義できる．  実装  クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
 
 
 
@@ -185,8 +185,7 @@
     
 
     <p><a href="https://gyazo.com/d9c458606aeaa73df9890d7221dd1b8c"><img src="https://i.gyazo.com/d9c458606aeaa73df9890d7221dd1b8c.png" alt="Image from Gyazo"></a></p>
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ノートブックの作成
 </h1>
 
@@ -194,8 +193,7 @@
 ノートブックのタイトルは <strong>AI-4</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
 <!-- [![Image from Gyazo](https://i.gyazo.com/54d5cced235882d26a3a323388173139.png)](https://gyazo.com/54d5%cced235882d26a3a323388173139) -->
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   8パズル
 </h1>
 
@@ -269,8 +267,7 @@ $$
   
 </div>
 
-<h1>
-  <img class="head-image" src="/logo/logo.png">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   実装
 </h1>
 
@@ -477,8 +474,7 @@ Cost: 13
 web_viewer <span style="color:#f92672">=</span> WebViewer()
 result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True, viewer<span style="color:#f92672">=</span>web_viewer)
 </code></pre></div><p><a href="https://gyazo.com/6893e43131955778143518f6ba052de7"><img src="https://i.gyazo.com/6893e43131955778143518f6ba052de7.png" alt="Image from Gyazo"></a></p>
-<!-- <h1>
-  <img class="head-image" src="/logo/logo.png">
+<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
  -->
@@ -503,22 +499,7 @@ result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<
 
     
 
-    <div class="horizontal">
-
-  
-  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter4/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmukai-lab.info%2Fwww%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
-  
-  
-  <div style="padding: 6px; margin-top:1px">
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
-
-  
-  
-</div>
-
-
-
+    
   </div>
 
   <div class="pagination">
@@ -552,7 +533,7 @@ if (!doNotTrack) {
 
         <footer>
   <div>
-    <span>&copy; <time datetime="2021-01-10 21:58:30.04346 &#43;0900 JST m=&#43;0.327801545">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
+    <span>&copy; <time datetime="2021-01-10 22:20:11.96737 &#43;0900 JST m=&#43;0.418353955">2021</time> Naoto Mukai. Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.</span>
   </div>
 </footer>
 
