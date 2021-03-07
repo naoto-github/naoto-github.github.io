@@ -261,10 +261,65 @@ document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&
   繰り返し
 </h1>
 
+<p>プログラムの制御は <strong>順次</strong>，<strong>繰り返し（反復）</strong>，<strong>条件分岐（選択）</strong> のいずれかに分類されます．
+これまでにコーディングしたプログラムは全て <strong>順次</strong> と呼ばれる制御で，コードの先頭から順番に実行されます．
+ここでは，特定のコードを繰り返し実行する <strong>繰り返し</strong> に注目します．</p>
+<ul>
+<li><strong>順次</strong> 記述された順番にコードを実行する</li>
+<li><strong>繰り返し</strong> 特定のコードを繰り返し実行する</li>
+<li><strong>条件分岐</strong> 条件に応じて実行するコードを選択する</li>
+</ul>
 <h2 id="for文">for文</h2>
+<p>回数を指定して繰り返しを実行するのが <strong>for文</strong> です．
+for文では，<strong>変数の初期化</strong>，<strong>繰り返しの継続条件</strong>，<strong>変数の増減式</strong> を指定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">for</span>(<span style="color:#a6e22e">変数の初期化</span>; <span style="color:#a6e22e">繰り返しの継続条件</span>; <span style="color:#a6e22e">変数の増減式</span>){
+  <span style="color:#a6e22e">繰り返す処理</span>;
+}
+</code></pre></div><p>例えば，3回の繰り返しをfor文で実行することを考えます．
+変数の初期化は<code>let i=0</code>であり，変数<code>i</code>に<code>0</code>を代入しています．
+繰り返しの継続条件は<code>i&lt;3</code>であり，<code>i</code>が<code>3</code>より小さいときは，繰り返しを実行します（条件式の詳細は次回に解説）．
+変数の増減式は<code>i++</code>であり，これは<code>i=i+1</code>と同じ意味です．
+つまり，変数<code>i</code>に<code>1</code>を加算する処理です．
+この結果，<code>i</code>が<code>0</code>，<code>1</code>，<code>2</code>と増加しながら処理を繰り返し，
+<code>i</code>が<code>3</code>になったとき，繰り返しは停止することになります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// for文で繰り返し
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+  document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;i=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">i</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>)
+}
+</code></pre></div><p><a href="https://gyazo.com/417ae0cda3e557a4f448c88934564d04"><img src="https://i.gyazo.com/417ae0cda3e557a4f448c88934564d04.png" alt="Image from Gyazo"></a></p>
+<p>for文は配列と相性が良く，配列の要素に対して特定の処理をする際に用いられることが多いです．
+例えば，for文の<code>i</code>を配列のインデックスとして，<code>x</code>の全ての要素にアクセスすることができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// for文で配列の要素を表示
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+  document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;x[</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">i</span><span style="color:#e6db74">}</span><span style="color:#e6db74">]=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">x</span>[<span style="color:#a6e22e">i</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>)
+}
+</code></pre></div><p><a href="https://gyazo.com/dd74fa2ca0eda101540b51e759123a8f"><img src="https://i.gyazo.com/dd74fa2ca0eda101540b51e759123a8f.png" alt="Image from Gyazo"></a></p>
+<p><code>x</code>の要素数は<code>x.length</code>で取得することができます．
+このため繰り返しの継続条件を，<code>i&lt;x.length</code>と表現する方が便利です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// for文で配列の要素を表示
+</span><span style="color:#75715e"></span>document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;x.length=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">length</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>)
+<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">x</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+  document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;x[</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">i</span><span style="color:#e6db74">}</span><span style="color:#e6db74">]=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">x</span>[<span style="color:#a6e22e">i</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>)
+}
+</code></pre></div><p><a href="https://gyazo.com/c6709a62580922c2873ef5a4cb777738"><img src="https://i.gyazo.com/c6709a62580922c2873ef5a4cb777738.png" alt="Image from Gyazo"></a></p>
 <h2 id="for-of-文">for of 文</h2>
+<p>インデックスを利用せずに配列の要素を取得するには <strong>for of 文</strong> を利用します．
+ES6から導入された構文であり，配列だけでなく，イテレータなど列挙可能なオブジェクトに対して利用可能です．
+ここでは，<code>x</code>から取り出された要素が<code>value</code>に代入されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// for of で配列の要素を表示
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">x</span>){
+  document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;value=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">value</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>)
+}
+</code></pre></div><p><a href="https://gyazo.com/f284d66d8110beda15010a55be327b95"><img src="https://i.gyazo.com/f284d66d8110beda15010a55be327b95.png" alt="Image from Gyazo"></a></p>
 <h2 id="for-in-文">for in 文</h2>
-<h2 id="breakとcontinue">breakとcontinue</h2>
+<p>連想配列の要素を取得するには <strong>for in 文</strong> を利用します
+ここでは，<code>box</code>のキーが<code>key</code>に代入されます．
+この<code>key</code>を利用して，<code>box</code>の要素を取得します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// for in で配列の要素を表示
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">key</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">box</span>){
+  document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;box[</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">key</span><span style="color:#e6db74">}</span><span style="color:#e6db74">]=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">box</span>[<span style="color:#a6e22e">key</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>)
+}
+</code></pre></div><p><a href="https://gyazo.com/9b10dc2dbbdf1454650c9e6616d4a970"><img src="https://i.gyazo.com/9b10dc2dbbdf1454650c9e6616d4a970.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   アプリの確認
 </h1>
@@ -279,7 +334,15 @@ document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&
   課題
 </h1>
 
-<p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
+<p>連想配列で表現された5教科の得点の合計と平均を <strong>for in 文</strong> を用いて算出せよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">score</span> <span style="color:#f92672">=</span> {
+  <span style="color:#e6db74">&#34;国語&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">78</span>,
+  <span style="color:#e6db74">&#34;算数&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">92</span>,
+  <span style="color:#e6db74">&#34;理科&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">88</span>,
+  <span style="color:#e6db74">&#34;英語&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">73</span>,
+  <span style="color:#e6db74">&#34;社会&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">95</span>
+}
+</code></pre></div><p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
 提出方法は初回の<a href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/">Webアプリの開発</a>を参考にしてください．</p>
 <h3>参考書籍</h3>
 
