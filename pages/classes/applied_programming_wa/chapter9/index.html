@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    jQuery②・フォーム処理 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  <script src="./freetile/jquery.freetile.min.js"></script>  
+
+  
+  
+
+  <meta property="og:title" content="jQuery②・フォーム処理" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter9/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter9」に設定しましょう．
+ https://codepen.io/
+
+CodePenの「Settings」をクリックし，「Pen Settings」を開きます． ここで，「jQuery」をキーワードに検索し，「Save &amp; Close」をクリックします．
+
+フォーム処理  テキストフィールドやラジオボタンに入力された値を処理しましょう．
+テキストフィールドの処理 テキストフィールドに価格を入力し，ボタンをクリックすると消費税を計算します． HTMLに下記のコードを入力してください． テキストフィールドを作成するには，inputのtype属性をtextに設定します． pは計算結果を表示するために用います． divは複数の要素をグループとしてまとめるために用いられるブロック要素です． フォントやレイアウトを変更するような特殊な効果はありません．
+&lt;div&gt; &lt;p&gt;価格を入力してください．&lt;/p&gt; &lt;input id=&#34;price&#34; type=&#34;text&#34;&gt;&lt;/input&gt;円 &lt;button id=&#34;bt_tax&#34; type=&#34;button&#34;&gt;消費税を計算&lt;/button&gt; &lt;p id=&#34;tax&#34;&gt;&lt;/p&gt; &lt;/div&gt; ボタンのイベント処理は前回説明したようにon()を利用します． テキストフィールドに入力された値はval()で取得することが出来ます． この値に0.1を掛け算し，消費税（税率10%）を求めます． 計算結果はtext()で設定しています．
+$(&#34;#bt_tax&#34;).on(&#34;click&#34;, function(){ let price = $(&#34;#price&#34;).val(); let tax = price * 0.1; $(&#34;#tax&#34;).text(tax &#43; &#34;円&#34;); }); 例えば，テキストフィールドに1000を入力すると，十分の一の100が結果として出力されます．
+
+ラジオボタンの処理 ラジオボタンで色を選択し，ボタンをクリックすると， ページ全体の文字色を選択した色に変更します． HTMLに下記のコードを入力してください． ラジオボタンを作成するには，inputのtype属性をradioに設定します． name属性はラジオボタンのグループを表し，同一のname属性から一つを選択できます（複数選択はできない）． value属性は，後述するval()で取得される値です． checkedは初期状態で選択されている項目を表します．
+&lt;div&gt; &lt;p&gt;文字の色を選択してください．&lt;/p&gt; &lt;input type=&#34;radio&#34; name=&#34;color&#34; value=&#34;black&#34; checked&gt;黒&lt;/input&gt; &lt;input type=&#34;radio&#34; name=&#34;color&#34; value=&#34;red&#34;&gt;赤&lt;/input&gt; &lt;input type=&#34;radio&#34; name=&#34;color&#34; value=&#34;blue&#34;&gt;青&lt;/input&gt; &lt;button id=&#34;bt_color&#34; type=&#34;button&#34;&gt;文字色を変更&lt;/button&gt; &lt;/div&gt; チェックボックスを取得するにはname属性を用いて， input[name=color]と表現します． このとき，選択されている項目だけを取得したい場合は，:checkedを末尾に付けます． val()で色を表す文字列を取得し，これをcss()で文字の色に設定します．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="jQuery②・フォーム処理" />
+
+
+
+  <meta name="twitter:description" content="CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter9」に設定しましょう．
+ https://codepen.io/
+
+CodePenの「Settings」をクリックし，「Pen Settings」を開きます． ここで，「jQuery」をキーワードに検索し，「Save &amp; Close」をクリックします．
+
+フォーム処理  テキストフィールドやラジオボタンに入力された値を処理しましょう．
+テキストフィールドの処理 テキストフィールドに価格を入力し，ボタンをクリックすると消費税を計算します． HTMLに下記のコードを入力してください． テキストフィールドを作成するには，inputのtype属性をtextに設定します． pは計算結果を表示するために用います． divは複数の要素をグループとしてまとめるために用いられるブロック要素です． フォントやレイアウトを変更するような特殊な効果はありません．
+&lt;div&gt; &lt;p&gt;価格を入力してください．&lt;/p&gt; &lt;input id=&#34;price&#34; type=&#34;text&#34;&gt;&lt;/input&gt;円 &lt;button id=&#34;bt_tax&#34; type=&#34;button&#34;&gt;消費税を計算&lt;/button&gt; &lt;p id=&#34;tax&#34;&gt;&lt;/p&gt; &lt;/div&gt; ボタンのイベント処理は前回説明したようにon()を利用します． テキストフィールドに入力された値はval()で取得することが出来ます． この値に0.1を掛け算し，消費税（税率10%）を求めます． 計算結果はtext()で設定しています．
+$(&#34;#bt_tax&#34;).on(&#34;click&#34;, function(){ let price = $(&#34;#price&#34;).val(); let tax = price * 0.1; $(&#34;#tax&#34;).text(tax &#43; &#34;円&#34;); }); 例えば，テキストフィールドに1000を入力すると，十分の一の100が結果として出力されます．
+
+ラジオボタンの処理 ラジオボタンで色を選択し，ボタンをクリックすると， ページ全体の文字色を選択した色に変更します． HTMLに下記のコードを入力してください． ラジオボタンを作成するには，inputのtype属性をradioに設定します． name属性はラジオボタンのグループを表し，同一のname属性から一つを選択できます（複数選択はできない）． value属性は，後述するval()で取得される値です． checkedは初期状態で選択されている項目を表します．
+&lt;div&gt; &lt;p&gt;文字の色を選択してください．&lt;/p&gt; &lt;input type=&#34;radio&#34; name=&#34;color&#34; value=&#34;black&#34; checked&gt;黒&lt;/input&gt; &lt;input type=&#34;radio&#34; name=&#34;color&#34; value=&#34;red&#34;&gt;赤&lt;/input&gt; &lt;input type=&#34;radio&#34; name=&#34;color&#34; value=&#34;blue&#34;&gt;青&lt;/input&gt; &lt;button id=&#34;bt_color&#34; type=&#34;button&#34;&gt;文字色を変更&lt;/button&gt; &lt;/div&gt; チェックボックスを取得するにはname属性を用いて， input[name=color]と表現します． このとき，選択されている項目だけを取得したい場合は，:checkedを末尾に付けます． val()で色を表す文字列を取得し，これをcss()で文字の色に設定します．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/tech/">Tech</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/projects/">Projects</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">jQuery②・フォーム処理</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  CodePenの準備
+</h1>
+
+<p><a href="https://codepen.io/">CodePen</a>にアクセスして，Penを作成し，タイトルを設定しましょう．
+Penのタイトルは「Chapter9」に設定しましょう．</p>
+<p><a href="https://codepen.io/"><i class="fas fa-external-link-alt"></i> https://codepen.io/</a></p>
+<p><a href="https://gyazo.com/79db9f7dc97445988269d2f60e949c24"><img src="https://i.gyazo.com/79db9f7dc97445988269d2f60e949c24.png" alt="Image from Gyazo"></a></p>
+<p>CodePenの「Settings」をクリックし，「Pen Settings」を開きます．
+ここで，「jQuery」をキーワードに検索し，「Save &amp; Close」をクリックします．</p>
+<p><a href="https://gyazo.com/36d91cc7f53ed36653d0ea074b692c0a"><img src="https://i.gyazo.com/36d91cc7f53ed36653d0ea074b692c0a.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  フォーム処理
+</h1>
+
+<p>テキストフィールドやラジオボタンに入力された値を処理しましょう．</p>
+<h2 id="テキストフィールドの処理">テキストフィールドの処理</h2>
+<p>テキストフィールドに価格を入力し，ボタンをクリックすると消費税を計算します．
+HTMLに下記のコードを入力してください．
+テキストフィールドを作成するには，<code>input</code>の<code>type</code>属性を<code>text</code>に設定します．
+<code>p</code>は計算結果を表示するために用います．
+<code>div</code>は複数の要素をグループとしてまとめるために用いられるブロック要素です．
+フォントやレイアウトを変更するような特殊な効果はありません．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;価格を入力してください．&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;price&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>&gt;&lt;/<span style="color:#f92672">input</span>&gt;円
+  &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bt_tax&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span>&gt;消費税を計算&lt;/<span style="color:#f92672">button</span>&gt;
+  &lt;<span style="color:#f92672">p</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tax&#34;</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p>ボタンのイベント処理は前回説明したように<code>on()</code>を利用します．
+テキストフィールドに入力された値は<code>val()</code>で取得することが出来ます．
+この値に0.1を掛け算し，消費税（税率10%）を求めます．
+計算結果は<code>text()</code>で設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#bt_tax&#34;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span>(){
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">price</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#price&#34;</span>).<span style="color:#a6e22e">val</span>();
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">tax</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">price</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.1</span>;
+  <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#tax&#34;</span>).<span style="color:#a6e22e">text</span>(<span style="color:#a6e22e">tax</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;円&#34;</span>);
+});
+</code></pre></div><p>例えば，テキストフィールドに<code>1000</code>を入力すると，十分の一の<code>100</code>が結果として出力されます．</p>
+<p><a href="https://gyazo.com/46c5006072b1b1105e3792c37d1ce31f"><img src="https://i.gyazo.com/46c5006072b1b1105e3792c37d1ce31f.png" alt="Image from Gyazo"></a></p>
+<h2 id="ラジオボタンの処理">ラジオボタンの処理</h2>
+<p>ラジオボタンで色を選択し，ボタンをクリックすると，
+ページ全体の文字色を選択した色に変更します．
+HTMLに下記のコードを入力してください．
+ラジオボタンを作成するには，<code>input</code>の<code>type</code>属性を<code>radio</code>に設定します．
+<code>name</code>属性はラジオボタンのグループを表し，同一の<code>name</code>属性から一つを選択できます（複数選択はできない）．
+<code>value</code>属性は，後述する<code>val()</code>で取得される値です．
+<code>checked</code>は初期状態で選択されている項目を表します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;文字の色を選択してください．&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;color&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;black&#34;</span> <span style="color:#a6e22e">checked</span>&gt;黒&lt;/<span style="color:#f92672">input</span>&gt;
+  &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;color&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;red&#34;</span>&gt;赤&lt;/<span style="color:#f92672">input</span>&gt;
+  &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;color&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;blue&#34;</span>&gt;青&lt;/<span style="color:#f92672">input</span>&gt;
+  &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bt_color&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span>&gt;文字色を変更&lt;/<span style="color:#f92672">button</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p>チェックボックスを取得するには<code>name</code>属性を用いて，
+<code>input[name=color]</code>と表現します．
+このとき，選択されている項目だけを取得したい場合は，<code>:checked</code>を末尾に付けます．
+<code>val()</code>で色を表す文字列を取得し，これを<code>css()</code>で文字の色に設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#bt_color&#34;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span>(){
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">color</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;input[name=color]:checked&#34;</span>).<span style="color:#a6e22e">val</span>();
+  <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;body&#34;</span>).<span style="color:#a6e22e">css</span>(<span style="color:#e6db74">&#34;color&#34;</span>, <span style="color:#a6e22e">color</span>);
+})
+</code></pre></div><p>例えば，<code>赤</code>を選択すると，ページ内の全ての文字が赤色に変更されます．</p>
+<p><a href="https://gyazo.com/006ac62dcf753bf7cb837bff498d499c"><img src="https://i.gyazo.com/006ac62dcf753bf7cb837bff498d499c.png" alt="Image from Gyazo"></a></p>
+<h2 id="ファイルの処理">ファイルの処理</h2>
+<p>ファイル選択アイアログを表示し，アップロードした画像をページ内に表示します．
+HTMLに下記のコードを入力してください．
+ファイル選択ダイアログを作成するには，<code>input</code>の<code>type</code>属性を<code>file</code>に設定します．
+<code>img</code>はアップロードした画像を表示するために用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;ファイルを選択してください．&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;image&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;file&#34;</span>&gt;&lt;/<span style="color:#f92672">input</span>&gt;
+  &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bt_image&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span>&gt;送信&lt;/<span style="color:#f92672">button</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;preview&#34;</span> <span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;200px&#34;</span>&gt;
+  &lt;/<span style="color:#f92672">p</span>&gt;  
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p>アップロードしたファイルのオブジェクトは，<code>$(&quot;#image&quot;)[0].files[0]</code>として取得します．
+前半の<code>$(&quot;#image&quot;)[0]</code>は，jQueryオブジェクトに含まれている，DOMオブジェクト（本来のJavaScriptのオブジェクト）を取り出すことを意味します．
+また，後半の<code>files[0]</code>は，選択されたファイルのリストであり，リストの最初の要素のみを用いています（ここでは同時に複数の画像を選択しないため）．</p>
+<p>ファイルのデータを取得するには<a href="https://developer.mozilla.org/ja/docs/Web/API/FileReader">FileReader</a>を利用します．
+<code>onload</code>はファイルの読み込みが成功したときに実行する無名関数を代入します．
+<code>readAsDataURL()</code>で，ファイルの読み込みが開始され，その結果が<code>result</code>に記憶されます．
+この<code>result</code>を<code>img</code>の<code>src</code>属性に設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#bt_image&#34;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span>(){
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">image</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#image&#34;</span>)[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">files</span>[<span style="color:#ae81ff">0</span>];
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">fr</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">FileReader</span>();
+  <span style="color:#a6e22e">fr</span>.<span style="color:#a6e22e">onload</span> <span style="color:#f92672">=</span> () =&gt; {
+    <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#preview&#34;</span>).<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;src&#34;</span>, <span style="color:#a6e22e">fr</span>.<span style="color:#a6e22e">result</span>);
+  };
+  <span style="color:#a6e22e">fr</span>.<span style="color:#a6e22e">readAsDataURL</span>(<span style="color:#a6e22e">image</span>);
+})
+</code></pre></div><p>ここでは，<a href="https://pro-foto.jp/">pro.foto</a>で公開されている動物のフリー画像をアップロードしてみます．
+ファイルをアップロードすると，ページに画像が表示されます．</p>
+<p><a href="https://gyazo.com/cf904b1865d0e57e7e01865a82445216"><img src="https://i.gyazo.com/cf904b1865d0e57e7e01865a82445216.jpg" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/0de04a5b51be2e5912f691a4fe947ca4"><img src="https://i.gyazo.com/0de04a5b51be2e5912f691a4fe947ca4.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Ajax
+</h1>
+
+<h2 id="図書雑誌検索">図書・雑誌検索</h2>
+<p><a href="https://support.nii.ac.jp/ja/cib/api/b_opensearch">CiNii Books</a>のAPIを利用して，
+図書館に所蔵されている図書・雑誌を検索しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span>&gt;
+  &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;book_title&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;坂の上の雲&#34;</span>&gt;&lt;/<span style="color:#f92672">input</span>&gt;
+  &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bt_book&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span>&gt;検索&lt;/<span style="color:#f92672">button</span>&gt;
+  &lt;<span style="color:#f92672">ul</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;books&#34;</span>&gt;
+  &lt;/<span style="color:#f92672">ul</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#bt_book&#34;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span>(){
+
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">title</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#book_title&#34;</span>).<span style="color:#a6e22e">val</span>();
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`https://ci.nii.ac.jp/books/opensearch/search?title=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">title</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;format=json&amp;count=5`</span>
+    
+  <span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">ajax</span>({
+	<span style="color:#a6e22e">url</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">url</span>,
+    <span style="color:#a6e22e">method</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;GET&#34;</span>,
+    <span style="color:#a6e22e">dataType</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;json&#34;</span>,
+  })
+  .<span style="color:#a6e22e">done</span>(<span style="color:#a6e22e">data</span> =&gt; {
+	<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#books&#34;</span>).<span style="color:#a6e22e">empty</span>();
+	<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">items</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">data</span>[<span style="color:#e6db74">&#34;@graph&#34;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#34;items&#34;</span>]
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">item</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">items</span>){
+	  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">title</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>[<span style="color:#e6db74">&#34;title&#34;</span>]
+	  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">link</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>[<span style="color:#e6db74">&#34;@id&#34;</span>]
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">date</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>[<span style="color:#e6db74">&#34;dc:date&#34;</span>]
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">creator</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>[<span style="color:#e6db74">&#34;dc:creator&#34;</span>]
+      <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#books&#34;</span>).<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">`&lt;li&gt;&lt;a href=&#34;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">link</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34; target=&#34;_blank&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">title</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> (</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">date</span><span style="color:#e6db74">}</span><span style="color:#e6db74">) </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">creator</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/a&gt;&lt;/li&gt;`</span>);
+    }
+  })
+})  
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  アプリの確認
+</h1>
+
+<p class="codepen" data-height="265" data-theme-id="light" data-default-tab="js,result" data-user="nmukai" data-slug-hash="ZEBwYzp" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="Chapter9">
+  <span>See the Pen <a href="https://codepen.io/nmukai/pen/ZEBwYzp">
+  Chapter9</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
+提出方法は初回の<a href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/">Webアプリの開発</a>を参考にしてください．</p>
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B08CXDYVLS&linkId=829c7897d68d44db2de11a55b3e0bfd8&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B01LYO6C1N&linkId=81a9a7d9508c06ad6e7af3fdce5631c1&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B0192PG8TU&linkId=420f0d4a0c28a0ff476faefe9466a260&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter9/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
