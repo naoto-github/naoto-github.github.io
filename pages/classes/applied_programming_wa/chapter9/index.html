@@ -303,36 +303,68 @@ HTMLに下記のコードを入力してください．
 
 <h2 id="図書雑誌検索">図書・雑誌検索</h2>
 <p><a href="https://support.nii.ac.jp/ja/cib/api/b_opensearch">CiNii Books</a>のAPIを利用して，
-図書館に所蔵されている図書・雑誌を検索しましょう．</p>
+図書館に所蔵されている図書・雑誌を検索しましょう．
+APIへのアクセスには jQueryの<strong>Ajax(Asynchronous JavaScript And XML)</strong> を利用します．
+Ajaxは非同期にサーバからデータを取得するための実装方法であり，
+ページをリロード（再読込）することなく，ページの一部分を動的に書き換えることができます．</p>
+<p>HTMLに下記のコードを入力してください．
+図書のタイトルを入力するテキストフィールドと，
+AjaxでAPIにアクセスするためのボタンを設置しています．
+テキストフィールドの初期値である<code>value</code>属性は司馬遼太郎の<code>坂の上の雲</code>に設定しています．
+また，<code>ul</code>は検索結果のリストを表示するために用います．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span>&gt;
   &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;book_title&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;坂の上の雲&#34;</span>&gt;&lt;/<span style="color:#f92672">input</span>&gt;
   &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bt_book&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span>&gt;検索&lt;/<span style="color:#f92672">button</span>&gt;
   &lt;<span style="color:#f92672">ul</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;books&#34;</span>&gt;
   &lt;/<span style="color:#f92672">ul</span>&gt;
 &lt;/<span style="color:#f92672">div</span>&gt;
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#bt_book&#34;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span>(){
+</code></pre></div><p>APIには <strong>GETメソッド</strong> という方法でアクセスします．
+GETメソッドでは，URLの最後に <strong>クエリパラメータ</strong> と呼ばれる情報を付け加えることができます．
+クエリパラメータは<code>?</code>の後ろに<code>パラメータ=値</code>のペアで表し，複数あるときは<code>&amp;</code>で連結します．
+ここでは，<code>title=坂の上の雲</code>が図書のタイトル，<code>format=json</code>が取得するデータのフォーマット，
+<code>count=5</code>が取得するレコードの最大数を表しています．
+下記のURLにアクセスしてみましょう．
+JSON形式でデータが取得できることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">https://ci.nii.ac.jp/books/opensearch/search?title=坂の上の雲<span style="color:#960050;background-color:#1e0010">&amp;</span>format=json<span style="color:#960050;background-color:#1e0010">&amp;</span>count=5
+</code></pre></div><p>それでは，Ajaxのコードを確認しましょう．
+最初に図書のタイトルを<code>title</code>，APIのURLを<code>url</code>に代入しています．
+jQueryでAjaxを実行するには<code>$.ajax()</code>を用います．
+引数には連想配列として，<code>url</code>，<code>method</code>，<code>dataType</code>，<code>data</code>を指定します．
+それぞれ，APIのURL，GETメソッド，JSON形式，クエリパラメータを表しています．</p>
+<p>Ajaxでのアクセスが成功した場合，<code>done()</code>の引数として渡された無名関数が実行されます．
+<code>ul</code>の要素を<code>empty()</code>で空にした後で，取得したJSON形式のデータから，
+タイトル<code>title</code>，リンク<code>link</code>，発刊年<code>date</code>，著者<code>author</code>のデータを抽出します．
+最後に<code>ul</code>に，抽出された情報を含む<code>li</code>を追加します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#bt_book&#34;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span>(){
 
   <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">title</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#book_title&#34;</span>).<span style="color:#a6e22e">val</span>();
-  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`https://ci.nii.ac.jp/books/opensearch/search?title=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">title</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;format=json&amp;count=5`</span>
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">url</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`https://ci.nii.ac.jp/books/opensearch/search`</span>
     
   <span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">ajax</span>({
 	<span style="color:#a6e22e">url</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">url</span>,
     <span style="color:#a6e22e">method</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;GET&#34;</span>,
     <span style="color:#a6e22e">dataType</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;json&#34;</span>,
+    <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+	  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">title</span>,
+      <span style="color:#a6e22e">format</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;json&#34;</span>,
+      <span style="color:#a6e22e">count</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">5</span>
+    }
   })
   .<span style="color:#a6e22e">done</span>(<span style="color:#a6e22e">data</span> =&gt; {
 	<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#books&#34;</span>).<span style="color:#a6e22e">empty</span>();
-	<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">items</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">data</span>[<span style="color:#e6db74">&#34;@graph&#34;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#34;items&#34;</span>]
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">items</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">data</span>[<span style="color:#e6db74">&#34;@graph&#34;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#34;items&#34;</span>]
     <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">item</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">items</span>){
 	  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">title</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>[<span style="color:#e6db74">&#34;title&#34;</span>]
-	  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">link</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>[<span style="color:#e6db74">&#34;@id&#34;</span>]
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">link</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>[<span style="color:#e6db74">&#34;@id&#34;</span>]
       <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">date</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>[<span style="color:#e6db74">&#34;dc:date&#34;</span>]
       <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">creator</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">item</span>[<span style="color:#e6db74">&#34;dc:creator&#34;</span>]
       <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#books&#34;</span>).<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">`&lt;li&gt;&lt;a href=&#34;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">link</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34; target=&#34;_blank&#34;&gt;</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">title</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> (</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">date</span><span style="color:#e6db74">}</span><span style="color:#e6db74">) </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">creator</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/a&gt;&lt;/li&gt;`</span>);
     }
   })
-})  
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  
+});
+</code></pre></div><p><a href="https://gyazo.com/bb328582d7b884284371efaad63deba9"><img src="https://i.gyazo.com/bb328582d7b884284371efaad63deba9.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   アプリの確認
 </h1>
 
@@ -346,7 +378,8 @@ HTMLに下記のコードを入力してください．
   課題
 </h1>
 
-<p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
+<p>フォームに入力された10進数を，ボタンをクリックすると2進数に変換して表示させてください．
+課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
 提出方法は初回の<a href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/">Webアプリの開発</a>を参考にしてください．</p>
 <h3>参考書籍</h3>
 
