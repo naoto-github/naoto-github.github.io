@@ -89,8 +89,13 @@
 
 前回と同様にp5.jsとml5.jsを導入しましょう．
 https://unpkg.com/ml5@latest/dist/ml5.min.js 
-ハンドポーズの検出  アプリの確認  See the Pen Chapter12 by Naoto Mukai (@nmukai) on CodePen.  課題  課題を完成させたら，Penの ZIPファイル と リンク を提出してください． 提出方法は初回のWebアプリの開発を参考にしてください．
-参考書籍" />
+ハンドポーズの検出  ml5.jsとp5.jsを 組み合わせて ハンドポーズの検出 にチャレンジします． 前回は画像から顔を検出しましたが，今回はWebカメラの映像からハンドポーズを検出します． Webカメラが利用可能なPC環境で実装してください．
+HTMLに下記のコードを入力してください． 今回はp5.jsを利用するため，h1でタイトルのみを記述します．
+&lt;h1&gt;ハンドポーズ認識&lt;/h1&gt; ml5.jsのハンドポーズ検出は MdiaPipe Handpose から移植されています． 手の指や関節の21点のランドマークを検出できます．
+ビデオは createCapture() でキャプチャされ， キャプチャされたフレームは通常の画像と同じように扱うことができます．
+ハンドポーズ検出器を生成するには，ml5.handpose()を利用します． 第一引数は，キャプチャされたフレームvideo， 第二引数はモデルがロードされたタイミングで実行される無名関数です．
+ハンドポーズのイベントはhandpose.on()で検出します． 第一引数は&quot;predict&quot;， 第二引数は検出結果を処理する無名関数を設定します． ここでは，検出結果が格納されたresultsを，predictionsに代入します． このpredictionsは配列であることに注意してください．
+let video; let handpose; let predictions = []; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video.size(width, height); video.hide(); // ハンドポーズの検出器  handpose = ml5.handpose(video, () =&gt; { console.log(&#34;Model Loaded&#34;); }); // ハンドポーズの検出  handpose." />
 
 
 
@@ -110,8 +115,13 @@ https://unpkg.com/ml5@latest/dist/ml5.min.js
 
 前回と同様にp5.jsとml5.jsを導入しましょう．
 https://unpkg.com/ml5@latest/dist/ml5.min.js 
-ハンドポーズの検出  アプリの確認  See the Pen Chapter12 by Naoto Mukai (@nmukai) on CodePen.  課題  課題を完成させたら，Penの ZIPファイル と リンク を提出してください． 提出方法は初回のWebアプリの開発を参考にしてください．
-参考書籍" />
+ハンドポーズの検出  ml5.jsとp5.jsを 組み合わせて ハンドポーズの検出 にチャレンジします． 前回は画像から顔を検出しましたが，今回はWebカメラの映像からハンドポーズを検出します． Webカメラが利用可能なPC環境で実装してください．
+HTMLに下記のコードを入力してください． 今回はp5.jsを利用するため，h1でタイトルのみを記述します．
+&lt;h1&gt;ハンドポーズ認識&lt;/h1&gt; ml5.jsのハンドポーズ検出は MdiaPipe Handpose から移植されています． 手の指や関節の21点のランドマークを検出できます．
+ビデオは createCapture() でキャプチャされ， キャプチャされたフレームは通常の画像と同じように扱うことができます．
+ハンドポーズ検出器を生成するには，ml5.handpose()を利用します． 第一引数は，キャプチャされたフレームvideo， 第二引数はモデルがロードされたタイミングで実行される無名関数です．
+ハンドポーズのイベントはhandpose.on()で検出します． 第一引数は&quot;predict&quot;， 第二引数は検出結果を処理する無名関数を設定します． ここでは，検出結果が格納されたresultsを，predictionsに代入します． このpredictionsは配列であることに注意してください．
+let video; let handpose; let predictions = []; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video.size(width, height); video.hide(); // ハンドポーズの検出器  handpose = ml5.handpose(video, () =&gt; { console.log(&#34;Model Loaded&#34;); }); // ハンドポーズの検出  handpose." />
 
 
 
@@ -205,6 +215,99 @@ Penのタイトルは「Chapter12」に設定しましょう．</p>
   ハンドポーズの検出
 </h1>
 
+<p><a href="https://ml5js.org/">ml5.js</a>と<a href="https://p5js.org/">p5.js</a>を
+組み合わせて <strong>ハンドポーズの検出</strong> にチャレンジします．
+前回は画像から顔を検出しましたが，今回はWebカメラの映像からハンドポーズを検出します．
+Webカメラが利用可能なPC環境で実装してください．</p>
+<p>HTMLに下記のコードを入力してください．
+今回はp5.jsを利用するため，<code>h1</code>でタイトルのみを記述します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">h1</span>&gt;ハンドポーズ認識&lt;/<span style="color:#f92672">h1</span>&gt;
+</code></pre></div><p>ml5.jsのハンドポーズ検出は <strong>MdiaPipe Handpose</strong> から移植されています．
+手の指や関節の21点のランドマークを検出できます．</p>
+<p>ビデオは <code>createCapture()</code> でキャプチャされ，
+キャプチャされたフレームは通常の画像と同じように扱うことができます．</p>
+<p>ハンドポーズ検出器を生成するには，<code>ml5.handpose()</code>を利用します．
+第一引数は，キャプチャされたフレーム<code>video</code>，
+第二引数はモデルがロードされたタイミングで実行される無名関数です．</p>
+<p>ハンドポーズのイベントは<code>handpose.on()</code>で検出します．
+第一引数は<code>&quot;predict&quot;</code>，
+第二引数は検出結果を処理する無名関数を設定します．
+ここでは，検出結果が格納された<code>results</code>を，<code>predictions</code>に代入します．
+この<code>predictions</code>は配列であることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">video</span>;
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">handpose</span>;
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">predictions</span> <span style="color:#f92672">=</span> [];
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setup</span>(){
+  <span style="color:#a6e22e">createCanvas</span>(<span style="color:#ae81ff">640</span>, <span style="color:#ae81ff">480</span>);
+  
+  <span style="color:#75715e">// ビデオのキャプチャ
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">video</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">createCapture</span>(<span style="color:#a6e22e">VIDEO</span>);
+  <span style="color:#a6e22e">video</span>.<span style="color:#a6e22e">size</span>(<span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>);
+  <span style="color:#a6e22e">video</span>.<span style="color:#a6e22e">hide</span>();
+  
+  <span style="color:#75715e">// ハンドポーズの検出器
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">handpose</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ml5</span>.<span style="color:#a6e22e">handpose</span>(<span style="color:#a6e22e">video</span>, () =&gt; {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Model Loaded&#34;</span>);
+  });
+  
+  <span style="color:#75715e">// ハンドポーズの検出
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">handpose</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;predict&#34;</span>, <span style="color:#a6e22e">results</span> =&gt; {
+    <span style="color:#a6e22e">predictions</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">results</span>;
+  });
+
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">draw</span>() {
+  <span style="color:#a6e22e">image</span>(<span style="color:#a6e22e">video</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>);
+ 
+  <span style="color:#75715e">// ランドマークの描画
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">drawLandmarks</span>();
+  
+  <span style="color:#75715e">// ライトセーバの描画
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">drawLightSaber</span>();
+}
+</code></pre></div><p>検出結果を描画する関数として，<code>drawLandmarks()</code>と<code>drawLightSaber()</code>を定義します．
+<code>drawLandmarks()</code>は，検出された全ての21点のランドマークを円とテキストで描画します．
+テキストは配列のインデックスです（インデックスは0〜20）．
+例えば親指の先端のインデックスは4です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">drawLandmarks</span>(){
+  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">prediction</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">predictions</span>){
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">point</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>[<span style="color:#a6e22e">i</span>];
+      <span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;#00ff00&#34;</span>); <span style="color:#75715e">// 塗りつぶしの色
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">noStroke</span>(); <span style="color:#75715e">// 線の色
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">text</span>(<span style="color:#a6e22e">str</span>(<span style="color:#a6e22e">i</span>), <span style="color:#a6e22e">point</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">point</span>[<span style="color:#ae81ff">1</span>]); <span style="color:#75715e">// テキストを描画
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">circle</span>(<span style="color:#a6e22e">point</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">point</span>[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">10</span>); <span style="color:#75715e">// 円を描画
+</span><span style="color:#75715e"></span>    }
+  }
+}
+</code></pre></div><p><a href="https://gyazo.com/988e323d3ebddb96faa2c10b72575398"><img src="https://i.gyazo.com/988e323d3ebddb96faa2c10b72575398.gif" alt="Image from Gyazo"></a></p>
+<p><code>drawLightSaber()</code>は検出された手の状態に合わせてライトセーバを描画します．
+親指の第1関節の座標と，小指の先端の座標から，ライトセーバの傾きを計算しています．
+ライトセーバの長さと傾きから，ライトセーバーの先端の座標を求め，
+<code>line()</code>で線の太さが'30&rsquo;の直線を描画しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">drawLightSaber</span>(){
+  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">prediction</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">predictions</span>){
+    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
+	
+      <span style="color:#66d9ef">let</span> [<span style="color:#a6e22e">head_x</span>, <span style="color:#a6e22e">head_y</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>[<span style="color:#ae81ff">3</span>]; <span style="color:#75715e">// 親指の第1関節
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">let</span> [<span style="color:#a6e22e">tail_x</span>, <span style="color:#a6e22e">tail_y</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>[<span style="color:#ae81ff">20</span>]; <span style="color:#75715e">// 小指の先端
+</span><span style="color:#75715e"></span>	  
+	  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">length</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">300</span>; <span style="color:#75715e">// ライトセーバの長さ
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">angle</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">atan2</span>((<span style="color:#a6e22e">tail_y</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">head_y</span>), (<span style="color:#a6e22e">tail_x</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">head_x</span>)); <span style="color:#75715e">// ライトセーバの傾き
+</span><span style="color:#75715e"></span>      
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">target_x</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">head_x</span> <span style="color:#f92672">-</span> (<span style="color:#a6e22e">length</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">cos</span>(<span style="color:#a6e22e">angle</span>)); <span style="color:#75715e">// ライトセーバの先端のx座標
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">target_y</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">head_y</span> <span style="color:#f92672">-</span> (<span style="color:#a6e22e">length</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">sin</span>(<span style="color:#a6e22e">angle</span>)); <span style="color:#75715e">// ライトセーバの先端のy座標
+</span><span style="color:#75715e"></span>	  
+      <span style="color:#a6e22e">stroke</span>(<span style="color:#e6db74">&#34;#00ffff&#34;</span>); <span style="color:#75715e">// 線の色
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">strokeWeight</span>(<span style="color:#ae81ff">30</span>); <span style="color:#75715e">// 線の太さ
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">line</span>(<span style="color:#a6e22e">head_x</span>, <span style="color:#a6e22e">head_y</span>, <span style="color:#a6e22e">target_x</span>, <span style="color:#a6e22e">target_y</span>); <span style="color:#75715e">// ライトセーバを描画
+</span><span style="color:#75715e"></span>      
+    }
+  }
+}
+</code></pre></div><p><a href="https://gyazo.com/e90c2a14fe1d8d414a92594740567512"><img src="https://i.gyazo.com/e90c2a14fe1d8d414a92594740567512.gif" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   アプリの確認
 </h1>
@@ -219,7 +322,8 @@ Penのタイトルは「Chapter12」に設定しましょう．</p>
   課題
 </h1>
 
-<p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
+<p>ライトセーバを自由に改良してみてください．
+課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
 提出方法は初回の<a href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/">Webアプリの開発</a>を参考にしてください．</p>
 <h3>参考書籍</h3>
 
