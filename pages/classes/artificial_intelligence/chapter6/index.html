@@ -84,7 +84,7 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-6 とします． ノートブックの作成方法は第1回の資料を参照してください．
+  <meta property="og:description" content="ノートブックの作成Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-6 とします． ノートブックの作成方法は第1回の資料を参照してください．
 迷路問題今回は 迷路問題 を独自に設計します．
 迷路問題初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ．ただし，隣り合う状態への移動にかかるコストは$1$とする．この問題を 状態空間モデル で表現します．
 状態空間モデル$A$から$Y$までの25の状態から，冗長な状態を取り除く．例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する．この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．行動は移動可能な状態のペアとして定義する．例えば，$S1$からは，$S2$と$S7$に移動可能なため，下記のように表現できる．$S1 \rightarrow S2$$S1 \rightarrow S7$同様に全ての状態について列挙すると，合わせて31通りの行動が定義できる．探索アルゴリズム探索木を用いて初期状態から目的状態を探索するための アルゴリズム（探索する手順） について紹介します． ここでは，ヒューリスティックスと呼ばれる知識を用いないで探索する 幅優先探索 と 深さ優先探索 を取り上げます． これまでに取り上げた，水差し問題，8パズル，ハノイの塔では， 実は幅優先探索を用いていました．
@@ -103,7 +103,7 @@
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-6 とします． ノートブックの作成方法は第1回の資料を参照してください．
+  <meta name="twitter:description" content="ノートブックの作成Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-6 とします． ノートブックの作成方法は第1回の資料を参照してください．
 迷路問題今回は 迷路問題 を独自に設計します．
 迷路問題初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ．ただし，隣り合う状態への移動にかかるコストは$1$とする．この問題を 状態空間モデル で表現します．
 状態空間モデル$A$から$Y$までの25の状態から，冗長な状態を取り除く．例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する．この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．行動は移動可能な状態のペアとして定義する．例えば，$S1$からは，$S2$と$S7$に移動可能なため，下記のように表現できる．$S1 \rightarrow S2$$S1 \rightarrow S7$同様に全ての状態について列挙すると，合わせて31通りの行動が定義できる．探索アルゴリズム探索木を用いて初期状態から目的状態を探索するための アルゴリズム（探索する手順） について紹介します． ここでは，ヒューリスティックスと呼ばれる知識を用いないで探索する 幅優先探索 と 深さ優先探索 を取り上げます． これまでに取り上げた，水差し問題，8パズル，ハノイの塔では， 実は幅優先探索を用いていました．
@@ -191,7 +191,7 @@
   ノートブックの作成
 </h1>
 
-<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+<p><strong>Google Colaboratory</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-6</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
@@ -299,56 +299,56 @@ GOAL  <span style="color:#f92672">=</span> <span style="color:#ae81ff">17</span>
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
         <span style="color:#f92672">...</span>
-        
+
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
         <span style="color:#f92672">...</span>
-        
+
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
         <span style="color:#f92672">...</span>
 </code></pre></div><h3 id="actionsself-state">actions(self, state)</h3>
 <p>実行可能な行動のリストを返します．
 行動は全部で31パターンが存在します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
-    list <span style="color:#f92672">=</span> []
-    
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>: <span style="color:#75715e">#S1からS2,S7に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">7</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>: <span style="color:#75715e">#S2からS1,S6に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>: <span style="color:#75715e">#S3からS4に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span>: <span style="color:#75715e">#S4からS3,S5,S8に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">8</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>: <span style="color:#75715e">#S5からS4に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">6</span>: <span style="color:#75715e">#S6からS2に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>: <span style="color:#75715e">#S7からS1,S8,S14に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">14</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">8</span>: <span style="color:#75715e">#S8からS4,S7,S12に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">12</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>: <span style="color:#75715e">#S9からS10,S13に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">13</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span>: <span style="color:#75715e">#S10からS9,S17に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">17</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">11</span>: <span style="color:#75715e">#S11からS12に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">12</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">12</span>: <span style="color:#75715e">#S12からS8,S11,S13に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">13</span>: <span style="color:#75715e">#S13からS9,S12に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">12</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">14</span>: <span style="color:#75715e">#S14からS7,S15に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">15</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">15</span>: <span style="color:#75715e">#S15からS4に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">14</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">16</span>: <span style="color:#75715e">#S16からS17に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">17</span>]
-    <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">17</span>: <span style="color:#75715e">#S17からS10,S16に到達可能</span>
-        list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">16</span>]
+  list <span style="color:#f92672">=</span> []
 
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;{} -&gt; {}&#34;</span><span style="color:#f92672">.</span>format(state, list))
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>: <span style="color:#75715e">#S1からS2,S7</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">7</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>: <span style="color:#75715e">#S2からS1,S6</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>: <span style="color:#75715e">#S3からS4</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span>: <span style="color:#75715e">#S4からS3,S5,S8</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">8</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>: <span style="color:#75715e">#S5からS4</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">6</span>: <span style="color:#75715e">#S6からS2</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">7</span>: <span style="color:#75715e">#S7からS1,S8,S14</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">14</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">8</span>: <span style="color:#75715e">#S8からS4,S7,S12</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">12</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">9</span>: <span style="color:#75715e">#S9からS10,S13</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">13</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span>: <span style="color:#75715e">#S10からS9,S17</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">17</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">11</span>: <span style="color:#75715e">#S11からS12</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">12</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">12</span>: <span style="color:#75715e">#S12からS8,S11,S13</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">13</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">13</span>: <span style="color:#75715e">#S13からS9,S12</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">12</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">14</span>: <span style="color:#75715e">#S14からS7,S15</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">15</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">15</span>: <span style="color:#75715e">#S15からS4</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">14</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">16</span>: <span style="color:#75715e">#S16からS17</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">17</span>]
+  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> <span style="color:#ae81ff">17</span>: <span style="color:#75715e">#S17からS10,S16</span>
+      list <span style="color:#f92672">=</span> [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">16</span>]
 
-    <span style="color:#66d9ef">return</span> list
+  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{state} -&gt; {list}&#34;</span>)
+
+  <span style="color:#66d9ef">return</span> list
 </code></pre></div><h3 id="resultself-state-action">result(self, state, action)</h3>
 <p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
@@ -360,7 +360,8 @@ GOAL  <span style="color:#f92672">=</span> <span style="color:#ae81ff">17</span>
 </code></pre></div><h2 id="解の探索">解の探索</h2>
 <h3 id="幅優先探索">幅優先探索</h3>
 <p>まずは，幅優先探索<code>breadth_first</code>を用いて探索します．
-探索順番は$S1,S2,S7,\cdots,S9,S10$となっていることがわかります．</p>
+探索順番は$S1,S2,S7,\cdots,S9,S10$となっており，
+初期状態に近い状態を優先して探索していることがわかります．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> MazeProblem(initial_state<span style="color:#f92672">=</span>START)
 result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">1 -&gt; [2, 7]
@@ -392,24 +393,27 @@ $S1, S7, S8, S12, S13, S9, S10, S17$であり，
 <p>次は，深さ先探索<code>depth_first</code>を用いて探索します．
 ここでは，探索順番を揃えるため，行動のリスト<code>list</code>の順番を<code>reverse</code>関数で反転しておきます（深さ優先探索では番号の大きい状態を優先するため）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">list<span style="color:#f92672">.</span>reverse() <span style="color:#75715e">#リストの順番を反転</span>
-        
+
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{state} -&gt; {list}&#34;</span>)
+
 <span style="color:#66d9ef">return</span> list
-</code></pre></div><p>探索順番は$S1,S2,S6,\cdots,S9,S10$となっていることがわかります．</p>
+</code></pre></div><p>探索順番は$S1,S2,S6,\cdots,S9,S10$となっており，
+探索状態が発見できなくなるまで深く探索していることがわかります．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> MazeProblem(initial_state<span style="color:#f92672">=</span>START)
 result <span style="color:#f92672">=</span> depth_first(problem, graph_search<span style="color:#f92672">=</span>True)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">1 -&gt; [2, 7]
-2 -&gt; [1, 6]
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">1 -&gt; [7, 2]
+2 -&gt; [6, 1]
 6 -&gt; [2]
-7 -&gt; [1, 8, 14]
-8 -&gt; [4, 12]
-4 -&gt; [3, 5, 8]
+7 -&gt; [14, 8, 1]
+8 -&gt; [12, 7, 4]
+4 -&gt; [8, 5, 3]
 3 -&gt; [4]
 5 -&gt; [4]
-12 -&gt; [8, 11, 13]
+12 -&gt; [13, 11, 8]
 11 -&gt; [12]
-13 -&gt; [9, 12]
-9 -&gt; [10, 13]
-10 -&gt; [9, 17]
+13 -&gt; [12, 9]
+9 -&gt; [13, 10]
+10 -&gt; [17, 9]
 </code></pre></div><p>最終状態，パス，コストを確認してみましょう．
 初期状態$S1$から目的状態$S17$までのパスは，
 $S1, S7, S8, S12, S13, S9, S10, S17$であり，
@@ -421,12 +425,23 @@ $S1, S7, S8, S12, S13, S9, S10, S17$であり，
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">17
 [(None, 1), (7, 7), (8, 8), (12, 12), (13, 13), (9, 9), (10, 10), (17, 17)]
 7
-</code></pre></div><!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  完成したノートブックの確認
+</h1>
+
+<p><a href="https://colab.research.google.com/drive/1V9tZF4QictpySMzHG5eRm_WKYp0_e7sE?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
- -->
-<!-- 幅優先探索と深さ優先探索の長所と短所を考え説明しなさい（マークダウンにしてセルに入力すること）． -->
-<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
+
+<p>独自に迷路問題を設計し，幅優先探索と深さ優先探索の差を考察せよ．</p>
+<p>課題を完成させたら <strong>AI-6.ipynb</strong> を保存し，共有用のリンクを提出しなさい．
+提出の際は必ず下記の設定を行うこと．</p>
+<ul>
+<li>ノートブックの変更内容を保存して固定</li>
+<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
+<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
+</ul>
 
 <h3>参考書籍</h3>
 
