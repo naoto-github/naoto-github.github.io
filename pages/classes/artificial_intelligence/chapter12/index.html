@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    強化学習・バランスゲーム | mLAB
+    強化学習・Q学習 | mLAB
   </title>
 
   
@@ -64,7 +64,7 @@
   
   
 
-  <meta property="og:title" content="強化学習・バランスゲーム" />
+  <meta property="og:title" content="強化学習・Q学習" />
 
 
 
@@ -76,7 +76,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/372bc65ab38c0331bec2702e0a04a3c1.png" />
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
 
 
 
@@ -84,9 +84,9 @@
 
 
 
-  <meta property="og:description" content="Q学習とはQ学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&rsquo;, a&rsquo;)$は，状態$s$から遷移した先の状態$s&#39;$において，行動$a&#39;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
-$$ Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&rsquo; \in A(s&rsquo;)} Q(s&rsquo;, a&rsquo;)) $$
-   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．" />
+  <meta property="og:description" content="Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&#39;, a&#39;)$は，状態$s$から遷移した先の状態$s&#39;$において，行動$a&#39;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
+$$ Q&#39;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&#39; \in A(s&#39;)} Q(s&#39;, a&#39;)) $$
+   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．" />
 
 
 
@@ -97,17 +97,17 @@ $$ Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&rsquo;
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="強化学習・バランスゲーム" />
+  <meta name="twitter:title" content="強化学習・Q学習" />
 
 
 
-  <meta name="twitter:description" content="Q学習とはQ学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&rsquo;, a&rsquo;)$は，状態$s$から遷移した先の状態$s&#39;$において，行動$a&#39;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
-$$ Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&rsquo; \in A(s&rsquo;)} Q(s&rsquo;, a&rsquo;)) $$
-   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．" />
+  <meta name="twitter:description" content="Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&#39;, a&#39;)$は，状態$s$から遷移した先の状態$s&#39;$において，行動$a&#39;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
+$$ Q&#39;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&#39; \in A(s&#39;)} Q(s&#39;, a&#39;)) $$
+   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．" />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/372bc65ab38c0331bec2702e0a04a3c1.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
 
 
   
@@ -177,25 +177,24 @@ $$ Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&rsquo;
 <main>
   <div class="post">
     
-    <h1 class="post-title">強化学習・バランスゲーム</h1>
+    <h1 class="post-title">強化学習・Q学習</h1>
 <div class="post-line"></div>
     
     
 
-    <p><a href="https://gyazo.com/372bc65ab38c0331bec2702e0a04a3c1"><img src="https://i.gyazo.com/372bc65ab38c0331bec2702e0a04a3c1.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   Q学習とは
 </h1>
 
 <p><strong>Q学習</strong> は状態$S$と行動$a$の組み合わせに対する <strong>価値$Q(s,a)$</strong> を学習するためのアルゴリズムです．
 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です．
-また，$Q(s&rsquo;, a&rsquo;)$は，状態$s$から遷移した先の状態$s'$において，行動$a'$を選択したときの価値を表しています．
+また，$Q(s', a')$は，状態$s$から遷移した先の状態$s'$において，行動$a'$を選択したときの価値を表しています．
 ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり，
 $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します．
 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）．
 また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．</p>
 <p>$$
-Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) + \alpha(r + \gamma \max_{a&rsquo; \in A(s&rsquo;)} Q(s&rsquo;, a&rsquo;))
+Q'(s,a) = (1 - \alpha)Q(s,a) + \alpha(r + \gamma \max_{a' \in A(s')} Q(s', a'))
 $$</p>
 <table>
 <thead>
@@ -239,278 +238,165 @@ $$</p>
   ノートブックの作成
 </h1>
 
-<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+<p><strong>Google Colaboratory</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-12</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  バランスゲームの復習
-</h1>
-
-<p>前回実装したバランスゲームを復習しましょう．
-必要なライブラリの導入と，バランスゲーム（CartPole-v0）の初期化をします．</p>
+<p>最初に<strong>OpenAI Gym</strong> をインストールします．
+セルで下記のコマンドを実行してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; !pip install gym
+</code></pre></div><p>また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gym
 <span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-
-env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;CartPole-v0&#39;</span>) <span style="color:#75715e"># 環境の初期化</span>
-</code></pre></div><p>次に，200ステップに限定して，ランダムな行動選択を行なった結果を確認しましょう．
-ポールはあっという間に倒れてしまいます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-    action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-    
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
-    
-    env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
-</code></pre></div><p><a href="https://gyazo.com/899c1c6cf6ca3a390fbea4f0ea4cc72e"><img src="https://i.gyazo.com/899c1c6cf6ca3a390fbea4f0ea4cc72e.gif" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Q学習の実装
+<span style="color:#f92672">import</span> random
+<span style="color:#f92672">import</span> time
+<span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> output
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  フローズンレイク（FrozenLake）
 </h1>
 
-<h3 id="qテーブルの作成">Qテーブルの作成</h3>
-<p>最初に <strong>価値$Q(s,a)$</strong> を記録しておくQテーブル（辞書型）を作成します．
-また，Qテーブルに値を設定するための <code>setQ</code>関数，
-Qテーブルから値を取得するための<code>getQ</code>関数も実装します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">q_table <span style="color:#f92672">=</span> {} <span style="color:#75715e"># Qテーブル</span>
+<p><a href="https://gym.openai.com/envs/FrozenLake-v0/">フローズンレイク（FrozenLake）</a>をQ学習を利用して解いてみましょう．</p>
+<h2 id="環境の初期化">環境の初期化</h2>
+<p>前回と同様に対象とする環境を作成します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;FrozenLake-v0&#39;</span>, map_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;4x4&#34;</span>, is_slippery<span style="color:#f92672">=</span>False)
+</code></pre></div><p>また，実行結果の理解を簡単にするために，辞書<code>ACTION</code>，関数<code>toString()</code>も定義します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ACTION <span style="color:#f92672">=</span> {
+  <span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#34;LEFT&#34;</span>,
+  <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;DOWN&#34;</span>,
+  <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;RIGHT&#34;</span>,
+  <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;UP&#34;</span>
+}
 
-<span style="color:#75715e"># Q値の設定</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setQ</span>(state, action, value):
-    q_table[(state, action)] <span style="color:#f92672">=</span> value
-                     
-<span style="color:#75715e"># Q値の取得</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">toString</span>(histories):
+  moves <span style="color:#f92672">=</span> []
+  <span style="color:#66d9ef">for</span> observation, action <span style="color:#f92672">in</span> histories:
+    moves<span style="color:#f92672">.</span>append((observation, ACTION[action]))
+  <span style="color:#66d9ef">return</span> moves
+</code></pre></div><h2 id="q学習">Q学習</h2>
+<h3 id="qテーブル">Qテーブル</h3>
+<p>価値$Q(s,a)$を記録するための辞書を作成します．
+$S$は$0,1,\cdots,15$の16パターン，
+$a$は$0,1,2,3$の4パターンが存在するため，
+$16\times4=64$パターンの$Q$を記録する必要があります．
+全ての$Q$は<code>0.01</code>で初期化しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">qtable <span style="color:#f92672">=</span> {
+    <span style="color:#ae81ff">0</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">1</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">2</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">3</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">4</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">5</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">6</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">7</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">8</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">9</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">10</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">11</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">12</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">13</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">14</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">15</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>]
+}
+</code></pre></div><p>$Q$を設定するための関数<code>setQ()</code>と，
+$Q$を取得するための関数<code>getQ()</code>を定義しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setQ</span>(state, action, value):
+  qtable[state][action] <span style="color:#f92672">=</span> value
+  
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getQ</span>(state, action):
-
-    <span style="color:#75715e"># テーブルに状態が存在しないとき</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span>(state, action) <span style="color:#f92672">in</span> q_table:
-        q_table[(state, action)] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-
-    <span style="color:#66d9ef">return</span> q_table[(state, action)]
-</code></pre></div><h3 id="状態の離散化">状態の離散化</h3>
-<p>次に状態の離散化を行います．
-本来，バランスゲームでは，
-カートの位置，カートの速度，ポールの角度，ポールの速度の4つの状態を <strong>連続値</strong> で取得します．
-しかし，このままではQテーブルに記録できないため，区間を定め <strong>離散値</strong> に変換します．
-例えば，カートの位置は，-2.4〜2.4までの値をとりますが，
-これを6つの範囲に分割し，下記の表の離散値に変換します．</p>
-<table>
-<thead>
-<tr>
-<th>範囲</th>
-<th>離散値</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-2.4〜-1.6</td>
-<td>1</td>
-</tr>
-<tr>
-<td>-1.6〜-0.8</td>
-<td>2</td>
-</tr>
-<tr>
-<td>-0.8〜0</td>
-<td>3</td>
-</tr>
-<tr>
-<td>0〜0.8</td>
-<td>4</td>
-</tr>
-<tr>
-<td>0.8〜1.6</td>
-<td>5</td>
-</tr>
-<tr>
-<td>1.6〜2.4</td>
-<td>6</td>
-</tr>
-</tbody>
-</table>
-<p>上記の変換を<code>digitize</code>関数として実装します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">BIN_NUMBER <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span> <span style="color:#75715e"># 離散値の数</span>
-
-<span style="color:#75715e"># 離散値の範囲</span>
-bins <span style="color:#f92672">=</span> []
-bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">2.4</span>, <span style="color:#ae81ff">2.4</span>, BIN_NUMBER)) <span style="color:#75715e"># カートの位置</span>
-bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">3.0</span>, <span style="color:#ae81ff">3.0</span>, BIN_NUMBER)) <span style="color:#75715e"># カートの速度</span>
-bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.2</span>, BIN_NUMBER)) <span style="color:#75715e"># ポールの角度</span>
-bins<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span><span style="color:#ae81ff">2.0</span>, <span style="color:#ae81ff">2.0</span>, BIN_NUMBER)) <span style="color:#75715e"># ポールの速度</span>
-
-<span style="color:#75715e"># 観測データを状態（離散値）に変換</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">digitize</span>(observation):
-
-    state <span style="color:#f92672">=</span> []
-    
-    state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">0</span>], bins[<span style="color:#ae81ff">0</span>]))
-    state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">1</span>], bins[<span style="color:#ae81ff">1</span>]))
-    state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">2</span>], bins[<span style="color:#ae81ff">2</span>]))
-    state<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>digitize(observation[<span style="color:#ae81ff">3</span>], bins[<span style="color:#ae81ff">3</span>]))
-    
-    <span style="color:#66d9ef">return</span> tuple(state)
-</code></pre></div><p>どのように離散値に変換されるか確認してみましょう．
-この例では，$(3, 3, 3, 3)$ -&gt; $(3, 3, 3, 2)$ -&gt; $(3, 4, 2, 2)$と状態が変化していることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):
-    action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-
-    <span style="color:#66d9ef">print</span>(observation)
-    <span style="color:#66d9ef">print</span>(digitize(observation))
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[-0.03864226  0.2379734  -0.0228475  -0.28297691]
-(3, 3, 3, 3)
-[-0.03388279  0.43341365 -0.02850703 -0.58277736]
-(3, 3, 3, 2)
-[-0.02521452  0.62892315 -0.04016258 -0.88430238]
-(3, 4, 2, 2)
-</code></pre></div><h3 id="報酬と更新式">報酬と更新式</h3>
-<p>報酬を<code>getReward</code>関数で定義します．
-ポールが倒れていなければ$r=1$です．
-一方，ポールが倒れた場合，目標ステップ（ここでは180とした）に到達していれば$r=1$，
-到達していなければペナルティとして$r=-200$を与えることにします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 報酬の取得</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getReward</span>(step, done):
-
-    <span style="color:#66d9ef">if</span> done:
-        <span style="color:#66d9ef">if</span> step <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">180</span>:
-            reward <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># 目標ステップに到達</span>
-        <span style="color:#66d9ef">else</span>:
-            reward <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">200</span> <span style="color:#75715e"># ペナルティ</span>
-    <span style="color:#66d9ef">else</span>:
-        reward <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-
-    <span style="color:#66d9ef">return</span> reward
-</code></pre></div><p>Qテーブルの更新式を<code>updateQTable</code>関数で定義します．
-このとき，学習率$\alpha=0.1$，割引率$\gamma=0.9$とします．
-ここで，Qテーブルのキーは状態$s$と行動$a$のペアとなることに注意してください．</p>
+  <span style="color:#66d9ef">return</span> qtable[state][action]
+</code></pre></div><h3 id="q値の更新">Q値の更新</h3>
+<p>$Q$の更新式を表す<code>updateQ()</code>を定義します．
+割引率$\alpha$は<code>0.1</code>，割引率$\gamma$は<code>0.9</code>に設定します．
+<code>np.max()</code>で最大の$Q$を選択していることに注意してください．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span> <span style="color:#75715e"># 学習率</span>
 gamma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span> <span style="color:#75715e"># 割引率</span>
 
-<span style="color:#75715e"># Q値の更新</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateQTable</span>(state, action, next_state, reward):
-
-    max_value <span style="color:#f92672">=</span> max(getQ(next_state, <span style="color:#ae81ff">0</span>), getQ(next_state, <span style="color:#ae81ff">1</span>))
-
-    value <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> getQ(state, action) <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (reward <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> max_value)
-
-    setQ(state, action, value)
-</code></pre></div><p>Qテーブルが更新される様子を確認してみましょう．
-ここでは，状態$(3, 3, 3, 3)$において，行動$1$を選択したとき，
-状態$(3, 3, 3, 2)$に遷移し，報酬$1$を獲得しました．
-この情報を用いてQテーブルを更新すると，
-状態と行動のペアの価値$Q((3, 3, 3, 3), 1)$は$0.1$に設定されたことがわかります（学習率$\alpha=0.1$だから）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
-q_table <span style="color:#f92672">=</span> {} <span style="color:#75715e">#Qテーブルの初期化</span>
-
-<span style="color:#75715e"># 最初の状態</span>
-action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() 
-observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-state <span style="color:#f92672">=</span> digitize(observation)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;state: {}&#34;</span><span style="color:#f92672">.</span>format(state))
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;action: {}&#34;</span><span style="color:#f92672">.</span>format(action))
-
-<span style="color:#75715e"># 次の状態</span>
-next_action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() 
-observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-next_state <span style="color:#f92672">=</span> digitize(observation)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;next_state: {}&#34;</span><span style="color:#f92672">.</span>format(next_state))
-
-<span style="color:#75715e"># 報酬を取得</span>
-reward <span style="color:#f92672">=</span> getReward(<span style="color:#ae81ff">0</span>, done)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;reward: {}&#34;</span><span style="color:#f92672">.</span>format(reward))
-
-<span style="color:#75715e"># Qテーブルの更新</span>
-updateQTable(state, action, next_state, reward)
-
-<span style="color:#75715e"># Q値の確認</span>
-q_value <span style="color:#f92672">=</span> q_table[(state, action)]
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Q value: {}&#34;</span><span style="color:#f92672">.</span>format(q_value))
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">state: (3, 3, 3, 3)
-action: 1
-next_state: (3, 3, 3, 2)
-reward: 1
-Q value: 0.1
-</code></pre></div><h3 id="行動の選択">行動の選択</h3>
-<p>行動の選択には$\epsilon$グリーティ手法を採用します．
-この手法は，確率$\epsilon$でランダムな行動を選択し，
-確率$1 - \epsilon$で状態$s$において最も価値$Q(s,a)$が大きい行動$a$を選択します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># εグリーディ手法で行動選択</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">greedyAction</span>(state, epsilon):    
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateQ</span>(state, action, next_state, reward):
+  max_value <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max([getQ(next_state, <span style="color:#ae81ff">0</span>), getQ(next_state, <span style="color:#ae81ff">1</span>), getQ(next_state, <span style="color:#ae81ff">2</span>), getQ(next_state, <span style="color:#ae81ff">3</span>)])
+  value <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> getQ(state, action) <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (reward <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> max_value)
+  setQ(state, action, value)
+</code></pre></div><h3 id="行動戦略">行動戦略</h3>
+<p>プレイヤーの行動は$\epsilon$-グリーディ戦略で決定します．
+$\epsilon$-グリーディ戦略では，確率$\epsilon$でランダムに行動を選択し，
+確率$1-\epsilon$で$Q$が最大となる行動を選択します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">greedyAction</span>(state, epsilon):    
     
     <span style="color:#66d9ef">if</span> epsilon <span style="color:#f92672">&gt;</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand():
-        action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample()
+        action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
     <span style="color:#66d9ef">else</span>:
-        action <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax([getQ(state, <span style="color:#ae81ff">0</span>), getQ(state, <span style="color:#ae81ff">1</span>)])
+        action <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax([getQ(state, <span style="color:#ae81ff">0</span>), getQ(state, <span style="color:#ae81ff">1</span>), getQ(state, <span style="color:#ae81ff">2</span>), getQ(state, <span style="color:#ae81ff">3</span>)])
 
     <span style="color:#66d9ef">return</span> action
-</code></pre></div><h3 id="qテーブルの学習">Qテーブルの学習</h3>
-<p>これで準備が整いました．
-200ステップのエピソード（ゲーム）を1000回繰り返してQテーブルを学習します．
-このとき，$\epsilon=0.2$に設定しておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
-q_table <span style="color:#f92672">=</span> {}
+</code></pre></div><h3 id="学習プロセス">学習プロセス</h3>
+<p>プレイヤーの行動を繰り返すことで$Q$を学習します．
+プレイヤーは終了判定が<code>True</code>になるまで，最大100回まで行動を繰り返します．
+このプレイヤーの行動を1000回繰り返します．
+<code>15(=G)</code>に到達したときに得られる報酬<code>1</code>が伝播し，価値<code>Q(s,a)</code>が設定されます．
+また，$\epsilon$は<code>0.2</code>に設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.2</span>
 
 <span style="color:#66d9ef">for</span> episode <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000</span>):
+  state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;エピソード [{}]&#34;</span><span style="color:#f92672">.</span>format(episode))
-    
-    observation <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-    
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-        
-        <span style="color:#75715e"># 状態の取得</span>
-        state <span style="color:#f92672">=</span> digitize(observation)
-        
-        <span style="color:#75715e"># εグリーディ手法で行動選択</span>
-        action <span style="color:#f92672">=</span> greedyAction(state, <span style="color:#ae81ff">0.2</span>)
+  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+    action <span style="color:#f92672">=</span> greedyAction(state, epsilon)
+    next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+    updateQ(state, action, next_state, reward)
+    state <span style="color:#f92672">=</span> next_state
 
-        <span style="color:#75715e"># 次の状態に遷移</span>
-        observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+    <span style="color:#66d9ef">if</span> done:
+      <span style="color:#66d9ef">break</span>
+</code></pre></div><p>学習した<code>Q</code>を利用してプレイヤーを行動させます．
+$\epsilon$を<code>0</code>に設定し，常に$Q$が最大の行動を選択します．
+この結果，DOWN，DOWN，RIGHT，DOWN，RIGHT，RIGHTの順に行動し，
+<strong>15(=G)</strong> に到達していることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Q値で移動</span>
+epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
-        <span style="color:#75715e"># 次の状態</span>
-        next_state <span style="color:#f92672">=</span> digitize(observation)        
-        
-        <span style="color:#75715e"># 報酬の取得</span>
-        reward <span style="color:#f92672">=</span> getReward((i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>), done)
+state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
-        <span style="color:#75715e"># Q値の更新</span>
-        updateQTable(state, action, next_state, reward)
+histories <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+  action <span style="color:#f92672">=</span> greedyAction(state, epsilon)
+  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+  histories<span style="color:#f92672">.</span>append((state, action))
+  state <span style="color:#f92672">=</span> next_state
+  output<span style="color:#f92672">.</span>clear()
+  env<span style="color:#f92672">.</span>render()
+  time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
 
-        <span style="color:#66d9ef">if</span> done:
-            <span style="color:#66d9ef">break</span>        
-</code></pre></div><p>学習したQテーブルを用いて実行しましょう．
-このとき，$\epsilon=0$に設定しておきましょう．
-うまく学習できていれば200ステップを維持することが出来るはずです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
+  <span style="color:#66d9ef">if</span> done:
+    <span style="color:#66d9ef">break</span>
 
-observation <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-    
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-        
-    <span style="color:#75715e"># 状態の取得</span>
-    state <span style="color:#f92672">=</span> digitize(observation)
-        
-    <span style="color:#75715e"># εグリーディ手法で行動選択</span>
-    action <span style="color:#f92672">=</span> greedyAction(state, <span style="color:#ae81ff">0</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;actions={toString(histories)}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Right)
+SFFF
+FHFH
+FFFH
+HFFG
+actions=[(0, &#39;DOWN&#39;), (4, &#39;DOWN&#39;), (8, &#39;RIGHT&#39;), (9, &#39;DOWN&#39;), (13, &#39;RIGHT&#39;), (14, &#39;RIGHT&#39;)]
+next_state=15
+reward=1.0
+done=True
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  完成したノートブックの確認
+</h1>
 
-    <span style="color:#75715e"># 次の状態に遷移</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
-    
-    env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
-</code></pre></div><p><a href="https://gyazo.com/11558b8cb97ac192672b1254001877b7"><img src="https://i.gyazo.com/11558b8cb97ac192672b1254001877b7.gif" alt="Image from Gyazo"></a></p>
-<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<p><a href="https://colab.research.google.com/drive/1rzuPN_uOO7Bp0b0mFwOAZNNcgi7D75g6?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
- -->
-<!-- ポールが直立している時間を延ばす工夫を考え実装しなさい． -->
-<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
+
+<p><code>map_name</code>を<code>8x8</code>としたときの解を導出しなさい．
+課題を完成させたら <strong>AI-12.ipynb</strong> を保存し，共有用のリンクを提出しなさい．
+提出の際は必ず下記の設定を行うこと．</p>
+<ul>
+<li>ノートブックの変更内容を保存して固定</li>
+<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
+<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
+</ul>
 
 <h3>参考書籍</h3>
 

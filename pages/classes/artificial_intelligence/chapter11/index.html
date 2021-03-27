@@ -76,7 +76,7 @@
 
 
 
-  <meta property="og:image" content="https://gyazo.com/b382b7380e2c0466e31fbf6e6b0728cc" />
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
 
 
 
@@ -84,17 +84,14 @@
 
 
 
-  <meta property="og:description" content="OpenAI GymとはOpenAI Gymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． バランスゲーム（CartPole）や，ドライブゲーム（MountainCar）などのゲームを題材に， 強化学習のアルゴリズムを実装し評価することができます．
-最初に，OpenAI Gym をインストールします． インストールしたフォルダで，PowerShellを起動し， 下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
-&gt; .\Scripts\pip install gym &gt; .\Scripts\pip install &#34;gym[atari]&#34; &gt; .\Scripts\pip install &#34;gym[all]&#34; ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-11 とします． ノートブックの作成方法は第1回の資料を参照してください．
-バランスゲーム（CartPole）バランスゲームは，カートの上に垂直に立てたポールを落とさないようにバランスをとることが目的です． ユーザは，下記の状態を観測することが出来ます．
- カートの位置（-2.4 〜 2.4） カートの速度 ポールの角度（-12度 〜 12度） ポールの速度  また，ユーザは，カートに対し，下記のいずれかの行動をとることが出来ます．
- 左に向かって力を加える（0） 右に向かって力を加える（1）  下記の条件を満たしたとき，ゲームは失敗となります．
- ポールが12度以上傾く カートの位置が画面の端に到達する（中央から2.4以上離れる）  ポールを落とさずバランスを維持して200ステップが経過すれば成功となります．
-[学習前] 
-[学習後] 
-実装今回は強化学習は利用せず，観測した状態に応じて行動を選択するアプローチで挑戦してみましょう．
-まずはライブラリを導入します． ここでは，Gym に加えて，数値計算のための Numpy も導入します．" />
+  <meta property="og:description" content="OpenAI Gymとは  OpenAI Gymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． ここでは，フローズンレイク（FrozenLake）などのゲームを題材に， 強化学習のアルゴリズムを実装することができます．
+ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-11 とします． ノートブックの作成方法は第1回の資料を参照してください．
+最初にOpenAI Gym をインストールします． セルで下記のコマンドを実行してください．
+&gt; !pip install gym また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．
+import gym import numpy as np import random import time from google.colab import output フローズンレイク（FrozenLake）  フローズンレイク（FrozenLake）は， 凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです．
+湖の環境は下記のように16文字のテキストで表現されます． ここで，Sはスタート地点，Gはゴール地点，Fは凍った湖，Hは穴が空いた湖です． Sから，Hを避けて，Fだけを通り，Gに到達できればクリアです．
+SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤーの位置です． どこにHがあるかを知ることはできません． プレイヤーの位置は0〜15の数値で表され，Sは0，Gは15に対応します．
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 また，プレイヤーは，下記のいずれかの行動をとることが出来ます．" />
 
 
 
@@ -109,21 +106,18 @@
 
 
 
-  <meta name="twitter:description" content="OpenAI GymとはOpenAI Gymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． バランスゲーム（CartPole）や，ドライブゲーム（MountainCar）などのゲームを題材に， 強化学習のアルゴリズムを実装し評価することができます．
-最初に，OpenAI Gym をインストールします． インストールしたフォルダで，PowerShellを起動し， 下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．
-&gt; .\Scripts\pip install gym &gt; .\Scripts\pip install &#34;gym[atari]&#34; &gt; .\Scripts\pip install &#34;gym[all]&#34; ノートブックの作成Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-11 とします． ノートブックの作成方法は第1回の資料を参照してください．
-バランスゲーム（CartPole）バランスゲームは，カートの上に垂直に立てたポールを落とさないようにバランスをとることが目的です． ユーザは，下記の状態を観測することが出来ます．
- カートの位置（-2.4 〜 2.4） カートの速度 ポールの角度（-12度 〜 12度） ポールの速度  また，ユーザは，カートに対し，下記のいずれかの行動をとることが出来ます．
- 左に向かって力を加える（0） 右に向かって力を加える（1）  下記の条件を満たしたとき，ゲームは失敗となります．
- ポールが12度以上傾く カートの位置が画面の端に到達する（中央から2.4以上離れる）  ポールを落とさずバランスを維持して200ステップが経過すれば成功となります．
-[学習前] 
-[学習後] 
-実装今回は強化学習は利用せず，観測した状態に応じて行動を選択するアプローチで挑戦してみましょう．
-まずはライブラリを導入します． ここでは，Gym に加えて，数値計算のための Numpy も導入します．" />
+  <meta name="twitter:description" content="OpenAI Gymとは  OpenAI Gymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． ここでは，フローズンレイク（FrozenLake）などのゲームを題材に， 強化学習のアルゴリズムを実装することができます．
+ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-11 とします． ノートブックの作成方法は第1回の資料を参照してください．
+最初にOpenAI Gym をインストールします． セルで下記のコマンドを実行してください．
+&gt; !pip install gym また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．
+import gym import numpy as np import random import time from google.colab import output フローズンレイク（FrozenLake）  フローズンレイク（FrozenLake）は， 凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです．
+湖の環境は下記のように16文字のテキストで表現されます． ここで，Sはスタート地点，Gはゴール地点，Fは凍った湖，Hは穴が空いた湖です． Sから，Hを避けて，Fだけを通り，Gに到達できればクリアです．
+SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤーの位置です． どこにHがあるかを知ることはできません． プレイヤーの位置は0〜15の数値で表され，Sは0，Gは15に対応します．
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 また，プレイヤーは，下記のいずれかの行動をとることが出来ます．" />
 
 
 
-  <meta name="twitter:image" content="https://gyazo.com/b382b7380e2c0466e31fbf6e6b0728cc" />
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
 
 
   
@@ -198,174 +192,231 @@
     
     
 
-    <p><a href="https://gyazo.com/b382b7380e2c0466e31fbf6e6b0728cc"><img src="https://i.gyazo.com/b382b7380e2c0466e31fbf6e6b0728cc.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   OpenAI Gymとは
 </h1>
 
 <p><a href="https://gym.openai.com/">OpenAI Gym</a>は，
 機械学習の一分野である <strong>強化学習</strong> を開発するためのツールキットです．
-バランスゲーム（CartPole）や，ドライブゲーム（MountainCar）などのゲームを題材に，
-強化学習のアルゴリズムを実装し評価することができます．</p>
-<p>最初に，<strong>OpenAI Gym</strong> をインストールします．
-インストールしたフォルダで，<strong>PowerShell</strong>を起動し，
-下記のコマンドを実行してください（Shiftキーを押しながら右クリック）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; .\Scripts\pip install gym
-&gt; .\Scripts\pip install &#34;gym[atari]&#34;
-&gt; .\Scripts\pip install &#34;gym[all]&#34;
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+ここでは，フローズンレイク（FrozenLake）などのゲームを題材に，
+強化学習のアルゴリズムを実装することができます．</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ノートブックの作成
 </h1>
 
-<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+<p><strong>Google Colaboratory</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-11</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  バランスゲーム（CartPole）
+<p>最初に<strong>OpenAI Gym</strong> をインストールします．
+セルで下記のコマンドを実行してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; !pip install gym
+</code></pre></div><p>また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gym
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> random
+<span style="color:#f92672">import</span> time
+<span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> output
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  フローズンレイク（FrozenLake）
 </h1>
 
-<p>バランスゲームは，カートの上に垂直に立てたポールを落とさないようにバランスをとることが目的です．
-ユーザは，下記の状態を観測することが出来ます．</p>
+<p><a href="https://gym.openai.com/envs/FrozenLake-v0/">フローズンレイク（FrozenLake）</a>は，
+凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです．</p>
+<p>湖の環境は下記のように16文字のテキストで表現されます．
+ここで，<strong>S</strong>はスタート地点，<strong>G</strong>はゴール地点，<strong>F</strong>は凍った湖，<strong>H</strong>は穴が空いた湖です．
+<strong>S</strong>から，<strong>H</strong>を避けて，<strong>F</strong>だけを通り，<strong>G</strong>に到達できればクリアです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">SFFF
+FHFH
+FFFH
+HFFG
+</code></pre></div><p>プレイヤーが観測できる情報は，プレイヤーの位置です．
+どこに<strong>H</strong>があるかを知ることはできません．
+プレイヤーの位置は0〜15の数値で表され，<strong>S</strong>は0，<strong>G</strong>は15に対応します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text"> 0  1  2  3
+ 4  5  6  7
+ 8  9 10 11
+12 13 14 15
+</code></pre></div><p>また，プレイヤーは，下記のいずれかの行動をとることが出来ます．</p>
 <ul>
-<li>カートの位置（-2.4 〜 2.4）</li>
-<li>カートの速度</li>
-<li>ポールの角度（-12度 〜 12度）</li>
-<li>ポールの速度</li>
+<li>左に行く(0)</li>
+<li>下に行く(1)</li>
+<li>右に行く(2)</li>
+<li>上に行く(3)</li>
 </ul>
-<p>また，ユーザは，カートに対し，下記のいずれかの行動をとることが出来ます．</p>
+<p>下記の条件を満たしたとき，ゲームは失敗になります．</p>
 <ul>
-<li>左に向かって力を加える（0）</li>
-<li>右に向かって力を加える（1）</li>
+<li><strong>H</strong> に到達</li>
 </ul>
-<p>下記の条件を満たしたとき，ゲームは失敗となります．</p>
+<p>下記の条件を満たしたとき，ゲームは成功になります．</p>
 <ul>
-<li>ポールが12度以上傾く</li>
-<li>カートの位置が画面の端に到達する（中央から2.4以上離れる）</li>
+<li><strong>G</strong> に到達</li>
 </ul>
-<p>ポールを落とさずバランスを維持して200ステップが経過すれば成功となります．</p>
-<p><strong>[学習前]</strong>
-<a href="https://gyazo.com/80314e768d571a5758a511cf46f2607c"><img src="https://i.gyazo.com/80314e768d571a5758a511cf46f2607c.gif" alt="Image from Gyazo"></a></p>
-<p><strong>[学習後]</strong>
-<a href="https://gyazo.com/8f2e141389d5598fba33252dc25c48df"><img src="https://i.gyazo.com/8f2e141389d5598fba33252dc25c48df.gif" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   実装
 </h1>
 
-<p>今回は強化学習は利用せず，観測した状態に応じて行動を選択するアプローチで挑戦してみましょう．</p>
-<p>まずはライブラリを導入します．
-ここでは，<strong>Gym</strong> に加えて，数値計算のための <strong>Numpy</strong> も導入します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gym
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-</code></pre></div><p>最初に対象とする環境（ゲーム）を作成します．
-ここでは，バランスゲーム（CartPole-v0）を指定します．
-このゲームの <strong>行動空間</strong> は2種類の離散値（0:左へ押す，1:右へ押す），
-また，<strong>状態空間</strong> は区間のある4種類の連続値で表されることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;CartPole-v0&#39;</span>) <span style="color:#75715e"># 環境の初期化</span>
+<h2 id="環境の初期化">環境の初期化</h2>
+<p>最初に対象とする環境を作成します．
+ここでは，バランスゲーム（FrozenLake-v0）を指定します．
+引数には<code>map_name</code>と<code>is_slippy</code>を設定します．
+<code>map_name</code>は<code>4x4</code>，または，<code>8x8</code>の2種類を指定できます．
+<code>is_slippy</code>はプレイヤーが氷上で滑るかどうかを表，ここでは滑らない（<code>false</code>）に設定します．
+滑る（<code>true</code>）に設定すると，一定の確率で異なる方向に移動してしまいます．
+このゲームの <strong>行動</strong> は4種類の離散値（0:左，1:下，2:右，3:上），
+また，<strong>状態空間</strong> は16種類の離散値（0〜15）であることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;FrozenLake-v0&#39;</span>, map_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;4x4&#34;</span>, is_slippery<span style="color:#f92672">=</span>False) <span style="color:#75715e"># 環境の初期化</span>
 
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Action Space: {}&#34;</span><span style="color:#f92672">.</span>format(env<span style="color:#f92672">.</span>action_space)) <span style="color:#75715e"># 行動空間</span>
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Env Space: {}&#34;</span><span style="color:#f92672">.</span>format(env<span style="color:#f92672">.</span>observation_space)) <span style="color:#75715e"># 状態空間</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Action Space: Discrete(2)
-Env Space: Box(4,)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Action Space: Discrete(4)
+Env Space: Discrete(16)
 </code></pre></div><p>次に環境を<code>reset</code>関数で初期化します．
-このとき，観測された初期状態も取得されます．
-状態は4種類の要素から構成されるタプルであり，
-カートの位置，カートの速度，ポールの角度，ポールの速度を表しています．
-このとき，ポールの角度はラジアン角であることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">observation <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境の初期化</span>
-
-cart_position <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">0</span>] <span style="color:#75715e"># カートの位置</span>
-cart_speed <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">1</span>] <span style="color:#75715e"># カートの速度</span>
-pole_angle <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">2</span>] <span style="color:#75715e"># ポールの角度</span>
-pole_speed <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">3</span>] <span style="color:#75715e"># ポールの速度</span>
-
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;カートの位置: {}&#34;</span><span style="color:#f92672">.</span>format(cart_position))
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;カートの速度: {}&#34;</span><span style="color:#f92672">.</span>format(cart_speed))
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;ポールの角度: {}&#34;</span><span style="color:#f92672">.</span>format(pole_angle))
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;ポールの速度: {}&#34;</span><span style="color:#f92672">.</span>format(pole_speed))
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">カートの位置: -0.01807530436166336
-カートの速度: 0.028363315474415216
-ポールの角度: -0.022288393152732122
-ポールの速度: -0.010803063301248708
-</code></pre></div><p>それでは，上記の状態を<code>render()</code>関数で描画してみます．
-初期状態はランダムに決定されるため，実行するごとに結果は変化します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
-</code></pre></div><p><a href="https://gyazo.com/bc499e0443d53481de63e03f57f317aa"><img src="https://i.gyazo.com/bc499e0443d53481de63e03f57f317aa.png" alt="Image from Gyazo"></a></p>
-<p>それでは，<code>step</code>関数を利用して，行動を選択します．
-ここでは，「左に向かって力を加える」という行動を10回繰り返して実行しています．
-この結果，カートは左に移動し，ポールが右に傾いていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">action <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># 左に向かって力を加える</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-    env<span style="color:#f92672">.</span>step(action) 
-
+このとき，観測されたプレイヤーの位置を取得します．
+プレイヤーの位置は <strong>0(=S)</strong> であることがわかります．
+また，<code>env.render()</code>はプレイヤーの環境を文字列で可視化します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境の初期化</span>
 env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
-</code></pre></div><p><a href="https://gyazo.com/fc3833ae9783aa04d1c401636a58cc29"><img src="https://i.gyazo.com/fc3833ae9783aa04d1c401636a58cc29.png" alt="Image from Gyazo"></a></p>
-<p><code>step</code>関数は，行動を終了後の4種類の情報を返します．</p>
+
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;state={state}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">SFFF
+FHFH
+FFFH
+HFFG
+state=0
+</code></pre></div><p>ここで，実行結果の理解を簡単にするため，
+下記のように辞書<code>ACTION</code>，関数<code>toString()</code>を定義しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># プレイヤーの行動</span>
+ACTION <span style="color:#f92672">=</span> {
+  <span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#34;LEFT&#34;</span>,
+  <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;DOWN&#34;</span>,
+  <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;RIGHT&#34;</span>,
+  <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;UP&#34;</span>
+}
+
+<span style="color:#75715e"># プレイヤーの行動履歴を文字列化</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">toString</span>(histories):
+  moves <span style="color:#f92672">=</span> []
+  <span style="color:#66d9ef">for</span> observation, action <span style="color:#f92672">in</span> histories:
+    moves<span style="color:#f92672">.</span>append((observation, ACTION[action]))
+  <span style="color:#66d9ef">return</span> moves
+</code></pre></div><h2 id="プレイヤーの行動">プレイヤーの行動</h2>
+<p>環境を初期化したら，<code>step()</code>を利用して，行動を選択します．
+ここでは，プレイヤーを下に移動させてみます．
+<code>step()</code>の引数に「下に行く」を表す <strong>1(=DOWN)</strong> を指定します．
+この移動を結果は下記の情報で表されます．</p>
 <ul>
-<li>状態(observation)</li>
-<li>報酬(reward)</li>
-<li>終了判定(done)</li>
-<li>その他の情報(info)です．</li>
+<li>プレイヤーの位置<code>next_state</code></li>
+<li>報酬<code>reward</code></li>
+<li>終了判定<code>done</code></li>
+<li>その他の情報<code>info</code>（ここでは利用しない）</li>
 </ul>
-<p>ここでは，**状態(observation)<strong>と</strong>終了判定(done)**のみを確認してみます．
-ポールの角度は0.338（=19.36度）であり，これは失敗の条件を満たしています．
-このため，終了判定は <strong>True</strong> となっています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+<p>下に移動したため，プレイヤーの位置は<code>4</code>になっていることがわかります．
+また，報酬は<code>0</code>，終了状態は<code>False</code>となっています．
+報酬はプレイヤーがゴールに到達したときだけ<code>1</code>になります．
+終了状態は穴(H)に落ちるか，ゴールに到達すると<code>True</code>になります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 下に移動</span>
+state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
+action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># DOWN</span>
+next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+env<span style="color:#f92672">.</span>render()
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;action={move[action]}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>) <span style="color:#75715e"># 座標 0～15</span>
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>) <span style="color:#75715e"># 報酬 ゴールに到達すると1</span>
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>) <span style="color:#75715e"># 終了状態</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Down)
+SFFF
+FHFH
+FFFH
+HFFG
+action=DOWN
+next_state=4
+reward=0.0
+done=False
+</code></pre></div><p>それでは，ゴールに到達可能な移動を指定してみます．
+ここでは，<code>RIGHT</code>，<code>RIGHT</code>，<code>DOWN</code>，<code>DOWN</code>，<code>DOWN</code>，<code>RIGHT</code>の順に移動します．
+移動履歴を<code>histories</code>に記録しておきます．
+また，<code>output.clear()</code>はコンソール出力のクリア，
+<code>time.sleep(1)</code>は1秒間の待機を表します．
+この結果，プレイヤーの位置は <strong>15(=G)</strong>，
+報酬は<code>1</code>，終了判定が<code>True</code>になっていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ゴールに到達する経路</span>
+state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
-env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">状態: [-0.21165671 -2.12699302  0.33853234  3.51525944]
-終了判定: True
-</code></pre></div><p><a href="https://gyazo.com/c0e45a82648e5038c380d310c9e1c155"><img src="https://i.gyazo.com/c0e45a82648e5038c380d310c9e1c155.png" alt="Image from Gyazo"></a></p>
-<p>では，200ステップに限定して，<code>action_space.sample()</code>関数を利用して，
-ランダムに行動を選択してみましょう．
-この結果，わずか <strong>15ステップ</strong> でポールは倒れ失敗してしまいました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境のリセット</span>
+actions <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>] <span style="color:#75715e">#RIGHT, RIGHT, DOWN, DOWN, DOWN, RIGHT</span>
+histories <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> action <span style="color:#f92672">in</span> actions:
+  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+  histories<span style="color:#f92672">.</span>append((state, action))
+  state <span style="color:#f92672">=</span> next_state
+  output<span style="color:#f92672">.</span>clear()
+  env<span style="color:#f92672">.</span>render()
+  time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
 
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-    action <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>action_space<span style="color:#f92672">.</span>sample() <span style="color:#75715e"># ランダムに行動選択</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-    
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
-    
-    env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
-</code></pre></div><p><a href="https://gyazo.com/e1adbf0bf716a6b52af57c7aedcb9e73"><img src="https://i.gyazo.com/e1adbf0bf716a6b52af57c7aedcb9e73.gif" alt="Image from Gyazo"></a></p>
-<p>最後に，<strong>ポールの速度</strong> に基づき行動を選択するように改良してみましょう．
-<code>selectAction</code>関数は，ポールの速度が右なら，右方向に力を加え，
-ポールの速度が左なら，左方向に力を加えます．
-この結果，先程より長く <strong>177ステップ</strong> でカートが画面の端に到達し失敗となりました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">selectAction</span>(observation):
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;actions={toString(histories)}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Right)
+SFFF
+FHFH
+FFFH
+HFFG
+actions=[(0, &#39;RIGHT&#39;), (1, &#39;RIGHT&#39;), (2, &#39;DOWN&#39;), (6, &#39;DOWN&#39;), (10, &#39;DOWN&#39;), (14, &#39;RIGHT&#39;)]
+next_state=15
+reward=1.0
+done=True
+</code></pre></div><h2 id="ランダムにプレイヤーを移動">ランダムにプレイヤーを移動</h2>
+<p>ランダムにプレイヤーを移動させてみます．
+<code>random.choice()</code>は引数で与えられたリストからランダムに一つを選びます．
+ここでは，<code>[0, 1, 2, 3]</code>を引数とするため，上下左右から一つが選択されます．
+この結果，プレイヤーは<code>5(=H)</code>に到達してしまい，ゲームは失敗となります．
+報酬は<code>0</code>，終了状態は<code>True</code>です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
-    pole_speed <span style="color:#f92672">=</span> observation[<span style="color:#ae81ff">3</span>] <span style="color:#75715e"># ポールの速度</span>
-    
-    <span style="color:#66d9ef">if</span> pole_speed <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>:
-        action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># 速度が右なら，右方向に力</span>
-    <span style="color:#66d9ef">else</span>:
-        action <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># 速度が左なら，左方向に力</span>
-        
-    <span style="color:#66d9ef">return</span> action
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境の初期化</span>
+histories <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+  action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
+  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+  histories<span style="color:#f92672">.</span>append((state, action))
+  state <span style="color:#f92672">=</span> next_state
+  output<span style="color:#f92672">.</span>clear()
+  env<span style="color:#f92672">.</span>render()
+  time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
 
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">200</span>):
-    action <span style="color:#f92672">=</span> selectAction(observation) <span style="color:#75715e"># ポールの速度に基づき選択</span>
-    observation, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-    
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Step {}&#34;</span><span style="color:#f92672">.</span>format(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;状態: {}&#34;</span><span style="color:#f92672">.</span>format(observation))
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;終了判定: {}&#34;</span><span style="color:#f92672">.</span>format(done))
-    
-    env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
-</code></pre></div><p><a href="https://gyazo.com/a81bce74630e64401d9250fe0c8bfa2d"><img src="https://i.gyazo.com/a81bce74630e64401d9250fe0c8bfa2d.gif" alt="Image from Gyazo"></a></p>
-<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  <span style="color:#66d9ef">if</span> done:
+    <span style="color:#66d9ef">break</span>
+
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;actions={toString(histories)}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Down)
+SFFF
+FHFH
+FFFH
+HFFG
+actions=[(0, &#39;LEFT&#39;), (0, &#39;LEFT&#39;), (0, &#39;LEFT&#39;), (0, &#39;RIGHT&#39;), (1, &#39;DOWN&#39;)]
+next_state=5
+reward=0.0
+done=True
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  完成したノートブックの確認
+</h1>
+
+<p><a href="https://colab.research.google.com/drive/1Uh3sF8sCc9jy8PRYzd5ERbAhWQwWfueO?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
- -->
-<!-- ポールが直立している時間が長くなるよう`selectAction`関数を改良しなさい． -->
-<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
+
+<p>プレイヤーを<code>RIGHT</code>，<code>RIGHT</code>，<code>DOWN</code>，<code>DOWN</code>，<code>DOWN</code>，<code>RIGHT</code>とは異なる経路でゴールに到達させること．
+課題を完成させたら <strong>AI-11.ipynb</strong> を保存し，共有用のリンクを提出しなさい．
+提出の際は必ず下記の設定を行うこと．</p>
+<ul>
+<li>ノートブックの変更内容を保存して固定</li>
+<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
+<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
+</ul>
 
 <h3>参考書籍</h3>
 
