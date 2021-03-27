@@ -806,21 +806,22 @@ Jupyter Notebookのインストール  [Python](https://www.</description>
     </item>
     
     <item>
-      <title>強化学習・山登りゲーム</title>
+      <title>強化学習・タクシーゲーム</title>
       <link>https://mukai-lab.info/pages/classes/artificial_intelligence/chapter13/</link>
       <pubDate>Thu, 12 Mar 2020 18:47:35 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/artificial_intelligence/chapter13/</guid>
       <description>ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします． ノートブックの作成方法は第1回の資料を参照してください．
-山登りゲーム（MountainCar）  山登りゲームは，車両を山の上の旗がある場所まで移動させることが目的です（旗の位置は0.5）． ユーザは，下記の状態を観測することが出来ます．
+最初にOpenAI Gym をインストールします． セルで下記のコマンドを実行してください．
+&amp;gt; !pip install gym また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．
+import gym import numpy as np import random import time from google.colab import output from tqdm.notebook import tqdm タクシーゲーム（Taxi）  山登りゲームは，車両を山の上の旗がある場所まで移動させることが目的です（旗の位置は0.5）． ユーザは，下記の状態を観測することが出来ます．
  車両の位置（-1.2 〜 0.6） 車両の速度（-0.07 〜 0.07）  また，ユーザは，車両に対し，下記のいずれかの行動をとることが出来ます．
  後方に加速（0） 加速なし（1） 前方に加速（2）  下記の条件を満たしたとき，ゲームは失敗となります．
  旗に到達できず200ステップが経過する  今回は，この山登りゲームをQ学習で解いてみましょう． 基本的には前回のバランスゲームの実装方法と同じです．
 [学習前] 
 [学習後] 
 山登りゲームの実装  まずは必要なライブラリの導入と，山登りゲーム（MountainCar-v0）の初期化をします．
-import gym import numpy as np env = gym.make(&amp;#39;MountainCar-v0&amp;#39;) # 環境の初期化 次に，200ステップに限定して，ランダムな行動選択を行なった結果を確認しましょう． 車両は谷底をウロウロするだけで，山を登ることはありません．
-env.reset() # 環境のリセット for i in range(200): action = env.action_space.sample() # ランダムに行動選択 observation, reward, done, info = env.</description>
+import gym import numpy as np env = gym.</description>
     </item>
     
     <item>
@@ -842,17 +843,6 @@ env.reset() # 環境のリセット for i in range(200): action = env.action_spa
     </item>
     
     <item>
-      <title>強化学習・Q学習</title>
-      <link>https://mukai-lab.info/pages/classes/artificial_intelligence/chapter12/</link>
-      <pubDate>Wed, 11 Mar 2020 18:33:09 +0900</pubDate>
-      
-      <guid>https://mukai-lab.info/pages/classes/artificial_intelligence/chapter12/</guid>
-      <description>Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&#39;, a&#39;)$は，状態$s$から遷移した先の状態$s&#39;$において，行動$a&#39;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
-$$ Q&#39;(s,a) = (1 - \alpha)Q(s,a) + \alpha(r + \gamma \max_{a&#39; \in A(s&#39;)} Q(s&#39;, a&#39;)) $$
-   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．</description>
-    </item>
-    
-    <item>
       <title>強化学習・バランスゲーム</title>
       <link>https://mukai-lab.info/pages/classes/artificial_intelligence/chapter2_2020/</link>
       <pubDate>Wed, 11 Mar 2020 18:33:09 +0900</pubDate>
@@ -861,6 +851,17 @@ $$ Q&#39;(s,a) = (1 - \alpha)Q(s,a) + \alpha(r + \gamma \max_{a&#39; \in A(s&#39
       <description>Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&#39;, a&#39;)$は，状態$s$から遷移した先の状態$s&#39;$において，行動$a&#39;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
 $$ Q&#39;(s,a) = (1 - \alpha)Q(s,a) + \alpha(r + \gamma \max_{a&#39; \in A(s&#39;)} Q(s&#39;, a&#39;)) $$
    パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．</description>
+    </item>
+    
+    <item>
+      <title>強化学習・フローズンレイク</title>
+      <link>https://mukai-lab.info/pages/classes/artificial_intelligence/chapter12/</link>
+      <pubDate>Wed, 11 Mar 2020 18:33:09 +0900</pubDate>
+      
+      <guid>https://mukai-lab.info/pages/classes/artificial_intelligence/chapter12/</guid>
+      <description>Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&#39;, a&#39;)$は，状態$s$から遷移した先の状態$s&#39;$において，行動$a&#39;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
+$$ Q&#39;(s,a) = (1 - \alpha)Q(s,a) + \alpha(r + \gamma \max_{a&#39; \in A(s&#39;)} Q(s&#39;, a&#39;)) $$
+   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．</description>
     </item>
     
     <item>
@@ -967,7 +968,7 @@ MacOSの場合 MacOSでは，バージョン管理が容易な pyenv をイン�
 関連科目: 知能情報システム
 授業テーマ: 人工知能の基本的な理論とアルゴリズムの習得
 授業内容 日常生活に自然に取り込まれている人工知能技術の理論と手法を学習する． 本授業では，コンピュータで問題解決に必要なモデルを定義し， 幅優先探索など探索アルゴリズムに関して，パズルを題材に学習する． また，自動運転車にも用いられる強化学習を取り上げ，ゲームを題材に学習する． また，実装はプログラミング言語のPythonを利用する．
-授業計画  人工知能とは Pythonの基本 探索木・Simple AI 探索木・8パズル 探索木・ハノイの塔 探索アルゴリズム・幅優先探索と深さ優先探索 探索アルゴリズム・ヒューリスティック探索 局所探索アルゴリズム・山登り法 局所探索アルゴリズム・シミュレーテッドアニーリング 進化的アルゴリズム・遺伝的アルゴリズム 強化学習・OpenAI Gym 強化学習・Q学習  旧資料（2020年度まで）  強化学習・OpenAI Gym 強化学習・バランスゲーム 強化学習・山登りゲーム  参考書籍     </description>
+授業計画  人工知能とは Pythonの基本 探索木・Simple AI 探索木・8パズル 探索木・ハノイの塔 探索アルゴリズム・幅優先探索と深さ優先探索 探索アルゴリズム・ヒューリスティック探索 局所探索アルゴリズム・山登り法 局所探索アルゴリズム・シミュレーテッドアニーリング 進化的アルゴリズム・遺伝的アルゴリズム 強化学習・OpenAI Gym 強化学習・フローズンレイク 強化学習・タクシーゲーム  旧資料（2020年度まで）  強化学習・OpenAI Gym 強化学習・バランスゲーム 強化学習・山登りゲーム  参考書籍     </description>
     </item>
     
     <item>
