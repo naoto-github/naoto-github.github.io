@@ -814,14 +814,9 @@ Jupyter Notebookのインストール  [Python](https://www.</description>
       <description>ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします． ノートブックの作成方法は第1回の資料を参照してください．
 最初にOpenAI Gym をインストールします． セルで下記のコマンドを実行してください．
 &amp;gt; !pip install gym また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．
-import gym import numpy as np import random import time from google.colab import output from tqdm.notebook import tqdm タクシーゲーム（Taxi）  山登りゲームは，車両を山の上の旗がある場所まで移動させることが目的です（旗の位置は0.5）． ユーザは，下記の状態を観測することが出来ます．
- 車両の位置（-1.2 〜 0.6） 車両の速度（-0.07 〜 0.07）  また，ユーザは，車両に対し，下記のいずれかの行動をとることが出来ます．
- 後方に加速（0） 加速なし（1） 前方に加速（2）  下記の条件を満たしたとき，ゲームは失敗となります．
- 旗に到達できず200ステップが経過する  今回は，この山登りゲームをQ学習で解いてみましょう． 基本的には前回のバランスゲームの実装方法と同じです．
-[学習前] 
-[学習後] 
-山登りゲームの実装  まずは必要なライブラリの導入と，山登りゲーム（MountainCar-v0）の初期化をします．
-import gym import numpy as np env = gym.</description>
+import gym import numpy as np import random import time from google.colab import output from tqdm.notebook import tqdm タクシーゲーム（Taxi）  タクシーゲーム（Taxi）は，乗車地まで移動し，お客を乗せて（Pickup），降車地まで移動し，お客を降ろす（Drop off）ことを目的としたゲームです．
+環境は下記のように$5\times5$で表されます． R(Red) ，G(Green) ，Y(Yellow) ，B(Blue) は， お客の乗車地，または，降車地です． また，| は壁であり，タクシーが通過することはできません．
++---------+ |R: | : :G| | : | : : | | : : : : | | | : | : | |Y| : |B: | +---------+ タクシーが観測できる情報は，タクシーの位置座標taxi_row，taxi_col，お客の乗車位置（状態）pass_loc，お客の降車位置dest_idxです．</description>
     </item>
     
     <item>
