@@ -341,22 +341,22 @@ df
 </code></pre></div><p><a href="https://gyazo.com/c2ae60d1ec316caabc0366cfe7caa26b"><img src="https://i.gyazo.com/c2ae60d1ec316caabc0366cfe7caa26b.png" alt="Image from Gyazo"></a></p>
 <h2 id="グラフの作成">グラフの作成</h2>
 <p><a href="https://matplotlib.org/">matplotlib</a>を利用して，データをグラフで可視化します．
-棒グラフを作成するには<code>df.plt.bar()</code>を用います．
+棒グラフを作成するには<code>df.plot.bar()</code>を用います．
 ここで，<code>x</code>はX軸，<code>y</code>はY軸，<code>figsize</code>はグラフの大きさを意味します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>plt<span style="color:#f92672">.</span>bar(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;年齢&#34;</span>, y<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;女&#34;</span>], figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>bar(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;年齢&#34;</span>, y<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;女&#34;</span>], figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
 </code></pre></div><p><a href="https://gyazo.com/861a97a17d4664e7277872691356df18"><img src="https://i.gyazo.com/861a97a17d4664e7277872691356df18.png" alt="Image from Gyazo"></a></p>
-<p>折れ線グラフを作成するには<code>df.plt.line()</code>を用います．
+<p>折れ線グラフを作成するには<code>df.plot.line()</code>を用います．
 ここでは，Y軸に<code>男</code>と<code>女</code>のデータを指定しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>plt<span style="color:#f92672">.</span>line(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;年齢&#34;</span>, y<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;男&#34;</span>, <span style="color:#e6db74">&#34;女&#34;</span>], figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>line(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;年齢&#34;</span>, y<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;男&#34;</span>, <span style="color:#e6db74">&#34;女&#34;</span>], figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
 </code></pre></div><p><a href="https://gyazo.com/694d8c8c68d745b71614765dc3fdb9f6"><img src="https://i.gyazo.com/694d8c8c68d745b71614765dc3fdb9f6.png" alt="Image from Gyazo"></a></p>
-<p>横棒グラフを作成するには<code>df.plt.barh()</code>を用います．
+<p>横棒グラフを作成するには<code>df.plot.barh()</code>を用います．
 ここでは，5歳間隔で人口を集計します．
 <code>df.rolling()</code>を用いると指定した区間のデータをまとめて対象にすることができ，
 <code>sum()</code>によって対象の区間の合計を算出します．
 また，列番号に<code>[::5]</code>と指定することで，5列おきにデータが抽出されます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_population <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;男&#34;</span>, <span style="color:#e6db74">&#34;女&#34;</span>]]<span style="color:#f92672">.</span>rolling(<span style="color:#ae81ff">5</span>)<span style="color:#f92672">.</span>sum() <span style="color:#75715e"># 5歳分を合計</span>
 df_population <span style="color:#f92672">=</span> df_population[::<span style="color:#ae81ff">5</span>] <span style="color:#75715e"># 5歳間隔で抽出</span>
-df_population[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">.</span>plt<span style="color:#f92672">.</span>barh(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>)) <span style="color:#75715e"># 0歳を除く</span>
+df_population[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>barh(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>)) <span style="color:#75715e"># 0歳を除く</span>
 </code></pre></div><p><a href="https://gyazo.com/ab52336c1413347e0d61a4ca72ce275a"><img src="https://i.gyazo.com/ab52336c1413347e0d61a4ca72ce275a.png" alt="Image from Gyazo"></a></p>
 <p>本日のノートブックは下記URLで確認できます．</p>
 <p><a href="https://colab.research.google.com/drive/1yI_qfbDa4_iyXxuHapWOl-4LQfjQBGp_?usp=sharing"><i class="fas fa-external-link-square-alt"></i> chapter1.ipynb</a></p>
