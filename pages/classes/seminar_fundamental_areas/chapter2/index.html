@@ -85,13 +85,13 @@
 
 
   <meta property="og:description" content="相関分析とは  相関分析とは，2つの変数XとYの関係性を分析する方法です． 例えば，暑い日にはアイスクリームの売上数が増加すると考えられます． このとき，「X:温度」と「Y:アイスクリームの売上数」には関係がありそうです． 一般に，相関分析には相関係数と呼ばれる評価指標が用いられます（正確にはピアソンの積率相関係数と呼ばれる）． 相関係数は-1から1の範囲で与えられ，1に近いほど正の相関，-1に近いほど負の相関を示します．
-   相関係数 相関の強さ     0.7～1 強い正の相関   0.4～0.7 正の相関   0.2～0.4 弱い正の相関   -0.2～0.2 相関なし   -0.4～0.2 弱い負の相関   -0.7～-0.4 負の相関   -1～-0.7 強い負の相関    正の相関は，Xが増加するとYも増加する関係を表し，負の相関は，Xが増加するとYが減少する関係性を表します． 先の「温度」と「アイスクリームの売上数」の例では，温度が増加すると，売上数も増加するので正の相関となります． 相関係数はアンケートの分析などでも用いられるメジャーな分析手法の一つです． ここでは，日進市のオープンデータを対象に相関分析を適用してみましょう．
-データの準備  前回の授業で日進市の人口ピラミッドを作成しました． グラフから，日進市には子育て世帯が多く，幼稚園や保育園などが充実した地区が人気であることが予想されます． そこで，町別人口・世帯数と子育て支援施設のデータを対象に，相関関係があるかを調べてみましょう．
-それでは，日進市のオープンデータミュージアムから 上記の2種類のデータをダウンロードしましょう． まずは，オープンデータミュージアムで公開されている行政活動情報の町別人口・世帯数のデータをダウンロードします． 行政活動情報のページにアクセスし， 平成30年1月1日のCSV形式のデータをダウンロードしてください． このデータには，日進市内の各町（赤池町，浅田町など）の人口や世帯数が含まれています．
+   相関係数 相関の強さ     0.7～1.0 強い正の相関   0.4～0.7 正の相関   0.2～0.4 弱い正の相関   -0.2～0.2 相関なし   -0.4～-0.2 弱い負の相関   -0.7～-0.4 負の相関   -1.0～-0.7 強い負の相関    正の相関は，Xが増加するとYも増加する関係を表し，負の相関は，Xが増加するとYが減少する関係性を表します． 先の「温度」と「アイスクリームの売上数」の例では，温度が増加すると，売上数も増加するので正の相関となります． 相関係数はアンケートの分析などでも用いられるメジャーな分析手法の一つです． ここでは，日進市の気温と降水量のオープンデータを対象に相関分析を適用してみましょう．
+オープンデータを相関分析  それでは，Google Colaboratoryを利用して，オープンデータの相関分析に挑戦しましょう．
+ノートブックの作成 まずは，ノートブックを作成します． ノートブックの名前は chapter2.ipynb に設定します．
 
-次に7市町オープンデータのフォーマットに従った子育て支援施設のデータをダウンロードします． 7市町オープンデータ共通整備項目にアクセスし， CSV形式のデータをダウンロードしてください． このデータには，日進市内にある幼稚園や保育園などの子育て支援施設の名称や住所が含まれています．
-
-相関係数の算出  それでは，ダウンロードしたデータをエクセルで読み込み相関係数を算出してみましょう． まずはエクセルを起動して，空白のブックを選択します． セルA1をアクティブにした状態で，データ・タブのテキストまたはCSVからをクリックします． ダイアログが表示されたら，ダウンロードした町別人口・世帯数のファイルを選択し，インポートをクリックします． プレビュー画面で，編集をクリックし，クエリエディタを開きます． ここでは，1行目から3行目の不要なデータを削除してしまいます． 削除後に，1行目をヘッダーとして使用をクリックして，最後に，閉じて読み込むをクリックします． 読み込み後に，下記のように表示されていることを確認してください．" />
+前回と同様に相関分析に利用するライブラリを導入します．
+matplotlib，pandas，そして，新たに数値計算ライブラリのNumPyをインポートします． numpyの別名としてnpを指定しています．
+!pip install japanize-matplotlib import matplotlib.pyplot as plt import japanize_matplotlib import pandas as pd import numpy as np データフレーム（pandas） pandasを利用して， CSV形式のオープンデータ（kion." />
 
 
 
@@ -107,13 +107,13 @@
 
 
   <meta name="twitter:description" content="相関分析とは  相関分析とは，2つの変数XとYの関係性を分析する方法です． 例えば，暑い日にはアイスクリームの売上数が増加すると考えられます． このとき，「X:温度」と「Y:アイスクリームの売上数」には関係がありそうです． 一般に，相関分析には相関係数と呼ばれる評価指標が用いられます（正確にはピアソンの積率相関係数と呼ばれる）． 相関係数は-1から1の範囲で与えられ，1に近いほど正の相関，-1に近いほど負の相関を示します．
-   相関係数 相関の強さ     0.7～1 強い正の相関   0.4～0.7 正の相関   0.2～0.4 弱い正の相関   -0.2～0.2 相関なし   -0.4～0.2 弱い負の相関   -0.7～-0.4 負の相関   -1～-0.7 強い負の相関    正の相関は，Xが増加するとYも増加する関係を表し，負の相関は，Xが増加するとYが減少する関係性を表します． 先の「温度」と「アイスクリームの売上数」の例では，温度が増加すると，売上数も増加するので正の相関となります． 相関係数はアンケートの分析などでも用いられるメジャーな分析手法の一つです． ここでは，日進市のオープンデータを対象に相関分析を適用してみましょう．
-データの準備  前回の授業で日進市の人口ピラミッドを作成しました． グラフから，日進市には子育て世帯が多く，幼稚園や保育園などが充実した地区が人気であることが予想されます． そこで，町別人口・世帯数と子育て支援施設のデータを対象に，相関関係があるかを調べてみましょう．
-それでは，日進市のオープンデータミュージアムから 上記の2種類のデータをダウンロードしましょう． まずは，オープンデータミュージアムで公開されている行政活動情報の町別人口・世帯数のデータをダウンロードします． 行政活動情報のページにアクセスし， 平成30年1月1日のCSV形式のデータをダウンロードしてください． このデータには，日進市内の各町（赤池町，浅田町など）の人口や世帯数が含まれています．
+   相関係数 相関の強さ     0.7～1.0 強い正の相関   0.4～0.7 正の相関   0.2～0.4 弱い正の相関   -0.2～0.2 相関なし   -0.4～-0.2 弱い負の相関   -0.7～-0.4 負の相関   -1.0～-0.7 強い負の相関    正の相関は，Xが増加するとYも増加する関係を表し，負の相関は，Xが増加するとYが減少する関係性を表します． 先の「温度」と「アイスクリームの売上数」の例では，温度が増加すると，売上数も増加するので正の相関となります． 相関係数はアンケートの分析などでも用いられるメジャーな分析手法の一つです． ここでは，日進市の気温と降水量のオープンデータを対象に相関分析を適用してみましょう．
+オープンデータを相関分析  それでは，Google Colaboratoryを利用して，オープンデータの相関分析に挑戦しましょう．
+ノートブックの作成 まずは，ノートブックを作成します． ノートブックの名前は chapter2.ipynb に設定します．
 
-次に7市町オープンデータのフォーマットに従った子育て支援施設のデータをダウンロードします． 7市町オープンデータ共通整備項目にアクセスし， CSV形式のデータをダウンロードしてください． このデータには，日進市内にある幼稚園や保育園などの子育て支援施設の名称や住所が含まれています．
-
-相関係数の算出  それでは，ダウンロードしたデータをエクセルで読み込み相関係数を算出してみましょう． まずはエクセルを起動して，空白のブックを選択します． セルA1をアクティブにした状態で，データ・タブのテキストまたはCSVからをクリックします． ダイアログが表示されたら，ダウンロードした町別人口・世帯数のファイルを選択し，インポートをクリックします． プレビュー画面で，編集をクリックし，クエリエディタを開きます． ここでは，1行目から3行目の不要なデータを削除してしまいます． 削除後に，1行目をヘッダーとして使用をクリックして，最後に，閉じて読み込むをクリックします． 読み込み後に，下記のように表示されていることを確認してください．" />
+前回と同様に相関分析に利用するライブラリを導入します．
+matplotlib，pandas，そして，新たに数値計算ライブラリのNumPyをインポートします． numpyの別名としてnpを指定しています．
+!pip install japanize-matplotlib import matplotlib.pyplot as plt import japanize_matplotlib import pandas as pd import numpy as np データフレーム（pandas） pandasを利用して， CSV形式のオープンデータ（kion." />
 
 
 
@@ -210,7 +210,7 @@
 </thead>
 <tbody>
 <tr>
-<td>0.7～1</td>
+<td>0.7～1.0</td>
 <td>強い正の相関</td>
 </tr>
 <tr>
@@ -226,7 +226,7 @@
 <td>相関なし</td>
 </tr>
 <tr>
-<td>-0.4～0.2</td>
+<td>-0.4～-0.2</td>
 <td>弱い負の相関</td>
 </tr>
 <tr>
@@ -234,7 +234,7 @@
 <td>負の相関</td>
 </tr>
 <tr>
-<td>-1～-0.7</td>
+<td>-1.0～-0.7</td>
 <td>強い負の相関</td>
 </tr>
 </tbody>
@@ -242,92 +242,115 @@
 <p>正の相関は，Xが増加するとYも増加する関係を表し，負の相関は，Xが増加するとYが減少する関係性を表します．
 先の「温度」と「アイスクリームの売上数」の例では，温度が増加すると，売上数も増加するので正の相関となります．
 <strong>相関係数</strong>はアンケートの分析などでも用いられるメジャーな分析手法の一つです．
-ここでは，日進市のオープンデータを対象に相関分析を適用してみましょう．</p>
+ここでは，日進市の気温と降水量のオープンデータを対象に相関分析を適用してみましょう．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  データの準備
+  オープンデータを相関分析
 </h1>
 
-<p>前回の授業で日進市の人口ピラミッドを作成しました．
-グラフから，日進市には子育て世帯が多く，幼稚園や保育園などが充実した地区が人気であることが予想されます．
-そこで，<strong>町別人口・世帯数</strong>と<strong>子育て支援施設</strong>のデータを対象に，相関関係があるかを調べてみましょう．</p>
-<p>それでは，<a href="http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/index.html">日進市のオープンデータミュージアム</a>から
-上記の2種類のデータをダウンロードしましょう．
-まずは，オープンデータミュージアムで公開されている行政活動情報の<strong>町別人口・世帯数</strong>のデータをダウンロードします．
-<a href="http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/5498.html">行政活動情報のページ</a>にアクセスし，
-<strong>平成30年1月1日のCSV形式のデータ</strong>をダウンロードしてください．
-このデータには，日進市内の各町（赤池町，浅田町など）の<strong>人口</strong>や<strong>世帯数</strong>が含まれています．</p>
-<p><a href="https://gyazo.com/30f9e9b41e91b8aa362683cd20b0968e"><img src="https://i.gyazo.com/30f9e9b41e91b8aa362683cd20b0968e.png" alt="https://gyazo.com/30f9e9b41e91b8aa362683cd20b0968e"></a></p>
-<p>次に7市町オープンデータのフォーマットに従った<strong>子育て支援施設</strong>のデータをダウンロードします．
-<a href="http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/7shimachi_opendata.html">7市町オープンデータ共通整備項目</a>にアクセスし，
-<strong>CSV形式のデータ</strong>をダウンロードしてください．
-このデータには，日進市内にある幼稚園や保育園などの子育て支援施設の<strong>名称</strong>や<strong>住所</strong>が含まれています．</p>
-<p><a href="https://gyazo.com/b38a11c6720d50f68fd6dd8279d3d9c4"><img src="https://i.gyazo.com/b38a11c6720d50f68fd6dd8279d3d9c4.png" alt="https://gyazo.com/b38a11c6720d50f68fd6dd8279d3d9c4"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  相関係数の算出
-</h1>
+<p>それでは，<a href="https://colab.research.google.com/">Google Colaboratory</a>を利用して，オープンデータの相関分析に挑戦しましょう．</p>
+<h2 id="ノートブックの作成">ノートブックの作成</h2>
+<p>まずは，ノートブックを作成します．
+ノートブックの名前は <strong>chapter2.ipynb</strong> に設定します．</p>
+<p><a href="https://gyazo.com/9d7dffcdf8a0186d2be99d293db1c254"><img src="https://i.gyazo.com/9d7dffcdf8a0186d2be99d293db1c254.png" alt="Image from Gyazo"></a></p>
+<p>前回と同様に相関分析に利用するライブラリを導入します．</p>
+<p><a href="https://matplotlib.org/">matplotlib</a>，<a href="https://pandas.pydata.org/">pandas</a>，そして，新たに数値計算ライブラリの<a href="https://numpy.org/">NumPy</a>をインポートします．
+<code>numpy</code>の別名として<code>np</code>を指定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install japanize-matplotlib
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> japanize_matplotlib
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+</code></pre></div><h2 id="データフレームpandas">データフレーム（pandas）</h2>
+<p><a href="https://pandas.pydata.org/">pandas</a>を利用して，
+CSV形式のオープンデータ（<a href="https://mukai-lab.info/classes/seminar_fundamental_areas/csv/kion.csv">kion.csv</a>）を読み込みます．
+平成21年1月から平成30年12月までの日進市の気温や降水量に関するデータです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># kion.csv</span>
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://mukai-lab.info/classes/seminar_fundamental_areas/csv/kion.csv&#34;</span>
 
-<p>それでは，ダウンロードしたデータをエクセルで読み込み相関係数を算出してみましょう．
-まずはエクセルを起動して，<strong>空白のブック</strong>を選択します．
-セル<strong>A1</strong>をアクティブにした状態で，データ・タブの<strong>テキストまたはCSVから</strong>をクリックします．
-ダイアログが表示されたら，ダウンロードした<strong>町別人口・世帯数</strong>のファイルを選択し，<strong>インポート</strong>をクリックします．
-プレビュー画面で，<strong>編集</strong>をクリックし，クエリエディタを開きます．
-ここでは，1行目から3行目の不要なデータを削除してしまいます．
-削除後に，<strong>1行目をヘッダーとして使用</strong>をクリックして，最後に，<strong>閉じて読み込む</strong>をクリックします．
-読み込み後に，下記のように表示されていることを確認してください．</p>
-<p><a href="https://gyazo.com/0138909a479da64e3e4190b54e12337d"><img src="https://i.gyazo.com/0138909a479da64e3e4190b54e12337d.png" alt="https://gyazo.com/0138909a479da64e3e4190b54e12337d"></a></p>
-<p>同様の手順で<strong>子育て支援施設</strong>のデータを読み込みます．
-プレビュー画面で，<strong>編集</strong>をクリックし，クエリエディタを開きます．
-ここでは，<strong>名称</strong>と<strong>住所表記</strong>の列だけを残し，その他の列は削除してしまいましょう．
-削除後に，<strong>1行目をヘッダーとして使用</strong>をクリックして，最後に，<strong>閉じて読み込む</strong>をクリックします．
-読み込み後に，下記のように表示されていることを確認してください．</p>
-<p><a href="https://gyazo.com/952435ea0344b7fbc42a3c6bfc6b7f65"><img src="https://i.gyazo.com/952435ea0344b7fbc42a3c6bfc6b7f65.png" alt="https://gyazo.com/952435ea0344b7fbc42a3c6bfc6b7f65"></a></p>
-<p>次に，各町に存在する子育て支援施設の数を数えます．
-<strong>町別人口・世帯数</strong>のシートのF列に，<strong>countif関数</strong>を用いて施設数をカウントします．
-セル<strong>F2</strong>をアクティブにした状態で，関数の挿入をクリックし，countif関数を選択します．</p>
-<p><a href="https://gyazo.com/2c747260111fa0770b692f85b3df5246"><img src="https://i.gyazo.com/2c747260111fa0770b692f85b3df5246.png" alt="https://gyazo.com/2c747260111fa0770b692f85b3df5246"></a></p>
-<p>countif関数は条件を満たすセルの数をカウントするために用いられます．
-ここでは，「町名が住所表記に含まれる」という条件を満たすセルをカウントします．
-下図を参考に範囲，検索条件を入力してください．
-ここで，範囲は子育て支援施設のシートの<strong>B2:B73</strong>を指定しています．
-また，検索条件の「*(アスタリスク)」は<strong>ワイルドカード</strong>と呼ばれ，
-任意の文字列を表しています（<strong>赤池</strong>は<strong>赤池町</strong>を含むため，二重でカウントされてしまうが，簡単化のため，ここでは考慮しない）．</p>
-<p><a href="https://gyazo.com/03404c2f90544e91ce525445d221e57b"><img src="https://i.gyazo.com/03404c2f90544e91ce525445d221e57b.png" alt="https://gyazo.com/03404c2f90544e91ce525445d221e57b"></a></p>
-<p>カウントした結果が下図と一致することを確認してください．
-赤池町は3，浅田町は5となっています．</p>
-<p><a href="https://gyazo.com/7f00adbd3e7ec63c21f11ab29aa4708c"><img src="https://i.gyazo.com/7f00adbd3e7ec63c21f11ab29aa4708c.png" alt="https://gyazo.com/7f00adbd3e7ec63c21f11ab29aa4708c"></a></p>
-<p>まずは，散布図を作成して，全体の傾向を可視化しましょう．
-E列の世帯数とF列の子育て支援施設数を選択して，挿入タブから散布図を選択してください．
-このとき，合計の行を含めないように注意してください．
-作成した散布図が下記と一致することを確認してください．</p>
-<p><a href="https://gyazo.com/d040e9315d4ee41938dce42c53371bfc"><img src="https://i.gyazo.com/d040e9315d4ee41938dce42c53371bfc.png" alt="https://gyazo.com/d040e9315d4ee41938dce42c53371bfc"></a></p>
-<p>ここで，近似曲線を追加します．
-データ系列を選択して，右クリックし，<strong>近似曲線の追加（線形近似）<strong>を選択します．
-近似直線が右上がりであることから，<strong>世帯数</strong>と</strong>子育て支援施設数</strong>には，正の相関があることが読み取れます．</p>
-<p><a href="https://gyazo.com/c6bc89092a1215f1b2f642b4bdb1250e"><img src="https://i.gyazo.com/c6bc89092a1215f1b2f642b4bdb1250e.png" alt="https://gyazo.com/c6bc89092a1215f1b2f642b4bdb1250e"></a></p>
-<p>最後に分析ツールを用いて相関係数を算出しましょう．
-データ・タブの<strong>データ分析</strong>をクリックし，<strong>相関</strong>を選択します．
-<strong>データ分析</strong>が表示されていない場合は，
-【ファイル】-【オプション】-【アドイン】-【Excelアドイン】の設定をクリックし，
-分析ツールのチェックボックスにチェックを入れてください．
-入力範囲は<strong>E1:F28</strong>，先頭行をラベルとして使用にチェックを入れ，
-出力先をH2に設定して，OKをクリックします．</p>
-<p><a href="https://gyazo.com/64a64f94923af3707fe5892c1fe1508a"><img src="https://i.gyazo.com/64a64f94923af3707fe5892c1fe1508a.png" alt="https://gyazo.com/64a64f94923af3707fe5892c1fe1508a"></a></p>
-<p>この結果，<strong>世帯数</strong>と<strong>子育て支援施設数</strong>の相関係数は0.43と算出されました．
-この値は<strong>正の相関</strong>であることを意味しています．
-つまり，<strong>子育て支援施設</strong>が多い地区は，その地区に住む<strong>世帯数</strong>も多いということが示されました．
-しかし，このルールに該当しない例外的な地区もあるようです．
-例えば，折戸町は1073世帯と決して多くはありませんが，12の子育て支援施設が存在しています．
-このように統計において他の値から大きく外れた値は<strong>外れ値</strong>と呼ばれます．
-外れ値が大きな意味合いを持つケースも存在するので，この理由を調査してみるのも面白いと思います．</p>
-<p><a href="https://gyazo.com/30f7e29c9f32d9b0323aaa1c218dac97"><img src="https://i.gyazo.com/30f7e29c9f32d9b0323aaa1c218dac97.png" alt="Image from Gyazo"></a></p>
-<!-- [![https://gyazo.com/de6228f08840c96af1c8d733cf71a192](https://i.gyazo.com/de6228f08840c96af1c8d733cf71a192.png)](https://gyazo.com/de6228f08840c96af1c8d733cf71a192) -->
-<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<span style="color:#75715e"># データフレームの生成（3桁区切りを指定）</span>
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(url)
+
+<span style="color:#75715e"># HTMLで表示(=display(df))</span>
+df
+</code></pre></div><p><a href="https://gyazo.com/8c3a3a633a1024465a8f16a3bad2b8f0"><img src="https://i.gyazo.com/8c3a3a633a1024465a8f16a3bad2b8f0.png" alt="Image from Gyazo"></a></p>
+<h2 id="日平均気温と降水量の合計">日平均気温と降水量の合計</h2>
+<p>最初に「X:日平均気温」と「Y:降水量の合計」の関係を探ります．
+気温の高い夏には雨が多く，気温の低い冬には雨が少ないことが予想されます．</p>
+<h3 id="散布図">散布図</h3>
+<p>散布図を作成するには<code>df.plot.scatter()</code>を用います．
+X軸に <strong>日平均気温</strong> ，Y軸に <strong>降水量の合計</strong> をプロットします．
+この結果，全体的に右上がりの傾向があることが読み取れます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>scatter(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;日平均気温&#34;</span>, y<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;降水量の合計&#34;</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+</code></pre></div><p><a href="https://gyazo.com/eac68fe97444d84d3f50d5b24ccce76f"><img src="https://i.gyazo.com/eac68fe97444d84d3f50d5b24ccce76f.png" alt="Image from Gyazo"></a></p>
+<h3 id="近似直線">近似直線</h3>
+<p>この傾向を明確化するために散布図の近似直線を描画します．
+近似直線は $y = ax + b$ の式で表され，適切な傾き<code>a</code>と切片<code>b</code>を求める必要があります．
+ここでは，<code>np.polyfit()</code>を用いて，近似直線の傾き<code>a</code>と切片<code>b</code>を求めます（2乗誤差の最小化）．
+導出の結果，$a \simeq 5.89$，$b \simeq 42.64$という結果になりました．
+$a &gt; 0$であることから，<strong>日平均気温</strong> と <strong>降水量の合計</strong> には，正の相関があることが読み取れます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 近似直線の傾きaと切片b</span>
+a, b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>polyfit(df[<span style="color:#e6db74">&#34;日平均気温&#34;</span>], df[<span style="color:#e6db74">&#34;降水量の合計&#34;</span>], <span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;a={a} b={b}&#34;</span>)
+
+<span style="color:#75715e"># 近似直線のxとy</span>
+x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">30</span>)
+y <span style="color:#f92672">=</span> a <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> b
+
+fig <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>scatter(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;日平均気温&#34;</span>, y<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;降水量の合計&#34;</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+fig<span style="color:#f92672">.</span>plot(x, y)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">a=5.894288323846492 b=42.6426477663791
+</code></pre></div><p><a href="https://gyazo.com/95c24d825a8c68d201ff6e337b557586"><img src="https://i.gyazo.com/95c24d825a8c68d201ff6e337b557586.png" alt="Image from Gyazo"></a></p>
+<h3 id="相関係数">相関係数</h3>
+<p>相関係数は<code>corr()</code>で算出することができます．
+この結果，<strong>日平均気温</strong> と <strong>降水量の合計</strong> の相関係数は$0.58$となりました．
+これは　<strong>日平均気温</strong> と <strong>降水量の合計</strong> に「正の相関がある」ことを示しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[[<span style="color:#e6db74">&#34;日平均気温&#34;</span>, <span style="color:#e6db74">&#34;降水量の合計&#34;</span>]]<span style="color:#f92672">.</span>corr()
+</code></pre></div><p><a href="https://gyazo.com/aeafdba231c58c538186488a9c18b060"><img src="https://i.gyazo.com/aeafdba231c58c538186488a9c18b060.png" alt="Image from Gyazo"></a></p>
+<h2 id="日照時間と降水量の合計">日照時間と降水量の合計</h2>
+<p>次に「X:日照時間」と「Y:降水量の合計」の関係を探ります．
+日照時間が多い日には雨が少なく，日照時間が少ない日には雨が少ないことが予想されます．</p>
+<h3 id="散布図-1">散布図</h3>
+<p><code>df.plot.scatter()</code>で散布図を作成します．
+X軸に <strong>日照時間</strong> ，Y軸に <strong>降水量の合計</strong> をプロットします．
+この結果，全体的に右下がりの傾向があることが読み取れます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>scatter(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;日照時間&#34;</span>, y<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;降水量の合計&#34;</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+</code></pre></div><p><a href="https://gyazo.com/cc356cea497f5f6f928aeb58fb32e5de"><img src="https://i.gyazo.com/cc356cea497f5f6f928aeb58fb32e5de.png" alt="Image from Gyazo"></a></p>
+<h3 id="近似直線-1">近似直線</h3>
+<p>この傾向を明確化するために散布図の近似直線を描画します．
+<code>np.polyfit()</code>を用いて，近似直線の傾き<code>a</code>と切片<code>b</code>を求めます．
+導出の結果，$a \simeq -0.75$，$b \simeq 276.55$という結果になりました．
+$a &lt; 0$であることから，<strong>日照時間</strong> と <strong>降水量の合計</strong> には，負の相関があることが読み取れます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 近似直線の傾きaと切片b</span>
+a, b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>polyfit(df[<span style="color:#e6db74">&#34;日照時間&#34;</span>], df[<span style="color:#e6db74">&#34;降水量の合計&#34;</span>], <span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;a={a} b={b}&#34;</span>)
+
+<span style="color:#75715e"># 近似直線のxとy</span>
+x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">300</span>)
+y <span style="color:#f92672">=</span> a <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> b
+
+fig <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>scatter(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;日照時間&#34;</span>, y<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;降水量の合計&#34;</span>, figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+fig<span style="color:#f92672">.</span>plot(x, y)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">a=-0.7500836696786253 b=276.54845558604035
+</code></pre></div><p><a href="https://gyazo.com/fae265ca745f24e7826e3f058e027fad"><img src="https://i.gyazo.com/fae265ca745f24e7826e3f058e027fad.png" alt="Image from Gyazo"></a></p>
+<h3 id="相関係数-1">相関係数</h3>
+<p><code>corr()</code>で相関係数を算出します．
+この結果，<strong>日照時間</strong> と <strong>降水量の合計</strong> の相関係数は$-0.30$となりました．
+これは　<strong>日照時間</strong> と <strong>降水量の合計</strong> に「弱い負の相関がある」ことを示しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[[<span style="color:#e6db74">&#34;日照時間&#34;</span>, <span style="color:#e6db74">&#34;降水量の合計&#34;</span>]]<span style="color:#f92672">.</span>corr()
+</code></pre></div><p><a href="https://gyazo.com/fac48ce7336fbeecad068715dbadc3c9"><img src="https://i.gyazo.com/fac48ce7336fbeecad068715dbadc3c9.png" alt="Image from Gyazo"></a></p>
+<p>本日のノートブックは下記URLで確認できます．</p>
+<p><a href="https://colab.research.google.com/drive/1wsNhb3V2EYiObeBztdgS8vhkqXORl-He?usp=sharing"><i class="fas fa-external-link-square-alt"></i> chapter2.ipynb</a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
- -->
-<!-- 日進市のオープンデータから[医療施設（機関）](http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/jyumin.html#kenkou)のデータをダウンロードし， -->
-<!-- **町別人口・世帯数**との関係性を**散布図**と**相関係数**で示しなさい（Excelファイルは新規に作成すること）． -->
-<!-- また，完成したエクセルファイルを保存し，提出しなさい（ファイル名は任意で構わない）． -->
+
+<p>Google Colaboratoryで作成した <strong>chapter2.ipynb</strong> を保存し，共有用のリンクを提出しなさい．
+提出の際は必ず下記の設定を行うこと．</p>
+<ul>
+<li>ノートブックの変更内容を保存して固定</li>
+<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
+<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
+</ul>
 <h3>参考書籍</h3>
 
 
