@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    オープンストリートマップを利用したオープンデータの可視化①・uMap | mLAB
+    オープンストリートマップを利用したオープンデータの可視化①・Folium | mLAB
   </title>
 
   
@@ -64,7 +64,7 @@
   
   
 
-  <meta property="og:title" content="オープンストリートマップを利用したオープンデータの可視化①・uMap" />
+  <meta property="og:title" content="オープンストリートマップを利用したオープンデータの可視化①・Folium" />
 
 
 
@@ -76,7 +76,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/0cc18d7ba4f7db56959e985acc851378.png" />
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
 
 
 
@@ -85,14 +85,16 @@
 
 
   <meta property="og:description" content="オープンストリートマップとは  行政が公開しているオープンデータには， 施設の位置を表す緯度，経度の情報が含まれることが多くあります． 前回利用した日進市の子育て支援施設のオープンデータにも，施設の名称や住所に加えて，緯度・経度の情報が含まれていました． オンライン地図を利用して，これらの位置情報を可視化することで，新たな気付きを得ることが可能です．
-オンライン地図として最も有名なサービスはGoogleが提供しているGoogle Mapsでしょう． Google Mapsは，滑らかな地図の表示はもちろん，ストリートビュー，ジオコーディング，ルート検索などの機能も充実しています． ここで，ジオコーディングとは住所や地名などを緯度・経度に変換する技術を指しています． 例えば，椙山女学園大学の地図をGoogle Mapで表示してみます． ウェブページにGoogle Mapsを埋め込むには，共有をクリックし， 地図を埋め込むのタブに表示されているソースコードをコピペするだけで完成です．
-Google Mapsはとても便利なのですが，利用規約が厳しいことが知られています． クレジット表示が必要なことは当然ですが，非営利であっても印刷物での使用には大きな制限があります． 新聞，雑誌，レポートなどの目的では問題ありませんが，ガイドブックや印刷広告には使用することができません． これは，行政にとっては致命的であり，自治体を紹介する印刷広告を作成しようとしても，Google Mapsを掲載することができません． そこで，代わりに用いられるのがオープンストリートマップ(OpenStreetMap: OSM)です． オープストリートマップはクリエイティブ・コモンズ CC-BY-SA 2.0と呼ばれる ライセンスで提供されており，適切にクレジットを表示すれば，営利目的の使用も含め，複製・再配布・改変が認められています． 例えば，椙山女学園大学の地図をオープンストリートマップで表示してみます． 上記のGoogle Mapsと比較しても，遜色ないことが分かるでしょう．
-加えて，オープンストリートマップの最も大きな特徴は，オープンストリートマップのアカウント登録さえすれば， 誰しもが自由に地図を編集することができるという点です． つまり，オープンストリートマップは，オンライン地図のサービスであることに加え，無料地図の共同作成プロジェクトでもあるわけです． オープンストリートマップを編集する人のことをマッパーと呼び， 複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントをマッピングパーティと呼びます． 全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします． 日進市においては，平成29年12月9日に「ブラニッシン〜いまのにっしん，世界に発信！〜」という マッピングパーティが開催され，向も参加しました．
-今回は日進市のオープンデータとオープンストリートマップを組み合わせ， 独自のオンライン地図を作成する方法について学習していきましょう．
-GeoJSON  ここで，オープンデータの条件である「機械判読に適したデータ形式」について考えてみます． オンライン地図にオープンデータを表示するには，当然，コンピュータが読み取ることが出来る形式を用いる必要があります． これまでに，xlsx形式，csv形式を紹介しましたが，よりウェブに相性が良いデータ形式があります． それが，**JSON形式（.json）**です． JSONは，「じぇいそん」と読み，ブラウザで動作するプログラミング言語のJavaScriptで用いられるデータ形式です （JavaScript以外のプログラミング言語でも対応していることが多い）．
-下記のCSV形式のデータを例に考えてみましょう．
-町名,男,女,総数,世帯数赤池町,1693,1647,3340,1315浅田町,2593,2431,5024,2086上記のデータをJSON形式に変換すると下記になります． JSON形式では，データは**string（文字列）とvalue（値）の組で表現されます． 例えば，&ldquo;町名&quot;という文字列と，&ldquo;赤池町&quot;という値が組になっていることがわかります． また，[ ]**は配列を表しており，0番目の要素に赤池町のデータ，1番目の要素に浅田町のデータが格納されます． 要素は「,（カンマ）」で区切られますが，最後の要素には必要ありません（間違えやすいので要注意）．
-[ { &#34;町名&#34;: &#34;赤池町&#34;, &#34;男&#34;: 1693, &#34;女&#34;: 1647, &#34;総数&#34;: 3340, &#34;世帯数&#34;: 1315 }, { &#34;町名&#34;: &#34;浅田町&#34;, &#34;男&#34;: 2593, &#34;女&#34;: 2431, &#34;総数&#34;: 5042, &#34;世帯数&#34;: 2086 }	] このJSON形式を基本として，点，線，多角形などの空間データを表現するために用いられるのが， GeoJSON形式です． GeoJSONは，「じおじぇいそん」と読み， uMap，Leeflet， OpenLayersなどの様々な地図サービスで利用可能です．" />
+オンライン地図として最も有名なサービスはGoogleが提供しているGoogle Mapsでしょう． Google Mapsは，滑らかな地図の表示はもちろん，ストリートビュー，ジオコーディング，ルート検索などの機能も充実しています． ジオコーディングとは住所や地名などを緯度・経度に変換する技術です． 例えば，椙山女学園大学の地図をGoogle Mapで表示してみます． ウェブページにGoogle Mapsを埋め込むには，共有をクリックし， 地図を埋め込むのタブに表示されているソースコードをコピペするだけで完成です．
+Google Mapsはとても便利なのですが，利用規約が厳しいことが知られています． クレジット表示が必要なことに加え，非営利であっても 印刷物 での使用には大きな制限があります． 新聞，雑誌，レポートなどの目的では問題ありませんが，ガイドブックや印刷広告には使用することができません． これは，行政にとっては致命的であり，自治体を紹介する印刷広告を作成しようとしても，Google Mapsを掲載することができません． そこで，代わりに用いられるのがオープンストリートマップ(OpenStreetMap: OSM)です． オープストリートマップはクリエイティブ・コモンズ CC-BY-SA 2.0と呼ばれる ライセンスで提供されており，適切にクレジットを表示すれば，営利目的の使用も含め，複製・再配布・改変が認められています． 例えば，椙山女学園大学の地図をオープンストリートマップで表示してみます． 上記のGoogle Mapsと比較しても，遜色ないことが分かるでしょう．
+加えて，オープンストリートマップの最も大きな特徴は，オープンストリートマップのアカウント登録さえすれば， 誰しもが自由に地図を編集することができるという点です． つまり，オープンストリートマップは，オンライン地図のサービスであることに加え，無料地図の共同作成プロジェクトでもあるわけです． オープンストリートマップを編集する人のことを マッパー と呼び， 複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントを マッピングパーティ と呼びます． 全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします．
+今回は日進市の子育て支援施設のオープンデータとオープンストリートマップを組み合わせ， 独自のオンライン地図を作成する方法について学習していきましょう．
+オリジナル地図の作成  それでは，Google Colaboratoryを利用して，オープンストリートマップを利用したオンライン地図の作成に挑戦しましょう．
+ノートブックの作成 まずは，ノートブックを作成します． ノートブックの名前は chapter3.ipynb に設定します．
+
+オープンストリートマップを利用したオンライン地図を作成するためのライブラリにLeeflet.jsがあります． このLeeflet.jsをPythonで利用するための機能を提供するライブラリがfoliumです． ここでは，foliumをインストールします．
+!pip install folium foliumとpandasをインポートします．
+import folium import pandas as pd オープンストリートマップの表示 椙山女学園大学・星ヶ丘キャンパスを中心とした地図を表示しています． 星ヶ丘キャンパスの緯度・経度をlat，lonに代入します．" />
 
 
 
@@ -103,23 +105,25 @@ GeoJSON  ここで，オープンデータの条件である「機械判読に�
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="オープンストリートマップを利用したオープンデータの可視化①・uMap" />
+  <meta name="twitter:title" content="オープンストリートマップを利用したオープンデータの可視化①・Folium" />
 
 
 
   <meta name="twitter:description" content="オープンストリートマップとは  行政が公開しているオープンデータには， 施設の位置を表す緯度，経度の情報が含まれることが多くあります． 前回利用した日進市の子育て支援施設のオープンデータにも，施設の名称や住所に加えて，緯度・経度の情報が含まれていました． オンライン地図を利用して，これらの位置情報を可視化することで，新たな気付きを得ることが可能です．
-オンライン地図として最も有名なサービスはGoogleが提供しているGoogle Mapsでしょう． Google Mapsは，滑らかな地図の表示はもちろん，ストリートビュー，ジオコーディング，ルート検索などの機能も充実しています． ここで，ジオコーディングとは住所や地名などを緯度・経度に変換する技術を指しています． 例えば，椙山女学園大学の地図をGoogle Mapで表示してみます． ウェブページにGoogle Mapsを埋め込むには，共有をクリックし， 地図を埋め込むのタブに表示されているソースコードをコピペするだけで完成です．
-Google Mapsはとても便利なのですが，利用規約が厳しいことが知られています． クレジット表示が必要なことは当然ですが，非営利であっても印刷物での使用には大きな制限があります． 新聞，雑誌，レポートなどの目的では問題ありませんが，ガイドブックや印刷広告には使用することができません． これは，行政にとっては致命的であり，自治体を紹介する印刷広告を作成しようとしても，Google Mapsを掲載することができません． そこで，代わりに用いられるのがオープンストリートマップ(OpenStreetMap: OSM)です． オープストリートマップはクリエイティブ・コモンズ CC-BY-SA 2.0と呼ばれる ライセンスで提供されており，適切にクレジットを表示すれば，営利目的の使用も含め，複製・再配布・改変が認められています． 例えば，椙山女学園大学の地図をオープンストリートマップで表示してみます． 上記のGoogle Mapsと比較しても，遜色ないことが分かるでしょう．
-加えて，オープンストリートマップの最も大きな特徴は，オープンストリートマップのアカウント登録さえすれば， 誰しもが自由に地図を編集することができるという点です． つまり，オープンストリートマップは，オンライン地図のサービスであることに加え，無料地図の共同作成プロジェクトでもあるわけです． オープンストリートマップを編集する人のことをマッパーと呼び， 複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントをマッピングパーティと呼びます． 全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします． 日進市においては，平成29年12月9日に「ブラニッシン〜いまのにっしん，世界に発信！〜」という マッピングパーティが開催され，向も参加しました．
-今回は日進市のオープンデータとオープンストリートマップを組み合わせ， 独自のオンライン地図を作成する方法について学習していきましょう．
-GeoJSON  ここで，オープンデータの条件である「機械判読に適したデータ形式」について考えてみます． オンライン地図にオープンデータを表示するには，当然，コンピュータが読み取ることが出来る形式を用いる必要があります． これまでに，xlsx形式，csv形式を紹介しましたが，よりウェブに相性が良いデータ形式があります． それが，**JSON形式（.json）**です． JSONは，「じぇいそん」と読み，ブラウザで動作するプログラミング言語のJavaScriptで用いられるデータ形式です （JavaScript以外のプログラミング言語でも対応していることが多い）．
-下記のCSV形式のデータを例に考えてみましょう．
-町名,男,女,総数,世帯数赤池町,1693,1647,3340,1315浅田町,2593,2431,5024,2086上記のデータをJSON形式に変換すると下記になります． JSON形式では，データは**string（文字列）とvalue（値）の組で表現されます． 例えば，&ldquo;町名&quot;という文字列と，&ldquo;赤池町&quot;という値が組になっていることがわかります． また，[ ]**は配列を表しており，0番目の要素に赤池町のデータ，1番目の要素に浅田町のデータが格納されます． 要素は「,（カンマ）」で区切られますが，最後の要素には必要ありません（間違えやすいので要注意）．
-[ { &#34;町名&#34;: &#34;赤池町&#34;, &#34;男&#34;: 1693, &#34;女&#34;: 1647, &#34;総数&#34;: 3340, &#34;世帯数&#34;: 1315 }, { &#34;町名&#34;: &#34;浅田町&#34;, &#34;男&#34;: 2593, &#34;女&#34;: 2431, &#34;総数&#34;: 5042, &#34;世帯数&#34;: 2086 }	] このJSON形式を基本として，点，線，多角形などの空間データを表現するために用いられるのが， GeoJSON形式です． GeoJSONは，「じおじぇいそん」と読み， uMap，Leeflet， OpenLayersなどの様々な地図サービスで利用可能です．" />
+オンライン地図として最も有名なサービスはGoogleが提供しているGoogle Mapsでしょう． Google Mapsは，滑らかな地図の表示はもちろん，ストリートビュー，ジオコーディング，ルート検索などの機能も充実しています． ジオコーディングとは住所や地名などを緯度・経度に変換する技術です． 例えば，椙山女学園大学の地図をGoogle Mapで表示してみます． ウェブページにGoogle Mapsを埋め込むには，共有をクリックし， 地図を埋め込むのタブに表示されているソースコードをコピペするだけで完成です．
+Google Mapsはとても便利なのですが，利用規約が厳しいことが知られています． クレジット表示が必要なことに加え，非営利であっても 印刷物 での使用には大きな制限があります． 新聞，雑誌，レポートなどの目的では問題ありませんが，ガイドブックや印刷広告には使用することができません． これは，行政にとっては致命的であり，自治体を紹介する印刷広告を作成しようとしても，Google Mapsを掲載することができません． そこで，代わりに用いられるのがオープンストリートマップ(OpenStreetMap: OSM)です． オープストリートマップはクリエイティブ・コモンズ CC-BY-SA 2.0と呼ばれる ライセンスで提供されており，適切にクレジットを表示すれば，営利目的の使用も含め，複製・再配布・改変が認められています． 例えば，椙山女学園大学の地図をオープンストリートマップで表示してみます． 上記のGoogle Mapsと比較しても，遜色ないことが分かるでしょう．
+加えて，オープンストリートマップの最も大きな特徴は，オープンストリートマップのアカウント登録さえすれば， 誰しもが自由に地図を編集することができるという点です． つまり，オープンストリートマップは，オンライン地図のサービスであることに加え，無料地図の共同作成プロジェクトでもあるわけです． オープンストリートマップを編集する人のことを マッパー と呼び， 複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントを マッピングパーティ と呼びます． 全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします．
+今回は日進市の子育て支援施設のオープンデータとオープンストリートマップを組み合わせ， 独自のオンライン地図を作成する方法について学習していきましょう．
+オリジナル地図の作成  それでは，Google Colaboratoryを利用して，オープンストリートマップを利用したオンライン地図の作成に挑戦しましょう．
+ノートブックの作成 まずは，ノートブックを作成します． ノートブックの名前は chapter3.ipynb に設定します．
+
+オープンストリートマップを利用したオンライン地図を作成するためのライブラリにLeeflet.jsがあります． このLeeflet.jsをPythonで利用するための機能を提供するライブラリがfoliumです． ここでは，foliumをインストールします．
+!pip install folium foliumとpandasをインポートします．
+import folium import pandas as pd オープンストリートマップの表示 椙山女学園大学・星ヶ丘キャンパスを中心とした地図を表示しています． 星ヶ丘キャンパスの緯度・経度をlat，lonに代入します．" />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/0cc18d7ba4f7db56959e985acc851378.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
 
 
   
@@ -189,13 +193,12 @@ GeoJSON  ここで，オープンデータの条件である「機械判読に�
 <main>
   <div class="post">
     
-    <h1 class="post-title">オープンストリートマップを利用したオープンデータの可視化①・uMap</h1>
+    <h1 class="post-title">オープンストリートマップを利用したオープンデータの可視化①・Folium</h1>
 <div class="post-line"></div>
     
     
 
-    <p><a href="https://gyazo.com/0cc18d7ba4f7db56959e985acc851378"><img src="https://i.gyazo.com/0cc18d7ba4f7db56959e985acc851378.png" alt="https://gyazo.com/0cc18d7ba4f7db56959e985acc851378"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   オープンストリートマップとは
 </h1>
 
@@ -205,13 +208,13 @@ GeoJSON  ここで，オープンデータの条件である「機械判読に�
 オンライン地図を利用して，これらの位置情報を可視化することで，新たな気付きを得ることが可能です．</p>
 <p>オンライン地図として最も有名なサービスはGoogleが提供している<a href="https://www.google.co.jp/maps/">Google Maps</a>でしょう．
 Google Mapsは，滑らかな地図の表示はもちろん，ストリートビュー，ジオコーディング，ルート検索などの機能も充実しています．
-ここで，ジオコーディングとは住所や地名などを緯度・経度に変換する技術を指しています．
+ジオコーディングとは住所や地名などを緯度・経度に変換する技術です．
 例えば，椙山女学園大学の地図をGoogle Mapで表示してみます．
 ウェブページにGoogle Mapsを埋め込むには，<strong>共有</strong>をクリックし，
 <strong>地図を埋め込む</strong>のタブに表示されているソースコードをコピペするだけで完成です．</p>
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3261.8931131937625!2d136.98512531556443!3d35.159286366026095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600364495cbb50c3%3A0x10d8b5b9f62e6a31!2z5qSZ5bGx5aWz5a2m5ZyS5aSn5a2mIOaYn-OBjOS4mOOCreODo-ODs-ODkeOCuQ!5e0!3m2!1sja!2sjp!4v1519897606539" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 <p>Google Mapsはとても便利なのですが，<a href="https://www.google.co.jp/permissions/geoguidelines.html">利用規約</a>が厳しいことが知られています．
-クレジット表示が必要なことは当然ですが，非営利であっても<strong>印刷物</strong>での使用には大きな制限があります．
+クレジット表示が必要なことに加え，非営利であっても <strong>印刷物</strong> での使用には大きな制限があります．
 新聞，雑誌，レポートなどの目的では問題ありませんが，ガイドブックや印刷広告には使用することができません．
 これは，行政にとっては致命的であり，自治体を紹介する印刷広告を作成しようとしても，Google Mapsを掲載することができません．
 そこで，代わりに用いられるのが<a href="https://openstreetmap.jp/">オープンストリートマップ(OpenStreetMap: OSM)</a>です．
@@ -223,135 +226,116 @@ Google Mapsは，滑らかな地図の表示はもちろん，ストリートビ
 <p>加えて，オープンストリートマップの最も大きな特徴は，オープンストリートマップのアカウント登録さえすれば，
 誰しもが自由に地図を編集することができるという点です．
 つまり，オープンストリートマップは，オンライン地図のサービスであることに加え，無料地図の共同作成プロジェクトでもあるわけです．
-オープンストリートマップを編集する人のことを<strong>マッパー</strong>と呼び，
-複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントを<strong>マッピングパーティ</strong>と呼びます．
-全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします．
-日進市においては，平成29年12月9日に「ブラニッシン〜いまのにっしん，世界に発信！〜」という
-マッピングパーティが開催され，向も参加しました．</p>
-<p>今回は日進市のオープンデータとオープンストリートマップを組み合わせ，
+オープンストリートマップを編集する人のことを <strong>マッパー</strong> と呼び，
+複数のマッパーで街歩きをしながらオープンストリートマップを編集するイベントを <strong>マッピングパーティ</strong> と呼びます．
+全国各地でマッピングパーティは開催されていますので，興味があれば参加してみることをお勧めします．</p>
+<p>今回は日進市の子育て支援施設のオープンデータとオープンストリートマップを組み合わせ，
 独自のオンライン地図を作成する方法について学習していきましょう．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  GeoJSON
+  オリジナル地図の作成
 </h1>
 
-<p>ここで，オープンデータの条件である「機械判読に適したデータ形式」について考えてみます．
-オンライン地図にオープンデータを表示するには，当然，コンピュータが読み取ることが出来る形式を用いる必要があります．
-これまでに，xlsx形式，csv形式を紹介しましたが，よりウェブに相性が良いデータ形式があります．
-それが，**JSON形式（.json）**です．
-<a href="http://www.json.org/">JSON</a>は，「じぇいそん」と読み，ブラウザで動作するプログラミング言語のJavaScriptで用いられるデータ形式です
-（JavaScript以外のプログラミング言語でも対応していることが多い）．</p>
-<p>下記のCSV形式のデータを例に考えてみましょう．</p>
-<pre><code class="language-csv" data-lang="csv">町名,男,女,総数,世帯数
-赤池町,1693,1647,3340,1315
-浅田町,2593,2431,5024,2086
-</code></pre><p>上記のデータをJSON形式に変換すると下記になります．
-JSON形式では，データは**string（文字列）<strong>と</strong>value（値）<strong>の組で表現されます．
-例えば，&ldquo;町名&quot;という文字列と，&ldquo;赤池町&quot;という値が組になっていることがわかります．
-また，</strong>[ ]**は配列を表しており，0番目の要素に赤池町のデータ，1番目の要素に浅田町のデータが格納されます．
-要素は「,（カンマ）」で区切られますが，最後の要素には必要ありません（間違えやすいので要注意）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">[
-	{
-		<span style="color:#f92672">&#34;町名&#34;</span>: <span style="color:#e6db74">&#34;赤池町&#34;</span>,
-		<span style="color:#f92672">&#34;男&#34;</span>: <span style="color:#ae81ff">1693</span>,
-		<span style="color:#f92672">&#34;女&#34;</span>: <span style="color:#ae81ff">1647</span>,
-		<span style="color:#f92672">&#34;総数&#34;</span>: <span style="color:#ae81ff">3340</span>,
-		<span style="color:#f92672">&#34;世帯数&#34;</span>: <span style="color:#ae81ff">1315</span>
-	},
-	{
-		<span style="color:#f92672">&#34;町名&#34;</span>: <span style="color:#e6db74">&#34;浅田町&#34;</span>,
-		<span style="color:#f92672">&#34;男&#34;</span>: <span style="color:#ae81ff">2593</span>,
-		<span style="color:#f92672">&#34;女&#34;</span>: <span style="color:#ae81ff">2431</span>,
-		<span style="color:#f92672">&#34;総数&#34;</span>: <span style="color:#ae81ff">5042</span>,
-		<span style="color:#f92672">&#34;世帯数&#34;</span>: <span style="color:#ae81ff">2086</span>
-	}		
-]
-</code></pre></div><p>このJSON形式を基本として，点，線，多角形などの空間データを表現するために用いられるのが，
-<strong>GeoJSON</strong>形式です．
-<a href="http://geojson.org/geojson-spec.html">GeoJSON</a>は，「じおじぇいそん」と読み，
-<a href="http://umap.openstreetmap.fr/ja/">uMap</a>，<a href="http://leafletjs.com/">Leeflet</a>，
-<a href="http://openlayers.org/">OpenLayers</a>などの様々な地図サービスで利用可能です．</p>
-<p>下記のCSV形式のデータを例に考えてみましょう．
-緯度・経度の情報が含まれており，オンライン地図では<strong>点</strong>として扱われます．</p>
-<pre><code class="language-csv" data-lang="csv">名称,緯度,経度,説明
-休日急病診療所,35.132795,137.042009,日進市中央福祉センター内にある休日急病診療所です．
-西部福祉会館,35.12599221,137.0147748,乳幼児室，学習室があります．
-</code></pre><p>上記のデータをGeoJSON形式に変換すると下記になります．
-少し複雑に見えますが，JSON形式に従っていることを確認してください．
-ここでは，空間データの種類を表す<strong>type</strong>に**Point（点）**を設定しています．
-Pointの他にも，<strong>LineString（線）</strong>，<strong>Polygon（多角形）<strong>などを指定することもできます．
-また，座標は</strong>coordinates</strong>で指定していますが，経度・緯度の順番であることに注意してください．
-その他，名称，説明などの情報は，<strong>properties</strong>に記載します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-	<span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;FeatureCollection&#34;</span>,
-	<span style="color:#f92672">&#34;features&#34;</span>: [
-		{
-			<span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;Feature&#34;</span>,
-			<span style="color:#f92672">&#34;geometry&#34;</span>:
-				{
-					<span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;Point&#34;</span>,
-					<span style="color:#f92672">&#34;coordinates&#34;</span>: [<span style="color:#ae81ff">137.042009</span>,<span style="color:#ae81ff">35.132795</span>]
-				},
-			<span style="color:#f92672">&#34;properties&#34;</span>:
-				{
-					<span style="color:#f92672">&#34;名称&#34;</span>: <span style="color:#e6db74">&#34;休日急病診療所&#34;</span>,
-					<span style="color:#f92672">&#34;説明&#34;</span>: <span style="color:#e6db74">&#34;日進市中央福祉センター内にある休日急病診療所です．&#34;</span>
-				}
-		},
-		{
-			<span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;Feature&#34;</span>,
-			<span style="color:#f92672">&#34;geometry&#34;</span>:
-				{
-					<span style="color:#f92672">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;Point&#34;</span>,
-					<span style="color:#f92672">&#34;coordinates&#34;</span>: [<span style="color:#ae81ff">137.0147748</span>,<span style="color:#ae81ff">35.12599221</span>]
-				},
-			<span style="color:#f92672">&#34;properties&#34;</span>:
-				{
-					<span style="color:#f92672">&#34;名称&#34;</span>: <span style="color:#e6db74">&#34;西部福祉会館&#34;</span>,
-					<span style="color:#f92672">&#34;説明&#34;</span>: <span style="color:#e6db74">&#34;日進市中央福祉センター内にある休日急病診療所です．&#34;</span>
-				}
-		}
-	]
-}
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  uMap
-</h1>
+<p>それでは，<a href="https://colab.research.google.com/">Google Colaboratory</a>を利用して，オープンストリートマップを利用したオンライン地図の作成に挑戦しましょう．</p>
+<h2 id="ノートブックの作成">ノートブックの作成</h2>
+<p>まずは，ノートブックを作成します．
+ノートブックの名前は <strong>chapter3.ipynb</strong> に設定します．</p>
+<p><a href="https://gyazo.com/8b256d00b0a891ad32ab619a7841b648"><img src="https://i.gyazo.com/8b256d00b0a891ad32ab619a7841b648.png" alt="Image from Gyazo"></a></p>
+<p>オープンストリートマップを利用したオンライン地図を作成するためのライブラリに<a href="https://leafletjs.com/">Leeflet.js</a>があります．
+この<a href="https://leafletjs.com/">Leeflet.js</a>をPythonで利用するための機能を提供するライブラリが<a href="https://python-visualization.github.io/folium/">folium</a>です．
+ここでは，<a href="https://python-visualization.github.io/folium/">folium</a>をインストールします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install folium
+</code></pre></div><p><a href="https://python-visualization.github.io/folium/">folium</a>と<a href="https://pandas.pydata.org/">pandas</a>をインポートします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> folium
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><h3 id="オープンストリートマップの表示">オープンストリートマップの表示</h3>
+<p>椙山女学園大学・星ヶ丘キャンパスを中心とした地図を表示しています．
+星ヶ丘キャンパスの緯度・経度を<code>lat</code>，<code>lon</code>に代入します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 星ヶ丘キャンパスの緯度・経度</span>
+lat <span style="color:#f92672">=</span> <span style="color:#ae81ff">35.1594195</span> 
+lon <span style="color:#f92672">=</span> <span style="color:#ae81ff">136.9875942</span>
+</code></pre></div><p><code>folium.Map()</code>で地図を作成します．
+このとき，<code>location=[lat, lon]</code>で星ヶ丘キャンパスの緯度・経度を指定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[lat, lon])
+map
+</code></pre></div><p>星ヶ丘キャンパスを中心とした地図が生成されますが，
+地図のズーム（倍率）が低いため，名古屋市を中心とした地図であることしかわかりません．</p>
+<p><a href="https://gyazo.com/dc05883a2f9cc93edd7efc64a24c88ba"><img src="https://i.gyazo.com/dc05883a2f9cc93edd7efc64a24c88ba.png" alt="Image from Gyazo"></a></p>
+<p>そこで，地図のズーム（倍率）<code>zoom_start</code>を<code>16</code>に設定します．
+今度は星ヶ丘キャンパスが地図の中心にあることが確認できます．
+オープンストリートマップのズーム（倍率）は0〜20まで設定が可能です（参考:<a href="https://wiki.openstreetmap.org/wiki/Zoom_levels">Zoom levels</a>）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[lat, lon], zoom_start<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>)
+map
+</code></pre></div><p><a href="https://gyazo.com/ea481fa3560bda42ec917525d9a72c4a"><img src="https://i.gyazo.com/ea481fa3560bda42ec917525d9a72c4a.png" alt="Image from Gyazo"></a></p>
+<h2 id="データフレームpandas">データフレーム（pandas）</h2>
+<p><a href="https://pandas.pydata.org/">pandas</a>を利用して，
+CSV形式のオープンデータ（<a href="https://mukai-lab.info/classes/seminar_fundamental_areas/csv/kosodate.csv">kosodate.csv</a>）を読み込みます．
+日進市の子育て支援施設の一覧です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># kion.csv</span>
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://mukai-lab.info/classes/seminar_fundamental_areas/csv/kosodate.csv&#34;</span>
 
-<p>GeoJSON形式のデータをオープンストリートマップに重ねて表示することに挑戦してみましょう．
-今回は<a href="http://umap.openstreetmap.fr/ja/">uMap</a>という地図サービスを利用します．
-uMapはオープンストリートマップを加工して，ウェブページに埋め込むためのオリジナル地図を作成することができます．
-<a href="http://umap.openstreetmap.fr/ja/">uMap</a>のウェブサイトを開き，<strong>マップを作成</strong>をクリックしましょう．</p>
-<p><a href="https://gyazo.com/2379f6b09819cc69e17c37ec071b70db"><img src="https://i.gyazo.com/2379f6b09819cc69e17c37ec071b70db.png" alt="https://gyazo.com/2379f6b09819cc69e17c37ec071b70db"></a></p>
-<p>オープンストリートマップを利用した地図が表示されます．
-次に，画面右に並んでいるアイコンから<strong>データインポート</strong>をクリックします．
-ここで，上記のGeoJSON形式のデータを貼り付けください．
-また，インポートデータ形式には<strong>geojson</strong>を選択してください．
-最後に<strong>インポート</strong>をクリックします．</p>
-<p><a href="https://gyazo.com/b21099d764b26e3c24944f9c192a9292"><img src="https://i.gyazo.com/b21099d764b26e3c24944f9c192a9292.png" alt="https://gyazo.com/b21099d764b26e3c24944f9c192a9292"></a></p>
-<p>するとGeoJSONで読み込んだエリアの地図に遷移し，
-休日急病診療所と西部福祉会館のマーカーが表示されます．
-また，キーボードのシフトキーを押しながらマーカーをクリックすると，
-マーカーの編集モードを表示することができます．
-ここでは，マーカーの色，形状，シンボルに加え，
-ポップアップ表示したときの名称や概要を設定することができます．
-作成した地図を公開する場合には，<strong>サイトへのマップ埋め込みと共有</strong>をクリックし，
-表示されたソースコードを貼り付けるだけでウェブページに埋め込みが可能です．</p>
-<p>このとき，<strong>iframeエクスポートオプション</strong>で，
-「横幅」と「縦幅」を<strong>100%</strong>，
-「フルスクリーンのリンクを含める？」を<strong>OFF</strong>，また，
-「デフォルトのマップ表示から現在の表示に切り替えますか？」と
-「現在表示しているレイヤを保持」を<strong>ON</strong>に設定しておきましょう．</p>
-<p><a href="https://gyazo.com/3eb5d016c500c4919165b87fd68850ee"><img src="https://i.gyazo.com/3eb5d016c500c4919165b87fd68850ee.png" alt="https://gyazo.com/3eb5d016c500c4919165b87fd68850ee"></a></p>
-<!-- <iframe width="100%" height="500px" frameBorder="0" src="http://umap.openstreetmap.fr/ja/map/map_202304?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=undefined&captionBar=false&datalayers=505797#15/35.1301/137.0302"></iframe> -->
-<!-- <iframe width="100%" height="500px" frameborder="0" allowfullscreen src="https://umap.openstreetmap.fr/ja/map/map_333887?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=undefined&captionBar=false#13/35.1318/137.0457"></iframe> -->
-<iframe width="100%" height="300px" frameborder="0" allowfullscreen src="https://umap.openstreetmap.fr/ja/map/map_334386?scaleControl=false&miniMap=false&scrollWheelZoom=false&zoomControl=true&allowEdit=false&moreControl=true&searchControl=null&tilelayersControl=null&embedControl=null&datalayersControl=true&onLoadPanel=undefined&captionBar=false&datalayers=893103#13/35.1248/137.0381"></iframe>
-<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<span style="color:#75715e"># データフレームの生成（3桁区切りを指定）</span>
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(url)
+
+<span style="color:#75715e"># HTMLで表示(=display(df))</span>
+df
+</code></pre></div><p><a href="https://gyazo.com/1ebddf2c43952923dd974205c7151c20"><img src="https://i.gyazo.com/1ebddf2c43952923dd974205c7151c20.png" alt="Image from Gyazo"></a></p>
+<p>ここでは，<strong>名称</strong> ，<strong>緯度</strong> ，<strong>経度</strong> ，<strong>説明</strong> ，Webサイトの列を抽出します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;名称&#34;</span>, <span style="color:#e6db74">&#34;緯度&#34;</span>, <span style="color:#e6db74">&#34;経度&#34;</span>, <span style="color:#e6db74">&#34;説明&#34;</span>, <span style="color:#e6db74">&#34;Webサイト&#34;</span>]]
+df
+</code></pre></div><p><a href="https://gyazo.com/d0f1f53a3e0b324d2d79af15ae0c6572"><img src="https://i.gyazo.com/d0f1f53a3e0b324d2d79af15ae0c6572.png" alt="Image from Gyazo"></a></p>
+<h2 id="マーカーの設置">マーカーの設置</h2>
+<p>子育て支援施設をマーカーとして地図に設置します．
+地図の中心を，全ての子育て支援施設の緯度・経度の平均に設定します．
+<code>mean()</code>で平均を計算した結果から，最初の要素<code>values[0]</code>を取り出しています．
+中心の緯度は<code>35.1352</code>，経度は<code>137.0375</code>になりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">center_lat <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;緯度&#34;</span>]]<span style="color:#f92672">.</span>mean()<span style="color:#f92672">.</span>values[<span style="color:#ae81ff">0</span>]
+center_lon <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;経度&#34;</span>]]<span style="color:#f92672">.</span>mean()<span style="color:#f92672">.</span>values[<span style="color:#ae81ff">0</span>]
+
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;center_lat={center_lat} center_lon={center_lon}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">center_lat=35.13520385133334 center_lon=137.03754084
+</code></pre></div><p>上記で計算した緯度・経度を中心とした地図を再描画します．
+地図の中心に日進市役所が存在することが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[center_lat, center_lon], zoom_start<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>)
+map
+</code></pre></div><p><a href="https://gyazo.com/0340cc30d1e29f8dbfa07d48ab4b2dc0"><img src="https://i.gyazo.com/0340cc30d1e29f8dbfa07d48ab4b2dc0.png" alt="Image from Gyazo"></a></p>
+<p>マーカー<code>marker</code>を作成し，リスト<code>markers</code>に記録します．
+施設の名前は<code>name</code>，施設の緯度・経度は<code>lat</code>，<code>lon</code>，施設の説明は<code>text</code>，施設のURLは<code>url</code>に代入しています．
+ここで，<code>popup</code>はマーカーをクリックしたときに表示されるHTML要素であり，<code>tooltip</code>はマウスをマーカーにホバーしたときに表示される文字列です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">markers <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>iterrows():
+  name <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">0</span>]
+  lat <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">1</span>]
+  lon <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">2</span>]
+  text <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">3</span>]
+  url <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">4</span>]
+  popup <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;&lt;div style=&#39;width:300px&#39;&gt;&lt;b&gt;{name}&lt;/b&gt;&lt;br&gt;{text}&lt;br&gt;&lt;a href=&#39;{url}&#39;&gt;{url}&lt;/a&gt;&lt;/div&gt;&#34;</span>;
+  marker <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Marker([lat, lon], tooltip<span style="color:#f92672">=</span>name, popup<span style="color:#f92672">=</span>popup)
+  markers<span style="color:#f92672">.</span>append(marker)
+</code></pre></div><p>作成したマーカーの一覧を，<code>add_to()</code>で地図に追加し，地図を再描画します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[center_lat, center_lon], zoom_start<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>)
+
+<span style="color:#66d9ef">for</span> marker <span style="color:#f92672">in</span> markers:
+  marker<span style="color:#f92672">.</span>add_to(map)
+
+map
+</code></pre></div><p>地図にマーカーが表示されていることが確認できます．</p>
+<p><a href="https://gyazo.com/39d873a184c14d5d41f1802ef046fb4a"><img src="https://i.gyazo.com/39d873a184c14d5d41f1802ef046fb4a.png" alt="Image from Gyazo"></a></p>
+<p>マーカーをホバーすると<code>tooltip</code>，マーカーをクリックすると<code>popup</code>が表示されることが確認できます．</p>
+<p><a href="https://gyazo.com/831d95e20df705c5b7956b5285f1480a"><img src="https://i.gyazo.com/831d95e20df705c5b7956b5285f1480a.png" alt="Image from Gyazo"></a></p>
+<p>本日のノートブックは下記URLで確認できます．</p>
+<p><a href="https://colab.research.google.com/drive/1BIkCPDWBjwFwu_IkkRtTZ_D8ZAtPwNYp?usp=sharing"><i class="fas fa-external-link-square-alt"></i> chapter3.ipynb</a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
- -->
-<!-- 日進市の[7市町オープンデータ共通整備項目](http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/7shimachi_opendata.html)から任意のデータを選び， -->
-<!-- 2箇所以上の施設を表すGeoJSON形式のデータを作成しなさい． -->
-<!-- また，uMAPで作成したGeoJSON形式のデータをインポートし，マップ埋め込み用のソースコードを貼り付けた -->
-<!-- HTMLファイルを作成し，提出しなさい． -->
+
+<p>Google Colaboratoryで作成した <strong>chapter3.ipynb</strong> を保存し，共有用のリンクを提出しなさい．
+提出の際は必ず下記の設定を行うこと．</p>
+<ul>
+<li>ノートブックの変更内容を保存して固定</li>
+<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
+<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
+</ul>
 <h3>参考書籍</h3>
 
 
