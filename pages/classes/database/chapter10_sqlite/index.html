@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    SQL(4) 関係代数演算 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  <script src="./freetile/jquery.freetile.min.js"></script>  
+
+  
+  
+
+  <meta property="og:title" content="SQL(4) 関係代数演算" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/database/chapter10_sqlite/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/5381397a5a28294a9848d76331f0fdcc.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="テーブルのレストア  前回までに作成したテーブルを .restore でレストアしましょう． また，.tableで【学生リスト】，【学部リスト】，【テニス部】，【サッカー部】，【商品リスト】があることを確認しましょう．
+sqlite&gt; .restore db3.sqlite sqlite&gt; .table サッカー部 商品リスト 学部リスト テニス部 学生リスト    学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか    【学生リスト】
+   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="SQL(4) 関係代数演算" />
+
+
+
+  <meta name="twitter:description" content="テーブルのレストア  前回までに作成したテーブルを .restore でレストアしましょう． また，.tableで【学生リスト】，【学部リスト】，【テニス部】，【サッカー部】，【商品リスト】があることを確認しましょう．
+sqlite&gt; .restore db3.sqlite sqlite&gt; .table サッカー部 商品リスト 学部リスト テニス部 学生リスト    学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか    【学生リスト】
+   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/5381397a5a28294a9848d76331f0fdcc.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/tech/">Tech</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/projects/">Projects</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">SQL(4) 関係代数演算</h1>
+<div class="post-line"></div>
+    
+    
+
+    <p><a href="https://gyazo.com/5381397a5a28294a9848d76331f0fdcc"><img src="https://i.gyazo.com/5381397a5a28294a9848d76331f0fdcc.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  テーブルのレストア
+</h1>
+
+<p>前回までに作成したテーブルを <code>.restore</code> でレストアしましょう．
+また，<code>.table</code>で【学生リスト】，【学部リスト】，【テニス部】，【サッカー部】，【商品リスト】があることを確認しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; .restore db3.sqlite
+sqlite&gt; .table
+サッカー部  商品リスト  学部リスト
+テニス部     学生リスト
+</code></pre></div><table>
+<thead>
+<tr>
+<th><u>学籍番号</u></th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+<th>よみがな</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A001</td>
+<td>岩城隼人</td>
+<td>2</td>
+<td>工学部</td>
+<td>いわきはやと</td>
+</tr>
+<tr>
+<td>A002</td>
+<td>岩村優</td>
+<td>1</td>
+<td>工学部</td>
+<td>いわむらゆう</td>
+</tr>
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+<td>すぎえひろこ</td>
+</tr>
+<tr>
+<td>C004</td>
+<td>仙波あすか</td>
+<td>1</td>
+<td>国際関係学部</td>
+<td>せんばあすか</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【学生リスト】</strong></p>
+<table>
+<thead>
+<tr>
+<th><u>学部</u></th>
+<th>キャンパス</th>
+<th>教員数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工学部</td>
+<td>春日井</td>
+<td>30</td>
+</tr>
+<tr>
+<td>人文学部</td>
+<td>春日井</td>
+<td>20</td>
+</tr>
+<tr>
+<td>国際関係学部</td>
+<td>名古屋</td>
+<td>25</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【学部リスト】</strong></p>
+<table>
+<thead>
+<tr>
+<th><u>学籍番号</u></th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+<th>よみがな</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A002</td>
+<td>岩村優</td>
+<td>1</td>
+<td>工学部</td>
+<td>いわむらゆう</td>
+</tr>
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+<td>すぎえひろこ</td>
+</tr>
+<tr>
+<td>C004</td>
+<td>仙波あすか</td>
+<td>1</td>
+<td>国際関係学部</td>
+<td>せんばあすか</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【テニス部】</strong></p>
+<table>
+<thead>
+<tr>
+<th><u>学籍番号</u></th>
+<th>氏名</th>
+<th>学年</th>
+<th>学部</th>
+<th>よみがな</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A001</td>
+<td>岩城隼人</td>
+<td>2</td>
+<td>工学部</td>
+<td>いわきはやと</td>
+</tr>
+<tr>
+<td>B003</td>
+<td>杉江弘子</td>
+<td>3</td>
+<td>人文学部</td>
+<td>すぎえひろこ</td>
+</tr>
+<tr>
+<td>A005</td>
+<td>内田弘</td>
+<td>3</td>
+<td>工学部</td>
+<td>うちだひろし</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【サッカー部】</strong></p>
+<table>
+<thead>
+<tr>
+<th>商品ID</th>
+<th>商品名</th>
+<th>仕入れ値</th>
+<th>売値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C01</td>
+<td>テレビ</td>
+<td>50000</td>
+<td>65000</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>エアコン</td>
+<td>60000</td>
+<td>70000</td>
+</tr>
+<tr>
+<td>C03</td>
+<td>冷蔵庫</td>
+<td>80000</td>
+<td>55000</td>
+</tr>
+<tr>
+<td>C04</td>
+<td>電卓</td>
+<td>3000</td>
+<td>2000</td>
+</tr>
+<tr>
+<td>C05</td>
+<td>炊飯器</td>
+<td>20000</td>
+<td>25000</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【商品リスト】</strong></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  集合演算
+</h1>
+
+<p>リレーションに対する4つの集合演算がSQLで表現可能であることを確認していきましょう．</p>
+<ul>
+<li>和集合演算</li>
+<li>差集合演算</li>
+<li>共通集合演算</li>
+<li>直積演算</li>
+</ul>
+<p>まずは，<code>.header</code>でヘッダーを表示する設定にしておきます
+（加えて<code>.mode</code>を利用することで，様々な表示モードに変更できるという情報を頂きました！）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; .header on
+sqlite&gt; select * from 学生リスト;
+学籍番号|氏名|学年|学部|よみがな
+A001|岩城隼人|2|工学部|いわきはやと
+A002|岩村優|1|工学部|いわむらゆう
+B003|杉江弘子|3|人文学部|すぎえひろこ
+C004|仙波あすか|1|国際関係学部|せんばあすか
+</code></pre></div><h3 id="和集合演算">和集合演算</h3>
+<p>和集合演算が適用可能であるためにはリレーションが <strong>和両立</strong> である必要があります．
+ここでは，和両立の条件を満たしている【テニス部】と【サッカー部】を対象に考えていきます．</p>
+<p>和集合演算には<strong>UNION</strong>を用います．
+<strong>テーブル名1</strong>と<strong>テーブル名2</strong>は対象のテーブルの名前です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 和集合演算 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</code></pre></div><p>それでは，【テニス部】と【サッカー部】の和集合を求めてみましょう．
+ここで，注意して欲しいのは，
+いずれのリレーションにも共通の$(B003,杉江弘子,3,人文学部,すぎえひろこ)$です．
+和集合の結果には，該当のレコードは一つだけとなります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from テニス部 union select * from サッカー部;
+学籍番号|氏名|学年|学部|よみがな
+A001|岩城隼人|2|工学部|いわきはやと
+A002|岩村優|1|工学部|いわむらゆう
+A005|内田弘|3|工学部|うちだひろし
+B003|杉江弘子|3|人文学部|すぎえひろこ
+C004|仙波あすか|1|国際関係学部|せんばあすか
+</code></pre></div><h3 id="差集合演算">差集合演算</h3>
+<p>差集合演算には<strong>EXCEPT</strong>を用います．
+<strong>テーブル名1</strong>と<strong>テーブル名2</strong>は対象のテーブルの名前です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 差集合演算 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">EXCEPT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</code></pre></div><p>それでは，【テニス部】と【サッカー部】の差集合を求めてみましょう．
+【テニス部】から共通のレコードが取り除かれていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from テニス部 except select * from サッカー部;
+学籍番号|氏名|学年|学部|よみがな
+A002|岩村優|1|工学部|いわむらゆう
+C004|仙波あすか|1|国際関係学部|せんばあすか
+</code></pre></div><h3 id="共通集合演算">共通集合演算</h3>
+<p>共通集合演算には<strong>INTERSECT</strong>を用います．
+<strong>テーブル名1</strong>と<strong>テーブル名2</strong>は対象のテーブルの名前です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 共通集合演算 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">INTERSECT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</code></pre></div><p>それでは，【テニス部】と【サッカー部】の共通集合を求めてみましょう．
+共通のレコードが結果に含まれていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from テニス部 intersect select * from サッカー部;
+学籍番号|氏名|学年|学部|よみがな
+B003|杉江弘子|3|人文学部|すぎえひろこ
+</code></pre></div><h3 id="直積演算">直積演算</h3>
+<p>直積演算には<strong>CROSS JOIN</strong>を用います．
+<strong>テーブル名1</strong>と<strong>テーブル名2</strong>は対象のテーブルの名前です．
+これまでとは異なりCROSS JOINの後にSELECT文は不要です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 直積演算 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">CROSS</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</code></pre></div><p>それでは，【テニス部】と【サッカー部】の直積を求めてみましょう．
+全ての組み合わせでレコードが構成されていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from テニス部 cross join サッカー部;
+学籍番号|氏名|学年|学部|よみがな|学籍番号|氏名|学年|学部|よみがな
+A002|岩村優|1|工学部|いわむらゆう|A001|岩城隼人|2|工学部|いわきはやと
+A002|岩村優|1|工学部|いわむらゆう|B003|杉江弘子|3|人文学部|すぎえひろこ
+A002|岩村優|1|工学部|いわむらゆう|A005|内田弘|3|工学部|うちだひろし
+B003|杉江弘子|3|人文学部|すぎえひろこ|A001|岩城隼人|2|工学部|いわきはやと
+B003|杉江弘子|3|人文学部|すぎえひろこ|B003|杉江弘子|3|人文学部|すぎえひろこ
+B003|杉江弘子|3|人文学部|すぎえひろこ|A005|内田弘|3|工学部|うちだひろし
+C004|仙波あすか|1|国際関係学部|せんばあすか|A001|岩城隼人|2|工学部|いわきはやと
+C004|仙波あすか|1|国際関係学部|せんばあすか|B003|杉江弘子|3|人文学部|すぎえひろこ
+C004|仙波あすか|1|国際関係学部|せんばあすか|A005|内田弘|3|工学部|うちだひろし
+</code></pre></div>
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題1
+  </h3>
+
+  <p>
+    
+下記の【八百屋】と【果物屋】を新規に作成しなさい．
+また，和集合，差集合，共通集合，直積集合を求め，その出力結果を提出しなさい．
+
+<table>
+<TR><TH><u>商品番号</u></TH>
+<TH>商品名</TH>
+<TH>価格</TH>
+</TR>
+<TR><TD>G1</TD>
+<TD>ニンジン</TD>
+<TD>100</TD>
+</TR>
+<TR><TD>G2</TD>
+<TD>トマト</TD>
+<TD>200</TD>
+</TR>
+<TR><TD>G3</TD>
+<TD>スイカ</TD>
+<TD>500</TD>
+</TR>
+</table>
+<b>【八百屋】</b>
+
+<table>
+<TR><TH><u>商品番号</u></TH>
+<TH>商品名</TH>
+<TH>価格</TH>
+</TR>
+<TR><TD>G4</TD>
+<TD>イチゴ</TD>
+<TD>300</TD>
+</TR>
+<TR><TD>G5</TD>
+<TD>ブドウ</TD>
+<TD>200</TD>
+</TR>
+<TR><TD>G3</TD>
+<TD>スイカ</TD>
+<TD>500</TD>
+</TR>
+</table>
+<b>【果物屋】</b>
+
+
+  </p>
+  
+</div>
+
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  関係代数演算
+</h1>
+
+<p>リレーションに対する3つの関係代数演算（リレーショナル代数演算）が
+SQLで表現可能であることを確認していきましょう（商演算は割愛）
+．</p>
+<ul>
+<li>射影演算</li>
+<li>選択演算</li>
+<li>結合演算</li>
+</ul>
+<h3 id="射影演算">射影演算</h3>
+<p>射影演算は <strong>SELECT文</strong> を用いるだけです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 射影演算 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">属性名</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span>;
+</code></pre></div><p>それでは，【学生リスト】を氏名とよみがなで射影してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select 氏名,よみがな from 学生リスト;
+氏名|よみがな
+岩城隼人|いわきはやと
+岩村優|いわむらゆう
+杉江弘子|すぎえひろこ
+仙波あすか|せんばあすか
+</code></pre></div><h3 id="選択演算">選択演算</h3>
+<p>選択演算は <strong>SELECT文</strong> と <strong>WHERE句</strong> を組み合わせるだけです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 選択演算 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">属性名</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">条件式</span>;
+</code></pre></div><p>それでは，【学生リスト】から工学部のレコードを選択しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from 学生リスト where 学部=&#34;工学部&#34;;
+学籍番号|氏名|学年|学部|よみがな
+A001|岩城隼人|2|工学部|いわきはやと
+A002|岩村優|1|工学部|いわむらゆう
+</code></pre></div><h3 id="結合演算">結合演算</h3>
+<p>結合演算は，条件を指定して結合する方法（<strong>内部結合</strong>と<strong>外部結合</strong>）と，
+一致するドメインを条件として結合する方法（<strong>自然結合</strong>）があります．</p>
+<p>条件を指定して結合（内部結合）するには <strong>INNER JOIN</strong> を用います．
+<strong>テーブル名1</strong>と<strong>テーブル名2</strong>は対象のテーブルの名前です．
+<strong>ON</strong>の後に，結合の条件となる各テーブルの属性を指定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 内部結合 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">ON</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span>.<span style="color:#960050;background-color:#1e0010">属性名</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>.<span style="color:#960050;background-color:#1e0010">属性名</span><span style="color:#ae81ff">2</span>;
+</code></pre></div><p>それでは，【学生リスト】と【学部リスト】を「学部」を条件に結合してみましょう．
+学部の属性値が一致するレコードが結合されていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from 学生リスト inner join 学部リスト on 学生リスト.学部 = 学部リスト.学部;
+学籍番号|氏名|学年|学部|よみがな|学部|キャンパス|教員数
+A001|岩城隼人|2|工学部|いわきはやと|工学部|春日井|30
+A002|岩村優|1|工学部|いわむらゆう|工学部|春日井|30
+B003|杉江弘子|3|人文学部|すぎえひろこ|人文学部|春日井|20
+C004|仙波あすか|1|国際関係学部|せんばあすか|国際関係学部|名古屋|25
+</code></pre></div><p>一致するドメインを条件として結合(自然結合)するには <strong>NATURAL INNER JOIN</strong> を用います．
+上述の方法とは異なり，具体的に条件となる属性は指定しません．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 自然結合 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">NATURAL</span> <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</code></pre></div><p>それでは，【学生リスト】と【学部リスト】を自然結合してみましょう．
+自動的に「学部」を条件として結合されていることがわかります．
+また，冗長な属性は取り除かれています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; select * from 学生リスト natural inner join 学部リスト;
+学籍番号|氏名|学年|学部|よみがな|キャンパス|教員数
+A001|岩城隼人|2|工学部|いわきはやと|春日井|30
+A002|岩村優|1|工学部|いわむらゆう|春日井|30
+B003|杉江弘子|3|人文学部|すぎえひろこ|春日井|20
+C004|仙波あすか|1|国際関係学部|せんばあすか|名古屋|25
+</code></pre></div>
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    課題2
+  </h3>
+
+  <p>
+    
+【学生リスト】に新たに下記のレコードを追加しなさい．
+
+<table>
+<TR><TH><u>学籍番号</u></TH>
+<TH>氏名</TH>
+<TH>学年</TH>
+<TH>学部</TH>
+<TH>よみがな</TH>
+</TR>
+<TR><TD>D006</TD>
+<TD>山下隆</TD>
+<TD>4</TD>
+<TD>経営情報学部</TD>
+<TD>やましたたかし</TD>
+</TR>
+</table>
+
+その後で，学部リストとの内部結合(INNER JOIN)，左外部結合(LEFT OUTER JOIN)を行い，
+その差を考察しなさい．
+
+  </p>
+  
+</div>
+
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  テーブルのバックアップ
+</h1>
+
+<p>作成したテーブルをファイルにバックアップするには，<code>.backup</code>を用います．
+バックアップするファイル名は <strong>db4.sqlite</strong> としましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sqlite&gt; .backup db4.sqlite
+</code></pre></div><h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4781913903&linkId=0a2c1ffad427bdeee3fd703f5392bac2&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479815654X&linkId=cfb458fce9d85899424b079e9b3743e8&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479813516X&linkId=38aea2a346205302f4138786b73ddd9f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274066312&linkId=236165e8339c6e743d26f664f7eb791f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/database/chapter10_sqlite/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
