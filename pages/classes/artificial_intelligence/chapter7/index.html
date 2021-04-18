@@ -339,8 +339,10 @@ A*アルゴリズムの効率は用いるヒューリスティックスに影響
 
 <p>最初にライブラリをインポートします．
 <strong>探索問題の型</strong> を表す<code>SearchPrblem</code>と
-<strong>A*アルゴリズム</strong> を表す<code>astar</code> をインポートします．</p>
+<strong>A*アルゴリズム</strong> を表す<code>astar</code> をインポートします．
+数値計算ライブラリの<code>numpy</code>もインポートしておきます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, astar
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 </code></pre></div><p>最初に各状態の座標を定義します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">S1 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S1&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
 S2 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S2&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>)
@@ -494,7 +496,30 @@ $S1, S7, S8, S12, S13, S9, S10, S17$であり，
   課題
 </h1>
 
-<p>Google Colaboratoryで作成した <strong>AI-7.ipynb</strong> を保存し， 
+<p>8パズルを <strong>A*アルゴリズム</strong> と <strong>幅優先探索</strong>  で解き，探索数の差を調べなさい．
+初期状態と目的状態は下記に設定すること．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> (
+    <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>,
+    <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">4</span>,
+    <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">2</span>
+)
+
+GOAL <span style="color:#f92672">=</span> (
+    <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>,
+    <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>,
+    <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>
+)
+</code></pre></div><p>また，状態間のコストとヒューリスティックスは下記のように定義する．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heuristic</span>(self, state):
+
+	s <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(state)
+	g <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(GOAL)
+    h <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>sum(s <span style="color:#f92672">==</span> g)
+
+    <span style="color:#66d9ef">return</span> h
+</code></pre></div><p>Google Colaboratoryで作成した <strong>AI-7.ipynb</strong> を保存し， 
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出しなさい．
 提出の前に必ず下記の設定を行うこと．</p>
 <ul>
