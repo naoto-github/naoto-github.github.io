@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    強化学習・タクシーゲーム | mLAB
+    強化学習・フローズンレイク | mLAB
   </title>
 
   
@@ -64,7 +64,7 @@
   
   
 
-  <meta property="og:title" content="強化学習・タクシーゲーム" />
+  <meta property="og:title" content="強化学習・フローズンレイク" />
 
 
 
@@ -76,7 +76,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/72fa98336ec675d6370409ed92649992.png" />
+  <meta property="og:image" content="https://i.gyazo.com/b55214411b1c141e7adcf916743f172f.png" />
 
 
 
@@ -84,12 +84,9 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします． ノートブックの作成方法は第1回の資料を参照してください．
-最初にOpenAI Gym をインストールします． セルで下記のコマンドを実行してください．
-&gt; !pip install gym また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．
-import gym import numpy as np import random import time from google.colab import output from tqdm.notebook import tqdm タクシーゲーム（Taxi）  タクシーゲーム（Taxi）は，乗車地まで移動し，お客を乗せて（Pickup），降車地まで移動し，お客を降ろす（Drop off）ことを目的としたゲームです．
-環境は下記のように$5\times5$で表されます． R(Red) ，G(Green) ，Y(Yellow) ，B(Blue) は， お客の乗車地，または，降車地です． また，| は壁であり，タクシーが通過することはできません．
-&#43;---------&#43; |R: | : :G| | : | : : | | : : : : | | | : | : | |Y| : |B: | &#43;---------&#43; タクシーが観測できる情報は，タクシーの位置座標taxi_row，taxi_col，お客の乗車位置（状態）pass_loc，お客の降車位置dest_idxです．" />
+  <meta property="og:description" content="Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&rsquo;, a&rsquo;)$は，状態$s$から遷移した先の状態$s&#39;$において，行動$a&#39;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
+$$ Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&rsquo; \in A(s&rsquo;)} Q(s&rsquo;, a&rsquo;)) $$
+   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-13 とします． ノートブックの作成方法は第1回の資料を参照してください．" />
 
 
 
@@ -100,20 +97,17 @@ import gym import numpy as np import random import time from google.colab import
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="強化学習・タクシーゲーム" />
+  <meta name="twitter:title" content="強化学習・フローズンレイク" />
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-3 とします． ノートブックの作成方法は第1回の資料を参照してください．
-最初にOpenAI Gym をインストールします． セルで下記のコマンドを実行してください．
-&gt; !pip install gym また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．
-import gym import numpy as np import random import time from google.colab import output from tqdm.notebook import tqdm タクシーゲーム（Taxi）  タクシーゲーム（Taxi）は，乗車地まで移動し，お客を乗せて（Pickup），降車地まで移動し，お客を降ろす（Drop off）ことを目的としたゲームです．
-環境は下記のように$5\times5$で表されます． R(Red) ，G(Green) ，Y(Yellow) ，B(Blue) は， お客の乗車地，または，降車地です． また，| は壁であり，タクシーが通過することはできません．
-&#43;---------&#43; |R: | : :G| | : | : : | | : : : : | | | : | : | |Y| : |B: | &#43;---------&#43; タクシーが観測できる情報は，タクシーの位置座標taxi_row，taxi_col，お客の乗車位置（状態）pass_loc，お客の降車位置dest_idxです．" />
+  <meta name="twitter:description" content="Q学習とは  Q学習 は状態$S$と行動$a$の組み合わせに対する 価値$Q(s,a)$ を学習するためのアルゴリズムです． 下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s&rsquo;, a&rsquo;)$は，状態$s$から遷移した先の状態$s&#39;$において，行動$a&#39;$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
+$$ Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) &#43; \alpha(r &#43; \gamma \max_{a&rsquo; \in A(s&rsquo;)} Q(s&rsquo;, a&rsquo;)) $$
+   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-13 とします． ノートブックの作成方法は第1回の資料を参照してください．" />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/72fa98336ec675d6370409ed92649992.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/b55214411b1c141e7adcf916743f172f.png" />
 
 
   
@@ -183,18 +177,70 @@ import gym import numpy as np import random import time from google.colab import
 <main>
   <div class="post">
     
-    <h1 class="post-title">強化学習・タクシーゲーム</h1>
+    <h1 class="post-title">強化学習・フローズンレイク</h1>
 <div class="post-line"></div>
     
     
 
-    <p><a href="https://gyazo.com/72fa98336ec675d6370409ed92649992"><img src="https://i.gyazo.com/72fa98336ec675d6370409ed92649992.png" alt="Image from Gyazo"></a></p>
+    <p><a href="https://gyazo.com/b55214411b1c141e7adcf916743f172f"><img src="https://i.gyazo.com/b55214411b1c141e7adcf916743f172f.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Q学習とは
+</h1>
+
+<p><strong>Q学習</strong> は状態$S$と行動$a$の組み合わせに対する <strong>価値$Q(s,a)$</strong> を学習するためのアルゴリズムです．
+下記は，状態$s$で行動$a$を選択し，報酬$r$を獲得したときの更新式です．
+また，$Q(s&rsquo;, a&rsquo;)$は，状態$s$から遷移した先の状態$s'$において，行動$a'$を選択したときの価値を表しています．
+ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり，
+$0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します．
+学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）．
+また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．</p>
+<p>$$
+Q&rsquo;(s,a) = (1 - \alpha)Q(s,a) + \alpha(r + \gamma \max_{a&rsquo; \in A(s&rsquo;)} Q(s&rsquo;, a&rsquo;))
+$$</p>
+<table>
+<thead>
+<tr>
+<th>パラメータ</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$s$</td>
+<td>状態</td>
+</tr>
+<tr>
+<td>$a$</td>
+<td>行動</td>
+</tr>
+<tr>
+<td>$Q(s,a)$</td>
+<td>状態$s$で行動$a$を選択する価値</td>
+</tr>
+<tr>
+<td>$r$</td>
+<td>報酬</td>
+</tr>
+<tr>
+<td>$A(s)$</td>
+<td>状態$s$で選択可能な行動の集合</td>
+</tr>
+<tr>
+<td>$\alpha$</td>
+<td>学習率</td>
+</tr>
+<tr>
+<td>$\gamma$</td>
+<td>割引率</td>
+</tr>
+</tbody>
+</table>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ノートブックの作成
 </h1>
 
-<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
-ノートブックのタイトルは <strong>AI-3</strong> とします．
+<p><strong>Google Colaboratory</strong> を起動し，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>AI-13</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
 <p>最初に<strong>OpenAI Gym</strong> をインストールします．
 セルで下記のコマンドを実行してください．</p>
@@ -205,189 +251,52 @@ import gym import numpy as np import random import time from google.colab import
 <span style="color:#f92672">import</span> random
 <span style="color:#f92672">import</span> time
 <span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> output
-<span style="color:#f92672">from</span> tqdm.notebook <span style="color:#f92672">import</span> tqdm
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  タクシーゲーム（Taxi）
+  フローズンレイク（FrozenLake）
 </h1>
 
-<p><a href="https://gym.openai.com/envs/Taxi-v3/">タクシーゲーム（Taxi）</a>は，乗車地まで移動し，お客を乗せて（Pickup），降車地まで移動し，お客を降ろす（Drop off）ことを目的としたゲームです．</p>
-<p>環境は下記のように$5\times5$で表されます．
-<strong>R(Red)</strong> ，<strong>G(Green)</strong> ，<strong>Y(Yellow)</strong> ，<strong>B(Blue)</strong> は，
-お客の乗車地，または，降車地です．
-また，<strong>|</strong> は壁であり，タクシーが通過することはできません．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">+---------+
-|R: | : :G|
-| : | : : |
-| : : : : |
-| | : | : |
-|Y| : |B: |
-+---------+
-</code></pre></div><p>タクシーが観測できる情報は，タクシーの位置座標<code>taxi_row</code>，<code>taxi_col</code>，お客の乗車位置（状態）<code>pass_loc</code>，お客の降車位置<code>dest_idx</code>です．</p>
-<p>タクシーの位置座標は，行列の番号で表され，$5\times5=25$パターンがあります．
-お客の乗車位置（状態）は下記の$5$パターンがあります．
-<strong>Taxi(4)</strong> は，お客がタクシーに乗車している状態を表します．</p>
-<ul>
-<li>Red(0)</li>
-<li>Green(1)</li>
-<li>Yellow(2)</li>
-<li>Blue(3)</li>
-<li>Taxi(4)</li>
-</ul>
-<p>お客の降車位置は下記の$4$パターンがあります．</p>
-<ul>
-<li>Red(0)</li>
-<li>Green(1)</li>
-<li>Yellow(2)</li>
-<li>Blue(3)</li>
-</ul>
-<p>よって，タクシーゲームにおける状態の組み合わせは$25 \times 5 \times 4 = 500$パターンです．</p>
-<p>また，タクシーは下記のいずれかの行動をとることが出来ます．</p>
-<ul>
-<li>South(0): 南に移動</li>
-<li>North(1): 北に移動</li>
-<li>East(2): 東に移動</li>
-<li>West(3): 西に移動</li>
-<li>Pickup(4): 乗車</li>
-<li>Drop-off(5): 降車</li>
-</ul>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  実装
-</h1>
-
+<p><a href="https://gym.openai.com/envs/FrozenLake-v0/">フローズンレイク（FrozenLake）</a>をQ学習を利用して解いてみましょう．</p>
 <h2 id="環境の初期化">環境の初期化</h2>
-<p>最初に対象とする環境を作成します．
-ここでは，タクシーゲーム（Taxi-v3）を指定します．
-このゲームの <strong>行動</strong> は6種類の離散値，
-また，<strong>状態空間</strong> は500種類の離散値であることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;Taxi-v3&#39;</span>) <span style="color:#75715e"># 環境の初期化</span>
-<span style="color:#66d9ef">print</span>(env<span style="color:#f92672">.</span>action_space)
-<span style="color:#66d9ef">print</span>(env<span style="color:#f92672">.</span>observation_space)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Discrete(6)
-Discrete(500)
-</code></pre></div><p>ここで，実行結果の理解を簡単にするため，
-下記のように辞書<code>PASSENGER</code>，<code>DESTINATIONS</code>，<code>ACTIONS</code>を定義しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">PASSENGER <span style="color:#f92672">=</span> {
-    <span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#34;Red&#34;</span>,
-    <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;Green&#34;</span>,
-    <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;Yellow&#34;</span>,
-    <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;Blue&#34;</span>,
-    <span style="color:#ae81ff">4</span>: <span style="color:#e6db74">&#34;Taxi&#34;</span>
+<p>前回と同様に対象とする環境を作成します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;FrozenLake-v0&#39;</span>, map_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;4x4&#34;</span>, is_slippery<span style="color:#f92672">=</span>False)
+</code></pre></div><p>また，実行結果の理解を簡単にするために，辞書<code>ACTION</code>，関数<code>toString()</code>も定義します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ACTION <span style="color:#f92672">=</span> {
+  <span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#34;LEFT&#34;</span>,
+  <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;DOWN&#34;</span>,
+  <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;RIGHT&#34;</span>,
+  <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;UP&#34;</span>
 }
 
-DESTINATIONS <span style="color:#f92672">=</span> {
-    <span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#34;Red&#34;</span>,
-    <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;Green&#34;</span>,
-    <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;Yellow&#34;</span>,
-    <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;Blue&#34;</span>
-}
-
-ACTIONS <span style="color:#f92672">=</span> {
-    <span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#34;South&#34;</span>,
-    <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;North&#34;</span>,
-    <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;East&#34;</span>,
-    <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;West&#34;</span>,
-    <span style="color:#ae81ff">4</span>: <span style="color:#e6db74">&#34;Pickup&#34;</span>,
-    <span style="color:#ae81ff">5</span>: <span style="color:#e6db74">&#34;Drop-off&#34;</span>
-}
-</code></pre></div><h2 id="プレイヤーの行動">プレイヤーの行動</h2>
-<p>環境を初期化して，<code>env.render()</code>でタクシーの環境を文字列で可視化します．
-ここで，観測された状態<code>state</code>は，<code>env.decode()</code>でタクシーの位置座標<code>taxi_row</code>，<code>taxi_col</code>，お客の乗車位置（状態）<code>pass_loc</code>，お客の降車位置<code>dest_idx</code>に変換します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-env<span style="color:#f92672">.</span>render()
-
-taxi_row, taxi_col, pass_loc, dest_idx <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>decode(state)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;taxi_row={taxi_row} taxi_col={taxi_col} pass_loc={PASSENGER[pass_loc]} dest_idex={DESTINATIONS[dest_idx]}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">+---------+
-|R: | : :G|
-| : | : : |
-| : : : : |
-| | : | : |
-|Y| : |B: |
-+---------+
-
-taxi_row=3 taxi_col=0 pass_loc=Yellow dest_idex=Red
-</code></pre></div><p>次に，<code>step()</code>を利用して，行動を選択します．
-ここでは，タクシーを南に移動させてみます．
-<code>step()</code>の引数に「南に移動する」を表す <strong>0(=SOUTH)</strong> を指定します．
-この行動の結果は下記の情報で表されます．</p>
-<ul>
-<li>状態<code>taxi_row</code>, <code>taxi_col</code>, <code>pass_loc</code>, <code>dest_idex</code></li>
-<li>報酬<code>reward</code></li>
-<li>終了判定<code>done</code></li>
-<li>その他の情報<code>info</code>（ここでは利用しない）</li>
-</ul>
-<p>タクシーは南に移動したため，<code>taxi_row</code>が<code>3</code>から<code>4</code>に変化していることがわかります．報酬はお客を正しく乗車，降車させたときに<code>20</code>，異なる場所で乗車，降車したときは<code>-10</code>，それ以外は<code>-1</code>に設定されています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">action <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># 南に移動</span>
-next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-taxi_row, taxi_col, pass_loc, dest_idx <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>decode(next_state)
-env<span style="color:#f92672">.</span>render()
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;action={ACTIONS[action]}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;taxi_row={taxi_row} taxi_col={taxi_col} pass_loc={PASSENGER[pass_loc]} dest_idex={DESTINATIONS[dest_idx]}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">+---------+
-|R: | : :G|
-| : | : : |
-| : : : : |
-| | : | : |
-|Y| : |B: |
-+---------+
-  (South)
-action=South
-taxi_row=4 taxi_col=0 pass_loc=Yellow dest_idex=Red
-reward=-1
-done=False
-</code></pre></div><h2 id="ランダムにタクシーを移動">ランダムにタクシーを移動</h2>
-<p>ランダムにタクシーを移動させてみます．
-<code>random.choice()</code>は引数で与えられたリストからランダムに一つを選びます．
-ここでは，<code>[0, 1, 2, 3, 4, 5]</code>を引数とするため，上下左右と乗車・降車から一つが選択されます．
-この結果，報酬は<code>-1</code>，終了状態は<code>False</code>であることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-  action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>])
-  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-  taxi_row, taxi_col, pass_loc, dest_idx <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>decode(next_state)
-  output<span style="color:#f92672">.</span>clear()
-  env<span style="color:#f92672">.</span>render()
-  time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
-
-  <span style="color:#66d9ef">if</span> done:
-    <span style="color:#66d9ef">break</span>
-
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;taxi_row={taxi_row} taxi_col={taxi_col} pass_loc={PASSENGER[pass_loc]} dest_idex={DESTINATIONS[dest_idx]}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">+---------+
-|R: | : :G|
-| : | : : |
-| : : : : |
-| | : | : |
-|Y| : |B: |
-+---------+
-  (South)
-taxi_row=4 taxi_col=2 pass_loc=Green dest_idex=Blue
-reward=-1
-done=False
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Q学習
-</h1>
-
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">toString</span>(histories):
+  moves <span style="color:#f92672">=</span> []
+  <span style="color:#66d9ef">for</span> observation, action <span style="color:#f92672">in</span> histories:
+    moves<span style="color:#f92672">.</span>append((observation, ACTION[action]))
+  <span style="color:#66d9ef">return</span> moves
+</code></pre></div><h2 id="q学習">Q学習</h2>
 <h3 id="qテーブル">Qテーブル</h3>
 <p>価値$Q(s,a)$を記録するための辞書を作成します．
-$s$は，<code>taxi_row</code>，<code>taxi_col</code>，<code>pass_loc</code>，<code>dest_idx</code>のタプルで表現され．500パターンが存在します．
-$a$は$0,1,2,3,4,5$の6パターンが存在します．
-よって，$500 \times 6 = 3000$パターンの$Q$を記録する必要があります．
+$s$は$0,1,\cdots,15$の16パターン，
+$a$は$0,1,2,3$の4パターンが存在するため，
+$16\times4=64$パターンの$Q$を記録する必要があります．
 全ての$Q$は<code>0.01</code>で初期化しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">qtable <span style="color:#f92672">=</span> {}
-
-<span style="color:#66d9ef">for</span> taxi_row <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
-  <span style="color:#66d9ef">for</span> taxi_col <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
-    <span style="color:#66d9ef">for</span> pass_loc <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
-      <span style="color:#66d9ef">for</span> dest_idx <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>):
-        <span style="color:#75715e">#print(f&#34;{taxi_row} {taxi_col} {pass_loc} {dest_idx}&#34;)</span>
-        state <span style="color:#f92672">=</span> (taxi_row, taxi_col, pass_loc, dest_idx)
-        qtable[state] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">qtable <span style="color:#f92672">=</span> {
+    <span style="color:#ae81ff">0</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">1</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">2</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">3</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">4</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">5</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">6</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">7</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">8</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">9</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">10</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">11</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">12</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">13</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">14</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>],
+    <span style="color:#ae81ff">15</span>: [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>]
+}
 </code></pre></div><p>$Q$を設定するための関数<code>setQ()</code>と，
 $Q$を取得するための関数<code>getQ()</code>を定義しておきます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setQ</span>(state, action, value):
@@ -403,7 +312,7 @@ $Q$を取得するための関数<code>getQ()</code>を定義しておきます�
 gamma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span> <span style="color:#75715e"># 割引率</span>
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateQ</span>(state, action, next_state, reward):
-  max_value <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max([getQ(next_state, <span style="color:#ae81ff">0</span>), getQ(next_state, <span style="color:#ae81ff">1</span>), getQ(next_state, <span style="color:#ae81ff">2</span>), getQ(next_state, <span style="color:#ae81ff">3</span>), getQ(next_state, <span style="color:#ae81ff">4</span>), getQ(next_state, <span style="color:#ae81ff">5</span>)])
+  max_value <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max([getQ(next_state, <span style="color:#ae81ff">0</span>), getQ(next_state, <span style="color:#ae81ff">1</span>), getQ(next_state, <span style="color:#ae81ff">2</span>), getQ(next_state, <span style="color:#ae81ff">3</span>)])
   value <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> getQ(state, action) <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (reward <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> max_value)
   setQ(state, action, value)
 </code></pre></div><h3 id="行動戦略">行動戦略</h3>
@@ -413,41 +322,44 @@ $\epsilon$-グリーディ戦略では，確率$\epsilon$でランダムに行�
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">greedyAction</span>(state, epsilon):    
 
     <span style="color:#66d9ef">if</span> epsilon <span style="color:#f92672">&gt;</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand():
-        action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>])
+        action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
     <span style="color:#66d9ef">else</span>:
-        action <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax([getQ(state, <span style="color:#ae81ff">0</span>), getQ(state, <span style="color:#ae81ff">1</span>), getQ(state, <span style="color:#ae81ff">2</span>), getQ(state, <span style="color:#ae81ff">3</span>), getQ(state, <span style="color:#ae81ff">4</span>), getQ(state, <span style="color:#ae81ff">5</span>)])
+        action <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax([getQ(state, <span style="color:#ae81ff">0</span>), getQ(state, <span style="color:#ae81ff">1</span>), getQ(state, <span style="color:#ae81ff">2</span>), getQ(state, <span style="color:#ae81ff">3</span>)])
 
     <span style="color:#66d9ef">return</span> action
 </code></pre></div><h3 id="学習プロセス">学習プロセス</h3>
 <p>プレイヤーの行動を繰り返すことで$Q$を学習します．
 プレイヤーは終了判定が<code>True</code>になるまで，最大100回まで行動を繰り返します．
-このプレイヤーの行動を10000回繰り返します．
-<code>env.decode()</code>はリストを返すため，<code>tuple()</code>でタプルに変換していることに注意してください．
-$\epsilon$は<code>0.2</code>に設定しています．
-また，<code>tqdm()</code>は繰り返しの進捗を表すプログレッシブ・バーを表示するための関数です．</p>
+このプレイヤーの行動を1000回繰り返します．
+<code>15(=G)</code>に到達したときに得られる報酬<code>1</code>が伝播し，価値<code>Q(s,a)</code>が設定されます．
+また，$\epsilon$は<code>0.2</code>に設定しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.2</span>
 
-<span style="color:#66d9ef">for</span> episode <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">10000</span>)):
+<span style="color:#66d9ef">for</span> episode <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000</span>):
   state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
   <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
-    action <span style="color:#f92672">=</span> greedyAction(tuple(env<span style="color:#f92672">.</span>decode(state)), epsilon)
+    action <span style="color:#f92672">=</span> greedyAction(state, epsilon)
     next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-    updateQ(tuple(env<span style="color:#f92672">.</span>decode(state)), action, tuple(env<span style="color:#f92672">.</span>decode(next_state)), reward)
+    updateQ(state, action, next_state, reward)
     state <span style="color:#f92672">=</span> next_state
 
     <span style="color:#66d9ef">if</span> done:
       <span style="color:#66d9ef">break</span>
 </code></pre></div><p>学習した<code>Q</code>を利用してプレイヤーを行動させます．
 $\epsilon$を<code>0</code>に設定し，常に$Q$が最大の行動を選択します．
-この結果，お客を<code>G(=Green</code>)に送り届け，報酬として<code>20</code>を受け取り，終了判定が<code>True</code>になっていることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+この結果，DOWN，DOWN，RIGHT，DOWN，RIGHT，RIGHTの順に行動し，
+<strong>15(=G)</strong> に到達していることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Q値で移動</span>
+epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
 state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
+histories <span style="color:#f92672">=</span> []
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
-  action <span style="color:#f92672">=</span> greedyAction(tuple(env<span style="color:#f92672">.</span>decode(state)), epsilon)
+  action <span style="color:#f92672">=</span> greedyAction(state, epsilon)
   next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+  histories<span style="color:#f92672">.</span>append((state, action))
   state <span style="color:#f92672">=</span> next_state
   output<span style="color:#f92672">.</span>clear()
   env<span style="color:#f92672">.</span>render()
@@ -456,30 +368,29 @@ state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</spa
   <span style="color:#66d9ef">if</span> done:
     <span style="color:#66d9ef">break</span>
 
-taxi_row, taxi_col, pass_loc, dest_idx <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>decode(next_state)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;taxi_row={taxi_row} taxi_col={taxi_col} pass_loc={PASSENGER[pass_loc]} dest_idex={DESTINATIONS[dest_idx]}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;actions={toString(histories)}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">+---------+
-|R: | : :G|
-| : | : : |
-| : : : : |
-| | : | : |
-|Y| : |B: |
-+---------+
-  (Dropoff)
-taxi_row=0 taxi_col=4 pass_loc=Green dest_idex=Green
-reward=20
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Right)
+SFFF
+FHFH
+FFFH
+HFFG
+actions=[(0, &#39;DOWN&#39;), (4, &#39;DOWN&#39;), (8, &#39;RIGHT&#39;), (9, &#39;DOWN&#39;), (13, &#39;RIGHT&#39;), (14, &#39;RIGHT&#39;)]
+next_state=15
+reward=1.0
 done=True
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   完成したノートブックの確認
 </h1>
 
-<p><a href="https://colab.research.google.com/drive/1le2w84rECWO-_sKep5OAK9LWa_O1CL2g?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
+<p><a href="https://colab.research.google.com/drive/1rzuPN_uOO7Bp0b0mFwOAZNNcgi7D75g6?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
+<p><code>map_name</code>を<code>8x8</code>としたときの解を導出しなさい．</p>
 <p>Google Colaboratoryで作成した <strong>AI-13.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出しなさい．
 提出の前に必ず下記の設定を行うこと．</p>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    強化学習・OpenAI Gym | mLAB
+    遺伝的アルゴリズム・巡回セールスマン問題 | mLAB
   </title>
 
   
@@ -64,7 +64,7 @@
   
   
 
-  <meta property="og:title" content="強化学習・OpenAI Gym" />
+  <meta property="og:title" content="遺伝的アルゴリズム・巡回セールスマン問題" />
 
 
 
@@ -84,14 +84,10 @@
 
 
 
-  <meta property="og:description" content="OpenAI Gymとは  OpenAI Gymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． ここでは，フローズンレイク（FrozenLake）などのゲームを題材に， 強化学習のアルゴリズムを実装することができます．
-ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-11 とします． ノートブックの作成方法は第1回の資料を参照してください．
-最初にOpenAI Gym をインストールします． セルで下記のコマンドを実行してください．
-&gt; !pip install gym また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．
-import gym import numpy as np import random import time from google.colab import output フローズンレイク（FrozenLake）  フローズンレイク（FrozenLake）は， 凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです．
-湖の環境は下記のように16文字のテキストで表現されます． ここで，Sはスタート地点，Gはゴール地点，Fは凍った湖，Hは穴が空いた湖です． Sから，Hを避けて，Fだけを通り，Gに到達できればクリアです．
-SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤーの位置です． どこにHがあるかを知ることはできません． プレイヤーの位置は0〜15の数値で表され，Sは0，Gは15に対応します．
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 また，プレイヤーは，下記のいずれかの行動をとることが出来ます．" />
+  <meta property="og:description" content="ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-11 とします． ノートブックの作成方法は第1回の資料を参照してください．
+最初に Simple AI と NetworkX をインストールします． NetworkXはネットワーク分析のためのライブラリです． セルで下記のコマンドを実行してください．
+!pip install simpleai !pip install network 巡回セールスマン問題  今回は 巡回セールスマン問題(Traveling Salesman Problem) を取り上げましょう．
+巡回セールスマン問題   $A,B,C,D,E,F,G,H,I,J$で表される10の都市がある． 各都市の座標は次の表で与えられる．  都市ABCDEFGHIJ X17973263578310012355 Y7281597604826624977  セールスマンは，全ての都市を1回だけ訪れて，出発した都市に戻る． この条件を満たす巡回路において，経路コスト（ユークリッド距離）が最小のものを求めよ． 例えば，次の経路は条件を満たす巡回路である． この経路コストは約$558$である． $$ A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow G \rightarrow H \rightarrow I \rightarrow J \rightarrow A $$ 10都市を巡る巡回路の組み合わせは$1814400$通り存在する（逆の順番で巡る経路が存在するため2で割る）． $$ \frac{10!" />
 
 
 
@@ -102,18 +98,14 @@ SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤー
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="強化学習・OpenAI Gym" />
+  <meta name="twitter:title" content="遺伝的アルゴリズム・巡回セールスマン問題" />
 
 
 
-  <meta name="twitter:description" content="OpenAI Gymとは  OpenAI Gymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． ここでは，フローズンレイク（FrozenLake）などのゲームを題材に， 強化学習のアルゴリズムを実装することができます．
-ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-11 とします． ノートブックの作成方法は第1回の資料を参照してください．
-最初にOpenAI Gym をインストールします． セルで下記のコマンドを実行してください．
-&gt; !pip install gym また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．
-import gym import numpy as np import random import time from google.colab import output フローズンレイク（FrozenLake）  フローズンレイク（FrozenLake）は， 凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです．
-湖の環境は下記のように16文字のテキストで表現されます． ここで，Sはスタート地点，Gはゴール地点，Fは凍った湖，Hは穴が空いた湖です． Sから，Hを避けて，Fだけを通り，Gに到達できればクリアです．
-SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤーの位置です． どこにHがあるかを知ることはできません． プレイヤーの位置は0〜15の数値で表され，Sは0，Gは15に対応します．
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 また，プレイヤーは，下記のいずれかの行動をとることが出来ます．" />
+  <meta name="twitter:description" content="ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-11 とします． ノートブックの作成方法は第1回の資料を参照してください．
+最初に Simple AI と NetworkX をインストールします． NetworkXはネットワーク分析のためのライブラリです． セルで下記のコマンドを実行してください．
+!pip install simpleai !pip install network 巡回セールスマン問題  今回は 巡回セールスマン問題(Traveling Salesman Problem) を取り上げましょう．
+巡回セールスマン問題   $A,B,C,D,E,F,G,H,I,J$で表される10の都市がある． 各都市の座標は次の表で与えられる．  都市ABCDEFGHIJ X17973263578310012355 Y7281597604826624977  セールスマンは，全ての都市を1回だけ訪れて，出発した都市に戻る． この条件を満たす巡回路において，経路コスト（ユークリッド距離）が最小のものを求めよ． 例えば，次の経路は条件を満たす巡回路である． この経路コストは約$558$である． $$ A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow G \rightarrow H \rightarrow I \rightarrow J \rightarrow A $$ 10都市を巡る巡回路の組み合わせは$1814400$通り存在する（逆の順番で巡る経路が存在するため2で割る）． $$ \frac{10!" />
 
 
 
@@ -187,20 +179,12 @@ SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤー
 <main>
   <div class="post">
     
-    <h1 class="post-title">強化学習・OpenAI Gym</h1>
+    <h1 class="post-title">遺伝的アルゴリズム・巡回セールスマン問題</h1>
 <div class="post-line"></div>
     
     
 
-    <p><a href="https://gyazo.com/87be6a7f6d7f55ac49c8e4588c975132"><img src="https://i.gyazo.com/87be6a7f6d7f55ac49c8e4588c975132.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  OpenAI Gymとは
-</h1>
-
-<p><a href="https://gym.openai.com/">OpenAI Gym</a>は，
-機械学習の一分野である <strong>強化学習</strong> を開発するためのツールキットです．
-ここでは，フローズンレイク（FrozenLake）などのゲームを題材に，
-強化学習のアルゴリズムを実装することができます．</p>
+    <p><a href="https://gyazo.com/3d91d3d8392e40f736740f4ee9168354"><img src="https://i.gyazo.com/3d91d3d8392e40f736740f4ee9168354.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ノートブックの作成
 </h1>
@@ -208,209 +192,443 @@ SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤー
 <p><strong>Google Colaboratory</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-11</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
-<p>最初に<strong>OpenAI Gym</strong> をインストールします．
+<p>最初に <strong>Simple AI</strong> と <strong>NetworkX</strong> をインストールします．
+<a href="https://networkx.org/documentation/stable/index.html">NetworkX</a>はネットワーク分析のためのライブラリです．
 セルで下記のコマンドを実行してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; !pip install gym
-</code></pre></div><p>また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gym
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> random
-<span style="color:#f92672">import</span> time
-<span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> output
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install simpleai
+!pip install network
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  フローズンレイク（FrozenLake）
+  巡回セールスマン問題
 </h1>
 
-<p><a href="https://gym.openai.com/envs/FrozenLake-v0/">フローズンレイク（FrozenLake）</a>は，
-凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです．</p>
-<p>湖の環境は下記のように16文字のテキストで表現されます．
-ここで，<strong>S</strong>はスタート地点，<strong>G</strong>はゴール地点，<strong>F</strong>は凍った湖，<strong>H</strong>は穴が空いた湖です．
-<strong>S</strong>から，<strong>H</strong>を避けて，<strong>F</strong>だけを通り，<strong>G</strong>に到達できればクリアです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">SFFF
-FHFH
-FFFH
-HFFG
-</code></pre></div><p>プレイヤーが観測できる情報は，プレイヤーの位置です．
-どこに<strong>H</strong>があるかを知ることはできません．
-プレイヤーの位置は0〜15の数値で表され，<strong>S</strong>は0，<strong>G</strong>は15に対応します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text"> 0  1  2  3
- 4  5  6  7
- 8  9 10 11
-12 13 14 15
-</code></pre></div><p>また，プレイヤーは，下記のいずれかの行動をとることが出来ます．</p>
-<ul>
-<li>左に行く(0)</li>
-<li>下に行く(1)</li>
-<li>右に行く(2)</li>
-<li>上に行く(3)</li>
-</ul>
-<p>下記の条件を満たしたとき，ゲームは失敗になります．</p>
-<ul>
-<li><strong>H</strong> に到達</li>
-</ul>
-<p>下記の条件を満たしたとき，ゲームは成功になります．</p>
-<ul>
-<li><strong>G</strong> に到達</li>
-</ul>
+<p>今回は <strong>巡回セールスマン問題(Traveling Salesman Problem)</strong> を取り上げましょう．</p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    巡回セールスマン問題
+  </h3>
+
+  <p>
+    
+
+$A,B,C,D,E,F,G,H,I,J$で表される10の都市がある．
+各都市の座標は次の表で与えられる．
+
+<table>
+<tr><th>都市</th><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td></tr>
+<tr><th>X</th><td>17</td><td>97</td><td>32</td><td>63</td><td>57</td><td>83</td><td>100</td><td>12</td><td>3</td><td>55</td></tr>
+<tr><th>Y</th><td>72</td><td>8</td><td>15</td><td>97</td><td>60</td><td>48</td><td>26</td><td>62</td><td>49</td><td>77</td></tr>
+</table>
+
+セールスマンは，全ての都市を1回だけ訪れて，出発した都市に戻る．
+この条件を満たす巡回路において，経路コスト（ユークリッド距離）が最小のものを求めよ．
+
+例えば，次の経路は条件を満たす巡回路である．
+この経路コストは約$558$である．
+
+$$
+A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow G \rightarrow H \rightarrow I \rightarrow J \rightarrow A
+$$
+
+10都市を巡る巡回路の組み合わせは$1814400$通り存在する（逆の順番で巡る経路が存在するため2で割る）．
+
+$$
+\frac{10!}{2} = 1814400
+$$
+
+<a href="https://gyazo.com/3343a3698dfc464e5cdbd7e751a2b9b9"><img src="https://i.gyazo.com/3343a3698dfc464e5cdbd7e751a2b9b9.png" alt="Image from Gyazo" width="446"/></a>
+
+
+  </p>
+  
+</div>
+
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  都市ネットワーク
+</h1>
+
+<p>10都市を巡る巡回路を，<strong>NetworkX</strong>ライブラリを利用して，ネットワーク（グラフ）として表現します．
+都市は<code>nodes</code>，経路は<code>route</code>で表します．
+このとき，都市の座標は辞書型の <code>pos</code> に設定します．
+また，経路は2都市間のタプル<code>(&quot;A&quot;,&quot;B&quot;)</code>を繋げて表現します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> networkx <span style="color:#f92672">as</span> nx
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> random
+<span style="color:#f92672">import</span> copy
+<span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem
+<span style="color:#f92672">from</span> simpleai.search.local <span style="color:#f92672">import</span> genetic
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># グラフの初期化</span>
+graph <span style="color:#f92672">=</span> nx<span style="color:#f92672">.</span>Graph()
+
+<span style="color:#75715e"># ノード</span>
+nodes <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#e6db74">&#34;I&#34;</span>, <span style="color:#e6db74">&#34;J&#34;</span>]
+
+<span style="color:#75715e"># ノードの位置</span>
+pos <span style="color:#f92672">=</span>{
+  <span style="color:#e6db74">&#34;A&#34;</span>: (<span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">72</span>),
+  <span style="color:#e6db74">&#34;B&#34;</span>: (<span style="color:#ae81ff">97</span>, <span style="color:#ae81ff">8</span>),
+  <span style="color:#e6db74">&#34;C&#34;</span>: (<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">15</span>),
+  <span style="color:#e6db74">&#34;D&#34;</span>: (<span style="color:#ae81ff">63</span>, <span style="color:#ae81ff">97</span>),
+  <span style="color:#e6db74">&#34;E&#34;</span>: (<span style="color:#ae81ff">57</span>, <span style="color:#ae81ff">60</span>),
+  <span style="color:#e6db74">&#34;F&#34;</span>: (<span style="color:#ae81ff">83</span>, <span style="color:#ae81ff">48</span>),
+  <span style="color:#e6db74">&#34;G&#34;</span>: (<span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">26</span>),
+  <span style="color:#e6db74">&#34;H&#34;</span>: (<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">62</span>),
+  <span style="color:#e6db74">&#34;I&#34;</span>: (<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">49</span>),
+  <span style="color:#e6db74">&#34;J&#34;</span>: (<span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">77</span>)
+}
+
+<span style="color:#75715e"># 経路</span>
+route <span style="color:#f92672">=</span> [(<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>), (<span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>), (<span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>), (<span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>), (<span style="color:#e6db74">&#34;E&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>), (<span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>), (<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>), (<span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#e6db74">&#34;I&#34;</span>), (<span style="color:#e6db74">&#34;I&#34;</span>, <span style="color:#e6db74">&#34;J&#34;</span>), (<span style="color:#e6db74">&#34;J&#34;</span>, <span style="color:#e6db74">&#34;A&#34;</span>)] 
+graph<span style="color:#f92672">.</span>add_edges_from(route)
+
+<span style="color:#75715e"># 描画</span>
+nx<span style="color:#f92672">.</span>draw(graph, pos<span style="color:#f92672">=</span>pos, with_labels<span style="color:#f92672">=</span>True)
+</code></pre></div><p><a href="https://gyazo.com/3343a3698dfc464e5cdbd7e751a2b9b9"><img src="https://i.gyazo.com/3343a3698dfc464e5cdbd7e751a2b9b9.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  遺伝的アルゴリズム
+</h1>
+
+<p>前回に引き続き，巡回セールスマン問題を <strong>遺伝的アルゴリズム（Genetic Algorithm）</strong> で解くことに挑戦します．
+まずは，巡回セールスマン問題における遺伝的アルゴリズムの個体（遺伝子）の定義を考えます．</p>
+<p>都市を回る順番をそのまま個体として表現することを考えます．
+例えば，$A,B,\cdots,E$の5つの都市の巡回路において，$1,2, \cdots, 5$の数字を割り当て，
+この数字の列を個体とする方法です．</p>
+<p>$$
+A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow A
+$$</p>
+<p>$$
+I_1 = (1, 2, 3, 4, 5)
+$$</p>
+<p>$$
+A \rightarrow D \rightarrow E \rightarrow B \rightarrow C \rightarrow A
+$$</p>
+<p>$$
+I_2 = (1, 4, 5, 2, 3)
+$$</p>
+<p>この方法では，$I_1$と$I_2$に交叉を適用したとき，巡回路の条件を満たさない解が得られることがあります（致死解）．
+例えば，上記の$I_1$と$I_2$の3番目の遺伝子から交叉する場合を考えます．
+同じ都市を2回訪れる経路や，全ての都市を巡らない経路が生成されることがわかります．</p>
+<p>$$
+A \rightarrow B \rightarrow E \rightarrow B \rightarrow C \rightarrow A
+$$</p>
+<p>$$
+I_{1}^{'} = (1, 2, 5, 2, 3)
+$$</p>
+<p>$$
+A \rightarrow D \rightarrow C \rightarrow D \rightarrow E \rightarrow A
+$$</p>
+<p>$$
+I_{2}^{'} = (1, 4, 3, 4, 5)
+$$</p>
+<p>そこで，次のように個体を表現することにします．
+この方法では，訪れる都市が，$A, B, C, D, E$の何番目にあるかを表します．
+例えば，最初に訪れる都市が$A$であれば，$A$は$A, B, C, D, E$の0番目にあるため，遺伝子は<code>0</code>とします．
+次に訪れる都市が$D$であれば，$D$は$B, C, D, E$の2番目にあるため，遺伝子は<code>2</code>とします．
+この方法では致死解は生じません．</p>
+<p>$$
+A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow A
+$$</p>
+<p>$$
+I_{1}^{'} = (0, 0, 0, 0, 0)
+$$</p>
+<table>
+<thead>
+<tr>
+<th>訪問する都市</th>
+<th>都市の順番</th>
+<th>遺伝子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><span style="color:red">A</span>BCDE</td>
+<td>0</td>
+</tr>
+<tr>
+<td>B</td>
+<td><span style="color:red">B</span>CDE</td>
+<td>0</td>
+</tr>
+<tr>
+<td>C</td>
+<td><span style="color:red">C</span>DE</td>
+<td>0</td>
+</tr>
+<tr>
+<td>D</td>
+<td><span style="color:red">D</span>E</td>
+<td>0</td>
+</tr>
+<tr>
+<td>E</td>
+<td><span style="color:red">E</span></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>$$
+A \rightarrow D \rightarrow E \rightarrow B \rightarrow C \rightarrow A
+$$</p>
+<p>$$
+I_2 = (0, 2, 2, 0, 0)
+$$</p>
+<table>
+<thead>
+<tr>
+<th>訪問する都市</th>
+<th>都市の順番</th>
+<th>遺伝子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><span style="color:red">A</span>BCDE</td>
+<td>0</td>
+</tr>
+<tr>
+<td>D</td>
+<td>BC<span style="color:red">D</span>E</td>
+<td>2</td>
+</tr>
+<tr>
+<td>E</td>
+<td>BC<span style="color:red">E</span></td>
+<td>2</td>
+</tr>
+<tr>
+<td>B</td>
+<td><span style="color:red">B</span>C</td>
+<td>0</td>
+</tr>
+<tr>
+<td>C</td>
+<td><span style="color:red">C</span></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>上記の方法に従って，経路から個体（遺伝子）を生成する<code>toGene()</code>を定義します．
+初期経路の個体が$(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)$となっていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 経路から個体（遺伝子）へ</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">toGene</span>(route):
+
+  destinations <span style="color:#f92672">=</span> list(copy<span style="color:#f92672">.</span>deepcopy(graph<span style="color:#f92672">.</span>nodes))
+  gene <span style="color:#f92672">=</span> []
+
+  <span style="color:#66d9ef">for</span> edge <span style="color:#f92672">in</span> route:
+    index <span style="color:#f92672">=</span> destinations<span style="color:#f92672">.</span>index(edge[<span style="color:#ae81ff">0</span>])
+    destinations<span style="color:#f92672">.</span>pop(index)
+    gene<span style="color:#f92672">.</span>append(index)
+
+  <span style="color:#66d9ef">return</span> gene
+
+gene <span style="color:#f92672">=</span> toGene(route)
+<span style="color:#66d9ef">print</span>(gene)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]
+</code></pre></div><p>逆に個体（遺伝子）から経路を生成する<code>toRoute()</code>を定義します．
+個体に対応する経路が下記であることがわかります．</p>
+<p>$$
+A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow G \rightarrow H \rightarrow I \rightarrow J \rightarrow A
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 個体（遺伝子）から経路へ</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">toRoute</span>(gene):
+  destinations <span style="color:#f92672">=</span> list(copy<span style="color:#f92672">.</span>deepcopy(graph<span style="color:#f92672">.</span>nodes))
+  nodes <span style="color:#f92672">=</span> []
+
+  <span style="color:#66d9ef">for</span> index <span style="color:#f92672">in</span> gene:
+    node <span style="color:#f92672">=</span> destinations[index]
+    destinations<span style="color:#f92672">.</span>pop(index)
+    nodes<span style="color:#f92672">.</span>append(node)
+
+  route <span style="color:#f92672">=</span> []
+
+  <span style="color:#66d9ef">for</span> i, node <span style="color:#f92672">in</span> enumerate(nodes):
+    edge <span style="color:#f92672">=</span> ((nodes[i], nodes[(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> len(nodes)]))
+    route<span style="color:#f92672">.</span>append(edge)
+
+  <span style="color:#66d9ef">return</span> route
+
+route <span style="color:#f92672">=</span> toRoute(gene)
+<span style="color:#66d9ef">print</span>(route)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[(<span style="color:#e6db74">&#39;A&#39;</span>, <span style="color:#e6db74">&#39;B&#39;</span>), (<span style="color:#e6db74">&#39;B&#39;</span>, <span style="color:#e6db74">&#39;C&#39;</span>), (<span style="color:#e6db74">&#39;C&#39;</span>, <span style="color:#e6db74">&#39;D&#39;</span>), (<span style="color:#e6db74">&#39;D&#39;</span>, <span style="color:#e6db74">&#39;E&#39;</span>), (<span style="color:#e6db74">&#39;E&#39;</span>, <span style="color:#e6db74">&#39;F&#39;</span>), (<span style="color:#e6db74">&#39;F&#39;</span>, <span style="color:#e6db74">&#39;G&#39;</span>), (<span style="color:#e6db74">&#39;G&#39;</span>, <span style="color:#e6db74">&#39;H&#39;</span>), (<span style="color:#e6db74">&#39;H&#39;</span>, <span style="color:#e6db74">&#39;I&#39;</span>), (<span style="color:#e6db74">&#39;I&#39;</span>, <span style="color:#e6db74">&#39;J&#39;</span>), (<span style="color:#e6db74">&#39;J&#39;</span>, <span style="color:#e6db74">&#39;A&#39;</span>)]
+</code></pre></div><p>ランダムに個体を生成する<code>randomGene()</code>を定義します．
+生成された個体と対応する経路を合わせて確認しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ランダムに個体を生成</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">randomGene</span>():
+    destinations <span style="color:#f92672">=</span> list(copy<span style="color:#f92672">.</span>deepcopy(graph<span style="color:#f92672">.</span>nodes))
+    gene <span style="color:#f92672">=</span> []
+
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(destinations)):
+      node <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice(destinations)
+      index <span style="color:#f92672">=</span> destinations<span style="color:#f92672">.</span>index(node)
+      destinations<span style="color:#f92672">.</span>pop(index)
+      gene<span style="color:#f92672">.</span>append(index)
+
+    <span style="color:#66d9ef">return</span> gene
+
+gene <span style="color:#f92672">=</span> randomGene()
+<span style="color:#66d9ef">print</span>(gene)
+<span style="color:#66d9ef">print</span>(toRoute(gene))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>]
+[(<span style="color:#e6db74">&#39;J&#39;</span>, <span style="color:#e6db74">&#39;E&#39;</span>), (<span style="color:#e6db74">&#39;E&#39;</span>, <span style="color:#e6db74">&#39;F&#39;</span>), (<span style="color:#e6db74">&#39;F&#39;</span>, <span style="color:#e6db74">&#39;I&#39;</span>), (<span style="color:#e6db74">&#39;I&#39;</span>, <span style="color:#e6db74">&#39;A&#39;</span>), (<span style="color:#e6db74">&#39;A&#39;</span>, <span style="color:#e6db74">&#39;D&#39;</span>), (<span style="color:#e6db74">&#39;D&#39;</span>, <span style="color:#e6db74">&#39;C&#39;</span>), (<span style="color:#e6db74">&#39;C&#39;</span>, <span style="color:#e6db74">&#39;H&#39;</span>), (<span style="color:#e6db74">&#39;H&#39;</span>, <span style="color:#e6db74">&#39;G&#39;</span>), (<span style="color:#e6db74">&#39;G&#39;</span>, <span style="color:#e6db74">&#39;B&#39;</span>), (<span style="color:#e6db74">&#39;B&#39;</span>, <span style="color:#e6db74">&#39;J&#39;</span>)]
+</code></pre></div><p>巡回セールスマン問題の目的関数となる経路コストを算出する<code>distance()</code>を定義します．
+この経路コストを <strong>最小化</strong> することが目的となります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 経路距離</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">distance</span>(route):
+  d <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+
+  <span style="color:#66d9ef">for</span> edge <span style="color:#f92672">in</span> route:
+    pos_head <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(pos[edge[<span style="color:#ae81ff">0</span>]])
+    pos_tail <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(pos[edge[<span style="color:#ae81ff">1</span>]])
+    d <span style="color:#f92672">+=</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(pos_tail <span style="color:#f92672">-</span> pos_head)
+
+  <span style="color:#66d9ef">return</span> d
+
+d <span style="color:#f92672">=</span> distance(route)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;distance={d}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">distance<span style="color:#f92672">=</span><span style="color:#ae81ff">557.6889363201603</span>
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   実装
 </h1>
 
-<h2 id="環境の初期化">環境の初期化</h2>
-<p>最初に対象とする環境を作成します．
-ここでは，バランスゲーム（FrozenLake-v0）を指定します．
-引数には<code>map_name</code>と<code>is_slippy</code>を設定します．
-<code>map_name</code>は<code>4x4</code>，または，<code>8x8</code>の2種類を指定できます．
-<code>is_slippy</code>はプレイヤーが氷上で滑るかどうかを表，ここでは滑らない（<code>false</code>）に設定します．
-滑る（<code>true</code>）に設定すると，一定の確率で異なる方向に移動してしまいます．
-このゲームの <strong>行動</strong> は4種類の離散値（0:左，1:下，2:右，3:上），
-また，<strong>状態空間</strong> は16種類の離散値（0〜15）であることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;FrozenLake-v0&#39;</span>, map_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;4x4&#34;</span>, is_slippery<span style="color:#f92672">=</span>False) <span style="color:#75715e"># 環境の初期化</span>
+<h2 id="クラスの定義">クラスの定義</h2>
+<p>それでは，遺伝的アルゴリズムを実装しましょう．
+最初に初期状態を定義します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> toGene(route)
+</code></pre></div><p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
+巡回セールスマン問題を表す <code>TSProblem</code>  を定義します．
+オーバライドするメソッドは，<code>value</code>，<code>generate_random_state</code>，
+<code>crossover</code>，<code>mutate</code> の4種類です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TSProblem</span>(SearchProblem):
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Action Space: {}&#34;</span><span style="color:#f92672">.</span>format(env<span style="color:#f92672">.</span>action_space)) <span style="color:#75715e"># 行動空間</span>
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Env Space: {}&#34;</span><span style="color:#f92672">.</span>format(env<span style="color:#f92672">.</span>observation_space)) <span style="color:#75715e"># 状態空間</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Action Space: Discrete(4)
-Env Space: Discrete(16)
-</code></pre></div><p>次に環境を<code>reset</code>関数で初期化します．
-このとき，観測されたプレイヤーの位置を取得します．
-プレイヤーの位置は <strong>0(=S)</strong> であることがわかります．
-また，<code>env.render()</code>はプレイヤーの環境を文字列で可視化します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境の初期化</span>
-env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
+        <span style="color:#f92672">...</span>
 
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;state={state}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">SFFF
-FHFH
-FFFH
-HFFG
-state=0
-</code></pre></div><p>ここで，実行結果の理解を簡単にするため，
-下記のように辞書<code>ACTION</code>，関数<code>toString()</code>を定義しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># プレイヤーの行動</span>
-ACTION <span style="color:#f92672">=</span> {
-  <span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#34;LEFT&#34;</span>,
-  <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;DOWN&#34;</span>,
-  <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;RIGHT&#34;</span>,
-  <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;UP&#34;</span>
-}
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_random_state</span>(self):
+        <span style="color:#f92672">...</span>     
 
-<span style="color:#75715e"># プレイヤーの行動履歴を文字列化</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">toString</span>(histories):
-  moves <span style="color:#f92672">=</span> []
-  <span style="color:#66d9ef">for</span> observation, action <span style="color:#f92672">in</span> histories:
-    moves<span style="color:#f92672">.</span>append((observation, ACTION[action]))
-  <span style="color:#66d9ef">return</span> moves
-</code></pre></div><h2 id="プレイヤーの行動">プレイヤーの行動</h2>
-<p>環境を初期化したら，<code>step()</code>を利用して，行動を選択します．
-ここでは，プレイヤーを下に移動させてみます．
-<code>step()</code>の引数に「下に行く」を表す <strong>1(=DOWN)</strong> を指定します．
-この行動の結果は下記の情報で表されます．</p>
-<ul>
-<li>プレイヤーの位置<code>next_state</code></li>
-<li>報酬<code>reward</code></li>
-<li>終了判定<code>done</code></li>
-<li>その他の情報<code>info</code>（ここでは利用しない）</li>
-</ul>
-<p>下に移動したため，プレイヤーの位置は<code>4</code>になっていることがわかります．
-また，報酬は<code>0</code>，終了状態は<code>False</code>となっています．
-報酬はプレイヤーがゴールに到達したときだけ<code>1</code>になります．
-終了状態は穴(H)に落ちるか，ゴールに到達すると<code>True</code>になります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 下に移動</span>
-state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># DOWN</span>
-next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-env<span style="color:#f92672">.</span>render()
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossover</span>(self, state1, state2):
+        <span style="color:#f92672">...</span>
 
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;action={ACTION[action]}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>) <span style="color:#75715e"># 座標 0～15</span>
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>) <span style="color:#75715e"># 報酬（ゴールに到達すると1）</span>
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>) <span style="color:#75715e"># 終了状態</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Down)
-SFFF
-FHFH
-FFFH
-HFFG
-action=DOWN
-next_state=4
-reward=0.0
-done=False
-</code></pre></div><p>それでは，ゴールに到達可能な移動を指定してみます．
-ここでは，<code>RIGHT</code>，<code>RIGHT</code>，<code>DOWN</code>，<code>DOWN</code>，<code>DOWN</code>，<code>RIGHT</code>の順に移動します．
-移動履歴を<code>histories</code>に記録しておきます．
-また，<code>output.clear()</code>はコンソール出力のクリア，
-<code>time.sleep(1)</code>は1秒間の待機を表します．
-この結果，プレイヤーの位置は <strong>15(=G)</strong>，
-報酬は<code>1</code>，終了判定が<code>True</code>になっていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ゴールに到達する経路</span>
-state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mutate</span>(self, state):
+        <span style="color:#f92672">...</span>
 
-actions <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>] <span style="color:#75715e">#RIGHT, RIGHT, DOWN, DOWN, DOWN, RIGHT</span>
-histories <span style="color:#f92672">=</span> []
-<span style="color:#66d9ef">for</span> action <span style="color:#f92672">in</span> actions:
-  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-  histories<span style="color:#f92672">.</span>append((state, action))
-  state <span style="color:#f92672">=</span> next_state
-  output<span style="color:#f92672">.</span>clear()
-  env<span style="color:#f92672">.</span>render()
-  time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
+</code></pre></div><h3 id="valueself-state">value(self, state)</h3>
+<p>個体<code>state</code>の経路コストを算出します．
+巡回セールスマン問題は経路コストを最小化する必要がありますが，
+ここでは目的関数を負の値で表し，<strong>最大化</strong> を目的とした問題として扱います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
 
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;actions={toString(histories)}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Right)
-SFFF
-FHFH
-FFFH
-HFFG
-actions=[(0, &#39;RIGHT&#39;), (1, &#39;RIGHT&#39;), (2, &#39;DOWN&#39;), (6, &#39;DOWN&#39;), (10, &#39;DOWN&#39;), (14, &#39;RIGHT&#39;)]
-next_state=15
-reward=1.0
-done=True
-</code></pre></div><h2 id="ランダムにプレイヤーを移動">ランダムにプレイヤーを移動</h2>
-<p>ランダムにプレイヤーを移動させてみます．
-<code>random.choice()</code>は引数で与えられたリストからランダムに一つを選びます．
-ここでは，<code>[0, 1, 2, 3]</code>を引数とするため，上下左右から一つが選択されます．
-この結果，プレイヤーは<code>5(=H)</code>に到達してしまい，ゲームは失敗となります．
-報酬は<code>0</code>，終了状態は<code>True</code>です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
+  route <span style="color:#f92672">=</span> toRoute(state)
+  value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> distance(route)
 
-histories <span style="color:#f92672">=</span> []
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
-  action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
-  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-  histories<span style="color:#f92672">.</span>append((state, action))
-  state <span style="color:#f92672">=</span> next_state
-  output<span style="color:#f92672">.</span>clear()
-  env<span style="color:#f92672">.</span>render()
-  time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
+  <span style="color:#75715e">#--------------------</span>
+  <span style="color:#75715e"># 途中経過の出力</span>
+  <span style="color:#66d9ef">global</span> max_state
+  <span style="color:#66d9ef">global</span> max_value
 
-  <span style="color:#66d9ef">if</span> done:
-    <span style="color:#66d9ef">break</span>
+  <span style="color:#66d9ef">if</span> max_value <span style="color:#f92672">&lt;</span> value:
+	max_state <span style="color:#f92672">=</span> state
+	max_value <span style="color:#f92672">=</span> value
+	<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;max state: {max_state}({max_value:.3f})&#34;</span>)
+  <span style="color:#75715e">#--------------------</span>
 
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;actions={toString(histories)}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Down)
-SFFF
-FHFH
-FFFH
-HFFG
-actions=[(0, &#39;LEFT&#39;), (0, &#39;LEFT&#39;), (0, &#39;LEFT&#39;), (0, &#39;RIGHT&#39;), (1, &#39;DOWN&#39;)]
-next_state=5
-reward=0.0
-done=True
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  <span style="color:#66d9ef">return</span> value
+</code></pre></div><h3 id="generate_random_stateself">generate_random_state(self)</h3>
+<p>ランダムに個体<code>gene</code>を生成します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_random_state</span>(self):
+
+  gene <span style="color:#f92672">=</span> randomGene()
+
+  <span style="color:#66d9ef">return</span> gene
+</code></pre></div><h3 id="crossoverself-state1-state2">crossover(self, state1, state2)</h3>
+<p>個体<code>state1</code>と個体<code>state2</code>を交叉し，新しい個体を生成します．
+交叉する位置は乱数で決定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">crossover</span>(self, state1, state2):
+
+  child <span style="color:#f92672">=</span> []
+
+  index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(state1))
+
+  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, index):
+	child<span style="color:#f92672">.</span>append(state1[i])
+
+  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(index, len(state2)):
+	child<span style="color:#f92672">.</span>append(state2[i])
+
+  <span style="color:#66d9ef">return</span> child
+</code></pre></div><h3 id="mutateself-state">mutate(self, state)</h3>
+<p>個体<code>state</code>を突然変異させ，新しい個体を生成します．
+突然変異する位置は乱数で決定します．
+位置に応じて設定する値の最大値が異なることに注意してください．
+例えば，個体の最初の遺伝子は$0,1,\cdots,9$の10通りから選択しますが，
+5番目の遺伝子は$0,1,\cdots,4$の5通りから選択します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mutate</span>(self, state):
+
+  child <span style="color:#f92672">=</span> list(copy<span style="color:#f92672">.</span>deepcopy(state))
+
+  index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, len(child))
+  max <span style="color:#f92672">=</span> len(child) <span style="color:#f92672">-</span> index
+  child[index] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, max)
+ 
+  <span style="color:#66d9ef">return</span> child
+</code></pre></div><h2 id="解の探索">解の探索</h2>
+<p>遺伝的アルゴリズム<code>genetic</code>を用いて解を探索します
+ここで，<code>population_size</code>は1世代の個体の数，<code>mutation_chance</code>は突然変異の確率，<code>iterations_limit</code>は世代交代の数です．
+経路コストは徐々に減少し，最終的に約$302$になりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">max_state <span style="color:#f92672">=</span> START
+max_value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1000</span>
+problem <span style="color:#f92672">=</span> TSProblem(initial_state<span style="color:#f92672">=</span>START)
+result <span style="color:#f92672">=</span> genetic(problem, population_size<span style="color:#f92672">=</span><span style="color:#ae81ff">300</span>, mutation_chance<span style="color:#f92672">=</span><span style="color:#ae81ff">0.4</span>, iterations_limit<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">max state: [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">565.698</span>)
+max state: [<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">540.774</span>)
+max state: [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">486.344</span>)
+max state: [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">478.315</span>)
+max state: [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">445.342</span>)
+max state: [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">405.025</span>)
+max state: [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">384.451</span>)
+max state: [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">381.537</span>)
+max state: [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">379.105</span>)
+max state: [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">372.361</span>)
+max state: [<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">341.490</span>)
+max state: [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">327.178</span>)
+max state: [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">320.839</span>)
+max state: [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">309.094</span>)
+max state: [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>](<span style="color:#f92672">-</span><span style="color:#ae81ff">302.755</span>)
+</code></pre></div><p>得られた経路を確認すると，経路コストが最短となっていることがわかります．</p>
+<p>$$
+D \rightarrow A \rightarrow H \rightarrow I \rightarrow C \rightarrow B \rightarrow G \rightarrow F \rightarrow E \rightarrow J \rightarrow D
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">route <span style="color:#f92672">=</span> toRoute(result<span style="color:#f92672">.</span>state)
+<span style="color:#66d9ef">print</span>(route)
+
+<span style="color:#75715e"># グラフの初期化</span>
+graph<span style="color:#f92672">.</span>clear()
+
+<span style="color:#75715e"># ノードの設定</span>
+graph<span style="color:#f92672">.</span>add_nodes_from(nodes)
+
+<span style="color:#75715e"># 経路の設定</span>
+graph<span style="color:#f92672">.</span>add_edges_from(route)
+
+<span style="color:#75715e"># 描画</span>
+nx<span style="color:#f92672">.</span>draw(graph, pos<span style="color:#f92672">=</span>pos, with_labels<span style="color:#f92672">=</span>True)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[(<span style="color:#e6db74">&#39;D&#39;</span>, <span style="color:#e6db74">&#39;A&#39;</span>), (<span style="color:#e6db74">&#39;A&#39;</span>, <span style="color:#e6db74">&#39;H&#39;</span>), (<span style="color:#e6db74">&#39;H&#39;</span>, <span style="color:#e6db74">&#39;I&#39;</span>), (<span style="color:#e6db74">&#39;I&#39;</span>, <span style="color:#e6db74">&#39;C&#39;</span>), (<span style="color:#e6db74">&#39;C&#39;</span>, <span style="color:#e6db74">&#39;B&#39;</span>), (<span style="color:#e6db74">&#39;B&#39;</span>, <span style="color:#e6db74">&#39;G&#39;</span>), (<span style="color:#e6db74">&#39;G&#39;</span>, <span style="color:#e6db74">&#39;F&#39;</span>), (<span style="color:#e6db74">&#39;F&#39;</span>, <span style="color:#e6db74">&#39;E&#39;</span>), (<span style="color:#e6db74">&#39;E&#39;</span>, <span style="color:#e6db74">&#39;J&#39;</span>), (<span style="color:#e6db74">&#39;J&#39;</span>, <span style="color:#e6db74">&#39;D&#39;</span>)]
+</code></pre></div><p><a href="https://gyazo.com/ee1fbd48b50cda7c169a033ea75ad50d"><img src="https://i.gyazo.com/ee1fbd48b50cda7c169a033ea75ad50d.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   完成したノートブックの確認
 </h1>
 
-<p><a href="https://colab.research.google.com/drive/1Uh3sF8sCc9jy8PRYzd5ERbAhWQwWfueO?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
+<p><a href="https://colab.research.google.com/drive/1fZoe1-F7Cq6_fgYQaVHUwM6pSY2TrVE4?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
-<p>プレイヤーを<code>RIGHT</code>，<code>RIGHT</code>，<code>DOWN</code>，<code>DOWN</code>，<code>DOWN</code>，<code>RIGHT</code>とは異なる経路でゴールに到達させること．</p>
+<p>ノード数を12まで増やして，最適な巡回路を探索してください．
+ノードの座標は自由に設定して構いません．</p>
 <p>Google Colaboratoryで作成した <strong>AI-11.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出しなさい．
 提出の前に必ず下記の設定を行うこと．</p>
