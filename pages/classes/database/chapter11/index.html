@@ -527,6 +527,55 @@ sqlite4.db
 <p><a href="https://gyazo.com/8e26e1ff81e3bf0fe3f106bc0f7ca2ee"><img src="https://i.gyazo.com/8e26e1ff81e3bf0fe3f106bc0f7ca2ee.png" alt="Image from Gyazo"></a></p>
 <p><a href="https://gyazo.com/ebe05de0e40be63a899ecefc36e84896"><img src="https://i.gyazo.com/ebe05de0e40be63a899ecefc36e84896.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  ビュー
+</h1>
+
+<p>テーブルに対するクエリの結果を <strong>ビュー</strong> として保存することができます．
+保存された <strong>ビュー</strong> はテーブルと同じように扱うことができます．
+ここでは，【学生リスト】と【学部リスト］の自然結合を【大学リスト］という名前のビューとして保存します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">VIEW</span> <span style="color:#960050;background-color:#1e0010">大学リスト</span> <span style="color:#66d9ef">AS</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">natural</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">学部リスト</span>;
+</code></pre></div><p><code>SELECT</code>で【大学リスト】のレコードを表示すると，【学生リスト】と【学部リスト］の自然結合が表示されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">大学リスト</span>
+</code></pre></div><p><a href="https://gyazo.com/693fc3a7132b88c01be44bfa83fff205"><img src="https://i.gyazo.com/693fc3a7132b88c01be44bfa83fff205.png" alt="Image from Gyazo"></a></p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    例題2
+  </h3>
+
+  <p>
+    
+【八百屋】と【果物屋】の和集合演算の結果を【スーパー】という名前のビューとして保存しなさい．
+
+  </p>
+  
+</div>
+
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  トリガー
+</h1>
+
+<p>テーブルに追加・削除・更新などのクエリが適用されたときに自動的に実行する処理を <strong>トリガー</strong> として登録することができます．
+ここでは，【売上商品】と【売上日時】のテーブルを作成し，【売上商品】に<code>INSERT</code>が発生したとき，同じタイミングで【売上日時】に時刻を記録する処理を【売上ログ】という名前のトリガーとして登録します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#960050;background-color:#1e0010">売上商品</span>(
+	ID INTEGER <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> AUTOINCREMENT,
+  	<span style="color:#960050;background-color:#1e0010">商品名</span> TEXT
+)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#960050;background-color:#1e0010">売上日時</span>(
+	ID INTEGER <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> AUTOINCREMENT,
+  	<span style="color:#960050;background-color:#1e0010">日時</span> TEXT
+)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TRIGGER</span> <span style="color:#960050;background-color:#1e0010">売上ログ</span> <span style="color:#66d9ef">AFTER</span> <span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">ON</span> <span style="color:#960050;background-color:#1e0010">売上商品</span>
+	<span style="color:#66d9ef">BEGIN</span>
+    	<span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#960050;background-color:#1e0010">売上日時</span>(<span style="color:#960050;background-color:#1e0010">日時</span>) <span style="color:#66d9ef">VALUES</span>(datetime());
+    <span style="color:#66d9ef">END</span>;
+</code></pre></div><p>【売上商品】にパソコンを<code>INSERT</code>すると，
+【売上日時】に<code>2021-04-24 10:39:17</code>が記録されていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">INSERT</span> <span style="color:#66d9ef">INTO</span> <span style="color:#960050;background-color:#1e0010">売上商品</span>(<span style="color:#960050;background-color:#1e0010">商品名</span>) <span style="color:#66d9ef">VALUES</span>(<span style="color:#e6db74">&#34;パソコン&#34;</span>);
+</code></pre></div><p><a href="https://gyazo.com/666c6548852f05096055720b7ce1eee4"><img src="https://i.gyazo.com/666c6548852f05096055720b7ce1eee4.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/ae651cd10fa90212e399f2efe23bd6fb"><img src="https://i.gyazo.com/ae651cd10fa90212e399f2efe23bd6fb.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   データベースの保存
 </h1>
 
