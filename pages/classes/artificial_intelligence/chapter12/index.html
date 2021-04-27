@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    強化学習・OpenAI Gym | mLAB
+    強化学習・モンテカルロ法 | mLAB
   </title>
 
   
@@ -64,7 +64,7 @@
   
   
 
-  <meta property="og:title" content="強化学習・OpenAI Gym" />
+  <meta property="og:title" content="強化学習・モンテカルロ法" />
 
 
 
@@ -76,7 +76,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/87be6a7f6d7f55ac49c8e4588c975132.png" />
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
 
 
 
@@ -84,14 +84,13 @@
 
 
 
-  <meta property="og:description" content="OpenAI Gymとは  OpenAI Gymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． ここでは，フローズンレイク（FrozenLake）などのゲームを題材に， 強化学習のアルゴリズムを実装することができます．
-ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
-最初にOpenAI Gym をインストールします． セルで下記のコマンドを実行してください．
-&gt; !pip install gym また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．
-import gym import numpy as np import random import time from google.colab import output フローズンレイク（FrozenLake）  フローズンレイク（FrozenLake）は， 凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです．
-湖の環境は下記のように16文字のテキストで表現されます． ここで，Sはスタート地点，Gはゴール地点，Fは凍った湖，Hは穴が空いた湖です． Sから，Hを避けて，Fだけを通り，Gに到達できればクリアです．
-SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤーの位置です． どこにHがあるかを知ることはできません． プレイヤーの位置は0〜15の数値で表され，Sは0，Gは15に対応します．
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 また，プレイヤーは，下記のいずれかの行動をとることが出来ます．" />
+  <meta property="og:description" content="強化学習  強化学習(Reinforcement Learning) とは，自律的に行動するプログラム（ エージェント ）がある環境において， 観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です． DeepMind社が開発した囲碁プログラムの AlphaGo や， Atari社のビデオゲームをプレイする DQN(Deep Q-Network) などが強化学習の成果としてよく知られています． また，強化学習には，次に挙げるような手法が存在します．
+ モンテカルロ法（Monte Carlo Methods） TD学習(Temporal Difference Learning) Q学習(Q-Learning)  ここでは，シンプルなトランプゲームを題材に強化学習の基本を学び， 最後に強化学習のツールキットであるOpenAI Gymを利用してQ学習を実装してみます．
+  ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
+完成したノートブックの確認  ノートブックの確認
+トランプゲーム  次に示す2つのルールを考えます． いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます． ルール1には引き分けがないことに注意してください．
+ルール1   同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する． 1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる． 逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)．   ルール2   2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる．   実装  乱数を生成するrandom，数値計算のためのnumpyに加え， プログレスバーを表示するtqdm.notebookをインポートします．
+import random import numpy as np from tqdm." />
 
 
 
@@ -102,22 +101,21 @@ SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤー
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="強化学習・OpenAI Gym" />
+  <meta name="twitter:title" content="強化学習・モンテカルロ法" />
 
 
 
-  <meta name="twitter:description" content="OpenAI Gymとは  OpenAI Gymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． ここでは，フローズンレイク（FrozenLake）などのゲームを題材に， 強化学習のアルゴリズムを実装することができます．
-ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
-最初にOpenAI Gym をインストールします． セルで下記のコマンドを実行してください．
-&gt; !pip install gym また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．
-import gym import numpy as np import random import time from google.colab import output フローズンレイク（FrozenLake）  フローズンレイク（FrozenLake）は， 凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです．
-湖の環境は下記のように16文字のテキストで表現されます． ここで，Sはスタート地点，Gはゴール地点，Fは凍った湖，Hは穴が空いた湖です． Sから，Hを避けて，Fだけを通り，Gに到達できればクリアです．
-SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤーの位置です． どこにHがあるかを知ることはできません． プレイヤーの位置は0〜15の数値で表され，Sは0，Gは15に対応します．
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 また，プレイヤーは，下記のいずれかの行動をとることが出来ます．" />
+  <meta name="twitter:description" content="強化学習  強化学習(Reinforcement Learning) とは，自律的に行動するプログラム（ エージェント ）がある環境において， 観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です． DeepMind社が開発した囲碁プログラムの AlphaGo や， Atari社のビデオゲームをプレイする DQN(Deep Q-Network) などが強化学習の成果としてよく知られています． また，強化学習には，次に挙げるような手法が存在します．
+ モンテカルロ法（Monte Carlo Methods） TD学習(Temporal Difference Learning) Q学習(Q-Learning)  ここでは，シンプルなトランプゲームを題材に強化学習の基本を学び， 最後に強化学習のツールキットであるOpenAI Gymを利用してQ学習を実装してみます．
+  ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
+完成したノートブックの確認  ノートブックの確認
+トランプゲーム  次に示す2つのルールを考えます． いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます． ルール1には引き分けがないことに注意してください．
+ルール1   同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する． 1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる． 逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)．   ルール2   2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる．   実装  乱数を生成するrandom，数値計算のためのnumpyに加え， プログレスバーを表示するtqdm.notebookをインポートします．
+import random import numpy as np from tqdm." />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/87be6a7f6d7f55ac49c8e4588c975132.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
 
 
   
@@ -187,20 +185,32 @@ SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤー
 <main>
   <div class="post">
     
-    <h1 class="post-title">強化学習・OpenAI Gym</h1>
+    <h1 class="post-title">強化学習・モンテカルロ法</h1>
 <div class="post-line"></div>
     
     
 
-    <p><a href="https://gyazo.com/87be6a7f6d7f55ac49c8e4588c975132"><img src="https://i.gyazo.com/87be6a7f6d7f55ac49c8e4588c975132.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  OpenAI Gymとは
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  強化学習
 </h1>
 
-<p><a href="https://gym.openai.com/">OpenAI Gym</a>は，
-機械学習の一分野である <strong>強化学習</strong> を開発するためのツールキットです．
-ここでは，フローズンレイク（FrozenLake）などのゲームを題材に，
-強化学習のアルゴリズムを実装することができます．</p>
+<p><strong>強化学習(Reinforcement Learning)</strong> とは，自律的に行動するプログラム（ <strong>エージェント</strong> ）がある環境において，
+観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です．
+<a href="https://deepmind.com/">DeepMind社</a>が開発した囲碁プログラムの <strong>AlphaGo</strong> や，
+Atari社のビデオゲームをプレイする <strong>DQN(Deep Q-Network)</strong> などが強化学習の成果としてよく知られています．
+また，強化学習には，次に挙げるような手法が存在します．</p>
+<ul>
+<li>モンテカルロ法（Monte Carlo Methods）</li>
+<li>TD学習(Temporal Difference Learning)</li>
+<li>Q学習(Q-Learning)</li>
+</ul>
+<p>ここでは，シンプルなトランプゲームを題材に強化学習の基本を学び，
+最後に強化学習のツールキットである<a href="https://gym.openai.com/">OpenAI Gym</a>を利用してQ学習を実装してみます．</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/cjpEIotvwFY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ノートブックの作成
 </h1>
@@ -208,209 +218,350 @@ SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤー
 <p><strong>Google Colaboratory</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-12</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
-<p>最初に<strong>OpenAI Gym</strong> をインストールします．
-セルで下記のコマンドを実行してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; !pip install gym
-</code></pre></div><p>また，OpenAI Gymに加え，下記のライブラリも導入しておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gym
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> random
-<span style="color:#f92672">import</span> time
-<span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> output
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  フローズンレイク（FrozenLake）
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  完成したノートブックの確認
 </h1>
 
-<p><a href="https://gym.openai.com/envs/FrozenLake-v0/">フローズンレイク（FrozenLake）</a>は，
-凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです．</p>
-<p>湖の環境は下記のように16文字のテキストで表現されます．
-ここで，<strong>S</strong>はスタート地点，<strong>G</strong>はゴール地点，<strong>F</strong>は凍った湖，<strong>H</strong>は穴が空いた湖です．
-<strong>S</strong>から，<strong>H</strong>を避けて，<strong>F</strong>だけを通り，<strong>G</strong>に到達できればクリアです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">SFFF
-FHFH
-FFFH
-HFFG
-</code></pre></div><p>プレイヤーが観測できる情報は，プレイヤーの位置です．
-どこに<strong>H</strong>があるかを知ることはできません．
-プレイヤーの位置は0〜15の数値で表され，<strong>S</strong>は0，<strong>G</strong>は15に対応します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text"> 0  1  2  3
- 4  5  6  7
- 8  9 10 11
-12 13 14 15
-</code></pre></div><p>また，プレイヤーは，下記のいずれかの行動をとることが出来ます．</p>
-<ul>
-<li>左に行く(0)</li>
-<li>下に行く(1)</li>
-<li>右に行く(2)</li>
-<li>上に行く(3)</li>
-</ul>
-<p>下記の条件を満たしたとき，ゲームは失敗になります．</p>
-<ul>
-<li><strong>H</strong> に到達</li>
-</ul>
-<p>下記の条件を満たしたとき，ゲームは成功になります．</p>
-<ul>
-<li><strong>G</strong> に到達</li>
-</ul>
+<p><a href="https://colab.research.google.com/drive/1DhyvRP6Z3tS9HMIxf236H7VbgkXuZb_u?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  トランプゲーム
+</h1>
+
+<p>次に示す2つのルールを考えます．
+いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます．
+ルール1には引き分けがないことに注意してください．</p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    ルール1
+  </h3>
+
+  <p>
+    
+
+同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する．
+1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる．
+逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)．
+
+<a href="https://gyazo.com/414a0c6d9bf2481cdfdd098b7ca85ca2"><img src="https://i.gyazo.com/414a0c6d9bf2481cdfdd098b7ca85ca2.png" alt="Image from Gyazo" width="400"/></a>
+
+
+  </p>
+  
+</div>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    ルール2
+  </h3>
+
+  <p>
+    
+
+2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 
+2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． 
+ただし，<b>1枚目のカードを引いた時点で，ゲームから降りることを決めることができる</b>．
+
+<a href="https://gyazo.com/62b3f53aeffcf2e2ef9910a5e269cbe8"><img src="https://i.gyazo.com/62b3f53aeffcf2e2ef9910a5e269cbe8.png" alt="Image from Gyazo" width="597"/></a>
+
+
+  </p>
+  
+</div>
+
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   実装
 </h1>
 
-<h2 id="環境の初期化">環境の初期化</h2>
-<p>最初に対象とする環境を作成します．
-ここでは，バランスゲーム（FrozenLake-v0）を指定します．
-引数には<code>map_name</code>と<code>is_slippy</code>を設定します．
-<code>map_name</code>は<code>4x4</code>，または，<code>8x8</code>の2種類を指定できます．
-<code>is_slippy</code>はプレイヤーが氷上で滑るかどうかを表，ここでは滑らない（<code>false</code>）に設定します．
-滑る（<code>true</code>）に設定すると，一定の確率で異なる方向に移動してしまいます．
-このゲームの <strong>行動</strong> は4種類の離散値（0:左，1:下，2:右，3:上），
-また，<strong>状態空間</strong> は16種類の離散値（0〜15）であることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;FrozenLake-v0&#39;</span>, map_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;4x4&#34;</span>, is_slippery<span style="color:#f92672">=</span>False) <span style="color:#75715e"># 環境の初期化</span>
+<p>乱数を生成する<code>random</code>，数値計算のための<code>numpy</code>に加え，
+プログレスバーを表示する<a href="https://tqdm.github.io/docs/notebook/">tqdm.notebook</a>をインポートします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> random
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> tqdm.notebook <span style="color:#f92672">import</span> tqdm
+</code></pre></div><h2 id="ルール1の実装">ルール1の実装</h2>
+<p>それでは，ルール1を実装しましょう．
+同じ絵柄のトランプを使用するため，カードの数字は$1,2,\cdots,13$の13種類です．
+このカードから，<code>random.sample()</code>でランダムに2枚を選択し，1枚目のカードの数字の方が大きければ100円を獲得し，
+逆に小さければ100円を没収されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># トランプ</span>
+cards <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>]
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Action Space: {}&#34;</span><span style="color:#f92672">.</span>format(env<span style="color:#f92672">.</span>action_space)) <span style="color:#75715e"># 行動空間</span>
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Env Space: {}&#34;</span><span style="color:#f92672">.</span>format(env<span style="color:#f92672">.</span>observation_space)) <span style="color:#75715e"># 状態空間</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Action Space: Discrete(4)
-Env Space: Discrete(16)
-</code></pre></div><p>次に環境を<code>reset</code>関数で初期化します．
-このとき，観測されたプレイヤーの位置を取得します．
-プレイヤーの位置は <strong>0(=S)</strong> であることがわかります．
-また，<code>env.render()</code>はプレイヤーの環境を文字列で可視化します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境の初期化</span>
-env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 環境の描画</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">game</span>():
+  <span style="color:#75715e"># 2枚のカードを引く</span>
+  my_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
+  card1 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">0</span>]
+  card2 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">1</span>]
 
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;state={state}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">SFFF
-FHFH
-FFFH
-HFFG
-state=0
-</code></pre></div><p>ここで，実行結果の理解を簡単にするため，
-下記のように辞書<code>ACTION</code>，関数<code>toString()</code>を定義しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># プレイヤーの行動</span>
-ACTION <span style="color:#f92672">=</span> {
-  <span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#34;LEFT&#34;</span>,
-  <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;DOWN&#34;</span>,
-  <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;RIGHT&#34;</span>,
-  <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;UP&#34;</span>
+  <span style="color:#66d9ef">if</span> card1 <span style="color:#f92672">&gt;</span> card2:
+    <span style="color:#66d9ef">return</span> (card1, <span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You win</span>
+  <span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">return</span> (card1, <span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You lose</span>
+</code></pre></div><p>このゲームを10回繰り返してみます．
+この結果，勝ちは4回，負けは6回だったため，-600円が所持金となりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 所持金</span>
+money <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+  card, reward <span style="color:#f92672">=</span> game()
+  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{i}: card={card} reward={reward}&#34;</span>)
+  money <span style="color:#f92672">+=</span> reward
+
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Your money: {money}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">1</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">2</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">3</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">4</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">5</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">6</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">7</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">8</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">9</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+Your money: <span style="color:#f92672">-</span><span style="color:#ae81ff">600</span>
+</code></pre></div><p>カードの数字に応じて，得られる報酬の期待値（価値）が異なります．
+そこで，強化学習の考えに基づき，カードの数字の価値を求めてみましょう．
+カードの数字は <strong>状態$s$</strong> として定義され，13種類の状態が存在します．</p>
+<p>$$
+S = \{ s_1, s_2, \cdots, s_{13} \}
+$$</p>
+<p>また，勝負の結果，獲得または没収される金額を <strong>報酬r</strong> と定義します．
+報酬$r$は勝利したとき100，負けたとき-100となります．
+このとき，状態$s_x$の価値$V(s_x)$は，次の式を繰り返し適用することで求めることができます（得られる値は近似値）．
+ここで，$\alpha$は学習率と呼ばれ，$0&lt;\alpha&lt;1$の値を取ります．</p>
+<p>$$
+V&rsquo;(s_x) = (1 - \alpha) \cdot V(s_x) + \alpha \cdot r
+$$</p>
+<p>最初に，カードの数字の価値を$0$で初期化します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># カードの数字の価値（報酬の期待値）</span>
+values <span style="color:#f92672">=</span> {
+    <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span> 
 }
+</code></pre></div><p>次に，ゲームを100,000回繰り返して，上記の式を適用します．
+このとき，学習率$\alpha$は$0.001$に設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 学習率</span>
+alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>
 
-<span style="color:#75715e"># プレイヤーの行動履歴を文字列化</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">toString</span>(histories):
-  moves <span style="color:#f92672">=</span> []
-  <span style="color:#66d9ef">for</span> observation, action <span style="color:#f92672">in</span> histories:
-    moves<span style="color:#f92672">.</span>append((observation, ACTION[action]))
-  <span style="color:#66d9ef">return</span> moves
-</code></pre></div><h2 id="プレイヤーの行動">プレイヤーの行動</h2>
-<p>環境を初期化したら，<code>step()</code>を利用して，行動を選択します．
-ここでは，プレイヤーを下に移動させてみます．
-<code>step()</code>の引数に「下に行く」を表す <strong>1(=DOWN)</strong> を指定します．
-この行動の結果は下記の情報で表されます．</p>
-<ul>
-<li>プレイヤーの位置<code>next_state</code></li>
-<li>報酬<code>reward</code></li>
-<li>終了判定<code>done</code></li>
-<li>その他の情報<code>info</code>（ここでは利用しない）</li>
-</ul>
-<p>下に移動したため，プレイヤーの位置は<code>4</code>になっていることがわかります．
-また，報酬は<code>0</code>，終了状態は<code>False</code>となっています．
-報酬はプレイヤーがゴールに到達したときだけ<code>1</code>になります．
-終了状態は穴(H)に落ちるか，ゴールに到達すると<code>True</code>になります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 下に移動</span>
-state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># DOWN</span>
-next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-env<span style="color:#f92672">.</span>render()
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">100000</span>)):
+  card, reward <span style="color:#f92672">=</span> game()
+  values[card] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> values[card] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> reward
 
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;action={ACTION[action]}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>) <span style="color:#75715e"># 座標 0～15</span>
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>) <span style="color:#75715e"># 報酬（ゴールに到達すると1）</span>
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>) <span style="color:#75715e"># 終了状態</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Down)
-SFFF
-FHFH
-FFFH
-HFFG
-action=DOWN
-next_state=4
-reward=0.0
-done=False
-</code></pre></div><p>それでは，ゴールに到達可能な移動を指定してみます．
-ここでは，<code>RIGHT</code>，<code>RIGHT</code>，<code>DOWN</code>，<code>DOWN</code>，<code>DOWN</code>，<code>RIGHT</code>の順に移動します．
-移動履歴を<code>histories</code>に記録しておきます．
-また，<code>output.clear()</code>はコンソール出力のクリア，
-<code>time.sleep(1)</code>は1秒間の待機を表します．
-この結果，プレイヤーの位置は <strong>15(=G)</strong>，
-報酬は<code>1</code>，終了判定が<code>True</code>になっていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ゴールに到達する経路</span>
-state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
+<span style="color:#66d9ef">for</span> card <span style="color:#f92672">in</span> values:
+  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;card={card} value={values[card]:.2f}&#34;</span>)
+</code></pre></div><p>この結果，次に示す状態の価値$V(s_x)$が算出されました．
+$s_1$は常に負けるため価値は約$-100$，一方，$s_{13}$は常に勝利するため価値は約$100$になっています．
+また，$s_7$は，50%の確率で勝利し，50%の確率で負けるため，その価値は約$0$になっています．</p>
+<p>このように，ランダムにゲームを繰り返し，状態の価値（報酬の期待値）を推定する手法を  <strong>モンテカルロ法</strong>  と呼びます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">card<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">99.95</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">83.49</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">64.86</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">50.15</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">28.72</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">19.50</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">2.72</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">17.22</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">32.62</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">48.44</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">66.18</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">84.95</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">99.96</span>
+</code></pre></div><h2 id="ルール2の実装">ルール2の実装</h2>
+<p>それでは，ルール2を実装しましょう．
+上述と同じように <strong>モンテカルロ法</strong> で状態の価値を算出します．
+プレイヤーのそれぞれが同じ絵柄のトランプを利用します（プレイヤーAは <strong>クラブ</strong>，プレイヤーBは <strong>ダイヤ</strong>）．
+プレイヤーは2枚のカードを引き，それらの合計を求めます．
+この合計が多い方が100円を獲得します（合計が同じ場合は0円の獲得）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># トランプ</span>
+cards <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>]
 
-actions <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>] <span style="color:#75715e">#RIGHT, RIGHT, DOWN, DOWN, DOWN, RIGHT</span>
-histories <span style="color:#f92672">=</span> []
-<span style="color:#66d9ef">for</span> action <span style="color:#f92672">in</span> actions:
-  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-  histories<span style="color:#f92672">.</span>append((state, action))
-  state <span style="color:#f92672">=</span> next_state
-  output<span style="color:#f92672">.</span>clear()
-  env<span style="color:#f92672">.</span>render()
-  time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">game</span>():
+  <span style="color:#75715e"># 2枚のカードを引く</span>
+  my_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
+  rival_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
+  
+  card1 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">0</span>]
+  card2 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">1</span>]
 
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;actions={toString(histories)}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Right)
-SFFF
-FHFH
-FFFH
-HFFG
-actions=[(0, &#39;RIGHT&#39;), (1, &#39;RIGHT&#39;), (2, &#39;DOWN&#39;), (6, &#39;DOWN&#39;), (10, &#39;DOWN&#39;), (14, &#39;RIGHT&#39;)]
-next_state=15
-reward=1.0
-done=True
-</code></pre></div><h2 id="ランダムにプレイヤーを移動">ランダムにプレイヤーを移動</h2>
-<p>ランダムにプレイヤーを移動させてみます．
-<code>random.choice()</code>は引数で与えられたリストからランダムに一つを選びます．
-ここでは，<code>[0, 1, 2, 3]</code>を引数とするため，上下左右から一つが選択されます．
-この結果，プレイヤーは<code>5(=H)</code>に到達してしまい，ゲームは失敗となります．
-報酬は<code>0</code>，終了状態は<code>True</code>です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
+  <span style="color:#75715e"># カードの値を合計</span>
+  my_sum <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(my_cards)
+  rival_sum <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(rival_cards)
 
-histories <span style="color:#f92672">=</span> []
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
-  action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
-  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-  histories<span style="color:#f92672">.</span>append((state, action))
-  state <span style="color:#f92672">=</span> next_state
-  output<span style="color:#f92672">.</span>clear()
-  env<span style="color:#f92672">.</span>render()
-  time<span style="color:#f92672">.</span>sleep(<span style="color:#ae81ff">1</span>)
+  <span style="color:#66d9ef">if</span> my_sum <span style="color:#f92672">&gt;</span> rival_sum:
+    <span style="color:#66d9ef">return</span> (card1, card2, my_sum, <span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You win</span>
+  <span style="color:#66d9ef">elif</span> my_sum <span style="color:#f92672">==</span> rival_sum:
+    <span style="color:#66d9ef">return</span> (card1, card2, my_sum, <span style="color:#ae81ff">0</span>) <span style="color:#75715e"># Draw</span>
+  <span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">return</span> (card1, card2, my_sum, <span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You lose</span>
+</code></pre></div><p>このゲームを10回繰り返してみます．
+この結果，勝ちは5回，負けは4回，引き分けは1回だったため，100円が所持金となりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 所持金</span>
+money <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
-  <span style="color:#66d9ef">if</span> done:
-    <span style="color:#66d9ef">break</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+  card1, card2, sum, reward <span style="color:#f92672">=</span> game()
+  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{i}: card1={card1} card2={card2} sum={sum} reward={reward}&#34;</span>)
+  money <span style="color:#f92672">+=</span> reward
 
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;actions={toString(histories)}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">  (Down)
-SFFF
-FHFH
-FFFH
-HFFG
-actions=[(0, &#39;LEFT&#39;), (0, &#39;LEFT&#39;), (0, &#39;LEFT&#39;), (0, &#39;RIGHT&#39;), (1, &#39;DOWN&#39;)]
-next_state=5
-reward=0.0
-done=True
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Your money: {money}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">1</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">17</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">2</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">3</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">4</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+<span style="color:#ae81ff">5</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">6</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">7</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">8</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">17</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+<span style="color:#ae81ff">9</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+Your money: <span style="color:#ae81ff">100</span>
+</code></pre></div><p>カードの数字の合計を <strong>状態$s$</strong> と定義します．
+最小値は$1+2=3$，最大値は$12+13=25$であり，23種類の状態が存在します．</p>
+<p>$$
+S = \{ s_3, s_4, \cdots, s_{25} \}
+$$</p>
+<p>先程と同様に，状態$s_x$の価値$V(s_x)$を算出してみます．
+最初に，カードの数字の合計の価値を$0$で初期化します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 数字の合計の価値（報酬の期待値）</span>
+sum_values <span style="color:#f92672">=</span> {
+    <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">14</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">15</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">16</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">17</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">18</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">19</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">20</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">21</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">22</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">23</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">24</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">25</span>: <span style="color:#ae81ff">0</span>
+}
+</code></pre></div><p>次に，ゲームを500,000回繰り返して，価値を算出する式を適用します．
+このとき，学習率$\alpha$は$0.001$に設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 学習率</span>
+alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">500000</span>)):
+  card1, card2, sum, reward <span style="color:#f92672">=</span> game()
+  sum_values[sum] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> sum_values[sum] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> reward
+
+<span style="color:#66d9ef">for</span> sum <span style="color:#f92672">in</span> sum_values:
+  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;sum={sum} value={sum_values[sum]:.2f}&#34;</span>)
+</code></pre></div><p>この結果，次に示す状態の価値$V(s_x)$が算出されました．$s_3$は，引き分けを除き，その他の全ての合計値に負けるため価値は約-100，
+一方，$s_{25}$は，引き分けを除き，その他の全ての合計値に勝利するため価値は約100になっています（正確には100より少し小さい）．
+また，$s_{14}$は，50%の確率で勝利し，50%の確率で負けるため，その価値は約$0$になっています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sum<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">98.37</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">96.56</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">92.11</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">89.50</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">81.11</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">71.71</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">64.69</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">54.91</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">43.56</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">27.25</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">16.98</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.36</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">16.55</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">30.30</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">17</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">44.61</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">18</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">53.65</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">19</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">62.89</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">73.66</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">21</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">78.19</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">22</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">86.03</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">23</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">91.78</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">24</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">95.24</span>
+sum<span style="color:#f92672">=</span><span style="color:#ae81ff">25</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">98.67</span>
+</code></pre></div><p>ここで，ゲームのルールを思い出してみましょう．</p>
+<p>「ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる．」</p>
+<p>つまり，1枚目を引いた時点でのカードの価値がわかれば無理に勝負をする必要はないことになります．
+そこで，1枚目のカードの価値を算出してみましょう．</p>
+<p>1枚目のカードの数字は <strong>状態$t$</strong> として定義し，13種類の状態が存在します．</p>
+<p>$$
+T = \{ t_1, t_2, \cdots, t_{13} \}
+$$</p>
+<p>状態$t_x$の価値$V(t_x)$は，次の式を繰り返し適用することで求めることができます．
+報酬$r$が，カードの合計値の価値$V(s_x)$に置き換わっていることがわかります．
+このように，将来の状態の価値を基に，現在の状態の価値を更新する方法を <strong>ブートストラップ型学習</strong> と呼びます．</p>
+<p>$$
+V&rsquo;(t_x) = (1 - \alpha) \cdot V(t_x) + \alpha \cdot V(s_x)
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 1枚目のカードの価値（報酬の期待値）</span>
+card_values <span style="color:#f92672">=</span> {
+    <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span> 
+}
+</code></pre></div><p>ゲームを500,000回繰り返して，ブートストラップ型学習で1枚目のカードの価値を算出します．
+このとき，学習率$\alpha$は$0.001$に設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 学習率</span>
+alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">500000</span>)):
+  card1, card2, sum, reward <span style="color:#f92672">=</span> game()
+  sum_values[sum] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> sum_values[sum] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> reward
+  card_values[card1] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> card_values[card1] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> sum_values[sum]
+
+<span style="color:#66d9ef">for</span> card <span style="color:#f92672">in</span> card_values:
+  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;card={card} value={card_values[card]:.2f}&#34;</span>)
+</code></pre></div><p>この結果，次に示す状態の価値$V(t_x)$が算出されました．
+$t_1$の価値は約$-60$となり負ける可能性が高く，
+$t_{13}$の価値は約$60$となり勝つ可能性が高いことを示しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">card<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">60.76</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">51.00</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">41.24</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">32.77</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">19.22</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">9.60</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.58</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">9.65</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">18.31</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">33.06</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">40.74</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">51.62</span>
+card<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">62.09</span>
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  完成したノートブックの確認
-</h1>
-
-<p><a href="https://colab.research.google.com/drive/1Uh3sF8sCc9jy8PRYzd5ERbAhWQwWfueO?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
-<p>プレイヤーを<code>RIGHT</code>，<code>RIGHT</code>，<code>DOWN</code>，<code>DOWN</code>，<code>DOWN</code>，<code>RIGHT</code>とは異なる経路でゴールに到達させること．</p>
+<p>ルール2を変更し，合計値が同じであったら1000円を獲得し，それ以外の場合は-100円を没収することにする．
+このとき，$V(s_x)$と$V(t_x)$はどのような値になるか示せ．</p>
 <p>Google Colaboratoryで作成した <strong>AI-12.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出しなさい．
 提出の前に必ず下記の設定を行うこと．</p>
