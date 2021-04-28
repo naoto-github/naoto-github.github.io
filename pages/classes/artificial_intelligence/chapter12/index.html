@@ -76,7 +76,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+  <meta property="og:image" content="https://i.gyazo.com/6170c3bd93702fcecd34b2548157dced.png" />
 
 
 
@@ -84,12 +84,12 @@
 
 
 
-  <meta property="og:description" content="強化学習  強化学習(Reinforcement Learning) とは，自律的に行動するプログラム（ エージェント ）がある環境において， 観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です． DeepMind社が開発した囲碁プログラムの AlphaGo や， Atari社のビデオゲームをプレイする DQN(Deep Q-Network) などが強化学習の成果としてよく知られています． また，強化学習には，次に挙げるような手法が存在します．
+  <meta property="og:description" content="強化学習強化学習(Reinforcement Learning) とは，自律的に行動するプログラム（ エージェント ）がある環境において， 観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です． DeepMind社が開発した囲碁プログラムの AlphaGo や， Atari社のビデオゲームをプレイする DQN(Deep Q-Network) などが強化学習の成果としてよく知られています． また，強化学習には，次に挙げるような手法が存在します．
  モンテカルロ法（Monte Carlo Methods） TD学習(Temporal Difference Learning) Q学習(Q-Learning)  ここでは，シンプルなトランプゲームを題材に強化学習の基本を学び， 最後に強化学習のツールキットであるOpenAI Gymを利用してQ学習を実装してみます．
-  ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
-完成したノートブックの確認  ノートブックの確認
-トランプゲーム  次に示す2つのルールを考えます． いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます． ルール1には引き分けがないことに注意してください．
-ルール1   同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する． 1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる． 逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)．   ルール2   2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる．   実装  乱数を生成するrandom，数値計算のためのnumpyに加え， プログレスバーを表示するtqdm.notebookをインポートします．
+  ノートブックの作成Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
+完成したノートブックの確認ノートブックの確認
+トランプゲーム次に示す2つのルールを考えます． いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます． ルール1には引き分けがないことに注意してください．
+ルール1同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する． 1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる． 逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)．  ルール22人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる．  実装乱数を生成するrandom，数値計算のためのnumpyに加え， プログレスバーを表示するtqdm.notebookをインポートします．
 import random import numpy as np from tqdm." />
 
 
@@ -105,17 +105,17 @@ import random import numpy as np from tqdm." />
 
 
 
-  <meta name="twitter:description" content="強化学習  強化学習(Reinforcement Learning) とは，自律的に行動するプログラム（ エージェント ）がある環境において， 観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です． DeepMind社が開発した囲碁プログラムの AlphaGo や， Atari社のビデオゲームをプレイする DQN(Deep Q-Network) などが強化学習の成果としてよく知られています． また，強化学習には，次に挙げるような手法が存在します．
+  <meta name="twitter:description" content="強化学習強化学習(Reinforcement Learning) とは，自律的に行動するプログラム（ エージェント ）がある環境において， 観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です． DeepMind社が開発した囲碁プログラムの AlphaGo や， Atari社のビデオゲームをプレイする DQN(Deep Q-Network) などが強化学習の成果としてよく知られています． また，強化学習には，次に挙げるような手法が存在します．
  モンテカルロ法（Monte Carlo Methods） TD学習(Temporal Difference Learning) Q学習(Q-Learning)  ここでは，シンプルなトランプゲームを題材に強化学習の基本を学び， 最後に強化学習のツールキットであるOpenAI Gymを利用してQ学習を実装してみます．
-  ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
-完成したノートブックの確認  ノートブックの確認
-トランプゲーム  次に示す2つのルールを考えます． いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます． ルール1には引き分けがないことに注意してください．
-ルール1   同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する． 1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる． 逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)．   ルール2   2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる．   実装  乱数を生成するrandom，数値計算のためのnumpyに加え， プログレスバーを表示するtqdm.notebookをインポートします．
+  ノートブックの作成Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
+完成したノートブックの確認ノートブックの確認
+トランプゲーム次に示す2つのルールを考えます． いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます． ルール1には引き分けがないことに注意してください．
+ルール1同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する． 1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる． 逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)．  ルール22人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる．  実装乱数を生成するrandom，数値計算のためのnumpyに加え， プログレスバーを表示するtqdm.notebookをインポートします．
 import random import numpy as np from tqdm." />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/6170c3bd93702fcecd34b2548157dced.png" />
 
 
   
@@ -190,7 +190,8 @@ import random import numpy as np from tqdm." />
     
     
 
-    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+    <p><a href="https://gyazo.com/6170c3bd93702fcecd34b2548157dced"><img src="https://i.gyazo.com/6170c3bd93702fcecd34b2548157dced.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   強化学習
 </h1>
 
@@ -261,8 +262,8 @@ Atari社のビデオゲームをプレイする <strong>DQN(Deep Q-Network)</str
   <p>
     
 
-2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 
-2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． 
+2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する．
+2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）．
 ただし，<b>1枚目のカードを引いた時点で，ゲームから降りることを決めることができる</b>．
 
 <a href="https://gyazo.com/62b3f53aeffcf2e2ef9910a5e269cbe8"><img src="https://i.gyazo.com/62b3f53aeffcf2e2ef9910a5e269cbe8.png" alt="Image from Gyazo" width="597"/></a>
@@ -349,7 +350,7 @@ values <span style="color:#f92672">=</span> {
     <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
     <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
     <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span> 
+    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span>
 }
 </code></pre></div><p>次に，ゲームを100,000回繰り返して，上記の式を適用します．
 このとき，学習率$\alpha$は$0.001$に設定しています．</p>
@@ -392,7 +393,7 @@ cards <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>
   <span style="color:#75715e"># 2枚のカードを引く</span>
   my_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
   rival_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
-  
+
   card1 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">0</span>]
   card2 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">1</span>]
 
@@ -526,7 +527,7 @@ card_values <span style="color:#f92672">=</span> {
     <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
     <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
     <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span> 
+    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span>
 }
 </code></pre></div><p>ゲームを500,000回繰り返して，ブートストラップ型学習で1枚目のカードの価値を算出します．
 このとき，学習率$\alpha$は$0.001$に設定しています．</p>
