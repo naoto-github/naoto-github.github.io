@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+
+  <meta charset="UTF-8">
+  <!-- ページタイトル -->
+  <title>中津川市 コミュニティバス マップ</title>
+  <!-- leaflet.css -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+    <!-- leaflet-routing-machine.css -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+
+  <link rel="stylesheet" href="sample.css">
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+
+  <!-- leaflet.js -->
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+  <!-- leaflet-routing-machine.js -->
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+  <!-- data.js -->
+  <script src="data.js"></script>
+  <!-- timetable.js -->
+  <!-- <script src="timetable.js"></script> -->
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
+
+<body>
+
+<header>
+  <h1>中津川市 コミュニティバス マップ</h1>
+
+  <p>
+    中津川市が公開しているコミュニティバスの<a href="https://www.rosenzu.com/~gtfs/nakatsugawa/">オープンデータ</a>を可視化しました。<br>
+    市民がコミュニティバスを利用して、観光地やショッピング施設などに移動することをサポートします。<br>
+    地図上のマーカーをクリックすると，施設の名称やバスの時刻表が表示されます．
+  </p>
+
+  <p style="margin-right:20px">
+    <span style="color:red">●</span>: 観光地
+    <span style="color:green">●</span>: ショッピング施設
+    <span style="color:blue">●</span>: バス停
+  </p>
+
+</header>
+
+
+  <!-- 地図を表示するブロック要素 -->
+  <div id="mymap" style="width:100%;height:600px;"></div>
+
+  <script>
+
+    var stops_geojson_url = "https://raw.githubusercontent.com/naoto-github/GTFSConverter/main/json/stops.geojson"
+    var timetable_json_url = "https://raw.githubusercontent.com/naoto-github/GTFSConverter/main/json/timetable.json"
+
+    /* 緯度・経度と倍率の指定 */
+    var mymap = L.map("mymap").setView([35.55776, 137.48244], 13);
+
+    /* 地図タイルとクレジット表示 */
+    L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
+        }
+    ).addTo(mymap);
+
+    /* イベント処理 */
+    var popup = L.popup();
+    function onMapClick(e){
+      popup.setLatLng(e.latlng).setContent(e.latlng.toString()).openOn(mymap);
+    }
+    //mymap.on("click", onMapClick)
+
+    L.geoJSON(data, {
+      pointToLayer: function(feature, latlng){
+
+        var options ={
+          color: "#00ff00",
+          fillColor: "#00ff00",
+          opacity: 1,
+          fillOpacity: 0.8
+        }
+
+        if(feature.properties.type == "stop"){
+          options.color = "#0000ff";
+          options.fillColor = "#0000ff";
+          options.opacity = 0;
+          options.fillOpacity = 0;
+        }
+        if(feature.properties.type == "spot"){
+          options.color = "#ff0000";
+          options.fillColor = "#ff0000";
+        }
+        else if(feature.properties.type == "shop"){
+          options.color = "#00ff00";
+          options.fillColor = "#00ff00";
+        }
+        else if(feature.properties.type == "aa1"){
+          options.color = "#ffff00";
+          options.fillColor = "#ffff00";
+        }
+
+        circle = L.circleMarker(latlng, options);
+        circle.bindPopup("<div style='width:150px'>" + feature.properties.name + "<br>" +　"</div>");
+
+        return circle
+      }
+    }).addTo(mymap);
+
+    /* GeoJSONの読込 */
+    $.getJSON(stops_geojson_url, function(stop_data){
+      $.getJSON(timetable_json_url, function(timetable_data){
+        L.geoJSON(stop_data, {
+
+          pointToLayer: function(feature, latlng){
+
+            var options ={
+              color: "#0000ff",
+              fillColor: "#0000ff",
+              radius: 5,
+              opacity: 0,
+              fillOpacity: 0.5
+            }
+
+            circle = L.circleMarker(latlng, options);
+            circle.bindPopup("<div style='width:150px'>" + feature.properties.name + "<br>" + feature.properties.info + "</div>");
+
+            return circle
+          },
+          onEachFeature: function(feature, layer){
+
+             let html = "<div>"
+
+             // バス停
+             html += `<h2>${feature.properties.stop_name}</h2>`
+
+             //時刻表
+             timetable = timetable_data[feature.properties.stop_id]
+             for(var i=0; i<timetable["records"].length; i++){
+               record = timetable["records"][i];
+               route_long_name = record["route_long_name"];
+               trip_headsign = record["trip_headsign"];
+               departure_time = record["departure_time"];
+               html += `<p><b>${route_long_name}</b> ${departure_time} (${trip_headsign})</p>`
+             }
+
+             html += "</div>"
+
+             layer.bindPopup(html);
+           }
+         }).addTo(mymap);
+      })
+    })
+
+
+  </script>
+<footer id="footer">
+	Copyright(c) 2021 椙山女学園大学 文化情報学部 卒業研究
+</footer>
+</body>
+
+</html>
