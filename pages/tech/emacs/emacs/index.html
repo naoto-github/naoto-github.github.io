@@ -90,12 +90,13 @@
   <meta property="og:description" content="Atomへの乗り換えを検討しましたが，やっぱりEmacsが便利なことも多いです．そこで，MacでEmacsを利用する上で，必要最低限な設定をメモしておきます．
 インストール Macにインストール可能なEmacsは複数あるが，railwaycat氏のemacs-macがしっくりくる． インストール方法は，この計算物理屋の研究備忘録を参考にした（Mojabe10.14.4の環境では，なぜかcask版は実行できなかった）．
 % brew tap railwaycat/emacsmacport % brew install emacs-mac パッケージのインストール Emacsのパッケージをインストールするには，Melpaのレポジトリを登録しておく．.emacs.elに下記のように記述する（もうLispなんて忘れたわい）．
-(add-to-list &#39;package-archives &#39;(&#34;melpa-stable&#34; . &#34;https://stable.melpa.org/packages/&#34;) t) その後で，M-x list-packagesをして，パッケージを選択すればOK．
-Neo Tree Atomのようにファイルやフォルダをツリーで表示する． C-tでツリーの表示・非表示を切り替える．
-(global-set-key &#34;\C-t&#34; &#39;neotree-toggle) Markdown Mode マークダウン・ファイルのハイライトに用いる．
-テーマの設定 テーマをtango-darkに設定．
-(load-theme &#39;tango-dark t) キーバインディングの設定 Ctr-uでUndo．
-(global-set-key &#34;\C-u&#34; &#39;undo) **Meta-/**でComment．
+(add-to-list &#39;package-archives &#39;(&#34;melpa-stable&#34; . &#34;https://stable.melpa.org/packages/&#34;) t) その後で，M-x package-list-packagesをして，パッケージを選択すればOK．
+emacs-neotree emacs-neotree Atomのようにファイルやフォルダをツリーで表示する． C-tでツリーの表示・非表示を切り替える．
+(global-set-key &#34;\C-t&#34; &#39;neotree-toggle) markdonw-mode マークダウン・ファイルのハイライトに用いる．
+yatex Texのハイライトなど．
+テーマの設定 テーマをtango-dark に設定．
+(load-theme &#39;tango-dark t) キーバインディングの設定 Ctr-u でUndo．
+(global-set-key &#34;\C-u&#34; &#39;undo) Meta-/ でComment．
 (global-set-key &#34;\M-/&#34; &#39;comment-line) キーバインディングの競合の解消 デフォルトのキーバインディングでは， set-mark-command にC-SPC が割り当てられていますが，マック標準のキーバインディングと競合しており動作しません． この場合，【システム環境設定】→【キーボード】→【ショートカット】→【入力ソース】で，チェックを外すと解消されます．" />
 
 
@@ -114,12 +115,13 @@ Neo Tree Atomのようにファイルやフォルダをツリーで表示する�
   <meta name="twitter:description" content="Atomへの乗り換えを検討しましたが，やっぱりEmacsが便利なことも多いです．そこで，MacでEmacsを利用する上で，必要最低限な設定をメモしておきます．
 インストール Macにインストール可能なEmacsは複数あるが，railwaycat氏のemacs-macがしっくりくる． インストール方法は，この計算物理屋の研究備忘録を参考にした（Mojabe10.14.4の環境では，なぜかcask版は実行できなかった）．
 % brew tap railwaycat/emacsmacport % brew install emacs-mac パッケージのインストール Emacsのパッケージをインストールするには，Melpaのレポジトリを登録しておく．.emacs.elに下記のように記述する（もうLispなんて忘れたわい）．
-(add-to-list &#39;package-archives &#39;(&#34;melpa-stable&#34; . &#34;https://stable.melpa.org/packages/&#34;) t) その後で，M-x list-packagesをして，パッケージを選択すればOK．
-Neo Tree Atomのようにファイルやフォルダをツリーで表示する． C-tでツリーの表示・非表示を切り替える．
-(global-set-key &#34;\C-t&#34; &#39;neotree-toggle) Markdown Mode マークダウン・ファイルのハイライトに用いる．
-テーマの設定 テーマをtango-darkに設定．
-(load-theme &#39;tango-dark t) キーバインディングの設定 Ctr-uでUndo．
-(global-set-key &#34;\C-u&#34; &#39;undo) **Meta-/**でComment．
+(add-to-list &#39;package-archives &#39;(&#34;melpa-stable&#34; . &#34;https://stable.melpa.org/packages/&#34;) t) その後で，M-x package-list-packagesをして，パッケージを選択すればOK．
+emacs-neotree emacs-neotree Atomのようにファイルやフォルダをツリーで表示する． C-tでツリーの表示・非表示を切り替える．
+(global-set-key &#34;\C-t&#34; &#39;neotree-toggle) markdonw-mode マークダウン・ファイルのハイライトに用いる．
+yatex Texのハイライトなど．
+テーマの設定 テーマをtango-dark に設定．
+(load-theme &#39;tango-dark t) キーバインディングの設定 Ctr-u でUndo．
+(global-set-key &#34;\C-u&#34; &#39;undo) Meta-/ でComment．
 (global-set-key &#34;\M-/&#34; &#39;comment-line) キーバインディングの競合の解消 デフォルトのキーバインディングでは， set-mark-command にC-SPC が割り当てられていますが，マック標準のキーバインディングと競合しており動作しません． この場合，【システム環境設定】→【キーボード】→【ショートカット】→【入力ソース】で，チェックを外すと解消されます．" />
 
 
@@ -197,20 +199,23 @@ Neo Tree Atomのようにファイルやフォルダをツリーで表示する�
 <p>Emacsのパッケージをインストールするには，<strong>Melpa</strong>のレポジトリを登録しておく．<strong>.emacs.el</strong>に下記のように記述する（もうLispなんて忘れたわい）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp">(add-to-list <span style="color:#e6db74">&#39;package-archives</span>
              <span style="color:#f92672">&#39;</span>(<span style="color:#e6db74">&#34;melpa-stable&#34;</span> <span style="color:#f92672">.</span> <span style="color:#e6db74">&#34;https://stable.melpa.org/packages/&#34;</span>) <span style="color:#66d9ef">t</span>)
-</code></pre></div><p>その後で，<code>M-x list-packages</code>をして，パッケージを選択すればOK．</p>
-<h2 id="neo-tree">Neo Tree</h2>
-<p>Atomのようにファイルやフォルダをツリーで表示する．
+</code></pre></div><p>その後で，<code>M-x package-list-packages</code>をして，パッケージを選択すればOK．</p>
+<h2 id="emacs-neotree">emacs-neotree</h2>
+<p><a href="https://github.com/jaypei/emacs-neotree">emacs-neotree</a>
+Atomのようにファイルやフォルダをツリーで表示する．
 <code>C-t</code>でツリーの表示・非表示を切り替える．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp">(global-set-key <span style="color:#e6db74">&#34;\C-t&#34;</span> <span style="color:#e6db74">&#39;neotree-toggle</span>)
-</code></pre></div><h2 id="markdown-mode">Markdown Mode</h2>
+</code></pre></div><h2 id="markdonw-mode">markdonw-mode</h2>
 <p>マークダウン・ファイルのハイライトに用いる．</p>
+<h2 id="yatex">yatex</h2>
+<p>Texのハイライトなど．</p>
 <h1 id="テーマの設定">テーマの設定</h1>
-<p>テーマを<strong>tango-dark</strong>に設定．</p>
+<p>テーマを<strong>tango-dark</strong> に設定．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp">(load-theme <span style="color:#e6db74">&#39;tango-dark</span> <span style="color:#66d9ef">t</span>)
 </code></pre></div><h1 id="キーバインディングの設定">キーバインディングの設定</h1>
-<p><strong>Ctr-u</strong>でUndo．</p>
+<p><strong>Ctr-u</strong> でUndo．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp">(global-set-key <span style="color:#e6db74">&#34;\C-u&#34;</span> <span style="color:#e6db74">&#39;undo</span>)
-</code></pre></div><p>**Meta-/**でComment．</p>
+</code></pre></div><p><strong>Meta-/</strong> でComment．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lisp" data-lang="lisp">(global-set-key <span style="color:#e6db74">&#34;\M-/&#34;</span> <span style="color:#e6db74">&#39;comment-line</span>)
 </code></pre></div><h1 id="キーバインディングの競合の解消">キーバインディングの競合の解消</h1>
 <p>デフォルトのキーバインディングでは，
