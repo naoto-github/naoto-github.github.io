@@ -266,6 +266,29 @@ $A$から$Y$までの25の状態から，冗長な状態を取り除く．
 その次に，2ステップで到達可能な$S6$，$S8$，$S14$を探索します．
 これを目的状態$S17$に到達するまで繰り返します．</p>
 <p><a href="https://gyazo.com/7650922619de2a7e013c93e9dcc56773"><img src="https://i.gyazo.com/7650922619de2a7e013c93e9dcc56773.png" alt="Image from Gyazo"></a></p>
+<p>幅優先探索の探索順番は <strong>待ち行列（Queue）</strong> で表すことが可能です．
+待ち行列を考えるには，下図に示すような，蓋のない筒をイメージします．
+筒の左から要素を追加し，筒の右から要素を取り出します．
+このため「先に入れた要素が，先に取り出される」ことになります．
+よって，待ち行列は <strong>First-In First-Out（FIFO）</strong> とも呼ばれます．</p>
+<p><a href="https://gyazo.com/ae84356750372c422ed5cc95551de840"><img src="https://i.gyazo.com/ae84356750372c422ed5cc95551de840.png" alt="Image from Gyazo" width="500"/></a></p>
+<p>今回の迷路問題では，最初に状態$S1$を待ち行列に追加します．</p>
+<p>$$
+\{ \} \rightarrow \{ S1 \}
+$$</p>
+<p>待ち行列から$S1$を取り出し，$S1$から到達可能な$S2$，$S7$を待ち行列に追加します．</p>
+<p>$$
+\{ S1 \} \rightarrow \{ S7, S2 \}
+$$</p>
+<p>待ち行列から$S2$を取り出し，$S2$から到達可能な$S6$を待ち行列に追加します．</p>
+<p>$$
+\{ S7, S2 \} \rightarrow \{ S6, S7 \}
+$$</p>
+<p>待ち行列から$S7$を取り出し，$S7$から到達可能な$S8$と$S14$を待ち行列に追加します．</p>
+<p>$$
+\{ S6, S7 \} \rightarrow \{ S14, S8, S6 \}
+$$</p>
+<p>このように探索を繰り返すと，$S1$，$S2$，$S7$のように，初期状態に近い状態を優先して探索する <strong>幅優先探索</strong> となります．</p>
 <h3 id="深さ優先探索depth-first-search">深さ優先探索（Depth First Search）</h3>
 <p>深さ優先探索は，探索木の末端まで探索して目的状態を発見できなければ，
 一つ前の分岐まで後戻りして探索する手法のことです．
@@ -273,6 +296,29 @@ $A$から$Y$までの25の状態から，冗長な状態を取り除く．
 目的状態が発見できなかったため，$S1$まで戻り，$S7$，$S8$へと探索を進めます．
 これを目的状態$S17$に到達するまで繰り返します．</p>
 <p><a href="https://gyazo.com/ab01ecc1739314ce8da656d7f575f04d"><img src="https://i.gyazo.com/ab01ecc1739314ce8da656d7f575f04d.png" alt="Image from Gyazo"></a></p>
+<p>深さ優先探索の探索順番は <strong>スタック（Stack）</strong> で表すことが可能です．
+スタックを考えるには，下図に示すような，底がある筒をイメージします．
+筒の左から要素を追加し，筒の左から要素を取り出します．
+このため「後に入れた要素が，先に取り出される」ことになります．
+よって，スタックは <strong>Last-In First-Out（LIFO）</strong> とも呼ばれます．</p>
+<p><a href="https://gyazo.com/43638b08203fc59948520ae318d77135"><img src="https://i.gyazo.com/43638b08203fc59948520ae318d77135.png" alt="Image from Gyazo" width="400"/></a></p>
+<p>今回の迷路問題では，最初に状態$S1$をスタックに追加します．</p>
+<p>$$
+\{ \} \rightarrow \{ S1 \}
+$$</p>
+<p>スタックから$S1$を取り出し，$S1$から到達可能な$S2$，$S7$をスタックに追加します．</p>
+<p>$$
+\{ S1 \} \rightarrow \{ S2, S7 \}
+$$</p>
+<p>スタックから$S2$を取り出し，$S2$から到達可能な$S6$をスタックに追加します．</p>
+<p>$$
+\{ S2, S7 \} \rightarrow \{ S6, S7 \}
+$$</p>
+<p>スタックから$S6$を取り出しますが，$S6$から到達可能な状態はありません．</p>
+<p>$$
+\{ S6, S7 \} \rightarrow \{ S7 \}
+$$</p>
+<p>このように探索を繰り返すと，$S1$，$S2$，$S6$のように，初期状態から遠い状態を優先して探索する <strong>深さ優先探索</strong> となります．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   実装
 </h1>
