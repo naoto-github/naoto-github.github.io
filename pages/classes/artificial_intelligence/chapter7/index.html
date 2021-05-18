@@ -473,12 +473,13 @@ result <span style="color:#f92672">=</span> astar(problem, graph_search<span sty
 (&#39;S9&#39;, 4, 3) -&gt; [(&#39;S10&#39;, 5, 3), (&#39;S13&#39;, 4, 4)]
 (&#39;S5&#39;, 4, 2) -&gt; [(&#39;S4&#39;, 3, 2)]
 (&#39;S10&#39;, 5, 3) -&gt; [(&#39;S9&#39;, 4, 3), (&#39;S17&#39;, 5, 5)]
-</code></pre></div><p>最終状態，パス，コストを確認してみましょう．
+</code></pre></div><p>最終状態，パス，コスト，探索数を確認してみましょう．
 初期状態$S1$から目的状態$S17$までのパスは，
 $S1, S7, S8, S12, S13, S9, S10, S17$であり，
 そのコストは$10$となっています．
 ここでのコストはステップ数ではなく，
-得られたパスの実際のコスト（距離）となっていることに注意してください．</p>
+得られたパスの実際のコスト（距離）となっていることに注意してください．
+また，目的状態に到達するまでに探索した状態の数は$14$でした．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>state)
 <span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>path())
 <span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>cost)
@@ -498,7 +499,8 @@ $S1, S7, S8, S12, S13, S9, S10, S17$であり，
 
 <p>8パズルを <strong>A*アルゴリズム</strong> と <strong>幅優先探索</strong>  で解き，その探索数の差を示せ．
 探索数を調べるには上述のように変数<code>counter</code>を用いること．
-また，その理由を述べよ．このとき，初期状態と目的状態は下記に設定すること．</p>
+また，その差の理由を述べよ．</p>
+<p>このとき，初期状態と目的状態は下記に設定すること．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> (
     <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>,
     <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">4</span>,
@@ -510,7 +512,7 @@ GOAL <span style="color:#f92672">=</span> (
     <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>,
     <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>
 )
-</code></pre></div><p>また，状態間のコストとヒューリスティックスは下記のように実装する．
+</code></pre></div><p>状態間のコストとヒューリスティックスは下記のように実装する．
 <code>cost</code>は状態間のコストが常に1であることを表している．
 また，<code>heuristic</code>は目的状態と異なるタイルの数をカウントしている．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
