@@ -510,16 +510,18 @@ GOAL <span style="color:#f92672">=</span> (
     <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>,
     <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>
 )
-</code></pre></div><p>また，状態間のコストとヒューリスティックスは下記のように実装する．</p>
+</code></pre></div><p>また，状態間のコストとヒューリスティックスは下記のように実装する．
+<code>cost</code>は状態間のコストが常に1であることを表している．
+また，<code>heuristic</code>は目的状態と異なるタイルの数をカウントしている．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
 	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heuristic</span>(self, state):
 
-	s <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(state)
-	g <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(GOAL)
-    h <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>sum(s <span style="color:#f92672">==</span> g)
+  s <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(state)
+  g <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(GOAL)
+  h <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>sum(s <span style="color:#f92672">==</span> g)
 
-    <span style="color:#66d9ef">return</span> h
+  <span style="color:#66d9ef">return</span> h
 </code></pre></div><p>Google Colaboratoryで作成した <strong>AI-7.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出しなさい．
 提出の前に必ず下記の設定を行うこと．</p>
