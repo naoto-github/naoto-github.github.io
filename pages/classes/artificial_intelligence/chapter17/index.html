@@ -87,12 +87,11 @@
 
 
 
-  <meta property="og:description" content="ゲーム木  
-
-ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-17 とします． ノートブックの作成方法は第1回の資料を参照してください．
-最初に木構造を表現するtreelibをインストールします． セルで下記のコマンドを実行してください．
-&gt; !pip install treelib また，treelibに加え，下記のライブラリも導入しておきましょう．
-from treelib import Node, Tree import numpy as np import itertools 実装  # 盤面の評価 class Evaluation(): # 初期化 def __init__(self, player, board, value): self.player = player #プレイヤー self.board = board # 状態 self.value = value # 評価 self.text = self.__str__() # 文字列化 def __str__(self): return f&#34;[{self.player} {self.board} {self.value}]&#34; # 評価の更新 def update(self, value): self." />
+  <meta property="og:description" content="ゲーム木  これまでは8パズルやハノイの塔など1人のプレイヤーが解く問題を対象にしていました． ここでは，プレイヤーとコンピュータが対戦するオセロや将棋などの対戦形式のゲームについて考えましょう．
+人間とコンピュータとの対戦 対戦形式のゲームは，従来から人工知能の研究テーマとして取り組まれています． これまでに，人間（プロ棋士）とコンピュターとの対戦がメディアにも取り上げられています． 1997年には，IBMのDeep Blueが当時のチェスのチャンピオンに勝利しました， 2013年には，山本一成氏が開発したPonanzaがプロ棋士に勝利したことが注目されました． さらに，2016年には，ディープラーニングを取り入れたDeepMindのAlphaGoがプロ棋士に勝利しました． このように，対戦形式のゲームでは，既にコンピュータ（AI）が人間を超えるようになっています．
+    ゲーム 年 状況     オセロ 1980年 ムーアが世界チャンピオンの井上博に勝利   チェス 1997年 IBMのDeepBlueが世界チャンピオンのガルリ・カスパロフに勝利   将棋 2013年 山本一成が開発したPonanzaがプロ棋士の佐藤慎一に勝利   囲碁 2016年 DeepMindのAlphaGoがプロ棋士のイ・セドルに勝利    ゲーム木を利用した解の導出 対戦形式のゲームでは，プレイヤーの選択と，コンピュータの選択が交互に繰り返されます． このため，これまでの探索木では，適切な解を導出することができません． このような場合， ゲーム木（Game Tree） と呼ばれる手法が用いられます．
+ゲーム木は次のような木構造で表されます． 木のルート（根）であるAはゲームの初期状態（盤面）であり，先手（黒）が手を打つ場面です． 先手が手を打つとBまたはCに遷移します． BとCは後手（白）が手を打つ場面です． 同様に，後手が手を打つと，BからD，E，F，また，CからG，H，I，のいずれかに遷移します． DからIは先手が手を打つ場面です． 最終的には，後手が手を打つ場面であるJからVに遷移します．
+JからVの状態（盤面）には，先手がどれぐらい有利かを表す評価が与えられます （評価を決める評価関数はゲームによって異なり，開発者が最も頭を悩ませる部分です）． 例えば，Jは3，Kは2，Lは7となっています． 先手にとっては，A - B - D - Lと遷移すると，最も評価の高い 7 になりますが， 後手は先手の評価を下げようと手を打つため，実際はLに到達することはできません．" />
 
 
 
@@ -107,12 +106,11 @@ from treelib import Node, Tree import numpy as np import itertools 実装  # 盤
 
 
 
-  <meta name="twitter:description" content="ゲーム木  
-
-ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-17 とします． ノートブックの作成方法は第1回の資料を参照してください．
-最初に木構造を表現するtreelibをインストールします． セルで下記のコマンドを実行してください．
-&gt; !pip install treelib また，treelibに加え，下記のライブラリも導入しておきましょう．
-from treelib import Node, Tree import numpy as np import itertools 実装  # 盤面の評価 class Evaluation(): # 初期化 def __init__(self, player, board, value): self.player = player #プレイヤー self.board = board # 状態 self.value = value # 評価 self.text = self.__str__() # 文字列化 def __str__(self): return f&#34;[{self.player} {self.board} {self.value}]&#34; # 評価の更新 def update(self, value): self." />
+  <meta name="twitter:description" content="ゲーム木  これまでは8パズルやハノイの塔など1人のプレイヤーが解く問題を対象にしていました． ここでは，プレイヤーとコンピュータが対戦するオセロや将棋などの対戦形式のゲームについて考えましょう．
+人間とコンピュータとの対戦 対戦形式のゲームは，従来から人工知能の研究テーマとして取り組まれています． これまでに，人間（プロ棋士）とコンピュターとの対戦がメディアにも取り上げられています． 1997年には，IBMのDeep Blueが当時のチェスのチャンピオンに勝利しました， 2013年には，山本一成氏が開発したPonanzaがプロ棋士に勝利したことが注目されました． さらに，2016年には，ディープラーニングを取り入れたDeepMindのAlphaGoがプロ棋士に勝利しました． このように，対戦形式のゲームでは，既にコンピュータ（AI）が人間を超えるようになっています．
+    ゲーム 年 状況     オセロ 1980年 ムーアが世界チャンピオンの井上博に勝利   チェス 1997年 IBMのDeepBlueが世界チャンピオンのガルリ・カスパロフに勝利   将棋 2013年 山本一成が開発したPonanzaがプロ棋士の佐藤慎一に勝利   囲碁 2016年 DeepMindのAlphaGoがプロ棋士のイ・セドルに勝利    ゲーム木を利用した解の導出 対戦形式のゲームでは，プレイヤーの選択と，コンピュータの選択が交互に繰り返されます． このため，これまでの探索木では，適切な解を導出することができません． このような場合， ゲーム木（Game Tree） と呼ばれる手法が用いられます．
+ゲーム木は次のような木構造で表されます． 木のルート（根）であるAはゲームの初期状態（盤面）であり，先手（黒）が手を打つ場面です． 先手が手を打つとBまたはCに遷移します． BとCは後手（白）が手を打つ場面です． 同様に，後手が手を打つと，BからD，E，F，また，CからG，H，I，のいずれかに遷移します． DからIは先手が手を打つ場面です． 最終的には，後手が手を打つ場面であるJからVに遷移します．
+JからVの状態（盤面）には，先手がどれぐらい有利かを表す評価が与えられます （評価を決める評価関数はゲームによって異なり，開発者が最も頭を悩ませる部分です）． 例えば，Jは3，Kは2，Lは7となっています． 先手にとっては，A - B - D - Lと遷移すると，最も評価の高い 7 になりますが， 後手は先手の評価を下げようと手を打つため，実際はLに到達することはできません．" />
 
 
 
@@ -183,8 +181,80 @@ from treelib import Node, Tree import numpy as np import itertools 実装  # 盤
   ゲーム木
 </h1>
 
+<p>これまでは8パズルやハノイの塔など1人のプレイヤーが解く問題を対象にしていました．
+ここでは，プレイヤーとコンピュータが対戦するオセロや将棋などの対戦形式のゲームについて考えましょう．</p>
+<h2 id="人間とコンピュータとの対戦">人間とコンピュータとの対戦</h2>
+<p>対戦形式のゲームは，従来から人工知能の研究テーマとして取り組まれています．
+これまでに，人間（プロ棋士）とコンピュターとの対戦がメディアにも取り上げられています．
+1997年には，IBMのDeep Blueが当時のチェスのチャンピオンに勝利しました，
+2013年には，山本一成氏が開発したPonanzaがプロ棋士に勝利したことが注目されました．
+さらに，2016年には，ディープラーニングを取り入れたDeepMindのAlphaGoがプロ棋士に勝利しました．
+このように，対戦形式のゲームでは，既にコンピュータ（AI）が人間を超えるようになっています．</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1IiT59xku4c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<table>
+<thead>
+<tr>
+<th>ゲーム</th>
+<th>年</th>
+<th>状況</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>オセロ</td>
+<td>1980年</td>
+<td>ムーアが世界チャンピオンの井上博に勝利</td>
+</tr>
+<tr>
+<td>チェス</td>
+<td>1997年</td>
+<td>IBMの<a href="https://ja.wikipedia.org/wiki/%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%BB%E3%83%96%E3%83%AB%E3%83%BC_(%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF)">DeepBlue</a>が世界チャンピオンのガルリ・カスパロフに勝利</td>
+</tr>
+<tr>
+<td>将棋</td>
+<td>2013年</td>
+<td>山本一成が開発した<a href="https://ja.wikipedia.org/wiki/Ponanza#:~:text=Ponanza%EF%BC%88%E3%83%9D%E3%83%8A%E3%83%B3%E3%82%B6%EF%BC%89%E3%81%AF%E3%80%81%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF,%E3%81%A8%E8%A1%A8%E8%A8%98%E3%81%97%E3%81%A6%E3%81%84%E3%81%9F%E3%80%82">Ponanza</a>がプロ棋士の佐藤慎一に勝利</td>
+</tr>
+<tr>
+<td>囲碁</td>
+<td>2016年</td>
+<td>DeepMindの<a href="https://ja.wikipedia.org/wiki/AlphaGo">AlphaGo</a>がプロ棋士のイ・セドルに勝利</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ゲーム木を利用した解の導出">ゲーム木を利用した解の導出</h2>
+<p>対戦形式のゲームでは，プレイヤーの選択と，コンピュータの選択が交互に繰り返されます．
+このため，これまでの探索木では，適切な解を導出することができません．
+このような場合， <strong>ゲーム木（Game Tree）</strong> と呼ばれる手法が用いられます．</p>
+<p>ゲーム木は次のような木構造で表されます．
+木のルート（根）である<code>A</code>はゲームの初期状態（盤面）であり，先手（黒）が手を打つ場面です．
+先手が手を打つと<code>B</code>または<code>C</code>に遷移します．
+<code>B</code>と<code>C</code>は後手（白）が手を打つ場面です．
+同様に，後手が手を打つと，<code>B</code>から<code>D</code>，<code>E</code>，<code>F</code>，また，<code>C</code>から<code>G</code>，<code>H</code>，<code>I</code>，のいずれかに遷移します．
+<code>D</code>から<code>I</code>は先手が手を打つ場面です．
+最終的には，後手が手を打つ場面である<code>J</code>から<code>V</code>に遷移します．</p>
+<p><code>J</code>から<code>V</code>の状態（盤面）には，先手がどれぐらい有利かを表す評価が与えられます
+（評価を決める評価関数はゲームによって異なり，開発者が最も頭を悩ませる部分です）．
+例えば，<code>J</code>は3，<code>K</code>は2，<code>L</code>は7となっています．
+先手にとっては，<code>A - B - D - L</code>と遷移すると，最も評価の高い <strong>7</strong> になりますが，
+後手は先手の評価を下げようと手を打つため，実際は<code>L</code>に到達することはできません．</p>
 <p><a href="https://gyazo.com/8e651ad45d24e134331459c11039aca3"><img src="https://i.gyazo.com/8e651ad45d24e134331459c11039aca3.png" alt="Image from Gyazo"></a></p>
+<p>そこで，<strong>ミニマックス法（minimax）</strong> を用いて解を導出します．
+先手は評価を <strong>最大化</strong> ，後手は評価を <strong>最小化</strong> することから名付けられました．
+<code>D</code>の場面では，先手が手を打つため，評価が最大となる<code>L</code>を選択します．
+よって，<code>D</code>の評価も<code>L</code>と同じ7に設定します．
+同様に，<code>E</code>から<code>I</code>の評価も設定します．
+<code>B</code>の場面では，後手が手を打つため，評価が最小となる<code>E</code>を選択します．
+よって，<code>B</code>の評価も<code>E</code>と同じ4に設定します．
+同様に，<code>C</code>の評価は3に設定されます．
+<code>A</code>の場面では，先手が手を打つため，評価が最大なる<code>B</code>を選択します．
+よって，<code>A</code>の評価は<code>B</code>と同じ4に設定されます．
+このため，<code>A - B - E - M</code>に遷移することが先手にとって最良の選択となります．</p>
 <p><a href="https://gyazo.com/2a32b3e30538b0b318cb364eaec71f14"><img src="https://i.gyazo.com/2a32b3e30538b0b318cb364eaec71f14.png" alt="Image from Gyazo"></a></p>
+<p>1手ごとにミニマックス法による探索を実行し，先手は次の1手を決めます．
+先の例では深さが3までの探索でした（先手 - 後手 - 先手 - 後手）．
+これを深くすることで，より有利な手を導出することができます．
+しかし，探索する状態の組み合わせが爆発的に増加するため，効率良く探索することが求められます（ <strong>アルファベータ法</strong> など）．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ノートブックの作成
 </h1>
@@ -193,6 +263,7 @@ from treelib import Node, Tree import numpy as np import itertools 実装  # 盤
 ノートブックのタイトルは <strong>AI-17</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
 <p>最初に木構造を表現する<a href="https://treelib.readthedocs.io/en/latest/">treelib</a>をインストールします．
+treelibはゲーム木を表現するために用います．
 セルで下記のコマンドを実行してください．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; !pip install treelib
 </code></pre></div><p>また，treelibに加え，下記のライブラリも導入しておきましょう．</p>
@@ -203,6 +274,9 @@ from treelib import Node, Tree import numpy as np import itertools 実装  # 盤
   実装
 </h1>
 
+<p>ゲーム木を実装してみましょう．
+最初に状態（盤面）の評価を表す <code>Evaluation</code>クラスを定義します．
+Evaluationクラスは，「プレイヤー（先手または後手）」，「盤面の状態」，「盤面の評価」を保持します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 盤面の評価</span>
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Evaluation</span>():
 
@@ -221,7 +295,11 @@ from treelib import Node, Tree import numpy as np import itertools 実装  # 盤
   <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>(self, value):
     self<span style="color:#f92672">.</span>value <span style="color:#f92672">=</span> value
     self<span style="color:#f92672">.</span>text <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>__str__()
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ゲーム木</span>
+</code></pre></div><p>treelibでゲーム木を表現します．
+先手は<code>Black</code>，後手は<code>White</code>で表現しています．
+また，盤面の状態は，先の図に合わせて，<code>A</code>から<code>V</code>としています（本来は駒の配置などを表現する）．
+盤面の評価も，先の図と同じ値に設定しています（本来は評価関数で計算する）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ゲーム木</span>
 tree <span style="color:#f92672">=</span> Tree()
 
 <span style="color:#75715e"># Blackの盤面（先手）</span>
@@ -254,7 +332,10 @@ tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">
 tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;T&#34;</span>, <span style="color:#e6db74">&#34;T&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;T&#34;</span>, <span style="color:#ae81ff">3</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;H&#34;</span>)
 tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;U&#34;</span>, <span style="color:#e6db74">&#34;U&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;U&#34;</span>, <span style="color:#ae81ff">5</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;I&#34;</span>)
 tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;V&#34;</span>, <span style="color:#e6db74">&#34;V&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;V&#34;</span>, <span style="color:#ae81ff">6</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;I&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ゲーム木の表示</span>
+</code></pre></div><p>作成したゲーム木を表示します．
+末端以外の状態の評価は<code>None</code>となっていることに注意してください．
+先の図と同じ木構造になっていることを確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ゲーム木の表示</span>
 tree<span style="color:#f92672">.</span>show(data_property<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[Black A None]
 <span style="color:#960050;background-color:#1e0010">├──</span> [White B None]
@@ -278,7 +359,9 @@ tree<span style="color:#f92672">.</span>show(data_property<span style="color:#f9
     <span style="color:#960050;background-color:#1e0010">└──</span> [Black I None]
         <span style="color:#960050;background-color:#1e0010">├──</span> [White U <span style="color:#ae81ff">5</span>]
         <span style="color:#960050;background-color:#1e0010">└──</span> [White V <span style="color:#ae81ff">6</span>]
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ミニマックス法</span>
+</code></pre></div><p>ミニマックス法で，木の末端から評価を伝播させて，全ての状態（盤面）の評価を設定します．
+深さが奇数のときは最大値を選択し，偶数のときは最小値を選択します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ミニマックス法</span>
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">minimax</span>(tree):
 
   <span style="color:#75715e"># ノードを取得</span>
@@ -308,7 +391,9 @@ tree<span style="color:#f92672">.</span>show(data_property<span style="color:#f9
           parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>update(node<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value)
 
   <span style="color:#66d9ef">return</span> tree
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tree <span style="color:#f92672">=</span> minimax(tree)
+</code></pre></div><p>再度，ゲーム木を表示します．
+全ての状態（盤面）に評価が設定されていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tree <span style="color:#f92672">=</span> minimax(tree)
 tree<span style="color:#f92672">.</span>show(data_property<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[Black A <span style="color:#ae81ff">4</span>]
 <span style="color:#960050;background-color:#1e0010">├──</span> [White B <span style="color:#ae81ff">4</span>]
@@ -332,7 +417,10 @@ tree<span style="color:#f92672">.</span>show(data_property<span style="color:#f9
     <span style="color:#960050;background-color:#1e0010">└──</span> [Black I <span style="color:#ae81ff">6</span>]
         <span style="color:#960050;background-color:#1e0010">├──</span> [White U <span style="color:#ae81ff">5</span>]
         <span style="color:#960050;background-color:#1e0010">└──</span> [White V <span style="color:#ae81ff">6</span>]
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getMax</span>(tree):
+</code></pre></div><p>先手は<code>B</code>または<code>C</code>の評価の高い方を選択します．
+ここでは，評価4の<code>B</code>が選択されることになります．
+この選択を1手ごとに繰り返します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getMax</span>(tree):
 
   <span style="color:#75715e"># 降順で並べ替え</span>
   nodes <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>children(tree<span style="color:#f92672">.</span>root)
@@ -349,7 +437,9 @@ tree<span style="color:#f92672">.</span>show(data_property<span style="color:#f9
   完成したノートブックの確認
 </h1>
 
+<p>３目並べ（Tic-tac-toe）の対戦相手となるコンピュータをゲーム木で実装しています．</p>
 <p><a href="https://colab.research.google.com/drive/1Mz9AWbYQpy088mk1431vuhKFeQhPlB2W?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
+<p><a href="https://gyazo.com/5e7ece9becae9dbd0eedb7c90b80a810"><img src="https://i.gyazo.com/5e7ece9becae9dbd0eedb7c90b80a810.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
