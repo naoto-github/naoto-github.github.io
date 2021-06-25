@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    高次の正規化 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="高次の正規化" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/database/chapter_extra1/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="高次の正規化  リレーショナルデータベースに関連する実際の業務では， これまでに紹介した第3正規形を満たすように情報無損失分解しておけば問題ありません． 一方で，厳密な設計が求められる場合，より高次の正規形を必要とするケースも考えられます． 高次の正規形は次に挙げる3つですが，ここでは第4正規形まで取り上げることにします．
+ ボイス・コッド正規形 第4正規形 第5正規形  高次の正規形を説明する前に，第3正規形までを振り返っておきましょう．
+第1正規形 第1正規形 は，ドメインがシンプルであることが条件です． ドメインが，「複数のドメインの直積」や，「あるドメインのべき集合」となっていることは認められません．
+第１正規形   リレーション$R=(A_1, A_2, \cdots, A_n)$の各ドメインがシンプルであるとき第１正規形であるという．  第2正規形 第2正規形は，主キー以外の属性が，主キーに完全関数従属していることが条件です． 主キーが複数の属性で構成されているとき，主キーを構成する一部の属性に関数従属していることは認められません．
+第2正規形   リレーション$R$が下記の条件を満たすとき 第2正規形 であるという．  $R$は第1正規形である． $R$の全ての非キー属性が，$R$の主キー（候補キー）に完全関数従属している．   第3正規形 第3正規形は，主キー以外の属性が，主キーに推移的に従属していないことが条件です（第2正規形は満たしているので，主キーに完全関数従属はしている）．
+第3正規形   リレーション$R$が下記の条件を満たすとき 第3正規形 であるという．  $R$は第2正規形である． $R$の全ての非キー属性は，$R$の主キー（候補キー）に推移的に関数従属していない．   正規化の手順 次の【プロジェクトメンバー】を例に，第3正規形に変形してみましょう． このリレーションは，複数の企業から選抜された社員で構成されるプロジェクトのメンバーを表しています． 主キーは会社番号と社員番号のペアで構成され，社員は一つのプロジェクトに割り当てられます．
+   会社番号 社員番号 氏名 業種 担当プロジェクト ターゲット     C01 E01 加藤淳 製造業 A 主婦層   C01 E02 青木健二 製造業 A 主婦層   C01 E03 鈴木由香 製造業 B 若年層   C02 E01 渡辺大樹 情報通信業 B 若年層   C02 E02 松本恭子 情報通信業 A 主婦層    【プロジェクトメンバー】" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="高次の正規化" />
+
+
+
+  <meta name="twitter:description" content="高次の正規化  リレーショナルデータベースに関連する実際の業務では， これまでに紹介した第3正規形を満たすように情報無損失分解しておけば問題ありません． 一方で，厳密な設計が求められる場合，より高次の正規形を必要とするケースも考えられます． 高次の正規形は次に挙げる3つですが，ここでは第4正規形まで取り上げることにします．
+ ボイス・コッド正規形 第4正規形 第5正規形  高次の正規形を説明する前に，第3正規形までを振り返っておきましょう．
+第1正規形 第1正規形 は，ドメインがシンプルであることが条件です． ドメインが，「複数のドメインの直積」や，「あるドメインのべき集合」となっていることは認められません．
+第１正規形   リレーション$R=(A_1, A_2, \cdots, A_n)$の各ドメインがシンプルであるとき第１正規形であるという．  第2正規形 第2正規形は，主キー以外の属性が，主キーに完全関数従属していることが条件です． 主キーが複数の属性で構成されているとき，主キーを構成する一部の属性に関数従属していることは認められません．
+第2正規形   リレーション$R$が下記の条件を満たすとき 第2正規形 であるという．  $R$は第1正規形である． $R$の全ての非キー属性が，$R$の主キー（候補キー）に完全関数従属している．   第3正規形 第3正規形は，主キー以外の属性が，主キーに推移的に従属していないことが条件です（第2正規形は満たしているので，主キーに完全関数従属はしている）．
+第3正規形   リレーション$R$が下記の条件を満たすとき 第3正規形 であるという．  $R$は第2正規形である． $R$の全ての非キー属性は，$R$の主キー（候補キー）に推移的に関数従属していない．   正規化の手順 次の【プロジェクトメンバー】を例に，第3正規形に変形してみましょう． このリレーションは，複数の企業から選抜された社員で構成されるプロジェクトのメンバーを表しています． 主キーは会社番号と社員番号のペアで構成され，社員は一つのプロジェクトに割り当てられます．
+   会社番号 社員番号 氏名 業種 担当プロジェクト ターゲット     C01 E01 加藤淳 製造業 A 主婦層   C01 E02 青木健二 製造業 A 主婦層   C01 E03 鈴木由香 製造業 B 若年層   C02 E01 渡辺大樹 情報通信業 B 若年層   C02 E02 松本恭子 情報通信業 A 主婦層    【プロジェクトメンバー】" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">高次の正規化</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  高次の正規化
+</h1>
+
+<p>リレーショナルデータベースに関連する実際の業務では，
+これまでに紹介した第3正規形を満たすように情報無損失分解しておけば問題ありません．
+一方で，厳密な設計が求められる場合，より高次の正規形を必要とするケースも考えられます．
+高次の正規形は次に挙げる3つですが，ここでは第4正規形まで取り上げることにします．</p>
+<ul>
+<li><strong>ボイス・コッド正規形</strong></li>
+<li><strong>第4正規形</strong></li>
+<li><strong>第5正規形</strong></li>
+</ul>
+<p>高次の正規形を説明する前に，第3正規形までを振り返っておきましょう．</p>
+<h3 id="第1正規形">第1正規形</h3>
+<p><strong>第1正規形</strong> は，ドメインがシンプルであることが条件です．
+ドメインが，「複数のドメインの直積」や，「あるドメインのべき集合」となっていることは認められません．</p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    第１正規形
+  </h3>
+
+  <p>
+    
+	リレーション$R=(A_1, A_2, \cdots, A_n)$の各ドメインがシンプルであるとき<b>第１正規形</b>であるという．
+
+  </p>
+  
+</div>
+
+<h3 id="第2正規形">第2正規形</h3>
+<p><strong>第2正規形</strong>は，主キー以外の属性が，主キーに完全関数従属していることが条件です．
+主キーが複数の属性で構成されているとき，主キーを構成する一部の属性に関数従属していることは認められません．</p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    第2正規形
+  </h3>
+
+  <p>
+    
+リレーション$R$が下記の条件を満たすとき <b>第2正規形</b> であるという．
+
+<ul>
+<li>$R$は第1正規形である．</li>
+<li>$R$の全ての非キー属性が，$R$の主キー（候補キー）に完全関数従属している．</li>
+</ul>
+
+
+  </p>
+  
+</div>
+
+<h3 id="第3正規形">第3正規形</h3>
+<p><strong>第3正規形</strong>は，主キー以外の属性が，主キーに推移的に従属していないことが条件です（第2正規形は満たしているので，主キーに完全関数従属はしている）．</p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    第3正規形
+  </h3>
+
+  <p>
+    
+リレーション$R$が下記の条件を満たすとき <b>第3正規形</b> であるという．
+
+<ul>
+<li>$R$は第2正規形である．</li>
+<li>$R$の全ての非キー属性は，$R$の主キー（候補キー）に<b>推移的</b>に関数従属していない．</li>
+</ul>
+
+
+  </p>
+  
+</div>
+
+<h3 id="正規化の手順">正規化の手順</h3>
+<p>次の【プロジェクトメンバー】を例に，第3正規形に変形してみましょう．
+このリレーションは，複数の企業から選抜された社員で構成されるプロジェクトのメンバーを表しています．
+主キーは会社番号と社員番号のペアで構成され，社員は一つのプロジェクトに割り当てられます．</p>
+<table>
+<thead>
+<tr>
+<th><u>会社番号</u></th>
+<th><u>社員番号</u></th>
+<th>氏名</th>
+<th>業種</th>
+<th>担当プロジェクト</th>
+<th>ターゲット</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C01</td>
+<td>E01</td>
+<td>加藤淳</td>
+<td>製造業</td>
+<td>A</td>
+<td>主婦層</td>
+</tr>
+<tr>
+<td>C01</td>
+<td>E02</td>
+<td>青木健二</td>
+<td>製造業</td>
+<td>A</td>
+<td>主婦層</td>
+</tr>
+<tr>
+<td>C01</td>
+<td>E03</td>
+<td>鈴木由香</td>
+<td>製造業</td>
+<td>B</td>
+<td>若年層</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>E01</td>
+<td>渡辺大樹</td>
+<td>情報通信業</td>
+<td>B</td>
+<td>若年層</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>E02</td>
+<td>松本恭子</td>
+<td>情報通信業</td>
+<td>A</td>
+<td>主婦層</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【プロジェクトメンバー】</strong></p>
+<h4 id="第1正規形への正規化">第1正規形への正規化</h4>
+<p>最初に，第1正規形の判定をします．
+全てのドメインがシンプルであることは明らかです．
+このため，【プロジェクトメンバー】は第1正規形を満たしています．</p>
+<h4 id="第2正規形への正規化">第2正規形への正規化</h4>
+<p>次に，第2正規形の判定をします．
+非キー属性の関数従属をチェックします．</p>
+<p>$$
+\{会社番号, 社員番号\} \rightarrow 氏名
+$$</p>
+<p>$$
+会社番号 \rightarrow 業種
+$$</p>
+<p>$$
+\{会社番号, 社員番号\} \rightarrow 担当プロジェクト
+$$</p>
+<p>$$
+\{会社番号, 社員番号\} \rightarrow ターゲット
+$$</p>
+<p>このとき，業種は主キーの一部（会社番号）に関数従属しているため，
+主キーに完全関数従属していません．
+よって，【プロジェクトメンバー】は第2正規形ではありません．
+そこで，次のように情報無損失分解します．</p>
+<table>
+<thead>
+<tr>
+<th><u>会社番号</u></th>
+<th><u>社員番号</u></th>
+<th>氏名</th>
+<th>担当プロジェクト</th>
+<th>ターゲット</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C01</td>
+<td>E01</td>
+<td>加藤淳</td>
+<td>A</td>
+<td>主婦層</td>
+</tr>
+<tr>
+<td>C01</td>
+<td>E02</td>
+<td>青木健二</td>
+<td>A</td>
+<td>主婦層</td>
+</tr>
+<tr>
+<td>C01</td>
+<td>E03</td>
+<td>鈴木由香</td>
+<td>B</td>
+<td>若年層</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>E01</td>
+<td>渡辺大樹</td>
+<td>B</td>
+<td>若年層</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>E02</td>
+<td>松本恭子</td>
+<td>A</td>
+<td>主婦層</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【プロジェクトメンバー】</strong></p>
+<table>
+<thead>
+<tr>
+<th><u>会社番号</u></th>
+<th>業種</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C01</td>
+<td>製造業</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>情報通信業</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【業種リスト】</strong></p>
+<p>これで，全ての非キー属性が主キーに完全関数従属しています．
+よって，【プロジェクトメンバー】は第2正規形です．</p>
+<h4 id="第3正規形への正規化">第3正規形への正規化</h4>
+<p>次に，第3正規形の判定をします．
+非キー属性の推移的な関数従属をチェックします．</p>
+<p>$$
+\{会社番号, 社員番号\} \rightarrow 担当プロジェクト \rightarrow ターゲット
+$$</p>
+<p>このとき，ターゲットは，担当プロジェクトを介して，推移的に主キーに関数従属しています．
+よって，【プロジェクトメンバー】は第2正規形ではありません．
+そこで，次のように情報無損失分解します．</p>
+<table>
+<thead>
+<tr>
+<th><u>会社番号</u></th>
+<th><u>社員番号</u></th>
+<th>氏名</th>
+<th>担当プロジェクト</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C01</td>
+<td>E01</td>
+<td>加藤淳</td>
+<td>A</td>
+</tr>
+<tr>
+<td>C01</td>
+<td>E02</td>
+<td>青木健二</td>
+<td>A</td>
+</tr>
+<tr>
+<td>C01</td>
+<td>E03</td>
+<td>鈴木由香</td>
+<td>B</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>E01</td>
+<td>渡辺大樹</td>
+<td>B</td>
+</tr>
+<tr>
+<td>C02</td>
+<td>E02</td>
+<td>松本恭子</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【プロジェクトメンバー】</strong></p>
+<table>
+<thead>
+<tr>
+<th><u>担当プロジェクト</u></th>
+<th>ターゲット</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>主婦層</td>
+</tr>
+<tr>
+<td>B</td>
+<td>若年層</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【プロジェクリスト】</strong></p>
+<p>これで，全ての非キー属性に推移的に関数従属は存在しません．
+よって，【プロジェクトメンバー】は第3正規形です．</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  ボイス・コッド正規形
+</h1>
+
+<p><strong>ボイス・コッド正規形（Boyce-Codd Normal Form: BCNF）</strong> は，
+第3正規形をより厳密に定義した正規形であり，
+Edgar Frank Codd氏とRaymond F. Boyce氏によって定義されました（第3.5正規形とも呼ばれる）．
+第3正規形であれば，既にボイス・コッド正規形を満たしていることが殆どで，
+ボイス・コッド正規形を満たしてないリレーションは極めて珍しいとされています．</p>
+<p>例えば，次の【参加研修リスト】を考えます．
+主キーは社員番号と研修のペアで構成されています．
+このとき，社員は複数の異なる内容の研修を受けることが出来ますが，
+同じ研修内容を複数受けることは出来ません（E01は鈴木のプログラミングを受けられない）．
+また，1つの研修を1人の講師が担当します．
+講師は同一内容の研修を複数担当することがありますが，
+異なる内容の研修を担当することはありません（伊藤はマナーを担当できない）．</p>
+<table>
+<thead>
+<tr>
+<th><u>社員番号</u></th>
+<th><u>研修</u></th>
+<th>講師</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E01</td>
+<td>プログラミング</td>
+<td>伊藤</td>
+</tr>
+<tr>
+<td>E01</td>
+<td>マナー</td>
+<td>山田</td>
+</tr>
+<tr>
+<td>E02</td>
+<td>プログラミング</td>
+<td>鈴木</td>
+</tr>
+<tr>
+<td>E03</td>
+<td>マナー</td>
+<td>山田</td>
+</tr>
+<tr>
+<td>E03</td>
+<td>リーダシップ</td>
+<td>武田</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【参加研修リスト】</strong></p>
+<p>このとき，次の関数従属が成立します．</p>
+<p>$$
+\{ 社員番号,研修 \} \rightarrow 講師
+$$</p>
+<p>非キー属性が主キーに完全関数従属しているため第2正規形です．
+また，推移的な関数従属も存在しないので，第3正規形であることも間違いありません．</p>
+<p>一方で，次の関数従属が成立しています．</p>
+<p>$$
+講師 \rightarrow 研修
+$$</p>
+<p>このように，主キーである <strong>研修</strong> が，非キー属性である <strong>講師</strong> に関数従属していると
+ボイス・コッド正規形とはならず，タプル挿入時異常などの更新時異常が発生します．</p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    ボイス・コッド正規形
+  </h3>
+
+  <p>
+    
+リレーション$R$が下記の条件を満たすとき <b>ボイス・コッド正規形</b> であるという．
+
+<ul>
+<li>$R$に存在する関数従属 $X \rightarrow Y$ の $X$ は主キーである
+<li><span style="opacity:0.7">または，$Y \in X$であり 自明な関数従属である</span></li>
+</ul>
+
+(正確な定義は増永先生の「<a href="https://www.saiensu.co.jp/search/?isbn=978-4-7819-1500-5&y=2021">データベース入門（サイエンス社）</a>」を参照のこと)
+
+  </p>
+  
+</div>
+
+<p>例として，タプル挿入時異常を考えてみましょう．
+ある講師の「高木」が新たに「リーダーシップ」の研修を担当することが決まった場合，
+次のタプルを追加することが必要です．
+しかし，社員番号が空値であるため，主キー制約に違反してしまいます．</p>
+<table>
+<thead>
+<tr>
+<th><u>社員番号</u></th>
+<th><u>研修</u></th>
+<th>講師</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>リーダーシップ</td>
+<td>高木</td>
+</tr>
+</tbody>
+</table>
+<p>そこで，次のように情報無損失分解します．
+分解後は「講師」が主キーになり，「研修」が非キーとなっていることに注意してください．
+これらのリレーションはボイス・コッド正規形を満たしています．</p>
+<table>
+<thead>
+<tr>
+<th><u>社員番号</u></th>
+<th><u>講師</u></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E01</td>
+<td>伊藤</td>
+</tr>
+<tr>
+<td>E01</td>
+<td>山田</td>
+</tr>
+<tr>
+<td>E02</td>
+<td>鈴木</td>
+</tr>
+<tr>
+<td>E03</td>
+<td>山田</td>
+</tr>
+<tr>
+<td>E03</td>
+<td>武田</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【参加研修リスト】</strong></p>
+<table>
+<thead>
+<tr>
+<th><u>講師</u></th>
+<th>研修</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>伊藤</td>
+<td>プログラミング</td>
+</tr>
+<tr>
+<td>山田</td>
+<td>マナー</td>
+</tr>
+<tr>
+<td>鈴木</td>
+<td>プログラミング</td>
+</tr>
+<tr>
+<td>武田</td>
+<td>リーダシップ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【講師リスト】</strong></p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    例題1
+  </h3>
+
+  <p>
+    
+ボイス・コッド正規形では上記のタプル挿入時異常が発生しないことを確認せよ．
+
+  </p>
+  
+</div>
+
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  第4正規形
+</h1>
+
+<p>第4正規形は <strong>多値従属性</strong> という概念が必要となります．</p>
+<h3 id="多値従属性">多値従属性</h3>
+<p>多値従属性は，関数従属性を包括する概念であり，関数従属性が成立すれば，多値従属性も成立しています．
+関数従属性は，ある属性の値$X$に応じて，他の属性の値$Y$が <strong>一意</strong> に決まります．
+一方，多値従属性は，ある属性の値$X$に応じて，他の属性の値$Y$の <strong>候補</strong> が決まるという特徴があります．</p>
+<p>関数従属は，情報無損失分解の <strong>十分条件</strong> でした．
+つまり，関数従属が成立すれば，情報無損失分解が可能ですが，
+関数従属が成立しない場合でも情報無損失分解が可能なケースがあります．
+一方で，多値従属性は，情報無損失分解の <strong>必要十分条件</strong> です．
+つまり，多値従属性が成立すれば，情報無損失分解が可能であり，
+逆に成立しない場合は，情報無損失分解は不可能です．</p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    多値従属性
+  </h3>
+
+  <p>
+    
+リレーション$R(A, B, C)$が，リレーション$R_1=(A,B)$と$R_2=(A,C)$に情報無損失分解されるとき，多値従属性が成立するという．
+	
+多値従属性は．
+
+
+$$
+A \rightarrow \rightarrow B | C
+$$
+
+または，
+
+$$
+A \rightarrow \rightarrow B
+$$
+
+$$
+A \rightarrow \rightarrow C
+$$
+
+のように表される．
+
+
+  </p>
+  
+</div>
+
+<p>それでは，第4正規形について，次の【研修リスト】を例に挙げて考えます．
+主キーは研修，講師，社員番号の組で構成されています．
+先程とは異なり，一つの研修を複数の講師が担当します．
+例えば，プログラミングは伊藤と鈴木が交代で担当するため，受講する社員は共通でE01とE02の2人です．
+また，講師は異なる内容の研修を担当することが可能です（伊藤はプログラミングとマナーを担当している）．</p>
+<table>
+<thead>
+<tr>
+<th><u>研修</u></th>
+<th><u>講師</u></th>
+<th><u>社員番号</u></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>プログラミング</td>
+<td>伊藤</td>
+<td>E01</td>
+</tr>
+<tr>
+<td>プログラミング</td>
+<td>伊藤</td>
+<td>E02</td>
+</tr>
+<tr>
+<td>プログラミング</td>
+<td>鈴木</td>
+<td>E01</td>
+</tr>
+<tr>
+<td>プログラミング</td>
+<td>鈴木</td>
+<td>E02</td>
+</tr>
+<tr>
+<td>マナー</td>
+<td>伊藤</td>
+<td>E02</td>
+</tr>
+<tr>
+<td>マナー</td>
+<td>山田</td>
+<td>E02</td>
+</tr>
+<tr>
+<td>リーダシップ</td>
+<td>武田</td>
+<td>E03</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【研修リスト】</strong></p>
+<p>この研修リストは，主キーは全ての属性で構成されており，
+明らかにボイス・コッド正規形を満たしています．</p>
+<p>一方で，次の多値従属性が成立します．</p>
+<p>$$
+研修 \rightarrow \rightarrow 講師 | 社員番号
+$$</p>
+<p>これは，次のように2つの多値従属性があることを意味します．</p>
+<p>$$
+研修 \rightarrow \rightarrow 講師
+$$</p>
+<p>$$
+研修 \rightarrow \rightarrow 社員番号
+$$</p>
+<p>このように，多値従属性が複数存在すると，第4正規形とはならず，
+タプル挿入時異常などの更新時異常が発生します．</p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    第4正規形
+  </h3>
+
+  <p>
+    
+リレーション$R$が下記の条件を満たすとき <b>第4正規形</b> であるという．
+
+<ul>
+<li>$R$に存在する多値従属 $X \rightarrow \rightarrow Y$ が存在し，$X \rightarrow \rightarrow Z$ が存在しない
+<li><span style="opacity:0.7">または，$X$が主キーである</span></li>
+</ul>
+
+(正確な定義は増永先生の「<a href="https://www.saiensu.co.jp/search/?isbn=978-4-7819-1500-5&y=2021">データベース入門（サイエンス社）</a>」を参照のこと)
+
+  </p>
+  
+</div>
+
+<p>例として，タプル挿入時異常を考えてみます．
+先と同じように，「リーダーシップ」の研修を講師の「高木」が担当することが決まった場合，
+次のタプルを追加することが必要です．
+しかし，社員番号が空値であるため，主キー制約に違反してしまいます．</p>
+<table>
+<thead>
+<tr>
+<th><u>研修</u></th>
+<th><u>講師</u></th>
+<th><u>社員番号</u></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>リーダーシップ</td>
+<td>高木</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>そこで，次のように情報無損失分解します．
+これらのリレーションは，第4正規形を満たしています．</p>
+<table>
+<thead>
+<tr>
+<th><u>研修</u></th>
+<th><u>講師</u></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>プログラミング</td>
+<td>伊藤</td>
+</tr>
+<tr>
+<td>プログラミング</td>
+<td>鈴木</td>
+</tr>
+<tr>
+<td>マナー</td>
+<td>伊藤</td>
+</tr>
+<tr>
+<td>マナー</td>
+<td>山田</td>
+</tr>
+<tr>
+<td>リーダシップ</td>
+<td>武田</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【研修講師リスト】</strong></p>
+<table>
+<thead>
+<tr>
+<th><u>研修</u></th>
+<th><u>社員番号</u></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>プログラミング</td>
+<td>E01</td>
+</tr>
+<tr>
+<td>プログラミング</td>
+<td>E02</td>
+</tr>
+<tr>
+<td>マナー</td>
+<td>E02</td>
+</tr>
+<tr>
+<td>リーダシップ</td>
+<td>E03</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【研修学生リスト】</strong></p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    例題2
+  </h3>
+
+  <p>
+    
+第4正規形では上記のタプル挿入時異常が発生しないことを確認せよ．
+
+  </p>
+  
+</div>
+
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  情報処理技術者試験・過去問
+</h1>
+
+<p>下記リンクは
+<a href="https://www.ap-siken.com/">応用情報技術者試験ドットコム</a>，
+<a href="https://www.db-siken.com/">データベーススペシャリスト ドットコム</a>に掲載されている問題です．</p>
+<ul>
+<li><a href="https://www.ap-siken.com/kakomon/19_aki/q63.html">ソフトウェア開発技術者 平成19年秋期 午前 問63</a></li>
+<li><a href="https://www.ap-siken.com/kakomon/20_haru/q62.html">ソフトウェア開発技術者 平成20年春期 午前 問62</a></li>
+<li><a href="https://www.ap-siken.com/kakomon/29_haru/q27.html">応用情報技術者 平成29年春期 午前 問27</a></li>
+<li><a href="https://www.db-siken.com/kakomon/26_haru/am2_6.html">データベーススペシャリスト 平成26年春期 午前Ⅱ 問6</a></li>
+</ul>
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4781913903&linkId=0a2c1ffad427bdeee3fd703f5392bac2&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479815654X&linkId=cfb458fce9d85899424b079e9b3743e8&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=479813516X&linkId=38aea2a346205302f4138786b73ddd9f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274066312&linkId=236165e8339c6e743d26f664f7eb791f&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/database/chapter_extra1/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
