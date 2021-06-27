@@ -87,8 +87,9 @@
 
 
 
-  <meta property="og:description" content="
-インデックス線形探索2分探索木B木参考書籍" />
+  <meta property="og:description" content="インデックスとは  データベースの検索効率を向上させるために用いられるのが インデックス（索引） です． 一般にSQLiteなどのリレーショナル・データベースでは，インデックスは自動的に作成されますが， ユーザが意図してインデックスを作成するためのSQL文も用意されています． インデックスを作成する際の注意点を挙げます．
+ データ量の多いデータベースにインデックス作成する（データが少ない場合はパフォーマンスが低下） カーディナリティ（属性に含まれる値のバリエーション）が高い属性でインデックスを作成する WHERE区の条件などに用いられる属性でインデックスを作成する．  ここでは，次の16のレコードを含むテーブルを例とします． ID と NAME の属性で構成され，主キーは ID です． このテーブルから Alex を検索するときのパフォーマンスを考えます．
+   ID NAME     23 Chris   20 David   9 Greg   22 Allen   11 Carl   29 Rajiv   6 Jordan   4 Alex   26 Ashly   19 Nancy   2 Emily   27 Norma   18 Christine   28 Joy   12 Maria   3 Alice    インデックスはデータ構造に依存して，パフォーマンスが決まります． データベースでは，B木（B-tree） が用いられますが， ここでは比較のため 線形探索 と 2分探索木 を取り上げます．" />
 
 
 
@@ -103,8 +104,9 @@
 
 
 
-  <meta name="twitter:description" content="
-インデックス線形探索2分探索木B木参考書籍" />
+  <meta name="twitter:description" content="インデックスとは  データベースの検索効率を向上させるために用いられるのが インデックス（索引） です． 一般にSQLiteなどのリレーショナル・データベースでは，インデックスは自動的に作成されますが， ユーザが意図してインデックスを作成するためのSQL文も用意されています． インデックスを作成する際の注意点を挙げます．
+ データ量の多いデータベースにインデックス作成する（データが少ない場合はパフォーマンスが低下） カーディナリティ（属性に含まれる値のバリエーション）が高い属性でインデックスを作成する WHERE区の条件などに用いられる属性でインデックスを作成する．  ここでは，次の16のレコードを含むテーブルを例とします． ID と NAME の属性で構成され，主キーは ID です． このテーブルから Alex を検索するときのパフォーマンスを考えます．
+   ID NAME     23 Chris   20 David   9 Greg   22 Allen   11 Carl   29 Rajiv   6 Jordan   4 Alex   26 Ashly   19 Nancy   2 Emily   27 Norma   18 Christine   28 Joy   12 Maria   3 Alice    インデックスはデータ構造に依存して，パフォーマンスが決まります． データベースでは，B木（B-tree） が用いられますが， ここでは比較のため 線形探索 と 2分探索木 を取り上げます．" />
 
 
 
@@ -173,21 +175,204 @@
 
     <p><a href="https://gyazo.com/0dcbbf8483ec443fa96c4c40bb64cf36"><img src="https://i.gyazo.com/0dcbbf8483ec443fa96c4c40bb64cf36.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  インデックス
+  インデックスとは
 </h1>
 
+<p>データベースの検索効率を向上させるために用いられるのが <strong>インデックス（索引）</strong> です．
+一般にSQLiteなどのリレーショナル・データベースでは，インデックスは自動的に作成されますが，
+ユーザが意図してインデックスを作成するためのSQL文も用意されています．
+インデックスを作成する際の注意点を挙げます．</p>
+<ul>
+<li>データ量の多いデータベースにインデックス作成する（データが少ない場合はパフォーマンスが低下）</li>
+<li>カーディナリティ（属性に含まれる値のバリエーション）が高い属性でインデックスを作成する</li>
+<li>WHERE区の条件などに用いられる属性でインデックスを作成する．</li>
+</ul>
+<p>ここでは，次の16のレコードを含むテーブルを例とします．
+<strong>ID</strong> と <strong>NAME</strong> の属性で構成され，主キーは <strong>ID</strong> です．
+このテーブルから <strong>Alex</strong> を検索するときのパフォーマンスを考えます．</p>
+<table>
+<thead>
+<tr>
+<th><u>ID</u></th>
+<th>NAME</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>23</td>
+<td>Chris</td>
+</tr>
+<tr>
+<td>20</td>
+<td>David</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Greg</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Allen</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Carl</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Rajiv</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Jordan</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Alex</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Ashly</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Nancy</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Emily</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Norma</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Christine</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Joy</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Maria</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Alice</td>
+</tr>
+</tbody>
+</table>
+<p>インデックスはデータ構造に依存して，パフォーマンスが決まります．
+データベースでは，<strong>B木（B-tree）</strong> が用いられますが，
+ここでは比較のため <strong>線形探索</strong> と <strong>2分探索木</strong> を取り上げます．</p>
+<ul>
+<li>線形探索(Linear Search)</li>
+<li>2分探索木(Binary Search Tree)</li>
+<li>B木（B-tree）</li>
+</ul>
+<h2 id="線形探索">線形探索</h2>
+<p>データベースでインデックスが作成されていない状態では，<strong>線形探索</strong> となります．
+検索キーとなる <strong>ID</strong> はリスト形式で管理され，リストの先頭から順に比較されます．
+例えば，<strong>ID=4(Alex)</strong> を検索するときは，
+リストの先頭から23，20 ，9，…という順番で比較し，
+8番目の比較で <strong>ID=4</strong> を発見できます．
+探索回数は最少で1回（ID=23のとき），最多で16回（ID=3のとき）となります．
+要素数が$n$のとき，時間計算量を表すO記法では$O(n)$と表されます．</p>
+<p><a href="https://gyazo.com/8e3bc0bb1f886e46caf6b0e581771394"><img src="https://i.gyazo.com/8e3bc0bb1f886e46caf6b0e581771394.png" alt="Image from Gyazo"></a></p>
+<h2 id="2分探索木">2分探索木</h2>
+<p>線形探索では効率が悪いため木構造のインデックスが採用されます．
+まずは基本となる <strong>2分探索木</strong> を紹介します．
+2分探索木では，ノードが <strong>ID</strong> を表しており，
+「左の子は親より値が小さく」，「右の子は親より値が大きい」という特徴があります．
+木の根（ルート）から探索をスタートし，値の大小を比較しながら，リンクを辿って検索します．
+例えば，<strong>ID=4(Alex)</strong> を検索するときは，木の根の20と比較します．
+$4 &lt; 20$ であるため，左の子へのリンクを辿って9と比較します．
+$4 &lt; 9$であるため，左の子へのリンクを辿って4を発見します．
+探索回数は最少で1回（ID=20のとき），最多で5回（ID=3またはID=12のとき）となっていますが，
+左右の木が平衡であれば，最多で$log_2(16)=4$となります（平衡を維持する2分探索木を <strong>AVL木</strong> と呼びます）．
+要素数が$n$のとき，平衡状態の時間計算量を表すO記法は$O(log(n))$と表されます．</p>
+<p><a href="https://gyazo.com/d057c8f38c98aef270c22428ebceec49"><img src="https://i.gyazo.com/d057c8f38c98aef270c22428ebceec49.png" alt="Image from Gyazo"></a></p>
+<h2 id="b木">B木</h2>
+<p>実際のリレーショナル・データベースでは，<strong>B木</strong> によるインデックス作成されます（または <strong>B+木</strong>）．
+<strong>B木</strong>は，2分探索木の分岐数を最大$m$に一般化したものです．
+ノードには複数の <strong>ID</strong> が記録され，値に応じて複数の分岐が存在します．
+例えば，<strong>ID=4(Alex)</strong> を検索するときは，木の根の9と20を比較します．
+このとき，9より小さければ左の子，9より大きく20より小さいときは中央の子，20より大きいときは右の子を辿ります．
+$4&lt;9$であるため，左の子へのリンクを辿って，4を発見します．
+$m$が大きい場合，各ノードで線形探索と同じ計算量が発生するため，2分探索木より効率が悪いように見えます．
+しかし，ハードディスクなどの外部記憶装置の場合は，ブロック単位でデータを参照する方が効率が良いためB木が採用されます．</p>
+<p><a href="https://gyazo.com/660373bd05cb0ade2b51add2e1109430"><img src="https://i.gyazo.com/660373bd05cb0ade2b51add2e1109430.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  線形探索
+  SQLでインデックス
 </h1>
 
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  2分探索木
+<p><a href="https://colab.research.google.com/">google colaboratory</a>を利用して，
+リレーショナル・データベース（SQLite）におけるインデックスの効果を検証してみましょう．
+SQLでインデックスを作成するには，<strong>CREATE INDEX文</strong> を用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> <span style="color:#960050;background-color:#1e0010">インデックス名</span> <span style="color:#66d9ef">ON</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span>(<span style="color:#960050;background-color:#1e0010">属名</span>)
+</code></pre></div><p>PythonのSQLiteのライブラリを導入します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> sqlite3
+</code></pre></div><p>1〜20,000までの整数を生成し，ランダムに10,000個の整数を選択します．
+この10,000個の整数をリレーショナル・データベースに登録することにします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">key_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">200000</span> <span style="color:#75715e">#@param {type: &#34;number&#34;}</span>
+sample_size <span style="color:#f92672">=</span>   <span style="color:#ae81ff">100000</span> <span style="color:#75715e">#@param {type: &#34;number&#34;}</span>
+list <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(range(key_size), sample_size)
+</code></pre></div><p>リレーショナル・データベースを生成します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># SQLite</span>
+con <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#39;sample.db&#39;</span>)
+cur <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span>cursor()
+</code></pre></div><p><strong>CREATE TABLE文</strong> でIDだけで構成されるテーブルを生成します．
+ランダムに選ばれた10,000個の整数をレコードとして登録します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cur<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;CREATE TABLE sample(ID text)&#34;</span>)
+
+<span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> list:
+  cur<span style="color:#f92672">.</span>execute(f<span style="color:#e6db74">&#34;INSERT INTO sample VALUES({key})&#34;</span>)
+</code></pre></div><p>10,000個の整数から，1つの整数を選び， <strong>SELECT文</strong> で検索します．
+同じ値の整数が検索結果となっていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 探索対象</span>
+target <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(list, <span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>]
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;target={target}&#34;</span>)
+
+<span style="color:#75715e"># SELECT文</span>
+result <span style="color:#f92672">=</span> cur<span style="color:#f92672">.</span>execute(f<span style="color:#e6db74">&#34;SELECT * FROM sample where ID={target}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;result={result.fetchone()[0]}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">target<span style="color:#f92672">=</span><span style="color:#ae81ff">188372</span>
+result<span style="color:#f92672">=</span><span style="color:#ae81ff">188372</span>
+</code></pre></div><p>上記と同じ検索を1,000回繰り返し，応答時間を計測します．
+応答時間は <strong>8.05秒</strong> となりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%%</span>time
+
+<span style="color:#75715e"># SELECT文を1000回繰り返す</span>
+<span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000</span>):
+  target <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(list, <span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>]
+  result <span style="color:#f92672">=</span> cur<span style="color:#f92672">.</span>execute(f<span style="color:#e6db74">&#34;SELECT * FROM sample where ID={target}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">CPU times: user <span style="color:#ae81ff">8.05</span> s, sys: <span style="color:#ae81ff">0</span> ns, total: <span style="color:#ae81ff">8.05</span> s
+Wall time: <span style="color:#ae81ff">8.04</span> s
+</code></pre></div><p>次にIDでインデックスを作成し，同じように1,000回の検索を行います．
+応答時間は <strong>82.4ミリ秒（0.084秒）</strong> となりました．
+インデックスがあると約100倍の高速化が確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%%</span>time
+
+<span style="color:#75715e"># インデックスの作成</span>
+cur<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;CREATE INDEX myindex ON sample(id)&#34;</span>)
+
+<span style="color:#75715e"># SELECT文を1000回繰り返す</span>
+<span style="color:#66d9ef">for</span> step <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000</span>):
+  target <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(list, <span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>]
+  result <span style="color:#f92672">=</span> cur<span style="color:#f92672">.</span>execute(f<span style="color:#e6db74">&#34;SELECT * FROM sample where ID={target}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">CPU times: user <span style="color:#ae81ff">69.6</span> ms, sys: <span style="color:#ae81ff">4.98</span> ms, total: <span style="color:#ae81ff">74.5</span> ms
+Wall time: <span style="color:#ae81ff">82.4</span> ms
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  2分探索木とB木の可視化
 </h1>
 
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  B木
-</h1>
-
+<p>サンフランシスコ大学が2分探索木とB木の可視化ツールを公開しています．</p>
+<ul>
+<li><a href="https://www.cs.usfca.edu/~galles/visualization/BST.html">Binary Search Tree Visualization</a></li>
+<li><a href="https://www.cs.usfca.edu/~galles/visualization/BTree.html">B-tree Visualization</a></li>
+</ul>
 <h3>参考書籍</h3>
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4781913903&linkId=0a2c1ffad427bdeee3fd703f5392bac2&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
