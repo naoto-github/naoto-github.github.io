@@ -94,11 +94,11 @@
 https://unpkg.com/ml5@latest/dist/ml5.min.js 
 ハンドポーズの検出ml5.jsとp5.jsを 組み合わせて ハンドポーズの検出 にチャレンジします． 前回は画像から顔を検出しましたが，今回はWebカメラの映像からハンドポーズを検出します． Webカメラが利用可能なPC環境で実装してください．
 HTMLに下記のコードを入力してください． 今回はp5.jsを利用するため，h1でタイトルのみを記述します．
-&lt;h1&gt;ハンドポーズ認識&lt;/h1&gt; ml5.jsのハンドポーズ検出は MdiaPipe Handpose から移植されています． 手の指や関節の21点のランドマークを検出できます．
-ビデオは createCapture() でキャプチャされ， キャプチャされたフレームは通常の画像と同じように扱うことができます．
+&lt;h1&gt;ハンドポーズ認識&lt;/h1&gt; まずはWebカメラで撮影された映像を，createCapture() でキャプチャします． キャプチャされたフレームは通常の画像と同じように扱うことができます．
+let video; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video.size(width, height); video.hide(); } function draw() { // キャプチャした画像を表示  image(video, 0, 0, width, height); } ml5.jsのハンドポーズ検出は MdiaPipe Handpose から移植されています． 手の指や関節の21点のランドマークを検出できます．
 ハンドポーズ検出器を生成するには，ml5.handpose()を利用します． 第一引数は，キャプチャされたフレームvideo， 第二引数はモデルがロードされたタイミングで実行される無名関数です．
 ハンドポーズのイベントはhandpose.on()で検出します． 第一引数は&quot;predict&quot;， 第二引数は検出結果を処理する無名関数を設定します． ここでは，検出結果が格納されたresultsを，predictionsに代入します． このpredictionsは配列であることに注意してください．
-let video; let handpose; let predictions = []; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video.size(width, height); video.hide(); // ハンドポーズの検出器  handpose = ml5.handpose(video, () =&gt; { console.log(&#34;Model Loaded&#34;); }); // ハンドポーズの検出  handpose." />
+let video; let handpose; let predictions = []; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video." />
 
 
 
@@ -120,11 +120,11 @@ let video; let handpose; let predictions = []; function setup(){ createCanvas(64
 https://unpkg.com/ml5@latest/dist/ml5.min.js 
 ハンドポーズの検出ml5.jsとp5.jsを 組み合わせて ハンドポーズの検出 にチャレンジします． 前回は画像から顔を検出しましたが，今回はWebカメラの映像からハンドポーズを検出します． Webカメラが利用可能なPC環境で実装してください．
 HTMLに下記のコードを入力してください． 今回はp5.jsを利用するため，h1でタイトルのみを記述します．
-&lt;h1&gt;ハンドポーズ認識&lt;/h1&gt; ml5.jsのハンドポーズ検出は MdiaPipe Handpose から移植されています． 手の指や関節の21点のランドマークを検出できます．
-ビデオは createCapture() でキャプチャされ， キャプチャされたフレームは通常の画像と同じように扱うことができます．
+&lt;h1&gt;ハンドポーズ認識&lt;/h1&gt; まずはWebカメラで撮影された映像を，createCapture() でキャプチャします． キャプチャされたフレームは通常の画像と同じように扱うことができます．
+let video; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video.size(width, height); video.hide(); } function draw() { // キャプチャした画像を表示  image(video, 0, 0, width, height); } ml5.jsのハンドポーズ検出は MdiaPipe Handpose から移植されています． 手の指や関節の21点のランドマークを検出できます．
 ハンドポーズ検出器を生成するには，ml5.handpose()を利用します． 第一引数は，キャプチャされたフレームvideo， 第二引数はモデルがロードされたタイミングで実行される無名関数です．
 ハンドポーズのイベントはhandpose.on()で検出します． 第一引数は&quot;predict&quot;， 第二引数は検出結果を処理する無名関数を設定します． ここでは，検出結果が格納されたresultsを，predictionsに代入します． このpredictionsは配列であることに注意してください．
-let video; let handpose; let predictions = []; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video.size(width, height); video.hide(); // ハンドポーズの検出器  handpose = ml5.handpose(video, () =&gt; { console.log(&#34;Model Loaded&#34;); }); // ハンドポーズの検出  handpose." />
+let video; let handpose; let predictions = []; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video." />
 
 
 
@@ -214,10 +214,26 @@ Webカメラが利用可能なPC環境で実装してください．</p>
 <p>HTMLに下記のコードを入力してください．
 今回はp5.jsを利用するため，<code>h1</code>でタイトルのみを記述します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">h1</span>&gt;ハンドポーズ認識&lt;/<span style="color:#f92672">h1</span>&gt;
+</code></pre></div><p>まずはWebカメラで撮影された映像を，<code>createCapture()</code> でキャプチャします．
+キャプチャされたフレームは通常の画像と同じように扱うことができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">video</span>;
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setup</span>(){
+  <span style="color:#a6e22e">createCanvas</span>(<span style="color:#ae81ff">640</span>, <span style="color:#ae81ff">480</span>);
+
+  <span style="color:#75715e">// ビデオのキャプチャ
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">video</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">createCapture</span>(<span style="color:#a6e22e">VIDEO</span>);
+  <span style="color:#a6e22e">video</span>.<span style="color:#a6e22e">size</span>(<span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>);
+  <span style="color:#a6e22e">video</span>.<span style="color:#a6e22e">hide</span>();
+
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">draw</span>() {
+  <span style="color:#75715e">// キャプチャした画像を表示
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">image</span>(<span style="color:#a6e22e">video</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>);
+}
 </code></pre></div><p>ml5.jsのハンドポーズ検出は <strong>MdiaPipe Handpose</strong> から移植されています．
 手の指や関節の21点のランドマークを検出できます．</p>
-<p>ビデオは <code>createCapture()</code> でキャプチャされ，
-キャプチャされたフレームは通常の画像と同じように扱うことができます．</p>
 <p>ハンドポーズ検出器を生成するには，<code>ml5.handpose()</code>を利用します．
 第一引数は，キャプチャされたフレーム<code>video</code>，
 第二引数はモデルがロードされたタイミングで実行される無名関数です．</p>
@@ -251,7 +267,8 @@ Webカメラが利用可能なPC環境で実装してください．</p>
 }
 
 <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">draw</span>() {
-  <span style="color:#a6e22e">image</span>(<span style="color:#a6e22e">video</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>);
+  <span style="color:#75715e">// キャプチャした画像を表示
+</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">image</span>(<span style="color:#a6e22e">video</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>);
 
   <span style="color:#75715e">// ランドマークの描画
 </span><span style="color:#75715e"></span>  <span style="color:#a6e22e">drawLandmarks</span>();
@@ -279,6 +296,7 @@ Webカメラが利用可能なPC環境で実装してください．</p>
 親指の第1関節の座標と，小指の先端の座標から，ライトセーバの傾きを計算しています．
 ライトセーバの長さと傾きから，ライトセーバーの先端の座標を求め，
 <code>line()</code>で線の太さが'30&rsquo;の直線を描画しています．</p>
+<p><a href="https://gyazo.com/b7c25e986c415af5dae6b8c994523141"><img src="https://i.gyazo.com/b7c25e986c415af5dae6b8c994523141.png" alt="Image from Gyazo" width="300"/></a></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">drawLightSaber</span>(){
   <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">prediction</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">predictions</span>){
     <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
