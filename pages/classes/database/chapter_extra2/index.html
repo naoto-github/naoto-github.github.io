@@ -314,22 +314,23 @@ SQLでインデックスを作成するには，<strong>CREATE INDEX文</strong>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-SQL" data-lang="SQL"><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> <span style="color:#960050;background-color:#1e0010">インデックス名</span> <span style="color:#66d9ef">ON</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span>(<span style="color:#960050;background-color:#1e0010">属名</span>)
 </code></pre></div><p>PythonのSQLiteのライブラリを導入します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> sqlite3
-</code></pre></div><p>1〜20,000までの整数を生成し，ランダムに10,000個の整数を選択します．
-この10,000個の整数をリレーショナル・データベースに登録することにします．</p>
+<span style="color:#f92672">import</span> random
+</code></pre></div><p>1〜200,000までの整数を生成し，ランダムに10,000個の整数を選択します．
+この100,000個の整数をリレーショナル・データベースに登録することにします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">key_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">200000</span> <span style="color:#75715e">#@param {type: &#34;number&#34;}</span>
-sample_size <span style="color:#f92672">=</span>   <span style="color:#ae81ff">100000</span> <span style="color:#75715e">#@param {type: &#34;number&#34;}</span>
+sample_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">100000</span> <span style="color:#75715e">#@param {type: &#34;number&#34;}</span>
 list <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(range(key_size), sample_size)
 </code></pre></div><p>リレーショナル・データベースを生成します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># SQLite</span>
 con <span style="color:#f92672">=</span> sqlite3<span style="color:#f92672">.</span>connect(<span style="color:#e6db74">&#39;sample.db&#39;</span>)
 cur <span style="color:#f92672">=</span> con<span style="color:#f92672">.</span>cursor()
 </code></pre></div><p><strong>CREATE TABLE文</strong> でIDだけで構成されるテーブルを生成します．
-ランダムに選ばれた10,000個の整数をレコードとして登録します．</p>
+ランダムに選ばれた100,000個の整数をレコードとして登録します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cur<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;CREATE TABLE sample(ID text)&#34;</span>)
 
 <span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> list:
   cur<span style="color:#f92672">.</span>execute(f<span style="color:#e6db74">&#34;INSERT INTO sample VALUES({key})&#34;</span>)
-</code></pre></div><p>10,000個の整数から，1つの整数を選び， <strong>SELECT文</strong> で検索します．
+</code></pre></div><p>100,000個の整数から，1つの整数を選び， <strong>SELECT文</strong> で検索します．
 同じ値の整数が検索結果となっていることがわかります．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 探索対象</span>
 target <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(list, <span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>]
@@ -371,6 +372,7 @@ Wall time: <span style="color:#ae81ff">82.4</span> ms
 <p>サンフランシスコ大学が2分探索木とB木の可視化ツールを公開しています．</p>
 <ul>
 <li><a href="https://www.cs.usfca.edu/~galles/visualization/BST.html">Binary Search Tree Visualization</a></li>
+<li><a href="https://www.cs.usfca.edu/~galles/visualization/AVLtree.html">AVL Tree Visualization</a></li>
 <li><a href="https://www.cs.usfca.edu/~galles/visualization/BTree.html">B-tree Visualization</a></li>
 </ul>
 <h3>参考書籍</h3>
