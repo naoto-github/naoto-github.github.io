@@ -87,14 +87,14 @@
 
 
 
-  <meta property="og:description" content="畳み込みニューラルネットワーク畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
+  <meta property="og:description" content="畳み込みニューラルネットワーク  畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
 入力画像は，畳み込み層に入力され，プーリング層を経て， 全結合層で集約され，最終的に画像の分類を出力します． この畳み込み層とプーリング層の処理は，複数回繰り返されることがあります． 畳み込み層では複数のフィルタを用いて画像の特徴量を抽出します． プーリング層では特徴を失わないように画像サイズを縮小します（ダウンサンプリング）． 全結合層は多層パーセプトロンで用いられる一般的な層と同じです．
 
 畳み込み層 畳み込み層の仕組みを確認しましょう． 畳み込み層の目的は入力された複数の画像の特徴量をフィルタを利用して抽出することです． 下図は$4 \times 4$の入力画像に，$2 \times 2$のフィルタを適用した様子です． 入力画像からフィルタと同じ$2 \times 2$の画素を取り出し，フィルタの値と掛け合わせることで特徴量となります． この操作を1ピクセルだけずらしながら画像全体に適用すると$3 \times 3$の画像に変換されます． フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．
 
 それでは，この畳み込み層の振る舞いを再現してみましょう．
-ノートブックを作成し，ノートブックのタイトルをNN-6 に設定します． まずは，ライブラリをインポートします． 画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
-import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib." />
+ノートブックを作成し，ノートブックのタイトルをchapter6 に設定します． まずは，ライブラリのインストールとインポートを行います． ここでは，画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
+!pip install torch !pip install torchvision import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision." />
 
 
 
@@ -109,14 +109,14 @@ import torch import torch.nn as nn import torch.nn.functional as F import torch.
 
 
 
-  <meta name="twitter:description" content="畳み込みニューラルネットワーク畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
+  <meta name="twitter:description" content="畳み込みニューラルネットワーク  畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
 入力画像は，畳み込み層に入力され，プーリング層を経て， 全結合層で集約され，最終的に画像の分類を出力します． この畳み込み層とプーリング層の処理は，複数回繰り返されることがあります． 畳み込み層では複数のフィルタを用いて画像の特徴量を抽出します． プーリング層では特徴を失わないように画像サイズを縮小します（ダウンサンプリング）． 全結合層は多層パーセプトロンで用いられる一般的な層と同じです．
 
 畳み込み層 畳み込み層の仕組みを確認しましょう． 畳み込み層の目的は入力された複数の画像の特徴量をフィルタを利用して抽出することです． 下図は$4 \times 4$の入力画像に，$2 \times 2$のフィルタを適用した様子です． 入力画像からフィルタと同じ$2 \times 2$の画素を取り出し，フィルタの値と掛け合わせることで特徴量となります． この操作を1ピクセルだけずらしながら画像全体に適用すると$3 \times 3$の画像に変換されます． フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．
 
 それでは，この畳み込み層の振る舞いを再現してみましょう．
-ノートブックを作成し，ノートブックのタイトルをNN-6 に設定します． まずは，ライブラリをインポートします． 画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
-import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib." />
+ノートブックを作成し，ノートブックのタイトルをchapter6 に設定します． まずは，ライブラリのインストールとインポートを行います． ここでは，画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
+!pip install torch !pip install torchvision import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision." />
 
 
 
@@ -208,11 +208,13 @@ CNNは， <strong>畳み込み層(Convolutional Layer)</strong> ， <strong>プ�
 フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．</p>
 <p><a href="https://gyazo.com/07d6ec107bd1478b64775030d3de4964"><img src="https://i.gyazo.com/07d6ec107bd1478b64775030d3de4964.png" alt="Image from Gyazo"></a></p>
 <p>それでは，この畳み込み層の振る舞いを再現してみましょう．</p>
-<p>ノートブックを作成し，ノートブックのタイトルを<strong>NN-6</strong> に設定します．
-まずは，ライブラリをインポートします．
-画像処理ライブラリの<a href="http://www.pythonware.com/products/pil/">Pillow</a>と
+<p>ノートブックを作成し，ノートブックのタイトルを<strong>chapter6</strong> に設定します．
+まずは，ライブラリのインストールとインポートを行います．
+ここでは，画像処理ライブラリの<a href="http://www.pythonware.com/products/pil/">Pillow</a>と
 数値計算ライブラリの<a href="https://www.scipy.org/">Scipy</a>も追加します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install torch
+!pip install torchvision
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
 <span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
 <span style="color:#f92672">import</span> torch.nn.functional <span style="color:#f92672">as</span> F
 <span style="color:#f92672">import</span> torch.optim <span style="color:#f92672">as</span> optim
@@ -295,7 +297,8 @@ MAXプーリングは対象領域の最大値を代表値とする方法です�
 </h1>
 
 <p>それでは，畳込みニューラルネットワークを利用して，CIFAR-10の分類に挑戦しましょう．
-<code>transform=Transforms.ToTensor()</code>オプションを設定して，データセットを読み込みます．</p>
+<code>transform=Transforms.ToTensor()</code>オプションを設定して，
+PyTorchで処理可能な形式でデータセットを読み込みます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor())
 </code></pre></div><p>今回も分類問題の難易度を下げるため，
 ラベルが0(airplane)，1(automobile)，2(bird)のみを対象とします．</p>
@@ -332,15 +335,15 @@ $2 \times 2$でプーリングすると$1/2$のサイズの$5 \times 5$に縮小
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(nn<span style="color:#f92672">.</span>Module):
     <span style="color:#66d9ef">def</span> __init__(self):
         super(Net, self)<span style="color:#f92672">.</span>__init__()
-        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>))　<span style="color:#75715e"># 入力チャネル，出力チャネル，フィルタサイズ</span>
-        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>))　<span style="color:#75715e"># 入力チャネル，出力チャネル，フィルタサイズ</span>
-        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">64</span>) <span style="color:#75715e"># 入力数，出力数</span>
-        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">3</span>)  <span style="color:#75715e"># 入力数，出力数</span>
+        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)) <span style="color:#75715e">#入力チャネル，出力チャネル，フィルタサイズ</span>
+        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)) <span style="color:#75715e">#入力チャネル，出力チャネル，フィルタサイズ</span>
+        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">64</span>) <span style="color:#75715e">#入力数，出力数</span>
+        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">3</span>) <span style="color:#75715e">#入力数，出力数</span>
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
-        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv1(x)), <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2x2でMAXプーリング</span>
-        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv2(x)), <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2x2でMAXプーリング</span>
-        x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>) <span style="color:#75715e"># 1次元に整形</span>
+        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv1(x)), <span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x2でMAXプーリング</span>
+        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv2(x)), <span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x2でMAXプーリング</span>
+        x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>) <span style="color:#75715e">#1次元に整形</span>
         x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>fc1(x))
         x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(self<span style="color:#f92672">.</span>fc2(x), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
         <span style="color:#66d9ef">return</span> x
@@ -425,7 +428,19 @@ acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</
 <span style="color:#66d9ef">print</span>(acc)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
 <span style="color:#ae81ff">0.8462</span>
-</code></pre></div><h3>参考書籍</h3>
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>Google Colaboratoryで作成した <strong>chapter6.ipynb</strong> を保存し，
+<strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
+提出の前に必ず下記の設定を行ってください．</p>
+<ul>
+<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
+<li>ノートブックの変更内容を保存して固定</li>
+<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
+</ul>
+<h3>参考書籍</h3>
 
 
 
