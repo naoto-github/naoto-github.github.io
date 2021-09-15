@@ -87,7 +87,7 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook6 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
+  <meta property="og:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter6 とします． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
 import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize 分類  今回からは 分類 と呼ばれる問題にチャレンジします． これまでの 回帰 では，「アイスクリームの売上」や「インフルエンザの報告数」など連続値を予測対象としましたが， 分類では「リンゴ or メロン」や「Aさんの顔 or Bさんの顔」など離散値を予測対象とします． これら目標データとなる離散値を ラベル，カテゴリ ，または，クラス と呼びます．
 ここでは，下記のデータを例に考えてみましょう． このデータはリンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） を示しています． カテゴリは色で表現されており，red はリンゴ， green はメロンを表しています． 例えば，$x_1=9.5$，$x_2=278$ はリンゴであることを意味します．
 x1 = np.array([9.5, 11.2, 10.3, 13.4, 12.9, 14.2]) #大きさ（cm） x2 = np.array([278, 298, 382, 1221, 1305, 1512]) #重さ（g） label = np." />
@@ -105,7 +105,7 @@ x1 = np.array([9.5, 11.2, 10.3, 13.4, 12.9, 14.2]) #大きさ（cm） x2 = np.ar
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook6 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
+  <meta name="twitter:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter6 とします． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
 import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize 分類  今回からは 分類 と呼ばれる問題にチャレンジします． これまでの 回帰 では，「アイスクリームの売上」や「インフルエンザの報告数」など連続値を予測対象としましたが， 分類では「リンゴ or メロン」や「Aさんの顔 or Bさんの顔」など離散値を予測対象とします． これら目標データとなる離散値を ラベル，カテゴリ ，または，クラス と呼びます．
 ここでは，下記のデータを例に考えてみましょう． このデータはリンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） を示しています． カテゴリは色で表現されており，red はリンゴ， green はメロンを表しています． 例えば，$x_1=9.5$，$x_2=278$ はリンゴであることを意味します．
 x1 = np.array([9.5, 11.2, 10.3, 13.4, 12.9, 14.2]) #大きさ（cm） x2 = np.array([278, 298, 382, 1221, 1305, 1512]) #重さ（g） label = np." />
@@ -180,9 +180,8 @@ x1 = np.array([9.5, 11.2, 10.3, 13.4, 12.9, 14.2]) #大きさ（cm） x2 = np.ar
   ノートブックの作成
 </h1>
 
-<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
-ノートブックのタイトルは <strong>Notebook6</strong> とします．
-ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．
+<p>Colabにアクセスし，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>chapter6</strong> とします．
 また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>，<strong>scipy.optimize</strong> を導入しておいてください．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 <span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
@@ -250,8 +249,10 @@ f({\bf x}) = {\bf w} \cdot {\bf x} = w_1 \cdot x_1 + w_2 \cdot x_2
 $$</p>
 <p>内積は，ベクトル${\bf w}$に対して，ベクトル${\bf x}$を垂直に下ろした， <strong>正射影</strong> を表します（正確には$|{\bf w}| = 1$のとき）．
 ここでの，ポイントは内積した値の <strong>符号</strong> です．
-符号が <strong>正</strong> であるとき，$-\pi /2 \leq \theta \leq \pi /2$であり，${\bf x}$はメロンとみなすことができます．
-一方，符号が <strong>負</strong> であるとき，$-\pi  \leq \theta \leq - \pi /2$，または，$\pi / 2  \leq \theta \leq \pi$であり，
+符号が <strong>正</strong> であるとき，$0 &lt; \theta &lt; \frac{1}{2}\pi$，
+または，$\frac{3}{2}\pi &lt; \theta &lt; 2 \pi$であり，${\bf x}$はメロンとみなすことができます．
+一方，符号が <strong>負</strong> であるとき，
+$\frac{1}{2}\pi  &lt; \theta &lt; \frac{3}{2}\pi$であり，
 ${\bf x}$はリンゴとみなすことができます．
 このような関数$f({\bf x})$を <strong>識別関数</strong> と呼びます．</p>
 <p><a href="https://gyazo.com/0e71843afcf165489d57c18e09915bc8"><img src="https://i.gyazo.com/0e71843afcf165489d57c18e09915bc8.png" alt="Image from Gyazo"></a></p>
@@ -305,6 +306,23 @@ p <span style="color:#f92672">=</span> w<span style="color:#f92672">.</span>dot(
 <p>今回設定した${\bf w} = (1, 1)$は，たまたま上手く分類が出来ました．
 一般的な分類アルゴリズムでは，適切な${\bf w}$を求めることが狙いとなります．
 次回は，ベクトルの内積の考えを利用した <strong>線形判別分析</strong> に挑戦します．</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>下記のデータを分類する決定境界（ベクトル${\bf w}$）を自由に定め，
+識別関数$f(x)$の結果が正しいことを示してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">23</span>, <span style="color:#ae81ff">25</span>])
+x2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">16</span>])
+label <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#e6db74">&#34;blue&#34;</span>,<span style="color:#e6db74">&#34;blue&#34;</span>,<span style="color:#e6db74">&#34;blue&#34;</span>,<span style="color:#e6db74">&#34;pink&#34;</span>,<span style="color:#e6db74">&#34;pink&#34;</span>,<span style="color:#e6db74">&#34;pink&#34;</span>]) <span style="color:#75715e">#カテゴリ</span>
+</code></pre></div><p>課題を完成させたら，<strong>chapter6.ipynb</strong> を保存し，
+<strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
+このとき，必ず事前に下記の設定を行ってから提出してください．</p>
+<ul>
+<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
+<li>ノートブックの変更内容を保存して固定</li>
+<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
+</ul>
 <!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>

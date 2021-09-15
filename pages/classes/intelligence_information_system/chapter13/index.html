@@ -87,8 +87,8 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook13 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，random を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt import random オーバーフィッティング（過学習）  オーバーフィッティング とは 過学習 または 過剰適合 と呼ばれることもある現象で， サンプルデータに過剰に適合してしまい， データ全体に対しての汎用的な能力を失った状態を指します． ここでは，回帰問題を例に挙げて，オーバーフィッティングを再現してみましょう．
+  <meta property="og:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter13 とします． また，numpy，matplotlib.pyplot，random，scikit-learn を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt import random from sklearn.model_selection import KFold オーバーフィッティング（過学習）  オーバーフィッティング とは 過学習 または 過剰適合 と呼ばれることもある現象で， サンプルデータに過剰に適合してしまい， データ全体に対しての汎用的な能力を失った状態を指します． ここでは，回帰問題を例に挙げて，オーバーフィッティングを再現してみましょう．
 まずは，$x^3 - 2x$に従った40点のデータを生成します． これに，ノイズとなる乱数を加え，対象のデータ全体とします．
 x = np.arange(-2, 2, 0.1) # 40点を生成 y = x ** 3 - 2* x r = np.random.rand(len(y)) * 2 # 乱数を生成 y = y &#43; r # 乱数を加算 data = np.stack([x, y]) plt." />
 
@@ -105,8 +105,8 @@ x = np.arange(-2, 2, 0.1) # 40点を生成 y = x ** 3 - 2* x r = np.random.rand(
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Jupyter Notebook を起動し，新規にノートブックを作成してください． ノートブックのタイトルは Notebook13 とします． ノートブックの作成方法は第１回の資料を参照してください． また，numpy，matplotlib.pyplot，random を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt import random オーバーフィッティング（過学習）  オーバーフィッティング とは 過学習 または 過剰適合 と呼ばれることもある現象で， サンプルデータに過剰に適合してしまい， データ全体に対しての汎用的な能力を失った状態を指します． ここでは，回帰問題を例に挙げて，オーバーフィッティングを再現してみましょう．
+  <meta name="twitter:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter13 とします． また，numpy，matplotlib.pyplot，random，scikit-learn を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt import random from sklearn.model_selection import KFold オーバーフィッティング（過学習）  オーバーフィッティング とは 過学習 または 過剰適合 と呼ばれることもある現象で， サンプルデータに過剰に適合してしまい， データ全体に対しての汎用的な能力を失った状態を指します． ここでは，回帰問題を例に挙げて，オーバーフィッティングを再現してみましょう．
 まずは，$x^3 - 2x$に従った40点のデータを生成します． これに，ノイズとなる乱数を加え，対象のデータ全体とします．
 x = np.arange(-2, 2, 0.1) # 40点を生成 y = x ** 3 - 2* x r = np.random.rand(len(y)) * 2 # 乱数を生成 y = y &#43; r # 乱数を加算 data = np.stack([x, y]) plt." />
 
@@ -180,13 +180,13 @@ x = np.arange(-2, 2, 0.1) # 40点を生成 y = x ** 3 - 2* x r = np.random.rand(
   ノートブックの作成
 </h1>
 
-<p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
-ノートブックのタイトルは <strong>Notebook13</strong> とします．
-ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter1/">第１回の資料</a>を参照してください．
-また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>，<strong>random</strong> を導入しておいてください．</p>
+<p>Colabにアクセスし，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>chapter13</strong> とします．
+また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>，<strong>random</strong>，<strong>scikit-learn</strong> を導入しておいてください．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 <span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
 <span style="color:#f92672">import</span> random
+<span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> KFold
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   オーバーフィッティング（過学習）
 </h1>
@@ -231,6 +231,7 @@ plt<span style="color:#f92672">.</span>scatter(sample[<span style="color:#ae81ff
     <span style="color:#66d9ef">return</span> y_, e
 </code></pre></div><p>最初に次数$d=1$の回帰式（回帰直線）を求めます．
 1本の直線で全体の傾向を近似していることがわかります．</p>
+<!-- 2乗誤差は約80.1です． -->
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y, e <span style="color:#f92672">=</span> regression(data, sample, <span style="color:#ae81ff">1</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Error: &#34;</span> <span style="color:#f92672">+</span> str(e))
 
@@ -243,6 +244,7 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y
 <p>次に次数$d=3$の回帰式を求めます．
 データにはノイズが加わっていますが，
 真の関数である$x^3 - 2x$を，よく近似できていることがわかります．</p>
+<!-- 2乗誤差は約11.4です． -->
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y, e <span style="color:#f92672">=</span> regression(data, sample, <span style="color:#ae81ff">3</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Error: &#34;</span> <span style="color:#f92672">+</span> str(e))
 
@@ -258,6 +260,7 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y
 誤差を最小化することができています．
 しかし，データ全体に対してはどうでしょうか．
 上述の$d=3$より近似精度が落ちていないでしょうか．</p>
+<!-- 2乗誤差は約31.0であり，$d=3$よりも誤差が大きくなってしまっています． -->
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y, e <span style="color:#f92672">=</span> regression(data, sample, <span style="color:#ae81ff">10</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Error: &#34;</span> <span style="color:#f92672">+</span> str(e))
 
@@ -305,9 +308,7 @@ plt<span style="color:#f92672">.</span>legend()
 この結果，5パターンの学習用とテスト用のサンプルが生成されます．
 各サンプルは，学習用に32，テスト用に8のデータが用意されていることがわかります．</p>
 <p><strong>[IN:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> KFold
-
-kf <span style="color:#f92672">=</span> KFold(n_splits<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, shuffle<span style="color:#f92672">=</span>True, random_state <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#k-分割交差検証（k=5）</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">kf <span style="color:#f92672">=</span> KFold(n_splits<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, shuffle<span style="color:#f92672">=</span>True, random_state <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#k-分割交差検証（k=5）</span>
     
 <span style="color:#66d9ef">for</span> train_set, test_set <span style="color:#f92672">in</span> kf<span style="color:#f92672">.</span>split(data[<span style="color:#ae81ff">0</span>]):
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;train_set: &#34;</span><span style="color:#f92672">+</span>  str(train_set) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; test_set: &#34;</span> <span style="color:#f92672">+</span>  str(test_set))
@@ -358,36 +359,44 @@ plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;d
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;error&#34;</span>)
 plt<span style="color:#f92672">.</span>legend()
 </code></pre></div><p><a href="https://gyazo.com/ca9e6c07656ba67003547944de93c427"><img src="https://i.gyazo.com/ca9e6c07656ba67003547944de93c427.png" alt="Image from Gyazo"></a></p>
-<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
- -->
-<!-- 下記のデータセットを利用し，k-分割交差検証で多項式回帰の精度を評価しなさい． -->
-<!-- ```python -->
-<!-- x2 = np.array([-2.00000000e+00, -1.90000000e+00, -1.80000000e+00, -1.70000000e+00, -->
-<!--        -1.60000000e+00, -1.50000000e+00, -1.40000000e+00, -1.30000000e+00, -->
-<!--        -1.20000000e+00, -1.10000000e+00, -1.00000000e+00, -9.00000000e-01, -->
-<!--        -8.00000000e-01, -7.00000000e-01, -6.00000000e-01, -5.00000000e-01, -->
-<!--        -4.00000000e-01, -3.00000000e-01, -2.00000000e-01, -1.00000000e-01, -->
-<!--         1.77635684e-15,  1.00000000e-01,  2.00000000e-01,  3.00000000e-01, -->
-<!--         4.00000000e-01,  5.00000000e-01,  6.00000000e-01,  7.00000000e-01, -->
-<!--         8.00000000e-01,  9.00000000e-01,  1.00000000e+00,  1.10000000e+00, -->
-<!--         1.20000000e+00,  1.30000000e+00,  1.40000000e+00,  1.50000000e+00, -->
-<!--         1.60000000e+00,  1.70000000e+00,  1.80000000e+00,  1.90000000e+00]) -->
-<!-- y2 = np.array([ 4.39898556e+00,  3.93435081e+00,  2.61498259e+00,  2.72044213e+00, -->
-<!--         1.30362037e+00,  2.08098975e+00,  1.85633410e+00,  1.44865881e+00, -->
-<!--         7.29089005e-01, -9.42380345e-02,  8.39806492e-01,  9.13725511e-01, -->
-<!--        -6.89556978e-02, -1.88622122e-01, -4.17447107e-01, -8.50096595e-02, -->
-<!--        -5.10447688e-01, -1.18019152e-03,  1.36162277e-01,  8.31331709e-01, -->
-<!--         9.37694167e-02,  1.68726072e+00,  4.71255186e-01,  2.02384997e+00, -->
-<!--         1.12543648e+00,  2.23950532e+00,  2.69476804e+00,  1.50769218e+00, -->
-<!--         2.86140345e+00,  2.46208705e+00,  2.46640709e+00,  2.40690140e+00, -->
-<!--         1.29052071e+00,  7.78084009e-01,  1.01201918e+00,  5.94619852e-01, -->
-<!--         1.27863784e-01, -4.80496436e-01, -1.75028230e+00, -2.54273399e+00])		 -->
-<!-- data2 = np.stack([x2, y2]) -->
-<!-- ``` -->
-<!-- [![Image from Gyazo](https://i.gyazo.com/c3b122c99c004d9f7ba915d117858e92.png)](https://gyazo.com/c3b122c99c004d9f7ba915d117858e92) -->
-<!-- [![Image from Gyazo](https://i.gyazo.com/4589eebf892e43a067313ce66fa87b9e.png)](https://gyazo.com/4589eebf892e43a067313ce66fa87b9e) -->
+
+<p>下記のデータセットを利用し，$k=5$のk-分割交差検証で多項式回帰の精度を評価しなさい．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#f92672">-</span><span style="color:#ae81ff">2.00000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.90000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.80000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.70000000e+00</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">1.60000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.50000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.40000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.30000000e+00</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">1.20000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.10000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.00000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">9.00000000e-01</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">8.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5.00000000e-01</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">4.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.00000000e-01</span>,
+        <span style="color:#ae81ff">1.77635684e-15</span>,  <span style="color:#ae81ff">1.00000000e-01</span>,  <span style="color:#ae81ff">2.00000000e-01</span>,  <span style="color:#ae81ff">3.00000000e-01</span>,
+        <span style="color:#ae81ff">4.00000000e-01</span>,  <span style="color:#ae81ff">5.00000000e-01</span>,  <span style="color:#ae81ff">6.00000000e-01</span>,  <span style="color:#ae81ff">7.00000000e-01</span>,
+        <span style="color:#ae81ff">8.00000000e-01</span>,  <span style="color:#ae81ff">9.00000000e-01</span>,  <span style="color:#ae81ff">1.00000000e+00</span>,  <span style="color:#ae81ff">1.10000000e+00</span>,
+        <span style="color:#ae81ff">1.20000000e+00</span>,  <span style="color:#ae81ff">1.30000000e+00</span>,  <span style="color:#ae81ff">1.40000000e+00</span>,  <span style="color:#ae81ff">1.50000000e+00</span>,
+        <span style="color:#ae81ff">1.60000000e+00</span>,  <span style="color:#ae81ff">1.70000000e+00</span>,  <span style="color:#ae81ff">1.80000000e+00</span>,  <span style="color:#ae81ff">1.90000000e+00</span>])
+		
+y2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([ <span style="color:#ae81ff">4.39898556e+00</span>,  <span style="color:#ae81ff">3.93435081e+00</span>,  <span style="color:#ae81ff">2.61498259e+00</span>,  <span style="color:#ae81ff">2.72044213e+00</span>,
+        <span style="color:#ae81ff">1.30362037e+00</span>,  <span style="color:#ae81ff">2.08098975e+00</span>,  <span style="color:#ae81ff">1.85633410e+00</span>,  <span style="color:#ae81ff">1.44865881e+00</span>,
+        <span style="color:#ae81ff">7.29089005e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">9.42380345e-02</span>,  <span style="color:#ae81ff">8.39806492e-01</span>,  <span style="color:#ae81ff">9.13725511e-01</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">6.89556978e-02</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.88622122e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.17447107e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8.50096595e-02</span>,
+       <span style="color:#f92672">-</span><span style="color:#ae81ff">5.10447688e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.18019152e-03</span>,  <span style="color:#ae81ff">1.36162277e-01</span>,  <span style="color:#ae81ff">8.31331709e-01</span>,
+        <span style="color:#ae81ff">9.37694167e-02</span>,  <span style="color:#ae81ff">1.68726072e+00</span>,  <span style="color:#ae81ff">4.71255186e-01</span>,  <span style="color:#ae81ff">2.02384997e+00</span>,
+        <span style="color:#ae81ff">1.12543648e+00</span>,  <span style="color:#ae81ff">2.23950532e+00</span>,  <span style="color:#ae81ff">2.69476804e+00</span>,  <span style="color:#ae81ff">1.50769218e+00</span>,
+        <span style="color:#ae81ff">2.86140345e+00</span>,  <span style="color:#ae81ff">2.46208705e+00</span>,  <span style="color:#ae81ff">2.46640709e+00</span>,  <span style="color:#ae81ff">2.40690140e+00</span>,
+        <span style="color:#ae81ff">1.29052071e+00</span>,  <span style="color:#ae81ff">7.78084009e-01</span>,  <span style="color:#ae81ff">1.01201918e+00</span>,  <span style="color:#ae81ff">5.94619852e-01</span>,
+        <span style="color:#ae81ff">1.27863784e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.80496436e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.75028230e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.54273399e+00</span>])
+
+data2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>stack([x2, y2])
+</code></pre></div><p><a href="https://gyazo.com/c3b122c99c004d9f7ba915d117858e92"><img src="https://i.gyazo.com/c3b122c99c004d9f7ba915d117858e92.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/4589eebf892e43a067313ce66fa87b9e"><img src="https://i.gyazo.com/4589eebf892e43a067313ce66fa87b9e.png" alt="Image from Gyazo"></a></p>
+<p>課題を完成させたら，<strong>chapter13.ipynb</strong> を保存し，
+<strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
+このとき，必ず事前に下記の設定を行ってから提出してください．</p>
+<ul>
+<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
+<li>ノートブックの変更内容を保存して固定</li>
+<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
+</ul>
 <!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
 
 <h3>参考書籍</h3>
