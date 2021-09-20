@@ -34,10 +34,10 @@ new Vue({
     convert: function(){
       
       let data = sheet.getData();
-      let width = data.length;
+      let height = data.length;
       
-      if(width > 0){
-        let height = data[0].length;
+      if(height > 0){
+        let width = data[0].length;
       
         this.sql = ""
         
@@ -58,7 +58,7 @@ new Vue({
             type = "INTEGER";
           }
           
-          if(j != width - 1){
+          if(j != width-1){
             create_sql += sheet.getHeader(j) + ` ${type},\n`
           }
           else{
@@ -80,7 +80,7 @@ new Vue({
               value = "'" + value + "'"
             }
             
-            if(j != width - 1){
+            if(j != width-1){
               insert_sql += value + ","
             }
             else{
