@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Kaggle②・コンペに挑戦しよう！ | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="Kaggle②・コンペに挑戦しよう！" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter15/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter15 とします．
+パラメータの最適化  機械学習モデルの精度を向上させるには，パラメータの最適化（チューニング）が欠かせません． 例えば，決定木では，分割基準（gini or entropy），木の最大の深さ（max_depth）， 分割可能な最小ノード数（min_samples_split）などが挙げられます． これらのパラメータは ハイパーパラメータ と呼ばれ， 最適化することで最大のパフォーマンスを発揮することができます． ここでは，ハイパーパラメータの 自動最適化フレームワークであるOptunaを取り上げます． このフレームワークは，日本企業のPreferred Networksが開発して折り， 国内外の様々なプロジェクトで導入されています．
+Optunaをインストールして，必要なライブラリを導入します． ここで，mplot3dは， 散布図や曲面などを3次元空間にプロットするためのライブラリです．
+!pip install optuna import optuna import matplotlib.pyplot as plt import numpy as np from mpl_toolkits.mplot3d import Axes3D Optunaで最適化する関数$f(x,y)$を定義します． この関数を最小化するパラメータ$x$と$y$を探索します．
+$$ f(x, y) = x^2 &#43; y^2 $$
+# 関数f(x, y)を定義 def f(x, y): return x**2 &#43; y**2 関数$f(x)$を3次元空間にプロットします． 図から分かるように，この問題の最適解は$x=0$，$y=0$です．
+# 関数f(x, y)の可視化 x_list = np.arange(-5, 5, 0." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Kaggle②・コンペに挑戦しよう！" />
+
+
+
+  <meta name="twitter:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter15 とします．
+パラメータの最適化  機械学習モデルの精度を向上させるには，パラメータの最適化（チューニング）が欠かせません． 例えば，決定木では，分割基準（gini or entropy），木の最大の深さ（max_depth）， 分割可能な最小ノード数（min_samples_split）などが挙げられます． これらのパラメータは ハイパーパラメータ と呼ばれ， 最適化することで最大のパフォーマンスを発揮することができます． ここでは，ハイパーパラメータの 自動最適化フレームワークであるOptunaを取り上げます． このフレームワークは，日本企業のPreferred Networksが開発して折り， 国内外の様々なプロジェクトで導入されています．
+Optunaをインストールして，必要なライブラリを導入します． ここで，mplot3dは， 散布図や曲面などを3次元空間にプロットするためのライブラリです．
+!pip install optuna import optuna import matplotlib.pyplot as plt import numpy as np from mpl_toolkits.mplot3d import Axes3D Optunaで最適化する関数$f(x,y)$を定義します． この関数を最小化するパラメータ$x$と$y$を探索します．
+$$ f(x, y) = x^2 &#43; y^2 $$
+# 関数f(x, y)を定義 def f(x, y): return x**2 &#43; y**2 関数$f(x)$を3次元空間にプロットします． 図から分かるように，この問題の最適解は$x=0$，$y=0$です．
+# 関数f(x, y)の可視化 x_list = np.arange(-5, 5, 0." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">Kaggle②・コンペに挑戦しよう！</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  ノートブックの作成
+</h1>
+
+<p>Colabにアクセスし，新規にノートブックを作成してください．
+ノートブックのタイトルは <strong>chapter15</strong> とします．</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  パラメータの最適化
+</h1>
+
+<p>機械学習モデルの精度を向上させるには，パラメータの最適化（チューニング）が欠かせません．
+例えば，決定木では，分割基準（<code>gini</code> or <code>entropy</code>），木の最大の深さ（<code>max_depth</code>），
+分割可能な最小ノード数（<code>min_samples_split</code>）などが挙げられます．
+これらのパラメータは <strong>ハイパーパラメータ</strong> と呼ばれ，
+最適化することで最大のパフォーマンスを発揮することができます．
+ここでは，ハイパーパラメータの
+自動最適化フレームワークである<a href="https://github.com/optuna/optuna">Optuna</a>を取り上げます．
+このフレームワークは，日本企業の<a href="https://www.preferred.jp/ja/">Preferred Networks</a>が開発して折り，
+国内外の様々なプロジェクトで導入されています．</p>
+<p>Optunaをインストールして，必要なライブラリを導入します．
+ここで，<a href="https://matplotlib.org/2.2.2/mpl_toolkits/index.html">mplot3d</a>は，
+散布図や曲面などを3次元空間にプロットするためのライブラリです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">!</span>pip install optuna
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> optuna
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> mpl_toolkits.mplot3d <span style="color:#f92672">import</span> Axes3D
+</code></pre></div><p>Optunaで最適化する関数$f(x,y)$を定義します．
+この関数を最小化するパラメータ$x$と$y$を探索します．</p>
+<p>$$
+f(x, y) = x^2 + y^2
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 関数f(x, y)を定義</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>(x, y):
+  <span style="color:#66d9ef">return</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> y<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
+</code></pre></div><p>関数$f(x)$を3次元空間にプロットします．
+図から分かるように，この問題の最適解は$x=0$，$y=0$です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 関数f(x, y)の可視化</span>
+x_list <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0.1</span>)
+y_list <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0.1</span>)
+
+X, Y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>meshgrid(x_list, y_list)
+Z <span style="color:#f92672">=</span>  f(X, Y)
+
+fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
+ax <span style="color:#f92672">=</span> Axes3D(fig)
+ax<span style="color:#f92672">.</span>plot_surface(X, Y, Z)
+ax<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#34;X&#34;</span>)
+ax<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#34;Y&#34;</span>)
+ax<span style="color:#f92672">.</span>set_zlabel(<span style="color:#e6db74">&#34;f(x, y)&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/0d9c4d09b29bb779f2b8e7f5fd4f5758"><img src="https://i.gyazo.com/0d9c4d09b29bb779f2b8e7f5fd4f5758.png" alt="Image from Gyazo"></a></p>
+<p>それでは，<a href="https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html">Optunaの目的関数</a>を定義しましょう．
+このとき，Trialクラスを利用して，探索するパラメータの空間を指定します．
+ここでは，$x$の探索空間は-5から5，同様に$y$の探索空間も-5から5に設定します．
+整数を探索するときは<code>suggest_int</code>，実数を探索するときは<code>suggest_float</code>など，
+探索空間の種類に応じて異なる関数を用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 目的関数を定義</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">objective</span>(trial): 
+    x <span style="color:#f92672">=</span> trial<span style="color:#f92672">.</span>suggest_int(<span style="color:#e6db74">&#34;x&#34;</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>) <span style="color:#75715e">#-5〜5までを探索</span>
+    y <span style="color:#f92672">=</span> trial<span style="color:#f92672">.</span>suggest_int(<span style="color:#e6db74">&#34;y&#34;</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>) <span style="color:#75715e">#-5〜5までを探索</span>
+    <span style="color:#66d9ef">return</span> f(x, y)
+</code></pre></div><p>目的関数を最小化するパラメータを探索します．
+探索回数<code>n_trials</code>は100に設定しました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 最適なパラメータを探索</span>
+study <span style="color:#f92672">=</span> optuna<span style="color:#f92672">.</span>create_study(direction<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;minimize&#34;</span>) <span style="color:#75715e"># 最適化処理を管理するstudyオブジェクト</span>
+study<span style="color:#f92672">.</span>optimize(objective, n_trials<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">[I 2021-09-27 07:09:08,706] A new study created in memory with name: no-name-9c66fd90-bcc3-45ed-9d80-2d8742dcf962
+[I 2021-09-27 07:09:08,712] Trial 0 finished with value: 2.0 and parameters: {&#39;x&#39;: -1, &#39;y&#39;: 1}. Best is trial 0 with value: 2.0.
+[I 2021-09-27 07:09:08,716] Trial 1 finished with value: 17.0 and parameters: {&#39;x&#39;: 4, &#39;y&#39;: -1}. Best is trial 0 with value: 2.0.
+[I 2021-09-27 07:09:08,720] Trial 2 finished with value: 20.0 and parameters: {&#39;x&#39;: 4, &#39;y&#39;: 2}. Best is trial 0 with value: 2.0.
+[I 2021-09-27 07:09:08,724] Trial 3 finished with value: 20.0 and parameters: {&#39;x&#39;: -4, &#39;y&#39;: -2}. Best is trial 0 with value: 2.0.
+[I 2021-09-27 07:09:08,729] Trial 4 finished with value: 41.0 and parameters: {&#39;x&#39;: -5, &#39;y&#39;: -4}. Best is trial 0 with value: 2.0.
+</code></pre></div><p>探索の結果，最適なパラメータである$x=0$，$y=0$が発見されました．
+このように，機械学習のモデルに合わせて最適なパラメータを探索することで，
+パフォーマンスを改善させることができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 最適なパラメータ</span>
+<span style="color:#66d9ef">print</span>(study<span style="color:#f92672">.</span>best_params)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">{&#39;x&#39;: 0, &#39;y&#39;: 0}
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  コンペの紹介
+</h1>
+
+<p>Kaggleで公開されている初学者向けのコンペを紹介します.</p>
+<h2 id="スパムメールの分類just-the-basics---strata-2013-after-party">スパムメールの分類（Just the Basics - Strata 2013 After-party）</h2>
+<p>通常のメールとスパムメールを分類する問題です．
+メール・コーパスによる100種類の特徴量で構成されています（データには属性名が含まれていないので注意）．</p>
+<p><a href="https://www.kaggle.com/c/just-the-basics-the-after-party/">https://www.kaggle.com/c/just-the-basics-the-after-party/</a></p>
+<h2 id="手書き数字の分類digit-recognizer">手書き数字の分類（Digit Recognizer）</h2>
+<p>手書き数字（$0〜9$）を分類する問題です．
+データセットはMNISTとして広く知られています．
+$28 \times 28$ピクセルの画素値（$0〜255$）がデータとして提供されます．</p>
+<p><a href="https://www.kaggle.com/c/digit-recognizer/data?select=train.csv">https://www.kaggle.com/c/digit-recognizer/data?select=train.csv</a></p>
+<h2 id="タクシー料金の予測new-york-city-taxi-fare-prediction">タクシー料金の予測（New York City Taxi Fare Prediction）</h2>
+<p>ニューヨークのタクシー料金を回帰アルゴリズムで予測します．
+データは乗降車の時刻や緯度経度など8属性で構成されています．
+回帰問題であることから評価には平均2乗誤差（Root Mean Square Error: RMSE）が用いられます．</p>
+<p><a href="https://www.kaggle.com/c/new-york-city-taxi-fare-prediction">https://www.kaggle.com/c/new-york-city-taxi-fare-prediction</a></p>
+<h2 id="住宅価格の予測house-prices---advanced-regression-techniques">住宅価格の予測（House Prices - Advanced Regression Techniques）</h2>
+<p>住宅価格を回帰アルゴリズムで予測することを目的とします．
+データは敷地面積（LotArea），建築年（yearBuilt）などの81属性で構成されています．
+評価には平均2乗誤差（Root Mean Square Error: RMSE）が用いられます．</p>
+<p><a href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques/">https://www.kaggle.com/c/house-prices-advanced-regression-techniques/</a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  学習アルゴリズムの紹介
+</h1>
+
+<p>Kaggleでよく使用される学習アルゴリズムを紹介します．</p>
+<h2 id="バギング">バギング</h2>
+<p><strong>バギング</strong> を利用したアルゴリズムに <strong>RandomForest</strong> があります．
+バギングとは，独立した複数の学習器を作成し，それらの多数決で解を定める方法です．</p>
+<h3 id="randomforest">RandomForest</h3>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html">https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html</a></p>
+<h2 id="ブースティング">ブースティング</h2>
+<p><strong>ブースティング</strong> を利用したアルゴリズム２，
+<strong>XGBoost</strong>，<strong>LightGBM</strong>，<strong>CatBoost</strong> などがあります（参考: <a href="https://qiita.com/DS27/items/1d0fe42fe2a406b7128a">勾配ブースティング決定木（XGBoost, LightGBM, CatBoost）を実装してみた</a>」）．
+ブースティングは，バギングとは異なり独立した学習器を作成するのではなく，
+ある学習器から，その弱点を補う学習器を生成することを繰り返し，
+それらの多数決で解を定める方法です．</p>
+<h3 id="xgboost">XGBoost</h3>
+<p><a href="https://github.com/dmlc/xgboost/">https://github.com/dmlc/xgboost/</a></p>
+<h3 id="lightgbm">LightGBM</h3>
+<p><a href="https://github.com/microsoft/LightGBM/">https://github.com/microsoft/LightGBM/</a></p>
+<h3 id="catboost">CatBoost</h3>
+<p><a href="https://catboost.ai/">https://catboost.ai/</a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>自由にコンペを選び，その結果を報告してください．
+課題を完成させたら，<strong>chapter15.ipynb</strong> を保存し，
+<strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
+このとき，必ず事前に下記の設定を行ってから提出してください．</p>
+<ul>
+<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
+<li>ノートブックの変更内容を保存して固定</li>
+<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
+</ul>
+
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274222446&linkId=1a63210b6dc95e90156695289116cb1b&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B078767Y56&linkId=cd73876214aec3d9b72777ab73920051&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4802611641&linkId=e77970ab2740fac9fdeb8b877668c257&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4839963525&linkId=14f05f671ddd917b204596b6b535981e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter15/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
