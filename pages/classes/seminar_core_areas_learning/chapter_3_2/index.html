@@ -383,12 +383,57 @@ penup()
 <span style="color:#66d9ef">else</span>:
 	<span style="color:#960050;background-color:#1e0010">いずれの条件式も満たさないとき実行される処理</span>
 </code></pre></div><h2 id="if文を利用した描画">if文を利用した描画</h2>
+<p>if文を利用して，円に色を設定してみましょう．
+ここでは，亀のX座標（<code>getx</code>）を条件式に用いています（Y座標を取得するには<code>gety</code>）．
+$x$座標が$400$以上のときは赤色．
+$x$座標が$400$より小さいときは青色で描画しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">center_x <span style="color:#f92672">=</span> <span style="color:#ae81ff">400</span>
+center_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">250</span>
+radius <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>
+
+initializeTurtle()
+speed(<span style="color:#ae81ff">10</span>)
+penup()
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">360</span>):
+
+  <span style="color:#66d9ef">if</span>(getx() <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">400</span>):
+    color(<span style="color:#e6db74">&#34;red&#34;</span>)
+  <span style="color:#66d9ef">else</span>:
+    color(<span style="color:#e6db74">&#34;blue&#34;</span>) 
+
+  r <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>pi <span style="color:#f92672">*</span> (i <span style="color:#f92672">/</span> <span style="color:#ae81ff">360</span>)
+  x <span style="color:#f92672">=</span> center_x <span style="color:#f92672">+</span> radius <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>cos(r)
+  y <span style="color:#f92672">=</span> center_y <span style="color:#f92672">+</span> radius <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>sin(r)
+  goto(x, y)
+  pendown()
+
+penup()
+</code></pre></div><p><a href="https://gyazo.com/dbcc0d10ecd71a0eb9417b72916a979b"><img src="https://i.gyazo.com/dbcc0d10ecd71a0eb9417b72916a979b.gif" alt="Image from Gyazo"></a></p>
 <p>if文を利用して，渦巻状の図形に色を設定してみましょう．
 ここでは，亀の進行方向（<code>heading</code>）を条件式に用いています．
-進行方向が上（$0$度）のとき赤色．
-進行方向が右（$90$度）のとき青色．
-進行方向が下（$180$度）のとき緑色．
-進行方向が左（$270$度）のとき黄色で描画しています．</p>
+進行方向が上（$270$度）のとき黄色．
+進行方向が右（$0$度）のとき赤色．
+進行方向が下（$90$度）のとき青色．
+進行方向が左（$180$度）のとき緑色で描画しています．</p>
+<p>まずは，<code>heading()</code>が亀の進行方向を表していることを確認してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">initializeTurtle()
+
+<span style="color:#66d9ef">print</span>(heading()) <span style="color:#75715e"># 上</span>
+
+right(<span style="color:#ae81ff">90</span>)
+<span style="color:#66d9ef">print</span>(heading()) <span style="color:#75715e"># 右</span>
+
+right(<span style="color:#ae81ff">90</span>)
+<span style="color:#66d9ef">print</span>(heading()) <span style="color:#75715e"># 下</span>
+
+right(<span style="color:#ae81ff">90</span>)
+<span style="color:#66d9ef">print</span>(heading()) <span style="color:#75715e"># 左</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">270
+0
+90
+180
+</code></pre></div><p>それでは，亀の進行方向に応じて色を変えてみます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">penup()
 
 goto(<span style="color:#ae81ff">400</span>, <span style="color:#ae81ff">250</span>)
@@ -413,40 +458,6 @@ pendown()
 
 penup()
 </code></pre></div><p><a href="https://gyazo.com/435ce6c4276a0f2abfe584aa93240ac4"><img src="https://i.gyazo.com/435ce6c4276a0f2abfe584aa93240ac4.gif" alt="Image from Gyazo"></a></p>
-<p>if文を利用して，円に色を設定してみましょう．
-ここでは，亀の位置（<code>getx</code>と<code>gety</code>）を条件式に用いています．
-また，複数の条件式を組み合わせるために，「論理積（かつ）」を表す論理演算子の<code>and</code>を用いています．
-$x$座標が$400$以上，かつ，$y$座標が$250$以上のときは赤色．
-$x$座標が$400$以上，かつ，$y$座標が$250$より小さいときは青色．
-$x$座標が$400$より小さい，かつ，$y$座標が$250$以上のときは緑色．
-$x$座標が$400$より小さい，かつ，$y$座標が$250$より小さいときは黄色で描画しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">center_x <span style="color:#f92672">=</span> <span style="color:#ae81ff">400</span>
-center_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">250</span>
-radius <span style="color:#f92672">=</span> <span style="color:#ae81ff">200</span>
-
-initializeTurtle()
-speed(<span style="color:#ae81ff">10</span>)
-penup()
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">360</span>):
-
-  <span style="color:#66d9ef">if</span>((getx() <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">400</span>) <span style="color:#f92672">and</span> (gety() <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">250</span>)):
-    color(<span style="color:#e6db74">&#34;red&#34;</span>)
-  <span style="color:#66d9ef">elif</span>((getx() <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">400</span>) <span style="color:#f92672">and</span> (gety() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">250</span>)):
-    color(<span style="color:#e6db74">&#34;blue&#34;</span>)
-  <span style="color:#66d9ef">elif</span>((getx() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">400</span>) <span style="color:#f92672">and</span> (gety() <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">250</span>)):
-    color(<span style="color:#e6db74">&#34;green&#34;</span>)
-  <span style="color:#66d9ef">elif</span>((getx() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">400</span>) <span style="color:#f92672">and</span> (gety() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">250</span>)):
-    color(<span style="color:#e6db74">&#34;yellow&#34;</span>)
-
-  r <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>pi <span style="color:#f92672">*</span> (i <span style="color:#f92672">/</span> <span style="color:#ae81ff">360</span>)
-  x <span style="color:#f92672">=</span> center_x <span style="color:#f92672">+</span> radius <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>cos(r)
-  y <span style="color:#f92672">=</span> center_y <span style="color:#f92672">+</span> radius <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>sin(r)
-  goto(x, y)
-  pendown()
-
-penup()
-</code></pre></div><p><a href="https://gyazo.com/acee4cb309ea4fe122c079e345a6cc25"><img src="https://i.gyazo.com/acee4cb309ea4fe122c079e345a6cc25.gif" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
