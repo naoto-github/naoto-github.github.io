@@ -255,6 +255,8 @@
 リレーションに含まれる所定のタプルを一意に同定する必要があります．</p>
 <p>例えば，【学生リスト】でタプルを検索することを考えてみましょう．
 下記の学生証の学生をどのように検索したら良いでしょうか．</p>
+<p><a href="https://gyazo.com/739df044885c8118b480560ed943c429"><img src="https://i.gyazo.com/739df044885c8118b480560ed943c429.png" alt="Image from Gyazo"></a></p>
+<!--
 <div style="width:300px;height:200px;border:2px solid black;margin-bottom:20px">
 <h3 style="margin-left:5px">
 学籍番号：A002<br />
@@ -262,6 +264,7 @@
 </h3>
 <h2 style="text-align:center">岩村 優</h2>
 </div>
+-->
 <p><strong>学年</strong>や<strong>学部</strong>で検索することは問題がありそうですね．
 なぜなら，「1年」は岩村さんだけでなく，仙波さんも該当しています．
 同様に，「工学部」は岩城さんも該当しています．
@@ -328,7 +331,74 @@
 
   <p>
     
-	【納品表】における適切な主キーは何か．
+	【学部リスト】における適切な主キーは何か．
+
+  </p>
+  
+</div>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    例題2
+  </h3>
+
+  <p>
+    
+	【社員表】における適切な主キーは何か．
+
+	<table>
+	<tbody>
+		<tr>
+			<th>社員番号</th>
+			<th>保険証番号</th>
+			<th>入社年度</th>
+			<th>部署</th>
+		</tr>
+		<tr>
+			<td>E01</td>
+			<td>2739</td>
+			<td>2016</td>
+			<td>営業</td>			
+		</tr>
+		<tr>
+			<td>E02</td>
+			<td>9281</td>
+			<td>2018</td>
+			<td>人事</td>			
+		</tr>
+		<tr>
+			<td>E03</td>
+			<td>3610</td>
+			<td>2019</td>
+			<td>人事</td>			
+		</tr>
+		<tr>
+			<td>E04</td>
+			<td>7232</td>
+			<td>2020</td>
+			<td>営業</td>			
+		</tr>
+	</tbody>
+	</table>
+</table>
+<b>社員表</b>
+
+  </p>
+  
+</div>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    例題3
+  </h3>
+
+  <p>
+    
+	【納品表】における適切な主キーは何か．納品表は特定の顧客に特定の商品を納品した数を記録するために用いる．
 
 	<table>
 	<tbody>
@@ -378,10 +448,11 @@
 <p>では，【学生リスト】と【学部リスト】の参照関係を考えてみましょう．
 いずれのリレーションにも <strong>学部</strong> が存在していますね．
 どうやらこの <strong>学部</strong> が参照関係にありそうです．
-ここで，注目すべきは【学部リスト】の <strong>学部</strong> は主キーであることです．
-つまり，主キー制約により，重複する値は存在せず，空値となることはありません．
+ここで，【学部リスト】の <strong>学部</strong> は主キーです．
+主キー制約により，重複する値は存在せず，空値となることはありません．
 一方，【学生リスト】の <strong>学部</strong> は，主キーではないため，重複や空値が存在する可能性があります．</p>
-<p>この場合，【学生リスト】の <strong>学部</strong> は【学部リスト】の <strong>学部</strong> を参照していると考えます．
+<p><a href="https://gyazo.com/061d1b420e13d3ec6bae2dda41b180cc"><img src="https://i.gyazo.com/061d1b420e13d3ec6bae2dda41b180cc.png" alt="Image from Gyazo"></a></p>
+<p>このことから，【学生リスト】の <strong>学部</strong> は【学部リスト】の <strong>学部</strong> を参照していると考ることができそうです．
 つまり，【学生リスト】の <strong>学部</strong> に出現する値は，【学部リスト】の <strong>学部</strong> に存在する値から選ぶ必要があります．
 このとき，【学生リスト】の <strong>学部</strong> を <strong>外部キー</strong> と呼びます．</p>
 <p>外部キーであるためには，下記の外部キー制約を満たす必要があります．</p>
@@ -395,7 +466,7 @@
   <p>
     
 	<ul>
-		<li>外部キーの値は，参照先のリレーションの主キーの値から選ばれる．</li>
+		<li>外部キーの値は，参照先の属性に出現する値から選ばれる．</li>
 		<li>外部キーは空値（NULL）を含むことが許される．</li>
 	</ul>
 
@@ -427,7 +498,7 @@
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
   <h3 style="color:#006600">
-    例題2
+    例題4
   </h3>
 
   <p>
