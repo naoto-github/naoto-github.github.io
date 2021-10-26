@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    混合ガウスモデル | mLAB
+    k平均法 | mLAB
   </title>
 
   
@@ -67,7 +67,7 @@
   
   
 
-  <meta property="og:title" content="混合ガウスモデル" />
+  <meta property="og:title" content="k平均法" />
 
 
 
@@ -79,7 +79,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d.png" />
+  <meta property="og:image" content="https://i.gyazo.com/8d85954e3dc8162ffc115bd3b834fb2b.png" />
 
 
 
@@ -87,12 +87,12 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter12 とします． また，numpy，matplotlib.pyplot，scikit-learn，SciPyを導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt from sklearn.mixture import GaussianMixture from scipy.stats import norm ガウス分布（正規分布）  ガウス分布（正規分布）は，ドイツの数学者のガウスに由来する確率・統計において最重要な確率分布の一つです． 自然界や社会の様々な現象を表現するモデルとして知られています． Pythonでは，Numpyを利用して，正規分布に従う乱数を生成することが可能です．
-例えば，平均0，標準偏差1の正規分布に従う乱数を生成してみます． 生成した乱数のヒストグラム（度数）は下図のようになります． このヒストグラムからも分かるように，正規分布には下記の特徴があります．
- 平均値がピークとなる 平均値を中心として左右対称 標準偏差が小さいと尖った形状，大きいと平らな形状  x = np.random.normal(0, 1, 10000) # 10000の乱数を生成 plt.hist(x, bins=100) # 階級数を100に設定したヒストグラム plt.xlim(-5, 5) plt.xlabel(&#34;x&#34;) plt.ylabel(&#34;Frequency&#34;) 
-正規分布に従う特徴量の一つに人間の身長があります． 例えば，日本人男性の平均は167.7cm，標準偏差は6.6cm， また，アメリカ人男性の平均は178.4cmで，標準偏差は7.6cmとされています． それでは，この特徴量を利用して日本人男性とアメリカ人男性の正規分布に従う乱数を生成しましょう． そして，これを重ね合わせてしまいます．
-x1 = np.random.normal(167.7, 6.6, 10000) x2 = np.random.normal(178.4, 7.6, 10000) x = np." />
+  <meta property="og:description" content="クラスタリング  これまで取り上げた手法は全て 教師あり学習 でした． 今回は，正解（教師）が与えられない 教師なし学習 に注目します． 教師なし学習の一つが クラスタリング と呼ばれる手法です． クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります． 分類と混同されがちですが，正解（教師）は存在しないため， 同じクラスタに割り当てられたデータは 似ている とみなすことができますが， その割り当てが 正しい， 正しくない といった判断は出来ないことに注意してください． また，クラスタリングには，階層型手法 と 非階層型手法 に分かれますが， ここでは非階層型手法を取り上げることにします．
+ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter12 とします． また，numpy，matplotlib.pyplot, scikit-learn，pandas を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from sklearn.cluster import KMeans import pandas as pd データの準備  ユニセフ・世界子供白書が公開している人口統計指標のデータを用います． ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します． ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します． 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．
+data = pd.read_csv(&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;) display(data.head()) #最初の5件だけ表示 
+一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．
+japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(japan)" />
 
 
 
@@ -103,20 +103,20 @@ x1 = np.random.normal(167.7, 6.6, 10000) x2 = np.random.normal(178.4, 7.6, 10000
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="混合ガウスモデル" />
+  <meta name="twitter:title" content="k平均法" />
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter12 とします． また，numpy，matplotlib.pyplot，scikit-learn，SciPyを導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt from sklearn.mixture import GaussianMixture from scipy.stats import norm ガウス分布（正規分布）  ガウス分布（正規分布）は，ドイツの数学者のガウスに由来する確率・統計において最重要な確率分布の一つです． 自然界や社会の様々な現象を表現するモデルとして知られています． Pythonでは，Numpyを利用して，正規分布に従う乱数を生成することが可能です．
-例えば，平均0，標準偏差1の正規分布に従う乱数を生成してみます． 生成した乱数のヒストグラム（度数）は下図のようになります． このヒストグラムからも分かるように，正規分布には下記の特徴があります．
- 平均値がピークとなる 平均値を中心として左右対称 標準偏差が小さいと尖った形状，大きいと平らな形状  x = np.random.normal(0, 1, 10000) # 10000の乱数を生成 plt.hist(x, bins=100) # 階級数を100に設定したヒストグラム plt.xlim(-5, 5) plt.xlabel(&#34;x&#34;) plt.ylabel(&#34;Frequency&#34;) 
-正規分布に従う特徴量の一つに人間の身長があります． 例えば，日本人男性の平均は167.7cm，標準偏差は6.6cm， また，アメリカ人男性の平均は178.4cmで，標準偏差は7.6cmとされています． それでは，この特徴量を利用して日本人男性とアメリカ人男性の正規分布に従う乱数を生成しましょう． そして，これを重ね合わせてしまいます．
-x1 = np.random.normal(167.7, 6.6, 10000) x2 = np.random.normal(178.4, 7.6, 10000) x = np." />
+  <meta name="twitter:description" content="クラスタリング  これまで取り上げた手法は全て 教師あり学習 でした． 今回は，正解（教師）が与えられない 教師なし学習 に注目します． 教師なし学習の一つが クラスタリング と呼ばれる手法です． クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります． 分類と混同されがちですが，正解（教師）は存在しないため， 同じクラスタに割り当てられたデータは 似ている とみなすことができますが， その割り当てが 正しい， 正しくない といった判断は出来ないことに注意してください． また，クラスタリングには，階層型手法 と 非階層型手法 に分かれますが， ここでは非階層型手法を取り上げることにします．
+ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter12 とします． また，numpy，matplotlib.pyplot, scikit-learn，pandas を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from sklearn.cluster import KMeans import pandas as pd データの準備  ユニセフ・世界子供白書が公開している人口統計指標のデータを用います． ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します． ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します． 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．
+data = pd.read_csv(&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;) display(data.head()) #最初の5件だけ表示 
+一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．
+japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(japan)" />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/8d85954e3dc8162ffc115bd3b834fb2b.png" />
 
 
   
@@ -174,160 +174,238 @@ x1 = np.random.normal(167.7, 6.6, 10000) x2 = np.random.normal(178.4, 7.6, 10000
 <main>
   <div class="post">
     
-    <h1 class="post-title">混合ガウスモデル</h1>
+    <h1 class="post-title">k平均法</h1>
 <div class="post-line"></div>
     
     
 
-    <p><a href="https://gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d"><img src="https://i.gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d.png" alt="Image from Gyazo"></a></p>
+    <p><a href="https://gyazo.com/8d85954e3dc8162ffc115bd3b834fb2b"><img src="https://i.gyazo.com/8d85954e3dc8162ffc115bd3b834fb2b.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  クラスタリング
+</h1>
+
+<p>これまで取り上げた手法は全て <strong>教師あり学習</strong> でした．
+今回は，正解（教師）が与えられない <strong>教師なし学習</strong> に注目します．
+教師なし学習の一つが <strong>クラスタリング</strong> と呼ばれる手法です．
+クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります．
+分類と混同されがちですが，正解（教師）は存在しないため，
+同じクラスタに割り当てられたデータは <strong>似ている</strong> とみなすことができますが，
+その割り当てが <strong>正しい</strong>， <strong>正しくない</strong> といった判断は出来ないことに注意してください．
+また，クラスタリングには，<strong>階層型手法</strong> と <strong>非階層型手法</strong> に分かれますが，
+ここでは非階層型手法を取り上げることにします．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ノートブックの作成
 </h1>
 
 <p>Colabにアクセスし，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>chapter12</strong> とします．
-また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>，<strong>scikit-learn</strong>，<strong>SciPy</strong>を導入しておいてください．</p>
+また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>, <strong>scikit-learn</strong>，<strong>pandas</strong> を導入しておいてください．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 <span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">from</span> sklearn.mixture <span style="color:#f92672">import</span> GaussianMixture
-<span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> norm
+<span style="color:#f92672">from</span> sklearn.cluster <span style="color:#f92672">import</span> KMeans
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  ガウス分布（正規分布）
+  データの準備
 </h1>
 
-<p>ガウス分布（正規分布）は，ドイツの数学者の<a href="https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%BC%E3%83%AB%E3%83%BB%E3%83%95%E3%83%AA%E3%83%BC%E3%83%89%E3%83%AA%E3%83%92%E3%83%BB%E3%82%AC%E3%82%A6%E3%82%B9">ガウス</a>に由来する確率・統計において最重要な確率分布の一つです．
-自然界や社会の様々な現象を表現するモデルとして知られています．
-Pythonでは，Numpyを利用して，正規分布に従う乱数を生成することが可能です．</p>
-<p>例えば，平均0，標準偏差1の正規分布に従う乱数を生成してみます．
-生成した乱数のヒストグラム（度数）は下図のようになります．
-このヒストグラムからも分かるように，正規分布には下記の特徴があります．</p>
-<ul>
-<li>平均値がピークとなる</li>
-<li>平均値を中心として左右対称</li>
-<li>標準偏差が小さいと尖った形状，大きいと平らな形状</li>
-</ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10000</span>) <span style="color:#75715e"># 10000の乱数を生成</span>
-
-plt<span style="color:#f92672">.</span>hist(x, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>) <span style="color:#75715e"># 階級数を100に設定したヒストグラム</span>
-plt<span style="color:#f92672">.</span>xlim(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Frequency&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/924fd161bbbadf80cf3ab949734a0990"><img src="https://i.gyazo.com/924fd161bbbadf80cf3ab949734a0990.png" alt="Image from Gyazo"></a></p>
-<p>正規分布に従う特徴量の一つに人間の身長があります．
-例えば，日本人男性の平均は167.7cm，標準偏差は6.6cm，
-また，アメリカ人男性の平均は178.4cmで，標準偏差は7.6cmとされています．
-それでは，この特徴量を利用して日本人男性とアメリカ人男性の正規分布に従う乱数を生成しましょう．
-そして，これを重ね合わせてしまいます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">167.7</span>,  <span style="color:#ae81ff">6.6</span>, <span style="color:#ae81ff">10000</span>) 
-x2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">178.4</span>, <span style="color:#ae81ff">7.6</span>, <span style="color:#ae81ff">10000</span>)
-x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate((x1, x2)) <span style="color:#75715e"># 結合（重ね合わせ）</span>
-
-plt<span style="color:#f92672">.</span>hist(x, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Frequency&#34;</span>)
-</code></pre></div><p>結合された乱数のヒストグラムは下記のようになります．
-このように複数の正規分布に従う乱数を重ね合わせることで，
-多彩な分布を表現することが可能になります．
-この正規分布を重ね合わせた表現を <strong>混合ガウスモデル（Gaussian Mixture Model）</strong> と呼びます．
-一方で，重ね合わせた分布からは，元の正規分布の特徴量を得ることは難しくなります．
-これを得るには <strong>EMアルゴリズム</strong> と呼ばれる手法が用いられます（詳細は割愛）．</p>
-<p><a href="https://gyazo.com/8af75bfb39facb6515c6d386666ebba6"><img src="https://i.gyazo.com/8af75bfb39facb6515c6d386666ebba6.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://www.unicef.or.jp/sowc/">ユニセフ・世界子供白書</a>が公開している人口統計指標のデータを用います．
+ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します．
+ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します．
+例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;</span>)
+display(data<span style="color:#f92672">.</span>head()) <span style="color:#75715e">#最初の5件だけ表示</span>
+</code></pre></div><p><a href="https://gyazo.com/69e05244ac4316e602ba666e57bc68f6"><img src="https://i.gyazo.com/69e05244ac4316e602ba666e57bc68f6.png" alt="Image from Gyazo"></a></p>
+<p>一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">japan <span style="color:#f92672">=</span> data[data[<span style="color:#e6db74">&#34;国&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;日本&#34;</span>] <span style="color:#75715e">#日本を表示</span>
+display(japan)
+</code></pre></div><p><a href="https://gyazo.com/6e885d4f7d6ae2761b11e326e3c18537"><img src="https://i.gyazo.com/6e885d4f7d6ae2761b11e326e3c18537.png" alt="Image from Gyazo"></a></p>
+<p>散布図で出生率，死亡率を可視化してみましょう．
+他国と比較すると，日本の少子高齢化が極めて大きな問題であることが分かります（この授業の趣旨ではありませんが）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>], data[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
+plt<span style="color:#f92672">.</span>scatter(japan[<span style="color:#e6db74">&#34;出生率&#34;</span>], japan[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/55be18219bb2264d955f327cdfd1af9e"><img src="https://i.gyazo.com/55be18219bb2264d955f327cdfd1af9e.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  scikit-learnで混合ガウスモデル
+  k平均法
 </h1>
 
-<p>それでは，scikit-learnを利用して <strong>混合ガウスモデル（Gaussian Mixture Model）</strong> の特徴量を推定してみましょう．
-まずは，対象のデータを<code>reshape</code>で2次元配列に変換します（scikit-learnの制限のため）．</p>
+<p>今回は，非階層型のクラスタリング手法である <strong>k平均法（k-means clustering）</strong> を取り上げます（ <strong>k近傍法</strong> と名前が似ていますが別物です）．
+k平均法では，あらかじめ分割するクラスタ数$k$を決める必要があります．
+ここでは，$k=3$としましょう．</p>
+<h3 id="クラスタの中心ベクトル">クラスタの中心ベクトル</h3>
+<p>クラスタの位置は，クラスタの中心を表すベクトル ${\bf c} = ( c_1, c_2, c_3 ) $ で表すことにします．
+ここでは，$c_1 = (10, 10)$，$c_2 = (20, 10)$，$c_3 = (30, 10)$を初期値とします．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(x)<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
-<span style="color:#66d9ef">print</span>(x)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">c1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>])
+c2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">10</span>])
+c3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">10</span>])
+clusters <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([c1, c2, c3])
+<span style="color:#66d9ef">print</span>(clusters)
 </code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">162.08389117</span>]
- [<span style="color:#ae81ff">170.77306785</span>]
- [<span style="color:#ae81ff">165.28550483</span>]
- <span style="color:#f92672">...</span>
- [<span style="color:#ae81ff">175.53732234</span>]
- [<span style="color:#ae81ff">178.69420996</span>]
- [<span style="color:#ae81ff">177.08352499</span>]]
-</code></pre></div><p>次に，scikit-learnのGaussianMixtureを利用して特徴量を推定します．
-このとき，重ね合わせた元の正規分布の <strong>数</strong> と <strong>分散</strong> を指定します．
-ここでは，各次元の分散が共通である2つの正規分布が重なっているとします（今回のデータは身長のみの1次元）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">gmm <span style="color:#f92672">=</span> GaussianMixture(
-	n_components<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, <span style="color:#75715e"># 重ね合わせた分布数</span>
-	covariance_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spherical&#34;</span> <span style="color:#75715e"># 分散は共通（球状）</span>
-)<span style="color:#f92672">.</span>fit(x)
-</code></pre></div><p>推定された <strong>重み</strong>，<strong>平均</strong>，<strong>標準偏差</strong>を調べてみましょう．
-推定された日本人男性の平均は167.4cm，標準偏差は6.4cm，また，
-推定されたアメリカ人男性の平均は179.7cm，標準偏差は6.9cmです．
-かなり高い精度で推定されていることが分かります．
-また，重みは2つの分布を混合した割合を意味しており，
-推定された重みは0.53:0.46となりました．
-今回は0.5:0.5で混合したため，これもほぼ一致していることが分かります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[[<span style="color:#ae81ff">10</span> <span style="color:#ae81ff">10</span>]
+ [<span style="color:#ae81ff">20</span> <span style="color:#ae81ff">10</span>]
+ [<span style="color:#ae81ff">30</span> <span style="color:#ae81ff">10</span>]]
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>],data[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
+plt<span style="color:#f92672">.</span>scatter(clusters[:,<span style="color:#ae81ff">0</span>], clusters[:,<span style="color:#ae81ff">1</span>])
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/c9d7083190c095cabaaebda0350c824e"><img src="https://i.gyazo.com/c9d7083190c095cabaaebda0350c824e.png" alt="Image from Gyazo"></a></p>
+<h2 id="クラスタとの距離">クラスタとの距離</h2>
+<p>次に，各データがどのクラスタに属するかを調べます．
+一般には，各データとクラスタとのユークリッド距離を類似度とみなし，
+最も値が小さいクラスタに属すると考えます．
+ここでは，<strong>map</strong> 関数と <strong>np.linalg.norm</strong> 関数を組み合わせて，
+各クラスタとの距離を計算しています．
+例えば，アフガニスタンの出生率は$7$，死亡率は$33$であるため，
+クラスタ$c_1$までの距離は下記のように求まります．</p>
+<p>$$
+\sqrt{(7 - 10)^2 + (33 - 10)^2} = 23.19
+$$</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">weight <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>weights_ <span style="color:#75715e">#重み（足すと1になる）</span>
-mean <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>means_ <span style="color:#75715e">#平均</span>
-sd <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sqrt(gmm<span style="color:#f92672">.</span>covariances_) <span style="color:#75715e">#標準偏差</span>
-<span style="color:#66d9ef">print</span>(weight)
-<span style="color:#66d9ef">print</span>(mean)
-<span style="color:#66d9ef">print</span>(sd)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">distance</span>(data, clusters):
+    d <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> data<span style="color:#f92672">.</span>iterrows():
+        x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([row[<span style="color:#e6db74">&#34;出生率&#34;</span>], row[<span style="color:#e6db74">&#34;死亡率&#34;</span>]])
+		<span style="color:#75715e">#clustersの要素cに対するユークリッド距離を計算</span>
+        value <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> c:  np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(x <span style="color:#f92672">-</span> c), clusters))
+        d<span style="color:#f92672">.</span>append(value)
+    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(d)
+
+d <span style="color:#f92672">=</span> distance(data, clusters) <span style="color:#75715e">#c1,c2,c3までの距離</span>
+<span style="color:#66d9ef">print</span>(d[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
 </code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">0.46127772</span> <span style="color:#ae81ff">0.53872228</span>] <span style="color:#75715e">#重み（足すと1になる）</span>
-[[<span style="color:#ae81ff">179.65302075</span>] [<span style="color:#ae81ff">167.4491238</span> ]] <span style="color:#75715e">#平均</span>
-[<span style="color:#ae81ff">6.92751809</span> <span style="color:#ae81ff">6.35107582</span>] <span style="color:#75715e">#標準偏差</span>
-</code></pre></div><p>推定された特徴量を用いて，正規分布を描いてみましょう．
-正規分布の確率密度を求めるには <code>norm.pdf</code> を利用します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">140</span>, <span style="color:#ae81ff">210</span>, <span style="color:#ae81ff">0.1</span>)
-y1 <span style="color:#f92672">=</span> weight[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>pdf(x_, mean[<span style="color:#ae81ff">0</span>], sd[<span style="color:#ae81ff">0</span>])
-y2 <span style="color:#f92672">=</span> weight[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>pdf(x_,mean[<span style="color:#ae81ff">1</span>], sd[<span style="color:#ae81ff">1</span>])
-
-plt<span style="color:#f92672">.</span>plot(x_, y1)
-plt<span style="color:#f92672">.</span>plot(x_, y2)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Height&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Probability Density&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/966ccbfdb5997cab640f735a1a79a84b"><img src="https://i.gyazo.com/966ccbfdb5997cab640f735a1a79a84b.png" alt="Image from Gyazo"></a></p>
-<p>この2つの正規分布を重ねると，元の分布の形状とほぼ一致した確率分布を得ることができます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y3 <span style="color:#f92672">=</span> y1 <span style="color:#f92672">+</span> y2
-
-plt<span style="color:#f92672">.</span>plot(x_, y3)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Height&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Probability Density&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/d97cc6cd3f3ca52640b07b8d759f2b03"><img src="https://i.gyazo.com/d97cc6cd3f3ca52640b07b8d759f2b03.png" alt="Image from Gyazo"></a></p>
-<p>さて，今回の混合ガウスモデルは，前回の <strong>k平均法</strong> と同じように，
-クラスタリングの手法としても用いることができます．
-例えば，165cmの男性がどちらの分布（クラスタ）に属するかを <code>predict</code> で判定すると，
-日本人の分布に属しているという結果になりました．
-同様に，185cmの男性は，アメリカ人の分布に属しているという結果になりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">23.19482701</span> <span style="color:#ae81ff">13.34166406</span>  <span style="color:#ae81ff">4.24264069</span>]
+ [ <span style="color:#ae81ff">3.60555128</span>  <span style="color:#ae81ff">8.54400375</span> <span style="color:#ae81ff">18.24828759</span>]
+ [<span style="color:#ae81ff">13.92838828</span>  <span style="color:#ae81ff">5.83095189</span>  <span style="color:#ae81ff">8.60232527</span>]
+ [<span style="color:#ae81ff">32.01562119</span> <span style="color:#ae81ff">22.02271555</span> <span style="color:#ae81ff">12.04159458</span>]
+ [ <span style="color:#ae81ff">7.21110255</span>  <span style="color:#ae81ff">5.65685425</span> <span style="color:#ae81ff">14.56021978</span>]]
+</code></pre></div><p>距離が最小となるクラスタの要素番号を調べます．
+ここは，<strong>argmin</strong> 関数を用いています．
+この関数は，配列に記録されている最も小さな値の要素番号を取得します．
+例えば，アフガニスタンの場合は，クラスタ$c_3$が最小であり，
+その要素番号である$2$が取得されます（配列の要素番号は$0$から）．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sample1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">165</span>]]) <span style="color:#75715e"># 165cm</span>
-sample2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">185</span>]]) <span style="color:#75715e"># 185cm</span>
-
-result1 <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>predict(sample1)
-result2 <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>predict(sample2)
-
-<span style="color:#66d9ef">print</span>(result1) <span style="color:#75715e"># 日本人</span>
-<span style="color:#66d9ef">print</span>(result2) <span style="color:#75715e"># アメリカ人</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">assign</span>(distance):
+    a <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> distance:
+        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmin(d)
+        a<span style="color:#f92672">.</span>append(index)
+    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(a)
+        
+a <span style="color:#f92672">=</span> assign(d)
+<span style="color:#66d9ef">print</span>(a[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
 </code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">1</span>]
-[<span style="color:#ae81ff">0</span>]
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[2 0 1 2 1]
+</code></pre></div><h2 id="クラスタの中心ベクトルの更新">クラスタの中心ベクトルの更新</h2>
+<p>クラスタの中心ベクトルを更新します．
+中心ベクトルは，各クラスタに属するデータの <strong>重心（平均）</strong> で表されます．
+この結果，中心ベクトルは，クラスタの中心に移動します．
+上記の操作を繰り返し，中心ベクトルの変化がなくなったとき，適したクラスタが得られたとみなします．</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateClusters</span>(data, clusters, a):
+    updated <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(clusters<span style="color:#f92672">.</span>ndim<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(a <span style="color:#f92672">==</span> i)
+        d <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>iloc[index]
+        size <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(index)<span style="color:#f92672">.</span>size
+        c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([d[<span style="color:#e6db74">&#34;出生率&#34;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> size, d[<span style="color:#e6db74">&#34;死亡率&#34;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> size])
+        updated<span style="color:#f92672">.</span>append(c)
+    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(updated)
+
+clusters <span style="color:#f92672">=</span> updateClusters(data, clusters, a)
+<span style="color:#66d9ef">print</span>(clusters)
+</code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">11.27941176</span>  <span style="color:#ae81ff">9.05882353</span>]
+ [<span style="color:#ae81ff">20.15</span>        <span style="color:#ae81ff">6.1</span>       ]
+ [<span style="color:#ae81ff">34.55357143</span>  <span style="color:#ae81ff">8.23214286</span>]]
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(clusters<span style="color:#f92672">.</span>ndim <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
+    index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(a <span style="color:#f92672">==</span> i)
+    d <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>iloc[index]
+    plt<span style="color:#f92672">.</span>scatter(d[<span style="color:#e6db74">&#34;出生率&#34;</span>],d[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
+    
+plt<span style="color:#f92672">.</span>scatter(clusters[:,<span style="color:#ae81ff">0</span>], clusters[:,<span style="color:#ae81ff">1</span>])
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/7df30a0171c87c747308753ac489fa5b"><img src="https://i.gyazo.com/7df30a0171c87c747308753ac489fa5b.png" alt="Image from Gyazo"></a></p>
+<p>上記の操作をクラスタの中心ベクトルが収束するまで繰り返します．
+最終的に得られた結果を最適なクラスタリングとみなします．</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  scikit-learnでK平均法
+</h1>
+
+<p>それでは，機械学習のライブラリである <a href="https://scikit-learn.org/stable/">scikit-learn</a> を利用してk平均法によるクラスタリングを実行してみましょう．
+k平均法を適用するには <strong>cluster.KMeans</strong> 関数を用います．
+クラスタ数は <code>n_clusters</code>で指定します．</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">km <span style="color:#f92672">=</span> KMeans(n_clusters<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+km<span style="color:#f92672">.</span>fit(data[[<span style="color:#e6db74">&#34;出生率&#34;</span>, <span style="color:#e6db74">&#34;死亡率&#34;</span>]])
+
+<span style="color:#66d9ef">print</span>(km<span style="color:#f92672">.</span>labels_) <span style="color:#75715e"># 所属するクラスタ</span>
+<span style="color:#66d9ef">print</span>(km<span style="color:#f92672">.</span>cluster_centers_) <span style="color:#75715e"># クラスタの中心</span>
+</code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span>
+ <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span>
+ <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span>
+ <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span>
+ <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span>]
+[[<span style="color:#ae81ff">20.26153846</span>  <span style="color:#ae81ff">5.96923077</span>]
+ [<span style="color:#ae81ff">35.03773585</span>  <span style="color:#ae81ff">8.41509434</span>]
+ [<span style="color:#ae81ff">11.16666667</span>  <span style="color:#ae81ff">9.22727273</span>]]
+</code></pre></div><p>クラスラリングの結果を散布図で可視化してみましょう．
+3つのクラスタが構成されていることがわかります．</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>], data[<span style="color:#e6db74">&#34;死亡率&#34;</span>], c<span style="color:#f92672">=</span>km<span style="color:#f92672">.</span>labels_)
+<span style="color:#66d9ef">for</span> x,y <span style="color:#f92672">in</span> km<span style="color:#f92672">.</span>cluster_centers_:
+  plt<span style="color:#f92672">.</span>scatter(x, y)
+</code></pre></div><p><a href="https://gyazo.com/7f0ecfb3cec57ed4dc9e3655c5a208ad"><img src="https://i.gyazo.com/7f0ecfb3cec57ed4dc9e3655c5a208ad.png" alt="Image from Gyazo"></a></p>
+<p>最後に，各クラスタにどのような国が所属しているか確認してみましょう．
+クラスタ$c_2$は，出生率が高く，死亡率が低いグループです．
+アフガニスタンなど治安が悪い国や，アンゴラなどの発展途上国が含まれています．
+クラスタ$c_3$は，出生率が低く，死亡率が高いグループです．
+オーストラリアやオーストリアなど経済発展が進んだ国が含まれています．
+クラスタ$c_1$は，その中間であり，アルジェリアやアルゼンチンなどが含まれています．</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">labels <span style="color:#f92672">=</span> km<span style="color:#f92672">.</span>labels_
+
+index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>)
+display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
+
+index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>)
+display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
+
+index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>)
+display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
+</code></pre></div><p><a href="https://gyazo.com/1b270c17f184295f57d535138a13e761"><img src="https://i.gyazo.com/1b270c17f184295f57d535138a13e761.png" alt="Image from Gyazo"></a></p>
+<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+ -->
+<!-- scikit-learnの **アヤメ**の データセットをk平均法でクラスタリングしてください（クラスタ数は3）． -->
+<!-- このとき，**Sepal Length** と**Sepal Width** のみを対象とすること -->
+<!-- （データフレームの列名は「出生率」「死亡率」にしておくとラクチン）． -->
+<!-- ```python -->
+<!-- from sklearn.datasets import load_iris -->
+<!-- iris = load_iris() -->
+<!-- data = pd.DataFrame(iris.data) -->
+<!-- data = data.loc[:,0:1]  -->
+<!-- data.columns = ["出生率","死亡率"] #本当はSepal LengthとSepal Width -->
+<!-- data.head() -->
+<!-- ``` -->
+<!-- [![Image from Gyazo](https://i.gyazo.com/ff28fe07c081d7dd5c296dab7bf1cebe.png)](https://gyazo.com/ff28fe07c081d7dd5c296dab7bf1cebe) -->
+<!-- [![Image from Gyazo](https://i.gyazo.com/7a71b9bcca2f2e8f0fab7de1c0ebf4f4.png)](https://gyazo.com/7a71b9bcca2f2e8f0fab7de1c0ebf4f4) -->
+<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
-<p>下記のデータから元の正規分布の特徴量を推定しなさい．
-ただし，正規分布の数は2，また，分散は共通とすること．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">14.25503594</span>,  <span style="color:#ae81ff">8.83020581</span>, <span style="color:#ae81ff">10.45406782</span>, <span style="color:#ae81ff">12.53819445</span>,  <span style="color:#ae81ff">7.86459267</span>,
-        <span style="color:#ae81ff">8.03801485</span>, <span style="color:#ae81ff">11.31295349</span>, <span style="color:#ae81ff">10.09167258</span>, <span style="color:#ae81ff">12.87803092</span>, <span style="color:#ae81ff">14.48622644</span>,
-       <span style="color:#ae81ff">11.99081559</span>,  <span style="color:#ae81ff">9.63743057</span>, <span style="color:#ae81ff">10.77132259</span>, <span style="color:#ae81ff">10.50821578</span>, <span style="color:#ae81ff">12.2923627</span> ,
-        <span style="color:#ae81ff">6.83922144</span>, <span style="color:#ae81ff">11.59345268</span>,  <span style="color:#ae81ff">8.38998967</span>, <span style="color:#ae81ff">11.77040723</span>,  <span style="color:#ae81ff">8.50230634</span>,
-        <span style="color:#ae81ff">7.3762556</span> , <span style="color:#ae81ff">11.11177995</span>, <span style="color:#ae81ff">13.57393876</span>, <span style="color:#ae81ff">14.39937259</span>,  <span style="color:#ae81ff">8.92640252</span>,
-       <span style="color:#ae81ff">12.62335089</span>, <span style="color:#ae81ff">10.04121407</span>, <span style="color:#ae81ff">11.20886925</span>, <span style="color:#ae81ff">10.53488673</span>,  <span style="color:#ae81ff">7.57188571</span>,
-       <span style="color:#ae81ff">19.20054947</span>, <span style="color:#ae81ff">20.67642748</span>, <span style="color:#ae81ff">17.81617885</span>, <span style="color:#ae81ff">24.66817129</span>, <span style="color:#ae81ff">20.9813163</span> ,
-       <span style="color:#ae81ff">21.92106427</span>, <span style="color:#ae81ff">19.31876107</span>, <span style="color:#ae81ff">17.31019546</span>, <span style="color:#ae81ff">16.69085822</span>, <span style="color:#ae81ff">14.48237459</span>,
-       <span style="color:#ae81ff">20.35137646</span>, <span style="color:#ae81ff">20.19614246</span>, <span style="color:#ae81ff">16.47291945</span>, <span style="color:#ae81ff">18.87417032</span>, <span style="color:#ae81ff">24.24447717</span>,
-       <span style="color:#ae81ff">26.12173461</span>, <span style="color:#ae81ff">27.47509222</span>, <span style="color:#ae81ff">19.05972395</span>, <span style="color:#ae81ff">18.82537232</span>, <span style="color:#ae81ff">18.87784878</span>,
-       <span style="color:#ae81ff">20.60160528</span>, <span style="color:#ae81ff">14.17361497</span>, <span style="color:#ae81ff">18.01530688</span>, <span style="color:#ae81ff">21.87758915</span>, <span style="color:#ae81ff">16.012469</span>  ,
-       <span style="color:#ae81ff">19.69841929</span>, <span style="color:#ae81ff">22.10291163</span>, <span style="color:#ae81ff">15.22297199</span>, <span style="color:#ae81ff">23.14124462</span>, <span style="color:#ae81ff">14.84946092</span>])
-</code></pre></div><p><a href="https://gyazo.com/fa0a3eda6701ec254b0b025b756cfda2"><img src="https://i.gyazo.com/fa0a3eda6701ec254b0b025b756cfda2.png" alt="Image from Gyazo"></a></p>
+<p>scikit-learnの <strong>アヤメ</strong>の データセットをk平均法でクラスタリングしてください（クラスタ数は3）．
+このとき，<strong>がく片の長さ（Sepal Length）</strong> と<strong>がく片の幅（Sepal Width）</strong> のみを対象とすること．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_iris
+iris <span style="color:#f92672">=</span> load_iris()
+data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(iris<span style="color:#f92672">.</span>data)
+data<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;がく片の長さ&#34;</span>,<span style="color:#e6db74">&#34;がく片の幅&#34;</span>,<span style="color:#e6db74">&#34;花弁の長さ&#34;</span>,<span style="color:#e6db74">&#34;花弁の幅&#34;</span>]
+</code></pre></div><p><a href="https://gyazo.com/282fe892fb26bfbaa6c86b5df920ba59"><img src="https://i.gyazo.com/282fe892fb26bfbaa6c86b5df920ba59.png" alt="Image from Gyazo"></a></p>
 <p>課題を完成させたら，<strong>chapter12.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
 このとき，必ず事前に下記の設定を行ってから提出してください．</p>
@@ -336,11 +414,6 @@ result2 <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</s
 <li>ノートブックの変更内容を保存して固定</li>
 <li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
 </ul>
-<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
- -->
-<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
 
 <h3>参考書籍</h3>
 
@@ -356,6 +429,65 @@ result2 <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</s
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4839963525&linkId=14f05f671ddd917b204596b6b535981e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
 </iframe>
 
+<!--
+## 解の導出
+
+それでは，上述の方法で解を導出してみましょう．
+クラスタの初期値は，先程と同じ値を設定します．
+最大で100回の中心ベクトルの更新を行い，
+所属するクラスタに変化がなければ終了することにします．
+ここでは，3回の繰り返しで収束し，下記のクラスタが得られました．
+
+$$c_1 = (11.16, 9.23)$$
+$$c_2 = (20.26, 5.97)$$
+$$c_3 = (35.04, 8.42)$$
+
+初期値が異なると得られる解も異なることに注意してください．
+実際は初期値を変えて複数回実行し，その中から最適なクラスタを解とします．
+
+**[In:]**
+```python
+c1 = np.array([10, 10])
+c2 = np.array([20, 10])
+c3 = np.array([30, 10])
+clusters = np.array([c1, c2, c3])
+
+for i in range(100):
+    print(clusters)
+    d = distance(data, clusters)
+    a = assign(d)
+    tmp = clusters
+    clusters = updateClusters(data, clusters, a)
+    if (clusters == tmp).all():
+        break
+```
+
+**[Out:]**
+```python
+[[10 10]
+ [20 10]
+ [30 10]]
+[[11.27941176  9.05882353]
+ [20.15        6.1       ]
+ [34.55357143  8.23214286]]
+[[11.16666667  9.22727273]
+ [20.26153846  5.96923077]
+ [35.03773585  8.41509434]]
+```
+
+```python
+for i in range(clusters.ndim + 1):
+    index = np.where(a == i)
+    d = data.iloc[index]
+    plt.scatter(d["出生率"],d["死亡率"])
+    
+plt.scatter(clusters[:,0], clusters[:,1])
+plt.xlabel("Birth Rate")
+plt.ylabel("Mortality Rate")
+```
+
+[![Image from Gyazo](https://i.gyazo.com/ab64a7d2af918f7187fc5d4eaa136147.png)](https://gyazo.com/ab64a7d2af918f7187fc5d4eaa136147)
+-->
 
 
     

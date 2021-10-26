@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    k平均法 | mLAB
+    決定木 | mLAB
   </title>
 
   
@@ -67,7 +67,7 @@
   
   
 
-  <meta property="og:title" content="k平均法" />
+  <meta property="og:title" content="決定木" />
 
 
 
@@ -79,7 +79,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/8d85954e3dc8162ffc115bd3b834fb2b.png" />
+  <meta property="og:image" content="https://i.gyazo.com/0f765b0d1f5517f2690a081f53e94bd5.png" />
 
 
 
@@ -87,12 +87,12 @@
 
 
 
-  <meta property="og:description" content="クラスタリング  これまで取り上げた手法は全て 教師あり学習 でした． 今回は，正解（教師）が与えられない 教師なし学習 に注目します． 教師なし学習の一つが クラスタリング と呼ばれる手法です． クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります． 分類と混同されがちですが，正解（教師）は存在しないため， 同じクラスタに割り当てられたデータは 似ている とみなすことができますが， その割り当てが 正しい， 正しくない といった判断は出来ないことに注意してください． また，クラスタリングには，階層型手法 と 非階層型手法 に分かれますが， ここでは非階層型手法を取り上げることにします．
-ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter11 とします． また，numpy，matplotlib.pyplot, scikit-learn，pandas を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt from sklearn.cluster import KMeans import pandas as pd データの準備  ユニセフ・世界子供白書が公開している人口統計指標のデータを用います． ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します． ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します． 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．
-data = pd.read_csv(&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;) display(data.head()) #最初の5件だけ表示 
-一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．
-japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(japan)" />
+  <meta property="og:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter11 とします．
+最初にグラフで日本語表示を可能とするjapanize-matplotlibをインストールします．
+!pip install japanize-matplotlib また，numpy，matplotlib.pyplot ，scikit-learn に加えて， データフレームを処理するための Pandasをインポートします．
+import numpy as np import matplotlib.pyplot as plt from sklearn import tree from sklearn.tree import plot_tree import pandas as pd import japanize_matplotlib データの準備  今回は，曜日（平日 or 土日） ， 時間帯（昼 or 夜） ，価格（高 or 安）， 天気（晴 or 雨） の情報を利用して， イベントの 来場者数（多 or 少） を分類（予測）してみましょう． 学習用のデータには15のサンプルが含まれています． また，学習用のデータの表現のため，データフレーム（Excelの表のようなもの）を利用します． これまでの行列とは異なり，データフレームには 属性名（列名） を設定することが可能です．
+[In:]
+df = pd.DataFrame( { &#34;曜日&#34;: [&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;土日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;土日&#34;], &#34;時間帯&#34;:[&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;], &#34;価格&#34;:[&#34;安&#34;,&#34;安&#34;,&#34;高&#34;,&#34;高&#34;,&#34;高&#34;,&#34;高&#34;,&#34;安&#34;,&#34;高&#34;,&#34;安&#34;,&#34;高&#34;,&#34;高&#34;,&#34;安&#34;,&#34;安&#34;,&#34;高&#34;,&#34;安&#34;], &#34;天気&#34;:[&#34;晴&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,], &#34;来場者数&#34;:[&#34;多&#34;,&#34;多&#34;,&#34;少&#34;,&#34;多&#34;,&#34;多&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,] } ) display(df)" />
 
 
 
@@ -103,20 +103,20 @@ japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(j
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="k平均法" />
+  <meta name="twitter:title" content="決定木" />
 
 
 
-  <meta name="twitter:description" content="クラスタリング  これまで取り上げた手法は全て 教師あり学習 でした． 今回は，正解（教師）が与えられない 教師なし学習 に注目します． 教師なし学習の一つが クラスタリング と呼ばれる手法です． クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります． 分類と混同されがちですが，正解（教師）は存在しないため， 同じクラスタに割り当てられたデータは 似ている とみなすことができますが， その割り当てが 正しい， 正しくない といった判断は出来ないことに注意してください． また，クラスタリングには，階層型手法 と 非階層型手法 に分かれますが， ここでは非階層型手法を取り上げることにします．
-ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter11 とします． また，numpy，matplotlib.pyplot, scikit-learn，pandas を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt from sklearn.cluster import KMeans import pandas as pd データの準備  ユニセフ・世界子供白書が公開している人口統計指標のデータを用います． ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します． ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します． 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．
-data = pd.read_csv(&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;) display(data.head()) #最初の5件だけ表示 
-一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．
-japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(japan)" />
+  <meta name="twitter:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter11 とします．
+最初にグラフで日本語表示を可能とするjapanize-matplotlibをインストールします．
+!pip install japanize-matplotlib また，numpy，matplotlib.pyplot ，scikit-learn に加えて， データフレームを処理するための Pandasをインポートします．
+import numpy as np import matplotlib.pyplot as plt from sklearn import tree from sklearn.tree import plot_tree import pandas as pd import japanize_matplotlib データの準備  今回は，曜日（平日 or 土日） ， 時間帯（昼 or 夜） ，価格（高 or 安）， 天気（晴 or 雨） の情報を利用して， イベントの 来場者数（多 or 少） を分類（予測）してみましょう． 学習用のデータには15のサンプルが含まれています． また，学習用のデータの表現のため，データフレーム（Excelの表のようなもの）を利用します． これまでの行列とは異なり，データフレームには 属性名（列名） を設定することが可能です．
+[In:]
+df = pd.DataFrame( { &#34;曜日&#34;: [&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;土日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;平日&#34;,&#34;土日&#34;], &#34;時間帯&#34;:[&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;,&#34;昼&#34;,&#34;夜&#34;,&#34;昼&#34;], &#34;価格&#34;:[&#34;安&#34;,&#34;安&#34;,&#34;高&#34;,&#34;高&#34;,&#34;高&#34;,&#34;高&#34;,&#34;安&#34;,&#34;高&#34;,&#34;安&#34;,&#34;高&#34;,&#34;高&#34;,&#34;安&#34;,&#34;安&#34;,&#34;高&#34;,&#34;安&#34;], &#34;天気&#34;:[&#34;晴&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;晴&#34;,&#34;雨&#34;,&#34;晴&#34;,&#34;晴&#34;,], &#34;来場者数&#34;:[&#34;多&#34;,&#34;多&#34;,&#34;少&#34;,&#34;多&#34;,&#34;多&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;少&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,&#34;多&#34;,] } ) display(df)" />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/8d85954e3dc8162ffc115bd3b834fb2b.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/0f765b0d1f5517f2690a081f53e94bd5.png" />
 
 
   
@@ -174,239 +174,369 @@ japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(j
 <main>
   <div class="post">
     
-    <h1 class="post-title">k平均法</h1>
+    <h1 class="post-title">決定木</h1>
 <div class="post-line"></div>
     
     
 
-    <p><a href="https://gyazo.com/8d85954e3dc8162ffc115bd3b834fb2b"><img src="https://i.gyazo.com/8d85954e3dc8162ffc115bd3b834fb2b.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  クラスタリング
-</h1>
-
-<p>これまで取り上げた手法は全て <strong>教師あり学習</strong> でした．
-今回は，正解（教師）が与えられない <strong>教師なし学習</strong> に注目します．
-教師なし学習の一つが <strong>クラスタリング</strong> と呼ばれる手法です．
-クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります．
-分類と混同されがちですが，正解（教師）は存在しないため，
-同じクラスタに割り当てられたデータは <strong>似ている</strong> とみなすことができますが，
-その割り当てが <strong>正しい</strong>， <strong>正しくない</strong> といった判断は出来ないことに注意してください．
-また，クラスタリングには，<strong>階層型手法</strong> と <strong>非階層型手法</strong> に分かれますが，
-ここでは非階層型手法を取り上げることにします．</p>
+    <p><a href="https://gyazo.com/0f765b0d1f5517f2690a081f53e94bd5"><img src="https://i.gyazo.com/0f765b0d1f5517f2690a081f53e94bd5.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ノートブックの作成
 </h1>
 
 <p>Colabにアクセスし，新規にノートブックを作成してください．
-ノートブックのタイトルは <strong>chapter11</strong> とします．
-また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>, <strong>scikit-learn</strong>，<strong>pandas</strong> を導入しておいてください．</p>
+ノートブックのタイトルは <strong>chapter11</strong> とします．</p>
+<p>最初にグラフで日本語表示を可能とする<a href="https://pypi.org/project/japanize-matplotlib/">japanize-matplotlib</a>をインストールします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">!</span>pip install japanize<span style="color:#f92672">-</span>matplotlib
+</code></pre></div><p>また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong> ，<strong>scikit-learn</strong> に加えて，
+データフレームを処理するための <a href="https://pandas.pydata.org/">Pandas</a>をインポートします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 <span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">from</span> sklearn.cluster <span style="color:#f92672">import</span> KMeans
+<span style="color:#f92672">from</span> sklearn <span style="color:#f92672">import</span> tree
+<span style="color:#f92672">from</span> sklearn.tree <span style="color:#f92672">import</span> plot_tree
 <span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> japanize_matplotlib
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   データの準備
 </h1>
 
-<p><a href="https://www.unicef.or.jp/sowc/">ユニセフ・世界子供白書</a>が公開している人口統計指標のデータを用います．
-ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します．
-ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します．
-例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;</span>)
-display(data<span style="color:#f92672">.</span>head()) <span style="color:#75715e">#最初の5件だけ表示</span>
-</code></pre></div><p><a href="https://gyazo.com/69e05244ac4316e602ba666e57bc68f6"><img src="https://i.gyazo.com/69e05244ac4316e602ba666e57bc68f6.png" alt="Image from Gyazo"></a></p>
-<p>一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">japan <span style="color:#f92672">=</span> data[data[<span style="color:#e6db74">&#34;国&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;日本&#34;</span>] <span style="color:#75715e">#日本を表示</span>
-display(japan)
-</code></pre></div><p><a href="https://gyazo.com/6e885d4f7d6ae2761b11e326e3c18537"><img src="https://i.gyazo.com/6e885d4f7d6ae2761b11e326e3c18537.png" alt="Image from Gyazo"></a></p>
-<p>散布図で出生率，死亡率を可視化してみましょう．
-他国と比較すると，日本の少子高齢化が極めて大きな問題であることが分かります（この授業の趣旨ではありませんが）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>], data[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
-plt<span style="color:#f92672">.</span>scatter(japan[<span style="color:#e6db74">&#34;出生率&#34;</span>], japan[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/55be18219bb2264d955f327cdfd1af9e"><img src="https://i.gyazo.com/55be18219bb2264d955f327cdfd1af9e.png" alt="Image from Gyazo"></a></p>
+<p>今回は，<strong>曜日（平日 or 土日）</strong> ， <strong>時間帯（昼 or 夜）</strong> ，<strong>価格（高 or 安）</strong>， <strong>天気（晴 or 雨）</strong> の情報を利用して，
+イベントの <strong>来場者数（多 or 少）</strong> を分類（予測）してみましょう．
+学習用のデータには15のサンプルが含まれています．
+また，学習用のデータの表現のため，データフレーム（Excelの表のようなもの）を利用します．
+これまでの行列とは異なり，データフレームには <strong>属性名（列名）</strong> を設定することが可能です．</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(
+    {
+        <span style="color:#e6db74">&#34;曜日&#34;</span>: [<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;土日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;平日&#34;</span>,<span style="color:#e6db74">&#34;土日&#34;</span>],
+        <span style="color:#e6db74">&#34;時間帯&#34;</span>:[<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>,<span style="color:#e6db74">&#34;夜&#34;</span>,<span style="color:#e6db74">&#34;昼&#34;</span>],
+        <span style="color:#e6db74">&#34;価格&#34;</span>:[<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>,<span style="color:#e6db74">&#34;高&#34;</span>,<span style="color:#e6db74">&#34;安&#34;</span>],
+        <span style="color:#e6db74">&#34;天気&#34;</span>:[<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;雨&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;雨&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;雨&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;雨&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,<span style="color:#e6db74">&#34;晴&#34;</span>,],
+        <span style="color:#e6db74">&#34;来場者数&#34;</span>:[<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;少&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,<span style="color:#e6db74">&#34;多&#34;</span>,]
+    }
+)
+display(df)
+</code></pre></div><p><a href="https://gyazo.com/7fc357fb695455c04c00ee94dd52afac"><img src="https://i.gyazo.com/7fc357fb695455c04c00ee94dd52afac.png" alt="Image from Gyazo"></a></p>
+<p>決定木の生成には，機械学習のライブラリである <a href="https://scikit-learn.org/stable/">scikit-learn</a> を利用しますが，
+&ldquo;平日&quot;や&quot;&ldquo;土日&quot;などの <strong>質的変数</strong> を扱うことができないため，上記のデータフレームを <strong>ダミー変数</strong> に変換する必要があります（R言語の <strong>rpart</strong> なら質的変数のままでも可能）．
+ダミー変数とは，文字列などの質的変数を，<strong>量的変数（数値）</strong> で表したものです．
+例えば &ldquo;平日&quot;を&quot;1&rdquo;，&ldquo;土日&quot;を&quot;0&quot;として表します．
+ダミー変数への変換は，Pandasの <strong>get_dummies</strong> 関数を用いるだけです（多重共線性を避けるため <strong>drop_first=True</strong> を設定しています）．</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">data <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;曜日&#34;</span>,<span style="color:#e6db74">&#34;時間帯&#34;</span>,<span style="color:#e6db74">&#34;価格&#34;</span>,<span style="color:#e6db74">&#34;天気&#34;</span>]]
+target <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#34;来場者数&#34;</span>]
+data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>get_dummies(data, drop_first<span style="color:#f92672">=</span>True) <span style="color:#75715e">#ダミー変数の生成</span>
+target <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>get_dummies(target, drop_first<span style="color:#f92672">=</span>True)
+display(data)
+display(target)
+</code></pre></div><p><a href="https://gyazo.com/f47dceec89e1884ddbca6a16e324c300"><img src="https://i.gyazo.com/f47dceec89e1884ddbca6a16e324c300.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/560ebf1aad9073df5cb64970ad824608"><img src="https://i.gyazo.com/560ebf1aad9073df5cb64970ad824608.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  k平均法
+  決定木のアルゴリズム
 </h1>
 
-<p>今回は，非階層型のクラスタリング手法である <strong>k平均法（k-means clustering）</strong> を取り上げます（ <strong>k近傍法</strong> と名前が似ていますが別物です）．
-k平均法では，あらかじめ分割するクラスタ数$k$を決める必要があります．
-ここでは，$k=3$としましょう．</p>
-<h3 id="クラスタの中心ベクトル">クラスタの中心ベクトル</h3>
-<p>クラスタの位置は，クラスタの中心を表すベクトル ${\bf c} = ( c_1, c_2, c_3 ) $ で表すことにします．
-ここでは，$c_1 = (10, 10)$，$c_2 = (20, 10)$，$c_3 = (30, 10)$を初期値とします．</p>
+<p>それでは， 今回のテーマである <strong>決定木</strong> について考えていきましょう．
+決定木は，これまでに紹介したロジスティック回帰やK近傍法のように分類（予測）のための手法です．
+分類のプロセスが <strong>木構造</strong> で表されることから，その名前が付けられました．
+決定木を生成するためには，<strong>ID3</strong>，<strong>C4.5</strong>，<strong>CART</strong> などのアルゴリズムが提案されています．
+これらのアルゴリズムは，<strong>エントロピー（平均情報量）</strong> や <strong>ジニ係数</strong> を基準に，
+サンプルの分割することを繰り返すことで，木構造を形成するという特徴を持ちます．
+ここでは，エントロピーを利用した，サンプルの分割に関して解説します．</p>
+<h3 id="情報量">情報量</h3>
+<p><strong>情報量</strong> とは，ある事象が起こった際の，起こりにくさを表す尺度です．
+事象を$E$，その事象が発生する確率を$P(E)$とすると，下記の式で情報量$I(E)$を求めることができます（対数の底は$2$とすることが多いです）．</p>
+<p>$$I(E) = \log_2\left( \frac{1}{P(E)} \right) = - \log_2( P(E) )$$</p>
+<p>例えば，いびつな形のサイコロを考えてみましょう．
+このサイコロは，1の目が出やすく，他の2,3,4,5,6の目は出にくいという特殊な形状だとします（確率は表に記載）．
+ここで，1の目が出る情報量を求めると，</p>
+<p>$$I(1の目) = - \log_2( P(1の目) ) =  - \log_2( 0.5 ) = 1$$</p>
+<p>また，2の目が出る情報量を求めると，</p>
+<p>$$I(2の目) = - \log_2( P(2の目) ) =  - \log_2( 0.1 ) = 3.32$$</p>
+<p>となります．
+このように，めったに起こることがない事象は情報量が <strong>大きく</strong>，
+頻繁に起こる事象は情報量が <strong>小さく</strong> なるという特徴を持ちます．</p>
+<table>
+<thead>
+<tr>
+<th>事象$E$（サイコロの目）</th>
+<th>確率$P(E)$</th>
+<th>情報量$I(E)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.1</td>
+<td>3.32</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.1</td>
+<td>3.32</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.1</td>
+<td>3.32</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.1</td>
+<td>3.32</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.1</td>
+<td>3.32</td>
+</tr>
+</tbody>
+</table>
+<h3 id="平均情報量エントロピー">平均情報量（エントロピー）</h3>
+<p><strong>平均情報量（エントロピー）</strong> とは，上記の <strong>情報量</strong> の期待値（平均値）です．
+確率変数（サイコロ）を$X$，結果として起こりうる事象（1,2,3,4,5,6の目）を$E_i$とすると，下記の式でエントロピー$H(X)$を求めることができます．</p>
+<p>$$H(X) = \sum_{E_i} P(E_i) \cdot I(E_i)$$</p>
+<p>例えば，上記のサイコロの例で，エントロピーを求めると，</p>
+<p>$$H(サイコロ) = P(1の目) \cdot I(1の目) + \cdots + P(6の目) \cdot I(6の目) $$</p>
+<p>$$H(サイコロ) = 0.5 \cdot 1 + (0.1 \cdot 3.32) \times 5 = 2.16$$</p>
+<p>となります．
+エントロピーは，事象の発生確率が，均一であるほど <strong>大きく</strong>,
+偏りがあるほど <strong>小さく</strong> なるという特徴を持ちます．</p>
+<h3 id="データセット分割前のエントロピー">データセット（分割前）のエントロピー</h3>
+<p>それでは，来場者数のデータセットのエントロピーを計算してみましょう．
+15のサンプルにおいて，来場者が多となる確率は $9 / 15$ ，少となる確率は $6 / 15$ です．
+この確率を基にエントロピーを計算すると$0.97$となります．</p>
+<table>
+<thead>
+<tr>
+<th>事象$E$（来場者数）</th>
+<th>確率$P(E)$</th>
+<th>情報量$I(E)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多</td>
+<td>9 / 15</td>
+<td>0.74</td>
+</tr>
+<tr>
+<td>少</td>
+<td>6 / 15</td>
+<td>1.32</td>
+</tr>
+</tbody>
+</table>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">c1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>])
-c2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">10</span>])
-c3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">10</span>])
-clusters <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([c1, c2, c3])
-<span style="color:#66d9ef">print</span>(clusters)
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[[<span style="color:#ae81ff">10</span> <span style="color:#ae81ff">10</span>]
- [<span style="color:#ae81ff">20</span> <span style="color:#ae81ff">10</span>]
- [<span style="color:#ae81ff">30</span> <span style="color:#ae81ff">10</span>]]
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>],data[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
-plt<span style="color:#f92672">.</span>scatter(clusters[:,<span style="color:#ae81ff">0</span>], clusters[:,<span style="color:#ae81ff">1</span>])
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/c9d7083190c095cabaaebda0350c824e"><img src="https://i.gyazo.com/c9d7083190c095cabaaebda0350c824e.png" alt="Image from Gyazo"></a></p>
-<h2 id="クラスタとの距離">クラスタとの距離</h2>
-<p>次に，各データがどのクラスタに属するかを調べます．
-一般には，各データとクラスタとのユークリッド距離を類似度とみなし，
-最も値が小さいクラスタに属すると考えます．
-ここでは，<strong>map</strong> 関数と <strong>np.linalg.norm</strong> 関数を組み合わせて，
-各クラスタとの距離を計算しています．
-例えば，アフガニスタンの出生率は$7$，死亡率は$33$であるため，
-クラスタ$c_1$までの距離は下記のように求まります．</p>
-<p>$$
-\sqrt{(7 - 10)^2 + (33 - 10)^2} = 23.19
-$$</p>
-<p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">distance</span>(data, clusters):
-    d <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> data<span style="color:#f92672">.</span>iterrows():
-        x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([row[<span style="color:#e6db74">&#34;出生率&#34;</span>], row[<span style="color:#e6db74">&#34;死亡率&#34;</span>]])
-		<span style="color:#75715e">#clustersの要素cに対するユークリッド距離を計算</span>
-        value <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> c:  np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(x <span style="color:#f92672">-</span> c), clusters))
-        d<span style="color:#f92672">.</span>append(value)
-    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(d)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#75715e">#エントロピーの定義</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">entropy</span>(probs):
+    value <span style="color:#f92672">=</span> (probs <span style="color:#f92672">*</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>log2(probs))<span style="color:#f92672">.</span>sum()
+    <span style="color:#66d9ef">return</span> value
 
-d <span style="color:#f92672">=</span> distance(data, clusters) <span style="color:#75715e">#c1,c2,c3までの距離</span>
-<span style="color:#66d9ef">print</span>(d[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
+<span style="color:#75715e">#分割前のエントロピー</span>
+probs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">9</span><span style="color:#f92672">/</span><span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">6</span><span style="color:#f92672">/</span><span style="color:#ae81ff">15</span>])
+e <span style="color:#f92672">=</span> entropy(probs)
+<span style="color:#66d9ef">print</span>(e)
 </code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">23.19482701</span> <span style="color:#ae81ff">13.34166406</span>  <span style="color:#ae81ff">4.24264069</span>]
- [ <span style="color:#ae81ff">3.60555128</span>  <span style="color:#ae81ff">8.54400375</span> <span style="color:#ae81ff">18.24828759</span>]
- [<span style="color:#ae81ff">13.92838828</span>  <span style="color:#ae81ff">5.83095189</span>  <span style="color:#ae81ff">8.60232527</span>]
- [<span style="color:#ae81ff">32.01562119</span> <span style="color:#ae81ff">22.02271555</span> <span style="color:#ae81ff">12.04159458</span>]
- [ <span style="color:#ae81ff">7.21110255</span>  <span style="color:#ae81ff">5.65685425</span> <span style="color:#ae81ff">14.56021978</span>]]
-</code></pre></div><p>距離が最小となるクラスタの要素番号を調べます．
-ここは，<strong>argmin</strong> 関数を用いています．
-この関数は，配列に記録されている最も小さな値の要素番号を取得します．
-例えば，アフガニスタンの場合は，クラスタ$c_3$が最小であり，
-その要素番号である$2$が取得されます（配列の要素番号は$0$から）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">0.9709505944546686
+</code></pre></div><h3 id="データセット分割後のエントロピー">データセット（分割後）のエントロピー</h3>
+<p>ここでは，<strong>価格</strong> でデータセットを分割してみましょう．
+価格が <strong>高</strong> は8サンプル，<strong>安</strong> は7サンプルとなります．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">assign</span>(distance):
-    a <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> distance:
-        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmin(d)
-        a<span style="color:#f92672">.</span>append(index)
-    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(a)
-        
-a <span style="color:#f92672">=</span> assign(d)
-<span style="color:#66d9ef">print</span>(a[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[2 0 1 2 1]
-</code></pre></div><h2 id="クラスタの中心ベクトルの更新">クラスタの中心ベクトルの更新</h2>
-<p>クラスタの中心ベクトルを更新します．
-中心ベクトルは，各クラスタに属するデータの <strong>重心（平均）</strong> で表されます．
-この結果，中心ベクトルは，クラスタの中心に移動します．
-上記の操作を繰り返し，中心ベクトルの変化がなくなったとき，適したクラスタが得られたとみなします．</p>
-<p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateClusters</span>(data, clusters, a):
-    updated <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(clusters<span style="color:#f92672">.</span>ndim<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
-        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(a <span style="color:#f92672">==</span> i)
-        d <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>iloc[index]
-        size <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(index)<span style="color:#f92672">.</span>size
-        c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([d[<span style="color:#e6db74">&#34;出生率&#34;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> size, d[<span style="color:#e6db74">&#34;死亡率&#34;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> size])
-        updated<span style="color:#f92672">.</span>append(c)
-    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(updated)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">high <span style="color:#f92672">=</span> data[data[<span style="color:#e6db74">&#34;価格_高&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>]
+low <span style="color:#f92672">=</span> data[data[<span style="color:#e6db74">&#34;価格_高&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>]
 
-clusters <span style="color:#f92672">=</span> updateClusters(data, clusters, a)
-<span style="color:#66d9ef">print</span>(clusters)
+target_high <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span>loc[high<span style="color:#f92672">.</span>index]
+display(target_high)
+target_low <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span>loc[low<span style="color:#f92672">.</span>index]
+display(target_low)
+</code></pre></div><p><a href="https://gyazo.com/a5c71bbf0a4c90dfc544e4f9c71895e2"><img src="https://i.gyazo.com/a5c71bbf0a4c90dfc544e4f9c71895e2.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/7a54e33f42ec9a5e023bd154965a53d1"><img src="https://i.gyazo.com/7a54e33f42ec9a5e023bd154965a53d1.png" alt="Image from Gyazo"></a></p>
+<p>分割したそれぞれのデータセットで，エントロピーを計算すると，
+高のエントロピーは $1.00$，安のエントロピーは $0.86$ となりました．</p>
+<p><strong>(価格=高)</strong></p>
+<table>
+<thead>
+<tr>
+<th>事象$E$（来場者数）</th>
+<th>確率$P(E)$</th>
+<th>情報量$I(E)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多</td>
+<td>4 / 8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>少</td>
+<td>4 / 8</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>(価格=安)</strong></p>
+<table>
+<thead>
+<tr>
+<th>事象$E$（来場者数）</th>
+<th>確率$P(E)$</th>
+<th>情報量$I(E)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>多</td>
+<td>2 / 7</td>
+<td>1,80</td>
+</tr>
+<tr>
+<td>少</td>
+<td>5 / 7</td>
+<td>0.49</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#75715e">#分割後（価格_高）のエントロピー</span>
+probs_high <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">4</span><span style="color:#f92672">/</span><span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">4</span><span style="color:#f92672">/</span><span style="color:#ae81ff">8</span>])
+e_high <span style="color:#f92672">=</span> entropy(probs_high)
+<span style="color:#66d9ef">print</span>(e_high)
+
+<span style="color:#75715e">#分割後（価格_低）のエントロピー</span>
+probs_low <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">5</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>])
+e_low <span style="color:#f92672">=</span> entropy(probs_low)
+<span style="color:#66d9ef">print</span>(e_low)
 </code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">11.27941176</span>  <span style="color:#ae81ff">9.05882353</span>]
- [<span style="color:#ae81ff">20.15</span>        <span style="color:#ae81ff">6.1</span>       ]
- [<span style="color:#ae81ff">34.55357143</span>  <span style="color:#ae81ff">8.23214286</span>]]
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(clusters<span style="color:#f92672">.</span>ndim <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
-    index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(a <span style="color:#f92672">==</span> i)
-    d <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>iloc[index]
-    plt<span style="color:#f92672">.</span>scatter(d[<span style="color:#e6db74">&#34;出生率&#34;</span>],d[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
-    
-plt<span style="color:#f92672">.</span>scatter(clusters[:,<span style="color:#ae81ff">0</span>], clusters[:,<span style="color:#ae81ff">1</span>])
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/7df30a0171c87c747308753ac489fa5b"><img src="https://i.gyazo.com/7df30a0171c87c747308753ac489fa5b.png" alt="Image from Gyazo"></a></p>
-<p>上記の操作をクラスタの中心ベクトルが収束するまで繰り返します．
-最終的に得られた結果を最適なクラスタリングとみなします．</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  scikit-learnでK平均法
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">1.0
+0.863120568566631
+</code></pre></div><p>このエントロピーの期待値を求め，分割前のエントロピーとの差を計算すると$0.035$となります．
+この値は <strong>情報利得（Information Gain）</strong> と呼ばれ，分割後のデータが偏るほど（不純度が減ると），大きな値となります．
+例えば，分割後のデータセットが，全て&quot;多&rdquo;，または，全て&quot;少&quot;となるとき，情報利得は最大となります．
+全ての属性（曜日，時間帯，価格，天気）の情報利得を調べると，下記の表のようになり，
+最も値の大きい <strong>価格</strong> が分割のための基準として採用されます．
+この操作を繰り返すことで，決定木が生成されます．</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>情報利得</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>曜日</td>
+<td>0.005</td>
+</tr>
+<tr>
+<td>時間帯</td>
+<td>0.009</td>
+</tr>
+<tr>
+<td>価格</td>
+<td>0.035</td>
+</tr>
+<tr>
+<td>天気</td>
+<td>0.011</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#75715e">#情報利得の定義</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gain</span>(data, target, attr):
+
+    probs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([target<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> len(target), (len(target) <span style="color:#f92672">-</span> target<span style="color:#f92672">.</span>sum()) <span style="color:#f92672">/</span> len(target)])
+    e <span style="color:#f92672">=</span> entropy(probs) <span style="color:#75715e">#分割前のエントロピー</span>
+
+    t <span style="color:#f92672">=</span> data[data[attr] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>]
+    f <span style="color:#f92672">=</span> data[data[attr] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>]
+
+    target_t <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span>loc[t<span style="color:#f92672">.</span>index]
+    target_f <span style="color:#f92672">=</span> target<span style="color:#f92672">.</span>loc[f<span style="color:#f92672">.</span>index]
+
+    probs_t <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([target_t<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> len(target_t),  (len(target_t) <span style="color:#f92672">-</span> target_t<span style="color:#f92672">.</span>sum()) <span style="color:#f92672">/</span> len(target_t)])
+    probs_f <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([target_f<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> len(target_f),  (len(target_f) <span style="color:#f92672">-</span> target_f<span style="color:#f92672">.</span>sum()) <span style="color:#f92672">/</span> len(target_f)])
+
+    e_t <span style="color:#f92672">=</span> entropy(probs_t) <span style="color:#75715e">#分割後のエントロピー</span>
+    e_f <span style="color:#f92672">=</span> entropy(probs_f)
+
+    g <span style="color:#f92672">=</span> e <span style="color:#f92672">-</span> ((len(t) <span style="color:#f92672">/</span> len(data)) <span style="color:#f92672">*</span> e_t <span style="color:#f92672">+</span> (len(f) <span style="color:#f92672">/</span> len(data)) <span style="color:#f92672">*</span> e_f) <span style="color:#75715e">#情報利得</span>
+
+    <span style="color:#66d9ef">return</span> g
+
+g_price <span style="color:#f92672">=</span> gain(data, target, <span style="color:#e6db74">&#34;曜日_平日&#34;</span>)
+<span style="color:#66d9ef">print</span>(g_price)
+
+g_price <span style="color:#f92672">=</span> gain(data, target, <span style="color:#e6db74">&#34;時間帯_昼&#34;</span>)
+<span style="color:#66d9ef">print</span>(g_price)
+
+g_price <span style="color:#f92672">=</span> gain(data, target, <span style="color:#e6db74">&#34;価格_高&#34;</span>)
+<span style="color:#66d9ef">print</span>(g_price)
+
+g_price <span style="color:#f92672">=</span> gain(data, target, <span style="color:#e6db74">&#34;天気_雨&#34;</span>)
+<span style="color:#66d9ef">print</span>(g_price)
+</code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0.004545537028176172</span> <span style="color:#75715e">#曜日_平日</span>
+<span style="color:#ae81ff">0.008986624929939513</span> <span style="color:#75715e">#時間帯_昼</span>
+<span style="color:#ae81ff">0.03482766245690749</span> <span style="color:#75715e">#価格_高</span>
+<span style="color:#ae81ff">0.010799704414199196</span> <span style="color:#75715e">#天気_雨</span>
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  scikit-learnで決定木
 </h1>
 
-<p>それでは，機械学習のライブラリである <a href="https://scikit-learn.org/stable/">scikit-learn</a> を利用してk平均法によるクラスタリングを実行してみましょう．
-k平均法を適用するには <strong>cluster.KMeans</strong> 関数を用います．
-クラスタ数は <code>n_clusters</code>で指定します．</p>
+<p>それでは，機械学習のライブラリである <a href="https://scikit-learn.org/stable/">scikit-learn</a> を利用して決定木を生成してみましょう．
+scikit-learnでは， <strong>CART</strong> と呼ばれるアルゴリズムで決定木を生成します．
+また， 分割の基準として標準では <strong>ジニ係数</strong> が用いられますが，ここでは上記で説明した <strong>エントロピー</strong> を利用します．
+決定木の生成には <strong>tree.DecisionTreeClassifier</strong> 関数を用います．
+ここで，基準（criterion）を <strong>entropy</strong> ，木の最大の深さ（max_depth）を <strong>3</strong> ，
+乱数のシード（random_state）を <strong>0</strong> に固定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">t <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>DecisionTreeClassifier(criterion<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;entropy&#34;</span>, max_depth<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, random_state<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+t <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>fit(data, target)
+</code></pre></div><p>生成された決定木を<code>plt_tree</code>で可視化します．
+<code>figsize</code>はグラフの大きさを設定しています．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">km <span style="color:#f92672">=</span> KMeans(n_clusters<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
-km<span style="color:#f92672">.</span>fit(data[[<span style="color:#e6db74">&#34;出生率&#34;</span>, <span style="color:#e6db74">&#34;死亡率&#34;</span>]])
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+plot_tree(t, feature_names<span style="color:#f92672">=</span>data<span style="color:#f92672">.</span>columns, filled<span style="color:#f92672">=</span>True)
+</code></pre></div><p>下図が生成された決定木です．
+決定木の根（ルート）から，属性に基づき分類し，最終的に到達する葉（リーフ）で <strong>多(0)</strong> か <strong>少(1)</strong> かを判定します．
+例えば，<strong>価格_高 &lt;= 0.5</strong> は，チケット価格（価格_高）による分類であり，<strong>True</strong> は安(0)，<strong>False</strong>　は高(1)を表しています．
+例えば，価格が安く（価格_高 &lt;= 0.5がTrue），お昼に開催される（時間帯_昼 &gt; 0.5がFalse）ときは，来場者は <strong>多</strong> となることがわかります．</p>
+<p><a href="https://gyazo.com/67e8e7a51d55afa1ff4623613b4dfa6f"><img src="https://i.gyazo.com/67e8e7a51d55afa1ff4623613b4dfa6f.png" alt="Image from Gyazo"></a></p>
+<p>最後に，<strong>predict</strong> 関数を利用して，決定木に対数する入力と出力の関係を確認します．
+例えば，「平日（1），昼（1），安（0），晴（0）」を入力すると，来場者数の予測は「多（0）」という結果が得られます．</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">result <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>predict([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]]) <span style="color:#75715e">#平日，昼，安，晴</span>
+<span style="color:#66d9ef">print</span>(result) <span style="color:#75715e">#多</span>
 
-<span style="color:#66d9ef">print</span>(km<span style="color:#f92672">.</span>labels_) <span style="color:#75715e"># 所属するクラスタ</span>
-<span style="color:#66d9ef">print</span>(km<span style="color:#f92672">.</span>cluster_centers_) <span style="color:#75715e"># クラスタの中心</span>
+result <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>predict([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]]) <span style="color:#75715e">#平日，夜，安　晴</span>
+<span style="color:#66d9ef">print</span>(result) <span style="color:#75715e">#多</span>
+
+result <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>predict([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>]]) <span style="color:#75715e">#平日，昼，高，晴</span>
+<span style="color:#66d9ef">print</span>(result) <span style="color:#75715e">#少</span>
 </code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span>
- <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span>
- <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span>
- <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span>
- <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span>]
-[[<span style="color:#ae81ff">20.26153846</span>  <span style="color:#ae81ff">5.96923077</span>]
- [<span style="color:#ae81ff">35.03773585</span>  <span style="color:#ae81ff">8.41509434</span>]
- [<span style="color:#ae81ff">11.16666667</span>  <span style="color:#ae81ff">9.22727273</span>]]
-</code></pre></div><p>クラスラリングの結果を散布図で可視化してみましょう．
-3つのクラスタが構成されていることがわかります．</p>
-<p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>], data[<span style="color:#e6db74">&#34;死亡率&#34;</span>], c<span style="color:#f92672">=</span>km<span style="color:#f92672">.</span>labels_)
-<span style="color:#66d9ef">for</span> x,y <span style="color:#f92672">in</span> km<span style="color:#f92672">.</span>cluster_centers_:
-  plt<span style="color:#f92672">.</span>scatter(x, y)
-</code></pre></div><p><a href="https://gyazo.com/7f0ecfb3cec57ed4dc9e3655c5a208ad"><img src="https://i.gyazo.com/7f0ecfb3cec57ed4dc9e3655c5a208ad.png" alt="Image from Gyazo"></a></p>
-<p>最後に，各クラスタにどのような国が所属しているか確認してみましょう．
-クラスタ$c_2$は，出生率が高く，死亡率が低いグループです．
-アフガニスタンなど治安が悪い国や，アンゴラなどの発展途上国が含まれています．
-クラスタ$c_3$は，出生率が低く，死亡率が高いグループです．
-オーストラリアやオーストリアなど経済発展が進んだ国が含まれています．
-クラスタ$c_1$は，その中間であり，アルジェリアやアルゼンチンなどが含まれています．</p>
-<p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">labels <span style="color:#f92672">=</span> km<span style="color:#f92672">.</span>labels_
-
-index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>)
-display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
-
-index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>)
-display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
-
-index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>)
-display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
-</code></pre></div><p><a href="https://gyazo.com/1b270c17f184295f57d535138a13e761"><img src="https://i.gyazo.com/1b270c17f184295f57d535138a13e761.png" alt="Image from Gyazo"></a></p>
-<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[0]
+[0]
+[1]
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
- -->
-<!-- scikit-learnの **アヤメ**の データセットをk平均法でクラスタリングしてください（クラスタ数は3）． -->
-<!-- このとき，**Sepal Length** と**Sepal Width** のみを対象とすること -->
-<!-- （データフレームの列名は「出生率」「死亡率」にしておくとラクチン）． -->
-<!-- ```python -->
-<!-- from sklearn.datasets import load_iris -->
-<!-- iris = load_iris() -->
-<!-- data = pd.DataFrame(iris.data) -->
-<!-- data = data.loc[:,0:1]  -->
-<!-- data.columns = ["出生率","死亡率"] #本当はSepal LengthとSepal Width -->
-<!-- data.head() -->
-<!-- ``` -->
-<!-- [![Image from Gyazo](https://i.gyazo.com/ff28fe07c081d7dd5c296dab7bf1cebe.png)](https://gyazo.com/ff28fe07c081d7dd5c296dab7bf1cebe) -->
-<!-- [![Image from Gyazo](https://i.gyazo.com/7a71b9bcca2f2e8f0fab7de1c0ebf4f4.png)](https://gyazo.com/7a71b9bcca2f2e8f0fab7de1c0ebf4f4) -->
-<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
 
-<p>scikit-learnの <strong>アヤメ</strong>の データセットをk平均法でクラスタリングしてください（クラスタ数は3）．
-このとき，<strong>がく片の長さ（Sepal Length）</strong> と<strong>がく片の幅（Sepal Width）</strong> のみを対象とすること．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_iris
-iris <span style="color:#f92672">=</span> load_iris()
-data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(iris<span style="color:#f92672">.</span>data)
-data<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;がく片の長さ&#34;</span>,<span style="color:#e6db74">&#34;がく片の幅&#34;</span>,<span style="color:#e6db74">&#34;花弁の長さ&#34;</span>,<span style="color:#e6db74">&#34;花弁の幅&#34;</span>]
-</code></pre></div><p><a href="https://gyazo.com/282fe892fb26bfbaa6c86b5df920ba59"><img src="https://i.gyazo.com/282fe892fb26bfbaa6c86b5df920ba59.png" alt="Image from Gyazo"></a></p>
-<p>課題を完成させたら，<strong>chapter11.ipynb</strong> を保存し，
+<p>タイタニックの<a href="https://www.kaggle.com/c/titanic">データセット</a>を利用して，
+生存結果（0:死亡，1:生存）を分類するための決定木を作成してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+<span style="color:#e6db74">&#39;生存結果&#39;</span>: {<span style="color:#ae81ff">0</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">14</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">15</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">16</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">17</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">18</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">19</span>: <span style="color:#ae81ff">1</span>}, 
+<span style="color:#e6db74">&#39;階級&#39;</span>: {<span style="color:#ae81ff">0</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">14</span>: <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">15</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">16</span>: <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">17</span>: <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">18</span>: <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">19</span>: <span style="color:#ae81ff">3</span>}, 
+<span style="color:#e6db74">&#39;性別&#39;</span>: {<span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#39;male&#39;</span>, <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#39;female&#39;</span>, <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#39;female&#39;</span>, <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#39;female&#39;</span>, <span style="color:#ae81ff">4</span>: <span style="color:#e6db74">&#39;male&#39;</span>, <span style="color:#ae81ff">5</span>: <span style="color:#e6db74">&#39;male&#39;</span>, <span style="color:#ae81ff">6</span>: <span style="color:#e6db74">&#39;male&#39;</span>, <span style="color:#ae81ff">7</span>: <span style="color:#e6db74">&#39;female&#39;</span>, <span style="color:#ae81ff">8</span>: <span style="color:#e6db74">&#39;female&#39;</span>, <span style="color:#ae81ff">9</span>: <span style="color:#e6db74">&#39;female&#39;</span>, <span style="color:#ae81ff">10</span>: <span style="color:#e6db74">&#39;female&#39;</span>, <span style="color:#ae81ff">11</span>: <span style="color:#e6db74">&#39;male&#39;</span>, <span style="color:#ae81ff">12</span>: <span style="color:#e6db74">&#39;male&#39;</span>, <span style="color:#ae81ff">13</span>: <span style="color:#e6db74">&#39;female&#39;</span>, <span style="color:#ae81ff">14</span>: <span style="color:#e6db74">&#39;female&#39;</span>, <span style="color:#ae81ff">15</span>: <span style="color:#e6db74">&#39;male&#39;</span>, <span style="color:#ae81ff">16</span>: <span style="color:#e6db74">&#39;female&#39;</span>, <span style="color:#ae81ff">17</span>: <span style="color:#e6db74">&#39;male&#39;</span>, <span style="color:#ae81ff">18</span>: <span style="color:#e6db74">&#39;male&#39;</span>, <span style="color:#ae81ff">19</span>: <span style="color:#e6db74">&#39;female&#39;</span>}, 
+<span style="color:#e6db74">&#39;年齢&#39;</span>: {<span style="color:#ae81ff">0</span>: <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">38</span>, <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">54</span>, <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">39</span>, <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">14</span>: <span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">15</span>: <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">16</span>: <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">17</span>: <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">18</span>: <span style="color:#ae81ff">34</span>, <span style="color:#ae81ff">19</span>: <span style="color:#ae81ff">15</span>}, 
+<span style="color:#e6db74">&#39;乗船料金&#39;</span>: {<span style="color:#ae81ff">0</span>: <span style="color:#ae81ff">7.25</span>, <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">71.2833</span>, <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">7.925</span>, <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">53.1</span>, <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">8.05</span>, <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">51.8625</span>, <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">21.075</span>, <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">11.1333</span>, <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">30.0708</span>, <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">16.7</span>, <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">26.55</span>, <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">8.05</span>, <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">31.275</span>, <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">7.8542</span>, <span style="color:#ae81ff">14</span>: <span style="color:#ae81ff">16.0</span>, <span style="color:#ae81ff">15</span>: <span style="color:#ae81ff">29.125</span>, <span style="color:#ae81ff">16</span>: <span style="color:#ae81ff">18.0</span>, <span style="color:#ae81ff">17</span>: <span style="color:#ae81ff">26.0</span>, <span style="color:#ae81ff">18</span>: <span style="color:#ae81ff">13.0</span>, <span style="color:#ae81ff">19</span>: <span style="color:#ae81ff">8.0292</span>}
+})
+</code></pre></div><p>課題を完成させたら，<strong>chapter11.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
 このとき，必ず事前に下記の設定を行ってから提出してください．</p>
 <ul>
@@ -414,6 +544,25 @@ data<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</s
 <li>ノートブックの変更内容を保存して固定</li>
 <li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
 </ul>
+<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+ -->
+<!-- scikit-learnの **アヤメ** のデータセットを決定木で分類してください． -->
+<!-- dotファイルに変換する際は，feature_namesに **iris.feature_names**， -->
+<!-- class_namesに **iris.target_names** を指定すること． -->
+<!-- ```python -->
+<!-- from sklearn.datasets import load_iris -->
+<!-- iris = load_iris() -->
+<!-- data = pd.DataFrame(iris.data) -->
+<!-- data.columns=iris.feature_names -->
+<!-- target = pd.DataFrame(iris.target) -->
+<!-- target.columns=["label"] -->
+<!-- print(data) -->
+<!-- print(target) -->
+<!-- ``` -->
+<!-- [![Image from Gyazo](https://i.gyazo.com/de05cb6cd9a4c85c635506e7413358b6.png)](https://gyazo.com/de05cb6cd9a4c85c635506e7413358b6) -->
+<!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
 
 <h3>参考書籍</h3>
 
@@ -429,65 +578,6 @@ data<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</s
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4839963525&linkId=14f05f671ddd917b204596b6b535981e&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
 </iframe>
 
-<!--
-## 解の導出
-
-それでは，上述の方法で解を導出してみましょう．
-クラスタの初期値は，先程と同じ値を設定します．
-最大で100回の中心ベクトルの更新を行い，
-所属するクラスタに変化がなければ終了することにします．
-ここでは，3回の繰り返しで収束し，下記のクラスタが得られました．
-
-$$c_1 = (11.16, 9.23)$$
-$$c_2 = (20.26, 5.97)$$
-$$c_3 = (35.04, 8.42)$$
-
-初期値が異なると得られる解も異なることに注意してください．
-実際は初期値を変えて複数回実行し，その中から最適なクラスタを解とします．
-
-**[In:]**
-```python
-c1 = np.array([10, 10])
-c2 = np.array([20, 10])
-c3 = np.array([30, 10])
-clusters = np.array([c1, c2, c3])
-
-for i in range(100):
-    print(clusters)
-    d = distance(data, clusters)
-    a = assign(d)
-    tmp = clusters
-    clusters = updateClusters(data, clusters, a)
-    if (clusters == tmp).all():
-        break
-```
-
-**[Out:]**
-```python
-[[10 10]
- [20 10]
- [30 10]]
-[[11.27941176  9.05882353]
- [20.15        6.1       ]
- [34.55357143  8.23214286]]
-[[11.16666667  9.22727273]
- [20.26153846  5.96923077]
- [35.03773585  8.41509434]]
-```
-
-```python
-for i in range(clusters.ndim + 1):
-    index = np.where(a == i)
-    d = data.iloc[index]
-    plt.scatter(d["出生率"],d["死亡率"])
-    
-plt.scatter(clusters[:,0], clusters[:,1])
-plt.xlabel("Birth Rate")
-plt.ylabel("Mortality Rate")
-```
-
-[![Image from Gyazo](https://i.gyazo.com/ab64a7d2af918f7187fc5d4eaa136147.png)](https://gyazo.com/ab64a7d2af918f7187fc5d4eaa136147)
--->
 
 
     

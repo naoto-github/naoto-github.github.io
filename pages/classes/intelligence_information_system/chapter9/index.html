@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    分類④・k近傍法 | mLAB
+    分類③・ロジスティック回帰 | mLAB
   </title>
 
   
@@ -67,7 +67,7 @@
   
   
 
-  <meta property="og:title" content="分類④・k近傍法" />
+  <meta property="og:title" content="分類③・ロジスティック回帰" />
 
 
 
@@ -79,7 +79,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/76fc4bb780f5f884c744cba59c0e9c2e.png" />
+  <meta property="og:image" content="https://i.gyazo.com/24e52670db8206b33030897451a51f7d.png" />
 
 
 
@@ -87,12 +87,10 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter9 とします． また，numpy，matplotlib.pyplot に加え，機械学習ライブラリのscikit-LearnとSciPyをインポートします．
-import numpy as np import matplotlib.pyplot as plt from sklearn.datasets import load_iris from sklearn.neighbors import KNeighborsClassifier import scipy.stats as stats データの準備  あらかじめ用意された機械学習のための データセット を利用することができます． ここでは，scikit-learn ライブラリに収録されている アヤメ（iris） のデータセットを用います． アヤメは草地に生息している植物であり， setosa， versicolor， virginica などの種類があります（和名はよく分かりませんでした）． このデータセットには，上記３種類のアヤメの， がく片の長さ（Sepal Length） ，がく片の幅（Sepal Width） ， 花弁の長さ（Petal Length） ，花弁の幅（Petal Width） を計測したデータが含まれています．
-
-各種類に50のサンプルがあり，例えば，最初のデータは[5.1,3.5,1.4, 0.2]となっています． これは，がく片の長さが5.1cm，がく片の幅が3.5cm，花弁の長さが1.4cm，花弁の幅が0.2cmを表しています． ラベルは0,1,2のいずれかで与えられ，それぞれsetosa，virsicolor, virginicaを表しています． 最初のサンプルのラベルは0であるため，これは setosa であることがわかります．
-[In:]
-iris = load_iris() print(iris.feature_names) #フィールド名 print(iris.data[0:5]) #フィールド・データ print(iris." />
+  <meta property="og:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter9 とします． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize データの準備  これまでは，リンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） という2次元のデータを用いていました． 今回は単純化のため，大きさ（$x$） のみに注目して分類します． また，グラフで可視化するために，リンゴを$0$，メロンを$1$と表現することにします．
+x = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） label = np.array([0, 0, 0, 0, 1, 1, 1]) #カテゴリ x = (x - x.mean()) / x.std() #標準化 plt.scatter(x, label, c=label) plt.xlabel(&#34;x&#34;) 
+ロジスティック回帰  今回取り上げる手法は ロジスティック回帰 です． 「回帰」という文字列が含まれますが，実際は前回の線形判別分析と同様に 分類 を目的とした手法です． 確率モデルとして用いられる ロジスティック関数（シグモイド関数） に， 対象のデータを回帰させることから，その名前が付けられています．" />
 
 
 
@@ -103,20 +101,18 @@ iris = load_iris() print(iris.feature_names) #フィールド名 print(iris.data
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="分類④・k近傍法" />
+  <meta name="twitter:title" content="分類③・ロジスティック回帰" />
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter9 とします． また，numpy，matplotlib.pyplot に加え，機械学習ライブラリのscikit-LearnとSciPyをインポートします．
-import numpy as np import matplotlib.pyplot as plt from sklearn.datasets import load_iris from sklearn.neighbors import KNeighborsClassifier import scipy.stats as stats データの準備  あらかじめ用意された機械学習のための データセット を利用することができます． ここでは，scikit-learn ライブラリに収録されている アヤメ（iris） のデータセットを用います． アヤメは草地に生息している植物であり， setosa， versicolor， virginica などの種類があります（和名はよく分かりませんでした）． このデータセットには，上記３種類のアヤメの， がく片の長さ（Sepal Length） ，がく片の幅（Sepal Width） ， 花弁の長さ（Petal Length） ，花弁の幅（Petal Width） を計測したデータが含まれています．
-
-各種類に50のサンプルがあり，例えば，最初のデータは[5.1,3.5,1.4, 0.2]となっています． これは，がく片の長さが5.1cm，がく片の幅が3.5cm，花弁の長さが1.4cm，花弁の幅が0.2cmを表しています． ラベルは0,1,2のいずれかで与えられ，それぞれsetosa，virsicolor, virginicaを表しています． 最初のサンプルのラベルは0であるため，これは setosa であることがわかります．
-[In:]
-iris = load_iris() print(iris.feature_names) #フィールド名 print(iris.data[0:5]) #フィールド・データ print(iris." />
+  <meta name="twitter:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter9 とします． また，numpy，matplotlib.pyplot，scipy.optimize を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from scipy.optimize import minimize データの準備  これまでは，リンゴとメロンの 大きさ（$x_1$） と 重さ（$x_2$） という2次元のデータを用いていました． 今回は単純化のため，大きさ（$x$） のみに注目して分類します． また，グラフで可視化するために，リンゴを$0$，メロンを$1$と表現することにします．
+x = np.array([9.5, 11.2, 10.3, 11.5, 13.4, 12.9, 14.2]) #大きさ（cm） label = np.array([0, 0, 0, 0, 1, 1, 1]) #カテゴリ x = (x - x.mean()) / x.std() #標準化 plt.scatter(x, label, c=label) plt.xlabel(&#34;x&#34;) 
+ロジスティック回帰  今回取り上げる手法は ロジスティック回帰 です． 「回帰」という文字列が含まれますが，実際は前回の線形判別分析と同様に 分類 を目的とした手法です． 確率モデルとして用いられる ロジスティック関数（シグモイド関数） に， 対象のデータを回帰させることから，その名前が付けられています．" />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/76fc4bb780f5f884c744cba59c0e9c2e.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/24e52670db8206b33030897451a51f7d.png" />
 
 
   
@@ -174,258 +170,200 @@ iris = load_iris() print(iris.feature_names) #フィールド名 print(iris.data
 <main>
   <div class="post">
     
-    <h1 class="post-title">分類④・k近傍法</h1>
+    <h1 class="post-title">分類③・ロジスティック回帰</h1>
 <div class="post-line"></div>
     
     
 
-    <p><a href="https://gyazo.com/76fc4bb780f5f884c744cba59c0e9c2e"><img src="https://i.gyazo.com/76fc4bb780f5f884c744cba59c0e9c2e.png" alt="Image from Gyazo"></a></p>
+    <p><a href="https://gyazo.com/24e52670db8206b33030897451a51f7d"><img src="https://i.gyazo.com/24e52670db8206b33030897451a51f7d.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ノートブックの作成
 </h1>
 
 <p>Colabにアクセスし，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>chapter9</strong> とします．
-また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong> に加え，機械学習ライブラリの<a href="https://scikit-learn.org/stable/">scikit-Learn</a>と<a href="https://scipy.org/">SciPy</a>をインポートします．</p>
+また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>，<strong>scipy.optimize</strong> を導入しておいてください．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 <span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_iris
-<span style="color:#f92672">from</span> sklearn.neighbors <span style="color:#f92672">import</span> KNeighborsClassifier
-<span style="color:#f92672">import</span> scipy.stats <span style="color:#f92672">as</span> stats
+<span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   データの準備
 </h1>
 
-<p>あらかじめ用意された機械学習のための <strong>データセット</strong> を利用することができます．
-ここでは，<strong>scikit-learn</strong> ライブラリに収録されている <strong>アヤメ（iris）</strong> のデータセットを用います．
-アヤメは草地に生息している植物であり，
-<strong>setosa</strong>， <strong>versicolor</strong>， <strong>virginica</strong> などの種類があります（和名はよく分かりませんでした）．
-このデータセットには，上記３種類のアヤメの，
-<strong>がく片の長さ（Sepal Length）</strong> ，<strong>がく片の幅（Sepal Width）</strong> ，
-<strong>花弁の長さ（Petal Length）</strong> ，<strong>花弁の幅（Petal Width）</strong> を計測したデータが含まれています．</p>
-<p><a title="Qwert1234 [Public domain], via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Iris_sanguinea_01.JPG"><img width="256" alt="Iris sanguinea 01" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Iris_sanguinea_01.JPG/256px-Iris_sanguinea_01.JPG"></a></p>
-<p>各種類に50のサンプルがあり，例えば，最初のデータは[5.1,3.5,1.4, 0.2]となっています．
-これは，がく片の長さが5.1cm，がく片の幅が3.5cm，花弁の長さが1.4cm，花弁の幅が0.2cmを表しています．
-ラベルは0,1,2のいずれかで与えられ，それぞれsetosa，virsicolor, virginicaを表しています．
-最初のサンプルのラベルは0であるため，これは <strong>setosa</strong> であることがわかります．</p>
-<p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">iris <span style="color:#f92672">=</span> load_iris()
-<span style="color:#66d9ef">print</span>(iris<span style="color:#f92672">.</span>feature_names) <span style="color:#75715e">#フィールド名</span>
-<span style="color:#66d9ef">print</span>(iris<span style="color:#f92672">.</span>data[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>]) <span style="color:#75715e">#フィールド・データ</span>
-<span style="color:#66d9ef">print</span>(iris<span style="color:#f92672">.</span>target_names) <span style="color:#75715e">#ラベル名</span>
-<span style="color:#66d9ef">print</span>(iris<span style="color:#f92672">.</span>target[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>]) <span style="color:#75715e">#ラベル・データ</span>
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#e6db74">&#39;sepal length (cm)&#39;</span>, <span style="color:#e6db74">&#39;sepal width (cm)&#39;</span>, <span style="color:#e6db74">&#39;petal length (cm)&#39;</span>, <span style="color:#e6db74">&#39;petal width (cm)&#39;</span>]
-[[<span style="color:#ae81ff">5.1</span> <span style="color:#ae81ff">3.5</span> <span style="color:#ae81ff">1.4</span> <span style="color:#ae81ff">0.2</span>]
- [<span style="color:#ae81ff">4.9</span> <span style="color:#ae81ff">3.</span>  <span style="color:#ae81ff">1.4</span> <span style="color:#ae81ff">0.2</span>]
- [<span style="color:#ae81ff">4.7</span> <span style="color:#ae81ff">3.2</span> <span style="color:#ae81ff">1.3</span> <span style="color:#ae81ff">0.2</span>]
- [<span style="color:#ae81ff">4.6</span> <span style="color:#ae81ff">3.1</span> <span style="color:#ae81ff">1.5</span> <span style="color:#ae81ff">0.2</span>]
- [<span style="color:#ae81ff">5.</span>  <span style="color:#ae81ff">3.6</span> <span style="color:#ae81ff">1.4</span> <span style="color:#ae81ff">0.2</span>]]
-[<span style="color:#e6db74">&#39;setosa&#39;</span> <span style="color:#e6db74">&#39;versicolor&#39;</span> <span style="color:#e6db74">&#39;virginica&#39;</span>]
-[<span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span>]
-</code></pre></div><p>ここでは，簡単化のため，<strong>がく片の長さ</strong> と <strong>がく片の幅</strong> のみ対象とします．
-散布図をプロットしてみると，versicolorとvirginicaの分類は難しそうだということがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">length <span style="color:#f92672">=</span> iris<span style="color:#f92672">.</span>data[:,<span style="color:#ae81ff">0</span>]
-width <span style="color:#f92672">=</span> iris<span style="color:#f92672">.</span>data[:,<span style="color:#ae81ff">1</span>]
-target <span style="color:#f92672">=</span> iris<span style="color:#f92672">.</span>target
-
-setosa <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(target <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-versicolor <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(target <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)
-virginica <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(target <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
-
-plt<span style="color:#f92672">.</span>scatter(length[setosa],width[setosa], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;setosa&#34;</span>)
-plt<span style="color:#f92672">.</span>scatter(length[versicolor],width[versicolor], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;versicolor&#34;</span>)
-plt<span style="color:#f92672">.</span>scatter(length[virginica],width[virginica], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;virginica&#34;</span>)
-plt<span style="color:#f92672">.</span>legend()
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;length&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;width&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/eaa40db3b02a18b5fa50ceb06857edb9"><img src="https://i.gyazo.com/eaa40db3b02a18b5fa50ceb06857edb9.png" alt="Image from Gyazo"></a></p>
+<p>これまでは，リンゴとメロンの <strong>大きさ（$x_1$）</strong> と <strong>重さ（$x_2$）</strong> という2次元のデータを用いていました．
+今回は単純化のため，<strong>大きさ（$x$）</strong> のみに注目して分類します．
+また，グラフで可視化するために，リンゴを$0$，メロンを$1$と表現することにします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">9.5</span>, <span style="color:#ae81ff">11.2</span>, <span style="color:#ae81ff">10.3</span>, <span style="color:#ae81ff">11.5</span>, <span style="color:#ae81ff">13.4</span>, <span style="color:#ae81ff">12.9</span>, <span style="color:#ae81ff">14.2</span>]) <span style="color:#75715e">#大きさ（cm）</span>
+label <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>]) <span style="color:#75715e">#カテゴリ</span>
+x <span style="color:#f92672">=</span> (x <span style="color:#f92672">-</span> x<span style="color:#f92672">.</span>mean()) <span style="color:#f92672">/</span> x<span style="color:#f92672">.</span>std() <span style="color:#75715e">#標準化</span>
+plt<span style="color:#f92672">.</span>scatter(x, label, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/290ecebd48cdb4ad264677c1072a4e26"><img src="https://i.gyazo.com/290ecebd48cdb4ad264677c1072a4e26.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  学習データとテストデータ
+  ロジスティック回帰
 </h1>
 
-<p>今回はデータセットに含まれる150のサンプルを
-<strong>学習データ（訓練データ）</strong> と <strong>テストデータ（評価データ）</strong> に分けることにします．
-このように，対象のサンプルを学習用とテスト用に分けて，
-回帰や分類の妥当性の検証に用いる方法を <strong>交差検証</strong> と呼びます．
-サンプルを分ける際は，偏りがないように，無作為に抽出することが必要です．
-ここでは，numpyの <strong>shuffle</strong> 関数を用いて，サンプルをシャッフルした後で，
-前方の100のサンプルを学習データ，後方の50のサンプルをテストデータとします．
-シャッフルの結果は，実行する度に変化することに注意してください．</p>
+<p>今回取り上げる手法は <strong>ロジスティック回帰</strong> です．
+「回帰」という文字列が含まれますが，実際は前回の線形判別分析と同様に <strong>分類</strong> を目的とした手法です．
+確率モデルとして用いられる <strong>ロジスティック関数（シグモイド関数）</strong> に，
+対象のデータを回帰させることから，その名前が付けられています．</p>
+<h2 id="ロジスティック関数">ロジスティック関数</h2>
+<p>まずは，ロジスティック関数$p(x)$の定義を確認しましょう．
+ロジスティック関数$p(x)$は，$x$が増加すると$1$に漸近し，また，$x$が減少すると$0$に漸近するという特徴を持ちます．</p>
+<p>$$
+p(x) = \frac{1}{1 + e^{-x}}
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">px</span>(x):
+    value <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> np<span style="color:#f92672">.</span>exp(<span style="color:#f92672">-</span>x))
+    <span style="color:#66d9ef">return</span> value
+
+x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.01</span>)
+y_ <span style="color:#f92672">=</span> px(x_)
+plt<span style="color:#f92672">.</span>plot(x_,y_)    
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/553c6a5801eb7dc8e7bb679e4c12e589"><img src="https://i.gyazo.com/553c6a5801eb7dc8e7bb679e4c12e589.png" alt="Image from Gyazo"></a></p>
+<p>次に，入力$x$に依存して，関数の形状がどのように変化するか見てみましょう．
+下記のグラフは$x$，$5x$，$5x + 10$を入力としたときのロジスティック関数の比較です．
+入力が変化すると，<strong>傾き</strong> や <strong>変曲点の位置</strong> が変わることがわかります．</p>
+<p>$$
+p(5x) = \frac{1}{1 + e^{-(5x)}}
+$$</p>
+<p>$$
+p(5x + 10) = \frac{1}{1 + e^{-(5x + 10)}}
+$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.01</span>)
+
+y1_ <span style="color:#f92672">=</span> px(x_)
+y2_ <span style="color:#f92672">=</span> px(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> x_)
+y3_ <span style="color:#f92672">=</span> px(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> x_ <span style="color:#f92672">+</span> <span style="color:#ae81ff">10</span>)
+
+plt<span style="color:#f92672">.</span>plot(x_,y1_, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;x&#34;</span>)
+plt<span style="color:#f92672">.</span>plot(x_,y2_, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5x&#34;</span>)
+plt<span style="color:#f92672">.</span>plot(x_,y3_, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;5x + 10&#34;</span>)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+plt<span style="color:#f92672">.</span>legend() <span style="color:#75715e">#判例を表示</span>
+</code></pre></div><p><a href="https://gyazo.com/73b984c7b2da2955ba7133e5c80da8e6"><img src="https://i.gyazo.com/73b984c7b2da2955ba7133e5c80da8e6.png" alt="Image from Gyazo"></a></p>
+<p>そこで，ロジスティック関数の入力の一般式$f(x)$を下記のように定義します．
+$w_1$は傾き，$w_2$は変曲点の位置を決めるパラメータです．
+これらのパラメータを調整することで，ロジスティック関数の形状を自由に変えることができます．</p>
+<p>$$
+f(x) = w_1 \cdot x + w_0
+$$</p>
+<p>$$
+p(f(x)) = p(w_1 \cdot x + w_0) = \frac{1}{1 + e^{-(w_1 \cdot x + w_0)}}
+$$</p>
+<h2 id="尤度">尤度</h2>
+<p>次にもっともらしさを表す指標である <strong>尤度</strong> について考えます．
+ロジスティック回帰では，この <strong>尤度</strong> を最大化するようなパラメータを求めることが目的となります．</p>
+<p>最初に，$f(x)=x$を入力とした場合を考えます（$w_1 = 1$，$w_0 = 0$ ）．
+このとき，リンゴとメロンの大きさ$x$に対する，ロジスティック関数$p(x)$の値を計算します．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">z <span style="color:#f92672">=</span> list(zip(length, width, target)) <span style="color:#75715e">#要素を一つのリストにまとめる</span>
-np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>shuffle(z) <span style="color:#75715e">#シャッフル</span>
-length,width,target <span style="color:#f92672">=</span> zip(<span style="color:#f92672">*</span>z) <span style="color:#75715e">#要素を分割する</span>
-length <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(length)
-width <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(width)
-target <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(target)
-<span style="color:#66d9ef">print</span>(length[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
-<span style="color:#66d9ef">print</span>(width[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
-<span style="color:#66d9ef">print</span>(target[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">p <span style="color:#f92672">=</span> px(<span style="color:#ae81ff">1</span><span style="color:#f92672">*</span>x <span style="color:#f92672">+</span> <span style="color:#ae81ff">0</span>)
+<span style="color:#66d9ef">print</span>(x)
+<span style="color:#66d9ef">print</span>(p)
+<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>p)
 </code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">6.2</span> <span style="color:#ae81ff">6.3</span> <span style="color:#ae81ff">5.2</span> <span style="color:#ae81ff">5.4</span> <span style="color:#ae81ff">5.8</span>]
-[<span style="color:#ae81ff">2.2</span> <span style="color:#ae81ff">2.5</span> <span style="color:#ae81ff">3.5</span> <span style="color:#ae81ff">3.</span>  <span style="color:#ae81ff">2.7</span>]
-[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span>]
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">l_length <span style="color:#f92672">=</span> length[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">100</span>] <span style="color:#75715e">#学習データ</span>
-l_width <span style="color:#f92672">=</span> width[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">100</span>]
-l_target <span style="color:#f92672">=</span> target[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">100</span>]
-t_length <span style="color:#f92672">=</span> length[<span style="color:#ae81ff">100</span>:<span style="color:#ae81ff">150</span>] <span style="color:#75715e">#テストデータ</span>
-t_width <span style="color:#f92672">=</span> width[<span style="color:#ae81ff">100</span>:<span style="color:#ae81ff">150</span>]
-t_target <span style="color:#f92672">=</span> target[<span style="color:#ae81ff">100</span>:<span style="color:#ae81ff">150</span>]
-</code></pre></div><p>それでは，100の学習データと，1つのテストデータを散布図にプロットしてみます．
-図中の赤いサンプルがテストデータです．
-このテストデータが，どのカテゴリ（setosa，versicolor，virginica）に分類されるかを考えます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">setosa <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(l_target <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-versicolor <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(l_target <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)
-virginica <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(l_target <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
-plt<span style="color:#f92672">.</span>scatter(l_length[setosa], l_width[setosa], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;setosa&#34;</span>)
-plt<span style="color:#f92672">.</span>scatter(l_length[versicolor], l_width[versicolor], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;versicolor&#34;</span>)
-plt<span style="color:#f92672">.</span>scatter(l_length[virginica], l_width[virginica], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;virginica&#34;</span>)
-plt<span style="color:#f92672">.</span>scatter(t_length[<span style="color:#ae81ff">0</span>], t_width[<span style="color:#ae81ff">0</span>], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;test&#34;</span>) <span style="color:#75715e">#テスト用のデータ</span>
-plt<span style="color:#f92672">.</span>legend()
-</code></pre></div><p><a href="https://gyazo.com/7b3248f8124ac284984f67b843470caf"><img src="https://i.gyazo.com/7b3248f8124ac284984f67b843470caf.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">1.49090975</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.41564757</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.98490402</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.22589542</span>  <span style="color:#ae81ff">0.9758682</span>   <span style="color:#ae81ff">0.65961462</span>
+  <span style="color:#ae81ff">1.48187394</span>]
+[<span style="color:#ae81ff">0.18378522</span> <span style="color:#ae81ff">0.39755872</span> <span style="color:#ae81ff">0.2719198</span>  <span style="color:#ae81ff">0.44376508</span> <span style="color:#ae81ff">0.72628761</span> <span style="color:#ae81ff">0.65917381</span>
+ <span style="color:#ae81ff">0.81485546</span>]
+[<span style="color:#ae81ff">0.81621478</span> <span style="color:#ae81ff">0.60244128</span> <span style="color:#ae81ff">0.7280802</span>  <span style="color:#ae81ff">0.55623492</span> <span style="color:#ae81ff">0.27371239</span> <span style="color:#ae81ff">0.34082619</span>
+ <span style="color:#ae81ff">0.18514454</span>]
+</code></pre></div><p>計算された値は，ロジスティック関数の特徴から，$0$から$1$の範囲に収まります．
+ロジスティック回帰では，この値を <strong>大きさが$x$であるときのメロンである確率</strong> とみなします．
+例えば，$x=-1.49$がメロンである確率は$18.4\%$，
+$x=0.98$がメロンである確率は$72.6\%$となります．
+また，<strong>大きさが$x$であるときのリンゴである確率</strong> は $1-p(x)$であるため，
+例えば，$x=-1.49$がリンゴである確率は$81.6\%$，
+$x=0.98$がリンゴである確率は$27.4\%$となります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0.01</span>)
+y_ <span style="color:#f92672">=</span> px(x_)
+p <span style="color:#f92672">=</span> px(x)
+plt<span style="color:#f92672">.</span>scatter(x, label, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>scatter(x, p, c<span style="color:#f92672">=</span>p)
+plt<span style="color:#f92672">.</span>plot(x_,y_)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/4651344f2c50493bb91240d73c871a06"><img src="https://i.gyazo.com/4651344f2c50493bb91240d73c871a06.png" alt="Image from Gyazo"></a></p>
+<!-- [![Image from Gyazo](https://i.gyazo.com/a135dcebade2a878d4f32dced1815ab4.png)](https://gyazo.com/a135dcebade2a878d4f32dced1815ab4) -->
+<p>このときの尤度$L(x)$は下記のように定義します．
+尤度は，$x_1 \cdots x_4$がリンゴ，また，$x_5 \cdots x_7$がメロンであるときの尤もらしさを表現しています．
+つまり，前方の4つの項は，$x_1 \cdots x_4$がリンゴであるときの同時確率，
+また，後方の3つの項は，$x_5 \cdots x_7$がメロンであるときの同時確率であり，
+これらの同時確率を掛け合わせた値が尤度$L(x)$となります．</p>
+<p>$$
+L(x) = (1 - p(x_1)) \cdot (1 - p(x_2)) \cdot (1 - p(x_3)) \cdot (1 - p(x_4)) \cdot p(x_5) \cdot p(x_6) \cdot p(x_7)
+$$</p>
+<p>$$
+L(x) = 0.82 \cdot 0.60 \cdot 0.72 \cdot 0.56 \cdot 0.73\cdot 0.66 \cdot 0.81
+$$</p>
+<p>$$
+L(x) =0.078
+$$</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lx</span>(w, x): <span style="color:#75715e">#尤度</span>
+    apple <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(label<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>)
+    melon <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(label<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>)
+    p_apple <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>prod(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> px(w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x[apple] <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">0</span>])) <span style="color:#75715e">#リンゴである確率</span>
+    p_melon <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>prod(px(w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x[melon] <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">0</span>])) <span style="color:#75715e">#メロンである確率</span>
+    l <span style="color:#f92672">=</span> p_apple <span style="color:#f92672">*</span> p_melon
+    <span style="color:#66d9ef">return</span> l
+
+w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>])
+l <span style="color:#f92672">=</span> lx(w, x)
+<span style="color:#66d9ef">print</span>(l)
+</code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">0.07768654594308204</span>
+</code></pre></div><p>ここで，求めたのは$w_1=1$，$w_0=0$のときの尤度$L(x)$です．
+当然，このパラメータの値が変われば，尤度の値も変わります．
+そこで，尤度$L(x)$を最大化するような，$w_1$，$w_0$を求めます．
+このような手法は <strong>最尤推定</strong> と呼ばれ，ロジスティック回帰で主に用いられます．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  k近傍法
+  数値解の導出
 </h1>
 
-<p>今回取り上げる手法は <strong>k近傍法（k-Nearest Neighbor: k-NN）</strong> です．
-これまでに解説した，<strong>線形判別分析（LDA）</strong> や <strong>ロジスティック回帰</strong> に比べると，
-とっても単純な仕組みで動作しますが，サンプル数が十分にあれば，高い精度を得られるとされています．
-また，ロジスティック回帰など，$w_1 \cdot x + w_0$といった特定の関数（分布）に従うことを前提に，
-最適なパラメータを導出する手法は <strong>パラメトリック</strong> な手法と呼ばれるのに対し，
-k近傍法は，特定の関数（分布）の前提を持たないことから <strong>ノンパラメトリック</strong> な手法と呼ばれます．
-加えて，パラメータの導出など事前の計算が不要なことから <strong>怠惰学習</strong> とも呼ばれます（なんだか不名誉な印象ですね）．</p>
-<p>それでは，k近傍法の仕組みを見ていきましょう．
-まずは，分類対象であるテスト用のサンプルから，距離的に近いサンプルを$k$個抽出します．
-距離は様々に定義することが出来ますが，ここでは <strong>ユークリッド距離</strong> を採用します．
-ユークリッド距離はnumpyの <strong>norm</strong> 関数で求めることができます．
-<strong>map</strong> 関数を利用して「テスト用のサンプル」と「他の全てのサンプル」の間の距離を計算しています．</p>
+<p>それでは，数値解を導出してみましょう．
+前回も用いた <strong>minimize</strong> 関数を利用します．
+今回も目的は尤度の <strong>最大化</strong> です．
+そこで，符号を反転した目的関数$g(x)$を定義しています．
+求めた数値解は$w_0 = -8.95$，$w_1 = 34.54$です．
+このパラメータで尤度を求めると$L(x) \simeq 1$となり，
+ロジスティック関数で，ほぼ正確に回帰（近似）できたことが分かります．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">v <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>c_[l_length <span style="color:#f92672">-</span> t_length[<span style="color:#ae81ff">0</span>], l_width <span style="color:#f92672">-</span> t_width[<span style="color:#ae81ff">0</span>]] <span style="color:#75715e">#ベクトルで表現</span>
-d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(list(map(<span style="color:#66d9ef">lambda</span> x: np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(x), v))) <span style="color:#75715e">#ユークリッド距離の計算</span>
-<span style="color:#66d9ef">print</span>(v[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
-<span style="color:#66d9ef">print</span>(d[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[ <span style="color:#ae81ff">0.1</span>  <span style="color:#ae81ff">0.</span> ]
- [<span style="color:#f92672">-</span><span style="color:#ae81ff">0.1</span>  <span style="color:#ae81ff">0.</span> ]
- [ <span style="color:#ae81ff">0.1</span>  <span style="color:#ae81ff">0.1</span>]
- [<span style="color:#f92672">-</span><span style="color:#ae81ff">0.1</span>  <span style="color:#ae81ff">0.1</span>]
- [<span style="color:#f92672">-</span><span style="color:#ae81ff">0.2</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.1</span>]]
-[<span style="color:#ae81ff">0.1</span>        <span style="color:#ae81ff">0.1</span>        <span style="color:#ae81ff">0.14142136</span> <span style="color:#ae81ff">0.14142136</span> <span style="color:#ae81ff">0.2236068</span> ]
-</code></pre></div><p>次に，求めた距離を基準として，学習データを昇順でソートします．
-この結果，ソートされたリストの <strong>[0:k]</strong> が，距離が近い$k$個のサンプルとなります．
-ここでは，$K=5$とした結果，そのラベルは$2,1,2,1,1$となったことが分かります（$1$はversicolor，$2$はvirginica）．</p>
-<p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">z <span style="color:#f92672">=</span> list(zip(d, l_length, l_width, l_target)) <span style="color:#75715e">#要素を一つのリストにまとめる</span>
-z<span style="color:#f92672">.</span>sort() <span style="color:#75715e">#昇順でソート</span>
-d,l_length,l_width,l_target <span style="color:#f92672">=</span> zip(<span style="color:#f92672">*</span>z) <span style="color:#75715e">#要素を分割する</span>
-d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(d)
-l_length <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(l_length)
-l_width <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(l_width)
-l_target <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(l_target)
-k <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
-<span style="color:#66d9ef">print</span>(d[<span style="color:#ae81ff">0</span>:k])
-<span style="color:#66d9ef">print</span>(l_target[<span style="color:#ae81ff">0</span>:k])
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#ae81ff">0.1</span>        <span style="color:#ae81ff">0.1</span>        <span style="color:#ae81ff">0.14142136</span> <span style="color:#ae81ff">0.14142136</span> <span style="color:#ae81ff">0.2236068</span> ]
-[<span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span>]
-</code></pre></div><p>この$k=5$個のサンプルで，ラベルの多数決（最頻値）を行います．
-このケースでは，多数決の結果， <strong>1(Versicolor)</strong> が最も多く，3個の出現頻度であったことがわかります．
-よって，このテスト用のサンプルを <strong>1(Versicolor)</strong> に分類します．
-このようにk近傍法では，事前に学習は不要であり，多数決という単純な仕組みで結果を得ます．</p>
-<p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">value,number <span style="color:#f92672">=</span> stats<span style="color:#f92672">.</span>mode(l_target[<span style="color:#ae81ff">0</span>:k]) <span style="color:#75715e">#最頻値</span>
-<span style="color:#66d9ef">print</span>(value)
-<span style="color:#66d9ef">print</span>(number)
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#ae81ff">1</span>] <span style="color:#75715e">#最頻値（Versicolor）</span>
-[<span style="color:#ae81ff">3</span>] <span style="color:#75715e">#出現回数</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">k <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
-plt<span style="color:#f92672">.</span>scatter(l_length[<span style="color:#ae81ff">0</span>:k], l_width[<span style="color:#ae81ff">0</span>:k], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;learning&#34;</span>)
-plt<span style="color:#f92672">.</span>scatter(t_length[<span style="color:#ae81ff">0</span>], t_width[<span style="color:#ae81ff">0</span>], label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;test&#34;</span>)
-plt<span style="color:#f92672">.</span>legend()
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gx</span>(w, x):
+    value <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> lx(w, x)
+    <span style="color:#66d9ef">return</span> value
 
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(k):
-    plt<span style="color:#f92672">.</span>annotate(l_target[i], (l_length[i], l_width[i]))
-</code></pre></div><p><a href="https://gyazo.com/63de60b2197a4974f4f5828e8fd767e1"><img src="https://i.gyazo.com/63de60b2197a4974f4f5828e8fd767e1.png" alt="Image from Gyazo"></a></p>
+w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>])
+result <span style="color:#f92672">=</span> minimize(gx, w_init, args<span style="color:#f92672">=</span>(x), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;SLSQP&#34;</span>)
+<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x)
+</code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">8.94836536</span> <span style="color:#ae81ff">34.53672525</span>]
+</code></pre></div><p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>x
+<span style="color:#66d9ef">print</span>(lx(w, x))
+</code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0.99999896366082</span>
+</code></pre></div><p>最後にグラフを描いて可視化してみましょう．
+ロジスティック関数により，リンゴとメロンが正確に分類されていることがわかります．
+決定境界は$f(x) = 34.54 \cdot x - 8.95 = 0$を解くことで求めることができます．
+これは，ロジスティック関数の変曲点の値が1/2であることが理由です．
+これを解くと$x = 0.26$となり，$x&lt;0.26$であればリンゴ，$x&gt;0.26$であれば メロンと分類することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0.01</span>)
+y_ <span style="color:#f92672">=</span> px(w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x_ <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">0</span>])
+p <span style="color:#f92672">=</span> px(w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">0</span>])
+plt<span style="color:#f92672">.</span>scatter(x, label, c<span style="color:#f92672">=</span>label)
+plt<span style="color:#f92672">.</span>scatter(x, p, c<span style="color:#f92672">=</span>p)
+plt<span style="color:#f92672">.</span>plot(x_,y_)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/0fa8e4a86b95654bbf0c11e4a63b7a5b"><img src="https://i.gyazo.com/0fa8e4a86b95654bbf0c11e4a63b7a5b.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  分類精度
-</h1>
-
-<p>最後に分類精度を確認しておきましょう．
-分類精度を評価するための基準も様々に存在しますが，
-今回は <strong>正解率（Accuracy）</strong> のみに注目します（この他にも <strong>適合率（Precision）</strong> ，<strong>再現率（Recall）</strong> などがあります）．
-正解率は，テストデータのうち，予測結果が正解であった割合です．
-ここでは，50個のテストデータのうち，35個が正解，15個が不正解であったため，
-正解率は$35/(35 + 15) = 0.7$となります（この値は交差検証のデータに依存します）．</p>
-<p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">positive <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-negative <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-<span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> zip(t_length, t_width, t_target):
-    v <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>c_[l_length<span style="color:#f92672">-</span> t[<span style="color:#ae81ff">0</span>], l_width <span style="color:#f92672">-</span> t[<span style="color:#ae81ff">1</span>]]
-    d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(list(map(<span style="color:#66d9ef">lambda</span> x: np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(x), v)))
-
-    z <span style="color:#f92672">=</span> list(zip(d, l_length, l_width, l_target))
-    z<span style="color:#f92672">.</span>sort()
-    d,l_length,l_width,l_target <span style="color:#f92672">=</span> zip(<span style="color:#f92672">*</span>z)
-    d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(d)
-    l_length <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(l_length)
-    l_width <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(l_width)
-    l_target <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(l_target)
-
-    k <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
-    value,number <span style="color:#f92672">=</span> stats<span style="color:#f92672">.</span>mode(l_target[<span style="color:#ae81ff">0</span>:k]) <span style="color:#75715e">#最頻値</span>
-
-    <span style="color:#66d9ef">if</span> value <span style="color:#f92672">==</span> t[<span style="color:#ae81ff">2</span>]:
-        positive <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">else</span>:
-        negative <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-
-<span style="color:#66d9ef">print</span>(positive) <span style="color:#75715e">#正解数</span>
-<span style="color:#66d9ef">print</span>(negative) <span style="color:#75715e">#不正解数</span>
-<span style="color:#66d9ef">print</span>(positive <span style="color:#f92672">/</span> (positive <span style="color:#f92672">+</span> negative)) <span style="color:#75715e">#正解率</span>
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">35</span>
-<span style="color:#ae81ff">15</span>
-<span style="color:#ae81ff">0.7</span>
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  scikit-learnでk近傍法
-</h1>
-
-<p>最後に<a href="https://scikit-learn.org/stable/">scikit-Learn</a>で提供されている
-k近傍法のライブラリ <strong>KNeighborsClassifer</strong> を利用して分類してみましょう．</p>
-<p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 学習データ</span>
-X <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(list(zip(l_length, l_width)))
-Y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(l_target)
-
-<span style="color:#75715e"># K=5で学習</span>
-k <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
-nn <span style="color:#f92672">=</span> KNeighborsClassifier(n_neighbors<span style="color:#f92672">=</span>k)
-nn<span style="color:#f92672">.</span>fit(X, Y)
-
-<span style="color:#75715e"># 評価データ</span>
-T <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(list(zip(t_length, t_width)))
-
-<span style="color:#75715e"># k近傍法で分類を予測</span>
-values <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>predict(T)
-<span style="color:#66d9ef">print</span>(values)
-
-<span style="color:#75715e"># 正解率</span>
-acc <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(values <span style="color:#f92672">==</span> t_target) <span style="color:#f92672">/</span> len(values)
-<span style="color:#66d9ef">print</span>(acc)
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span>
- <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span>]
-<span style="color:#ae81ff">0.74</span>
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
-<p>KNeighborsClassifierを利用して，$k$を1〜10まで変化させたときの正解率を調べ，
-その結果を折れ線グラフで示してください．</p>
-<p><a href="https://gyazo.com/e1d9c0d40077cdec3b7fa21738f71280"><img src="https://i.gyazo.com/e1d9c0d40077cdec3b7fa21738f71280.png" alt="Image from Gyazo"></a></p>
-<p>課題を完成させたら，<strong>chapter9.ipynb</strong> を保存し，
+<p>下記のデータを分類する決定境界をロジスティック回帰で求めよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">23</span>, <span style="color:#ae81ff">25</span>])
+label <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>])
+</code></pre></div><p>課題を完成させたら，<strong>chapter9.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
 このとき，必ず事前に下記の設定を行ってから提出してください．</p>
 <ul>
@@ -437,8 +375,12 @@ acc <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>s
   課題
 </h1>
  -->
-<!-- $k$を1〜20まで変化させたときの正解率を調べ，折れ線グラフで示してください（結果は交差検証のデータに依存）． -->
-<!-- [![Image from Gyazo](https://i.gyazo.com/69044a62cec25ee9f90477b1afc598a4.png)](https://gyazo.com/69044a62cec25ee9f90477b1afc598a4) -->
+<!-- 下記のデータを分類する決定境界をロジスティック回帰で求めよ． -->
+<!-- ```python -->
+<!-- x = np.array([10, 13, 15, 19, 23, 25]) -->
+<!-- label = np.array([1, 1, 1, 0, 0, 0]) -->
+<!-- ``` -->
+<!-- [![Image from Gyazo](https://i.gyazo.com/ebebd03044b95f46d1cdad59210c28c8.png)](https://gyazo.com/ebebd03044b95f46d1cdad59210c28c8) -->
 <!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
 
 <h3>参考書籍</h3>

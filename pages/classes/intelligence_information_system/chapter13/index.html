@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    オーバーフィッティングと交差検証 | mLAB
+    混合ガウスモデル | mLAB
   </title>
 
   
@@ -67,7 +67,7 @@
   
   
 
-  <meta property="og:title" content="オーバーフィッティングと交差検証" />
+  <meta property="og:title" content="混合ガウスモデル" />
 
 
 
@@ -79,7 +79,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/db7bf0839f23b52de8b31a4998ca3559.png" />
+  <meta property="og:image" content="https://i.gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d.png" />
 
 
 
@@ -87,10 +87,12 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter13 とします． また，numpy，matplotlib.pyplot，random，scikit-learn を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt import random from sklearn.model_selection import KFold オーバーフィッティング（過学習）  オーバーフィッティング とは 過学習 または 過剰適合 と呼ばれることもある現象で， サンプルデータに過剰に適合してしまい， データ全体に対しての汎用的な能力を失った状態を指します． ここでは，回帰問題を例に挙げて，オーバーフィッティングを再現してみましょう．
-まずは，$x^3 - 2x$に従った40点のデータを生成します． これに，ノイズとなる乱数を加え，対象のデータ全体とします．
-x = np.arange(-2, 2, 0.1) # 40点を生成 y = x ** 3 - 2* x r = np.random.rand(len(y)) * 2 # 乱数を生成 y = y &#43; r # 乱数を加算 data = np.stack([x, y]) plt." />
+  <meta property="og:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter13 とします． また，numpy，matplotlib.pyplot，scikit-learn，SciPyを導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from sklearn.mixture import GaussianMixture from scipy.stats import norm ガウス分布（正規分布）  ガウス分布（正規分布）は，ドイツの数学者のガウスに由来する確率・統計において最重要な確率分布の一つです． 自然界や社会の様々な現象を表現するモデルとして知られています． Pythonでは，Numpyを利用して，正規分布に従う乱数を生成することが可能です．
+例えば，平均0，標準偏差1の正規分布に従う乱数を生成してみます． 生成した乱数のヒストグラム（度数）は下図のようになります． このヒストグラムからも分かるように，正規分布には下記の特徴があります．
+ 平均値がピークとなる 平均値を中心として左右対称 標準偏差が小さいと尖った形状，大きいと平らな形状  x = np.random.normal(0, 1, 10000) # 10000の乱数を生成 plt.hist(x, bins=100) # 階級数を100に設定したヒストグラム plt.xlim(-5, 5) plt.xlabel(&#34;x&#34;) plt.ylabel(&#34;Frequency&#34;) 
+正規分布に従う特徴量の一つに人間の身長があります． 例えば，日本人男性の平均は167.7cm，標準偏差は6.6cm， また，アメリカ人男性の平均は178.4cmで，標準偏差は7.6cmとされています． それでは，この特徴量を利用して日本人男性とアメリカ人男性の正規分布に従う乱数を生成しましょう． そして，これを重ね合わせてしまいます．
+x1 = np.random.normal(167.7, 6.6, 10000) x2 = np.random.normal(178.4, 7.6, 10000) x = np." />
 
 
 
@@ -101,18 +103,20 @@ x = np.arange(-2, 2, 0.1) # 40点を生成 y = x ** 3 - 2* x r = np.random.rand(
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="オーバーフィッティングと交差検証" />
+  <meta name="twitter:title" content="混合ガウスモデル" />
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter13 とします． また，numpy，matplotlib.pyplot，random，scikit-learn を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt import random from sklearn.model_selection import KFold オーバーフィッティング（過学習）  オーバーフィッティング とは 過学習 または 過剰適合 と呼ばれることもある現象で， サンプルデータに過剰に適合してしまい， データ全体に対しての汎用的な能力を失った状態を指します． ここでは，回帰問題を例に挙げて，オーバーフィッティングを再現してみましょう．
-まずは，$x^3 - 2x$に従った40点のデータを生成します． これに，ノイズとなる乱数を加え，対象のデータ全体とします．
-x = np.arange(-2, 2, 0.1) # 40点を生成 y = x ** 3 - 2* x r = np.random.rand(len(y)) * 2 # 乱数を生成 y = y &#43; r # 乱数を加算 data = np.stack([x, y]) plt." />
+  <meta name="twitter:description" content="ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter13 とします． また，numpy，matplotlib.pyplot，scikit-learn，SciPyを導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from sklearn.mixture import GaussianMixture from scipy.stats import norm ガウス分布（正規分布）  ガウス分布（正規分布）は，ドイツの数学者のガウスに由来する確率・統計において最重要な確率分布の一つです． 自然界や社会の様々な現象を表現するモデルとして知られています． Pythonでは，Numpyを利用して，正規分布に従う乱数を生成することが可能です．
+例えば，平均0，標準偏差1の正規分布に従う乱数を生成してみます． 生成した乱数のヒストグラム（度数）は下図のようになります． このヒストグラムからも分かるように，正規分布には下記の特徴があります．
+ 平均値がピークとなる 平均値を中心として左右対称 標準偏差が小さいと尖った形状，大きいと平らな形状  x = np.random.normal(0, 1, 10000) # 10000の乱数を生成 plt.hist(x, bins=100) # 階級数を100に設定したヒストグラム plt.xlim(-5, 5) plt.xlabel(&#34;x&#34;) plt.ylabel(&#34;Frequency&#34;) 
+正規分布に従う特徴量の一つに人間の身長があります． 例えば，日本人男性の平均は167.7cm，標準偏差は6.6cm， また，アメリカ人男性の平均は178.4cmで，標準偏差は7.6cmとされています． それでは，この特徴量を利用して日本人男性とアメリカ人男性の正規分布に従う乱数を生成しましょう． そして，これを重ね合わせてしまいます．
+x1 = np.random.normal(167.7, 6.6, 10000) x2 = np.random.normal(178.4, 7.6, 10000) x = np." />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/db7bf0839f23b52de8b31a4998ca3559.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d.png" />
 
 
   
@@ -170,225 +174,160 @@ x = np.arange(-2, 2, 0.1) # 40点を生成 y = x ** 3 - 2* x r = np.random.rand(
 <main>
   <div class="post">
     
-    <h1 class="post-title">オーバーフィッティングと交差検証</h1>
+    <h1 class="post-title">混合ガウスモデル</h1>
 <div class="post-line"></div>
     
     
 
-    <p><a href="https://gyazo.com/db7bf0839f23b52de8b31a4998ca3559"><img src="https://i.gyazo.com/db7bf0839f23b52de8b31a4998ca3559.png" alt="Image from Gyazo"></a></p>
+    <p><a href="https://gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d"><img src="https://i.gyazo.com/cbf402e5fa5690f675cbdfcebc62eb7d.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ノートブックの作成
 </h1>
 
 <p>Colabにアクセスし，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>chapter13</strong> とします．
-また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>，<strong>random</strong>，<strong>scikit-learn</strong> を導入しておいてください．</p>
+また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>，<strong>scikit-learn</strong>，<strong>SciPy</strong>を導入しておいてください．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 <span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">import</span> random
-<span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> KFold
+<span style="color:#f92672">from</span> sklearn.mixture <span style="color:#f92672">import</span> GaussianMixture
+<span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> norm
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  オーバーフィッティング（過学習）
+  ガウス分布（正規分布）
 </h1>
 
-<p><strong>オーバーフィッティング</strong> とは
-<strong>過学習</strong> または <strong>過剰適合</strong> と呼ばれることもある現象で，
-サンプルデータに過剰に適合してしまい，
-データ全体に対しての汎用的な能力を失った状態を指します．
-ここでは，回帰問題を例に挙げて，オーバーフィッティングを再現してみましょう．</p>
-<p>まずは，$x^3 - 2x$に従った40点のデータを生成します．
-これに，ノイズとなる乱数を加え，対象のデータ全体とします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># 40点を生成</span>
+<p>ガウス分布（正規分布）は，ドイツの数学者の<a href="https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%BC%E3%83%AB%E3%83%BB%E3%83%95%E3%83%AA%E3%83%BC%E3%83%89%E3%83%AA%E3%83%92%E3%83%BB%E3%82%AC%E3%82%A6%E3%82%B9">ガウス</a>に由来する確率・統計において最重要な確率分布の一つです．
+自然界や社会の様々な現象を表現するモデルとして知られています．
+Pythonでは，Numpyを利用して，正規分布に従う乱数を生成することが可能です．</p>
+<p>例えば，平均0，標準偏差1の正規分布に従う乱数を生成してみます．
+生成した乱数のヒストグラム（度数）は下図のようになります．
+このヒストグラムからも分かるように，正規分布には下記の特徴があります．</p>
+<ul>
+<li>平均値がピークとなる</li>
+<li>平均値を中心として左右対称</li>
+<li>標準偏差が小さいと尖った形状，大きいと平らな形状</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10000</span>) <span style="color:#75715e"># 10000の乱数を生成</span>
 
-y <span style="color:#f92672">=</span> x <span style="color:#f92672">**</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span> x
-r <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand(len(y)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># 乱数を生成</span>
-y <span style="color:#f92672">=</span> y <span style="color:#f92672">+</span> r <span style="color:#75715e"># 乱数を加算</span>
-
-data <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>stack([x, y])
-plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#ae81ff">0</span>], data[<span style="color:#ae81ff">1</span>])
+plt<span style="color:#f92672">.</span>hist(x, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>) <span style="color:#75715e"># 階級数を100に設定したヒストグラム</span>
+plt<span style="color:#f92672">.</span>xlim(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/5d1b9055f3f0960c6f81bd7439d5d7bb"><img src="https://i.gyazo.com/5d1b9055f3f0960c6f81bd7439d5d7bb.png" alt="Image from Gyazo"></a></p>
-<p>このデータ全体から，20点をランダムに抽出します．
-これをサンプルデータとして回帰の学習に用いることにします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sample <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(random<span style="color:#f92672">.</span>sample(list(data<span style="color:#f92672">.</span>transpose()), <span style="color:#ae81ff">20</span>))<span style="color:#f92672">.</span>transpose() <span style="color:#75715e"># 20点をランダム抽出</span>
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Frequency&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/924fd161bbbadf80cf3ab949734a0990"><img src="https://i.gyazo.com/924fd161bbbadf80cf3ab949734a0990.png" alt="Image from Gyazo"></a></p>
+<p>正規分布に従う特徴量の一つに人間の身長があります．
+例えば，日本人男性の平均は167.7cm，標準偏差は6.6cm，
+また，アメリカ人男性の平均は178.4cmで，標準偏差は7.6cmとされています．
+それでは，この特徴量を利用して日本人男性とアメリカ人男性の正規分布に従う乱数を生成しましょう．
+そして，これを重ね合わせてしまいます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">167.7</span>,  <span style="color:#ae81ff">6.6</span>, <span style="color:#ae81ff">10000</span>) 
+x2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>normal(<span style="color:#ae81ff">178.4</span>, <span style="color:#ae81ff">7.6</span>, <span style="color:#ae81ff">10000</span>)
+x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate((x1, x2)) <span style="color:#75715e"># 結合（重ね合わせ）</span>
 
-plt<span style="color:#f92672">.</span>scatter(sample[<span style="color:#ae81ff">0</span>], sample[<span style="color:#ae81ff">1</span>])
-</code></pre></div><p><a href="https://gyazo.com/68290e04426dac731ffcb6c61844a13f"><img src="https://i.gyazo.com/68290e04426dac731ffcb6c61844a13f.png" alt="Image from Gyazo"></a></p>
-<p>回帰式の係数の導出にはNumpyの<code>polyfit</code>を用います．
-多項式回帰の次数$d$を変えて回帰式と2乗誤差を求めるため，
-新たに<code>regression</code>という関数を定義します．
-関数<code>regression</code>の返値は回帰式のY軸の値と2乗誤差のタプルです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">regression</span>(data, sample, d): 
-    w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>polyfit(sample[<span style="color:#ae81ff">0</span>], sample[<span style="color:#ae81ff">1</span>], d) <span style="color:#75715e">#回帰式の係数</span>
-    
-    y_ <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range((d<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)):
-        y_ <span style="color:#f92672">+=</span> w[i] <span style="color:#f92672">*</span> (data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">**</span> (d <span style="color:#f92672">-</span> i))
-        
-    e <span style="color:#f92672">=</span> sum((data[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> y_) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># ２乗誤差</span>
-    
-    <span style="color:#66d9ef">return</span> y_, e
-</code></pre></div><p>最初に次数$d=1$の回帰式（回帰直線）を求めます．
-1本の直線で全体の傾向を近似していることがわかります．</p>
-<!-- 2乗誤差は約80.1です． -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y, e <span style="color:#f92672">=</span> regression(data, sample, <span style="color:#ae81ff">1</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Error: &#34;</span> <span style="color:#f92672">+</span> str(e))
-
-plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#ae81ff">0</span>], data[<span style="color:#ae81ff">1</span>] )
-plt<span style="color:#f92672">.</span>scatter(sample[<span style="color:#ae81ff">0</span>], sample[<span style="color:#ae81ff">1</span>])
-plt<span style="color:#f92672">.</span>plot(data[<span style="color:#ae81ff">0</span>], y)
+plt<span style="color:#f92672">.</span>hist(x, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/9548493f8d147a2cf16d0caeeda729ae"><img src="https://i.gyazo.com/9548493f8d147a2cf16d0caeeda729ae.png" alt="Image from Gyazo"></a></p>
-<p>次に次数$d=3$の回帰式を求めます．
-データにはノイズが加わっていますが，
-真の関数である$x^3 - 2x$を，よく近似できていることがわかります．</p>
-<!-- 2乗誤差は約11.4です． -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y, e <span style="color:#f92672">=</span> regression(data, sample, <span style="color:#ae81ff">3</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Error: &#34;</span> <span style="color:#f92672">+</span> str(e))
-
-plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#ae81ff">0</span>], data[<span style="color:#ae81ff">1</span>] )
-plt<span style="color:#f92672">.</span>scatter(sample[<span style="color:#ae81ff">0</span>], sample[<span style="color:#ae81ff">1</span>])
-plt<span style="color:#f92672">.</span>plot(data[<span style="color:#ae81ff">0</span>], y)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/4f65ae5cc9c6b47b49d3d6c7f20e827c"><img src="https://i.gyazo.com/4f65ae5cc9c6b47b49d3d6c7f20e827c.png" alt="Image from Gyazo"></a></p>
-<p>次に次数$d=10$の回帰式を求めます．
-一般に次数を上げると近似の精度が上がります．
-グラフを確認すると，確かにサンプルデータに対しては，
-誤差を最小化することができています．
-しかし，データ全体に対してはどうでしょうか．
-上述の$d=3$より近似精度が落ちていないでしょうか．</p>
-<!-- 2乗誤差は約31.0であり，$d=3$よりも誤差が大きくなってしまっています． -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y, e <span style="color:#f92672">=</span> regression(data, sample, <span style="color:#ae81ff">10</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Error: &#34;</span> <span style="color:#f92672">+</span> str(e))
-
-plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#ae81ff">0</span>], data[<span style="color:#ae81ff">1</span>] )
-plt<span style="color:#f92672">.</span>scatter(sample[<span style="color:#ae81ff">0</span>], sample[<span style="color:#ae81ff">1</span>])
-plt<span style="color:#f92672">.</span>plot(data[<span style="color:#ae81ff">0</span>], y)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/a0a9796309339c97c9df3f5db34c6aac"><img src="https://i.gyazo.com/a0a9796309339c97c9df3f5db34c6aac.png" alt="Image from Gyazo"></a></p>
-<p>最後に，次数$d$に伴う2乗誤差の推移を可視化してみましょう．
-次数が増えるとサンプルデータに対する2乗誤差は減少するのに対し，
-データ全体に対しては2乗誤差が増加してしまうことがわかります．
-これが <strong>オーバーフィッティング</strong> です．
-これは回帰問題に限らず，サンプルデータを用いて学習する手法では，
-起こり得る現象です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dimension <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">1</span>)
-
-errors_all <span style="color:#f92672">=</span> [] <span style="color:#75715e"># データ全体に対する2乗誤差</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dimension:
-    y, e <span style="color:#f92672">=</span> regression(data, sample, i)
-    errors_all<span style="color:#f92672">.</span>append(e)
-    
-errors_sample <span style="color:#f92672">=</span> [] <span style="color:#75715e"># サンプルに対する2乗誤差</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dimension:
-    y, e <span style="color:#f92672">=</span> regression(sample, sample, i)
-    errors_sample<span style="color:#f92672">.</span>append(e)
-  
-plt<span style="color:#f92672">.</span>plot(dimension, errors_all, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;all&#34;</span>)
-plt<span style="color:#f92672">.</span>plot(dimension, errors_sample, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sample&#34;</span>)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;dimension&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;error&#34;</span>)
-plt<span style="color:#f92672">.</span>legend()
-</code></pre></div><p><a href="https://gyazo.com/e5c82f094eb68f9ad2a84193c500668b"><img src="https://i.gyazo.com/e5c82f094eb68f9ad2a84193c500668b.png" alt="Image from Gyazo"></a></p>
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Frequency&#34;</span>)
+</code></pre></div><p>結合された乱数のヒストグラムは下記のようになります．
+このように複数の正規分布に従う乱数を重ね合わせることで，
+多彩な分布を表現することが可能になります．
+この正規分布を重ね合わせた表現を <strong>混合ガウスモデル（Gaussian Mixture Model）</strong> と呼びます．
+一方で，重ね合わせた分布からは，元の正規分布の特徴量を得ることは難しくなります．
+これを得るには <strong>EMアルゴリズム</strong> と呼ばれる手法が用いられます（詳細は割愛）．</p>
+<p><a href="https://gyazo.com/8af75bfb39facb6515c6d386666ebba6"><img src="https://i.gyazo.com/8af75bfb39facb6515c6d386666ebba6.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  交差検証（クロスバリデーション）
+  scikit-learnで混合ガウスモデル
 </h1>
 
-<p>オーバーフィッティングの影響を減らし，回帰式の妥当な精度を得ることを目的として，
-<strong>交差検証（Cross-Validation）</strong> と呼ばれる方法が用いられます．
-特に十分なデータセットが用意できないときに，汎用性を向上させる手段として，
-有効な方法とされています．</p>
-<p>ここでは，機械学習でよく用いられる <strong>k-分割交差検証（k-fold cross validation）</strong> を取り上げます．
-この方法では，データセットをk個に分割し， <strong>k-1個</strong> を学習に，残りの <strong>1個</strong> をテストに用います．
-<code>KFold</code>関数に分割数$k=5$を指定して分割します（データの順番もシャッフルします）．
-この結果，5パターンの学習用とテスト用のサンプルが生成されます．
-各サンプルは，学習用に32，テスト用に8のデータが用意されていることがわかります．</p>
-<p><strong>[IN:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">kf <span style="color:#f92672">=</span> KFold(n_splits<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, shuffle<span style="color:#f92672">=</span>True, random_state <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#k-分割交差検証（k=5）</span>
-    
-<span style="color:#66d9ef">for</span> train_set, test_set <span style="color:#f92672">in</span> kf<span style="color:#f92672">.</span>split(data[<span style="color:#ae81ff">0</span>]):
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;train_set: &#34;</span><span style="color:#f92672">+</span>  str(train_set) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; test_set: &#34;</span> <span style="color:#f92672">+</span>  str(test_set))
-</code></pre></div><p><strong>[OUT:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">26</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">28</span> <span style="color:#ae81ff">29</span>
- <span style="color:#ae81ff">30</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">35</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">37</span> <span style="color:#ae81ff">38</span> <span style="color:#ae81ff">39</span>] test_set: [ <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">31</span> <span style="color:#ae81ff">34</span>]
-train_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">8</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">26</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">28</span> <span style="color:#ae81ff">29</span> <span style="color:#ae81ff">31</span>
- <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">34</span> <span style="color:#ae81ff">35</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">37</span> <span style="color:#ae81ff">38</span> <span style="color:#ae81ff">39</span>] test_set: [ <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">30</span>]
-train_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">8</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">28</span>
- <span style="color:#ae81ff">29</span> <span style="color:#ae81ff">30</span> <span style="color:#ae81ff">31</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">34</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">38</span> <span style="color:#ae81ff">39</span>] test_set: [ <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">26</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">35</span> <span style="color:#ae81ff">37</span>]
-train_set: [ <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">26</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">29</span>
- <span style="color:#ae81ff">30</span> <span style="color:#ae81ff">31</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">34</span> <span style="color:#ae81ff">35</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">37</span> <span style="color:#ae81ff">39</span>] test_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">28</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">38</span>]
-train_set: [ <span style="color:#ae81ff">0</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">8</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> <span style="color:#ae81ff">15</span> <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">17</span> <span style="color:#ae81ff">18</span> <span style="color:#ae81ff">20</span> <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">23</span> <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">26</span> <span style="color:#ae81ff">27</span> <span style="color:#ae81ff">28</span>
- <span style="color:#ae81ff">30</span> <span style="color:#ae81ff">31</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">33</span> <span style="color:#ae81ff">34</span> <span style="color:#ae81ff">35</span> <span style="color:#ae81ff">37</span> <span style="color:#ae81ff">38</span>] test_set: [ <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">19</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">29</span> <span style="color:#ae81ff">36</span> <span style="color:#ae81ff">39</span>]
-</code></pre></div><p>次に，<code>KFold</code>関数を利用して，多項式回帰の2乗誤差を求める<code>validate</code>関数を定義します．
-5パターンのデータセットで，それぞれ2乗誤差を求め，その <strong>平均値</strong> を最終的な評価とします．
-例えば，分割数$k=5$で，3次の多項式回帰の2乗誤差の平均は <strong>2.78</strong> となりました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">validate</span>(k, dimension):
-    kf <span style="color:#f92672">=</span> KFold(n_splits<span style="color:#f92672">=</span>k, shuffle<span style="color:#f92672">=</span>True, random_state <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
-    errors <span style="color:#f92672">=</span> []
-    
-    <span style="color:#66d9ef">for</span> train_set, test_set <span style="color:#f92672">in</span> kf<span style="color:#f92672">.</span>split(data[<span style="color:#ae81ff">0</span>]):
-        train <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([data[<span style="color:#ae81ff">0</span>][train_set], data[<span style="color:#ae81ff">1</span>][train_set]])
-        test  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([data[<span style="color:#ae81ff">0</span>][test_set],  data[<span style="color:#ae81ff">1</span>][test_set]])
-        y, e <span style="color:#f92672">=</span> regression(test, train, dimension)
-        errors<span style="color:#f92672">.</span>append(e)
-        
-    avg <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(errors) <span style="color:#75715e"># ２乗誤差の平均</span>
-    <span style="color:#66d9ef">return</span> avg
-</code></pre></div><p><strong>[IN:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">avg <span style="color:#f92672">=</span> validate(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># 5分割， 3次の多項式回帰</span>
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Average Error: &#34;</span> <span style="color:#f92672">+</span> str(avg))
-</code></pre></div><p><strong>[OUT:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Average Error: <span style="color:#ae81ff">2.781161227904894</span>
-</code></pre></div><p>最後に，k-分割交差検証を利用して，次数$d$に伴う2乗誤差の推移を可視化してみましょう．
-全体的な傾向はk-分割交差検証を用いない場合と同様ですが，
-オーバーフィッティングの影響が小さくなるため，
-次数が増えても2乗誤差は極端に増加していません．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dimension <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">1</span>)
+<p>それでは，scikit-learnを利用して <strong>混合ガウスモデル（Gaussian Mixture Model）</strong> の特徴量を推定してみましょう．
+まずは，対象のデータを<code>reshape</code>で2次元配列に変換します（scikit-learnの制限のため）．</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(x)<span style="color:#f92672">.</span>reshape(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">print</span>(x)
+</code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">162.08389117</span>]
+ [<span style="color:#ae81ff">170.77306785</span>]
+ [<span style="color:#ae81ff">165.28550483</span>]
+ <span style="color:#f92672">...</span>
+ [<span style="color:#ae81ff">175.53732234</span>]
+ [<span style="color:#ae81ff">178.69420996</span>]
+ [<span style="color:#ae81ff">177.08352499</span>]]
+</code></pre></div><p>次に，scikit-learnのGaussianMixtureを利用して特徴量を推定します．
+このとき，重ね合わせた元の正規分布の <strong>数</strong> と <strong>分散</strong> を指定します．
+ここでは，各次元の分散が共通である2つの正規分布が重なっているとします（今回のデータは身長のみの1次元）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">gmm <span style="color:#f92672">=</span> GaussianMixture(
+	n_components<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, <span style="color:#75715e"># 重ね合わせた分布数</span>
+	covariance_type<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;spherical&#34;</span> <span style="color:#75715e"># 分散は共通（球状）</span>
+)<span style="color:#f92672">.</span>fit(x)
+</code></pre></div><p>推定された <strong>重み</strong>，<strong>平均</strong>，<strong>標準偏差</strong>を調べてみましょう．
+推定された日本人男性の平均は167.4cm，標準偏差は6.4cm，また，
+推定されたアメリカ人男性の平均は179.7cm，標準偏差は6.9cmです．
+かなり高い精度で推定されていることが分かります．
+また，重みは2つの分布を混合した割合を意味しており，
+推定された重みは0.53:0.46となりました．
+今回は0.5:0.5で混合したため，これもほぼ一致していることが分かります．</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">weight <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>weights_ <span style="color:#75715e">#重み（足すと1になる）</span>
+mean <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>means_ <span style="color:#75715e">#平均</span>
+sd <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sqrt(gmm<span style="color:#f92672">.</span>covariances_) <span style="color:#75715e">#標準偏差</span>
+<span style="color:#66d9ef">print</span>(weight)
+<span style="color:#66d9ef">print</span>(mean)
+<span style="color:#66d9ef">print</span>(sd)
+</code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">0.46127772</span> <span style="color:#ae81ff">0.53872228</span>] <span style="color:#75715e">#重み（足すと1になる）</span>
+[[<span style="color:#ae81ff">179.65302075</span>] [<span style="color:#ae81ff">167.4491238</span> ]] <span style="color:#75715e">#平均</span>
+[<span style="color:#ae81ff">6.92751809</span> <span style="color:#ae81ff">6.35107582</span>] <span style="color:#75715e">#標準偏差</span>
+</code></pre></div><p>推定された特徴量を用いて，正規分布を描いてみましょう．
+正規分布の確率密度を求めるには <code>norm.pdf</code> を利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">140</span>, <span style="color:#ae81ff">210</span>, <span style="color:#ae81ff">0.1</span>)
+y1 <span style="color:#f92672">=</span> weight[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>pdf(x_, mean[<span style="color:#ae81ff">0</span>], sd[<span style="color:#ae81ff">0</span>])
+y2 <span style="color:#f92672">=</span> weight[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> norm<span style="color:#f92672">.</span>pdf(x_,mean[<span style="color:#ae81ff">1</span>], sd[<span style="color:#ae81ff">1</span>])
 
-errors_avg <span style="color:#f92672">=</span> []
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dimension:
-    e <span style="color:#f92672">=</span> validate(<span style="color:#ae81ff">5</span>, i)
-    errors_avg<span style="color:#f92672">.</span>append(e)
-    
-plt<span style="color:#f92672">.</span>plot(dimension, errors_avg, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;average&#34;</span>)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;dimension&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;error&#34;</span>)
-plt<span style="color:#f92672">.</span>legend()
-</code></pre></div><p><a href="https://gyazo.com/ca9e6c07656ba67003547944de93c427"><img src="https://i.gyazo.com/ca9e6c07656ba67003547944de93c427.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+plt<span style="color:#f92672">.</span>plot(x_, y1)
+plt<span style="color:#f92672">.</span>plot(x_, y2)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Height&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Probability Density&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/966ccbfdb5997cab640f735a1a79a84b"><img src="https://i.gyazo.com/966ccbfdb5997cab640f735a1a79a84b.png" alt="Image from Gyazo"></a></p>
+<p>この2つの正規分布を重ねると，元の分布の形状とほぼ一致した確率分布を得ることができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">y3 <span style="color:#f92672">=</span> y1 <span style="color:#f92672">+</span> y2
+
+plt<span style="color:#f92672">.</span>plot(x_, y3)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Height&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Probability Density&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/d97cc6cd3f3ca52640b07b8d759f2b03"><img src="https://i.gyazo.com/d97cc6cd3f3ca52640b07b8d759f2b03.png" alt="Image from Gyazo"></a></p>
+<p>さて，今回の混合ガウスモデルは，前回の <strong>k平均法</strong> と同じように，
+クラスタリングの手法としても用いることができます．
+例えば，165cmの男性がどちらの分布（クラスタ）に属するかを <code>predict</code> で判定すると，
+日本人の分布に属しているという結果になりました．
+同様に，185cmの男性は，アメリカ人の分布に属しているという結果になりました．</p>
+<p><strong>[In:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sample1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">165</span>]]) <span style="color:#75715e"># 165cm</span>
+sample2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">185</span>]]) <span style="color:#75715e"># 185cm</span>
+
+result1 <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>predict(sample1)
+result2 <span style="color:#f92672">=</span> gmm<span style="color:#f92672">.</span>predict(sample2)
+
+<span style="color:#66d9ef">print</span>(result1) <span style="color:#75715e"># 日本人</span>
+<span style="color:#66d9ef">print</span>(result2) <span style="color:#75715e"># アメリカ人</span>
+</code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">1</span>]
+[<span style="color:#ae81ff">0</span>]
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
-<p>下記のデータセットを利用し，$k=5$のk-分割交差検証で多項式回帰の精度を評価しなさい．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#f92672">-</span><span style="color:#ae81ff">2.00000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.90000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.80000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.70000000e+00</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">1.60000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.50000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.40000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.30000000e+00</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">1.20000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.10000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.00000000e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">9.00000000e-01</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">8.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">7.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">6.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">5.00000000e-01</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">4.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">3.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.00000000e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.00000000e-01</span>,
-        <span style="color:#ae81ff">1.77635684e-15</span>,  <span style="color:#ae81ff">1.00000000e-01</span>,  <span style="color:#ae81ff">2.00000000e-01</span>,  <span style="color:#ae81ff">3.00000000e-01</span>,
-        <span style="color:#ae81ff">4.00000000e-01</span>,  <span style="color:#ae81ff">5.00000000e-01</span>,  <span style="color:#ae81ff">6.00000000e-01</span>,  <span style="color:#ae81ff">7.00000000e-01</span>,
-        <span style="color:#ae81ff">8.00000000e-01</span>,  <span style="color:#ae81ff">9.00000000e-01</span>,  <span style="color:#ae81ff">1.00000000e+00</span>,  <span style="color:#ae81ff">1.10000000e+00</span>,
-        <span style="color:#ae81ff">1.20000000e+00</span>,  <span style="color:#ae81ff">1.30000000e+00</span>,  <span style="color:#ae81ff">1.40000000e+00</span>,  <span style="color:#ae81ff">1.50000000e+00</span>,
-        <span style="color:#ae81ff">1.60000000e+00</span>,  <span style="color:#ae81ff">1.70000000e+00</span>,  <span style="color:#ae81ff">1.80000000e+00</span>,  <span style="color:#ae81ff">1.90000000e+00</span>])
-		
-y2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([ <span style="color:#ae81ff">4.39898556e+00</span>,  <span style="color:#ae81ff">3.93435081e+00</span>,  <span style="color:#ae81ff">2.61498259e+00</span>,  <span style="color:#ae81ff">2.72044213e+00</span>,
-        <span style="color:#ae81ff">1.30362037e+00</span>,  <span style="color:#ae81ff">2.08098975e+00</span>,  <span style="color:#ae81ff">1.85633410e+00</span>,  <span style="color:#ae81ff">1.44865881e+00</span>,
-        <span style="color:#ae81ff">7.29089005e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">9.42380345e-02</span>,  <span style="color:#ae81ff">8.39806492e-01</span>,  <span style="color:#ae81ff">9.13725511e-01</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">6.89556978e-02</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.88622122e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.17447107e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">8.50096595e-02</span>,
-       <span style="color:#f92672">-</span><span style="color:#ae81ff">5.10447688e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.18019152e-03</span>,  <span style="color:#ae81ff">1.36162277e-01</span>,  <span style="color:#ae81ff">8.31331709e-01</span>,
-        <span style="color:#ae81ff">9.37694167e-02</span>,  <span style="color:#ae81ff">1.68726072e+00</span>,  <span style="color:#ae81ff">4.71255186e-01</span>,  <span style="color:#ae81ff">2.02384997e+00</span>,
-        <span style="color:#ae81ff">1.12543648e+00</span>,  <span style="color:#ae81ff">2.23950532e+00</span>,  <span style="color:#ae81ff">2.69476804e+00</span>,  <span style="color:#ae81ff">1.50769218e+00</span>,
-        <span style="color:#ae81ff">2.86140345e+00</span>,  <span style="color:#ae81ff">2.46208705e+00</span>,  <span style="color:#ae81ff">2.46640709e+00</span>,  <span style="color:#ae81ff">2.40690140e+00</span>,
-        <span style="color:#ae81ff">1.29052071e+00</span>,  <span style="color:#ae81ff">7.78084009e-01</span>,  <span style="color:#ae81ff">1.01201918e+00</span>,  <span style="color:#ae81ff">5.94619852e-01</span>,
-        <span style="color:#ae81ff">1.27863784e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">4.80496436e-01</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.75028230e+00</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2.54273399e+00</span>])
-
-data2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>stack([x2, y2])
-</code></pre></div><p><a href="https://gyazo.com/c3b122c99c004d9f7ba915d117858e92"><img src="https://i.gyazo.com/c3b122c99c004d9f7ba915d117858e92.png" alt="Image from Gyazo"></a></p>
-<p><a href="https://gyazo.com/4589eebf892e43a067313ce66fa87b9e"><img src="https://i.gyazo.com/4589eebf892e43a067313ce66fa87b9e.png" alt="Image from Gyazo"></a></p>
+<p>下記のデータから元の正規分布の特徴量を推定しなさい．
+ただし，正規分布の数は2，また，分散は共通とすること．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">14.25503594</span>,  <span style="color:#ae81ff">8.83020581</span>, <span style="color:#ae81ff">10.45406782</span>, <span style="color:#ae81ff">12.53819445</span>,  <span style="color:#ae81ff">7.86459267</span>,
+        <span style="color:#ae81ff">8.03801485</span>, <span style="color:#ae81ff">11.31295349</span>, <span style="color:#ae81ff">10.09167258</span>, <span style="color:#ae81ff">12.87803092</span>, <span style="color:#ae81ff">14.48622644</span>,
+       <span style="color:#ae81ff">11.99081559</span>,  <span style="color:#ae81ff">9.63743057</span>, <span style="color:#ae81ff">10.77132259</span>, <span style="color:#ae81ff">10.50821578</span>, <span style="color:#ae81ff">12.2923627</span> ,
+        <span style="color:#ae81ff">6.83922144</span>, <span style="color:#ae81ff">11.59345268</span>,  <span style="color:#ae81ff">8.38998967</span>, <span style="color:#ae81ff">11.77040723</span>,  <span style="color:#ae81ff">8.50230634</span>,
+        <span style="color:#ae81ff">7.3762556</span> , <span style="color:#ae81ff">11.11177995</span>, <span style="color:#ae81ff">13.57393876</span>, <span style="color:#ae81ff">14.39937259</span>,  <span style="color:#ae81ff">8.92640252</span>,
+       <span style="color:#ae81ff">12.62335089</span>, <span style="color:#ae81ff">10.04121407</span>, <span style="color:#ae81ff">11.20886925</span>, <span style="color:#ae81ff">10.53488673</span>,  <span style="color:#ae81ff">7.57188571</span>,
+       <span style="color:#ae81ff">19.20054947</span>, <span style="color:#ae81ff">20.67642748</span>, <span style="color:#ae81ff">17.81617885</span>, <span style="color:#ae81ff">24.66817129</span>, <span style="color:#ae81ff">20.9813163</span> ,
+       <span style="color:#ae81ff">21.92106427</span>, <span style="color:#ae81ff">19.31876107</span>, <span style="color:#ae81ff">17.31019546</span>, <span style="color:#ae81ff">16.69085822</span>, <span style="color:#ae81ff">14.48237459</span>,
+       <span style="color:#ae81ff">20.35137646</span>, <span style="color:#ae81ff">20.19614246</span>, <span style="color:#ae81ff">16.47291945</span>, <span style="color:#ae81ff">18.87417032</span>, <span style="color:#ae81ff">24.24447717</span>,
+       <span style="color:#ae81ff">26.12173461</span>, <span style="color:#ae81ff">27.47509222</span>, <span style="color:#ae81ff">19.05972395</span>, <span style="color:#ae81ff">18.82537232</span>, <span style="color:#ae81ff">18.87784878</span>,
+       <span style="color:#ae81ff">20.60160528</span>, <span style="color:#ae81ff">14.17361497</span>, <span style="color:#ae81ff">18.01530688</span>, <span style="color:#ae81ff">21.87758915</span>, <span style="color:#ae81ff">16.012469</span>  ,
+       <span style="color:#ae81ff">19.69841929</span>, <span style="color:#ae81ff">22.10291163</span>, <span style="color:#ae81ff">15.22297199</span>, <span style="color:#ae81ff">23.14124462</span>, <span style="color:#ae81ff">14.84946092</span>])
+</code></pre></div><p><a href="https://gyazo.com/fa0a3eda6701ec254b0b025b756cfda2"><img src="https://i.gyazo.com/fa0a3eda6701ec254b0b025b756cfda2.png" alt="Image from Gyazo"></a></p>
 <p>課題を完成させたら，<strong>chapter13.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
 このとき，必ず事前に下記の設定を行ってから提出してください．</p>
@@ -397,6 +336,10 @@ data2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span
 <li>ノートブックの変更内容を保存して固定</li>
 <li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
 </ul>
+<!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+ -->
 <!-- 作成したノートブックを **HTML(.html)** 形式でダウンロードし提出しなさい． -->
 
 <h3>参考書籍</h3>
