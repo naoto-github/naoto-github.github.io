@@ -219,19 +219,19 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y
 多項式基底の次数$d$を変えて回帰式と2乗誤差を求めるため，
 新たに<code>regression</code>という関数を定義します．
 関数<code>regression</code>の返値は回帰式のY軸の値と2乗誤差のタプルです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">regression</span>(data, sample, d):
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">regression</span>(data, sample, d): 
 
     <span style="color:#75715e"># サンプルで回帰式の係数</span>
     w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>polyfit(sample[<span style="color:#ae81ff">0</span>], sample[<span style="color:#ae81ff">1</span>], d)
-
+    
     <span style="color:#75715e"># f(x)を算出</span>
     fx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range((d<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)):
         fx <span style="color:#f92672">+=</span> w[i] <span style="color:#f92672">*</span> (data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">**</span> (d <span style="color:#f92672">-</span> i))
-
-    <span style="color:#75715e"># 2乗誤差</span>
-    e <span style="color:#f92672">=</span> sum((data[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> fx) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)
-
+        
+    <span style="color:#75715e"># 平均2乗誤差</span>
+    e <span style="color:#f92672">=</span> sum((data[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> fx) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> len(data[<span style="color:#ae81ff">1</span>])
+    
     <span style="color:#66d9ef">return</span> fx, e
 </code></pre></div><p>最初に次数$d=1$の回帰式（回帰直線）を求めます．
 1本の直線で全体の傾向を近似していることがわかります．</p>
@@ -258,14 +258,14 @@ plt<span style="color:#f92672">.</span>plot(data[<span style="color:#ae81ff">0</
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
 </code></pre></div><p><a href="https://gyazo.com/b94c467d60dce35009a805e31a8af13b"><img src="https://i.gyazo.com/b94c467d60dce35009a805e31a8af13b.png" alt="Image from Gyazo"></a></p>
-<p>次に次数$d=10$の回帰式を求めます．
+<p>次に次数$d=9$の回帰式を求めます．
 一般に次数を上げると近似の精度が上がります．
 グラフを確認すると，確かにサンプルデータに対しては，
 誤差を最小化することができています．
 しかし，データ全体に対してはどうでしょうか．
 上述の$d=3$より近似精度が落ちていないでしょうか．</p>
 <!-- 2乗誤差は約31.0であり，$d=3$よりも誤差が大きくなってしまっています． -->
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fx, e <span style="color:#f92672">=</span> regression(data, sample, <span style="color:#ae81ff">10</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fx, e <span style="color:#f92672">=</span> regression(data, sample, <span style="color:#ae81ff">9</span>)
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Error: &#34;</span> <span style="color:#f92672">+</span> str(e))
 
 plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#ae81ff">0</span>], data[<span style="color:#ae81ff">1</span>] )
@@ -273,31 +273,44 @@ plt<span style="color:#f92672">.</span>scatter(sample[<span style="color:#ae81ff
 plt<span style="color:#f92672">.</span>plot(data[<span style="color:#ae81ff">0</span>], fx)
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/bf70a85175e392b167259b0baa4d6fcc"><img src="https://i.gyazo.com/bf70a85175e392b167259b0baa4d6fcc.png" alt="Image from Gyazo"></a></p>
-<p>最後に，次数$d$に伴う2乗誤差の推移を可視化してみましょう．
-次数が増えるとサンプルデータに対する2乗誤差は減少するのに対し，
-データ全体に対しては2乗誤差が増加してしまうことがわかります．
+</code></pre></div><!-- [![Image from Gyazo](https://i.gyazo.com/bf70a85175e392b167259b0baa4d6fcc.png)](https://gyazo.com/bf70a85175e392b167259b0baa4d6fcc) -->
+<p><a href="https://gyazo.com/c885935bc4497bb30b40d02a626f58a7"><img src="https://i.gyazo.com/c885935bc4497bb30b40d02a626f58a7.png" alt="Image from Gyazo"></a></p>
+<p>次数が増えるとサンプルデータに対する誤差は減少するのに対し，
+データ全体に対しては誤差が増加してしまうことがわかります．
 これが <strong>オーバーフィッティング</strong> です．
 これは回帰問題に限らず，サンプルデータを用いて学習する手法では，
 起こり得る現象です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dimension <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">1</span>)
+<!--
+最後に，次数$d$に伴う2乗誤差の推移を可視化してみましょう．
+次数が増えるとサンプルデータに対する2乗誤差は減少するのに対し，
+データ全体に対しては2乗誤差が増加してしまうことがわかります．
+これが **オーバーフィッティング** です．
+これは回帰問題に限らず，サンプルデータを用いて学習する手法では，
+起こり得る現象です．
 
-errors_all <span style="color:#f92672">=</span> [] <span style="color:#75715e"># データ全体に対する2乗誤差</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dimension:
-    fx, e <span style="color:#f92672">=</span> regression(data, sample, i)
-    errors_all<span style="color:#f92672">.</span>append(e)
+```python
+dimension = np.arange(1, 11, 1)
 
-errors_sample <span style="color:#f92672">=</span> [] <span style="color:#75715e"># サンプルに対する2乗誤差</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dimension:
-    fx, e <span style="color:#f92672">=</span> regression(sample, sample, i)
-    errors_sample<span style="color:#f92672">.</span>append(e)
+errors_all = [] # データ全体に対する2乗誤差
+for i in dimension:
+    fx, e = regression(data, sample, i)
+    errors_all.append(e)
 
-plt<span style="color:#f92672">.</span>plot(dimension, errors_all, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;all&#34;</span>)
-plt<span style="color:#f92672">.</span>plot(dimension, errors_sample, label<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sample&#34;</span>)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;dimension&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;error&#34;</span>)
-plt<span style="color:#f92672">.</span>legend()
-</code></pre></div><p><a href="https://gyazo.com/9d89d212e8a79d1421884c65e456a278"><img src="https://i.gyazo.com/9d89d212e8a79d1421884c65e456a278.png" alt="Image from Gyazo"></a></p>
+errors_sample = [] # サンプルに対する2乗誤差
+for i in dimension:
+    fx, e = regression(sample, sample, i)
+    errors_sample.append(e)
+
+plt.plot(dimension, errors_all, label="all")
+plt.plot(dimension, errors_sample, label="sample")
+plt.xlabel("dimension")
+plt.ylabel("error")
+plt.legend()
+```
+
+[![Image from Gyazo](https://i.gyazo.com/9d89d212e8a79d1421884c65e456a278.png)](https://gyazo.com/9d89d212e8a79d1421884c65e456a278)
+
+-->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   正則化
 </h1>
@@ -329,9 +342,9 @@ $y$と$f(x)$の二乗誤差の平均値です．</p>
 
   <span style="color:#66d9ef">return</span> error
 </code></pre></div><p><strong>minimize</strong> 関数を利用して，平均二乗誤差を最小化する重み $w$ を算出します．
-このとき次数$d$は10に設定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e"># 次数</span>
-w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(d)
+このとき次数$d$は9に設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span> <span style="color:#75715e"># 次数</span>
+w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(d<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
 result <span style="color:#f92672">=</span> minimize(mse, w_init, args<span style="color:#f92672">=</span>(sample[<span style="color:#ae81ff">0</span>], sample[<span style="color:#ae81ff">1</span>], d), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;powell&#34;</span>)
 w <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>x
 </code></pre></div><p>算出された重み$w$を用いて，回帰式をグラフで表します．
@@ -342,7 +355,8 @@ plt<span style="color:#f92672">.</span>scatter(sample[<span style="color:#ae81ff
 plt<span style="color:#f92672">.</span>plot(data[<span style="color:#ae81ff">0</span>], polynominal(w, data[<span style="color:#ae81ff">0</span>], d))
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/13341fe1ba1b4d65b251fa46bf7d16a5"><img src="https://i.gyazo.com/13341fe1ba1b4d65b251fa46bf7d16a5.png" alt="Image from Gyazo"></a></p>
+</code></pre></div><!-- [![Image from Gyazo](https://i.gyazo.com/13341fe1ba1b4d65b251fa46bf7d16a5.png)](https://gyazo.com/13341fe1ba1b4d65b251fa46bf7d16a5) -->
+<p><a href="https://gyazo.com/13341fe1ba1b4d65b251fa46bf7d16a5"><img src="https://i.gyazo.com/13341fe1ba1b4d65b251fa46bf7d16a5.png" alt="Image from Gyazo"></a></p>
 <h2 id="リッジ回帰">リッジ回帰</h2>
 <p>次にリッジ回帰（Ridge Regression）で回帰式を求めます．
 リッジ回帰では，目的変数として，平均二乗誤差に<strong>L2ノルムの正則化項</strong>を加算します．
@@ -359,10 +373,10 @@ L2ノルムはユークリッド距離を表しており，ここでは重みベ
 
   <span style="color:#66d9ef">return</span> error
 </code></pre></div><p>先程と同様に <strong>minimize</strong> 関数で，リッジ回帰の目的関数を最小化する重み$w$を算出します．
-このとき，次数$d=10$，正則化の係数$\lambda=1$に設定しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e"># 次数</span>
+このとき，次数$d=9$，正則化の係数$\lambda=1$に設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span> <span style="color:#75715e"># 次数</span>
 lam <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># 正則化項の係数</span>
-w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(d)
+w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(d<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
 result <span style="color:#f92672">=</span> minimize(ridge, w_init, args<span style="color:#f92672">=</span>(sample[<span style="color:#ae81ff">0</span>], sample[<span style="color:#ae81ff">1</span>], d, lam), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;powell&#34;</span>)
 w <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>x
 </code></pre></div><p>算出された重み$w$を用いて，回帰式をグラフで表します．
@@ -372,7 +386,8 @@ plt<span style="color:#f92672">.</span>scatter(sample[<span style="color:#ae81ff
 plt<span style="color:#f92672">.</span>plot(data[<span style="color:#ae81ff">0</span>], polynominal(w, data[<span style="color:#ae81ff">0</span>], d))
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/f2eae35fe6b0e3005989bfd0f7254323"><img src="https://i.gyazo.com/f2eae35fe6b0e3005989bfd0f7254323.png" alt="Image from Gyazo"></a></p>
+</code></pre></div><!-- [![Image from Gyazo](https://i.gyazo.com/f2eae35fe6b0e3005989bfd0f7254323.png)](https://gyazo.com/f2eae35fe6b0e3005989bfd0f7254323) -->
+<p><a href="https://gyazo.com/f2eae35fe6b0e3005989bfd0f7254323"><img src="https://i.gyazo.com/f2eae35fe6b0e3005989bfd0f7254323.png" alt="Image from Gyazo"></a></p>
 <h2 id="ラッソ回帰">ラッソ回帰</h2>
 <p>最後にラッソ回帰（Lasso Regression）で回帰式を求めます．
 ラッソ回帰では，目的変数として，平均二乗誤差に<strong>L1ノルムの正則化項</strong>を加算します．
@@ -389,10 +404,10 @@ L1ノルムはマンハッタン距離を表しており，ここでは重みベ
 
   <span style="color:#66d9ef">return</span> error
 </code></pre></div><p>先程と同様に <strong>minimize</strong> 関数で，ラッソ回帰の目的関数を最小化する重み$w$を算出します．
-このとき，次数$d=10$，正則化の係数$\lambda=1$に設定しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e"># 次数</span>
+このとき，次数$d=9$，正則化の係数$\lambda=1$に設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">d <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span> <span style="color:#75715e"># 次数</span>
 lam <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># 正則化項の重み</span>
-w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(d)
+w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones(d<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
 result <span style="color:#f92672">=</span> minimize(lasso, w_init, args<span style="color:#f92672">=</span>(sample[<span style="color:#ae81ff">0</span>], sample[<span style="color:#ae81ff">1</span>], d, lam), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;powell&#34;</span>)
 w <span style="color:#f92672">=</span> result<span style="color:#f92672">.</span>x
 </code></pre></div><p>算出された重み$w$を用いて，回帰式をグラフで表します．
@@ -402,14 +417,15 @@ plt<span style="color:#f92672">.</span>scatter(sample[<span style="color:#ae81ff
 plt<span style="color:#f92672">.</span>plot(data[<span style="color:#ae81ff">0</span>], polynominal(w, data[<span style="color:#ae81ff">0</span>], d))
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/be93d5055b00f951a527a4a641398fea"><img src="https://i.gyazo.com/be93d5055b00f951a527a4a641398fea.png" alt="Image from Gyazo"></a></p>
+</code></pre></div><!-- [![Image from Gyazo](https://i.gyazo.com/be93d5055b00f951a527a4a641398fea.png)](https://gyazo.com/be93d5055b00f951a527a4a641398fea) -->
+<p><a href="https://gyazo.com/be93d5055b00f951a527a4a641398fea"><img src="https://i.gyazo.com/be93d5055b00f951a527a4a641398fea.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
 <p>$x^3 - 3x + 3$に従った40点を生成し，そこからランダムに20点を抽出する．
 この20点をラッソ回帰で学習した回帰式を求めてください．
-このとき，回帰式は10次の多項式基底とします．</p>
+このとき，回帰式は9次の多項式基底とします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 40点を生成</span>
 x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0.1</span>)
 y <span style="color:#f92672">=</span> x <span style="color:#f92672">**</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>
@@ -419,9 +435,11 @@ data <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>
 
 <span style="color:#75715e"># 20点をランダム抽出</span>
 sample <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(random<span style="color:#f92672">.</span>sample(list(data<span style="color:#f92672">.</span>transpose()), <span style="color:#ae81ff">20</span>))<span style="color:#f92672">.</span>transpose()
-</code></pre></div><p><a href="https://gyazo.com/4cdb5e44847ab0d389b5ff3fb20f424d"><img src="https://i.gyazo.com/4cdb5e44847ab0d389b5ff3fb20f424d.png" alt="Image from Gyazo"></a>
+</code></pre></div><!-- [![Image from Gyazo](https://i.gyazo.com/4cdb5e44847ab0d389b5ff3fb20f424d.png)](https://gyazo.com/4cdb5e44847ab0d389b5ff3fb20f424d) -->
+<p><a href="https://gyazo.com/f1b5b6ac8fc59f4b4587e84b12f631c0"><img src="https://i.gyazo.com/f1b5b6ac8fc59f4b4587e84b12f631c0.png" alt="Image from Gyazo"></a>
 【正則化なし】</p>
-<p><a href="https://gyazo.com/7702d72e09c0dcdf422ebbc35d5abae7"><img src="https://i.gyazo.com/7702d72e09c0dcdf422ebbc35d5abae7.png" alt="Image from Gyazo"></a>
+<!-- [![Image from Gyazo](https://i.gyazo.com/7702d72e09c0dcdf422ebbc35d5abae7.png)](https://gyazo.com/7702d72e09c0dcdf422ebbc35d5abae7) -->
+<p><a href="https://gyazo.com/ec7811474a6bbaea34b6c8ae9c47a666"><img src="https://i.gyazo.com/ec7811474a6bbaea34b6c8ae9c47a666.png" alt="Image from Gyazo"></a>
 【ラッソ回帰】</p>
 <p>課題を完成させたら，<strong>chapter6.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
