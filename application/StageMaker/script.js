@@ -18,49 +18,49 @@ objects = []
 function setup(){
   createCanvas(1200, 800);
   background(0, 0, 0);
-  
+
   button_ball = createButton('Ball');
   button_ball.size(100, 50)
   button_ball.position(100, 750);
   button_ball.mousePressed(selectBall);
-  
+
   button_goal = createButton('Goal');
   button_goal.size(100, 50)
   button_goal.position(200, 750);
   button_goal.mousePressed(selectGoal);
-  
+
   button_slope = createButton('Slope');
   button_slope.size(100, 50)
   button_slope.position(300, 750);
   button_slope.mousePressed(selectSlope);
-  
+
   button_lift = createButton('Lift');
   button_lift.size(100, 50)
   button_lift.position(400, 750);
   button_lift.mousePressed(selectLift);
-  
+
   button_jump = createButton('Jump');
   button_jump.size(100, 50)
   button_jump.position(500, 750);
   button_jump.mousePressed(selectJump);
-  
+
   button_undo = createButton('Undo');
   button_undo.size(100, 50)
   button_undo.position(600, 750);
   button_undo.mousePressed(selectUndo);
   button_undo.style("background", "#cc0000");
-  
+
   button_clear = createButton('Clear');
   button_clear.size(100, 50)
   button_clear.position(700, 750);
   button_clear.mousePressed(selectClear);
   button_clear.style("background", "#cc0000");
-  
+
   button_download = createButton('Download');
   button_download.size(100, 50)
   button_download.position(800, 750);
   button_download.mousePressed(selectDownload);
-  button_download.style("background", "#cc0000");  
+  button_download.style("background", "#cc0000");
 }
 
 function draw(){
@@ -71,13 +71,13 @@ function draw(){
 }
 
 function mousePressed(){
-  
+
   radius;
-  
+
   if(inside(mouseX, mouseY)){
     return
   }
-  
+
   switch(type){
     case 0:
       ball = new Ball(mouseX);
@@ -86,7 +86,7 @@ function mousePressed(){
         objects.splice(index, 1);
       }
       objects.push(ball);
-      
+
       break
     case 1:
       goal = new Goal(mouseX, mouseY);
@@ -112,11 +112,11 @@ function mousePressed(){
 }
 
 function mouseDragged(){
-  
+
   if(inside(mouseX, mouseY)){
     return
   }
-  
+
   switch(type){
     case 2:
       break
@@ -126,14 +126,18 @@ function mouseDragged(){
 }
 
 function mouseReleased(){
-  
+
   if(inside(mouseX, mouseY)){
     return
   }
-  
+
   switch(type){
     case 2:
-      slope = new Slope(p1_x, p1_y, mouseX, mouseY);
+      x1 = Math.min(p1_x, mouseX)
+      y1 = Math.min(p1_y, mouseY)
+      x2 = Math.max(p1_x, mouseX)
+      y2 = Math.max(p1_y, mouseY)
+      slope = new Slope(x1, y1, x2, y2);
       objects.push(slope);
       break
     case 3:
@@ -173,10 +177,10 @@ function selectClear(){
 }
 
 function selectDownload(){
-  
+
   let json = toJSON();
   let blob = new Blob([JSON.stringify(json, null, '  ')], {type: 'application\/json'});
-  
+
   var link = document.createElement( 'a' );
 	link.href = window.URL.createObjectURL(blob);
 	link.download = "stage1.json";
@@ -185,13 +189,13 @@ function selectDownload(){
 }
 
 function insideButton(button, mouseX, mouseY){
-  
+
   if(button.x <= mouseX && mouseX <= (button.x + button.width)){
     if(button.y <= mouseY && mouseY <= (button.y + button.height)){
       return true
     }
-  } 
-  
+  }
+
   return false
 }
 
@@ -220,7 +224,7 @@ function inside(mouseX, mouseY){
   else if(insideButton(button_download, mouseX, mouseY)){
     return true
   }
-  
+
   return false
 }
 
@@ -245,15 +249,15 @@ function includeGoalIndex(objects){
 }
 
 function toJSON(){
-  
+
   json = {};
-  
+
   jumps = [];
   slopes = [];
   lifts = [];
-  
+
   json["author"] = "N.Mukai"
-  
+
   for(let object of objects){
     if(object instanceof Ball){
       json["ball"] = {
@@ -276,7 +280,7 @@ function toJSON(){
       lifts.push(object);
     }
   }
-  
+
   json_list = []
   for(let jump of jumps){
     json_jump = {
@@ -286,25 +290,25 @@ function toJSON(){
     json_list.push(json_jump);
   }
   json["jumps"] = json_list;
-  
+
   json_list = []
   for(let slope of slopes){
     json_slope = {
-      "x": slope.p1_x,
-      "y": slope.p1_y,
-      "w": slope.p2_x - slope.p1_x,
-      "h": slope.p2_y - slope.p1_y
+      "x": (slope.p1_x + slope.p2_x) / 2,
+      "y": (slope.p1_y + slope.p2_y) / 2,
+      "w": Math.abs(slope.p2_x - slope.p1_x),
+      "h": Math.abs(slope.p2_y - slope.p1_y)
     }
     json_list.push(json_slope);
   }
   json["slopes"] = json_list;
-  
+
   json_list = []
   for(let lift of lifts){
     json_lift = {
-      "x": lift.p1_x,
-      "y": lift.p1_y,
-      "w": lift.p2_x - lift.p1_x,
+      "x": (lift.p1_x + lift.p2_x) / 2,
+      "y": (lift.p1_y +  lift.p2_y) / 2,
+      "w": Math.abs(lift.p2_x - lift.p1_x),
       "h": 10,
       "l": 200,
       "r": lift.angle
@@ -312,7 +316,7 @@ function toJSON(){
     json_list.push(json_lift);
   }
   json["lifts"] = json_list;
-  
+
   return json;
 }
 
@@ -325,7 +329,7 @@ class Ball{
   paint(){
     fill("yellow");
     noStroke();
-    ellipse(this.x, this.y, this.radius*2, this.radius*2);
+    ellipse(this.x, this.y, this.radius, this.radius);
   }
 }
 
@@ -338,7 +342,7 @@ class Goal{
   paint(){
     fill("red");
     noStroke();
-    ellipse(this.x, this.y, this.radius*2, this.radius*2);
+    ellipse(this.x, this.y, this.radius, this.radius);
   }
 }
 
@@ -351,7 +355,7 @@ class Jump{
   paint(){
     fill("green");
     noStroke();
-    ellipse(this.x, this.y, this.radius*2, this.radius*2);
+    ellipse(this.x, this.y, this.radius, this.radius);
   }
 }
 
