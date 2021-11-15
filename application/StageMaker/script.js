@@ -13,54 +13,72 @@ let radius;
 let p1_x;
 let p1_y;
 
+let inside_button = false;
+
 objects = []
 
 function setup(){
   createCanvas(1200, 800);
   background(0, 0, 0);
-
+  
   button_ball = createButton('Ball');
   button_ball.size(100, 50)
-  button_ball.position(100, 750);
+  button_ball.position(200, 800);
   button_ball.mousePressed(selectBall);
-
+  button_ball.mouseOver(() => {inside_button = true});
+  button_ball.mouseOut(() => {inside_button = false});
+  
   button_goal = createButton('Goal');
   button_goal.size(100, 50)
-  button_goal.position(200, 750);
+  button_goal.position(300, 800);
   button_goal.mousePressed(selectGoal);
-
+  button_goal.mouseOver(() => {inside_button = true});
+  button_goal.mouseOut(() => {inside_button = false});
+  
   button_slope = createButton('Slope');
   button_slope.size(100, 50)
-  button_slope.position(300, 750);
+  button_slope.position(400, 800);
   button_slope.mousePressed(selectSlope);
-
+  button_slope.mouseOver(() => {inside_button = true});
+  button_slope.mouseOut(() => {inside_button = false});  
+  
   button_lift = createButton('Lift');
   button_lift.size(100, 50)
-  button_lift.position(400, 750);
+  button_lift.position(500, 800);
   button_lift.mousePressed(selectLift);
-
+  button_lift.mouseOver(() => {inside_button = true});
+  button_lift.mouseOut(() => {inside_button = false});  
+  
   button_jump = createButton('Jump');
   button_jump.size(100, 50)
-  button_jump.position(500, 750);
+  button_jump.position(600, 800);
   button_jump.mousePressed(selectJump);
-
+  button_jump.mouseOver(() => {inside_button = true});
+  button_jump.mouseOut(() => {inside_button = false});  
+  
   button_undo = createButton('Undo');
   button_undo.size(100, 50)
-  button_undo.position(600, 750);
+  button_undo.position(700, 800);
   button_undo.mousePressed(selectUndo);
   button_undo.style("background", "#cc0000");
-
+  button_undo.mouseOver(() => {inside_button = true});
+  button_undo.mouseOut(() => {inside_button = false});  
+  
   button_clear = createButton('Clear');
   button_clear.size(100, 50)
-  button_clear.position(700, 750);
+  button_clear.position(800, 800);
   button_clear.mousePressed(selectClear);
   button_clear.style("background", "#cc0000");
-
+  button_clear.mouseOver(() => {inside_button = true});
+  button_clear.mouseOut(() => {inside_button = false});  
+  
   button_download = createButton('Download');
   button_download.size(100, 50)
-  button_download.position(800, 750);
+  button_download.position(900, 800);
   button_download.mousePressed(selectDownload);
-  button_download.style("background", "#cc0000");
+  button_download.style("background", "#00cc00");  
+  button_download.mouseOver(() => {inside_button = true});
+  button_download.mouseOut(() => {inside_button = false});
 }
 
 function draw(){
@@ -71,13 +89,13 @@ function draw(){
 }
 
 function mousePressed(){
-
+  
   radius;
-
-  if(inside(mouseX, mouseY)){
+  
+  if(inside_button){
     return
   }
-
+  
   switch(type){
     case 0:
       ball = new Ball(mouseX);
@@ -86,7 +104,7 @@ function mousePressed(){
         objects.splice(index, 1);
       }
       objects.push(ball);
-
+      
       break
     case 1:
       goal = new Goal(mouseX, mouseY);
@@ -112,11 +130,11 @@ function mousePressed(){
 }
 
 function mouseDragged(){
-
-  if(inside(mouseX, mouseY)){
+  
+  if(inside_button){
     return
   }
-
+  
   switch(type){
     case 2:
       break
@@ -126,11 +144,11 @@ function mouseDragged(){
 }
 
 function mouseReleased(){
-
-  if(inside(mouseX, mouseY)){
+  
+  if(inside_button){
     return
   }
-
+  
   switch(type){
     case 2:
       x1 = Math.min(p1_x, mouseX)
@@ -177,55 +195,15 @@ function selectClear(){
 }
 
 function selectDownload(){
-
+  
   let json = toJSON();
   let blob = new Blob([JSON.stringify(json, null, '  ')], {type: 'application\/json'});
-
+  
   var link = document.createElement( 'a' );
 	link.href = window.URL.createObjectURL(blob);
 	link.download = "stage1.json";
 	link.click();
 
-}
-
-function insideButton(button, mouseX, mouseY){
-
-  if(button.x <= mouseX && mouseX <= (button.x + button.width)){
-    if(button.y <= mouseY && mouseY <= (button.y + button.height)){
-      return true
-    }
-  }
-
-  return false
-}
-
-function inside(mouseX, mouseY){
-  if(insideButton(button_ball, mouseX, mouseY)){
-    return true
-  }
-  else if(insideButton(button_goal, mouseX, mouseY)){
-    return true
-  }
-  else if(insideButton(button_slope, mouseX, mouseY)){
-    return true
-  }
-  else if(insideButton(button_lift, mouseX, mouseY)){
-    return true
-  }
-  else if(insideButton(button_jump, mouseX, mouseY)){
-    return true
-  }
-  else if(insideButton(button_undo, mouseX, mouseY)){
-    return true
-  }
-  else if(insideButton(button_clear, mouseX, mouseY)){
-    return true
-  }
-  else if(insideButton(button_download, mouseX, mouseY)){
-    return true
-  }
-
-  return false
 }
 
 function includeBallIndex(objects){
@@ -249,15 +227,15 @@ function includeGoalIndex(objects){
 }
 
 function toJSON(){
-
+  
   json = {};
-
+  
   jumps = [];
   slopes = [];
   lifts = [];
-
+  
   json["author"] = "N.Mukai"
-
+  
   for(let object of objects){
     if(object instanceof Ball){
       json["ball"] = {
@@ -280,7 +258,7 @@ function toJSON(){
       lifts.push(object);
     }
   }
-
+  
   json_list = []
   for(let jump of jumps){
     json_jump = {
@@ -290,7 +268,7 @@ function toJSON(){
     json_list.push(json_jump);
   }
   json["jumps"] = json_list;
-
+  
   json_list = []
   for(let slope of slopes){
     json_slope = {
@@ -302,7 +280,7 @@ function toJSON(){
     json_list.push(json_slope);
   }
   json["slopes"] = json_list;
-
+  
   json_list = []
   for(let lift of lifts){
     json_lift = {
@@ -316,7 +294,7 @@ function toJSON(){
     json_list.push(json_lift);
   }
   json["lifts"] = json_list;
-
+  
   return json;
 }
 
@@ -379,7 +357,7 @@ class Lift{
     this.p1_y = p1_y;
     this.p2_x = p2_x;
     this.p2_y = p2_y;
-    this.angle = Math.atan2(p2_y - p1_y, p2_x - p2_y);
+    this.angle = Math.atan2(p2_y - p1_y, p2_x - p1_x);
   }
   paint(){
     stroke("blue");
