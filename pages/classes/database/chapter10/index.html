@@ -419,8 +419,8 @@ sqlite3.db
 <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">CROSS</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
 </code></pre></div><p>それでは，【テニス部】と【サッカー部】の直積を求めてみましょう．
 全ての組み合わせでレコードが構成されていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">/* 【テニス部】と【サッカー部】の直積 */
-SELECT * FROM テニス部 CROSS JOIN サッカー部;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【テニス部】と【サッカー部】の直積 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">CROSS</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">サッカー部</span>;
 </code></pre></div><p><a href="https://gyazo.com/2d416fb7417c94c5dc6a04c14315ae16"><img src="https://i.gyazo.com/2d416fb7417c94c5dc6a04c14315ae16.png" alt="Image from Gyazo"></a></p>
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
@@ -501,6 +501,15 @@ SQLで表現可能であることを確認していきましょう（商演算�
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学生リスト】を氏名とよみがなで射影 **/</span>
 <span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">氏名</span>,<span style="color:#960050;background-color:#1e0010">よみがな</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>;
 </code></pre></div><p><a href="https://gyazo.com/e2d3212d5a1a38a5be2c16899958ee92"><img src="https://i.gyazo.com/e2d3212d5a1a38a5be2c16899958ee92.png" alt="Image from Gyazo"></a></p>
+<p>次に，【学生リスト】を学部で射影してみましょう．
+「工学部」に所属している学生が2人いるため，射影した結果にも「工学部」が2回表示されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学生リスト】を学部で射影 **/</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">学部</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>;
+</code></pre></div><p><a href="https://gyazo.com/312faf7b36ac7b701beefd624ba0b975"><img src="https://i.gyazo.com/312faf7b36ac7b701beefd624ba0b975.png" alt="Image from Gyazo"></a></p>
+<p>重複行を除外して「工学部」を1回だけ表示するには，<strong>DISTINCT句</strong> を利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学生リスト】を重複を避けて学部で射影 **/</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">DISTINCT</span> <span style="color:#960050;background-color:#1e0010">学部</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>;
+</code></pre></div><p><a href="https://gyazo.com/03880f469eeb3a0d1e2a711ba1e76ca7"><img src="https://i.gyazo.com/03880f469eeb3a0d1e2a711ba1e76ca7.png" alt="Image from Gyazo"></a></p>
 <h3 id="選択演算">選択演算</h3>
 <p>選択演算は <strong>SELECT文</strong> と <strong>WHERE句</strong> を組み合わせるだけです．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 選択演算 */</span>
@@ -575,6 +584,18 @@ PRAGMA foreign_keys=OFF;
 
 <p>作成したデータベースを保存するには，[File]→[Save DB]をクリックします．
 保存したファイルは <strong>sqlite4.db</strong> とファイル名を変更してから，提出してください．</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  情報処理技術者試験・過去問
+</h1>
+
+<p>下記リンクは
+<a href="https://www.itpassportsiken.com/">ITパスポート試験ドットコム</a>，
+<a href="https://www.fe-siken.com/">基本情報技術者試験ドットコム</a>，
+<a href="https://www.ap-siken.com/">応用情報技術者試験ドットコム</a>に掲載されている問題です．</p>
+<ul>
+<li><a href="https://www.ap-siken.com/kakomon/01_moshi/q40.html">オリジナル模擬試験1 問40</a></li>
+<li><a href="https://www.ap-siken.com/kakomon/26_haru/q28.html">応用情報技術者 平成26年春期 午前 問28</a></li>
+</ul>
 <h3>参考書籍</h3>
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4781913903&linkId=0a2c1ffad427bdeee3fd703f5392bac2&bc1=f8f8f8&lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">

@@ -373,11 +373,14 @@ sqlite2.db
     
 【学部リスト】から，キャンパスが春日井のレコードを取得しなさい．
 
+
+<a href="https://gyazo.com/6cb4f449405342ea177baffb4e3806df"><img src="https://i.gyazo.com/6cb4f449405342ea177baffb4e3806df.png" alt="Image from Gyazo" width="1191"/></a>
+
   </p>
   
 </div>
 
-<p><a href="https://gyazo.com/6cb4f449405342ea177baffb4e3806df"><img src="https://i.gyazo.com/6cb4f449405342ea177baffb4e3806df.png" alt="Image from Gyazo"></a></p>
+<!-- [![Image from Gyazo](https://i.gyazo.com/6cb4f449405342ea177baffb4e3806df.png)](https://gyazo.com/6cb4f449405342ea177baffb4e3806df) -->
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
@@ -432,11 +435,16 @@ sqlite2.db
 </table>
 <b>【商品リスト】</b>
 
+<a href="https://gyazo.com/e2e9dce638ded4621e664342b2af3e8a"><img src="https://i.gyazo.com/e2e9dce638ded4621e664342b2af3e8a.png" alt="Image from Gyazo" width="1211"/></a>
+
+<a href="https://gyazo.com/1f70137682159a7fcb776375c4554290"><img src="https://i.gyazo.com/1f70137682159a7fcb776375c4554290.png" alt="Image from Gyazo" width="1147"/></a>
+
+
   </p>
   
 </div>
 
-<p><a href="https://gyazo.com/e2e9dce638ded4621e664342b2af3e8a"><img src="https://i.gyazo.com/e2e9dce638ded4621e664342b2af3e8a.png" alt="Image from Gyazo"></a></p>
+<!-- [![Image from Gyazo](https://i.gyazo.com/e2e9dce638ded4621e664342b2af3e8a.png)](https://gyazo.com/e2e9dce638ded4621e664342b2af3e8a) -->
 <!-- [![Image from Gyazo](https://i.gyazo.com/b49bd779cc9afdc46624e648b3f164a9.png)](https://gyazo.com/b49bd779cc9afdc46624e648b3f164a9) -->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   算術演算子を利用した検索
@@ -449,11 +457,16 @@ sqlite2.db
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【商品リスト】から商品名と利益（売値-仕入れ値）を取得 */</span>
 <span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">商品名</span>,<span style="color:#960050;background-color:#1e0010">売値</span><span style="color:#f92672">-</span><span style="color:#960050;background-color:#1e0010">仕入れ値</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">商品リスト</span>;
 </code></pre></div><p><a href="https://gyazo.com/4ced5c19dc7db39be168e859dda0bb93"><img src="https://i.gyazo.com/4ced5c19dc7db39be168e859dda0bb93.png" alt="Image from Gyazo"></a></p>
-<p>次に，【商品リスト】から，商品名と <strong>税込みの売値（10%）</strong> を取得してみましょう．
-このとき，<code>cast()</code>を利用して，計算結果のデータ型を <strong>INTEGER</strong> に変換していることに注意してください．</p>
+<p>このとき，列名には「売値-仕入れ値」が表示されてしまいます．
+列名に別名を付ける場合は <strong>AS句</strong> を利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【商品リスト】から商品名と利益（売値-仕入れ値）を取得 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">商品名</span>,<span style="color:#960050;background-color:#1e0010">売値</span><span style="color:#f92672">-</span><span style="color:#960050;background-color:#1e0010">仕入れ値</span> <span style="color:#66d9ef">AS</span> <span style="color:#960050;background-color:#1e0010">利益</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">商品リスト</span>;
+</code></pre></div><p><a href="https://gyazo.com/980700087582dcf9cf0007d273091c25"><img src="https://i.gyazo.com/980700087582dcf9cf0007d273091c25.png" alt="Image from Gyazo"></a></p>
+<p>次に，【商品リスト】から，商品名，売値，<strong>税込（売値の10%を加算）</strong> を取得してみましょう．
+このとき，<code>cast()</code>を利用して，計算結果のデータ型を <strong>INTEGER</strong> に変換することで，小数以下を切り捨てていることに注意してください．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【商品リスト】から商品名と税込みの売値を取得 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">商品名</span>, <span style="color:#66d9ef">cast</span>(<span style="color:#960050;background-color:#1e0010">売値</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1</span>.<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">as</span> INTEGER) <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">商品リスト</span>;
-</code></pre></div><p><a href="https://gyazo.com/e7e8c70c9155d8f7fe36437b7a06afe9"><img src="https://i.gyazo.com/e7e8c70c9155d8f7fe36437b7a06afe9.png" alt="Image from Gyazo"></a></p>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">商品名</span>, <span style="color:#960050;background-color:#1e0010">売値</span>, <span style="color:#66d9ef">CAST</span>(<span style="color:#960050;background-color:#1e0010">売値</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span>.<span style="color:#ae81ff">1</span>  <span style="color:#66d9ef">AS</span> INTEGER) <span style="color:#66d9ef">AS</span> <span style="color:#960050;background-color:#1e0010">税込</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">商品リスト</span>;
+</code></pre></div><p><a href="https://gyazo.com/2430e4d7e78949b1a501fb475c7c3ecf"><img src="https://i.gyazo.com/2430e4d7e78949b1a501fb475c7c3ecf.png" alt="Image from Gyazo"></a></p>
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
@@ -465,11 +478,64 @@ sqlite2.db
     
 【商品リスト】から，利益率が20%以上の商品を検索し，商品名と利益率を表示しなさい．
 
+<a href="https://gyazo.com/26047e55f364f7aaea2d4301f55e98e8"><img src="https://i.gyazo.com/26047e55f364f7aaea2d4301f55e98e8.png" alt="Image from Gyazo" width="842"/></a>
+
+
   </p>
   
 </div>
 
-<p><a href="https://gyazo.com/9d919e3f85c11c856d50721b89ff33c3"><img src="https://i.gyazo.com/9d919e3f85c11c856d50721b89ff33c3.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  合計や平均の計算
+</h1>
+
+<p>SELECT文で取得したレコードに対し，
+合計や平均などの関数を適用することができます．
+合計は$SUM(属性名)$，平均は$AVG(属性名)$，件数は$COUNT(属性名)$と記述します．</p>
+<p>それでは，【商品リスト】の売値の合計を計算してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【商品リスト】の売値の合計 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">SUM</span>(<span style="color:#960050;background-color:#1e0010">売値</span>) <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">商品リスト</span>;
+</code></pre></div><p><a href="https://gyazo.com/0bcb36cb9d475750e8d6c5fc21a33c9b"><img src="https://i.gyazo.com/0bcb36cb9d475750e8d6c5fc21a33c9b.png" alt="Image from Gyazo"></a></p>
+<p>次に，【商品リスト】の売値の平均を計算してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【商品リスト】の売値の平均 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">AVG</span>(<span style="color:#960050;background-color:#1e0010">売値</span>) <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">商品リスト</span>;
+</code></pre></div><p><a href="https://gyazo.com/0f7e4f569672707f5171c02933de7414"><img src="https://i.gyazo.com/0f7e4f569672707f5171c02933de7414.png" alt="Image from Gyazo"></a></p>
+<p>最後に，【商品リスト】のレコード件数を求めてみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【商品リスト】のレコード数 */</span>
+<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">COUNT</span>(<span style="color:#960050;background-color:#1e0010">売値</span>) <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">商品リスト</span>;
+</code></pre></div><p><a href="https://gyazo.com/78a23297d44e283203c3d5d625443d4c"><img src="https://i.gyazo.com/78a23297d44e283203c3d5d625443d4c.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  グループ集計
+</h1>
+
+<p>特定の列でグループ化して，グループごとの合計や平均などの関数を適用することが出来ます．
+グループ化したい列は <strong>GROUP BY句</strong> で指定します．</p>
+<p>それでは，【学部リスト】のキャンパスでグループ化して，教員数の合計を計算してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学部リスト】のキャンパスでグループ化 */</span> 
+<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">キャンパス</span>,<span style="color:#66d9ef">SUM</span>(<span style="color:#960050;background-color:#1e0010">教員数</span>) <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学部リスト</span> <span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> <span style="color:#960050;background-color:#1e0010">キャンパス</span>;
+</code></pre></div><p><a href="https://gyazo.com/ff20320e4131b3a77cf2ed01cc3657f7"><img src="https://i.gyazo.com/ff20320e4131b3a77cf2ed01cc3657f7.png" alt="Image from Gyazo"></a></p>
+<p>次に，【学生リスト】の学部でグループ化して，レコード件数を求めてみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学生リスト】の学部でグループ化 */</span> 
+<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">学部</span>, <span style="color:#66d9ef">COUNT</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">GROUP</span> <span style="color:#66d9ef">BY</span> <span style="color:#960050;background-color:#1e0010">学部</span>; 
+</code></pre></div><p><a href="https://gyazo.com/d43d7b9e9783dd6d5e92c032050165e9"><img src="https://i.gyazo.com/d43d7b9e9783dd6d5e92c032050165e9.png" alt="Image from Gyazo"></a></p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    例題4
+  </h3>
+
+  <p>
+    
+【学生リスト】の学年でグループ化し，レコード件数を求めなさい．このとき，レコード件数の列名は「学生数」と表示しなさい．
+
+<a href="https://gyazo.com/7e75740b0d52423c7adeabcebae43c7e"><img src="https://i.gyazo.com/7e75740b0d52423c7adeabcebae43c7e.png" alt="Image from Gyazo" width="837"/></a>
+
+
+  </p>
+  
+</div>
+
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   検索結果のソート
 </h1>
@@ -490,25 +556,6 @@ sqlite2.db
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学部リスト】を教員数の降順で並べ替え */</span>
 <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学部リスト</span> <span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> <span style="color:#960050;background-color:#1e0010">教員数</span> <span style="color:#66d9ef">DESC</span>;
 </code></pre></div><p><a href="https://gyazo.com/13f2d0ea063c26ed4b40a04d002c02c1"><img src="https://i.gyazo.com/13f2d0ea063c26ed4b40a04d002c02c1.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  合計や平均の計算
-</h1>
-
-<p>SELECT文で取得したレコードに対し，
-合計や平均などの関数を適用することができます．
-合計は$SUM(属性名)$，平均は$AVG(属性名)$，件数は$COUNT(属性名)$と記述します．</p>
-<p>それでは，【商品リスト】の売値の合計を計算してみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【商品リスト】の売値の合計 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">SUM</span>(<span style="color:#960050;background-color:#1e0010">売値</span>) <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">商品リスト</span>;
-</code></pre></div><p><a href="https://gyazo.com/0bcb36cb9d475750e8d6c5fc21a33c9b"><img src="https://i.gyazo.com/0bcb36cb9d475750e8d6c5fc21a33c9b.png" alt="Image from Gyazo"></a></p>
-<p>次に，【商品リスト】の売値の平均を計算してみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【商品リスト】の売値の平均 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">AVG</span>(<span style="color:#960050;background-color:#1e0010">売値</span>) <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">商品リスト</span>;
-</code></pre></div><p><a href="https://gyazo.com/0f7e4f569672707f5171c02933de7414"><img src="https://i.gyazo.com/0f7e4f569672707f5171c02933de7414.png" alt="Image from Gyazo"></a></p>
-<p>最後に，【商品リスト】のレコード件数を求めてみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【商品リスト】のレコード数 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">COUNT</span>(<span style="color:#960050;background-color:#1e0010">売値</span>) <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">商品リスト</span>;
-</code></pre></div><p><a href="https://gyazo.com/78a23297d44e283203c3d5d625443d4c"><img src="https://i.gyazo.com/78a23297d44e283203c3d5d625443d4c.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   正規表現
 </h1>
@@ -556,7 +603,7 @@ sqlite2.db
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
   <h3 style="color:#006600">
-    例題4
+    例題5
   </h3>
 
   <p>
@@ -564,12 +611,17 @@ sqlite2.db
 【学生リスト】から，正規表現を用いて，氏名が"岩"から始まるレコードを取得しなさい，
 また，同様に1年生〜2年生のレコードを取得しなさい．
 
+<a href="https://gyazo.com/04fa4be0e2f9178ca9b854975eb1092d"><img src="https://i.gyazo.com/04fa4be0e2f9178ca9b854975eb1092d.png" alt="Image from Gyazo" width="1173"/></a>
+
+<a href="https://gyazo.com/72dbbe4013e34534d12ef353a630801f"><img src="https://i.gyazo.com/72dbbe4013e34534d12ef353a630801f.png" alt="Image from Gyazo" width="1221"/></a>
+
+
   </p>
   
 </div>
 
-<p><a href="https://gyazo.com/04fa4be0e2f9178ca9b854975eb1092d"><img src="https://i.gyazo.com/04fa4be0e2f9178ca9b854975eb1092d.png" alt="Image from Gyazo"></a></p>
-<p><a href="https://gyazo.com/72dbbe4013e34534d12ef353a630801f"><img src="https://i.gyazo.com/72dbbe4013e34534d12ef353a630801f.png" alt="Image from Gyazo"></a></p>
+<!-- [![Image from Gyazo](https://i.gyazo.com/04fa4be0e2f9178ca9b854975eb1092d.png)](https://gyazo.com/04fa4be0e2f9178ca9b854975eb1092d) -->
+<!-- [![Image from Gyazo](https://i.gyazo.com/72dbbe4013e34534d12ef353a630801f.png)](https://gyazo.com/72dbbe4013e34534d12ef353a630801f) -->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   データベースの保存
 </h1>
