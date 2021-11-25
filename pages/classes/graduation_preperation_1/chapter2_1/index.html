@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Monacaでアプリ開発① Vue.jsの利用 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="Monacaでアプリ開発① Vue.jsの利用" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter2_1/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="MonacaVue.jsテンプレートの利用プロジェクトの作成 それでは，Monacaで新しいプロジェクトを作成します． 下記の手順に従って，フレームワークにVue.jsを利用したアプリを作成します．
+テンプレートの種類 フレームワークテンプレート を選択しましょう．
+
+フレームワーク Vue.js を選択しましょう．
+
+テンプレート Onsen UI V2 Vue Minimum を選択しましょう．
+
+プロジェクトの情報 プロジェクト名 は「Project1」， 説明 は「Vue.jsの利用」に設定しましょう．
+
+テンプレートの確認 プロジェクトを作成したら，クラウドIDE で開きます． 最初に App.vue を確認しましょう． App.vue は 単一ファイルコンポーネント（SFC: Single File Component） と呼ばれ， HTML，CSS，JavaScriptをまとめて記述することが可能なファイルです． このテンプレートでは，&lt;template&gt;&lt;/template&gt;がHTML，&lt;script&gt;&lt;/script&gt;がJavaScriptで記述されています．
+それでは，HTML部分を確認しましょう． ここで，v-onsで始まるタグは，Onsen UIのコンポーネントです． 例えば，v-ons-toolbarはツールバー，v-ons-buttonはボタンを表しています（詳細な説明は割愛）． 上から，ツールバーの表示，文字列の表示，ボタンの表示で構成されています． ここで，注目したいのは {{ title }}と，@click=&quot;alert&quot;の2箇所です． 前者はマスタッシュ（口ひげ）と呼ばれ，後述するVueで定義された変数titleを参照するための記述です． 後者はクリック・イベントを処理するための記述であり，v-onディレクティブと同等の表現です（v-on:click=&quot;alert&quot;と記述しても同じ）．
+&lt;template&gt; &lt;v-ons-page&gt; &lt;!-- ツールバーの表示 --&gt; &lt;v-ons-toolbar&gt; &lt;!-- タイトルの表示 --&gt; &lt;div class=&#34;center&#34;&gt;{{ title }}&lt;/div&gt; &lt;div class=&#34;right&#34;&gt; &lt;v-ons-toolbar-button&gt; &lt;v-ons-icon icon=&#34;ion-navicon, material: md-menu&#34;&gt;&lt;/v-ons-icon&gt; &lt;/v-ons-toolbar-button&gt; &lt;/div&gt; &lt;/v-ons-toolbar&gt; &lt;!" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Monacaでアプリ開発① Vue.jsの利用" />
+
+
+
+  <meta name="twitter:description" content="MonacaVue.jsテンプレートの利用プロジェクトの作成 それでは，Monacaで新しいプロジェクトを作成します． 下記の手順に従って，フレームワークにVue.jsを利用したアプリを作成します．
+テンプレートの種類 フレームワークテンプレート を選択しましょう．
+
+フレームワーク Vue.js を選択しましょう．
+
+テンプレート Onsen UI V2 Vue Minimum を選択しましょう．
+
+プロジェクトの情報 プロジェクト名 は「Project1」， 説明 は「Vue.jsの利用」に設定しましょう．
+
+テンプレートの確認 プロジェクトを作成したら，クラウドIDE で開きます． 最初に App.vue を確認しましょう． App.vue は 単一ファイルコンポーネント（SFC: Single File Component） と呼ばれ， HTML，CSS，JavaScriptをまとめて記述することが可能なファイルです． このテンプレートでは，&lt;template&gt;&lt;/template&gt;がHTML，&lt;script&gt;&lt;/script&gt;がJavaScriptで記述されています．
+それでは，HTML部分を確認しましょう． ここで，v-onsで始まるタグは，Onsen UIのコンポーネントです． 例えば，v-ons-toolbarはツールバー，v-ons-buttonはボタンを表しています（詳細な説明は割愛）． 上から，ツールバーの表示，文字列の表示，ボタンの表示で構成されています． ここで，注目したいのは {{ title }}と，@click=&quot;alert&quot;の2箇所です． 前者はマスタッシュ（口ひげ）と呼ばれ，後述するVueで定義された変数titleを参照するための記述です． 後者はクリック・イベントを処理するための記述であり，v-onディレクティブと同等の表現です（v-on:click=&quot;alert&quot;と記述しても同じ）．
+&lt;template&gt; &lt;v-ons-page&gt; &lt;!-- ツールバーの表示 --&gt; &lt;v-ons-toolbar&gt; &lt;!-- タイトルの表示 --&gt; &lt;div class=&#34;center&#34;&gt;{{ title }}&lt;/div&gt; &lt;div class=&#34;right&#34;&gt; &lt;v-ons-toolbar-button&gt; &lt;v-ons-icon icon=&#34;ion-navicon, material: md-menu&#34;&gt;&lt;/v-ons-icon&gt; &lt;/v-ons-toolbar-button&gt; &lt;/div&gt; &lt;/v-ons-toolbar&gt; &lt;!" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">Monacaでアプリ開発① Vue.jsの利用</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Monaca
+</h1>
+
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Vue.js
+</h1>
+
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  テンプレートの利用
+</h1>
+
+<h2 id="プロジェクトの作成">プロジェクトの作成</h2>
+<p>それでは，Monacaで新しいプロジェクトを作成します．
+下記の手順に従って，フレームワークにVue.jsを利用したアプリを作成します．</p>
+<h3 id="テンプレートの種類">テンプレートの種類</h3>
+<p><strong>フレームワークテンプレート</strong> を選択しましょう．</p>
+<p><a href="https://gyazo.com/8061d4454ea8aceb86501e7d9b71ae12"><img src="https://i.gyazo.com/8061d4454ea8aceb86501e7d9b71ae12.png" alt="Image from Gyazo"></a></p>
+<h3 id="フレームワーク">フレームワーク</h3>
+<p><strong>Vue.js</strong> を選択しましょう．</p>
+<p><a href="https://gyazo.com/cdd2c76706241ef6409427218c9d80a0"><img src="https://i.gyazo.com/cdd2c76706241ef6409427218c9d80a0.png" alt="Image from Gyazo" width="800"/></a></p>
+<h3 id="テンプレート">テンプレート</h3>
+<p><strong>Onsen UI V2 Vue Minimum</strong> を選択しましょう．</p>
+<p><a href="https://gyazo.com/7b7d998c4fc3d8a60e48c5403ee7ae1e"><img src="https://i.gyazo.com/7b7d998c4fc3d8a60e48c5403ee7ae1e.png" alt="Image from Gyazo" width="500"/></a></p>
+<h3 id="プロジェクトの情報">プロジェクトの情報</h3>
+<p><strong>プロジェクト名</strong> は「Project1」， <strong>説明</strong> は「Vue.jsの利用」に設定しましょう．</p>
+<p><a href="https://gyazo.com/71be010036b46760dd928b0092dffd3c"><img src="https://i.gyazo.com/71be010036b46760dd928b0092dffd3c.png" alt="Image from Gyazo"></a></p>
+<h2 id="テンプレートの確認">テンプレートの確認</h2>
+<p>プロジェクトを作成したら，<strong>クラウドIDE</strong> で開きます．
+最初に <strong>App.vue</strong> を確認しましょう．
+<strong>App.vue</strong> は <strong>単一ファイルコンポーネント（SFC: Single File Component）</strong> と呼ばれ，
+HTML，CSS，JavaScriptをまとめて記述することが可能なファイルです．
+このテンプレートでは，<code>&lt;template&gt;&lt;/template&gt;</code>がHTML，<code>&lt;script&gt;&lt;/script&gt;</code>がJavaScriptで記述されています．</p>
+<p>それでは，HTML部分を確認しましょう．
+ここで，<code>v-ons</code>で始まるタグは，<a href="https://ja.onsen.io/">Onsen UI</a>のコンポーネントです．
+例えば，<code>v-ons-toolbar</code>はツールバー，<code>v-ons-button</code>はボタンを表しています（詳細な説明は割愛）．
+上から，ツールバーの表示，文字列の表示，ボタンの表示で構成されています．
+ここで，注目したいのは <code>{{ title }}</code>と，<code>@click=&quot;alert&quot;</code>の2箇所です．
+前者はマスタッシュ（口ひげ）と呼ばれ，後述するVueで定義された変数<code>title</code>を参照するための記述です．
+後者はクリック・イベントを処理するための記述であり，<code>v-on</code>ディレクティブと同等の表現です（<code>v-on:click=&quot;alert&quot;</code>と記述しても同じ）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML">&lt;<span style="color:#f92672">template</span>&gt;
+    &lt;<span style="color:#f92672">v-ons-page</span>&gt;
+
+      <span style="color:#75715e">&lt;!-- ツールバーの表示 --&gt;</span>
+      &lt;<span style="color:#f92672">v-ons-toolbar</span>&gt;
+        <span style="color:#75715e">&lt;!-- タイトルの表示 --&gt;</span>
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;center&#34;</span>&gt;{{ title }}&lt;/<span style="color:#f92672">div</span>&gt;
+        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;right&#34;</span>&gt;
+          &lt;<span style="color:#f92672">v-ons-toolbar-button</span>&gt;
+            &lt;<span style="color:#f92672">v-ons-icon</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ion-navicon, material: md-menu&#34;</span>&gt;&lt;/<span style="color:#f92672">v-ons-icon</span>&gt;
+          &lt;/<span style="color:#f92672">v-ons-toolbar-button</span>&gt;
+        &lt;/<span style="color:#f92672">div</span>&gt;
+      &lt;/<span style="color:#f92672">v-ons-toolbar</span>&gt;
+
+      <span style="color:#75715e">&lt;!-- 文字列の表示 --&gt;</span>
+      &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-align: center; padding-top:10px&#34;</span>&gt;Hello World!&lt;/<span style="color:#f92672">div</span>&gt;
+
+      <span style="color:#75715e">&lt;!-- ボタンの表示 --&gt;</span>      
+      &lt;<span style="color:#f92672">p</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text-align: center&#34;</span>&gt;
+        &lt;<span style="color:#f92672">v-ons-button</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;alert&#34;</span>&gt;Click Me!&lt;/<span style="color:#f92672">v-ons-button</span>&gt;
+      &lt;/<span style="color:#f92672">p</span>&gt;
+
+    &lt;/<span style="color:#f92672">v-ons-page</span>&gt;
+&lt;/<span style="color:#f92672">template</span>&gt;
+&lt;<span style="color:#f92672">script</span>&gt;
+  <span style="color:#75715e">/* JavaScriptのコード */</span>
+&lt;/<span style="color:#f92672">script</span>&gt;
+</code></pre></div><p>次にJavaScript部分を確認しましょう．
+<code>data(){}</code>は，<strong>dataオプション</strong> と呼ばれ，JavaScriptの変数を定義します．
+定義された変数はHTMLで<code>{{ 変数名 }}</code>で参照することができます．
+ここでは，変数<code>title</code>に<code>My App</code>を代入しています．
+また，<code>methods:{}</code>は，<strong>methodsオプション</strong> と呼ばれ，JavaScriptのメソッドを定義します．
+定義された変数はイベント処理などで呼び出すことができます．
+ここでは，アラートを画面に出力する<code>alert()</code>メソッドが定義されています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
+  <span style="color:#a6e22e">data</span>() {
+    <span style="color:#66d9ef">return</span> {
+      <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;My app&#39;</span> <span style="color:#75715e">/* タイトル */</span>
+    };
+  },
+  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">alert</span>() {
+      <span style="color:#75715e">// ボタンをクリックしたときの処理       
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$ons</span>.<span style="color:#a6e22e">notification</span>.<span style="color:#a6e22e">alert</span>(<span style="color:#e6db74">&#39;This is an Onsen UI alert notification test.&#39;</span>);
+    }
+  }
+};
+</code></pre></div><h2 id="テンプレートの実行">テンプレートの実行</h2>
+<p><a href="https://gyazo.com/085fceaa9e0c2e68fefe2409ad5fd5dd"><img src="https://i.gyazo.com/085fceaa9e0c2e68fefe2409ad5fd5dd.gif" alt="Image from Gyazo"></a></p>
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter2_1/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
