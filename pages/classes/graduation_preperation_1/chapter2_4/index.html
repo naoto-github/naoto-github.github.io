@@ -96,7 +96,7 @@
 テンプレートの確認クラウドIDEを起動し，テンプレートの/src/App.vueを確認します．
 HTML v-ons-toolbarの次にあるdiv要素とp要素を削除しておきます．
 &lt;template&gt; &lt;v-ons-page&gt; &lt;v-ons-toolbar&gt; &lt;div class=&#34;center&#34;&gt;{{ title }}&lt;/div&gt; &lt;div class=&#34;right&#34;&gt; &lt;v-ons-toolbar-button&gt; &lt;v-ons-icon icon=&#34;ion-navicon, material: md-menu&#34;&gt;&lt;/v-ons-icon&gt; &lt;/v-ons-toolbar-button&gt; &lt;/div&gt; &lt;/v-ons-toolbar&gt; &lt;!-- 削除 --&gt; &lt;/v-ons-page&gt; &lt;/template&gt; &lt;script&gt; /* JavaScriptのコード */ &lt;/script&gt; JavaScript titleを 地図アプリ に設定します． methodsオプションの内容を削除しておきます．
-export default{ data() { return { title: &#39;地図アプリ&#39; }; }, methods: { // 削除  } }; 地図アプリの開発地図の表示 HTML 地図を表示するdiv要素を作成します． 要素の高さは360pxに設定しておきます．" />
+export default{ data() { return { title: &#39;地図アプリ&#39; }; }, methods: { // 削除  } }; 地図アプリの開発Leafletを利用した地図アプリを開発します． 地図には日進市のオープンデータを利用して， 日進市の教育機関や医療機関をマーカーとして表示します．" />
 
 
 
@@ -120,7 +120,7 @@ export default{ data() { return { title: &#39;地図アプリ&#39; }; }, methods
 テンプレートの確認クラウドIDEを起動し，テンプレートの/src/App.vueを確認します．
 HTML v-ons-toolbarの次にあるdiv要素とp要素を削除しておきます．
 &lt;template&gt; &lt;v-ons-page&gt; &lt;v-ons-toolbar&gt; &lt;div class=&#34;center&#34;&gt;{{ title }}&lt;/div&gt; &lt;div class=&#34;right&#34;&gt; &lt;v-ons-toolbar-button&gt; &lt;v-ons-icon icon=&#34;ion-navicon, material: md-menu&#34;&gt;&lt;/v-ons-icon&gt; &lt;/v-ons-toolbar-button&gt; &lt;/div&gt; &lt;/v-ons-toolbar&gt; &lt;!-- 削除 --&gt; &lt;/v-ons-page&gt; &lt;/template&gt; &lt;script&gt; /* JavaScriptのコード */ &lt;/script&gt; JavaScript titleを 地図アプリ に設定します． methodsオプションの内容を削除しておきます．
-export default{ data() { return { title: &#39;地図アプリ&#39; }; }, methods: { // 削除  } }; 地図アプリの開発地図の表示 HTML 地図を表示するdiv要素を作成します． 要素の高さは360pxに設定しておきます．" />
+export default{ data() { return { title: &#39;地図アプリ&#39; }; }, methods: { // 削除  } }; 地図アプリの開発Leafletを利用した地図アプリを開発します． 地図には日進市のオープンデータを利用して， 日進市の教育機関や医療機関をマーカーとして表示します．" />
 
 
 
@@ -252,12 +252,19 @@ MonacaでLeafletを利用するには，<strong>JS/CSSコンポーネント</str
   地図アプリの開発
 </h1>
 
+<p>Leafletを利用した地図アプリを開発します．
+地図には日進市の<a href="https://www.city.nisshin.lg.jp/opendata/index.html">オープンデータ</a>を利用して，
+日進市の教育機関や医療機関をマーカーとして表示します．</p>
 <h2 id="地図の表示">地図の表示</h2>
 <h3 id="html-1">HTML</h3>
 <p>地図を表示する<code>div</code>要素を作成します．
 要素の高さは360pxに設定しておきます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;map&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;height:360px&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
 </code></pre></div><h3 id="javascript-1">JavaScript</h3>
+<p>地図の緯度・経度を<code>lat</code>，<code>lng</code>，ズームレベルを<code>zoom</code>で定義します．
+緯度:<code>35.130621</code>，経度:<code>137.037568</code>は日進市役所です．
+<code>mounted</code>オプションは，Vueのインスタンスが初期化され，DOM（Document Object Model）が利用可能になったときに実行されます．
+ここでは，<code>map</code>オブジェクトを生成し，<a href="https://openstreetmap.jp/">オープンストリートマップ</a>の地図タイルを表示しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
   <span style="color:#a6e22e">data</span>() {
     <span style="color:#66d9ef">return</span> {
@@ -289,9 +296,161 @@ MonacaでLeafletを利用するには，<strong>JS/CSSコンポーネント</str
 </code></pre></div><h3 id="実行">実行</h3>
 <p><a href="https://gyazo.com/931e632c3a14cbf61be07d1b1a207d38"><img src="https://i.gyazo.com/931e632c3a14cbf61be07d1b1a207d38.gif" alt="Image from Gyazo" width="400"/></a></p>
 <h2 id="外部jsファイルのインポート">外部JSファイルのインポート</h2>
-<p><a href="https://mukai-lab.info/classes/graduation_preperation_1/kyouiku.js"><i class="fas fa-cloud-download-alt"></i>kyouiku.js</a>
-<a href="https://mukai-lab.info/classes/graduation_preperation_1/iryou.js"><i class="fas fa-cloud-download-alt"></i>iryou.js</a></p>
+<p><a href="https://www.city.nisshin.lg.jp/opendata/index.html">日進市オープンデータポータルサイト</a>で公開されている
+教育機関と医療機関のオープンデータを取り込みます．
+JSON形式でダウンロードしたデータを，独自に加工したファイルが次の <strong>kyouiku.js</strong> と <strong>iryou.js</strong> です．
+これらのファイルを，<code>/src/js/</code>に配置してください．</p>
+<ul>
+<li><a href="https://mukai-lab.info/classes/graduation_preperation_1/kyouiku.js"><i class="fas fa-cloud-download-alt"></i>kyouiku.js</a></li>
+<li><a href="https://mukai-lab.info/classes/graduation_preperation_1/iryou.js"><i class="fas fa-cloud-download-alt"></i>iryou.js</a></li>
+</ul>
 <p><a href="https://gyazo.com/ac5c110ecbd1abdc680a14c98b91dd3f"><img src="https://i.gyazo.com/ac5c110ecbd1abdc680a14c98b91dd3f.png" alt="Image from Gyazo"></a></p>
+<p>上記のファイルを，Vueで利用するには，次のように<code>import</code>を宣言します．
+JSON形式のデータには，<code>kyouiku.kyouiku_list</code>と<code>iryou.iryou_list</code>でアクセスします．</p>
+<h3 id="javascript-2">javascript</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">kyouiku</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./js/kyouiku&#34;</span>
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">iryou</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./js/iryou&#34;</span>
+</code></pre></div><p>正しくデータが取り込まれているか，次のコードを<code>mounted</code>プロパティに記述してみましょう．
+「日進市立西小学校」と「愛知国際病院」がアラート・ダイアログで表示されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$ons</span>.<span style="color:#a6e22e">notification</span>.<span style="color:#a6e22e">alert</span>(<span style="color:#a6e22e">kyouiku</span>.<span style="color:#a6e22e">kyouiku_list</span>[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#34;名称&#34;</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">iryou</span>.<span style="color:#a6e22e">iryou_list</span>[<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#34;施設名称&#34;</span>]);
+</code></pre></div><h3 id="実行-1">実行</h3>
+<p><a href="https://gyazo.com/971c3e0de7120f5807db6d2c11e75ecf"><img src="https://i.gyazo.com/971c3e0de7120f5807db6d2c11e75ecf.png" alt="Image from Gyazo"></a></p>
+<h2 id="マーカーの表示">マーカーの表示</h2>
+<p>上記で取り込んだ教育機関と医療機関のデータをマーカーとして表示しましょう．
+複数のマーカーを保持することができる<code>L.FeatureGroup</code>に，
+<code>L.circleMarker</code>として生成したマーカーを追加します．
+このとき，教育機関のマーカーは赤色，医療機関のマーカーは緑色に設定します．</p>
+<h3 id="javascript-3">JavaScript</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#a6e22e">data</span>() {
+  <span style="color:#66d9ef">return</span> {
+    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;地図アプリ&#34;</span>,
+    <span style="color:#a6e22e">map</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+    <span style="color:#a6e22e">lat</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">35.130621</span>,
+    <span style="color:#a6e22e">lng</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">137.037568</span>,
+    <span style="color:#a6e22e">zoom</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">14</span>,
+    <span style="color:#a6e22e">kyouiku_group</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+    <span style="color:#a6e22e">iryou_group</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>
+  };
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#75715e">// 教育機関のマーカー
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">kyouiku_group</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">L</span>.<span style="color:#a6e22e">featureGroup</span>()
+<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">data</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">kyouiku</span>.<span style="color:#a6e22e">kyouiku_list</span>){
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">lat</span> <span style="color:#f92672">=</span> Number(<span style="color:#a6e22e">data</span>[<span style="color:#e6db74">&#34;緯度&#34;</span>]); <span style="color:#75715e">// 緯度
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">lon</span> <span style="color:#f92672">=</span> Number(<span style="color:#a6e22e">data</span>[<span style="color:#e6db74">&#34;経度&#34;</span>]); <span style="color:#75715e">// 経度
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>isNaN(<span style="color:#a6e22e">lat</span>) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>isNaN(<span style="color:#a6e22e">lon</span>)){
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">marker</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">L</span>.<span style="color:#a6e22e">circleMarker</span>([<span style="color:#a6e22e">lat</span>, <span style="color:#a6e22e">lon</span>], {<span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#ff0000&#34;</span>}); <span style="color:#75715e">// マーカーは赤色
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">marker</span>.<span style="color:#a6e22e">bindPopup</span>(<span style="color:#a6e22e">data</span>[<span style="color:#e6db74">&#34;名称&#34;</span>]) <span style="color:#75715e">// ポップアップ表示
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">kyouiku_group</span>.<span style="color:#a6e22e">addLayer</span>(<span style="color:#a6e22e">marker</span>);
+  }
+}
+<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">kyouiku_group</span>.<span style="color:#a6e22e">addTo</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>);
+
+<span style="color:#75715e">// 医療機関のマーカー
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">iryou_group</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">L</span>.<span style="color:#a6e22e">featureGroup</span>()
+<span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">data</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">iryou</span>.<span style="color:#a6e22e">iryou_list</span>){
+  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">lat</span> <span style="color:#f92672">=</span> Number(<span style="color:#a6e22e">data</span>[<span style="color:#e6db74">&#34;緯度&#34;</span>]); <span style="color:#75715e">// 緯度
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">lon</span> <span style="color:#f92672">=</span> Number(<span style="color:#a6e22e">data</span>[<span style="color:#e6db74">&#34;経度&#34;</span>]); <span style="color:#75715e">// 経度
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>isNaN(<span style="color:#a6e22e">lat</span>) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span>isNaN(<span style="color:#a6e22e">lon</span>)){
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">marker</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">L</span>.<span style="color:#a6e22e">circleMarker</span>([<span style="color:#a6e22e">lat</span>, <span style="color:#a6e22e">lon</span>], {<span style="color:#a6e22e">color</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#00ff00&#34;</span>}); <span style="color:#75715e">// マーカーは緑色
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">marker</span>.<span style="color:#a6e22e">bindPopup</span>(<span style="color:#a6e22e">data</span>[<span style="color:#e6db74">&#34;施設名称&#34;</span>]) <span style="color:#75715e">// ポップアップ表示
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">iryou_group</span>.<span style="color:#a6e22e">addLayer</span>(<span style="color:#a6e22e">marker</span>);
+  }
+}
+<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">iryou_group</span>.<span style="color:#a6e22e">addTo</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>);
+</code></pre></div><h3 id="実行-2">実行</h3>
+<p><a href="https://gyazo.com/005578609f86c05d9887208b7a99bc2a"><img src="https://i.gyazo.com/005578609f86c05d9887208b7a99bc2a.gif" alt="Image from Gyazo" width="398"/></a></p>
+<h2 id="チェックボックスの作成">チェックボックスの作成</h2>
+<p>表示するマーカーを切り替えるためのチェックボックス<code>v-ons-checkbox</code>を生成します．
+<code>object_list</code>がチェックボックスの項目名であり，
+<code>checked_list</code>はチェックが入っているチェックボックスの配列です．</p>
+<h3 id="html-2">HTML</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML">&lt;<span style="color:#f92672">v-ons-list</span>&gt;
+  &lt;<span style="color:#f92672">v-ons-list-item</span> <span style="color:#a6e22e">v-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(object, $index) in object_list&#34;</span> <span style="color:#a6e22e">:key</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;object&#34;</span> <span style="color:#a6e22e">tappable</span>&gt;
+    &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>&gt;
+      &lt;<span style="color:#f92672">v-ons-checkbox</span>
+        <span style="color:#a6e22e">:input-id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#39;checkbox-&#39; + $index&#34;</span>
+        <span style="color:#a6e22e">:value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;object&#34;</span>
+        <span style="color:#a6e22e">v-model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;checked_list&#34;</span>
+      &gt;
+      &lt;/<span style="color:#f92672">v-ons-checkbox</span>&gt;
+    &lt;/<span style="color:#f92672">label</span>&gt;
+    &lt;<span style="color:#f92672">label</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;center&#34;</span> <span style="color:#a6e22e">:for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#39;checkbox-&#39; + $index&#34;</span>&gt;
+      {{ object }}
+    &lt;/<span style="color:#f92672">label</span>&gt;
+  &lt;/<span style="color:#f92672">v-ons-list-item</span>&gt;
+  &lt;<span style="color:#f92672">v-ons-list-item</span>&gt;
+    &lt;<span style="color:#f92672">v-ons-button</span> <span style="color:#a6e22e">modifier</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;large&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;margin: 6px 0&#34;</span>&gt;更新&lt;/<span style="color:#f92672">v-ons-button</span>&gt;
+  &lt;/<span style="color:#f92672">v-ons-list-item</span>&gt;
+&lt;/<span style="color:#f92672">v-ons-list</span>&gt;
+</code></pre></div><h3 id="javascript-4">JavaScript</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#a6e22e">data</span>() {
+  <span style="color:#66d9ef">return</span> {
+    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;地図アプリ&#34;</span>,
+    <span style="color:#a6e22e">map</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+    <span style="color:#a6e22e">lat</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">35.130621</span>,
+    <span style="color:#a6e22e">lng</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">137.037568</span>,
+    <span style="color:#a6e22e">zoom</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">14</span>,
+    <span style="color:#a6e22e">kyouiku_group</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+    <span style="color:#a6e22e">iryou_group</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+    <span style="color:#a6e22e">object_list</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#34;教育機関&#34;</span>, <span style="color:#e6db74">&#34;医療機関&#34;</span>],
+    <span style="color:#a6e22e">checked_list</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#34;教育機関&#34;</span>, <span style="color:#e6db74">&#34;医療機関&#34;</span>]
+  };
+}
+</code></pre></div><h3 id="実行-3">実行</h3>
+<p><a href="https://gyazo.com/43401997f920084b625da806d4d5502f"><img src="https://i.gyazo.com/43401997f920084b625da806d4d5502f.png" alt="Image from Gyazo" width="400"/></a></p>
+<h2 id="マーカーのフィルタ">マーカーのフィルタ</h2>
+<p>チェックボックスの状態に応じて表示するマーカーを切り替えます．
+更新ボタンをタップすると<code>filter</code>メソッドを呼び出します．
+filterメソッドでは，<code>checked_list</code>の状態に応じて，対応する<code>L.featureGroup</code>を地図に追加します．</p>
+<h3 id="html-3">HTML</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML">&lt;<span style="color:#f92672">v-ons-list-item</span>&gt;
+  &lt;<span style="color:#f92672">v-ons-button</span> <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;filter&#34;</span> <span style="color:#a6e22e">modifier</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;large&#34;</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;margin: 6px 0&#34;</span>&gt;更新&lt;/<span style="color:#f92672">v-ons-button</span>&gt;
+&lt;/<span style="color:#f92672">v-ons-list-item</span>&gt;
+</code></pre></div><h3 id="javascript-5">JavaScript</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+  <span style="color:#a6e22e">filter</span>(){
+
+    <span style="color:#75715e">// マーカーを削除
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">kyouiku_group</span>.<span style="color:#a6e22e">removeFrom</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>);
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">iryou_group</span>.<span style="color:#a6e22e">removeFrom</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>);
+
+    <span style="color:#75715e">//チェックされているマーカーを追加
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">item</span> <span style="color:#66d9ef">of</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">checked_list</span>){
+      <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">item</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;教育機関&#34;</span>){
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">kyouiku_group</span>.<span style="color:#a6e22e">addTo</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>);
+      }
+      <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">item</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;医療機関&#34;</span>){
+        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">iryou_group</span>.<span style="color:#a6e22e">addTo</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>);
+      }
+    }
+  }
+}
+</code></pre></div><h3 id="実行-4">実行</h3>
+<p><a href="https://gyazo.com/ddc6077aca963d196744a1bf2aa1a9f5"><img src="https://i.gyazo.com/ddc6077aca963d196744a1bf2aa1a9f5.gif" alt="Image from Gyazo" width="400"/></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>アプリが完成したら，次の課題に挑戦してみよう！</p>
+<ul>
+<li>マーカーの色や形を変える</li>
+<li>マーカーのポップアップに情報を追加する</li>
+<li>他の<a href="https://www.city.nisshin.lg.jp/opendata/index.html">日進市のオープンデータ</a>を利用する</li>
+</ul>
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4910415114&linkId=46f34f343091f0e82ff5d0a877b84e18&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4865840990&linkId=cae9299148bb73e889f84f20fdce0a04&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07J6FP6NQ&linkId=2175643cae4e4a9ef1883af1c79cd276&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B08WYKVPF5&linkId=d00e49ee2223d6ef7726467da4328058&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
 
 
     
