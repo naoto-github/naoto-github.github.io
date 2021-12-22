@@ -399,7 +399,10 @@ plot_tree(t, feature_names<span style="color:#f92672">=</span>data_df<span style
 <p>学習した決定木を用いて，評価データを分類します．
 例えば，<code>PassengerId=892</code>は「死亡（0）」，<code>PassengerId=893</code>は「生存（1）」に分類されています．
 この結果を，<strong>submission_df</strong> に，古いデータを削除してから追加します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># テストデータで分類</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># テストデータからPassengerIdを除く</span>
+test_df <span style="color:#f92672">=</span> test_df[[<span style="color:#e6db74">&#34;Pclass&#34;</span>, <span style="color:#e6db74">&#34;Age&#34;</span>, <span style="color:#e6db74">&#34;SibSp&#34;</span>, <span style="color:#e6db74">&#34;Parch&#34;</span>, <span style="color:#e6db74">&#34;Fare&#34;</span>, <span style="color:#e6db74">&#34;Sex_male&#34;</span>, <span style="color:#e6db74">&#34;Embarked_Q&#34;</span>, <span style="color:#e6db74">&#34;Embarked_S&#34;</span>]]
+display(test_df<span style="color:#f92672">.</span>head())
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># テストデータで分類</span>
 survived <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>predict(test_df)
 submission_df <span style="color:#f92672">=</span> submission_df<span style="color:#f92672">.</span>drop(<span style="color:#e6db74">&#34;Survived&#34;</span>, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
 submission_df <span style="color:#f92672">=</span> submission_df<span style="color:#f92672">.</span>assign(Survived<span style="color:#f92672">=</span>survived)
