@@ -292,6 +292,26 @@ MAXプーリングは対象領域の最大値を代表値とする方法です�
 この値が全結合層に伝達され，全結合層で分類結果を出力します．
 プーリング層では重みやバイアスの学習は行われません．</p>
 <p><a href="https://gyazo.com/c3fee05027aec01e97e09ae07ae410e5"><img src="https://i.gyazo.com/c3fee05027aec01e97e09ae07ae410e5.png" alt="Image from Gyazo"></a></p>
+<p>ここでは，元の$32 \times 32$の画像にMAXプーリングを適用してみます（本来は畳み込み層の出力画像に適用する）．
+最初にプーリング後の値を記録する配列<code>pooled_image</code>を用意します．
+$2 \times 2$のMAXプーリングの適用後に画像サイズは$16 \times 16$になることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pooling_size <span style="color:#f92672">=</span> (<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+image_size <span style="color:#f92672">=</span> gray_image<span style="color:#f92672">.</span>shape
+pooled_image <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(((int)(image_size[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">/</span>pooling_size[<span style="color:#ae81ff">1</span>]), (int)(image_size[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">/</span>pooling_size[<span style="color:#ae81ff">0</span>]))) <span style="color:#75715e"># 16x16の配列</span>
+</code></pre></div><p>$2 \times 2$の領域から，<code>np.max()</code>で最大値を選択し，<code>pooled_image</code>に記録します．
+平均プーリングの場合は，<code>np.mean()</code>を利用すればOKです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># MAXプーリング</span>
+<span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> range(pooled_image<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]):
+  <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(pooled_image<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]):
+    head_x <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> pooling_size[<span style="color:#ae81ff">0</span>]
+    head_y <span style="color:#f92672">=</span> y <span style="color:#f92672">*</span> pooling_size[<span style="color:#ae81ff">1</span>]
+    values <span style="color:#f92672">=</span> gray_image[head_y:head_y<span style="color:#f92672">+</span>pooling_size[<span style="color:#ae81ff">1</span>], head_x:head_x<span style="color:#f92672">+</span>pooling_size[<span style="color:#ae81ff">0</span>]]
+    pooled_image[y][x] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max(values) <span style="color:#75715e">#最大値を選択</span>
+</code></pre></div><p>MAXプーリング後の画像を表示します．
+元の画像の特徴が圧縮されていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">converted_image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(pooled_image)
+plt<span style="color:#f92672">.</span>imshow(converted_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/dde45eea521bc595483d29524ede822c"><img src="https://i.gyazo.com/dde45eea521bc595483d29524ede822c.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ネットワークの学習
 </h1>
