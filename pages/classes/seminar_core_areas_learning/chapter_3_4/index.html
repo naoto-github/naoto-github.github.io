@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Pythonの基礎・フラクタル図形を描いてみよう | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="Pythonの基礎・フラクタル図形を描いてみよう" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/seminar_core_areas_learning/chapter_3_4/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/fd58f9a4dc8feae92e05b0e9bee62491.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="フラクタル図形  フラクタル図形 とは，図形の一部が図形の全体と 自己相似 な関係を持つ図形のことです． 特定の処理を再帰的に繰り返して実行することで描くことができます． フラクタル図形は自然界でも観測が可能で，「シダの葉」や「雲の形」はフラクタル図形とされています． ここでは，Pythonの関数の再帰を利用して，コッホ曲線を描くことに挑戦します．
+
+Google Colaboratory  下記のリンクをクリックして，Colabにアクセスしましょう．
+  Google Colaboratory  Colabにアクセスしたら，大学のGmailアカウント（@g.sugiyama-u.ac.jp）でログインしていることを確認してください． 次に，ノートブック（ファイル）を新規作成し，ノートブックの名前を chapter4.ipynb に変更しましょう．
+
+加えて，前回と同様に，ColabTurtleとインストールしておきます． このとき，多次元配列の処理が可能なライブラリである numpy も追加しておきます．
+!pip install ColabTurtle from ColabTurtle.Turtle import * import numpy as np フラクタル図形の描画  フラクタル図形の一つであるコッホ曲線を描きます． コッホ曲線は与えられた線分を3等分し，分割した2点を頂点とする正三角形を作成する手続きを繰り返すことで得られます．
+
+コッホ曲線を描く関数はdrawKochですが，この関数の中でkochを再帰的に呼び出しています（つまりkochの中で，kochを呼び出す）． drawKochの引数は，再帰の次元数（dim），線分の両端の座標（p1とp2）です． 再帰の次元数とは，再帰を繰り返す回数であり，この値が1になるまで繰り返します． 例えば，dim=2で呼び出すと，再帰的にdim=1が4回呼び出さて終了します（4つの直線に分割されるため）．
+
+def drawKoch(dim, p1, p2): points = [] initializeTurtle() speed(8) penup() goto(p1[0], p1[1]) right(90) koch(dim, p1, p2) def koch(dim, p1, p2): p = np." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Pythonの基礎・フラクタル図形を描いてみよう" />
+
+
+
+  <meta name="twitter:description" content="フラクタル図形  フラクタル図形 とは，図形の一部が図形の全体と 自己相似 な関係を持つ図形のことです． 特定の処理を再帰的に繰り返して実行することで描くことができます． フラクタル図形は自然界でも観測が可能で，「シダの葉」や「雲の形」はフラクタル図形とされています． ここでは，Pythonの関数の再帰を利用して，コッホ曲線を描くことに挑戦します．
+
+Google Colaboratory  下記のリンクをクリックして，Colabにアクセスしましょう．
+  Google Colaboratory  Colabにアクセスしたら，大学のGmailアカウント（@g.sugiyama-u.ac.jp）でログインしていることを確認してください． 次に，ノートブック（ファイル）を新規作成し，ノートブックの名前を chapter4.ipynb に変更しましょう．
+
+加えて，前回と同様に，ColabTurtleとインストールしておきます． このとき，多次元配列の処理が可能なライブラリである numpy も追加しておきます．
+!pip install ColabTurtle from ColabTurtle.Turtle import * import numpy as np フラクタル図形の描画  フラクタル図形の一つであるコッホ曲線を描きます． コッホ曲線は与えられた線分を3等分し，分割した2点を頂点とする正三角形を作成する手続きを繰り返すことで得られます．
+
+コッホ曲線を描く関数はdrawKochですが，この関数の中でkochを再帰的に呼び出しています（つまりkochの中で，kochを呼び出す）． drawKochの引数は，再帰の次元数（dim），線分の両端の座標（p1とp2）です． 再帰の次元数とは，再帰を繰り返す回数であり，この値が1になるまで繰り返します． 例えば，dim=2で呼び出すと，再帰的にdim=1が4回呼び出さて終了します（4つの直線に分割されるため）．
+
+def drawKoch(dim, p1, p2): points = [] initializeTurtle() speed(8) penup() goto(p1[0], p1[1]) right(90) koch(dim, p1, p2) def koch(dim, p1, p2): p = np." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/fd58f9a4dc8feae92e05b0e9bee62491.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">Pythonの基礎・フラクタル図形を描いてみよう</h1>
+<div class="post-line"></div>
+    
+    
+
+    <p><a href="https://gyazo.com/fd58f9a4dc8feae92e05b0e9bee62491"><img src="https://i.gyazo.com/fd58f9a4dc8feae92e05b0e9bee62491.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  フラクタル図形
+</h1>
+
+<p><strong>フラクタル図形</strong> とは，図形の一部が図形の全体と <strong>自己相似</strong> な関係を持つ図形のことです．
+特定の処理を再帰的に繰り返して実行することで描くことができます．
+フラクタル図形は自然界でも観測が可能で，「シダの葉」や「雲の形」はフラクタル図形とされています．
+ここでは，Pythonの関数の再帰を利用して，<a href="https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%83%E3%83%9B%E6%9B%B2%E7%B7%9A">コッホ曲線</a>を描くことに挑戦します．</p>
+<p><a title="Intellectual Bookworm, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Visualisation_of_Barnsley_Fern_in_Processing.png"><img width="300" alt="Visualisation of Barnsley Fern in Processing" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Visualisation_of_Barnsley_Fern_in_Processing.png/512px-Visualisation_of_Barnsley_Fern_in_Processing.png"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Google Colaboratory
+</h1>
+
+<p>下記のリンクをクリックして，Colabにアクセスしましょう．</p>
+<p>
+	<a href="https://colab.research.google.com/">
+		<i class="fas fa-external-link-square-alt"></i> Google Colaboratory
+	</a>
+</p>
+<p>Colabにアクセスしたら，大学のGmailアカウント（@g.sugiyama-u.ac.jp）でログインしていることを確認してください．
+次に，ノートブック（ファイル）を新規作成し，ノートブックの名前を <strong>chapter4.ipynb</strong> に変更しましょう．</p>
+<p><a href="https://gyazo.com/32c1a3f9351cff789dddc1d286c1069c"><img src="https://i.gyazo.com/32c1a3f9351cff789dddc1d286c1069c.png" alt="Image from Gyazo"></a></p>
+<p>加えて，前回と同様に，ColabTurtleとインストールしておきます．
+このとき，多次元配列の処理が可能なライブラリである <strong>numpy</strong> も追加しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">!</span>pip install ColabTurtle
+<span style="color:#f92672">from</span> ColabTurtle.Turtle <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  フラクタル図形の描画
+</h1>
+
+<p>フラクタル図形の一つであるコッホ曲線を描きます．
+コッホ曲線は与えられた線分を3等分し，分割した2点を頂点とする正三角形を作成する手続きを繰り返すことで得られます．</p>
+<p><a title="Kkairri (original made by Solkoll~commonswiki), Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:How_to_make_Koch_curve.svg"><img width="500" alt="How to make Koch curve" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/How_to_make_Koch_curve.svg/512px-How_to_make_Koch_curve.svg.png"></a></p>
+<p>コッホ曲線を描く関数は<code>drawKoch</code>ですが，この関数の中で<code>koch</code>を再帰的に呼び出しています（つまり<code>koch</code>の中で，<code>koch</code>を呼び出す）．
+<code>drawKoch</code>の引数は，再帰の次元数（<code>dim</code>），線分の両端の座標（<code>p1</code>と<code>p2</code>）です．
+再帰の次元数とは，再帰を繰り返す回数であり，この値が1になるまで繰り返します．
+例えば，<code>dim=2</code>で呼び出すと，再帰的に<code>dim=1</code>が4回呼び出さて終了します（4つの直線に分割されるため）．</p>
+<p><a href="https://gyazo.com/9ac4953db0bec1644daf6581a41e9c84"><img src="https://i.gyazo.com/9ac4953db0bec1644daf6581a41e9c84.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">drawKoch</span>(dim, p1, p2):
+
+  points <span style="color:#f92672">=</span> []
+
+  initializeTurtle()
+  speed(<span style="color:#ae81ff">8</span>)
+  penup()
+  goto(p1[<span style="color:#ae81ff">0</span>], p1[<span style="color:#ae81ff">1</span>])
+  right(<span style="color:#ae81ff">90</span>)
+  koch(dim, p1, p2)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">koch</span>(dim, p1, p2):
+
+  p <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(p2) <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>array(p1) <span style="color:#75715e">#線分のベクトル</span>
+  d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(p, ord<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span> <span style="color:#75715e">#線分を3等分した長さ</span>
+
+  q1 <span style="color:#f92672">=</span> p1 <span style="color:#75715e">#左の端点</span>
+  goto(q1[<span style="color:#ae81ff">0</span>], q1[<span style="color:#ae81ff">1</span>])
+
+  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>):
+    pendown()
+
+  forward(d)
+  q2 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#1番目の分割点</span>
+
+  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
+    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q1, q2) <span style="color:#75715e">#再起処理</span>
+
+  left(<span style="color:#ae81ff">60</span>)
+  forward(d)
+  q3 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#三角形の頂点</span>
+  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
+    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q2, q3) <span style="color:#75715e">#再起処理</span>
+
+  right(<span style="color:#ae81ff">120</span>)
+  forward(d)
+  q4 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#2番目の分割点</span>
+  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
+    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q3, q4) <span style="color:#75715e">#再起処理</span>
+
+  left(<span style="color:#ae81ff">60</span>)
+  forward(d)
+  q5 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#右の端点</span>
+  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
+    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q4, q5) <span style="color:#75715e">#再起処理</span>
+
+  penup()
+</code></pre></div><p>次元数$1$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます．
+この結果，次のコッホ曲線が描かれます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
+p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
+drawKoch(<span style="color:#ae81ff">1</span>, p1, p2)
+</code></pre></div><p><a href="https://gyazo.com/b4f1f15ed8f0a4f538260b97048433d6"><img src="https://i.gyazo.com/b4f1f15ed8f0a4f538260b97048433d6.png" alt="Image from Gyazo"></a></p>
+<p>次元数$2$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます．
+この結果，次のコッホ曲線が描かれます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
+p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
+drawKoch(<span style="color:#ae81ff">2</span>, p1, p2)
+</code></pre></div><p><a href="https://gyazo.com/6dc5d52db8c701b380d3313d6d02bfd7"><img src="https://i.gyazo.com/6dc5d52db8c701b380d3313d6d02bfd7.png" alt="Image from Gyazo"></a></p>
+<p>次元数$3$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます．
+この結果，次のコッホ曲線が描かれます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
+p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
+drawKoch(<span style="color:#ae81ff">3</span>, p1, p2)
+</code></pre></div><p><a href="https://gyazo.com/3ba7a5594fbed249b17d7e30d1038a03"><img src="https://i.gyazo.com/3ba7a5594fbed249b17d7e30d1038a03.png" alt="Image from Gyazo"></a></p>
+<p>次元数$4$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます．
+この結果，次のコッホ曲線が描かれます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
+p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
+drawKoch(<span style="color:#ae81ff">4</span>, p1, p2)
+</code></pre></div><p><a href="https://gyazo.com/ed11313e32db17a40ff8e720345e0b9c"><img src="https://i.gyazo.com/ed11313e32db17a40ff8e720345e0b9c.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>これまでに学習した方法を活用して<strong>オリジナルの図形</strong>を描いてください．
+描画に際しては次の機能を用いることを必須とします（関数の使用は任意）．</p>
+<ul>
+<li>for文による繰り返し</li>
+<li>if文による条件分岐</li>
+<li>関数の定義と呼び出し</li>
+</ul>
+<p>課題が完成したら，Google Colaboratoryで作成した <strong>chapter4.ipynb</strong> を保存し，
+<strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
+提出の前に必ず下記の設定を行ってください．</p>
+<ul>
+<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
+<li>ノートブックの変更内容を保存して固定</li>
+<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
+</ul>
+<h3>参考図書</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07FZ1NMMZ&linkId=38f44340ac47378746248005b4c9960d&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=4274069443&linkId=6f9c26005ca2d450efc8091e3869c10a&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=tf_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07KXFBCFP&linkId=c4e4a0fa6a0f54ef89e20d39eecca1a5&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/seminar_core_areas_learning/chapter_3_4/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
