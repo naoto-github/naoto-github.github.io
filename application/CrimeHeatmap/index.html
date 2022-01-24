@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Leaflet Template</title>
+  <link rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css'><link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  
+  <div id="main">
+  
+    <!-- ヘッダ -->
+    <header>
+      <h1>愛知県 犯罪ヒートマップ</h1>
+ 
+      <p>
+        愛知県警察が公開している<a href="https://www.pref.aichi.jp/police/anzen/toukei/opendata/seian-s/crimeopendata.html">犯罪オープンデータ</a>を利用して生成した犯罪発生件数のヒートマップです。
+      </p>
+      
+      <div>
+        <b>犯罪種別</b>：       
+        <input type="radio" id="trick-all" value="all" v-model="checked_trick">
+        <label for="trick-all">全体</label>
+        <input type="radio" id="trick-hittakuri" value="hittakuri" v-model="checked_trick">
+        <label for="trick-hittakuri">ひったくり</label>
+        <input type="radio" id="trick-syajyou" value="syajyou" v-model="checked_trick">
+        <label for="trick-syajyou">車上ねらい</label>
+        <input type="radio" id="trick-buhin" value="buhin" v-model="checked_trick">
+        <label for="trick-buhin">部品ねらい</label>
+        <input type="radio" id="trick-jidou" value="jidou" v-model="checked_trick">
+        <label for="trick-jidou">自動販売機ねらい</label>
+        <input type="radio" id="trick-jidousya" value="jidousya" v-model="checked_trick">
+        <label for="trick-jidousya">自動車盗</label>
+        <input type="radio" id="trick-bike" value="bike" v-model="checked_trick">
+        <label for="trick-bike">オートバイ盗</label>
+        <input type="radio" id="trick-jitensya" value="jitensya" v-model="checked_trick">
+        <label for="trick-jitensya">自転車盗</label>
+      </div>     
+      
+      <div>
+        <b>バンド幅</b>：
+        <input type="radio" id="band-005" value="005" v-model="checked_band">
+        <label for="band-005">0.05</label>
+        <input type="radio" id="band-001" value="010" v-model="checked_band">
+        <label for="band-010">0.1</label>
+        <input type="radio" id="band-050" value="050" v-model="checked_band">
+        <label for="band-050">0.5</label>        
+        <input type="radio" id="band-scott" value="scott" v-model="checked_band">
+        <label for="band-scott">Scott</label>
+        <!--
+        <input type="radio" id="band-silverman" value="silverman" v-model="checked_band">
+        <label for="band-silverman">Silverman</label>        
+        -->
+      </div>
+        
+    </header>
+
+    <!-- partial:index.partial.html -->
+    <div id="map"></div>
+
+    <!-- フッタ -->
+    <footer>
+      <p>&copy; 椙山女学園大学 文化情報学部 向研究室 2022</p>
+    </footer>
+    
+  </div>
+  
+  <!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js'></script>
+  
+  <!-- 全体 -->
+  <script src="./data/all/crime-density-trick-all-band-scott.js"></script>
+  <script src="./data/all/crime-density-trick-all-band-silverman.js"></script>
+  <script src="./data/all/crime-density-trick-all-band-050.js"></script>
+  <script src="./data/all/crime-density-trick-all-band-010.js"></script>
+  <script src="./data/all/crime-density-trick-all-band-005.js"></script>
+
+  <!-- ひったくり -->
+  <script src="./data/hittakuri/crime-density-trick-hittakuri-band-scott.js"></script>
+  <script src="./data/hittakuri/crime-density-trick-hittakuri-band-silverman.js"></script>
+  <script src="./data/hittakuri/crime-density-trick-hittakuri-band-050.js"></script>
+  <script src="./data/hittakuri/crime-density-trick-hittakuri-band-010.js"></script>
+  <script src="./data/hittakuri/crime-density-trick-hittakuri-band-005.js"></script>  
+  
+  <!-- 車上ねらい　-->
+  <script src="./data/syajyou/crime-density-trick-syajyou-band-scott.js"></script>
+  <script src="./data/syajyou/crime-density-trick-syajyou-band-silverman.js"></script>
+  <script src="./data/syajyou/crime-density-trick-syajyou-band-050.js"></script>
+  <script src="./data/syajyou/crime-density-trick-syajyou-band-010.js"></script>
+  <script src="./data/syajyou/crime-density-trick-syajyou-band-005.js"></script>   
+
+  <!-- 部品ねらい　-->
+  <script src="./data/buhin/crime-density-trick-buhin-band-scott.js"></script>
+  <script src="./data/buhin/crime-density-trick-buhin-band-silverman.js"></script>
+  <script src="./data/buhin/crime-density-trick-buhin-band-050.js"></script>
+  <script src="./data/buhin/crime-density-trick-buhin-band-010.js"></script>
+  <script src="./data/buhin/crime-density-trick-buhin-band-005.js"></script> 
+  
+  <!-- 自動販売機ねらい　-->
+  <script src="./data/jidou/crime-density-trick-jidou-band-scott.js"></script>
+  <script src="./data/jidou/crime-density-trick-jidou-band-silverman.js"></script>
+  <script src="./data/jidou/crime-density-trick-jidou-band-050.js"></script>
+  <script src="./data/jidou/crime-density-trick-jidou-band-010.js"></script>
+  <script src="./data/jidou/crime-density-trick-jidou-band-005.js"></script> 
+  
+  <!-- 自動車盗　-->
+  <script src="./data/jidousya/crime-density-trick-jidousya-band-scott.js"></script>
+  <script src="./data/jidousya/crime-density-trick-jidousya-band-silverman.js"></script>
+  <script src="./data/jidousya/crime-density-trick-jidousya-band-050.js"></script>
+  <script src="./data/jidousya/crime-density-trick-jidousya-band-010.js"></script>
+  <script src="./data/jidousya/crime-density-trick-jidousya-band-005.js"></script>   
+
+  <!-- オートバイ盗　-->
+  <script src="./data/bike/crime-density-trick-bike-band-scott.js"></script>
+  <script src="./data/bike/crime-density-trick-bike-band-silverman.js"></script>
+  <script src="./data/bike/crime-density-trick-bike-band-050.js"></script>
+  <script src="./data/bike/crime-density-trick-bike-band-010.js"></script>
+  <script src="./data/bike/crime-density-trick-bike-band-005.js"></script>   
+  
+  <!-- 自転車盗　-->
+  <script src="./data/jitensya/crime-density-trick-jitensya-band-scott.js"></script>
+  <script src="./data/jitensya/crime-density-trick-jitensya-band-silverman.js"></script>
+  <script src="./data/jitensya/crime-density-trick-jitensya-band-050.js"></script>
+  <script src="./data/jitensya/crime-density-trick-jitensya-band-010.js"></script>
+  <script src="./data/jitensya/crime-density-trick-jitensya-band-005.js"></script>   
+  
+  <script  src="./script.js"></script>
+
+</body>
+</html>
