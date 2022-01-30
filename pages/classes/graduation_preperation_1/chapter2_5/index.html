@@ -301,20 +301,99 @@ Monacaで利用するには，<strong>JS/CSSコンポーネント</strong>をク
 		});
     },
 };
-</code></pre></div><h3 id="実行">実行</h3>
+</code></pre></div><h3 id="実行結果">実行結果</h3>
 <p><a href="https://gyazo.com/92bfb269d286c753b5f663f0919dc477"><img src="https://i.gyazo.com/92bfb269d286c753b5f663f0919dc477.jpg" alt="Image from Gyazo" width="400"/></a></p>
 <h2 id="外部jsファイルのインポート">外部JSファイルのインポート</h2>
 <p><a href="https://www.city.nisshin.lg.jp/opendata/index.html">日進市オープンデータポータルサイト</a>で公開されている人口のオープンデータを取り込みます．
 JSON形式でダウンロードしたデータを，独自に加工したファイルが次の <strong>jinkou.js</strong> です．
-これらのファイルを，<code>/src/js/</code>に配置してください．</p>
+このファイルを，<code>/src/js/</code>に配置してください．</p>
 <ul>
 <li><a href="https://mukai-lab.info/classes/graduation_preperation_1/jinkou.js"><i class="fas fa-cloud-download-alt"></i>jinkou.js</a></li>
 </ul>
+<p><a href="https://gyazo.com/17a477d7c6efb7c82833f499a943f00f"><img src="https://i.gyazo.com/17a477d7c6efb7c82833f499a943f00f.png" alt="Image from Gyazo"></a></p>
+<p>上記のファイルを，Vueで利用するには，次のように<code>import</code>を宣言します．
+JSON形式のデータには，<code>jinkou.jinkou_list</code>でアクセスします．</p>
+<h3 id="javascript-2">JavaScript</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">jinkou</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./js/jinkou&#34;</span>
+</code></pre></div><p>正しくデータが取り込まれているか，次のコードを<code>mounted</code>プロパティに記述してみましょう．
+アラート・ダイアログで「人口:63981」が表示されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$ons</span>.<span style="color:#a6e22e">notification</span>.<span style="color:#a6e22e">alert</span>(<span style="color:#e6db74">&#34;人口: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>[<span style="color:#e6db74">&#34;市全体&#34;</span>][<span style="color:#e6db74">&#34;1999&#34;</span>]);
+</code></pre></div><h3 id="実行結果-1">実行結果</h3>
+<p><a href="https://gyazo.com/7ef7052b6beab1e7937ee0c0cce186e2"><img src="https://i.gyazo.com/7ef7052b6beab1e7937ee0c0cce186e2.jpg" alt="Image from Gyazo" width="400"/></a></p>
+<h2 id="データの取り込み">データの取り込み</h2>
+<p>上記の人口のデータをグラフで表示しましょう．
+最初に，市全体，赤池長，浅田町のデータを選択するためのセレクトボックスを作成します．
+<code>city_list</code>がセレクトボックスの全ての選択肢，<code>selected_city</code>が選択されている選択肢を表します．
+初期状態では，市全体を表示することにします．
+また，<code>Object.keys()</code>は連想配列のキー，<code>Object.values()</code>は連想配列のバリューを取得するメソッドです．</p>
+<h3 id="html-2">HTML</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">v-ons-select</span> <span style="color:#a6e22e">v-model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;selected_city&#34;</span>&gt;
+	&lt;<span style="color:#f92672">option</span> <span style="color:#a6e22e">v-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;city in city_list&#34;</span>&gt;
+		{{ city }}
+    &lt;/<span style="color:#f92672">option</span>&gt;
+&lt;/<span style="color:#f92672">v-ons-select</span>&gt;
+</code></pre></div><h3 id="javascript-3">JavaScript</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span>() {
+	<span style="color:#66d9ef">return</span> {
+		<span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;グラフアプリ&#39;</span>,
+		<span style="color:#a6e22e">ctx</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+		<span style="color:#a6e22e">myChart</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+		<span style="color:#a6e22e">city_list</span><span style="color:#f92672">:</span> Object.<span style="color:#a6e22e">keys</span>(<span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>), <span style="color:#75715e">// 市全体，赤池長，浅田町
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">selected_city</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;市全体&#34;</span>, <span style="color:#75715e">// 選択されたデータ
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">label_data</span><span style="color:#f92672">:</span> Object.<span style="color:#a6e22e">keys</span>(<span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>[<span style="color:#e6db74">&#34;市全体&#34;</span>]), <span style="color:#75715e">// 1999, 2000, ..., 2021
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">graph_data</span><span style="color:#f92672">:</span> Object.<span style="color:#a6e22e">values</span>(<span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>[<span style="color:#e6db74">&#34;市全体&#34;</span>]) <span style="color:#75715e">// 63981, 65553, ..., 91652
+</span><span style="color:#75715e"></span>    };
+},
+<span style="color:#a6e22e">mounted</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(){
+	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;myChart&#39;</span>).<span style="color:#a6e22e">getContext</span>(<span style="color:#e6db74">&#39;2d&#39;</span>);
+	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Chart</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ctx</span>, {
+		<span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;bar&#39;</span>,
+        <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+			<span style="color:#a6e22e">labels</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">label_data</span>,
+			<span style="color:#a6e22e">datasets</span><span style="color:#f92672">:</span> [{
+				<span style="color:#a6e22e">label</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">selected_city</span>, <span style="color:#75715e">// 選択されたデータ
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">graph_data</span>
+            }]
+        }
+    });
+},  
+</code></pre></div><h3 id="実行結果-2">実行結果</h3>
+<p><a href="https://gyazo.com/72faa233be0d6c6d4b8503c3666dc692"><img src="https://i.gyazo.com/72faa233be0d6c6d4b8503c3666dc692.jpg" alt="Image from Gyazo" width="400"/></a></p>
+<h2 id="イベント処理">イベント処理</h2>
+<p>最後にセレクトボックスの状態に応じてグラフを切り替えます．
+Vueで宣言された変数を監視し，値の更新を検知する<code>watch</code>プロパティを利用します．
+ここでは，<code>this.selected_city</code>を監視し，更新された値に応じて，グラフを再構築してから描画します．</p>
+<h3 id="javascript-4">JavaScript</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">watch</span><span style="color:#f92672">:</span>{
+    <span style="color:#a6e22e">selected_city</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(){
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">label_data</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">keys</span>(<span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>[<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">selected_city</span>]),
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">graph_data</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">values</span>(<span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>[<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">selected_city</span>])
+
+    <span style="color:#75715e">/* データの更新 */</span>
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span>.<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">labels</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">label_data</span>;
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span>.<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">datasets</span>.<span style="color:#a6e22e">label</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">selected_city</span>;
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span>.<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">datasets</span>.<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">dataset</span>) =&gt; {
+        <span style="color:#a6e22e">dataset</span>.<span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">graph_data</span>;
+    });
+
+    <span style="color:#75715e">/* グラフを描画 */</span>
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span>.<span style="color:#a6e22e">update</span>();
+    }
+}
+</code></pre></div><h3 id="実行結果-3">実行結果</h3>
+<p>2011年に，赤池町の一部が天白区に編入，また，浅田町の一部が浅田平子となったため，人口が減少している．</p>
+<p><a href="https://gyazo.com/dc4d0ce93ee85ec3de7ce82a57878a21"><img src="https://i.gyazo.com/dc4d0ce93ee85ec3de7ce82a57878a21.jpg" alt="Image from Gyazo" width="400"/></a></p>
+<p><a href="https://gyazo.com/a8b5480d0dbffdc73633c933feb8e2f2"><img src="https://i.gyazo.com/a8b5480d0dbffdc73633c933feb8e2f2.jpg" alt="Image from Gyazo" width="400"/></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
 <p>アプリが完成したら，次の課題に挑戦してみよう！</p>
+<ul>
+<li>線グラフ（line）に変更する</li>
+<li>グラフの色（backgroundColor）を変更する</li>
+<li>他の<a href="https://www.city.nisshin.lg.jp/opendata/index.html">日進市のオープンデータ</a>を利用する</li>
+</ul>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   プロジェクトのソースコード
 </h1>
