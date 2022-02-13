@@ -279,7 +279,13 @@ right(90)
   ペンの色と太さ
 </h1>
 
+<p>ペンの色や太さを変更してみましょう．</p>
 <h2 id="ペンの色">ペンの色</h2>
+<p>ペンの色を変更するには<code>color()</code>を用います．
+<code>()</code>の中には色を表す<code>red</code>や<code>green</code>などの文字列を指定します．
+指定可能な色は<a href="https://www.astrouw.edu.pl/~jskowron/colors-x11/rgb.html">rgb.txt</a>に列挙されています．
+16進数の表現を用いて<code>#ff0000</code>や<code>#00ff00</code>などと指定することも可能です．
+ここでは，ペンの色を赤（<code>red</code>），緑（<code>green</code>），青（<code>blue</code>），ピンク（<code>pink</code>）に変えながら直線を描画します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">penup()
 goto(<span style="color:#f92672">-</span><span style="color:#ae81ff">200</span>, <span style="color:#ae81ff">0</span>)
 pendown()
@@ -296,23 +302,31 @@ forward(<span style="color:#ae81ff">100</span>)
 color(<span style="color:#e6db74">&#34;pink&#34;</span>)
 forward(<span style="color:#ae81ff">100</span>)
 </code></pre></div><p><a href="https://gyazo.com/fc707decbaf70fc2cde15278d0a57a72"><img src="https://i.gyazo.com/fc707decbaf70fc2cde15278d0a57a72.png" alt="Image from Gyazo" width="400"/></a></p>
+<p>色モードを指定して，RGB（赤，緑，青）の3色の組み合わせで，色を表現することも可能です．
+色モードを「1.0」に設定すると0.0〜1.0の範囲，また，色モードを「255」に設定すると0〜255の範囲で色の強さを表現します．
+RGBの値は<a href="https://www.colordic.org/">原色大辞典</a>を参考にすると良いです．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">penup()
 goto(<span style="color:#f92672">-</span><span style="color:#ae81ff">200</span>, <span style="color:#ae81ff">0</span>)
 pendown()
 
-color(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
+colormode(<span style="color:#ae81ff">255</span>) <span style="color:#75715e"># 0〜255の範囲で指定</span>
+
+color(<span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>) <span style="color:#75715e"># 赤</span>
 forward(<span style="color:#ae81ff">100</span>)
 
-color(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>)
+color(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">255</span>, <span style="color:#ae81ff">0</span>) <span style="color:#75715e"># 緑</span>
 forward(<span style="color:#ae81ff">100</span>)
 
-color(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+color(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">255</span>) <span style="color:#75715e"># 青</span>
 forward(<span style="color:#ae81ff">100</span>)
 
-color(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.7</span>, <span style="color:#ae81ff">0.8</span>)
+color(<span style="color:#ae81ff">234</span>, <span style="color:#ae81ff">145</span>, <span style="color:#ae81ff">152</span>) <span style="color:#75715e"># ピンク</span>
 forward(<span style="color:#ae81ff">100</span>)
 </code></pre></div><p><a href="https://gyazo.com/d6bdfba8d1d53d173da1de13b358f295"><img src="https://i.gyazo.com/d6bdfba8d1d53d173da1de13b358f295.png" alt="Image from Gyazo" width="400"/></a></p>
 <h2 id="ペンの太さ">ペンの太さ</h2>
+<p>ペンの太さを変更するには<code>pensize()</code>を用います．
+<code>()</code>の中にはペンの太さ（単位はピクセル）を指定します．
+ここでは，ペンの太さを<code>5</code>，<code>10</code>，<code>15</code>，<code>20</code>に変化させながら，直線を描画しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">penup()
 goto(<span style="color:#f92672">-</span><span style="color:#ae81ff">200</span>, <span style="color:#ae81ff">0</span>)
 pendown()
@@ -329,11 +343,41 @@ forward(<span style="color:#ae81ff">100</span>)
 pensize(<span style="color:#ae81ff">20</span>)
 forward(<span style="color:#ae81ff">100</span>)
 </code></pre></div><p><a href="https://gyazo.com/98a4b4e89d0a7ef5a47797be09bd975e"><img src="https://i.gyazo.com/98a4b4e89d0a7ef5a47797be09bd975e.png" alt="Image from Gyazo" width="400"/></a></p>
+<h2 id="例題2">例題2</h2>
+<p>次の図を参考に正三角形を描いてください．</p>
+<p><a href="https://gyazo.com/0c3058b97df7fe30bf67ea490b5d8b27"><img src="https://i.gyazo.com/0c3058b97df7fe30bf67ea490b5d8b27.png" alt="Image from Gyazo" width="400"/></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  その他の関数
+</h1>
+
+<h2 id="アニメーションの速度">アニメーションの速度</h2>
+<p>タートルのアニメーションの速度を変更するには<code>speed()</code>を用います．
+<code>()</code>の中には0〜10の範囲で速度を指定します．
+<code>10</code>が最も速く，<code>1</code>が最もゆっくり描画します．
+また，タートルのアニメーションが不要であれば<code>0</code>を指定すると良いです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">speed(<span style="color:#ae81ff">10</span>) <span style="color:#75715e"># 高速</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">speed(<span style="color:#ae81ff">1</span>) <span style="color:#75715e"># 低速</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">speed(<span style="color:#ae81ff">0</span>) <span style="color:#75715e"># アニメーションなし</span>
+</code></pre></div><h2 id="スクリーンの背景色">スクリーンの背景色</h2>
+<p>スクリーン（ウィンドウ）の背景色を指定するには<code>bgcolor()</code>を用います．
+<code>()</code>の中には，ペンの色を設定する<code>color()</code>と同様に，文字列や16進数で色を指定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">bgcolor(<span style="color:#e6db74">&#34;yellow&#34;</span>) <span style="color:#75715e"># 背景色を黄色に設定</span>
+</code></pre></div><h2 id="タートル矢印の表示非表示">タートル（矢印）の表示・非表示</h2>
+<p>タートル（矢印）を表示するには<code>showturtle()</code>，非表示にするには<code>hideturtle()</code>を用います．
+描画された結果だけを表示したいときは，<code>hideturtle()</code>でタートルを隠しておきましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">showturtle() <span style="color:#75715e"># タートルの表示</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">hideturtle() <span style="color:#75715e"># タートルの非表示</span>
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
 <p>次の課題に取り組んでください．</p>
+<ul>
+<li>正五角形を描く</li>
+<li>図を参考に辺の色を赤，青，緑に設定する</li>
+<li>背景色を黄に設定する</li>
+</ul>
+<p><a href="https://gyazo.com/26cf9a462c42804ac87f90c547887f50"><img src="https://i.gyazo.com/26cf9a462c42804ac87f90c547887f50.png" alt="Image from Gyazo" width="400"/></a></p>
 <p>課題を完成させたらスクリプトを保存し，「chapter2.py」を提出してください．</p>
 <h3>参考書籍</h3>
 
