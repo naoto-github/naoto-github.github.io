@@ -16,33 +16,76 @@
   <h1>MEME VISUALIZER</h1>
   
   <div id="main">
+
+    <hr>
+    
     <div>
-      <p>JINSプラットフォームから取得した認証コード</p>
+      <h2>認証コードを取得するためのURLを生成</h2>
+      <p>stateはランダムに生成した8文字</p>      
+      <button v-on:click="getCode">URLの生成</button>
+      <p><label>state:</label> {{ random_state }}</p>
+      <p><label>url:</label> <a href="{{ url }}">{{ url }}</a></p>      
+    </div>
+
+    <hr>
+    
+    <div>
+      <h2>JINSプラットフォームから取得した認証コード</h2>
+      <p>stateが一致していることを確認</p>
       <p><label>state:</label> {{ state }}</p>        
       <p><label>code:</label> {{ code }}</p>
     </div>
 
+    <hr>
+    
     <div>
+      <h2>認証コードを利用してアクセストークンの取得</h2>
+      <p>secretは<a href="https://developers.jins.com/">JINS MEME DEVERLOPERS</a>で生成</p>      
       <button v-on:click="getToken">アクセストークンの取得</button>      
-      <p><label>client secret:</label> <input v-model="client_secret" placeholder="input client_secret"></p>
-      <p><label>your secret:</label> {{ client_secret }}</p>            
+      <p><label>client secret:</label> <input type="password" v-model="client_secret" placeholder="input client_secret"></p>
       <p><label>response:</label> {{ response }}</p>      
     </div>
+
+    <hr>
+    
   </div>
 
   <script>
+
+    // 認証コード取得のパラメータ
+    response_type = "code";
+    client_id = "080625198745830";
+    redirect_uri = "https://mukai-lab.info/application/Jins_Meme/visualizer/";
+    scope = "official";
+    service_id = "meme";
+    login_hint = "nmukai@sugiyama-u.ac.jp";    
     
+    // アクセストークンのパラメータ
     post_url = "https://apis.jins.com/meme/v1/oauth/token";
     grant_type = "authorization_code";
     redirect_uri = "https://mukai-lab.info/application/Jins_Meme/visualizer/";
     client_id = "080625198745830";
+
+    // ランダムな文字列の生成
+    function getRandomStr(length){
+	const SOURCE = "abcdefghijklmnopqrstuvwxyz0123456789";
+	let result = '';
+	
+	for(let i=0; i<length; i++){
+	    result += SOURCE[Math.floor(Math.random() * SOURCE.length)];
+	}
+  
+	return result
+    }
     
     new Vue({
 	el: "#main",
 	data:{
-	    state: "no data",
-	    code: "no data",
-	    response: "no data",
+	    random_state: "",
+	    url: "",
+	    state: "",
+	    code: "",
+	    response: "",
 	    client_secret: "",
 	},
 	mounted: function(){
@@ -53,6 +96,10 @@
 	    this.code = params.get("code");
 	},
 	methods:{
+	    getCode: function(){
+		this.random_state = getRandomStr(8);
+		this.url = `https://accounts.jins.com/jp/ja/oauth/authorize?response_type=${response_type}&client_id=${client_id}&redirect_uri=${redirect_uri}&state=${this.random_state}&scope=${scope}&service_id=${service_id}&login_hint=${login_hint}`;		
+	    },
 	    getToken: function(){     
 		let params = new URLSearchParams();
 		params.append("grant_type", grant_type);
