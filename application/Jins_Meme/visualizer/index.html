@@ -3,10 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <title>Meme Visualizer</title>
+
+  <!-- Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  
 </head>
 <body>
-  
+
   <h1>MEME VISUALIZER</h1>
   
+  <div id="main">
+    <p>JINSプラットフォームから取得した認証コード</p>
+    <p><label>state:</label> {{ state }}</p>        
+    <p><label>code:</label> {{ code }}</p>    
+  </div>
+
+  <script>
+
+    new Vue({
+	el: "#main",
+	data:{
+	    state: "state",
+	    code: "code",
+	},
+	mounted: function(){
+	    let url = new URL(window.location.href);
+	    let params = url.searchParams;
+	    
+	    this.state = params.get("state");
+	    this.code = params.get("code");
+	},
+    });
+    
+  </script>
+
+  
 </body>
+
 </html>
