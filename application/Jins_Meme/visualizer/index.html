@@ -47,6 +47,16 @@
     </div>
 
     <hr>
+
+    <div>
+      <h2>アクセストークンを利用して15秒間隔データの取得</h2>
+      <button v-on:click="getData">15秒間隔データの取得</button>
+      <p><label>date_from:</label> {{ date_from }}</p>
+      <p><label>date_to:</label> {{ date_to }}</p>                  
+      <p><label>data:</label> {{ data }}</p>            
+    </div>
+
+    <hr>
     
   </div>
 
@@ -87,6 +97,9 @@
 	    code: "",
 	    response: "",
 	    client_secret: "",
+	    data: "",
+	    date_from: "",
+	    date_to: "",
 	},
 	mounted: function(){
 	    let url = new URL(window.location.href);
@@ -116,6 +129,17 @@
 		    .catch(error => {
 			console.log(error);
 		    })
+	    },
+	    getData: function(){
+		let access_token = this.response["access_token"];
+		let accept = "application/json"
+		let authorization = `Bearer ${access_token}`;
+
+		let now = new Date();
+		let before_1min = now.getTime() - 60000;
+		let before = new Date(before_1min);		
+		this.date_from = before.toISOString();
+		this.date_to = now.toISOString();		
 	    },
 	},	
     });
