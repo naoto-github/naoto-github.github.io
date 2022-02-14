@@ -6,6 +6,9 @@
 
   <!-- Vue.js -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   
 </head>
 <body>
@@ -13,18 +16,34 @@
   <h1>MEME VISUALIZER</h1>
   
   <div id="main">
-    <p>JINSプラットフォームから取得した認証コード</p>
-    <p><label>state:</label> {{ state }}</p>        
-    <p><label>code:</label> {{ code }}</p>    
+    <div>
+      <p>JINSプラットフォームから取得した認証コード</p>
+      <p><label>state:</label> {{ state }}</p>        
+      <p><label>code:</label> {{ code }}</p>
+    </div>
+
+    <div>
+      <button v-on:click="getToken">アクセストークンの取得</button>      
+      <p><label>client secret:</label> <input v-model="client_secret" placeholder="input client_secret"></p>
+      <p><label>your secret:</label> {{ client_secret }}</p>            
+      <p><label>response:</label> {{ response }}</p>      
+    </div>
   </div>
 
   <script>
 
+    post_url = "https://apis.jins.com/meme/v1/oauth/token";
+    grant_type = "authorization_code";
+    redirect_uri = "https://mukai-lab.info/application/Jins_Meme/visualizer/";
+    client_id = "080625198745830";
+    
     new Vue({
 	el: "#main",
 	data:{
-	    state: "state",
-	    code: "code",
+	    state: "no data",
+	    code: "no data",
+	    response: "no data",
+	    client_secret: "",
 	},
 	mounted: function(){
 	    let url = new URL(window.location.href);
@@ -33,6 +52,25 @@
 	    this.state = params.get("state");
 	    this.code = params.get("code");
 	},
+	methods:{
+	    getToken: function(){     
+		let params = new URLSearchParams();
+		params.append("grant_type", grant_type);
+		params.append("code", this.code);
+		params.append("redirect_uri", redirect_uri);
+		params.append("client_id", client_id);
+		params.append("client_secret", this.client_secret);
+	
+		axios.post(post_url, params)
+		    .then(response => {
+			this.response = response.data;
+			console.log(this.response);
+		    })
+		    .catch(error => {
+			console.log(error);
+		    })
+	    },
+	},	
     });
     
   </script>
