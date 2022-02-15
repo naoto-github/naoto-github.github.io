@@ -149,10 +149,6 @@
 		let access_token = this.response["access_token"];
 		let accept = "application/json";
 		let authorization = `Bearer ${access_token}`;
-
-
-		console.log("accept:" + accept);
-		console.log("authorization:" + authorization);		
 		
 		axios.get(get_url, {
 		    headers: {
@@ -160,8 +156,8 @@
 			"Authorization": authorization,
 		    },		    
 		    params: {
-			"date_from": this.date_from,
-			"date_to": this.date_to,
+			"date_from": encodeURI(this.date_from),
+			"date_to": encodeURI(this.date_to),
 		    },
 		}).then(response =>{
 		    this.data = response.data;
