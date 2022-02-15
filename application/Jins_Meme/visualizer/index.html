@@ -150,18 +150,15 @@
 		let accept = "application/json";
 		let authorization = `Bearer ${access_token}`;
 
-		console.log(encodeURI(this.date_from));
-		console.log(encodeURI(this.date_to));		
+		let uri = `${get_url}?date_from=${date_from}&date_to=${date_to}`
+		let encoded_url = encodeURI(uri);
+		console.log(encoded_url);
 		
-		axios.get(get_url, {
+		axios.get(encoded_uri, {
 		    headers: {
 			"Accept": accept,
 			"Authorization": authorization,
 		    },		    
-		    params: {
-			"date_from": encodeURI(this.date_from),
-			"date_to": encodeURI(this.date_to),
-		    },
 		}).then(response =>{
 		    this.data = response.data;
 		    console.log(this.data);
