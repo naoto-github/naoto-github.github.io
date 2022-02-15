@@ -50,7 +50,7 @@
     <hr>
 
     <div>
-      <h2>アクセストークンを利用して15秒間隔データの取得</h2>
+      <h2>アクセストークンを利用して60秒間隔データの取得</h2>
       <button v-on:click="setDataTime">時刻の取得（5分間）</button>
       <p><label>date_from:</label> <input v-model="date_from"></p>
       <p><label>date_to:</label> <input v-model="date_to"></p>
@@ -79,7 +79,9 @@
     client_id = "080625198745830";
 
     // 15秒間隔データのパラメータ
-    get_url = "https://apis.jins.com/meme/v2/users/me/official/computed_data";
+    //get_url = "https://apis.jins.com/meme/v2/users/me/official/computed_data";
+    // 60秒間隔データのパラメータ
+    get_url = "https://apis.jins.com/meme/v2/users/me/official/standard_mode_logs"
     accept = "application/json";
     
     // ランダムな文字列の生成
@@ -138,7 +140,7 @@
 	    },
 	    setDataTime: function(){
 		let now = new Date()
-		let minute = 5; //5分間のデータ
+		let minute = 10; //10分間のデータ
 		let seconds = minute * 60 * 1000;
 		let before_min = now.getTime() - seconds;
 		let before = new Date(before_min);		
@@ -152,9 +154,7 @@
 		
 		axios.get(get_url, {
 		    headers: {
-			"Content-Type": "*/*",
-			"Accept-Language": "*",
-			"Accept": "*/*",
+			"Accept": "application/json",
 			"Authorization": "Bearer " + access_token,
 		    },
 		    data: {
