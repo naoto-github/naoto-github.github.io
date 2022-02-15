@@ -146,19 +146,16 @@
 		this.date_to = now.toISOString();					
 	    },
 	    getData: function(){
-		let access_token = this.response["access_token"];
-		let accept = "application/json";
-		let authorization = `Bearer ${access_token}`;
 		
 		axios.get(get_url, {
+		    headers: {
+			"Accept": "application/json",
+			"Authorization": "Bearer " + access_token,
+		    },		    		    
 		    params: {
 			"date_from": encodeURIComponent(this.date_from),
 			"date_to": encodeURIComponent(this.date_to),			
 		    },
-		    headers: {
-			"Accept": accept,
-			"Authorization": authorization,
-		    },		    
 		}).then(response =>{
 		    this.data = response.data;
 		    console.log(this.data);
