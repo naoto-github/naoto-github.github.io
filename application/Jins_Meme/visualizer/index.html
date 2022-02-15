@@ -14,6 +14,7 @@
 <body>
 
   <h1>MEME VISUALIZER</h1>
+  <p>クロスオリジン（CCross-Origin Resource Sharing: ORS）エラーを回避するため，Safariの設定でエラーを無視することを推奨．</p>
   
   <div id="main">
 
@@ -50,9 +51,10 @@
 
     <div>
       <h2>アクセストークンを利用して15秒間隔データの取得</h2>
-      <button v-on:click="getData">15秒間隔データの取得</button>
-      <p><label>date_from:</label> {{ date_from }}</p>
-      <p><label>date_to:</label> {{ date_to }}</p>                  
+      <button v-on:click="setDataTime">時刻の取得（5分間）</button>
+      <p><label>date_from:</label> <input v-model="date_from"></p>
+      <p><label>date_to:</label> <input v-model="date_to"></p>
+      <button v-on:click="getData">15秒間隔データの取得</button>      
       <p><label>data:</label> {{ data }}</p>            
     </div>
 
@@ -76,6 +78,10 @@
     redirect_uri = "https://mukai-lab.info/application/Jins_Meme/visualizer/";
     client_id = "080625198745830";
 
+    // 15秒間隔データのパラメータ
+    get_url = "https://apis.jins.com/meme/v2/users/me/official/computed_data";
+    accept = "application/json";
+    
     // ランダムな文字列の生成
     function getRandomStr(length){
 	const SOURCE = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -130,16 +136,32 @@
 			console.log(error);
 		    })
 	    },
+	    setDataTime: function(){
+		let now = new Date()
+		let minute = 5; //5分間のデータ
+		let seconds = minute * 60 * 1000;
+		let before_min = now.getTime() - seconds;
+		let before = new Date(before_min);		
+		this.date_from = before.toISOString();
+		this.date_to = now.toISOString();					
+	    },
 	    getData: function(){
 		let access_token = this.response["access_token"];
-		let accept = "application/json"
+		let accept = "application/json";
 		let authorization = `Bearer ${access_token}`;
-
-		let now = new Date();
-		let before_1min = now.getTime() - 60000;
-		let before = new Date(before_1min);		
-		this.date_from = before.toISOString();
-		this.date_to = now.toISOString();		
+		
+		this.url = `${get_url}?date_from=${this.date_from}&date_to=${this.date_to}`
+		axios.get(get_url, {
+		    params: {
+			"Accept": accept,
+			"Authorization": authorization,
+		    }
+		}).then(response =>{
+		    this.data = response.data;
+		    console.log(this.data);
+		}).catch(error => {
+		    console.log(error);
+		})				
 	    },
 	},	
     });
