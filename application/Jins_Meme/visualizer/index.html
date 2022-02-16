@@ -79,10 +79,7 @@
     client_id = "080625198745830";
 
     // 15秒間隔データのパラメータ
-    //get_url = "https://apis.jins.com/meme/v2/users/me/official/computed_data";
-    // 60秒間隔データのパラメータ
-    get_url = "https://apis.jins.com/meme/v2/users/me/official/standard_mode_logs"
-    accept = "application/json";
+    get_url = "https://apis.jins.com/meme/v2/users/me/official/computed_data";
     
     // ランダムな文字列の生成
     function getRandomStr(length){
@@ -149,21 +146,21 @@
 	    },
 	    getData: function(){
 
-		//let access_token = this.response["access_token"];
-		let access_token = "803bb19ec19a6001e87b694adeb3a7ebc7f686b5a39d27257db80775bcb66b08";
+		let access_token = this.response["access_token"];
+
+		let params = new URLSearchParams();
+		params.append("date_from", this.date_from);
+		params.append("date_to", this.date_to);		
 		
-		axios.get(get_url, {
-		    params: {
-			"date_from": encodeURIComponent(this.date_from),
-			"date_to": encodeURIComponent(this.date_to),			
-		    },
-		    data: {
-		    },		    
+		axios({		    
+		    url: get_url,
+		    method: "get",
 		    headers: {
 			"Accept": "application/json",
-			"Authorization": "Bearer " + access_token,
+			"Authorization": `Bearer ${access_token}`,
 			"Accept-Language": "ja",
 		    },
+		    params,		    
 		}).then(response =>{
 		    this.data = response.data;
 		    console.log(this.data);
