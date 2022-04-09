@@ -280,11 +280,97 @@ circle(radius)
   関数
 </h1>
 
+<p>関数には，Pythonに組み込まれている関数と，ユーザが定義する関数の2種類があります．
+前者はこれまでに使用してきた<code>print()</code>や<code>input()</code>などが該当します．
+後者はユーザが関数に名前を付けて定義します．
+関数は，<strong>引数</strong> や <strong>返り値（戻り値）</strong> と組み合わせて定義することができます．</p>
+<p>例として円の面積を計算する関数<code>calcArea</code>を考えてみましょう．
+円の面積を求めるには円周率が必要なため，<strong>mathモジュール</strong> をインポートしておきます．
+円周率は<code>math.pi</code>で参照することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># mathモジュールをインポート</span>
+<span style="color:#f92672">import</span> math
+
+<span style="color:#75715e"># 円周率</span>
+<span style="color:#66d9ef">print</span>(math<span style="color:#f92672">.</span>pi) <span style="color:#75715e"># -&gt; 3.141592653589793</span>
+</code></pre></div><h2 id="関数定義">関数定義</h2>
+<p>関数を定義するには<code>def</code>を用います．
+実行する処理の部分は，for文やif文と同様にインデント（字下げ）が必要なことに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#960050;background-color:#1e0010">関数名</span>():
+	<span style="color:#960050;background-color:#1e0010">関数を呼び出したときに実行する処理</span>
+</code></pre></div><p>半径3の円の面積を計算する<code>calcArea()</code>を定義します．
+実行する処理の内部で<code>print()</code>を実行し，計算結果を表示しています．
+関数を呼び出し実行するには，定義した関数名<code>calcArea()</code>を用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 関数を定義</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calcArea</span>():
+	radius <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#75715e"># 半径は3</span>
+	area <span style="color:#f92672">=</span> radius <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>pi <span style="color:#75715e"># 半径*半径*円周率</span>
+	<span style="color:#66d9ef">print</span>(area)
+	
+<span style="color:#75715e"># 関数の呼び出し</span>
+calcArea() <span style="color:#75715e"># -&gt; 28.274333882308138</span>
+</code></pre></div><h2 id="引数を利用した関数定義">引数を利用した関数定義</h2>
+<p>上記の関数では，異なる半径の円の面積を計算するには，関数自体を修正しなくてはいけません．
+このような場合は，<strong>引数（ひきすう）</strong> を用います．
+関数名の後ろの括弧の中に記述された変数が引数です．
+関数を呼び出すときに，引数に渡した値が，関数の中で用いられます．
+複数の引数を設定する場合は，変数をカンマで区切って記述することが可能です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#960050;background-color:#1e0010">関数名</span>(<span style="color:#960050;background-color:#1e0010">引数</span><span style="color:#ae81ff">1</span>, <span style="color:#960050;background-color:#1e0010">引数</span><span style="color:#ae81ff">2</span>, <span style="color:#960050;background-color:#1e0010">…</span>):
+	<span style="color:#960050;background-color:#1e0010">関数を呼び出したときに実行する処理</span>
+</code></pre></div><p>ここでは，円の半径<code>radius</code>を引数として設定し，関数を呼び出すときに<code>5</code>を引数の値として渡しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 関数を定義</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calcArea</span>(radius):
+	area <span style="color:#f92672">=</span> radius <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>pi
+	<span style="color:#66d9ef">print</span>(area)
+	
+<span style="color:#75715e"># 関数の呼び出し</span>
+calcArea(<span style="color:#ae81ff">5</span>) <span style="color:#75715e"># -&gt; 78.53981633974483</span>
+</code></pre></div><h2 id="返り値を利用した関数定義">返り値を利用した関数定義</h2>
+<p>上記の関数では，計算された結果を<code>print()</code>で表示していますが，呼び出し元で利用することができません．
+このような場合は，<strong>返り値（戻り値）</strong> を用います．
+処理の最後に<code>return</code>で指定された値が返り値です．
+返り値は呼び出し元で計算結果として受け取ることが可能です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#960050;background-color:#1e0010">関数名</span>(<span style="color:#960050;background-color:#1e0010">引数</span><span style="color:#ae81ff">1</span>, <span style="color:#960050;background-color:#1e0010">引数</span><span style="color:#ae81ff">2</span>, <span style="color:#960050;background-color:#1e0010">…</span>):
+	<span style="color:#960050;background-color:#1e0010">関数を呼び出したときに実行する処理</span>
+	<span style="color:#66d9ef">return</span> <span style="color:#960050;background-color:#1e0010">返り値</span>
+</code></pre></div><p>ここでは，半径3の円の面積と，半径5の円の面積を返り値として受け取り，この合計を呼び出し元で出力しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 関数を定義</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calcArea</span>(radius):
+	area <span style="color:#f92672">=</span> radius <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> math<span style="color:#f92672">.</span>pi
+	<span style="color:#66d9ef">return</span> area
+	
+<span style="color:#75715e"># 関数の呼び出し</span>
+area3 <span style="color:#f92672">=</span> calcArea(<span style="color:#ae81ff">3</span>) <span style="color:#75715e"># -&gt; 28.274333882308138</span>
+area5 <span style="color:#f92672">=</span> calcArea(<span style="color:#ae81ff">5</span>) <span style="color:#75715e"># -&gt; 78.53981633974483</span>
+<span style="color:#66d9ef">print</span>(area3 <span style="color:#f92672">+</span> area5) <span style="color:#75715e"># -&gt; 106.81415022205297</span>
+</code></pre></div><h2 id="関数を活用した描画">関数を活用した描画</h2>
+<p>頂点数を指定して任意の多角形を描く関数<code>drawPolygon()</code>を定義してみましょう．
+引数には，始点の座標<code>x</code>と<code>y</code>，頂点数<code>vertex</code>を指定します．
+また，多角形の1辺の長さは200とします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">drawPolygon</span>(x, y, vertex):
+
+  penup()
+  goto(x, y) <span style="color:#75715e"># 始点の座標はx,y</span>
+  pendown()
+
+  sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">180</span> <span style="color:#f92672">*</span> (vertex <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 内角の和</span>
+  angle <span style="color:#f92672">=</span> sum <span style="color:#f92672">/</span> vertex <span style="color:#75715e"># 頂点の角度</span>
+
+  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(vertex):
+    forward(<span style="color:#ae81ff">200</span>)
+    right(<span style="color:#ae81ff">180</span> <span style="color:#f92672">-</span> angle)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">drawPolygon(<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">4</span>)
+</code></pre></div><p><a href="https://gyazo.com/ffdbaa9d588540be35a81a29f84cc2d4"><img src="https://i.gyazo.com/ffdbaa9d588540be35a81a29f84cc2d4.png" alt="Image from Gyazo" width="400"/></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">drawPolygon(<span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">173</span>, <span style="color:#ae81ff">6</span>) 
+</code></pre></div><p><a href="https://gyazo.com/45af504bdf67fdd9a47e1869494dcebc"><img src="https://i.gyazo.com/45af504bdf67fdd9a47e1869494dcebc.png" alt="Image from Gyazo" width="400"/></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
 <p>次の課題に取組んでください．</p>
+<ul>
+<li>辺の長さ<code>length</code>を引数として渡せるように<code>drawPolygon()</code>を改良してください</li>
+<li>頂点数を増やしていくと，図形はどのような形状になるか確認しなさい</li>
+</ul>
 <p>課題を完成させたらスクリプトを保存し，「chapter5.py」を提出してください．</p>
 <h3>参考書籍</h3>
 
