@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    乱数と条件分岐 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="乱数と条件分岐" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/programming/chapter4/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="乱数と条件分岐  Turtleグラフィックスを利用して， 乱数 と 条件分岐 の仕組みに関して学習しましょう． 乱数とはランダムに生成された数値のことであり，偶発性の表現が必要なシミュレーションやゲームにおいて利用されます． コンピュータで真の乱数を生成することは困難なため，確定的な計算手法で算出される疑似乱数が用いられます（規則性が存在する）． また，指定した条件に応じて実行するプログラムを切り替えるための制御が条件分岐です． 条件分岐は，前回学習した繰り返しと同様に，Pythonに限らず一般的なプログラミング言語においても重要な機能です．
+
+準備  Muエディタを起動したら，Python3 モードを選択しましょう． ツールバーにある「保存」をクリックして，「chapter4.py」という名前でスクリプトを保存します． また，Turtleグラフィックスのライブラリ（モジュール）をインポートしておきましょう．
+# Turtleグラフィックスのライブラリをインポート from turtle import * 乱数  乱数を生成するにはPythonの標準モジュールであるrandom をインポートします． Pythonにおいて， モジュール とはインポートされるファイル（.py）のことを指しています． 一方で，ライブラリ とは複数のモジュールをまとめてインストールできる機能のことを指します． 実際には厳密にモジュールとライブラリを区別しないことも多いので注意しましょう．
+# 乱数生成のためのモジュールをインポート from random import * 0以上1未満の乱数 0以上1未満の 一様分布 に従った実数（小数）を生成するには random() を用います．
+# 0以上1未満の乱数 for i in range(10): print(random()) 範囲を指定した乱数 範囲を指定して 一様分布 に従った実数（小数）を生成するには uniform(a, b)を用います．生成される値$x$は，$a \leq x &lt; b$となることに注意してください．
+# 1以上5未満を指定した乱数 for i in range(10): print(uniform(1, 5)) 範囲を指定した乱数（整数） 範囲を指定して 一様分布 に従った整数を生成するには randint(a, b)を用います．生成される値$x$は，$a \leq x \leq b$となることに注意してください．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="乱数と条件分岐" />
+
+
+
+  <meta name="twitter:description" content="乱数と条件分岐  Turtleグラフィックスを利用して， 乱数 と 条件分岐 の仕組みに関して学習しましょう． 乱数とはランダムに生成された数値のことであり，偶発性の表現が必要なシミュレーションやゲームにおいて利用されます． コンピュータで真の乱数を生成することは困難なため，確定的な計算手法で算出される疑似乱数が用いられます（規則性が存在する）． また，指定した条件に応じて実行するプログラムを切り替えるための制御が条件分岐です． 条件分岐は，前回学習した繰り返しと同様に，Pythonに限らず一般的なプログラミング言語においても重要な機能です．
+
+準備  Muエディタを起動したら，Python3 モードを選択しましょう． ツールバーにある「保存」をクリックして，「chapter4.py」という名前でスクリプトを保存します． また，Turtleグラフィックスのライブラリ（モジュール）をインポートしておきましょう．
+# Turtleグラフィックスのライブラリをインポート from turtle import * 乱数  乱数を生成するにはPythonの標準モジュールであるrandom をインポートします． Pythonにおいて， モジュール とはインポートされるファイル（.py）のことを指しています． 一方で，ライブラリ とは複数のモジュールをまとめてインストールできる機能のことを指します． 実際には厳密にモジュールとライブラリを区別しないことも多いので注意しましょう．
+# 乱数生成のためのモジュールをインポート from random import * 0以上1未満の乱数 0以上1未満の 一様分布 に従った実数（小数）を生成するには random() を用います．
+# 0以上1未満の乱数 for i in range(10): print(random()) 範囲を指定した乱数 範囲を指定して 一様分布 に従った実数（小数）を生成するには uniform(a, b)を用います．生成される値$x$は，$a \leq x &lt; b$となることに注意してください．
+# 1以上5未満を指定した乱数 for i in range(10): print(uniform(1, 5)) 範囲を指定した乱数（整数） 範囲を指定して 一様分布 に従った整数を生成するには randint(a, b)を用います．生成される値$x$は，$a \leq x \leq b$となることに注意してください．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">乱数と条件分岐</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  乱数と条件分岐
+</h1>
+
+<p>Turtleグラフィックスを利用して， <strong>乱数</strong> と <strong>条件分岐</strong> の仕組みに関して学習しましょう．
+乱数とはランダムに生成された数値のことであり，偶発性の表現が必要なシミュレーションやゲームにおいて利用されます．
+コンピュータで真の乱数を生成することは困難なため，確定的な計算手法で算出される<a href="https://ja.wikipedia.org/wiki/%E6%93%AC%E4%BC%BC%E4%B9%B1%E6%95%B0">疑似乱数</a>が用いられます（規則性が存在する）．
+また，指定した条件に応じて実行するプログラムを切り替えるための制御が条件分岐です．
+条件分岐は，前回学習した繰り返しと同様に，Pythonに限らず一般的なプログラミング言語においても重要な機能です．</p>
+<p><a href="https://gyazo.com/7f8adf58c3a0acdc09acea03a662d5f8"><img src="https://i.gyazo.com/7f8adf58c3a0acdc09acea03a662d5f8.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  準備
+</h1>
+
+<p>Muエディタを起動したら，<strong>Python3</strong> モードを選択しましょう．
+ツールバーにある「保存」をクリックして，「chapter4.py」という名前でスクリプトを保存します．
+また，Turtleグラフィックスのライブラリ（モジュール）をインポートしておきましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Turtleグラフィックスのライブラリをインポート</span>
+<span style="color:#f92672">from</span> turtle <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  乱数
+</h1>
+
+<p>乱数を生成するにはPythonの標準モジュールである<strong>random</strong> をインポートします．
+Pythonにおいて， <strong>モジュール</strong> とはインポートされるファイル（.py）のことを指しています．
+一方で，<strong>ライブラリ</strong> とは複数のモジュールをまとめてインストールできる機能のことを指します．
+実際には厳密にモジュールとライブラリを区別しないことも多いので注意しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 乱数生成のためのモジュールをインポート</span>
+<span style="color:#f92672">from</span> random <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</code></pre></div><h2 id="0以上1未満の乱数">0以上1未満の乱数</h2>
+<p>0以上1未満の <strong>一様分布</strong> に従った実数（小数）を生成するには <code>random()</code> を用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 0以上1未満の乱数</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+    <span style="color:#66d9ef">print</span>(random())
+</code></pre></div><h2 id="範囲を指定した乱数">範囲を指定した乱数</h2>
+<p>範囲を指定して <strong>一様分布</strong> に従った実数（小数）を生成するには <code>uniform(a, b)</code>を用います．生成される値$x$は，$a \leq x &lt; b$となることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 1以上5未満を指定した乱数</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+    <span style="color:#66d9ef">print</span>(uniform(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>))
+</code></pre></div><h2 id="範囲を指定した乱数整数">範囲を指定した乱数（整数）</h2>
+<p>範囲を指定して <strong>一様分布</strong> に従った整数を生成するには <code>randint(a, b)</code>を用います．生成される値$x$は，$a \leq x \leq b$となることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 1以上5以下を指定した乱数（整数）</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+    <span style="color:#66d9ef">print</span>(randint(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>))
+</code></pre></div><h2 id="正規分布に従う乱数">正規分布に従う乱数</h2>
+<p>平均<code>mu</code>と標準偏差<code>sigma</code>を指定して <strong>正規分布</strong> に従った実数（小数）を生成するには <code>normalvariate(mu,sigma)</code>を用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 平均0，標準偏差5の正規分布に従う乱数</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+    <span style="color:#66d9ef">print</span>(normalvariate(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">5</span>))
+</code></pre></div><h2 id="乱数を活用した描画">乱数を活用した描画</h2>
+<p>乱数を活用してTurtleグラフィックスを描画してみましょう．
+変数<code>x</code>と<code>y</code>に乱数を代入して，直径10の点（ドット）を描きます．
+乱数は-300から300までの一様分布とします．
+また，点を描くには<code>dot()</code>を用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">speed(<span style="color:#ae81ff">0</span>)
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+    penup()
+    x <span style="color:#f92672">=</span> uniform(<span style="color:#f92672">-</span><span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">300</span>)
+    y <span style="color:#f92672">=</span> uniform(<span style="color:#f92672">-</span><span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">300</span>)
+    goto(x, y)
+    pendown()
+    dot(<span style="color:#ae81ff">10</span>)
+</code></pre></div><p><a href="https://gyazo.com/d73f6acebd4dacc4870181a0c9fabc06"><img src="https://i.gyazo.com/d73f6acebd4dacc4870181a0c9fabc06.png" alt="Image from Gyazo" width="400"/></a></p>
+<p>次に，変数<code>x</code>と<code>y</code>に正規分布に従った乱数を代入して，直径10の点（ドット）を描きます．
+正規分布は平均0，標準偏差100とします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">speed(<span style="color:#ae81ff">0</span>)
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+    penup()
+    x <span style="color:#f92672">=</span> normalvariate(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">100</span>)
+    y <span style="color:#f92672">=</span> normalvariate(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">100</span>)
+    goto(x, y)
+    pendown()
+    dot(<span style="color:#ae81ff">10</span>)
+</code></pre></div><p><a href="https://gyazo.com/a9132a8d1ea51e0b938ada6b9b774bc7"><img src="https://i.gyazo.com/a9132a8d1ea51e0b938ada6b9b774bc7.png" alt="Image from Gyazo" width="400"/></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  条件分岐
+</h1>
+
+<p>指定した条件に応じて，実行するプログラムを切り替えることができます．
+条件は <strong>比較演算子</strong> と <strong>論理演算子</strong> を用いて <strong>条件式</strong> として記述します．</p>
+<h2 id="比較演算子">比較演算子</h2>
+<p>比較演算子を次の表にまとめます．
+表中の<code>x</code>と<code>y</code>には，数値リテラルや文字列リテラル，または，それらを代入した変数を用いることができます．
+比較演算子の結果は <strong>真理値</strong> と呼ばれる形式となります．
+真理値は<code>True</code>または<code>False</code>の2値のいずれかとなります（先頭の文字が大文字となることに注意すること）．</p>
+<table>
+<thead>
+<tr>
+<th>比較演算子</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x == y</code></td>
+<td>xとyは等しい</td>
+</tr>
+<tr>
+<td><code>x != y</code></td>
+<td>xとyは等しくない</td>
+</tr>
+<tr>
+<td><code>x &gt; y</code></td>
+<td>xはyより大きい</td>
+</tr>
+<tr>
+<td><code>x &gt;= y</code></td>
+<td>xはyより大きいか等しい</td>
+</tr>
+<tr>
+<td><code>x &lt; y</code></td>
+<td>xはyより小さい</td>
+</tr>
+<tr>
+<td><code>x &lt;= y</code></td>
+<td>xはyより小さいか等しい</td>
+</tr>
+</tbody>
+</table>
+<p>数値リテラルを対象に比較演算子を適用してみます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 数値と比較演算子</span>
+x <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># -&gt; True</span>
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># -&gt; False</span>
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># -&gt; False</span>
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">3</span>) <span style="color:#75715e"># -&gt; True</span>
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">4</span>) <span style="color:#75715e"># -&gt; True</span>
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># -&gt; False</span>
+</code></pre></div><p>文字列リテラルを対象に比較演算子を適用してみます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 文字列と比較演算子</span>
+x <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span> 
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;B&#34;</span>) <span style="color:#75715e"># -&gt; False</span>
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;B&#34;</span>) <span style="color:#75715e"># -&gt; True</span>
+</code></pre></div><h2 id="例題1">例題1</h2>
+<p>文字列リテラルに大小関係を比較する<code>&lt;</code>や<code>&gt;</code>を適用するとどうなるか調べてください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 文字列と比較演算子</span>
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#34;B&#34;</span>)
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&gt;=</span> <span style="color:#e6db74">&#34;B&#34;</span>)
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&lt;</span> <span style="color:#e6db74">&#34;B&#34;</span>)
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&lt;=</span> <span style="color:#e6db74">&#34;B&#34;</span>)
+</code></pre></div><h2 id="論理演算子">論理演算子</h2>
+<p>複数の条件を組み合わせた新しい条件を表現するには <strong>論理演算子</strong> を用います．
+論理演算子を次の表にまとめます．
+表中の<code>x</code>と<code>y</code>には，真理値，または，それらを代入した変数を用いることができます．
+論理演算子の結果は，比較演算子と同じように <strong>真理値</strong> です．</p>
+<table>
+<thead>
+<tr>
+<th>論理演算子</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x and y</code></td>
+<td>論理積（かつ）</td>
+</tr>
+<tr>
+<td><code>x or y</code></td>
+<td>論理和（または）</td>
+</tr>
+<tr>
+<td><code>not x</code></td>
+<td>否定</td>
+</tr>
+</tbody>
+</table>
+<p>論理積は<code>x</code>と<code>y</code>がいずれも<code>True</code>のときに，演算結果が<code>True</code>になります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 論理積</span>
+<span style="color:#66d9ef">print</span>(True <span style="color:#f92672">and</span> True) <span style="color:#75715e"># -&gt; True</span>
+<span style="color:#66d9ef">print</span>(True <span style="color:#f92672">and</span> False) <span style="color:#75715e"># -&gt; False</span>
+<span style="color:#66d9ef">print</span>(False <span style="color:#f92672">and</span> True) <span style="color:#75715e"># -&gt; False</span>
+<span style="color:#66d9ef">print</span>(False <span style="color:#f92672">and</span> False) <span style="color:#75715e"># -&gt; False</span>
+</code></pre></div><p>論理和は<code>x</code>と<code>y</code>がいずれも<code>Flase</code>のときに，演算結果が<code>False</code>になります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 論理和</span>
+<span style="color:#66d9ef">print</span>(True <span style="color:#f92672">or</span> True) <span style="color:#75715e"># -&gt; True</span>
+<span style="color:#66d9ef">print</span>(True <span style="color:#f92672">or</span> False) <span style="color:#75715e"># -&gt; True</span>
+<span style="color:#66d9ef">print</span>(False <span style="color:#f92672">or</span> True) <span style="color:#75715e"># -&gt; True</span>
+<span style="color:#66d9ef">print</span>(False <span style="color:#f92672">or</span> False) <span style="color:#75715e"># -&gt; False</span>
+</code></pre></div><p>否定は<code>x</code>の値を反転します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 否定</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">not</span>(True)) <span style="color:#75715e"># -&gt; False</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">not</span>(False)) <span style="color:#75715e"># -&gt; True</span>
+</code></pre></div><h2 id="例題2">例題2</h2>
+<p>条件式とは結果が真理値（TrueまたはFalse）になる演算式のことを指します．
+次に示す比較演算子と論理演算子を用いた条件式の結果を確認してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+y <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span>
+<span style="color:#66d9ef">print</span>((x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">10</span>) <span style="color:#f92672">and</span> (y <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">30</span>))
+<span style="color:#66d9ef">print</span>((x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">20</span>) <span style="color:#f92672">or</span> (y <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">40</span>))
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">not</span>(x <span style="color:#f92672">!=</span> <span style="color:#ae81ff">20</span>) <span style="color:#f92672">and</span> <span style="color:#f92672">not</span>(y <span style="color:#f92672">==</span> <span style="color:#ae81ff">30</span>))
+</code></pre></div><h2 id="if文">if文</h2>
+<p>条件式を指定して，実行するプログラムを切り替えるには <strong>if文</strong> を用います．
+if文は条件式を用いて次のように記述します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> <span style="color:#960050;background-color:#1e0010">条件式</span>:
+	<span style="color:#960050;background-color:#1e0010">条件式が</span>Trueのとき実行する処理
+</code></pre></div><p>条件式が<code>True</code>のときだけ，インデント（字下げ）された処理を実行します．
+ここでは，自然数<code>x</code>と<code>y</code>を比較して，<code>x</code>が<code>y</code>より大きいときだけ出力してみます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># xとyは自然数</span>
+x <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+y <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&gt;</span> y:
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{x}は{y}より大きい&#34;</span>)
+</code></pre></div><p><code>else</code>を用いて，条件式が<code>False</code>のときの処理を記述することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> <span style="color:#960050;background-color:#1e0010">条件式</span>:
+	<span style="color:#960050;background-color:#1e0010">条件式が</span>Trueのとき実行する処理
+<span style="color:#66d9ef">else</span>:
+	<span style="color:#960050;background-color:#1e0010">条件式が</span>Falseのとき実行する処理
+</code></pre></div><p>次のように記述すると，<code>x</code>と<code>y</code>の大小関係に応じて，実行するプログラムを切り替えることができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># xとyは自然数</span>
+x <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+y <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&gt;</span> y:
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{x}は{y}より大きい&#34;</span>)
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{x}は{y}より小さい&#34;</span>)
+</code></pre></div><p>さらに，<code>elif</code>を用いて，複数の条件式を記述することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">if</span> <span style="color:#960050;background-color:#1e0010">条件式</span><span style="color:#ae81ff">1</span>:
+	<span style="color:#960050;background-color:#1e0010">条件式が</span>Trueのとき実行する処理
+<span style="color:#66d9ef">elif</span> <span style="color:#960050;background-color:#1e0010">条件式</span><span style="color:#ae81ff">2</span>:
+	<span style="color:#960050;background-color:#1e0010">条件式</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">が</span>Trueのとき実行する処理
+<span style="color:#66d9ef">else</span>:
+	<span style="color:#960050;background-color:#1e0010">条件式</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">と条件式</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">が</span>Falseのとき実行する処理
+</code></pre></div><p>次のように記述すると，<code>x</code>と<code>y</code>の大小関係に応じて，3つに分岐してプログラムを実行することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># xとyは自然数</span>
+x <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+y <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+<span style="color:#66d9ef">if</span> x <span style="color:#f92672">&gt;</span> y:
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{x}は{y}より大きい&#34;</span>)
+<span style="color:#66d9ef">elif</span> x <span style="color:#f92672">&lt;</span> y:
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{x}は{y}より小さい&#34;</span>)
+<span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{x}と{y}は等しい&#34;</span>)  
+</code></pre></div><h2 id="if文を活用した描画">if文を活用した描画</h2>
+<p>if文を活用してTurtleグラフィックスを描画してみましょう．
+タートルのx座標が0より大きいときだけ，ドットを赤色で描きます．
+ここで，<code>position()</code>の結果はリストであり，
+参照番号0がx座標，1がy座標を表すことに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">speed(<span style="color:#ae81ff">0</span>)
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+    penup()
+    x <span style="color:#f92672">=</span> uniform(<span style="color:#f92672">-</span><span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">300</span>)
+    y <span style="color:#f92672">=</span> uniform(<span style="color:#f92672">-</span><span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">300</span>)
+    goto(x, y)
+    pendown()
+    <span style="color:#66d9ef">if</span> position()[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+        color(<span style="color:#e6db74">&#34;red&#34;</span>)
+        dot(<span style="color:#ae81ff">10</span>)
+    <span style="color:#66d9ef">else</span>:
+        color(<span style="color:#e6db74">&#34;black&#34;</span>)
+        dot(<span style="color:#ae81ff">10</span>)
+</code></pre></div><p><a href="https://gyazo.com/1104314a317bea2b60a007886d476175"><img src="https://i.gyazo.com/1104314a317bea2b60a007886d476175.png" alt="Image from Gyazo" width="400"/></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>次の課題に取組んでください．</p>
+<ul>
+<li>図を参考にif文を利用してドットを4色に塗り分ける</li>
+<li>色は赤，青，緑，ピンクの4色</li>
+</ul>
+<p><a href="https://gyazo.com/e0176a95365aaa470d4acf9a8d92ef64"><img src="https://i.gyazo.com/e0176a95365aaa470d4acf9a8d92ef64.png" alt="Image from Gyazo" width="400"/></a></p>
+<p>課題を完成させたらスクリプトを保存し，「chapter4.py」を提出してください．</p>
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07T63W9KC&linkId=9290dc532b8a5d3fc81a3197e01332be&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07FZ1NMMZ&linkId=a2f45ccd6b8345e7d359a665d24298c8&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07F2X9GRQ&linkId=5629a178082dddaacacdb47b22205c1f&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/programming/chapter4/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
