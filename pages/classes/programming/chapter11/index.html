@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Pygame Zero④ アニメーションとサウンド | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="Pygame Zero④ アニメーションとサウンド" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/programming/chapter11/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="アニメーションとサウンド  スプライトをアニメーションさせるには，前回のようにupdate()の中で座標を更新する方法に加え，Animationクラスを利用する方法があります． Animationクラスでは，直線的な動きに加え，速度の変化や，揺れる動きなどを簡単に表現することが可能です． また，Soundクラスや，Musicクラスを利用すると，ゲームに効果音やBGMを再生することが可能です． これらのクラスを活用して，ゲームの雰囲気を高めましょう．
+準備  Muエディタを起動したら，Pygame Zero モードを選択しましょう． 保存用のフォルダを「chapter11」という名前で作成し，ソースファイルを「game.py」という名前でフォルダ内に保存します． また，ゲームを表示するためのウィンドウを作成します． ウィンドウの幅は640px，高さは480px，背景色は白色に設定します．
+WIDTH = 640 HEIGHT = 480 def draw(): screen.fill(&#34;white&#34;) アニメーション  KENNYのAlien UFO Packに収録されている UFOの画像ufo1.pngとufo2.pngをダウンロードして，imagesフォルダにコピーしてください．
+
+
+Animationクラス Animationクラスを利用したアニメーションを実装しましょう．
+# スプライトの生成 ufo = Actor(&#34;ufo1&#34;, midleft=(0, 240)) # 座標(640, 240)に向かって線形に3秒間移動 animate(ufo, pos=(640, 240), tween=&#34;linear&#34;, duration=3) def draw(): screen.fill(&#34;white&#34;) ufo.draw() 
+animate(ufo, pos=(640, 240), tween=&#34;accelerate&#34;, duration=3) 
+animate(ufo, pos=(640, 240), tween=&#34;bounce_start&#34;, duration=3) 
+Clockクラス Clockクラスを利用することで，一定時間ごとに特定の関数を呼び出すことができます．
+from random import * ufo_list = [] def makeUFO(): # 乱数でUFOの初期座標を設定 x = randint(0, 640) y = randint(0, 480) ufo = Actor(&#34;ufo1&#34;, center=(x, y)) # 乱数でUFOの目的座標を設定 x2 = randint(0, 640) y2 = randint(0, 480) animate(ufo, pos=(x2, y2), tween=&#34;linear&#34;, duration=3) # UFOをリストに追加 ufo_list." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Pygame Zero④ アニメーションとサウンド" />
+
+
+
+  <meta name="twitter:description" content="アニメーションとサウンド  スプライトをアニメーションさせるには，前回のようにupdate()の中で座標を更新する方法に加え，Animationクラスを利用する方法があります． Animationクラスでは，直線的な動きに加え，速度の変化や，揺れる動きなどを簡単に表現することが可能です． また，Soundクラスや，Musicクラスを利用すると，ゲームに効果音やBGMを再生することが可能です． これらのクラスを活用して，ゲームの雰囲気を高めましょう．
+準備  Muエディタを起動したら，Pygame Zero モードを選択しましょう． 保存用のフォルダを「chapter11」という名前で作成し，ソースファイルを「game.py」という名前でフォルダ内に保存します． また，ゲームを表示するためのウィンドウを作成します． ウィンドウの幅は640px，高さは480px，背景色は白色に設定します．
+WIDTH = 640 HEIGHT = 480 def draw(): screen.fill(&#34;white&#34;) アニメーション  KENNYのAlien UFO Packに収録されている UFOの画像ufo1.pngとufo2.pngをダウンロードして，imagesフォルダにコピーしてください．
+
+
+Animationクラス Animationクラスを利用したアニメーションを実装しましょう．
+# スプライトの生成 ufo = Actor(&#34;ufo1&#34;, midleft=(0, 240)) # 座標(640, 240)に向かって線形に3秒間移動 animate(ufo, pos=(640, 240), tween=&#34;linear&#34;, duration=3) def draw(): screen.fill(&#34;white&#34;) ufo.draw() 
+animate(ufo, pos=(640, 240), tween=&#34;accelerate&#34;, duration=3) 
+animate(ufo, pos=(640, 240), tween=&#34;bounce_start&#34;, duration=3) 
+Clockクラス Clockクラスを利用することで，一定時間ごとに特定の関数を呼び出すことができます．
+from random import * ufo_list = [] def makeUFO(): # 乱数でUFOの初期座標を設定 x = randint(0, 640) y = randint(0, 480) ufo = Actor(&#34;ufo1&#34;, center=(x, y)) # 乱数でUFOの目的座標を設定 x2 = randint(0, 640) y2 = randint(0, 480) animate(ufo, pos=(x2, y2), tween=&#34;linear&#34;, duration=3) # UFOをリストに追加 ufo_list." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">Pygame Zero④ アニメーションとサウンド</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  アニメーションとサウンド
+</h1>
+
+<p>スプライトをアニメーションさせるには，前回のように<code>update()</code>の中で座標を更新する方法に加え，<a href="https://pygame-zero.readthedocs.io/ja/latest/builtins.html#animation">Animation</a>クラスを利用する方法があります．
+Animationクラスでは，直線的な動きに加え，速度の変化や，揺れる動きなどを簡単に表現することが可能です．
+また，<a href="https://pygame-zero.readthedocs.io/ja/latest/builtins.html#sounds">Sound</a>クラスや，<a href="https://pygame-zero.readthedocs.io/ja/latest/builtins.html#music">Music</a>クラスを利用すると，ゲームに効果音やBGMを再生することが可能です．
+これらのクラスを活用して，ゲームの雰囲気を高めましょう．</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  準備
+</h1>
+
+<p>Muエディタを起動したら，<strong>Pygame Zero</strong> モードを選択しましょう．
+保存用のフォルダを「chapter11」という名前で作成し，ソースファイルを「game.py」という名前でフォルダ内に保存します．
+また，ゲームを表示するためのウィンドウを作成します．
+ウィンドウの幅は640px，高さは480px，背景色は白色に設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">WIDTH <span style="color:#f92672">=</span> <span style="color:#ae81ff">640</span>
+HEIGHT <span style="color:#f92672">=</span> <span style="color:#ae81ff">480</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+	screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  アニメーション
+</h1>
+
+<p><a href="https://kenney.nl/">KENNY</a>の<a href="https://kenney.nl/assets/alien-ufo-pack">Alien UFO Pack</a>に収録されている
+UFOの画像<a href="https://i.gyazo.com/a277ab4cb8060861a76e75a2302efcf5.png">ufo1.png</a>と<a href="https://i.gyazo.com/07cf7805100f0e496877243212772625.png">ufo2.png</a>をダウンロードして，imagesフォルダにコピーしてください．</p>
+<p><a href="https://gyazo.com/07cf7805100f0e496877243212772625"><img src="https://i.gyazo.com/07cf7805100f0e496877243212772625.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/a277ab4cb8060861a76e75a2302efcf5"><img src="https://i.gyazo.com/a277ab4cb8060861a76e75a2302efcf5.png" alt="Image from Gyazo"></a></p>
+<h2 id="animationクラス">Animationクラス</h2>
+<p><a href="https://pygame-zero.readthedocs.io/ja/latest/builtins.html#animation">Animation</a>クラスを利用したアニメーションを実装しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># スプライトの生成</span>
+ufo <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;ufo1&#34;</span>, midleft<span style="color:#f92672">=</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">240</span>))
+
+<span style="color:#75715e"># 座標(640, 240)に向かって線形に3秒間移動</span>
+animate(ufo, pos<span style="color:#f92672">=</span>(<span style="color:#ae81ff">640</span>, <span style="color:#ae81ff">240</span>), tween<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;linear&#34;</span>, duration<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+    screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+    ufo<span style="color:#f92672">.</span>draw()
+</code></pre></div><p><a href="https://gyazo.com/c22c083067531c6fcd575d5b33d00ec1"><img src="https://i.gyazo.com/c22c083067531c6fcd575d5b33d00ec1.gif" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">animate(ufo, pos<span style="color:#f92672">=</span>(<span style="color:#ae81ff">640</span>, <span style="color:#ae81ff">240</span>), tween<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;accelerate&#34;</span>, duration<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+</code></pre></div><p><a href="https://gyazo.com/c8fb4878e98ee95f29a464a1f2fb47c7"><img src="https://i.gyazo.com/c8fb4878e98ee95f29a464a1f2fb47c7.gif" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">animate(ufo, pos<span style="color:#f92672">=</span>(<span style="color:#ae81ff">640</span>, <span style="color:#ae81ff">240</span>), tween<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;bounce_start&#34;</span>, duration<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+</code></pre></div><p><a href="https://gyazo.com/282abb75011899b8f81426750a3e6300"><img src="https://i.gyazo.com/282abb75011899b8f81426750a3e6300.gif" alt="Image from Gyazo"></a></p>
+<h2 id="clockクラス">Clockクラス</h2>
+<p><a href="https://pygame-zero.readthedocs.io/ja/latest/builtins.html#Clock">Clock</a>クラスを利用することで，一定時間ごとに特定の関数を呼び出すことができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> random <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+ufo_list <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">makeUFO</span>():
+    
+    <span style="color:#75715e"># 乱数でUFOの初期座標を設定</span>
+    x <span style="color:#f92672">=</span> randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">640</span>)
+    y <span style="color:#f92672">=</span> randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">480</span>)
+    ufo <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;ufo1&#34;</span>, center<span style="color:#f92672">=</span>(x, y))
+    
+    <span style="color:#75715e"># 乱数でUFOの目的座標を設定</span>
+    x2 <span style="color:#f92672">=</span> randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">640</span>)
+    y2 <span style="color:#f92672">=</span> randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">480</span>)    
+    animate(ufo, pos<span style="color:#f92672">=</span>(x2, y2), tween<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;linear&#34;</span>, duration<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+    
+    <span style="color:#75715e"># UFOをリストに追加</span>
+    ufo_list<span style="color:#f92672">.</span>append(ufo)
+    
+<span style="color:#75715e"># 1秒ごとにmakeUFO()を呼び出す</span>
+clock<span style="color:#f92672">.</span>schedule_interval(makeUFO, <span style="color:#ae81ff">1</span>)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+    screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+    
+    <span style="color:#66d9ef">for</span> ufo <span style="color:#f92672">in</span> ufo_list:
+        ufo<span style="color:#f92672">.</span>draw()
+</code></pre></div><p><a href="https://gyazo.com/d3bbc78e4ebe6d839da21166db6054b9"><img src="https://i.gyazo.com/d3bbc78e4ebe6d839da21166db6054b9.gif" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>():
+    <span style="color:#66d9ef">if</span> len(ufo_list) <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span>:
+        clock<span style="color:#f92672">.</span>unschedule(makeUFO)
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  サウンド
+</h1>
+
+<h2 id="soundクラス">Soundクラス</h2>
+<p><a href="https://pygame-zero.readthedocs.io/ja/latest/builtins.html#sounds">Sound</a>クラスを利用すると効果音を再生することができます．
+PygameZeroでは，<strong>.wav</strong> と <strong>.ogg</strong> のサウンド・ファイルを再生することができます．</p>
+<p><a href="https://kenney.nl/">KENNY</a>では，画像ファイルだけではなく，サウンド・ファイルも提供されています．
+ここでは，<a href="https://kenney.nl/assets/interface-sounds">Interface Sounds</a>をダウンロードして利用しましょう．
+ダウンロードしたサウンド・ファイル（.ogg）を，新規作成した <strong>soundsフォルダ</strong> を作成し，コピーして配置します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">makeUFO</span>():
+    
+    <span style="color:#75715e"># 乱数でUFOの初期座標を設定</span>
+    x <span style="color:#f92672">=</span> randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">640</span>)
+    y <span style="color:#f92672">=</span> randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">480</span>)
+    ufo <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;ufo1&#34;</span>, center<span style="color:#f92672">=</span>(x, y))
+    
+    <span style="color:#75715e"># 乱数でUFOの目的座標を設定</span>
+    x2 <span style="color:#f92672">=</span> randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">640</span>)
+    y2 <span style="color:#f92672">=</span> randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">480</span>)    
+    animate(ufo, pos<span style="color:#f92672">=</span>(x2, y2), tween<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;linear&#34;</span>, duration<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+    
+    <span style="color:#75715e"># UFOをリストに追加</span>
+    ufo_list<span style="color:#f92672">.</span>append(ufo)
+    
+    <span style="color:#75715e"># サウンド（open_001.ogg）を再生</span>
+    sounds<span style="color:#f92672">.</span>open_001<span style="color:#f92672">.</span>play()
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_mouse_down</span>(pos):
+    <span style="color:#66d9ef">for</span> ufo <span style="color:#f92672">in</span> ufo_list:
+        <span style="color:#66d9ef">if</span> ufo<span style="color:#f92672">.</span>collidepoint(pos):
+		
+			<span style="color:#75715e"># サウンド（scratch_001.ogg）を再生</span>
+            sounds<span style="color:#f92672">.</span>scratch_001<span style="color:#f92672">.</span>play()
+			
+			<span style="color:#75715e"># 画像（ufo2.png）に変更</span>
+            ufo<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ufo2&#34;</span>
+</code></pre></div><p><a href="https://gyazo.com/9d6c143a6b8199d242d48227f7644a36"><img src="https://i.gyazo.com/9d6c143a6b8199d242d48227f7644a36.gif" alt="Image from Gyazo"></a></p>
+<h2 id="musicクラス">Musicクラス</h2>
+<p><a href="https://pygame-zero.readthedocs.io/ja/latest/builtins.html#music">Music</a>クラスを利用するとBGMを再生することができます．
+Soundクラスで再生される効果音は，同時に複数のサウンドを再生することが可能ですが，Musicクラスで再生されるBGMは，常に一つのサウンドしか再生できません．
+また，Musicクラスで再生されたサウンドは，デフォルトでリピート再生されます．</p>
+<p>ここでは，<a href="https://maou.audio/">魔王魂</a>で提供されているBGM用のサウンド・ファイルを利用しましょう．
+同サイトから，<a href="https://maou.audio/bgm_cyber01/">サイバー01</a>をダウンロードして利用しましょう．
+ダウンロードしたサウンド・ファイル（.ogg）を<code>bgm.ogg</code>にリネームし，新規作成した <strong>musicフォルダ</strong> を作成し，コピーして配置します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">music<span style="color:#f92672">.</span>play(<span style="color:#e6db74">&#34;bgm&#34;</span>)
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>次の課題に取組んでください．</p>
+<ul>
+<li>全てのUFOをクリックしたら「FINISH」と表示してください</li>
+<li>全てのUFOをクリックしたら，BGMの再生を<code>music.stop()</code>でストップし，サウンド・ファイル（<code>confirmation_004.ogg</code>）を再生してください</li>
+</ul>
+<p><a href="https://gyazo.com/70b0a8774236a8fb6d49c3323291b959"><img src="https://i.gyazo.com/70b0a8774236a8fb6d49c3323291b959.gif" alt="Image from Gyazo"></a></p>
+<p>課題を完成させたらスクリプトを保存し，chapter11フォルダをZIPで圧縮して提出してください．</p>
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07T63W9KC&linkId=9290dc532b8a5d3fc81a3197e01332be&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07FZ1NMMZ&linkId=a2f45ccd6b8345e7d359a665d24298c8&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07F2X9GRQ&linkId=5629a178082dddaacacdb47b22205c1f&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/programming/chapter11/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
