@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    スプライトとイベント処理 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="スプライトとイベント処理" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/programming/chapter10/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="スプライトとイベント処理  スプライト（Sprite）とは，ゲームにおいてキャラクターをスクリーンに合成表示させるための仕組みのことです． 背景に対して，キャラクター・物体・文字などのスプライトを重ねて表示させることができます． CPU処理能力が低かったファミコンなどのゲーム機においてはハードウェアとして実装されていましたが， 現在のゲームにおいては，同様の機能がソフトウェアで実現され，疑似スプライトなどと呼ばれています． ここでは，位置の変更を伴うキャラクター画像のことを「スプライト」と考えれば良いです． スプライト用の画像は，様々なサイトで提供されていますが，KENNYで公開されているフリー画像を利用することにします． KENNYが提供しているアセット（素材）は，一部を除きCC0のライセンスであり，パブリックドメインとして自由に利用が可能です． また，キャラクターを動かすには，マウスやキーボードなどのイベント処理が必要となります． スプライトの使い方と合わせて，イベント処理についても学びましょう．
+
+
+準備  Muエディタを起動したら，Pygame Zero モードを選択しましょう． 保存用のフォルダを「chapter10」という名前で作成し，ソースファイルを「game.py」という名前でフォルダ内に保存します． また，ゲームを表示するためのウィンドウを作成します． ウィンドウの幅は640px，高さは480px，背景色は白色に設定します．
+WIDTH = 640 HEIGHT = 480 def draw(): screen.fill(&#34;white&#34;) スプライトの表示  KENNYからToons Characters 1をダウンロードしましょう． このアセットには，プレイヤー（Player），女性（Female），冒険家（Adventurer），戦士（Soldier），ゾンビ（Zombie）の5種類のキャラクターが含まれています． この中から，プレイヤー（Player）に該当する25種類のPNG画像（player_idle.png，player_walk1.pngなど）を，新規作成した imagesフォルダ を作成し，コピーして配置します．
+
+Actorクラス Pygame Zeroには，スプライトを扱うためのActorクラスが用意されています． Actorクラスには，位置を表すx，y，画像ファイルを表すimageなどの変数と， スクリーンに表示するためのdraw()，他のスプライトと衝突を判定するcollidepoint()，colliderect()などの関数が実装されています．
+それでは，Actorクラスを利用して，画像ファイルplayer_idle.pngをスプライトとして表示させます． このとき，スプライトの位置は，スクリーンの中央とします． また，スプライトをスクリーンに表示させるにはdraw()を用います．
+# スプライトを生成 player = Actor(&#34;player_idle&#34;, center=(WIDTH/2, HEIGHT/2)) def draw(): screen.fill(&#34;white&#34;) player.draw() # スプライトを描画 
+スプライトの位置を設定には アンカーポイント を用いることができます． アンカーポイントとして9種類が用意されており，centerは画像の中央，topleftは画像の左上が，指定された座標と一致するよう配置されます．
+
+# スプライトを生成 player = Actor(&#34;player_idle&#34;, topleft=(WIDTH/2, HEIGHT/2)) def draw(): screen." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="スプライトとイベント処理" />
+
+
+
+  <meta name="twitter:description" content="スプライトとイベント処理  スプライト（Sprite）とは，ゲームにおいてキャラクターをスクリーンに合成表示させるための仕組みのことです． 背景に対して，キャラクター・物体・文字などのスプライトを重ねて表示させることができます． CPU処理能力が低かったファミコンなどのゲーム機においてはハードウェアとして実装されていましたが， 現在のゲームにおいては，同様の機能がソフトウェアで実現され，疑似スプライトなどと呼ばれています． ここでは，位置の変更を伴うキャラクター画像のことを「スプライト」と考えれば良いです． スプライト用の画像は，様々なサイトで提供されていますが，KENNYで公開されているフリー画像を利用することにします． KENNYが提供しているアセット（素材）は，一部を除きCC0のライセンスであり，パブリックドメインとして自由に利用が可能です． また，キャラクターを動かすには，マウスやキーボードなどのイベント処理が必要となります． スプライトの使い方と合わせて，イベント処理についても学びましょう．
+
+
+準備  Muエディタを起動したら，Pygame Zero モードを選択しましょう． 保存用のフォルダを「chapter10」という名前で作成し，ソースファイルを「game.py」という名前でフォルダ内に保存します． また，ゲームを表示するためのウィンドウを作成します． ウィンドウの幅は640px，高さは480px，背景色は白色に設定します．
+WIDTH = 640 HEIGHT = 480 def draw(): screen.fill(&#34;white&#34;) スプライトの表示  KENNYからToons Characters 1をダウンロードしましょう． このアセットには，プレイヤー（Player），女性（Female），冒険家（Adventurer），戦士（Soldier），ゾンビ（Zombie）の5種類のキャラクターが含まれています． この中から，プレイヤー（Player）に該当する25種類のPNG画像（player_idle.png，player_walk1.pngなど）を，新規作成した imagesフォルダ を作成し，コピーして配置します．
+
+Actorクラス Pygame Zeroには，スプライトを扱うためのActorクラスが用意されています． Actorクラスには，位置を表すx，y，画像ファイルを表すimageなどの変数と， スクリーンに表示するためのdraw()，他のスプライトと衝突を判定するcollidepoint()，colliderect()などの関数が実装されています．
+それでは，Actorクラスを利用して，画像ファイルplayer_idle.pngをスプライトとして表示させます． このとき，スプライトの位置は，スクリーンの中央とします． また，スプライトをスクリーンに表示させるにはdraw()を用います．
+# スプライトを生成 player = Actor(&#34;player_idle&#34;, center=(WIDTH/2, HEIGHT/2)) def draw(): screen.fill(&#34;white&#34;) player.draw() # スプライトを描画 
+スプライトの位置を設定には アンカーポイント を用いることができます． アンカーポイントとして9種類が用意されており，centerは画像の中央，topleftは画像の左上が，指定された座標と一致するよう配置されます．
+
+# スプライトを生成 player = Actor(&#34;player_idle&#34;, topleft=(WIDTH/2, HEIGHT/2)) def draw(): screen." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">スプライトとイベント処理</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  スプライトとイベント処理
+</h1>
+
+<p>スプライト（Sprite）とは，ゲームにおいてキャラクターをスクリーンに合成表示させるための仕組みのことです．
+背景に対して，キャラクター・物体・文字などのスプライトを重ねて表示させることができます．
+CPU処理能力が低かったファミコンなどのゲーム機においてはハードウェアとして実装されていましたが，
+現在のゲームにおいては，同様の機能がソフトウェアで実現され，疑似スプライトなどと呼ばれています．
+ここでは，位置の変更を伴うキャラクター画像のことを「スプライト」と考えれば良いです．
+スプライト用の画像は，様々なサイトで提供されていますが，<a href="https://kenney.nl/">KENNY</a>で公開されているフリー画像を利用することにします．
+KENNYが提供しているアセット（素材）は，一部を除き<a href="https://creativecommons.jp/sciencecommons/aboutcc0/#:~:text=CC0%20%E3%81%A8%E3%81%AF%E3%80%81%E7%A7%91%E5%AD%A6%E8%80%85,%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82">CC0</a>のライセンスであり，パブリックドメインとして自由に利用が可能です．
+また，キャラクターを動かすには，マウスやキーボードなどのイベント処理が必要となります．
+スプライトの使い方と合わせて，イベント処理についても学びましょう．</p>
+<p><a href="https://gyazo.com/9293df86eec333f4eaf2571ce38392e6"><img src="https://i.gyazo.com/9293df86eec333f4eaf2571ce38392e6.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/e2e343d401f6734084ca59e1a3c5c2aa"><img src="https://i.gyazo.com/e2e343d401f6734084ca59e1a3c5c2aa.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  準備
+</h1>
+
+<p>Muエディタを起動したら，<strong>Pygame Zero</strong> モードを選択しましょう．
+保存用のフォルダを「chapter10」という名前で作成し，ソースファイルを「game.py」という名前でフォルダ内に保存します．
+また，ゲームを表示するためのウィンドウを作成します．
+ウィンドウの幅は640px，高さは480px，背景色は白色に設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">WIDTH <span style="color:#f92672">=</span> <span style="color:#ae81ff">640</span>
+HEIGHT <span style="color:#f92672">=</span> <span style="color:#ae81ff">480</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+	screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  スプライトの表示
+</h1>
+
+<p><a href="https://kenney.nl/">KENNY</a>から<a href="https://kenney.nl/assets/toon-characters-1">Toons Characters 1</a>をダウンロードしましょう．
+このアセットには，プレイヤー（Player），女性（Female），冒険家（Adventurer），戦士（Soldier），ゾンビ（Zombie）の5種類のキャラクターが含まれています．
+この中から，プレイヤー（Player）に該当する25種類のPNG画像（<code>player_idle.png</code>，<code>player_walk1.png</code>など）を，新規作成した <strong>imagesフォルダ</strong> を作成し，コピーして配置します．</p>
+<p><a href="https://gyazo.com/ad7ae49a707d083a666f478000e4b107"><img src="https://i.gyazo.com/ad7ae49a707d083a666f478000e4b107.png" alt="Image from Gyazo"></a></p>
+<h2 id="actorクラス">Actorクラス</h2>
+<p>Pygame Zeroには，スプライトを扱うための<a href="https://pygame-zero.readthedocs.io/ja/latest/builtins.html#actors">Actor</a>クラスが用意されています．
+Actorクラスには，位置を表す<code>x</code>，<code>y</code>，画像ファイルを表す<code>image</code>などの変数と，
+スクリーンに表示するための<code>draw()</code>，他のスプライトと衝突を判定する<code>collidepoint()</code>，<code>colliderect()</code>などの関数が実装されています．</p>
+<p>それでは，Actorクラスを利用して，画像ファイル<code>player_idle.png</code>をスプライトとして表示させます．
+このとき，スプライトの位置は，スクリーンの中央とします．
+また，スプライトをスクリーンに表示させるには<code>draw()</code>を用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># スプライトを生成</span>
+player <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;player_idle&#34;</span>, center<span style="color:#f92672">=</span>(WIDTH<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>, HEIGHT<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>))
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+    screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+    player<span style="color:#f92672">.</span>draw()  <span style="color:#75715e"># スプライトを描画</span>
+</code></pre></div><p><a href="https://gyazo.com/0d2acbcdf401b3f15977a20f13211f90"><img src="https://i.gyazo.com/0d2acbcdf401b3f15977a20f13211f90.png" alt="Image from Gyazo"></a></p>
+<p>スプライトの位置を設定には <strong>アンカーポイント</strong> を用いることができます．
+アンカーポイントとして9種類が用意されており，<code>center</code>は画像の中央，<code>topleft</code>は画像の左上が，指定された座標と一致するよう配置されます．</p>
+<p><a href="https://gyazo.com/4dcd8023b2c79ff1b4a90fab61b2ede7"><img src="https://i.gyazo.com/4dcd8023b2c79ff1b4a90fab61b2ede7.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># スプライトを生成</span>
+player <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;player_idle&#34;</span>, topleft<span style="color:#f92672">=</span>(WIDTH<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>, HEIGHT<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>))
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+    screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+    player<span style="color:#f92672">.</span>draw()  <span style="color:#75715e"># スプライトを描画</span>
+</code></pre></div><p><a href="https://gyazo.com/345fb265661a3ef0500cd56c18a2a63a"><img src="https://i.gyazo.com/345fb265661a3ef0500cd56c18a2a63a.png" alt="Image from Gyazo"></a></p>
+<p>スプライトを回転させるには，<code>angle</code>を用います．
+<code>90</code>に設定すれば反時計回りに90度，<code>180</code>に設定すれば半時計周りに180度回転します（時計回りに回転させるには負の値を設定すれば良い）．
+このとき，回転の中心はアンカーポイントとなることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">player <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;player_stand&#34;</span>, center<span style="color:#f92672">=</span>(WIDTH<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>, HEIGHT<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>))
+player<span style="color:#f92672">.</span>angle <span style="color:#f92672">=</span> <span style="color:#ae81ff">90</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+    screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+    player<span style="color:#f92672">.</span>draw()
+</code></pre></div><p><a href="https://gyazo.com/99b34a9e16257d46ff8b77c1fd3dc434"><img src="https://i.gyazo.com/99b34a9e16257d46ff8b77c1fd3dc434.png" alt="Image from Gyazo"></a></p>
+<h2 id="例題1">例題1</h2>
+<p>次の図を参考に，スプライトをスクリーンの下部に揃えて表示してください，
+このとき，画像は<code>player_stand.png</code>，アンカーポイントは<code>midbottom</code>を利用すること．</p>
+<p><a href="https://gyazo.com/1ce88825cba0578db8d834bd6be55446"><img src="https://i.gyazo.com/1ce88825cba0578db8d834bd6be55446.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  イベント処理
+</h1>
+
+<h2 id="キーボードのイベント処理">キーボードのイベント処理</h2>
+<p>キーボードを利用したイベント処理を利用して，プレイヤー（スプライト）を左右に移動させてみましょう．
+キーボードのイベントを検出するには，<code>keyboard</code>オブジェクトを利用するだけです．
+例えば，右向きのカーソルキーが押されているかどうかを検出するには，
+<code>keyboard.right</code>が<code>True</code>であるかをif文で判定すれば良いです（<a href="https://pygame-zero.readthedocs.io/ja/latest/hooks.html#buttons-and-keys">判定可能なキーの一覧</a>）．
+ここでは，右向きのカーソルキーが押されていると右方向に5だけ移動し，
+左向きのカーソルキーが押されていると左方向に5だけ移動します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">player <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;player_stand&#34;</span>, midbottom<span style="color:#f92672">=</span>(WIDTH<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>, HEIGHT))
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+    screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+    player<span style="color:#f92672">.</span>draw()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>():
+		
+    <span style="color:#66d9ef">if</span> keyboard<span style="color:#f92672">.</span>right: <span style="color:#75715e"># 右向きのカーソルキー</span>
+        player<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> player<span style="color:#f92672">.</span>x <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>	
+    <span style="color:#66d9ef">elif</span> keyboard<span style="color:#f92672">.</span>left: <span style="color:#75715e"># 左向きのカーソルキー		</span>
+        player<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> player<span style="color:#f92672">.</span>x <span style="color:#f92672">-</span> <span style="color:#ae81ff">5</span>
+</code></pre></div><p><a href="https://gyazo.com/ec2f2912d2029ce4737e6a5390cc4865"><img src="https://i.gyazo.com/ec2f2912d2029ce4737e6a5390cc4865.gif" alt="Image from Gyazo"></a></p>
+<p>キーが押されているときに，プレイヤーの画像も変更してみます．
+ここでは，右向きのカーソルキーが押されていると<code>player_walk1.png</code>を表示し，
+左向きのカーソルキーが押されていると<code>player_walk2.png</code>を表示します．
+また，何もキーが押されていないときは<code>player_stand.png</code>を表示します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">player <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;player_stand&#34;</span>, midbottom<span style="color:#f92672">=</span>(WIDTH<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>, HEIGHT))
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+    screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+    player<span style="color:#f92672">.</span>draw()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>():
+    <span style="color:#66d9ef">if</span> keyboard<span style="color:#f92672">.</span>right:
+        player<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> player<span style="color:#f92672">.</span>x <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_walk1&#34;</span>
+    <span style="color:#66d9ef">elif</span> keyboard<span style="color:#f92672">.</span>left:
+        player<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> player<span style="color:#f92672">.</span>x <span style="color:#f92672">-</span> <span style="color:#ae81ff">5</span>
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_walk2&#34;</span>
+    <span style="color:#66d9ef">else</span>:
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_stand&#34;</span>
+</code></pre></div><p><a href="https://gyazo.com/58615575b6e84f3f5ab604cf16d7bd3f"><img src="https://i.gyazo.com/58615575b6e84f3f5ab604cf16d7bd3f.gif" alt="Image from Gyazo"></a></p>
+<h2 id="例題2">例題2</h2>
+<p>次の図を参考に，上向きのカーソルキーを押すと，画像を<code>player_hold1.png</code>に変更してください，</p>
+<p><a href="https://gyazo.com/aac36d7f2e30c68119cb52cc1bc287c3"><img src="https://i.gyazo.com/aac36d7f2e30c68119cb52cc1bc287c3.gif" alt="Image from Gyazo"></a></p>
+<h2 id="マウスのイベント処理">マウスのイベント処理</h2>
+<p><a href="https://kenney.nl/">KENNY</a>の<a href="https://kenney.nl/assets/holiday-pack-2016">Holiday Pack 2016</a>に収録されている
+プレゼントの画像<code>item.png</code>をダウンロードして，imagesフォルダにコピーしてください．</p>
+<p><a href="https://gyazo.com/5588351d4cdb029d7bd78150549ca71b"><img src="https://i.gyazo.com/5588351d4cdb029d7bd78150549ca71b.png" alt="Image from Gyazo"></a></p>
+<p>上記のプレゼントの画像をアイテムとして，マウスがクリックされた位置のX座標に表示させます．
+複数のアイテムを表示させるため，リスト<code>item_list</code>を宣言します．
+マウスのイベントを検出するには，<code>on_mouse_down(pos)</code>を用います．
+引数の<code>pos</code>はマウスがクリックされた座標を表しており，X座標は<code>pos[0]</code>，Y座標は<code>pos[1]</code>で参照します．
+ここでは，アイテムのX座標を<code>pos[0]</code>，Y座標を<code>0</code>に設定します．
+アイテムを表示させるには，for文を利用して，リストから一つずつアイテムを取り出し，<code>draw()</code>を実行します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">player <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;player_stand&#34;</span>, midbottom<span style="color:#f92672">=</span>(WIDTH<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>, HEIGHT))
+
+<span style="color:#75715e"># アイテムのリスト</span>
+item_list <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+    screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+    player<span style="color:#f92672">.</span>draw()
+    
+	<span style="color:#75715e"># アイテムを表示</span>
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> item_list:
+        item<span style="color:#f92672">.</span>draw()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>():
+    <span style="color:#66d9ef">if</span> keyboard<span style="color:#f92672">.</span>right:
+        player<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> player<span style="color:#f92672">.</span>x <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_walk1&#34;</span>
+    <span style="color:#66d9ef">elif</span> keyboard<span style="color:#f92672">.</span>left:
+        player<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> player<span style="color:#f92672">.</span>x <span style="color:#f92672">-</span> <span style="color:#ae81ff">5</span>
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_walk2&#34;</span>
+    <span style="color:#66d9ef">elif</span> keyboard<span style="color:#f92672">.</span>up:
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_hold1&#34;</span>
+    <span style="color:#66d9ef">else</span>:
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_stand&#34;</span>
+
+<span style="color:#75715e"># マウスのイベント処理</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_mouse_down</span>(pos):
+    item <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;item.png&#34;</span>, center<span style="color:#f92672">=</span>(pos[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">0</span>))
+    item_list<span style="color:#f92672">.</span>append(item)  <span style="color:#75715e"># リストに追加</span>
+</code></pre></div><p><a href="https://gyazo.com/11ac4c06ff4bcca60aa56ee2c8d06543"><img src="https://i.gyazo.com/11ac4c06ff4bcca60aa56ee2c8d06543.gif" alt="Image from Gyazo"></a></p>
+<p>アイテムを上部から落下させます．
+<code>update()</code>の中で，for文を利用して，リストから一つずつアイテムを取り出し，Y座標に1だけ加算します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">player <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;player_stand&#34;</span>, midbottom<span style="color:#f92672">=</span>(WIDTH<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>, HEIGHT))
+
+item_list <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+    screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+    player<span style="color:#f92672">.</span>draw()
+    
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> item_list:
+        item<span style="color:#f92672">.</span>draw()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>():
+    <span style="color:#66d9ef">if</span> keyboard<span style="color:#f92672">.</span>right:
+        player<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> player<span style="color:#f92672">.</span>x <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_walk1&#34;</span>
+    <span style="color:#66d9ef">elif</span> keyboard<span style="color:#f92672">.</span>left:
+        player<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> player<span style="color:#f92672">.</span>x <span style="color:#f92672">-</span> <span style="color:#ae81ff">5</span>
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_walk2&#34;</span>
+    <span style="color:#66d9ef">elif</span> keyboard<span style="color:#f92672">.</span>up:
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_hold1&#34;</span>
+    <span style="color:#66d9ef">else</span>:
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_stand&#34;</span>
+
+	<span style="color:#75715e"># アイテムの落下</span>
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> item_list:
+        item<span style="color:#f92672">.</span>y <span style="color:#f92672">=</span> item<span style="color:#f92672">.</span>y <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_mouse_down</span>(pos):
+    item <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;item.png&#34;</span>, center<span style="color:#f92672">=</span>(pos[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">0</span>))
+    item_list<span style="color:#f92672">.</span>append(item)
+</code></pre></div><p><a href="https://gyazo.com/8fd2abba8a785e63f816399557680875"><img src="https://i.gyazo.com/8fd2abba8a785e63f816399557680875.gif" alt="Image from Gyazo"></a></p>
+<p>プレイヤーとアイテムの衝突を検知するには，<code>clliderect()</code>を利用します．
+衝突が検出されたときは<code>True</code>，検出されないときは<code>False</code>となります．
+ここでは，上方向のキーボードが押されているときに，プレイヤーとアイテムの衝突が検知されれば，アイテムを非表示にします．
+アイテムを非表示にするには，アイテムの座標はスクリーンの外部に設定します（pygame zeroのバージョン1.3なら透明度<code>opacity</code>でも代替可能）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">player <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;player_stand&#34;</span>, midbottom<span style="color:#f92672">=</span>(WIDTH<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>, HEIGHT))
+
+item_list <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>():
+    screen<span style="color:#f92672">.</span>fill(<span style="color:#e6db74">&#34;white&#34;</span>)
+    player<span style="color:#f92672">.</span>draw()
+    
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> item_list:
+        item<span style="color:#f92672">.</span>draw()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>():
+    <span style="color:#66d9ef">if</span> keyboard<span style="color:#f92672">.</span>right:
+        player<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> player<span style="color:#f92672">.</span>x <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_walk1&#34;</span>
+    <span style="color:#66d9ef">elif</span> keyboard<span style="color:#f92672">.</span>left:
+        player<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> player<span style="color:#f92672">.</span>x <span style="color:#f92672">-</span> <span style="color:#ae81ff">5</span>
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_walk2&#34;</span>
+    <span style="color:#66d9ef">elif</span> keyboard<span style="color:#f92672">.</span>up:
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_hold1&#34;</span>
+        
+		<span style="color:#75715e"># アイテムとの衝突処理</span>
+        <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> item_list:
+            <span style="color:#66d9ef">if</span>(player<span style="color:#f92672">.</span>colliderect(item)):
+                item<span style="color:#f92672">.</span>x <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">9999</span>  <span style="color:#75715e"># スクリーン外に移動</span>
+                item<span style="color:#f92672">.</span>y <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">9999</span>
+    <span style="color:#66d9ef">else</span>:
+        player<span style="color:#f92672">.</span>image <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;player_stand&#34;</span>
+
+    <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> item_list:
+        item<span style="color:#f92672">.</span>y <span style="color:#f92672">=</span> item<span style="color:#f92672">.</span>y <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_mouse_down</span>(pos):
+    item <span style="color:#f92672">=</span> Actor(<span style="color:#e6db74">&#34;item.png&#34;</span>, center<span style="color:#f92672">=</span>(pos[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">0</span>))
+    item_list<span style="color:#f92672">.</span>append(item)
+</code></pre></div><p><a href="https://gyazo.com/53cc95ab048e23735183805951dbc403"><img src="https://i.gyazo.com/53cc95ab048e23735183805951dbc403.gif" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>次の課題に取組んでください．</p>
+<ul>
+<li>スクリーンの左上にスコアを表示する</li>
+<li>落下しているアイテムを拾えばスコアに10を加算する</li>
+<li><a href="https://kenney.nl/">KENNY</a>の<a href="https://kenney.nl/assets/pixel-shmup">Pixel Shmup</a>に収録されている画像<a href="https://i.gyazo.com/fb821d27555cfb5c7700e25cb4bcedae.png">broken.png</a>をダウンロードして，imagesフォルダにコピーする</li>
+<li>アイテムがスクリーンに下部に到達したとき，画像を<a href="https://i.gyazo.com/fb821d27555cfb5c7700e25cb4bcedae.png">broken.png</a>に変更する</li>
+</ul>
+<p><a href="https://gyazo.com/401885bbe4dabb7cfc580ec86d52b6d0"><img src="https://i.gyazo.com/401885bbe4dabb7cfc580ec86d52b6d0.gif" alt="Image from Gyazo"></a></p>
+<p>課題を完成させたらスクリプトを保存し，chapter10フォルダをZIPで圧縮して提出してください．</p>
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07T63W9KC&linkId=9290dc532b8a5d3fc81a3197e01332be&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07FZ1NMMZ&linkId=a2f45ccd6b8345e7d359a665d24298c8&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B07F2X9GRQ&linkId=5629a178082dddaacacdb47b22205c1f&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/programming/chapter10/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
