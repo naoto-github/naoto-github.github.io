@@ -87,11 +87,11 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成ノートブックのタイトルは AI-5 とします． Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックの作成方法は第1回の資料を参照してください．
+  <meta property="og:description" content="ノートブックの作成  ノートブックのタイトルは AI-5 とします． Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックの作成方法は第1回の資料を参照してください．
 最初に Simple AI をインストールします． セルで下記のコマンドを実行してください．
-!pip install simpleai ハノイの塔今回は ハノイの塔（Tower of Hanoi） を取り上げましょう．
-ハノイの塔3本の支柱（A，B，C）があり，支柱Aに3枚の円盤（小，中，大）が重なっている．円盤を他の支柱に移動させることができるが，必ず大きい円盤の上に小さい円盤が積まれる状態でなければいけない．支柱Aにある全ての円盤を支柱Cに移すにはどうすれば良いか．この問題を 状態空間モデル で表現します．
-状態空間モデル円盤の状態を，支柱Aにあるとき1 ，支柱Bにあるとき2，支柱Cにあるとき3と表す．この状態を，$(小, 中, 大)$の円盤の順に並べる．例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す．また，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す．$$初期状態：(1, 1, 1)$$$$目的状態：(3, 3, 3)$$行動（操作）は，円盤を現在の支柱から，他の支柱へ移動することで与えられる．ただし，大きい円盤を小さい円盤の上に移動させることはできない．円盤（小）に対する行動は下記の6通りである．ここで，$y$と$z$は円盤（中）と円盤（大）の状態である． $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ $(2, y, z) \rightarrow (1, y, z)$ #支柱Bから支柱Aへ $(2, y, z) \rightarrow (3, y, z)$ #支柱Bから支柱Cへ $(3, y, z) \rightarrow (1, y, z)$ #支柱Cから支柱Aへ $(3, y, z) \rightarrow (2, y, z)$ #支柱Cから支柱Bへ同様に円盤（中），円盤（大）にも6通りの行動が存在し，合わせて18通りの行動が定義できる．実装クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+!pip install simpleai ハノイの塔  今回は ハノイの塔（Tower of Hanoi） を取り上げましょう．
+ハノイの塔   3本の支柱（A，B，C）があり，支柱Aに3枚の円盤（小，中，大）が重なっている．円盤を他の支柱に移動させることができるが，必ず大きい円盤の上に小さい円盤が積まれる状態でなければいけない．支柱Aにある全ての円盤を支柱Cに移すにはどうすれば良いか． この問題を 状態空間モデル で表現します． ここでは，モデルAとモデルBの2種類の状態空間モデル検討してみましょう．
+モデルAの状態定義   支柱に積まれている円盤の数が1枚のとき1，2枚のとき2，3枚のとき3と表す．この状態を，$(支柱A，支柱B，支柱C)$の順に並べる．例えば，初期状態は全ての円盤が支柱Aにあるため$(3, 0, 0)$と表す．同様に，目的状態は全ての円盤が支柱Cにあるため$(0, 0, 3)$と表す．$$初期状態：(3, 0, 0)$$$$目的状態：(0, 0, 3)$$ モデルBの状態定義   円盤が支柱Aにあるとき1 ，支柱Bにあるとき2，支柱Cにあるとき3と表す．この状態を，$(円盤（小）, 円盤（中）, 円盤（大）)$の順に並べる．例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す．同様に，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す．$$初期状態：(1, 1, 1)$$$$目的状態：(3, 3, 3)$$ 上記のモデルA，モデルBのどちらが適しているでしょうか． 次の2つの状態を例に考えてみましょう． 左の状態は，円盤（小）と円盤（大）が支柱A，円盤（中）が支柱Bにあります． 右の状態は，円盤（中）と円盤（大）が支柱A，円盤（小）が支柱Bにあります． これらを，モデルAとモデルBで表現してみましょう．" />
 
 
 
@@ -106,11 +106,11 @@
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成ノートブックのタイトルは AI-5 とします． Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックの作成方法は第1回の資料を参照してください．
+  <meta name="twitter:description" content="ノートブックの作成  ノートブックのタイトルは AI-5 とします． Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックの作成方法は第1回の資料を参照してください．
 最初に Simple AI をインストールします． セルで下記のコマンドを実行してください．
-!pip install simpleai ハノイの塔今回は ハノイの塔（Tower of Hanoi） を取り上げましょう．
-ハノイの塔3本の支柱（A，B，C）があり，支柱Aに3枚の円盤（小，中，大）が重なっている．円盤を他の支柱に移動させることができるが，必ず大きい円盤の上に小さい円盤が積まれる状態でなければいけない．支柱Aにある全ての円盤を支柱Cに移すにはどうすれば良いか．この問題を 状態空間モデル で表現します．
-状態空間モデル円盤の状態を，支柱Aにあるとき1 ，支柱Bにあるとき2，支柱Cにあるとき3と表す．この状態を，$(小, 中, 大)$の円盤の順に並べる．例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す．また，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す．$$初期状態：(1, 1, 1)$$$$目的状態：(3, 3, 3)$$行動（操作）は，円盤を現在の支柱から，他の支柱へ移動することで与えられる．ただし，大きい円盤を小さい円盤の上に移動させることはできない．円盤（小）に対する行動は下記の6通りである．ここで，$y$と$z$は円盤（中）と円盤（大）の状態である． $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ $(2, y, z) \rightarrow (1, y, z)$ #支柱Bから支柱Aへ $(2, y, z) \rightarrow (3, y, z)$ #支柱Bから支柱Cへ $(3, y, z) \rightarrow (1, y, z)$ #支柱Cから支柱Aへ $(3, y, z) \rightarrow (2, y, z)$ #支柱Cから支柱Bへ同様に円盤（中），円盤（大）にも6通りの行動が存在し，合わせて18通りの行動が定義できる．実装クラスの定義 最初にライブラリをインポートします． 前回と同様に，探索問題の型 を表すSearchPrblemと 幅優先探索 を表すbreadth_firstをインポートします．" />
+!pip install simpleai ハノイの塔  今回は ハノイの塔（Tower of Hanoi） を取り上げましょう．
+ハノイの塔   3本の支柱（A，B，C）があり，支柱Aに3枚の円盤（小，中，大）が重なっている．円盤を他の支柱に移動させることができるが，必ず大きい円盤の上に小さい円盤が積まれる状態でなければいけない．支柱Aにある全ての円盤を支柱Cに移すにはどうすれば良いか． この問題を 状態空間モデル で表現します． ここでは，モデルAとモデルBの2種類の状態空間モデル検討してみましょう．
+モデルAの状態定義   支柱に積まれている円盤の数が1枚のとき1，2枚のとき2，3枚のとき3と表す．この状態を，$(支柱A，支柱B，支柱C)$の順に並べる．例えば，初期状態は全ての円盤が支柱Aにあるため$(3, 0, 0)$と表す．同様に，目的状態は全ての円盤が支柱Cにあるため$(0, 0, 3)$と表す．$$初期状態：(3, 0, 0)$$$$目的状態：(0, 0, 3)$$ モデルBの状態定義   円盤が支柱Aにあるとき1 ，支柱Bにあるとき2，支柱Cにあるとき3と表す．この状態を，$(円盤（小）, 円盤（中）, 円盤（大）)$の順に並べる．例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す．同様に，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す．$$初期状態：(1, 1, 1)$$$$目的状態：(3, 3, 3)$$ 上記のモデルA，モデルBのどちらが適しているでしょうか． 次の2つの状態を例に考えてみましょう． 左の状態は，円盤（小）と円盤（大）が支柱A，円盤（中）が支柱Bにあります． 右の状態は，円盤（中）と円盤（大）が支柱A，円盤（小）が支柱Bにあります． これらを，モデルAとモデルBで表現してみましょう．" />
 
 
 
@@ -215,23 +215,52 @@
   
 </div>
 
-<p>この問題を <strong>状態空間モデル</strong> で表現します．</p>
+<p>この問題を <strong>状態空間モデル</strong> で表現します．
+ここでは，モデルAとモデルBの2種類の状態空間モデル検討してみましょう．</p>
 
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
   <h3 style="color:#FF0000">
-    状態空間モデル
+    モデルAの状態定義
+  </h3>
+
+  <p>
+    
+支柱に積まれている円盤の数が1枚のとき<b>1</b>，2枚のとき<b>2</b>，3枚のとき<b>3</b>と表す．
+この状態を，$(支柱A，支柱B，支柱C)$の順に並べる．
+
+例えば，初期状態は全ての円盤が支柱Aにあるため$(3, 0, 0)$と表す．
+同様に，目的状態は全ての円盤が支柱Cにあるため$(0, 0, 3)$と表す．
+
+$$
+初期状態：(3, 0, 0)
+$$
+
+$$
+目的状態：(0, 0, 3)
+$$
+
+
+  </p>
+  
+</div>
+
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    モデルBの状態定義
   </h3>
 
   <p>
     
 
-円盤の状態を，支柱Aにあるとき<b>1</b> ，支柱Bにあるとき<b>2</b>，
+円盤が支柱Aにあるとき<b>1</b> ，支柱Bにあるとき<b>2</b>，
 支柱Cにあるとき<b>3</b>と表す．
-この状態を，$(小, 中, 大)$の円盤の順に並べる．
+この状態を，$(円盤（小）, 円盤（中）, 円盤（大）)$の順に並べる．
 
 例えば，初期状態は全ての円盤が支柱Aにあるため$(1, 1, 1)$と表す．
-また，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す．
+同様に，目的状態は全ての円盤が支柱Cにあるため$(3, 3, 3)$と表す．
 
 $$
 初期状態：(1, 1, 1)
@@ -241,29 +270,136 @@ $$
 目的状態：(3, 3, 3)
 $$
 
+
+  </p>
+  
+</div>
+
+<p>上記のモデルA，モデルBのどちらが適しているでしょうか．
+次の2つの状態を例に考えてみましょう．
+左の状態は，円盤（小）と円盤（大）が支柱A，円盤（中）が支柱Bにあります．
+右の状態は，円盤（中）と円盤（大）が支柱A，円盤（小）が支柱Bにあります．
+これらを，モデルAとモデルBで表現してみましょう．</p>
+<p><a href="https://gyazo.com/4c4496ab6693b47bcf5a335b3d58baea"><img src="https://i.gyazo.com/4c4496ab6693b47bcf5a335b3d58baea.png" alt="Image from Gyazo" width="400"/></a></p>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>左の状態</th>
+<th>右の状態</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>$(2, 1, 0)$</td>
+<td>$(2, 1, 0)$</td>
+</tr>
+<tr>
+<td>B</td>
+<td>$(1, 2, 1)$</td>
+<td>$(2, 1, 1)$</td>
+</tr>
+</tbody>
+</table>
+<p>モデルAで表現すると，いずれの状態も$(2, 1, 0)$となって区別できません．
+これはモデルAが，支柱の位置は表現できる一方で，円盤の大きさを表現できていないことが原因です．
+一方，モデルBであれば，支柱の位置と，円盤の大きさの両方を表現できるため，異なる状態として区別することが可能です．
+よって，ここではハノイの塔の状態空間モデルとして <strong>モデルBを採用する</strong> ことにします．
+次にモデルBの行動を考えましょう．</p>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#FF0000">
+    状態空間モデルBの行動定義
+  </h3>
+
+  <p>
+    
+
 行動（操作）は，円盤を現在の支柱から，他の支柱へ移動することで与えられる．
-ただし，大きい円盤を小さい円盤の上に移動させることはできない．
+ただし，大きい円盤を小さい円盤の上に移動させることはできない．<br><br>
 
 円盤（小）に対する行動は下記の6通りである．
 ここで，$y$と$z$は円盤（中）と円盤（大）の状態である．
 
 <ul>
-<li> $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ</li>
-<li> $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ</li>
-<li> $(2, y, z) \rightarrow (1, y, z)$ #支柱Bから支柱Aへ</li>
-<li> $(2, y, z) \rightarrow (3, y, z)$ #支柱Bから支柱Cへ</li>
-<li> $(3, y, z) \rightarrow (1, y, z)$ #支柱Cから支柱Aへ</li>
-<li> $(3, y, z) \rightarrow (2, y, z)$ #支柱Cから支柱Bへ</li>
+<li> A1: $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ</li>
+<li> A2: $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ</li>
+<li> A3: $(2, y, z) \rightarrow (1, y, z)$ #支柱Bから支柱Aへ</li>
+<li> A4: $(2, y, z) \rightarrow (3, y, z)$ #支柱Bから支柱Cへ</li>
+<li> A5: $(3, y, z) \rightarrow (1, y, z)$ #支柱Cから支柱Aへ</li>
+<li> A6: $(3, y, z) \rightarrow (2, y, z)$ #支柱Cから支柱Bへ</li>
 </ul>
 
-同様に円盤（中），円盤（大）にも6通りの行動が存在し，
-合わせて18通りの行動が定義できる．
+円盤（中）に対する行動は下記の6通りである．
+ここで，$x$と$z$は円盤（小）と円盤（大）の状態である．
+
+<ul>
+<li> A7: $(x, 1, z) \rightarrow (x, 2, z)$ #支柱Aから支柱Bへ</li>
+<li> A8: $(x, 1, z) \rightarrow (x, 3, z)$ #支柱Aから支柱Cへ</li>
+<li> A9: $(x, 2, z) \rightarrow (x, 1, z)$ #支柱Bから支柱Aへ</li>
+<li> A10: $(x, 2, z) \rightarrow (x, 3, z)$ #支柱Bから支柱Cへ</li>
+<li> A11: $(x, 3, z) \rightarrow (x, 1, z)$ #支柱Cから支柱Aへ</li>
+<li> A12: $(x, 3, z) \rightarrow (x, 2, z)$ #支柱Cから支柱Bへ</li>
+</ul>
+
+円盤（大）に対する行動は下記の6通りである．
+ここで，$x$と$y$は円盤（小）と円盤（中）の状態である．
+
+<ul>
+<li> A13: $(x, y, 1) \rightarrow (x, y, 2)$ #支柱Aから支柱Bへ</li>
+<li> A14: $(x, y, 1) \rightarrow (x, y, 3)$ #支柱Aから支柱Cへ</li>
+<li> A15: $(x, y, 2) \rightarrow (x, y, 1)$ #支柱Bから支柱Aへ</li>
+<li> A16: $(x, y, 2) \rightarrow (x, y, 3)$ #支柱Bから支柱Cへ</li>
+<li> A17: $(x, y, 3) \rightarrow (x, y, 1)$ #支柱Cから支柱Aへ</li>
+<li> A18: $(x, y, 3) \rightarrow (x, y, 2)$ #支柱Cから支柱Bへ</li>
+</ul>
+
+よって，ハノイの塔の行動は上記の18種類が定義できる．
+ただし，円盤（中）と円盤（大）は，他の円盤の位置に応じて，選択できない行動がある．
 
 
   </p>
   
 </div>
 
+<h3 id="円盤小の行動を適用するための条件">円盤（小）の行動を適用するための条件</h3>
+<p>円盤（小）の上に円盤（中），円盤（大）があることはありえないため，常に円盤（小）の全ての行動が適用可能です．
+例えば円盤（小）が支柱Aにある場合， <strong>円盤（中）と円盤（大）の位置に関わらず</strong> ，常にA1，A2を適用することが可能です．</p>
+<ul>
+<li>A1: $(1, y, z) \rightarrow (2, y, z)$ #支柱Aから支柱Bへ</li>
+<li>A2: $(1, y, z) \rightarrow (3, y, z)$ #支柱Aから支柱Cへ</li>
+</ul>
+<h3 id="円盤中の行動を適用するための条件">円盤（中）の行動を適用するための条件</h3>
+<p>上記の円盤（中）に対する行動に注目してみましょう．
+円盤（中）が支柱Aにある場合，候補となる行動は下記の2種類です．</p>
+<ul>
+<li>A7: $(x, 1, z) \rightarrow (x, 2, z)$ #支柱Aから支柱Bへ</li>
+<li>A8: $(x, 1, z) \rightarrow (x, 3, z)$ #支柱Aから支柱Cへ</li>
+</ul>
+<p>円盤（小）が支柱Bにあるときは， <strong>円盤（大）の位置に関わらず</strong>，行動A8は適用できますが，A7は適用することができません．
+つまり，$(2, 1, z)$のときは，A8だけが適用可能な行動となります．</p>
+<p><a href="https://gyazo.com/cdb9bb409c6aa64063af5dc14a8cf71e"><img src="https://i.gyazo.com/cdb9bb409c6aa64063af5dc14a8cf71e.png" alt="Image from Gyazo"></a></p>
+<p>円盤（小）が支柱Cにあるときは， <strong>円盤（大）の位置に関わらず</strong>，行動A7は適用できますが，A8は適用することができません．
+つまり，$(3, 1, z)$のときは，A7だけが適用可能な行動となります．</p>
+<p><a href="https://gyazo.com/18b112d6af78a9da02823c6d5c979245"><img src="https://i.gyazo.com/18b112d6af78a9da02823c6d5c979245.png" alt="Image from Gyazo"></a></p>
+<p>円盤（中）の上に，円盤（小）があるときは，<strong>円盤（大）の位置に関わらず</strong>，行動A7，A8のいずれも適用することができません．
+つまり，$(1, 1, z)$のときは，選択可能な行動は存在しないことになります．</p>
+<p><a href="https://gyazo.com/c5ca8cd5774a1b579484119028ba5925"><img src="https://i.gyazo.com/c5ca8cd5774a1b579484119028ba5925.png" alt="Image from Gyazo"></a></p>
+<h3 id="円盤大の行動を適用するための条件">円盤（大）の行動を適用するための条件</h3>
+<p>次に円盤（大）に対する行動に注目してみましょう．
+円盤（大）が支柱Aにある場合，候補となる行動は下記の2種類です．</p>
+<ul>
+<li>A13: $(x, y, 1) \rightarrow (x, y, 2)$ #支柱Aから支柱Bへ</li>
+<li>A14: $(x, y, 1) \rightarrow (x, y, 3)$ #支柱Aから支柱Cへ</li>
+</ul>
+<p>A13が適用な状態は，円盤（小）と円盤（大）が支柱Cにあるときだけです．
+つまり，$(3, 3, 1)$のときだけ，A13が適用可能です．</p>
+<p><a href="https://gyazo.com/f5d9ad6ace43885eaba728d991b0195e"><img src="https://i.gyazo.com/f5d9ad6ace43885eaba728d991b0195e.png" alt="Image from Gyazo"></a></p>
+<p>A14が適用な状態は，円盤（小）と円盤（大）が支柱Bにあるときだけです．
+つまり，$(2, 2, 1)$のときだけ，A13が適用可能です．</p>
+<p><a href="https://gyazo.com/432f7d6d05fe65a41ab9db9e4de648bc"><img src="https://i.gyazo.com/432f7d6d05fe65a41ab9db9e4de648bc.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   実装
 </h1>
@@ -306,45 +442,39 @@ GOAL  <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span>
 
   <span style="color:#75715e"># 円盤小</span>
   <span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
-    actions<span style="color:#f92672">.</span>extend([<span style="color:#e6db74">&#34;A1&#34;</span>, <span style="color:#e6db74">&#34;A2&#34;</span>]) <span style="color:#75715e">#円盤小を支柱Aから支柱B，支柱Cへ</span>
-  <span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:            
-    actions<span style="color:#f92672">.</span>extend([<span style="color:#e6db74">&#34;A3&#34;</span>, <span style="color:#e6db74">&#34;A4&#34;</span>]) <span style="color:#75715e">#円盤小を支柱Bから支柱A，支柱Cへ</span>
-  <span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:            
-    actions<span style="color:#f92672">.</span>extend([<span style="color:#e6db74">&#34;A5&#34;</span>, <span style="color:#e6db74">&#34;A6&#34;</span>]) <span style="color:#75715e">#円盤小を支柱Cから支柱A，支柱Bへ</span>
-
+	actions<span style="color:#f92672">.</span>extend([<span style="color:#e6db74">&#34;A1&#34;</span>, <span style="color:#e6db74">&#34;A2&#34;</span>])
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+    actions<span style="color:#f92672">.</span>extend([<span style="color:#e6db74">&#34;A3&#34;</span>, <span style="color:#e6db74">&#34;A4&#34;</span>])
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+    actions<span style="color:#f92672">.</span>extend([<span style="color:#e6db74">&#34;A5&#34;</span>, <span style="color:#e6db74">&#34;A6&#34;</span>])
+	
   <span style="color:#75715e"># 円盤中</span>
-  <span style="color:#66d9ef">if</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A7&#34;</span>) <span style="color:#75715e">#円盤中を支柱Aから支柱Bへ</span>
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A8&#34;</span>) <span style="color:#75715e">#円盤中を支柱Aから支柱Cへ</span>
-  <span style="color:#66d9ef">if</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A9&#34;</span>) <span style="color:#75715e">#円盤中を支柱Bから支柱Aへ</span>
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A10&#34;</span>) <span style="color:#75715e">#円盤中を支柱Bから支柱Cへ           </span>
-  <span style="color:#66d9ef">if</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A11&#34;</span>) <span style="color:#75715e">#円盤中を支柱Cから支柱Aへ</span>
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A12&#34;</span>) <span style="color:#75715e">#円盤中を支柱Cから支柱Bへ</span>
+  <span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A7&#34;</span>)
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A8&#34;</span>)
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A9&#34;</span>)
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A10&#34;</span>)
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A11&#34;</span>)
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A12&#34;</span>)
 
   <span style="color:#75715e"># 円盤大</span>
-  <span style="color:#66d9ef">if</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> (s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>):
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A13&#34;</span>) <span style="color:#75715e">#円盤大を支柱Aから支柱Bへ</span>
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:                
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A14&#34;</span>) <span style="color:#75715e">#円盤大を支柱Aから支柱Cへ   </span>
-  <span style="color:#66d9ef">if</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> (s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>):
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A15&#34;</span>) <span style="color:#75715e">#円盤大を支柱Bから支柱Aへ</span>
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A16&#34;</span>) <span style="color:#75715e">#円盤大を支柱Bから支柱Cへ  </span>
-  <span style="color:#66d9ef">if</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> (s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>):
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>:
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A17&#34;</span>) <span style="color:#75715e">#円盤大を支柱Cから支柱Aへ</span>
-    <span style="color:#66d9ef">if</span> s <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>:                
-      actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A18&#34;</span>) <span style="color:#75715e">#円盤大を支柱Cから支柱Bへ</span>
+  <span style="color:#66d9ef">if</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A13&#34;</span>)
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A14&#34;</span>)
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">and</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A15&#34;</span>)
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A16&#34;</span>)
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">and</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A17&#34;</span>)
+  <span style="color:#66d9ef">elif</span> s <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> m <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">and</span> l <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+    actions<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#34;A18&#34;</span>)
 
   <span style="color:#66d9ef">return</span> actions
 </code></pre></div><h3 id="resultself-state-action">result(self, state, action)</h3>
@@ -471,11 +601,14 @@ $$
   
 </div>
 
+<!--
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   完成したノートブックの確認
 </h1>
 
-<p><a href="https://colab.research.google.com/drive/1GjbOQ7MfCvXKM-YIevSlN0yjUmITOmBU?usp=sharing"><i class="fas fa-external-link-alt"></i>ノートブックの確認</a></p>
+
+[<i class="fas fa-external-link-alt"></i>ノートブックの確認](https://colab.research.google.com/drive/1GjbOQ7MfCvXKM-YIevSlN0yjUmITOmBU?usp=sharing)
+-->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
