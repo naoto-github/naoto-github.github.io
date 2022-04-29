@@ -274,83 +274,89 @@ Pointの他にも， <strong>LineString（線）</strong> ， <strong>Polygon（
 <p>まずは，ノートブックを作成します．
 ノートブックの名前は <strong>chapter4.ipynb</strong> に設定します．</p>
 <p><a href="https://gyazo.com/54b843d96a77c1cd9df4034ce7f0c5e9"><img src="https://i.gyazo.com/54b843d96a77c1cd9df4034ce7f0c5e9.png" alt="Image from Gyazo"></a></p>
-<p>前回と同様に<a href="https://python-visualization.github.io/folium/">folium</a>をインストールし，
-<a href="https://python-visualization.github.io/folium/">folium</a>と<a href="https://pandas.pydata.org/">pandas</a>をインポートします．</p>
+<p>前回利用した<a href="https://python-visualization.github.io/folium/">folium</a>と，GeoJSONデータの取り込みが可能な<a href="https://geopandas.org/en/stable/">GeoPandas</a>，タイル地図の表示が可能な<a href="https://contextily.readthedocs.io/en/latest/">contextily</a>をインストールします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install folium
+!pip install geopandas
+!pip install contextily
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> folium
-<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
-</code></pre></div><h2 id="データフレームpandas">データフレーム（pandas）</h2>
-<p><a href="https://pandas.pydata.org/">pandas</a>を利用して，
-CSV形式のオープンデータ（<a href="https://mukai-lab.info/classes/seminar_fundamental_areas/csv/bus_stops.csv">bus_stops.csv</a>）を読み込みます．
-日進市のバス停の一覧です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># bus_stops.csv</span>
-url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://mukai-lab.info/classes/seminar_fundamental_areas/csv/bus_stops.csv&#34;</span>
+<span style="color:#f92672">import</span> geopandas <span style="color:#f92672">as</span> gpd
+<span style="color:#f92672">import</span> contextily <span style="color:#f92672">as</span> cx
+</code></pre></div><h2 id="データフレームgeopandas">データフレーム（GeoPandas）</h2>
+<p><a href="https://geopandas.org/en/stable/">GeoPandas</a>を利用して，GeoJSON形式のオープン出た<a href="https://mukai-lab.info/classes/seminar_fundamental_areas/csv/bus_stops.geojson">bus_stops.geojson</a>を読み込みます．
+これは，日進市が公開しているCSV形式のバス停のオープンデータを，GeoJSON形式に変換したファイルです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># bus_stops.geojson</span>
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://mukai-lab.info/classes/seminar_fundamental_areas/csv/bus_stops.geojson&#34;</span>
 
-<span style="color:#75715e"># データフレームの生成</span>
-df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(url)
+<span style="color:#75715e"># GeoJSON用のデータフレームの生成</span>
+df <span style="color:#f92672">=</span> gpd<span style="color:#f92672">.</span>read_file(url)
 
-<span style="color:#75715e"># HTMLで表示(=display(df))</span>
+<span style="color:#75715e"># HTMLで表示(=display(df)))</span>
 df
-</code></pre></div><p><a href="https://gyazo.com/a977df96d60fbb38e9cee4404573865a"><img src="https://i.gyazo.com/a977df96d60fbb38e9cee4404573865a.png" alt="Image from Gyazo"></a></p>
-<p>ここでは，<strong>バス停名</strong> ， <strong>緯度</strong> ， <strong>経度</strong> の列を抽出します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;バス停名&#34;</span>, <span style="color:#e6db74">&#34;緯度&#34;</span>, <span style="color:#e6db74">&#34;経度&#34;</span>]]
-df
-</code></pre></div><p><a href="https://gyazo.com/3fb166854323f3c2121ff230b31b0a03"><img src="https://i.gyazo.com/3fb166854323f3c2121ff230b31b0a03.png" alt="Image from Gyazo"></a></p>
-<p>地図の中心を，全てのバス停の緯度・経度の平均に設定します．
-前回と同じ方法で求めると，中心の緯度は<code>35.1373</code>，経度は<code>137.0466</code>になりました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">center_lat <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#34;緯度&#34;</span>]<span style="color:#f92672">.</span>mean()
-center_lon <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#34;経度&#34;</span>]<span style="color:#f92672">.</span>mean()
+</code></pre></div><p><a href="https://gyazo.com/e28c7814dbcc281d019b6f6eac103239"><img src="https://i.gyazo.com/e28c7814dbcc281d019b6f6eac103239.png" alt="Image from Gyazo"></a></p>
+<h2 id="オープンストリートマップの表示">オープンストリートマップの表示</h2>
+<p>表示する地図の中心を，全てのバス停の緯度・経度の平均に設定します．
+データフレームから，geometryの列を取得し，経度<code>x</code>と緯度<code>y</code>の平均を求めます．
+緯度は<code>35.1372</code>，経度は<code>137.0465</code>になりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">center_lat <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#34;geometry&#34;</span>]<span style="color:#f92672">.</span>y<span style="color:#f92672">.</span>mean()
+center_lon <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#34;geometry&#34;</span>]<span style="color:#f92672">.</span>x<span style="color:#f92672">.</span>mean()
 
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;center_lat={center_lat} center_lon={center_lon}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">center_lat=35.1372590495031 center_lon=137.04657202546582
-</code></pre></div><h2 id="geojsonへの変換">GeoJSONへの変換</h2>
-<p>データフレームをGeoJSON形式に変換します．
-バス停の名前は<code>name</code>，バス停の緯度・経度は<code>lat</code>，<code>lon</code>に代入しています．
-これらの値を<code>feature</code>の<code>geometry.coordinates</code>と<code>properties.name</code>に設定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">geojson <span style="color:#f92672">=</span> {
-  <span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;FeatureCollection&#34;</span>,
-  <span style="color:#e6db74">&#34;features&#34;</span>: []
-}
-
-<span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>iterrows():
-  name <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">0</span>]
-  lat <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">1</span>]
-  lon <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">2</span>]
-
-  feature <span style="color:#f92672">=</span> {
-    <span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;Feature&#34;</span>,
-    <span style="color:#e6db74">&#34;geometry&#34;</span>: {
-      <span style="color:#e6db74">&#34;type&#34;</span>: <span style="color:#e6db74">&#34;Point&#34;</span>,
-      <span style="color:#e6db74">&#34;coordinates&#34;</span>: [lon, lat]
-    },
-    <span style="color:#e6db74">&#34;properties&#34;</span>:{
-      <span style="color:#e6db74">&#34;name&#34;</span>: name
-    }
-  }
-
-  geojson[<span style="color:#e6db74">&#34;features&#34;</span>]<span style="color:#f92672">.</span>append(feature)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(geojson[<span style="color:#e6db74">&#34;features&#34;</span>][<span style="color:#ae81ff">0</span>])
-<span style="color:#66d9ef">print</span>(geojson[<span style="color:#e6db74">&#34;features&#34;</span>][<span style="color:#ae81ff">1</span>])
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">{&#39;type&#39;: &#39;Feature&#39;, &#39;geometry&#39;: {&#39;type&#39;: &#39;Point&#39;, &#39;coordinates&#39;: [137.0394341, 35.13220467]}, &#39;properties&#39;: {&#39;name&#39;: &#39;市役所&#39;}}
-{&#39;type&#39;: &#39;Feature&#39;, &#39;geometry&#39;: {&#39;type&#39;: &#39;Point&#39;, &#39;coordinates&#39;: [137.042486, 35.13206576]}, &#39;properties&#39;: {&#39;name&#39;: &#39;図書館&#39;}}
-</code></pre></div><h3 id="オープンストリートマップの表示">オープンストリートマップの表示</h3>
-<p>先に計算した緯度・経度を中心として地図を表示します．
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">center_lat=35.1372590495031 center_lon=137.04657202546582
+</code></pre></div><p>先に計算した緯度・経度を中心として地図を表示します．
 スケール（倍率）は<code>15</code>に設定します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[center_lat, center_lon], zoom_start<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span>)
 map
 </code></pre></div><p><a href="https://gyazo.com/1e62174a26b02cb566812036f7109fde"><img src="https://i.gyazo.com/1e62174a26b02cb566812036f7109fde.png" alt="Image from Gyazo"></a></p>
 <p>GeoJSON形式のデータを表示するには，<code>GeoJson()</code>を用います．
-このとき，<code>tooltip</code>として，バス停の名前を表示します（<code>GeoJsonTooltip</code>を利用します）．</p>
+データフレームを<code>to_json()</code>で変換してから，<code>GeoJson()</code>の引数として渡しています．
+この結果，バス停がマーカーとして表示されていることを確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[center_lat, center_lon], zoom_start<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span>)
+
+<span style="color:#75715e"># データフレームをGeoJSON形式に変換して地図に追加</span>
+folium<span style="color:#f92672">.</span>GeoJson(df<span style="color:#f92672">.</span>to_json())<span style="color:#f92672">.</span>add_to(map)
+
+map
+</code></pre></div><p><a href="https://gyazo.com/11601c626c3e34eecd55f48273763e46"><img src="https://i.gyazo.com/11601c626c3e34eecd55f48273763e46.png" alt="Image from Gyazo"></a></p>
+<p>さらに，<code>GeoJsonTooltip()</code>を利用して，バス停の名前をツールチップとして表示します．
+GeoJSON形式のpropertiesに含まれる<code>name</code>プロパティを，バス停の名前として参照するよう設定します．
+マーカーをマウスでホバーすると，バス停の名前が表示されることがわかります．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[center_lat, center_lon], zoom_start<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span>)
 
 tooltip <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>features<span style="color:#f92672">.</span>GeoJsonTooltip(fields<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;name&#34;</span>], labels<span style="color:#f92672">=</span>False)
-folium<span style="color:#f92672">.</span>GeoJson(geojson, tooltip<span style="color:#f92672">=</span>tooltip)<span style="color:#f92672">.</span>add_to(map)
+folium<span style="color:#f92672">.</span>GeoJson(df<span style="color:#f92672">.</span>to_json(), tooltip<span style="color:#f92672">=</span>tooltip)<span style="color:#f92672">.</span>add_to(map)
 
 map
-</code></pre></div><p>この結果，バス停がマーカーとして表示されていることを確認できます．</p>
-<p><a href="https://gyazo.com/11601c626c3e34eecd55f48273763e46"><img src="https://i.gyazo.com/11601c626c3e34eecd55f48273763e46.png" alt="Image from Gyazo"></a></p>
-<p>本日のノートブックは下記URLで確認できます．</p>
-<p><a href="https://colab.research.google.com/drive/18wqErISuFMA34MNuAyAmXSO30PErRIb4?usp=sharing"><i class="fas fa-external-link-square-alt"></i> chapter4.ipynb</a></p>
+</code></pre></div><p><a href="https://gyazo.com/0cdb682e54161a498a5e0fbc9a779d09"><img src="https://i.gyazo.com/0cdb682e54161a498a5e0fbc9a779d09.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  GeoPandasの活用
+</h1>
+
+<p>GeoJSON形式を読み込んだGeoPandasのデータフレームを活用すると，地理情報に関する様々な処理が可能です．</p>
+<h2 id="距離の算出">距離の算出</h2>
+<p>データフレームの各レコードから，特定の緯度・経度までの距離（単位：メートル）を算出することが可能です．
+ここでは，データフレームから市役所のバス停のレコードを抽出し，各バス停から市役所のバス停までの距離を算出します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> shapely.geometry <span style="color:#f92672">import</span> Point
+
+df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>to_crs(<span style="color:#ae81ff">6675</span>)  <span style="color:#75715e"># 直交座標系に変換</span>
+
+siyakusyo <span style="color:#f92672">=</span> df[df[<span style="color:#e6db74">&#34;name&#34;</span>]<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;市役所&#34;</span>] <span style="color:#75715e"># 市役所のレコードを抽出</span>
+point <span style="color:#f92672">=</span> Point(siyakusyo<span style="color:#f92672">.</span>geometry<span style="color:#f92672">.</span>x, siyakusyo<span style="color:#f92672">.</span>geometry<span style="color:#f92672">.</span>y)
+
+df<span style="color:#f92672">.</span>distance(point) <span style="color:#75715e"># 市役所までの距離を算出（単位：メートル）</span>
+</code></pre></div><p><a href="https://gyazo.com/c4f7ff24f22f96b08732fa7342ef5366"><img src="https://i.gyazo.com/c4f7ff24f22f96b08732fa7342ef5366.png" alt="Image from Gyazo"></a></p>
+<h2 id="データのプロット">データのプロット</h2>
+<p>データフレームの緯度・経度で表された点データをグラフをして表示するには，<code>plot()</code>を実行するだけです．
+グラフの横軸が経度，縦軸が緯度になっていることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>to_crs(<span style="color:#ae81ff">4326</span>) <span style="color:#75715e"># 世界測地系に変換</span>
+df<span style="color:#f92672">.</span>plot(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>))
+</code></pre></div><p><a href="https://gyazo.com/f07af51175c1b825e6432f5d4b237978"><img src="https://i.gyazo.com/f07af51175c1b825e6432f5d4b237978.png" alt="Image from Gyazo"></a></p>
+<p>グラフの背景として，オープンストリートマップを表示させることができます．
+データフレームの座標系をWebメルカトル（EPSG:3856）に変換してから，<code>plot()</code>でグラフを作成します．
+このグラフに対し，<code>add_basemap()</code>でオープンストリートマップを背景に設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>to_crs(epsg<span style="color:#f92672">=</span><span style="color:#ae81ff">3857</span>) <span style="color:#75715e"># Webメルカトルに変換</span>
+ax <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>plot(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>))
+cx<span style="color:#f92672">.</span>add_basemap(ax, source<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/d9cb1822b34215c7abe91c7c8b6ce378"><img src="https://i.gyazo.com/d9cb1822b34215c7abe91c7c8b6ce378.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
