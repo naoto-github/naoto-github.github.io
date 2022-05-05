@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    jQuery①・DOM操作 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="jQuery①・DOM操作" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/applied_programming_wa/2020_chapter8/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/5337a6102c2004e948607d61b6037ddd.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="jQuery  JavaScriptにライブラリを導入することで，様々な機能を追加することができます． JQueryは，JavaScriptのライブラリの一つであり， John Resig氏が2006年に開発したことで知られています． MITライセンスで公開されており，商用・非商用を問わず誰もが利用可能です．
+近年はVue.js，AngularJSなど， JavaScriptフレームワーク と呼ばれる技術が注目され，jQueryの代替として採用されるケースが増えてきました． それでも，jQueryは簡単に導入が可能であることに加え，学習コストも低いため， フロントエンド開発の選択肢として十分に価値があります．
+jQueryは主に下記を実現するために用いられます． DOMはHTMLを文書ツリーとして表現したモデルであり，jQueryで要素の作成・追加・削除が可能です（詳細は後述）． また，要素と同様にCSSの操作も可能です． さらに，ボタンやマウスのイベント処理に加え，サーバと非同期で通信する Ajax を簡潔に記述出来ます（APIの通信に用いることが多い）．
+ DOMの操作 CSSの操作 ボタンやマウスのイベント処理 Ajax  DOM  DOM(Document Object Model) はHTMLの要素を木構造で表現・管理するためのモデルです（文書ツリー）． html要素が親ノード（ルートノード）になり，head要素やbody要素が子ノードとしてぶらさがっている構造です． jQueryでは，DOMの要素の生成や取得が可能であり，文書ツリーを自由に書き換えることができます．
+&lt;html&gt; &lt;head&gt; &lt;meta&gt;&lt;/meta&gt; &lt;title&gt;&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;h1&gt;&lt;/h1&gt; &lt;p&gt;&lt;/p&gt; &lt;/body&gt; &lt;/html&gt; 
+CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter8」に設定しましょう．
+ https://codepen.io/
+
+CodePenでjQueryを導入するには CDN(Content Delivery Network) を利用します． CDNはWebサイト上のコンテンツを効率的にユーザに配信する仕組みのことです． CodePenの「Settings」をクリックし，「Pen Settings」を開きます． ここで，「jQuery」をキーワードに検索し，「Save &amp; Close」をクリックします． 2021年3月時点でのjQueryの最新バージョンは 3.6.0 です．
+
+jQueryの基本  jQueryの基本的な使い方について解説します
+HTMLの記述 HTMLに下記のコードを記述してください． id属性やclass属性が要素に設定されていることも確認してください．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="jQuery①・DOM操作" />
+
+
+
+  <meta name="twitter:description" content="jQuery  JavaScriptにライブラリを導入することで，様々な機能を追加することができます． JQueryは，JavaScriptのライブラリの一つであり， John Resig氏が2006年に開発したことで知られています． MITライセンスで公開されており，商用・非商用を問わず誰もが利用可能です．
+近年はVue.js，AngularJSなど， JavaScriptフレームワーク と呼ばれる技術が注目され，jQueryの代替として採用されるケースが増えてきました． それでも，jQueryは簡単に導入が可能であることに加え，学習コストも低いため， フロントエンド開発の選択肢として十分に価値があります．
+jQueryは主に下記を実現するために用いられます． DOMはHTMLを文書ツリーとして表現したモデルであり，jQueryで要素の作成・追加・削除が可能です（詳細は後述）． また，要素と同様にCSSの操作も可能です． さらに，ボタンやマウスのイベント処理に加え，サーバと非同期で通信する Ajax を簡潔に記述出来ます（APIの通信に用いることが多い）．
+ DOMの操作 CSSの操作 ボタンやマウスのイベント処理 Ajax  DOM  DOM(Document Object Model) はHTMLの要素を木構造で表現・管理するためのモデルです（文書ツリー）． html要素が親ノード（ルートノード）になり，head要素やbody要素が子ノードとしてぶらさがっている構造です． jQueryでは，DOMの要素の生成や取得が可能であり，文書ツリーを自由に書き換えることができます．
+&lt;html&gt; &lt;head&gt; &lt;meta&gt;&lt;/meta&gt; &lt;title&gt;&lt;/title&gt; &lt;/head&gt; &lt;body&gt; &lt;h1&gt;&lt;/h1&gt; &lt;p&gt;&lt;/p&gt; &lt;/body&gt; &lt;/html&gt; 
+CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter8」に設定しましょう．
+ https://codepen.io/
+
+CodePenでjQueryを導入するには CDN(Content Delivery Network) を利用します． CDNはWebサイト上のコンテンツを効率的にユーザに配信する仕組みのことです． CodePenの「Settings」をクリックし，「Pen Settings」を開きます． ここで，「jQuery」をキーワードに検索し，「Save &amp; Close」をクリックします． 2021年3月時点でのjQueryの最新バージョンは 3.6.0 です．
+
+jQueryの基本  jQueryの基本的な使い方について解説します
+HTMLの記述 HTMLに下記のコードを記述してください． id属性やclass属性が要素に設定されていることも確認してください．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/5337a6102c2004e948607d61b6037ddd.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">jQuery①・DOM操作</h1>
+<div class="post-line"></div>
+    
+    
+
+    <p><a href="https://gyazo.com/5337a6102c2004e948607d61b6037ddd"><img src="https://i.gyazo.com/5337a6102c2004e948607d61b6037ddd.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  jQuery
+</h1>
+
+<p>JavaScriptにライブラリを導入することで，様々な機能を追加することができます．
+<a href="https://jquery.com/">JQuery</a>は，JavaScriptのライブラリの一つであり，
+<a href="https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A7%E3%83%B3%E3%83%BB%E3%83%AC%E3%82%B7%E3%82%B0">John Resig</a>氏が2006年に開発したことで知られています．
+MITライセンスで公開されており，商用・非商用を問わず誰もが利用可能です．</p>
+<p>近年は<a href="https://jp.vuejs.org/index.html">Vue.js</a>，<a href="https://angularjs.org/">AngularJS</a>など，
+<strong>JavaScriptフレームワーク</strong> と呼ばれる技術が注目され，jQueryの代替として採用されるケースが増えてきました．
+それでも，jQueryは簡単に導入が可能であることに加え，学習コストも低いため，
+フロントエンド開発の選択肢として十分に価値があります．</p>
+<p>jQueryは主に下記を実現するために用いられます．
+DOMはHTMLを文書ツリーとして表現したモデルであり，jQueryで要素の作成・追加・削除が可能です（詳細は後述）．
+また，要素と同様にCSSの操作も可能です．
+さらに，ボタンやマウスのイベント処理に加え，サーバと非同期で通信する <strong>Ajax</strong> を簡潔に記述出来ます（APIの通信に用いることが多い）．</p>
+<ul>
+<li>DOMの操作</li>
+<li>CSSの操作</li>
+<li>ボタンやマウスのイベント処理</li>
+<li>Ajax</li>
+</ul>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  DOM
+</h1>
+
+<p><strong>DOM(Document Object Model)</strong> はHTMLの要素を木構造で表現・管理するためのモデルです（文書ツリー）．
+<code>html</code>要素が親ノード（ルートノード）になり，<code>head</code>要素や<code>body</code>要素が子ノードとしてぶらさがっている構造です．
+jQueryでは，DOMの要素の生成や取得が可能であり，文書ツリーを自由に書き換えることができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">html</span>&gt;
+	&lt;<span style="color:#f92672">head</span>&gt;
+		&lt;<span style="color:#f92672">meta</span>&gt;&lt;/<span style="color:#f92672">meta</span>&gt;
+		&lt;<span style="color:#f92672">title</span>&gt;&lt;/<span style="color:#f92672">title</span>&gt;
+	&lt;/<span style="color:#f92672">head</span>&gt;
+	&lt;<span style="color:#f92672">body</span>&gt;
+		&lt;<span style="color:#f92672">h1</span>&gt;&lt;/<span style="color:#f92672">h1</span>&gt;
+		&lt;<span style="color:#f92672">p</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+	&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><p><a href="https://gyazo.com/fc382b9e7d4409270b2b0f11aa3301a3"><img src="https://i.gyazo.com/fc382b9e7d4409270b2b0f11aa3301a3.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  CodePenの準備
+</h1>
+
+<p><a href="https://codepen.io/">CodePen</a>にアクセスして，Penを作成し，タイトルを設定しましょう．
+Penのタイトルは「Chapter8」に設定しましょう．</p>
+<p><a href="https://codepen.io/"><i class="fas fa-external-link-alt"></i> https://codepen.io/</a></p>
+<p><a href="https://gyazo.com/28f0701e6bd38c77055bd300ae150a11"><img src="https://i.gyazo.com/28f0701e6bd38c77055bd300ae150a11.png" alt="Image from Gyazo"></a></p>
+<p>CodePenでjQueryを導入するには <strong>CDN(Content Delivery Network)</strong> を利用します．
+CDNはWebサイト上のコンテンツを効率的にユーザに配信する仕組みのことです．
+CodePenの「Settings」をクリックし，「Pen Settings」を開きます．
+ここで，「jQuery」をキーワードに検索し，「Save &amp; Close」をクリックします．
+2021年3月時点でのjQueryの最新バージョンは <strong>3.6.0</strong> です．</p>
+<p><a href="https://gyazo.com/36d91cc7f53ed36653d0ea074b692c0a"><img src="https://i.gyazo.com/36d91cc7f53ed36653d0ea074b692c0a.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  jQueryの基本
+</h1>
+
+<p>jQueryの基本的な使い方について解説します</p>
+<h2 id="htmlの記述">HTMLの記述</h2>
+<p>HTMLに下記のコードを記述してください．
+id属性やclass属性が要素に設定されていることも確認してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">h1</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hl&#34;</span>&gt;&lt;/<span style="color:#f92672">h1</span>&gt;
+&lt;<span style="color:#f92672">h2</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hl&#34;</span>&gt;&lt;/<span style="color:#f92672">h2</span>&gt;
+&lt;<span style="color:#f92672">p</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;teacher&#34;</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+&lt;<span style="color:#f92672">p</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;credit&#34;</span>&gt;&lt;/<span style="color:#f92672">p</span>&gt;
+
+&lt;<span style="color:#f92672">p</span>&gt;キーワード：&lt;/<span style="color:#f92672">p</span>&gt;
+&lt;<span style="color:#f92672">ul</span>&gt;
+&lt;/<span style="color:#f92672">ul</span>&gt;
+
+&lt;<span style="color:#f92672">img</span>&gt;&lt;/<span style="color:#f92672">img</span>&gt;
+</code></pre></div><p>JavaScriptに下記のコードを記述してください．
+この<code>$(function($){});</code>は，HTMLがDOMとして構築された後に処理を実行するためのコードです．
+<code>$</code>は<code>jQuery</code>という文字列のエイリアス（別名）です．
+あまり難しく考えず，jQueryを利用する際に必要な <strong>おまじない</strong> と考えればOKです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">$</span>){
+
+  <span style="color:#75715e">// ここにjQueryのコードを記述
+</span><span style="color:#75715e"></span>
+});
+</code></pre></div><h2 id="テキストの操作">テキストの操作</h2>
+<p>jQueryの構文はCSSによく似ており，<strong>セレクタ</strong> と <strong>メソッド</strong> をペアにして記述します．
+セレクタは，CSSと同じように，要素セレクタ，IDセレクタ，CLASSセレクタが利用可能です．
+また，メソッドは，テキストを設定する<code>text()</code>，要素を追加する<code>append()</code>，
+CSSを設定する<code>css()</code>など様々な種類が用意されています．
+利用可能なメソッドの一覧は<a href="https://api.jquery.com/">jQuery API</a>で確認が可能です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;セレクタ&#34;</span>).<span style="color:#a6e22e">メソッド</span>();
+</code></pre></div><p>要素セレクタを利用して，タグに囲まれたテキストを設定してみましょう．
+テキストの設定には<code>text()</code>を利用します．
+ここでは，<code>h1</code>に「プログラミング応用」，<code>h2</code>に「専門科目」という文字列を設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// 要素名でDOM操作
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;h1&#34;</span>).<span style="color:#a6e22e">text</span>(<span style="color:#e6db74">&#34;プログラミング応用&#34;</span>);
+<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;h2&#34;</span>).<span style="color:#a6e22e">text</span>(<span style="color:#e6db74">&#34;専門科目&#34;</span>);
+</code></pre></div><p>IDセレクタを利用して，テキストを設定してみましょう．
+IDセレクタでは，先頭に<code>#</code>を付けることを忘れないようにしましょう．
+ここでは，<code>#teacher</code>に「担当教員: 向 直人」，<code>#credit</code>に「単位: 2単位」という文字列を設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// IDでDOM操作
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#teacher&#34;</span>).<span style="color:#a6e22e">text</span>(<span style="color:#e6db74">&#34;担当教員: 向 直人&#34;</span>);
+<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#credit&#34;</span>).<span style="color:#a6e22e">text</span>(<span style="color:#e6db74">&#34;単位: 2単位&#34;</span>);
+</code></pre></div><p><a href="https://gyazo.com/728eb422ef937b05d7d85f41f63ff662"><img src="https://i.gyazo.com/728eb422ef937b05d7d85f41f63ff662.png" alt="Image from Gyazo"></a></p>
+<h2 id="cssの操作">CSSの操作</h2>
+<p>要素セレクタを利用して，CSSを設定してみましょう．
+CSSの設定には<code>css()</code>を利用します．
+第1引数にはプロパティ，第2引数は値を設定します．
+ここでは，<code>p</code>に左マージンを10pxで設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// 要素名でCSSの設定
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;p&#34;</span>).<span style="color:#a6e22e">css</span>(<span style="color:#e6db74">&#34;margin-left&#34;</span>, <span style="color:#e6db74">&#34;10px&#34;</span>);
+</code></pre></div><p>CLASSセレクタを利用して，CSSを設定してみましょう．
+CLASSセレクタでは，先頭に<code>.</code>を付けることを忘れないようにしましょう．
+ここでは，<code>hl</code>の文字の色を<code>#005f33</code>に設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// クラス属性でCSSの設定
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;.hl&#34;</span>).<span style="color:#a6e22e">css</span>(<span style="color:#e6db74">&#34;color&#34;</span>, <span style="color:#e6db74">&#34;#005f33&#34;</span>);
+</code></pre></div><p><a href="https://gyazo.com/5476eb0d7fc210ee5aa9999750ebbd0a"><img src="https://i.gyazo.com/5476eb0d7fc210ee5aa9999750ebbd0a.png" alt="Image from Gyazo"></a></p>
+<h2 id="要素の追加">要素の追加</h2>
+<p>要素セレクタを利用して，対象の親要素に子要素を追加します（親子関係になることに注意）．
+要素の追加には<code>append()</code>を利用します．
+ここでは，<code>ul</code>を親要素として，3つの<code>li</code>を子要素として追加しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// 要素の追加
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;ul&#34;</span>).<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;&lt;li&gt;JavaScript&lt;/li&gt;&#34;</span>);
+<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;ul&#34;</span>).<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;&lt;li&gt;jQuery&lt;/li&gt;&#34;</span>);
+<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;ul&#34;</span>).<span style="color:#a6e22e">append</span>(<span style="color:#e6db74">&#34;&lt;li&gt;HTML&lt;/li&gt;&#34;</span>);
+</code></pre></div><p><a href="https://gyazo.com/2d7d917d7a3cb1e9be2739f33c079b31"><img src="https://i.gyazo.com/2d7d917d7a3cb1e9be2739f33c079b31.png" alt="Image from Gyazo"></a></p>
+<h2 id="属性の設定">属性の設定</h2>
+<p>要素セレクタを利用して，対象の要素に属性を設定します．
+属性の設定には<code>attr()</code>を利用します．
+第1引数には属性名，第2引数は値を設定します．
+ここでは，<code>img</code>の<code>src</code>属性に画像のURL，<code>width</code>属性に<code>200px</code>を設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// 属性の設定
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;img&#34;</span>).<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;src&#34;</span>, <span style="color:#e6db74">&#34;https://i.gyazo.com/c54e6f0aa37c43099fc151bb9b86d9c4.png&#34;</span>);
+<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;img&#34;</span>).<span style="color:#a6e22e">attr</span>(<span style="color:#e6db74">&#34;width&#34;</span>, <span style="color:#e6db74">&#34;200px&#34;</span>);
+</code></pre></div><p><a href="https://gyazo.com/d642eb1a1c82d679572ff09d6f55ae08"><img src="https://i.gyazo.com/d642eb1a1c82d679572ff09d6f55ae08.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  イベントの処理
+</h1>
+
+<p>jQueryでボタンやマウスなどのイベント処理が可能です．</p>
+<h2 id="ボタンイベント">ボタン・イベント</h2>
+<p>ボタンをクリックすると画像を表示するように修正しましょう．
+HTMLに下記のコードを追加してください（<code>img</code>の前に追加）．
+<code>button</code>はボタンを表すタグで，タグで囲まれた文字列をラベルとして用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;button&#34;</span>&gt;画像の表示&lt;/<span style="color:#f92672">button</span>&gt;&lt;<span style="color:#f92672">br</span>&gt;
+&lt;<span style="color:#f92672">img</span>&gt;&lt;/<span style="color:#f92672">img</span>&gt;
+</code></pre></div><p>最初は<code>img</code>を<code>hide()</code>で非表示にします．
+このメソッドは，CSSの<code>display</code>プロパティを<code>none</code>に設定します．
+ボタンをクリックしたタイミングで，<code>img</code>を<code>show()</code>で表示します．
+クリックの検出は<code>on()</code>を利用します．
+第1引数には<code>&quot;click&quot;</code>，第2引数には無名関数を設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// 画像を非表示
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;img&#34;</span>).<span style="color:#a6e22e">hide</span>();
+
+<span style="color:#75715e">// ボタンのクリックで画像を表示
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;button&#34;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span>(){
+  <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;img&#34;</span>).<span style="color:#a6e22e">show</span>();
+});
+</code></pre></div><p><a href="https://gyazo.com/e225a13cb95e242b97a0ef8a3c9fd61f"><img src="https://i.gyazo.com/e225a13cb95e242b97a0ef8a3c9fd61f.gif" alt="Image from Gyazo"></a></p>
+<p>上記のコードでは，画像が表示された後に，画像を非表示に戻すことができません．
+そこで，下記のコードに書き換えます．
+<code>display</code>プロパティが<code>none</code>（非表示）のときは<code>show()</code>で画像を表示し，
+そうでなければ<code>hide()</code>で画像を非表示にします．
+このとき，ボタンのラベルも合わせて変更しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// 画像を非表示
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;img&#34;</span>).<span style="color:#a6e22e">hide</span>();
+
+<span style="color:#75715e">// ボタンのクリックで画像を表示
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;button&#34;</span>).<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span>(){
+  <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;img&#34;</span>).<span style="color:#a6e22e">css</span>(<span style="color:#e6db74">&#34;display&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;none&#34;</span>){
+    <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;button&#34;</span>).<span style="color:#a6e22e">text</span>(<span style="color:#e6db74">&#34;画像の非表示&#34;</span>);
+    <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;img&#34;</span>).<span style="color:#a6e22e">show</span>();
+  }
+  <span style="color:#66d9ef">else</span>{
+    <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;button&#34;</span>).<span style="color:#a6e22e">text</span>(<span style="color:#e6db74">&#34;画像の表示&#34;</span>);
+    <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;img&#34;</span>).<span style="color:#a6e22e">hide</span>();
+  }
+});
+</code></pre></div><p><a href="https://gyazo.com/e26d2ce87670a3f55c1d7bc1873fe69c"><img src="https://i.gyazo.com/e26d2ce87670a3f55c1d7bc1873fe69c.gif" alt="Image from Gyazo"></a></p>
+<h2 id="マウスイベント">マウス・イベント</h2>
+<p>マウスを要素に重ねる（ホバー）と，文字の色が変わるように修正しましょう．
+HTMLに下記のコードを追加してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">p</span>&gt;授業予定&lt;/<span style="color:#f92672">p</span>&gt;
+&lt;<span style="color:#f92672">ol</span>&gt;
+  &lt;<span style="color:#f92672">li</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;chapter&#34;</span>&gt;Webアプリの開発&lt;/<span style="color:#f92672">li</span>&gt;
+  &lt;<span style="color:#f92672">li</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;chapter&#34;</span>&gt;HTML<span style="color:#960050;background-color:#1e0010">&amp;</span>CSSの基本&lt;/<span style="color:#f92672">li</span>&gt;
+  &lt;<span style="color:#f92672">li</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;chapter&#34;</span>&gt;JavaScript&lt;/<span style="color:#f92672">li</span>&gt;
+&lt;/<span style="color:#f92672">ol</span>&gt;
+</code></pre></div><p>マウスと要素のホバーの検出には，<code>hover()</code>を利用します．
+第1引数にはマウスが要素と重なっているときの処理（無名関数），
+第2引数にはマウスが要素から外れたときの処理（無名関数）を記述します．
+ここで，<code>this</code>は処理対象の要素（マウスと重なっている要素）を表します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;.chapter&#34;</span>).<span style="color:#a6e22e">hover</span>(<span style="color:#66d9ef">function</span>(){
+  <span style="color:#a6e22e">$</span>(<span style="color:#66d9ef">this</span>).<span style="color:#a6e22e">css</span>(<span style="color:#e6db74">&#34;color&#34;</span>, <span style="color:#e6db74">&#34;#005f33&#34;</span>);
+}, <span style="color:#66d9ef">function</span>(){
+  <span style="color:#a6e22e">$</span>(<span style="color:#66d9ef">this</span>).<span style="color:#a6e22e">css</span>(<span style="color:#e6db74">&#34;color&#34;</span>, <span style="color:#e6db74">&#34;#000000&#34;</span>);
+});
+</code></pre></div><p><a href="https://gyazo.com/22033d602658c8710e8b8f612ddb2923"><img src="https://i.gyazo.com/22033d602658c8710e8b8f612ddb2923.gif" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  アプリの確認
+</h1>
+
+<p class="codepen" data-height="265" data-theme-id="light" data-default-tab="result" data-user="nmukai" data-slug-hash="wvoQmRv" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="Chapter8">
+  <span>See the Pen <a href="https://codepen.io/nmukai/pen/wvoQmRv">
+  Chapter8</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>HTML全体の背景色をランダムに変化させるボタンを作成しなさい．
+色をRGBで指定するには下記のように表現することが出来る．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">color</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;rgb(255, 0, 0)&#34;</span>; <span style="color:#75715e">//赤
+</span></code></pre></div><p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
+提出方法は初回の<a href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/">Webアプリの開発</a>を参考にしてください．</p>
+<h3>参考書籍</h3>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B08CXDYVLS&linkId=829c7897d68d44db2de11a55b3e0bfd8&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B01LYO6C1N&linkId=81a9a7d9508c06ad6e7af3fdce5631c1&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+</iframe>
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B0192PG8TU&linkId=420f0d4a0c28a0ff476faefe9466a260&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
+    </iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/applied_programming_wa/2020_chapter8/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
