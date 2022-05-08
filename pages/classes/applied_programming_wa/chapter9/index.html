@@ -87,13 +87,15 @@
 
 
 
-  <meta property="og:description" content="フォーム処理  CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter9」に設定しましょう．
+  <meta property="og:description" content="フォーム処理  Webアプリでは，テキストフォーム や ラジオボタン などのフォームを利用して，ユーザの入力を受け付けることになります． これらのフォームに入力された値も，データバインディングの対象となります． ここでは，英単語のクイズ問題を作成して，クイズに対するユーザの回答を処理してみましょう． また，ユーザに情報を伝達するために便利な ダイアログ の使い方も確認します．
+CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter9」に設定しましょう．
 
 前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
 
-また，Vue.jsの基本構造も記述しておきます． Vueクラスのインスタンスには，el，data，methodsを指定します．
+また，Vue.jsの基本構造も記述しておきます． Vueクラスのインスタンスには，el，data，methodsを指定します． Webアプリのタイトルと説明文も記載しておきましょう．
 &lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt; {{ title }} &lt;/h1&gt; &lt;p&gt; {{ description }} &lt;/p&gt; &lt;div&gt; // JavaScript let app = new Vue({ el: &#34;#app&#34;, data: { title: &#34;英単語クイズアプリ&#34;, description: &#34;英単語に関するクイズを出題します．&#34;, }, methods: { }, }) 
-セレクトボックス  テキストフィールド  ラジオボタン  アプリの確認  課題  参考書籍" />
+クイズ問題の作成  「英単語のスペル（spell）」と「英単語の意味（meaning）」を回答するクイズ問題を配列で作成します． スペルの問題は，type，question，image，answerのキーを持つ連想配列です． typeはspellに設定します． imageはいらすとやで提供されている動物の画像のURLです． 同様に，意味の問題は，type，question，options，answerのキーを持つ連想配列です． typeはmeaningに設定します． optionsは回答の選択肢であり，配列で表現することにします．
+また，dataオプションに，クイズ問題を表すquizzes， 回答中のクイズの問題番号を表すquiz_number， ユーザの回答を表すquiz_answerを定義しておきます．" />
 
 
 
@@ -108,13 +110,15 @@
 
 
 
-  <meta name="twitter:description" content="フォーム処理  CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter9」に設定しましょう．
+  <meta name="twitter:description" content="フォーム処理  Webアプリでは，テキストフォーム や ラジオボタン などのフォームを利用して，ユーザの入力を受け付けることになります． これらのフォームに入力された値も，データバインディングの対象となります． ここでは，英単語のクイズ問題を作成して，クイズに対するユーザの回答を処理してみましょう． また，ユーザに情報を伝達するために便利な ダイアログ の使い方も確認します．
+CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter9」に設定しましょう．
 
 前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
 
-また，Vue.jsの基本構造も記述しておきます． Vueクラスのインスタンスには，el，data，methodsを指定します．
+また，Vue.jsの基本構造も記述しておきます． Vueクラスのインスタンスには，el，data，methodsを指定します． Webアプリのタイトルと説明文も記載しておきましょう．
 &lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt; {{ title }} &lt;/h1&gt; &lt;p&gt; {{ description }} &lt;/p&gt; &lt;div&gt; // JavaScript let app = new Vue({ el: &#34;#app&#34;, data: { title: &#34;英単語クイズアプリ&#34;, description: &#34;英単語に関するクイズを出題します．&#34;, }, methods: { }, }) 
-セレクトボックス  テキストフィールド  ラジオボタン  アプリの確認  課題  参考書籍" />
+クイズ問題の作成  「英単語のスペル（spell）」と「英単語の意味（meaning）」を回答するクイズ問題を配列で作成します． スペルの問題は，type，question，image，answerのキーを持つ連想配列です． typeはspellに設定します． imageはいらすとやで提供されている動物の画像のURLです． 同様に，意味の問題は，type，question，options，answerのキーを持つ連想配列です． typeはmeaningに設定します． optionsは回答の選択肢であり，配列で表現することにします．
+また，dataオプションに，クイズ問題を表すquizzes， 回答中のクイズの問題番号を表すquiz_number， ユーザの回答を表すquiz_answerを定義しておきます．" />
 
 
 
@@ -185,6 +189,10 @@
   フォーム処理
 </h1>
 
+<p>Webアプリでは，<strong>テキストフォーム</strong> や <strong>ラジオボタン</strong> などのフォームを利用して，ユーザの入力を受け付けることになります．
+これらのフォームに入力された値も，データバインディングの対象となります．
+ここでは，英単語のクイズ問題を作成して，クイズに対するユーザの回答を処理してみましょう．
+また，ユーザに情報を伝達するために便利な <strong>ダイアログ</strong> の使い方も確認します．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   CodePenの準備
 </h1>
@@ -196,7 +204,8 @@ Penのタイトルは「Chapter9」に設定しましょう．</p>
 Vue.jsのバージョンは2.6.11を採用します．</p>
 <p><a href="https://gyazo.com/4c110f8aea709c2d73759fc193a9a7a3"><img src="https://i.gyazo.com/4c110f8aea709c2d73759fc193a9a7a3.png" alt="Image from Gyazo"></a></p>
 <p>また，Vue.jsの基本構造も記述しておきます．
-Vueクラスのインスタンスには，<code>el</code>，<code>data</code>，<code>methods</code>を指定します．</p>
+Vueクラスのインスタンスには，<code>el</code>，<code>data</code>，<code>methods</code>を指定します．
+Webアプリのタイトルと説明文も記載しておきましょう．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
 &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
   &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
@@ -214,25 +223,292 @@ Vueクラスのインスタンスには，<code>el</code>，<code>data</code>，
 })
 </code></pre></div><p><a href="https://gyazo.com/81484fc47f5d1edbf4a796bcdd982b33"><img src="https://i.gyazo.com/81484fc47f5d1edbf4a796bcdd982b33.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  セレクトボックス
+  クイズ問題の作成
 </h1>
 
+<p>「英単語のスペル（spell）」と「英単語の意味（meaning）」を回答するクイズ問題を配列で作成します．
+スペルの問題は，<code>type</code>，<code>question</code>，<code>image</code>，<code>answer</code>のキーを持つ連想配列です．
+<code>type</code>はspellに設定します．
+<code>image</code>は<a href="https://www.irasutoya.com/">いらすとや</a>で提供されている動物の画像のURLです．
+同様に，意味の問題は，<code>type</code>，<code>question</code>，<code>options</code>，<code>answer</code>のキーを持つ連想配列です．
+<code>type</code>はmeaningに設定します．
+<code>options</code>は回答の選択肢であり，配列で表現することにします．</p>
+<p>また，<code>data</code>オプションに，クイズ問題を表す<code>quizzes</code>，
+回答中のクイズの問題番号を表す<code>quiz_number</code>，
+ユーザの回答を表す<code>quiz_answer</code>を定義しておきます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">quizzes</span> <span style="color:#f92672">=</span> [
+  {
+    <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;spell&#34;</span>,
+    <span style="color:#e6db74">&#34;question&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;犬&#34;</span>,
+    <span style="color:#e6db74">&#34;image&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://assets.codepen.io/4660782/dog.png&#34;</span>,
+    <span style="color:#e6db74">&#34;answer&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;dog&#34;</span>
+  },
+  {
+    <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;spell&#34;</span>,
+    <span style="color:#e6db74">&#34;question&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;猫&#34;</span>,
+    <span style="color:#e6db74">&#34;image&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://assets.codepen.io/4660782/cat.png&#34;</span>,
+    <span style="color:#e6db74">&#34;answer&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;cat&#34;</span>
+  },
+  {
+    <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;meaning&#34;</span>,
+    <span style="color:#e6db74">&#34;question&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;house&#34;</span>,
+    <span style="color:#e6db74">&#34;options&#34;</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#34;家&#34;</span>, <span style="color:#e6db74">&#34;空&#34;</span>, <span style="color:#e6db74">&#34;水&#34;</span>, <span style="color:#e6db74">&#34;海&#34;</span>],
+    <span style="color:#e6db74">&#34;answer&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;家&#34;</span>
+  },
+  {
+    <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;meaning&#34;</span>,
+    <span style="color:#e6db74">&#34;question&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;school&#34;</span>,
+    <span style="color:#e6db74">&#34;options&#34;</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#34;学校&#34;</span>, <span style="color:#e6db74">&#34;消防署&#34;</span>, <span style="color:#e6db74">&#34;区役所&#34;</span>, <span style="color:#e6db74">&#34;交番&#34;</span>],
+    <span style="color:#e6db74">&#34;answer&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;学校&#34;</span>
+  },
+]
+
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#app&#34;</span>,
+  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;英単語クイズアプリ&#34;</span>,
+    <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;英単語に関するクイズを出題します．&#34;</span>,
+    <span style="color:#a6e22e">quizzes</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">quizzes</span>, <span style="color:#75715e">// クイズ問題
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">quiz_number</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>, <span style="color:#75715e">// クイズの問題番号
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">quiz_answer</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#75715e">// クイズの回答
+</span><span style="color:#75715e"></span>  },
+  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+  },
+})
+</code></pre></div><p>次に，HTMLでクイズの問題番号をマスタッシュ記法で表示します．
+問題番号は0から始まるため，1だけ加算してから表示しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">h3</span>&gt;問題{{quiz_number + 1}}&lt;/<span style="color:#f92672">h3</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p><a href="https://gyazo.com/623b9fecc21c128b06637a0345e09d78"><img src="https://i.gyazo.com/623b9fecc21c128b06637a0345e09d78.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   テキストフィールド
 </h1>
+
+<p>英単語のスペルを答える問題を実装します．
+<code>v-if</code>ディレクティブを利用して，クイズのタイプが<code>spell</code>のとき，問題文<code>question</code>と画像<code>image</code>を表示します．
+imgタグのsrc属性には，<code>v-bind</code>ディレクティブを利用して，画像のURLを設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;<span style="color:#f92672">h3</span>&gt;問題{{quiz_number + 1}}&lt;/<span style="color:#f92672">h3</span>&gt;
+  
+  <span style="color:#75715e">&lt;!-- スペルを答える問題 --&gt;</span>
+  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">v-if</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;quizzes[quiz_number].type == `spell`&#34;</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;「{{ quizzes[quiz_number].question }}」 のスペルを答えなさい&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">div</span>&gt;&lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">v-bind:src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;quizzes[quiz_number].image&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+  &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p><a href="https://gyazo.com/878e3ebf8dcecabd1f03a9c4f068e174"><img src="https://i.gyazo.com/878e3ebf8dcecabd1f03a9c4f068e174.png" alt="Image from Gyazo"></a></p>
+<p><code>methods</code>オプションに，ユーザの入力した回答の正解を判定するための<code>check()</code>を定義します．
+ここでは，<code>alert()</code>を利用して，「正解」または「不正解」を表示することにします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">check</span>(){
+      <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_answer</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quizzes</span>[<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_number</span>].<span style="color:#a6e22e">answer</span>){
+		  <span style="color:#a6e22e">alert</span>(<span style="color:#e6db74">&#34;正解&#34;</span>);
+      }
+      <span style="color:#66d9ef">else</span>{
+		  <span style="color:#a6e22e">alert</span>(<span style="color:#e6db74">&#34;不正解&#34;</span>);
+      }
+    }
+}
+</code></pre></div><p>HTMLにテキストフィールド（input）とボタン（button）を設置します．
+テキストフィールドのデータバインディングには，<code>v-model</code>ディレクティブを利用します．
+ここでは，テキストフィールドに入力された値が自動的に<code>quiz_answer</code>に代入されます．
+また，<code>v-on</code>ディレクティブを利用して，ボタンをクリックしたときに<code>check()</code>を実行しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;  
+  &lt;<span style="color:#f92672">h3</span>&gt;問題{{quiz_number + 1}}&lt;/<span style="color:#f92672">h3</span>&gt;
+  
+  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">v-if</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;quizzes[quiz_number].type == `spell`&#34;</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;「{{ quizzes[quiz_number].question }}」 のスペルを答えなさい&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">div</span>&gt;&lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">v-bind:src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;quizzes[quiz_number].image&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">v-model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;quiz_answer&#34;</span>&gt; // テキストフィールド
+    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">v-on:click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;check&#34;</span>&gt;送信&lt;/<span style="color:#f92672">button</span>&gt; // ボタン
+  &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p><a href="https://gyazo.com/a63df3f88d3f6aff852e119f9c4184ec"><img src="https://i.gyazo.com/a63df3f88d3f6aff852e119f9c4184ec.png" alt="Image from Gyazo"></a></p>
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
+  
+  <h3 style="color:#006600">
+    キーポイント
+  </h3>
+
+  <p>
+    
+<ul>
+<li>テキストフィールドのデータバインディングには <b>v-modelディレクティブ</b></li>
+</ul>
+
+  </p>
+  
+</div>
 
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ラジオボタン
 </h1>
 
+<p>英単語の意味を答える問題を実装します．
+<code>v-if</code>ディレクティブを利用して，クイズのタイプが<code>meaning</code>のとき，問題文<code>question</code>と選択肢<code>options</code>を表示します．
+<code>options</code>は配列であるため，<code>v-for</code>ディレクティブを利用して，要素<code>option</code>と要素番号<code>index</code>を一つずつ取り出しています．
+選択肢はラジオボタン（input）で表現し，テキストフィールドと同様に<code>v-model</code>でデータバインディングします．
+データバインディングされた<code>quiz_answer</code>には，ラジオボタンのvalue属性が代入されることに注意してください．
+問題番号を表す<code>quiz_number</code>を2に設定してから，実行結果を確認しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
+  
+  &lt;<span style="color:#f92672">h3</span>&gt;問題{{quiz_number + 1}}&lt;/<span style="color:#f92672">h3</span>&gt;
+  
+  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">v-if</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;quizzes[quiz_number].type == `spell`&#34;</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;「{{ quizzes[quiz_number].question }}」 のスペルを答えなさい&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">div</span>&gt;&lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">v-bind:src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;quizzes[quiz_number].image&#34;</span>&gt;&lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">v-model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;quiz_answer&#34;</span>&gt;
+    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">v-on:click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;check&#34;</span>&gt;送信&lt;/<span style="color:#f92672">button</span>&gt;
+  &lt;/<span style="color:#f92672">div</span>&gt;
+  
+  <span style="color:#75715e">&lt;!-- 意味を答える問題 --&gt;</span>
+  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">v-if</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;quizzes[quiz_number].type == `meaning`&#34;</span>&gt;
+    &lt;<span style="color:#f92672">p</span>&gt;「{{ quizzes[quiz_number].question }}」 の意味を答えなさい&lt;/<span style="color:#f92672">p</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">v-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(option, index) in quizzes[quiz_number].options&#34;</span>&gt;
+      &lt;<span style="color:#f92672">label</span>&gt;
+        &lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;radio&#34;</span> <span style="color:#a6e22e">v-bind:value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;option&#34;</span> <span style="color:#a6e22e">v-model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;quiz_answer&#34;</span>&gt; {{ option }}
+		&lt;/<span style="color:#f92672">input</span>&gt;
+      &lt;/<span style="color:#f92672">label</span>&gt;
+    &lt;/<span style="color:#f92672">div</span>&gt;
+    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">v-on:click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;check&#34;</span>&gt;送信&lt;/<span style="color:#f92672">button</span>&gt;
+  &lt;/<span style="color:#f92672">div</span>&gt;
+  
+&lt;<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p><a href="https://gyazo.com/068a068ca9d202e8ceb8de7f94d7d298"><img src="https://i.gyazo.com/068a068ca9d202e8ceb8de7f94d7d298.png" alt="Image from Gyazo"></a></p>
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
+  
+  <h3 style="color:#006600">
+    キーポイント
+  </h3>
+
+  <p>
+    
+<ul>
+<li>ラジオボタンのデータバインディングには <b>v-modelディレクティブ</b></li>
+<li>inputタグのvalue属性が代入される</li>
+</ul>
+
+  </p>
+  
+</div>
+
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  要素の参照
+</h1>
+
+<p>正解・不正解の表示に<code>alert()</code>は不適切なので，dialogタグを代わりに利用しましょう．
+次に示すように，正解用のダイアログと，不正解用のダイアログを作成します．
+このとき，それぞれ異なる<code>ref</code>属性を設定します．
+<code>ref</code>属性はVue.jsでDOM要素を直接参照するために用いられます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">dialog</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;correct_dialog&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h3</span>&gt;正解&lt;/<span style="color:#f92672">h3</span>&gt;
+&lt;/<span style="color:#f92672">dialog</span>&gt;
+  
+&lt;<span style="color:#f92672">dialog</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;wrong_dialog&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h3</span>&gt;不正解&lt;/<span style="color:#f92672">h3</span>&gt;
+&lt;/<span style="color:#f92672">dialog</span>&gt;  
+</code></pre></div><p><code>check()</code>を修正して，ダイアログを表示させます．
+ダイアログのDOM要素を参照するには<code>$refs</code>を利用します．
+正解のダイアログは<code>this.$refs.correct_dialog</code>，不正解のダイアログは<code>this.$refs.wrong_dialog</code>で参照できます．
+ダイアログの<code>showModal()</code>を実行すると，ダイアログが表示されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+  <span style="color:#a6e22e">check</span>(){
+    <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_answer</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quizzes</span>[<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_number</span>].<span style="color:#a6e22e">answer</span>){
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">correct_dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$refs</span>.<span style="color:#a6e22e">correct_dialog</span>;
+      <span style="color:#a6e22e">correct_dialog</span>.<span style="color:#a6e22e">showModal</span>(); <span style="color:#75715e">// 正解用のダイアログを表示
+</span><span style="color:#75715e"></span>    }
+    <span style="color:#66d9ef">else</span>{
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">wrong_dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$refs</span>.<span style="color:#a6e22e">wrong_dialog</span>;
+      <span style="color:#a6e22e">wrong_dialog</span>.<span style="color:#a6e22e">showModal</span>(); <span style="color:#75715e">// 不正解用のダイアログを表示
+</span><span style="color:#75715e"></span>    }
+  }
+}
+</code></pre></div><p><a href="https://gyazo.com/7fc7d5fe89cbd00050d805b0a67104a1"><img src="https://i.gyazo.com/7fc7d5fe89cbd00050d805b0a67104a1.png" alt="Image from Gyazo"></a></p>
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
+  
+  <h3 style="color:#006600">
+    キーポイント
+  </h3>
+
+  <p>
+    
+<ul>
+<li>参照したいタグに<b>ref属性</b>を設定</li>
+<li>Vueでは<b>$refs</b>で参照</li>
+</ul>
+
+  </p>
+  
+</div>
+
+<p>最後にクイズに答えたら自動的に次の問題に進むように修正します．
+ダイアログにボタン（button）を設置し，<code>v-on</code>ディレクティブで<code>nextQuiz()</code>を実行します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">dialog</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;correct_dialog&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h3</span>&gt;正解&lt;/<span style="color:#f92672">h3</span>&gt;
+  &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">v-on:click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;nextQuiz()&#34;</span>&gt;次の問題へ&lt;/<span style="color:#f92672">button</span>&gt;
+&lt;/<span style="color:#f92672">dialog</span>&gt;
+  
+&lt;<span style="color:#f92672">dialog</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;wrong_dialog&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h3</span>&gt;不正解&lt;/<span style="color:#f92672">h3</span>&gt;
+  &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">v-on:click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;nextQuiz()&#34;</span>&gt;次の問題へ&lt;/<span style="color:#f92672">button</span>&gt;
+&lt;/<span style="color:#f92672">dialog</span>&gt;
+</code></pre></div><p><code>methods</code>オプションで，<code>nextQuiz()</code>を定義します．
+クイズの問題番号<code>quiz_number</code>に1を加算して，ユーザの入力した回答を初期値<code>&quot;&quot;</code>にします．
+また，ダイアログを<code>close()</code>で非表示にします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+  <span style="color:#a6e22e">check</span>(){
+    <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_answer</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quizzes</span>[<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_number</span>].<span style="color:#a6e22e">answer</span>){
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">correct_dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$refs</span>.<span style="color:#a6e22e">correct_dialog</span>;
+      <span style="color:#a6e22e">correct_dialog</span>.<span style="color:#a6e22e">showModal</span>();
+    }
+    <span style="color:#66d9ef">else</span>{
+      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">wrong_dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$refs</span>.<span style="color:#a6e22e">wrong_dialog</span>;
+      <span style="color:#a6e22e">wrong_dialog</span>.<span style="color:#a6e22e">showModal</span>();
+    }
+  },
+  <span style="color:#a6e22e">nextQuiz</span>(){
+	<span style="color:#75715e">// クイズの問題番号を1だけ加算する
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_number</span> <span style="color:#f92672">=</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_number</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quizzes</span>.<span style="color:#a6e22e">length</span>;
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_answer</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+      
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">correct_dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$refs</span>.<span style="color:#a6e22e">correct_dialog</span>;
+    <span style="color:#a6e22e">correct_dialog</span>.<span style="color:#a6e22e">close</span>(); <span style="color:#75715e">// 正解用のダイアログを非表示
+</span><span style="color:#75715e"></span>      
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">wrong_dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$refs</span>.<span style="color:#a6e22e">wrong_dialog</span>;
+    <span style="color:#a6e22e">wrong_dialog</span>.<span style="color:#a6e22e">close</span>(); <span style="color:#75715e">// 不正解用のダイアログを非表示
+</span><span style="color:#75715e"></span>  }
+}
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   アプリの確認
 </h1>
 
+<p class="codepen" data-height="600" data-theme-id="dark" data-default-tab="result" data-slug-hash="RwQrRvg" data-user="nmukai" data-token="2717cab9e0ab86c5f3879f083e4dc78a" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/nmukai/pen/RwQrRvg/2717cab9e0ab86c5f3879f083e4dc78a">
+  Chapter9</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
+<p>ユーザがクイズに正解した回数と間違えた回数を表示してください．</p>
+<p><a href="https://gyazo.com/1538dbead900cc7f11564584a5663d91"><img src="https://i.gyazo.com/1538dbead900cc7f11564584a5663d91.gif" alt="Image from Gyazo"></a></p>
+<p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
+提出方法は初回の<a href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/">Webアプリの開発</a>を参考にしてください．</p>
 <h3>参考書籍</h3>
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B08CXDYVLS&linkId=829c7897d68d44db2de11a55b3e0bfd8&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
