@@ -87,7 +87,14 @@
 
 
 
-  <meta property="og:description" content="コンポーネントとは  CodePenの準備  親から子への通信  子から親への通信  課題  参考書籍" />
+  <meta property="og:description" content="コンポーネントとは  コンポーネント はHTMLを構成する部品のことです． Vue.jsでは，Vue.component()を使ってコンポーネントを定義します． コンポーネントには，複数のHTML要素をまとめたtemplateオプション，データバインディングのためのdataオプション，関数を定義するためのmethodsオプションなどを記述します． コンポーネントとして定義することで，コンポーネントの再利用が可能となり，プログラムの設計が簡単になります． また，propsオプションを利用することで，コンポーネントに任意のデータを渡すことが可能です．
+CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter10」に設定しましょう．
+
+前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
+
+また，Vue.jsの基本構造も記述しておきます． Vueクラスのインスタンスには，el，data，methodsを指定します． Webアプリのタイトルと説明文も記載しておきましょう．
+&lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt; {{ title }} &lt;/h1&gt; &lt;p&gt; {{ description }} &lt;/p&gt; &lt;div&gt; // JavaScript let app = new Vue({ el: &#34;#app&#34;, data: { title: &#34;日進市観光アプリ&#34;, description: &#34;日進市の観光地を紹介するアプリです．&#34;,	}, methods: { }, }) 
+コンポーネントの作成  // templateオプションはテンプレート文字列（``）を使って定義 Vue.component(&#34;panel-component&#34;, { template: ` &lt;div class=&#34;panel&#34;&gt;　&lt;h3&gt;{{ name }}&lt;/h3&gt; &lt;/ps&gt; `, data(){ return{ name: &#34;日進市立図書館&#34;, } }, }) ." />
 
 
 
@@ -102,7 +109,14 @@
 
 
 
-  <meta name="twitter:description" content="コンポーネントとは  CodePenの準備  親から子への通信  子から親への通信  課題  参考書籍" />
+  <meta name="twitter:description" content="コンポーネントとは  コンポーネント はHTMLを構成する部品のことです． Vue.jsでは，Vue.component()を使ってコンポーネントを定義します． コンポーネントには，複数のHTML要素をまとめたtemplateオプション，データバインディングのためのdataオプション，関数を定義するためのmethodsオプションなどを記述します． コンポーネントとして定義することで，コンポーネントの再利用が可能となり，プログラムの設計が簡単になります． また，propsオプションを利用することで，コンポーネントに任意のデータを渡すことが可能です．
+CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter10」に設定しましょう．
+
+前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
+
+また，Vue.jsの基本構造も記述しておきます． Vueクラスのインスタンスには，el，data，methodsを指定します． Webアプリのタイトルと説明文も記載しておきましょう．
+&lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt; {{ title }} &lt;/h1&gt; &lt;p&gt; {{ description }} &lt;/p&gt; &lt;div&gt; // JavaScript let app = new Vue({ el: &#34;#app&#34;, data: { title: &#34;日進市観光アプリ&#34;, description: &#34;日進市の観光地を紹介するアプリです．&#34;,	}, methods: { }, }) 
+コンポーネントの作成  // templateオプションはテンプレート文字列（``）を使って定義 Vue.component(&#34;panel-component&#34;, { template: ` &lt;div class=&#34;panel&#34;&gt;　&lt;h3&gt;{{ name }}&lt;/h3&gt; &lt;/ps&gt; `, data(){ return{ name: &#34;日進市立図書館&#34;, } }, }) ." />
 
 
 
@@ -173,22 +187,152 @@
   コンポーネントとは
 </h1>
 
+<p><strong>コンポーネント</strong> はHTMLを構成する部品のことです．
+Vue.jsでは，<code>Vue.component()</code>を使ってコンポーネントを定義します．
+コンポーネントには，複数のHTML要素をまとめた<code>template</code>オプション，データバインディングのための<code>data</code>オプション，関数を定義するための<code>methods</code>オプションなどを記述します．
+コンポーネントとして定義することで，コンポーネントの再利用が可能となり，プログラムの設計が簡単になります．
+また，<code>props</code>オプションを利用することで，コンポーネントに任意のデータを渡すことが可能です．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   CodePenの準備
 </h1>
 
+<p><a href="https://codepen.io/">CodePen</a>にアクセスして，Penを作成し，タイトルを設定しましょう．
+Penのタイトルは「Chapter10」に設定しましょう．</p>
+<p><a href="https://gyazo.com/5fd4851129ac5a6e736c9530f5175fc1"><img src="https://i.gyazo.com/5fd4851129ac5a6e736c9530f5175fc1.png" alt="Image from Gyazo"></a></p>
+<p>前回と同様にVue.jsのライブラリをペンに追加してください．
+Vue.jsのバージョンは2.6.11を採用します．</p>
+<p><a href="https://gyazo.com/4c110f8aea709c2d73759fc193a9a7a3"><img src="https://i.gyazo.com/4c110f8aea709c2d73759fc193a9a7a3.png" alt="Image from Gyazo"></a></p>
+<p>また，Vue.jsの基本構造も記述しておきます．
+Vueクラスのインスタンスには，<code>el</code>，<code>data</code>，<code>methods</code>を指定します．
+Webアプリのタイトルと説明文も記載しておきましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
+&lt;<span style="color:#f92672">div</span>&gt;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#app&#34;</span>,
+  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市観光アプリ&#34;</span>,
+    <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市の観光地を紹介するアプリです．&#34;</span>,	
+  },
+  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+  },
+})
+</code></pre></div><p><a href="https://gyazo.com/f92f2f1f6e75712a49c617e81a426e99"><img src="https://i.gyazo.com/f92f2f1f6e75712a49c617e81a426e99.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  親から子への通信
+  コンポーネントの作成
 </h1>
 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// templateオプションはテンプレート文字列（``）を使って定義
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">Vue</span>.<span style="color:#a6e22e">component</span>(<span style="color:#e6db74">&#34;panel-component&#34;</span>, {
+  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">`
+</span><span style="color:#e6db74">    &lt;div class=&#34;panel&#34;&gt;　
+</span><span style="color:#e6db74">      &lt;h3&gt;{{ name }}&lt;/h3&gt;
+</span><span style="color:#e6db74">    &lt;/ps&gt;
+</span><span style="color:#e6db74">  `</span>,
+  <span style="color:#a6e22e">data</span>(){
+    <span style="color:#66d9ef">return</span>{
+      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市立図書館&#34;</span>,
+    }
+  },
+})
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css">.<span style="color:#a6e22e">panel</span>{
+  <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">300</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">background</span>: <span style="color:#ae81ff">#DDFFDD</span>;
+  <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">text-align</span>: <span style="color:#66d9ef">center</span>;
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
+  
+  <span style="color:#75715e">&lt;!-- コンポーネントの作成 --&gt;</span>
+  &lt;<span style="color:#f92672">panel-component</span>&gt;&lt;/<span style="color:#f92672">panel-component</span>&gt;
+  
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p><a href="https://gyazo.com/c1ff2f15a1711024725589ad2f592d0e"><img src="https://i.gyazo.com/c1ff2f15a1711024725589ad2f592d0e.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">Vue</span>.<span style="color:#a6e22e">component</span>(<span style="color:#e6db74">&#34;panel-component&#34;</span>, {
+  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">`
+</span><span style="color:#e6db74">    &lt;div class=&#34;panel&#34;&gt;　
+</span><span style="color:#e6db74">      &lt;h3&gt;{{ name }}&lt;/h3&gt;
+</span><span style="color:#e6db74">      &lt;p&gt;
+</span><span style="color:#e6db74">        &lt;img v-bind:src=&#34;image&#34; height=&#34;200px&#34;&gt;
+</span><span style="color:#e6db74">      &lt;/p&gt;
+</span><span style="color:#e6db74">      &lt;p&gt;{{ description }}&lt;/p&gt;
+</span><span style="color:#e6db74">    &lt;/ps&gt;
+</span><span style="color:#e6db74">  `</span>,
+  <span style="color:#a6e22e">data</span>(){
+    <span style="color:#66d9ef">return</span>{
+      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市立図書館&#34;</span>,
+      <span style="color:#a6e22e">image</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://assets.codepen.io/4660782/nissin-tosyokan.jpg&#34;</span>,
+      <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;2008年に岡田新一設計事務所の設計による現行館が開館した。&#34;</span>
+    }
+  },
+})
+</code></pre></div><p><a href="https://gyazo.com/b02847b475e0a4f36d5a7f09c967ab2d"><img src="https://i.gyazo.com/b02847b475e0a4f36d5a7f09c967ab2d.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  子から親への通信
+  propを利用したデータの引き渡し
 </h1>
 
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
+  
+  <h3 style="color:#006600">
+    キーポイント
+  </h3>
+
+  <p>
+    
+<ul>
+<li>子コンポーネントで受け取りたい属性は<b>props</b>オプションで指定</li>
+</ul>
+
+  </p>
+  
+</div>
+
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  フォントアイコンの利用
+</h1>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
+  
+  <h3 style="color:#006600">
+    キーポイント
+  </h3>
+
+  <p>
+    
+<ul>
+<li>フォントアイコンは<b>Font Awsome</b>が便利</li>
+</ul>
+
+  </p>
+  
+</div>
+
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  アプリの確認
+</h1>
+
+<p class="codepen" data-height="700" data-theme-id="dark" data-default-tab="result" data-slug-hash="abqdKdE" data-user="nmukai" data-token="e37feedb73b1c94605b31deaaf5a57ba" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/nmukai/pen/abqdKdE/e37feedb73b1c94605b31deaaf5a57ba">
+  Chapter10 課題</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
+<p>観光地のURLの情報を追加してください．</p>
+<p><a href="https://gyazo.com/fed0ea7bbd2cc4d1b1d8f265b2a22f2d"><img src="https://i.gyazo.com/fed0ea7bbd2cc4d1b1d8f265b2a22f2d.png" alt="Image from Gyazo"></a></p>
+<p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
+提出方法は初回の<a href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/">Webアプリの開発</a>を参考にしてください．</p>
 <h3>参考書籍</h3>
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=naotoassociat-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B08CXDYVLS&linkId=829c7897d68d44db2de11a55b3e0bfd8&bc1=f8f8f8&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=f8f8f8&f=ifr">
