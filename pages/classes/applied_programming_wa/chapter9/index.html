@@ -87,7 +87,7 @@
 
 
 
-  <meta property="og:description" content="フォーム処理  Webアプリでは，テキストフォーム や ラジオボタン などのフォームを利用して，ユーザの入力を受け付けることになります． これらのフォームに入力された値も，データバインディングの対象となります． ここでは，英単語のクイズ問題を作成して，クイズに対するユーザの回答を処理してみましょう． また，ユーザに情報を伝達するために便利な ダイアログ の使い方も確認します．
+  <meta property="og:description" content="フォーム処理  Webアプリでは，テキストフィールド や ラジオボタン などのフォームを利用して，ユーザの入力を受け付けることになります． これらのフォームに入力された値も，データバインディングの対象となります． ここでは，英単語のクイズ問題を作成して，クイズに対するユーザの回答を処理してみましょう． クイズの回答には，ユーザが文字列を入力するためのテキストフィールドや，選択肢から選ぶためのラジオボックスを利用します． また，ユーザに情報を伝達するために便利な ダイアログ の使い方も確認します．
 CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter9」に設定しましょう．
 
 前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
@@ -110,7 +110,7 @@ CodePenの準備  CodePenにアクセスして，Penを作成し，タイトル�
 
 
 
-  <meta name="twitter:description" content="フォーム処理  Webアプリでは，テキストフォーム や ラジオボタン などのフォームを利用して，ユーザの入力を受け付けることになります． これらのフォームに入力された値も，データバインディングの対象となります． ここでは，英単語のクイズ問題を作成して，クイズに対するユーザの回答を処理してみましょう． また，ユーザに情報を伝達するために便利な ダイアログ の使い方も確認します．
+  <meta name="twitter:description" content="フォーム処理  Webアプリでは，テキストフィールド や ラジオボタン などのフォームを利用して，ユーザの入力を受け付けることになります． これらのフォームに入力された値も，データバインディングの対象となります． ここでは，英単語のクイズ問題を作成して，クイズに対するユーザの回答を処理してみましょう． クイズの回答には，ユーザが文字列を入力するためのテキストフィールドや，選択肢から選ぶためのラジオボックスを利用します． また，ユーザに情報を伝達するために便利な ダイアログ の使い方も確認します．
 CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter9」に設定しましょう．
 
 前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
@@ -189,9 +189,10 @@ CodePenの準備  CodePenにアクセスして，Penを作成し，タイトル�
   フォーム処理
 </h1>
 
-<p>Webアプリでは，<strong>テキストフォーム</strong> や <strong>ラジオボタン</strong> などのフォームを利用して，ユーザの入力を受け付けることになります．
+<p>Webアプリでは，<strong>テキストフィールド</strong> や <strong>ラジオボタン</strong> などのフォームを利用して，ユーザの入力を受け付けることになります．
 これらのフォームに入力された値も，データバインディングの対象となります．
 ここでは，英単語のクイズ問題を作成して，クイズに対するユーザの回答を処理してみましょう．
+クイズの回答には，ユーザが文字列を入力するためのテキストフィールドや，選択肢から選ぶためのラジオボックスを利用します．
 また，ユーザに情報を伝達するために便利な <strong>ダイアログ</strong> の使い方も確認します．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   CodePenの準備
@@ -278,7 +279,8 @@ Webアプリのタイトルと説明文も記載しておきましょう．</p>
 })
 </code></pre></div><p>次に，HTMLでクイズの問題番号をマスタッシュ記法で表示します．
 問題番号は0から始まるため，1だけ加算してから表示しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
   &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
   &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
   &lt;<span style="color:#f92672">h3</span>&gt;問題{{quiz_number + 1}}&lt;/<span style="color:#f92672">h3</span>&gt;
@@ -306,7 +308,8 @@ imgタグのsrc属性には，<code>v-bind</code>ディレクティブを利用�
 </code></pre></div><p><a href="https://gyazo.com/878e3ebf8dcecabd1f03a9c4f068e174"><img src="https://i.gyazo.com/878e3ebf8dcecabd1f03a9c4f068e174.png" alt="Image from Gyazo"></a></p>
 <p><code>methods</code>オプションに，ユーザの入力した回答の正解を判定するための<code>check()</code>を定義します．
 ここでは，<code>alert()</code>を利用して，「正解」または「不正解」を表示することにします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
     <span style="color:#a6e22e">check</span>(){
       <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_answer</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quizzes</span>[<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_number</span>].<span style="color:#a6e22e">answer</span>){
 		  <span style="color:#a6e22e">alert</span>(<span style="color:#e6db74">&#34;正解&#34;</span>);
@@ -413,7 +416,8 @@ imgタグのsrc属性には，<code>v-bind</code>ディレクティブを利用�
 次に示すように，正解用のダイアログと，不正解用のダイアログを作成します．
 このとき，それぞれ異なる<code>ref</code>属性を設定します．
 <code>ref</code>属性はVue.jsでDOM要素を直接参照するために用いられます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">dialog</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;correct_dialog&#34;</span>&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+&lt;<span style="color:#f92672">dialog</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;correct_dialog&#34;</span>&gt;
   &lt;<span style="color:#f92672">h3</span>&gt;正解&lt;/<span style="color:#f92672">h3</span>&gt;
 &lt;/<span style="color:#f92672">dialog</span>&gt;
   
@@ -424,7 +428,8 @@ imgタグのsrc属性には，<code>v-bind</code>ディレクティブを利用�
 ダイアログのDOM要素を参照するには<code>$refs</code>を利用します．
 正解のダイアログは<code>this.$refs.correct_dialog</code>，不正解のダイアログは<code>this.$refs.wrong_dialog</code>で参照できます．
 ダイアログの<code>showModal()</code>を実行すると，ダイアログが表示されます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
   <span style="color:#a6e22e">check</span>(){
     <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_answer</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quizzes</span>[<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_number</span>].<span style="color:#a6e22e">answer</span>){
       <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">correct_dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$refs</span>.<span style="color:#a6e22e">correct_dialog</span>;
@@ -456,7 +461,8 @@ imgタグのsrc属性には，<code>v-bind</code>ディレクティブを利用�
 
 <p>最後にクイズに答えたら自動的に次の問題に進むように修正します．
 ダイアログにボタン（button）を設置し，<code>v-on</code>ディレクティブで<code>nextQuiz()</code>を実行します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">dialog</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;correct_dialog&#34;</span>&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+&lt;<span style="color:#f92672">dialog</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;correct_dialog&#34;</span>&gt;
   &lt;<span style="color:#f92672">h3</span>&gt;正解&lt;/<span style="color:#f92672">h3</span>&gt;
   &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">v-on:click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;nextQuiz()&#34;</span>&gt;次の問題へ&lt;/<span style="color:#f92672">button</span>&gt;
 &lt;/<span style="color:#f92672">dialog</span>&gt;
@@ -468,7 +474,8 @@ imgタグのsrc属性には，<code>v-bind</code>ディレクティブを利用�
 </code></pre></div><p><code>methods</code>オプションで，<code>nextQuiz()</code>を定義します．
 クイズの問題番号<code>quiz_number</code>に1を加算して，ユーザの入力した回答を初期値<code>&quot;&quot;</code>にします．
 また，ダイアログを<code>close()</code>で非表示にします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
   <span style="color:#a6e22e">check</span>(){
     <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_answer</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quizzes</span>[<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">quiz_number</span>].<span style="color:#a6e22e">answer</span>){
       <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">correct_dialog</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$refs</span>.<span style="color:#a6e22e">correct_dialog</span>;

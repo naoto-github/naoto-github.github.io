@@ -13,14 +13,14 @@
       <pubDate>Thu, 05 May 2022 16:29:09 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming_wa/chapter10/</guid>
-      <description>コンポーネントとは  コンポーネント はHTMLを構成する部品のことです． Vue.jsでは，Vue.component()を使ってコンポーネントを定義します． コンポーネントには，複数のHTML要素をまとめたtemplateオプション，データバインディングのためのdataオプション，関数を定義するためのmethodsオプションなどを記述します． コンポーネントとして定義することで，コンポーネントの再利用が可能となり，プログラムの設計が簡単になります． また，propsオプションを利用することで，コンポーネントに任意のデータを渡すことが可能です．
+      <description>コンポーネントとは  コンポーネント はHTMLを構成する部品のことです． Vue.jsでは，Vue.component()を使ってコンポーネントを定義します． コンポーネントには，複数のHTML要素をまとめたtemplateオプション，データバインディングのためのdataオプション，関数を定義するためのmethodsオプションなどを記述します． コンポーネントとして定義することで，コンポーネントの再利用が可能となり，プログラムの設計が簡単になります． また，propsオプションを利用することで，コンポーネントに任意のデータを渡すことが可能です． 今回は日進市の観光地を紹介するアプリを開発します． 観光地の情報や画像を表示するHTML要素をコンポーネントとして実装します．
 CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter10」に設定しましょう．
 
 前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
 
 また，Vue.jsの基本構造も記述しておきます． Vueクラスのインスタンスには，el，data，methodsを指定します． Webアプリのタイトルと説明文も記載しておきましょう．
 &amp;lt;!-- HTML --&amp;gt; &amp;lt;div id=&amp;#34;app&amp;#34;&amp;gt; &amp;lt;h1&amp;gt; {{ title }} &amp;lt;/h1&amp;gt; &amp;lt;p&amp;gt; {{ description }} &amp;lt;/p&amp;gt; &amp;lt;div&amp;gt; // JavaScript let app = new Vue({ el: &amp;#34;#app&amp;#34;, data: { title: &amp;#34;日進市観光アプリ&amp;#34;, description: &amp;#34;日進市の観光地を紹介するアプリです．&amp;#34;,	}, methods: { }, }) 
-コンポーネントの作成  // templateオプションはテンプレート文字列（``）を使って定義 Vue.component(&amp;#34;panel-component&amp;#34;, { template: ` &amp;lt;div class=&amp;#34;panel&amp;#34;&amp;gt;　&amp;lt;h3&amp;gt;{{ name }}&amp;lt;/h3&amp;gt; &amp;lt;/ps&amp;gt; `, data(){ return{ name: &amp;#34;日進市立図書館&amp;#34;, } }, }) .</description>
+コンポーネントの作成  日進市の観光情報を表示するためのHTML要素を コンポーネント として定義します． コンポーネントを定義するには，Vue.component()を利用します． コンポーネントには名前を付けることが可能で，ここではpanel-componentに設定しています． コンポーネントには，templateオプションを記述します． templateオプションでは，テンプレート文字列を利用して，コンポーネントで表示するHTMLを記述します． ここでは，マスタッシュ記法を利用して，dataプロパティで定義したnameを表示しています． この他にも，dataオプション，methodsオプションなどを定義することができます． dataオプションで定義する変数は，returnを使って関数として定義する必要があることに注意してください（インスタンス間で変数の競合を避けるため）．</description>
     </item>
     
     <item>
@@ -29,7 +29,7 @@ CodePenの準備  CodePenにアクセスして，Penを作成し，タイトル�
       <pubDate>Thu, 05 May 2022 16:25:39 +0900</pubDate>
       
       <guid>https://mukai-lab.info/pages/classes/applied_programming_wa/chapter9/</guid>
-      <description>フォーム処理  Webアプリでは，テキストフォーム や ラジオボタン などのフォームを利用して，ユーザの入力を受け付けることになります． これらのフォームに入力された値も，データバインディングの対象となります． ここでは，英単語のクイズ問題を作成して，クイズに対するユーザの回答を処理してみましょう． また，ユーザに情報を伝達するために便利な ダイアログ の使い方も確認します．
+      <description>フォーム処理  Webアプリでは，テキストフィールド や ラジオボタン などのフォームを利用して，ユーザの入力を受け付けることになります． これらのフォームに入力された値も，データバインディングの対象となります． ここでは，英単語のクイズ問題を作成して，クイズに対するユーザの回答を処理してみましょう． クイズの回答には，ユーザが文字列を入力するためのテキストフィールドや，選択肢から選ぶためのラジオボックスを利用します． また，ユーザに情報を伝達するために便利な ダイアログ の使い方も確認します．
 CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter9」に設定しましょう．
 
 前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
