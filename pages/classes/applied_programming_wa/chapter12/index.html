@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    AIを活用したWebアプリ③・ハンドポーズの検出 | mLAB
+    p5.js②・アニメーションと衝突処理 | mLAB
   </title>
 
   
@@ -67,7 +67,7 @@
   
   
 
-  <meta property="og:title" content="AIを活用したWebアプリ③・ハンドポーズの検出" />
+  <meta property="og:title" content="p5.js②・アニメーションと衝突処理" />
 
 
 
@@ -79,7 +79,7 @@
 
 
 
-  <meta property="og:image" content="https://i.gyazo.com/cee2e294370476894a8660b56e3a6d0d.png" />
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
 
 
 
@@ -87,18 +87,16 @@
 
 
 
-  <meta property="og:description" content="CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter12」に設定しましょう．
- https://codepen.io/
+  <meta property="og:description" content="p5.jsでアニメーション  p5.jsでアニメーションを表現するには，フレームごとに図形を少しずつ動かすことで，パラパラ漫画のように図形が動いているように錯覚させます． 1秒間に切り替わるフレーム数のことは，フレームレートと呼ばれます（単位はfps）． p5.jsのフレームレートは，ディスプレイのフレームレートに基づいて決定され， 一般に60fpsが用いられることが多いです． ここでは，「ブロックくずし」を作成しながら，アニメーションや衝突の処理について学びます．
+CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter12」に設定しましょう．
 
-前回と同様にp5.jsとml5.jsを導入しましょう．
-https://unpkg.com/ml5@latest/dist/ml5.min.js 
-ハンドポーズの検出  ml5.jsとp5.jsを 組み合わせて ハンドポーズの検出 にチャレンジします． 前回は画像から顔を検出しましたが，今回はWebカメラの映像からハンドポーズを検出します． Webカメラが利用可能なPC環境で実装してください．
-HTMLに下記のコードを入力してください． 今回はp5.jsを利用するため，h1でタイトルのみを記述します．
-&lt;h1&gt;ハンドポーズ認識&lt;/h1&gt; まずはWebカメラで撮影された映像を，createCapture() でキャプチャします． キャプチャされたフレームは通常の画像と同じように扱うことができます．
-let video; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video.size(width, height); video.hide(); } function draw() { // キャプチャした画像を表示  image(video, 0, 0, width, height); } ml5.jsのハンドポーズ検出は MdiaPipe Handpose から移植されています． 手の指や関節の21点のランドマークを検出できます．
-ハンドポーズ検出器を生成するには，ml5.handpose()を利用します． 第一引数は，キャプチャされたフレームvideo， 第二引数はモデルがロードされたタイミングで実行される無名関数です．
-ハンドポーズのイベントはhandpose.on()で検出します． 第一引数は&quot;predict&quot;， 第二引数は検出結果を処理する無名関数を設定します． ここでは，検出結果が格納されたresultsを，predictionsに代入します． このpredictionsは配列であることに注意してください．
-let video; let handpose; let predictions = []; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video." />
+前回と同様にVue.jsとvue-p5のライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11，vue-p5はhttps://unpkg.com/vue-p5を直接入力してください．
+
+vue-p5  HTMLは次のように記述します． vue-p5タグにおいて，p5.jsの実装に必要なsetup()とdraw()を宣言します．
+&lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt;{{ title }}&lt;/h1&gt; &lt;vue-p5 @setup=&#34;setup&#34; @draw=&#34;draw&#34;&gt; &lt;/vue-p5&gt; &lt;/div&gt; JavaScriptでVueクラスを定義します． キャンバスの幅と高さはいずれも500px，キャンバスの背景色は黒色にします．
+// JavaScript new Vue({ el: &#39;#app&#39;, data: { title: &#34;ブロックくずし&#34;, }, methods: { setup(sketch){ sketch.createCanvas(500, 500); // キャンバスの大きさ  sketch.background(&#34;black&#34;); // キャンバスの背景色  }, draw(sketch){ } } }); 
+図形描画  プレイヤーが操作するパドルを四角形で表現します． dataオプションで，パドルの位置を表すplayer_xとplayer_yを定義します． また，パドルの大きさは，幅が100，高さが50とします．
+data: { title: &#34;ブロックくずし&#34;, player_x: 25, player_y: 490, } 上記で定義したplayer_xとplayer_yを利用して四角形を描きます． 四角形を描く関数はrect(x, y, width, height)です． 引数のx，yは四角形の左上の座標，widthは幅，heightは高さです． パドルの中心をplayer_xとするため，四角形のX座標はx=this." />
 
 
 
@@ -109,26 +107,24 @@ let video; let handpose; let predictions = []; function setup(){ createCanvas(64
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="AIを活用したWebアプリ③・ハンドポーズの検出" />
+  <meta name="twitter:title" content="p5.js②・アニメーションと衝突処理" />
 
 
 
-  <meta name="twitter:description" content="CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter12」に設定しましょう．
- https://codepen.io/
+  <meta name="twitter:description" content="p5.jsでアニメーション  p5.jsでアニメーションを表現するには，フレームごとに図形を少しずつ動かすことで，パラパラ漫画のように図形が動いているように錯覚させます． 1秒間に切り替わるフレーム数のことは，フレームレートと呼ばれます（単位はfps）． p5.jsのフレームレートは，ディスプレイのフレームレートに基づいて決定され， 一般に60fpsが用いられることが多いです． ここでは，「ブロックくずし」を作成しながら，アニメーションや衝突の処理について学びます．
+CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter12」に設定しましょう．
 
-前回と同様にp5.jsとml5.jsを導入しましょう．
-https://unpkg.com/ml5@latest/dist/ml5.min.js 
-ハンドポーズの検出  ml5.jsとp5.jsを 組み合わせて ハンドポーズの検出 にチャレンジします． 前回は画像から顔を検出しましたが，今回はWebカメラの映像からハンドポーズを検出します． Webカメラが利用可能なPC環境で実装してください．
-HTMLに下記のコードを入力してください． 今回はp5.jsを利用するため，h1でタイトルのみを記述します．
-&lt;h1&gt;ハンドポーズ認識&lt;/h1&gt; まずはWebカメラで撮影された映像を，createCapture() でキャプチャします． キャプチャされたフレームは通常の画像と同じように扱うことができます．
-let video; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video.size(width, height); video.hide(); } function draw() { // キャプチャした画像を表示  image(video, 0, 0, width, height); } ml5.jsのハンドポーズ検出は MdiaPipe Handpose から移植されています． 手の指や関節の21点のランドマークを検出できます．
-ハンドポーズ検出器を生成するには，ml5.handpose()を利用します． 第一引数は，キャプチャされたフレームvideo， 第二引数はモデルがロードされたタイミングで実行される無名関数です．
-ハンドポーズのイベントはhandpose.on()で検出します． 第一引数は&quot;predict&quot;， 第二引数は検出結果を処理する無名関数を設定します． ここでは，検出結果が格納されたresultsを，predictionsに代入します． このpredictionsは配列であることに注意してください．
-let video; let handpose; let predictions = []; function setup(){ createCanvas(640, 480); // ビデオのキャプチャ  video = createCapture(VIDEO); video." />
+前回と同様にVue.jsとvue-p5のライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11，vue-p5はhttps://unpkg.com/vue-p5を直接入力してください．
+
+vue-p5  HTMLは次のように記述します． vue-p5タグにおいて，p5.jsの実装に必要なsetup()とdraw()を宣言します．
+&lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt;{{ title }}&lt;/h1&gt; &lt;vue-p5 @setup=&#34;setup&#34; @draw=&#34;draw&#34;&gt; &lt;/vue-p5&gt; &lt;/div&gt; JavaScriptでVueクラスを定義します． キャンバスの幅と高さはいずれも500px，キャンバスの背景色は黒色にします．
+// JavaScript new Vue({ el: &#39;#app&#39;, data: { title: &#34;ブロックくずし&#34;, }, methods: { setup(sketch){ sketch.createCanvas(500, 500); // キャンバスの大きさ  sketch.background(&#34;black&#34;); // キャンバスの背景色  }, draw(sketch){ } } }); 
+図形描画  プレイヤーが操作するパドルを四角形で表現します． dataオプションで，パドルの位置を表すplayer_xとplayer_yを定義します． また，パドルの大きさは，幅が100，高さが50とします．
+data: { title: &#34;ブロックくずし&#34;, player_x: 25, player_y: 490, } 上記で定義したplayer_xとplayer_yを利用して四角形を描きます． 四角形を描く関数はrect(x, y, width, height)です． 引数のx，yは四角形の左上の座標，widthは幅，heightは高さです． パドルの中心をplayer_xとするため，四角形のX座標はx=this." />
 
 
 
-  <meta name="twitter:image" content="https://i.gyazo.com/cee2e294370476894a8660b56e3a6d0d.png" />
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
 
 
   
@@ -186,145 +182,268 @@ let video; let handpose; let predictions = []; function setup(){ createCanvas(64
 <main>
   <div class="post">
     
-    <h1 class="post-title">AIを活用したWebアプリ③・ハンドポーズの検出</h1>
+    <h1 class="post-title">p5.js②・アニメーションと衝突処理</h1>
 <div class="post-line"></div>
     
     
 
-    <p><a href="https://gyazo.com/cee2e294370476894a8660b56e3a6d0d"><img src="https://i.gyazo.com/cee2e294370476894a8660b56e3a6d0d.png" alt="Image from Gyazo"></a></p>
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  p5.jsでアニメーション
+</h1>
+
+<p>p5.jsでアニメーションを表現するには，フレームごとに図形を少しずつ動かすことで，パラパラ漫画のように図形が動いているように錯覚させます．
+1秒間に切り替わるフレーム数のことは，<strong>フレームレート</strong>と呼ばれます（単位はfps）．
+p5.jsのフレームレートは，ディスプレイのフレームレートに基づいて決定され，
+一般に60fpsが用いられることが多いです．
+ここでは，「ブロックくずし」を作成しながら，アニメーションや衝突の処理について学びます．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   CodePenの準備
 </h1>
 
 <p><a href="https://codepen.io/">CodePen</a>にアクセスして，Penを作成し，タイトルを設定しましょう．
 Penのタイトルは「Chapter12」に設定しましょう．</p>
-<p><a href="https://codepen.io/"><i class="fas fa-external-link-alt"></i> https://codepen.io/</a></p>
-<p><a href="https://gyazo.com/22bb0ea26e0b9815c5dc786a0b1b4ccb"><img src="https://i.gyazo.com/22bb0ea26e0b9815c5dc786a0b1b4ccb.png" alt="Image from Gyazo"></a></p>
-<p>前回と同様にp5.jsとml5.jsを導入しましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">https://unpkg.com/ml5@latest/dist/ml5.min.js
-</code></pre></div><p><a href="https://gyazo.com/94ab4d78b79c3380098f687c57e4a9d5"><img src="https://i.gyazo.com/94ab4d78b79c3380098f687c57e4a9d5.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/cd35b38a2cb5e1bc684aeb1fa4f7abef"><img src="https://i.gyazo.com/cd35b38a2cb5e1bc684aeb1fa4f7abef.png" alt="Image from Gyazo"></a></p>
+<p>前回と同様にVue.jsとvue-p5のライブラリをペンに追加してください．
+Vue.jsのバージョンは2.6.11，vue-p5は<code>https://unpkg.com/vue-p5</code>を直接入力してください．</p>
+<p><a href="https://gyazo.com/8ab30f8dc68a390d752ee37a3a930dfd"><img src="https://i.gyazo.com/8ab30f8dc68a390d752ee37a3a930dfd.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  ハンドポーズの検出
+  vue-p5
 </h1>
 
-<p><a href="https://ml5js.org/">ml5.js</a>と<a href="https://p5js.org/">p5.js</a>を
-組み合わせて <strong>ハンドポーズの検出</strong> にチャレンジします．
-前回は画像から顔を検出しましたが，今回はWebカメラの映像からハンドポーズを検出します．
-Webカメラが利用可能なPC環境で実装してください．</p>
-<p>HTMLに下記のコードを入力してください．
-今回はp5.jsを利用するため，<code>h1</code>でタイトルのみを記述します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">h1</span>&gt;ハンドポーズ認識&lt;/<span style="color:#f92672">h1</span>&gt;
-</code></pre></div><p>まずはWebカメラで撮影された映像を，<code>createCapture()</code> でキャプチャします．
-キャプチャされたフレームは通常の画像と同じように扱うことができます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">video</span>;
-
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setup</span>(){
-  <span style="color:#a6e22e">createCanvas</span>(<span style="color:#ae81ff">640</span>, <span style="color:#ae81ff">480</span>);
-
-  <span style="color:#75715e">// ビデオのキャプチャ
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">video</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">createCapture</span>(<span style="color:#a6e22e">VIDEO</span>);
-  <span style="color:#a6e22e">video</span>.<span style="color:#a6e22e">size</span>(<span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>);
-  <span style="color:#a6e22e">video</span>.<span style="color:#a6e22e">hide</span>();
-
-}
-
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">draw</span>() {
-  <span style="color:#75715e">// キャプチャした画像を表示
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">image</span>(<span style="color:#a6e22e">video</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>);
-}
-</code></pre></div><p>ml5.jsのハンドポーズ検出は <strong>MdiaPipe Handpose</strong> から移植されています．
-手の指や関節の21点のランドマークを検出できます．</p>
-<p>ハンドポーズ検出器を生成するには，<code>ml5.handpose()</code>を利用します．
-第一引数は，キャプチャされたフレーム<code>video</code>，
-第二引数はモデルがロードされたタイミングで実行される無名関数です．</p>
-<p>ハンドポーズのイベントは<code>handpose.on()</code>で検出します．
-第一引数は<code>&quot;predict&quot;</code>，
-第二引数は検出結果を処理する無名関数を設定します．
-ここでは，検出結果が格納された<code>results</code>を，<code>predictions</code>に代入します．
-この<code>predictions</code>は配列であることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">video</span>;
-<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">handpose</span>;
-<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">predictions</span> <span style="color:#f92672">=</span> [];
-
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setup</span>(){
-  <span style="color:#a6e22e">createCanvas</span>(<span style="color:#ae81ff">640</span>, <span style="color:#ae81ff">480</span>);
-
-  <span style="color:#75715e">// ビデオのキャプチャ
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">video</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">createCapture</span>(<span style="color:#a6e22e">VIDEO</span>);
-  <span style="color:#a6e22e">video</span>.<span style="color:#a6e22e">size</span>(<span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>);
-  <span style="color:#a6e22e">video</span>.<span style="color:#a6e22e">hide</span>();
-
-  <span style="color:#75715e">// ハンドポーズの検出器
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">handpose</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">ml5</span>.<span style="color:#a6e22e">handpose</span>(<span style="color:#a6e22e">video</span>, () =&gt; {
-    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;Model Loaded&#34;</span>);
-  });
-
-  <span style="color:#75715e">// ハンドポーズの検出
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">handpose</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;predict&#34;</span>, <span style="color:#a6e22e">results</span> =&gt; {
-    <span style="color:#a6e22e">predictions</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">results</span>;
-  });
-
-}
-
-<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">draw</span>() {
-  <span style="color:#75715e">// キャプチャした画像を表示
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">image</span>(<span style="color:#a6e22e">video</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">width</span>, <span style="color:#a6e22e">height</span>);
-
-  <span style="color:#75715e">// ランドマークの描画
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">drawLandmarks</span>();
-
-  <span style="color:#75715e">// ライトセーバの描画
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">drawLightSaber</span>();
-}
-</code></pre></div><p>検出結果を描画する関数として，<code>drawLandmarks()</code>と<code>drawLightSaber()</code>を定義します．
-<code>drawLandmarks()</code>は，検出された全ての21点のランドマークを円とテキストで描画します．
-テキストは配列のインデックスです（インデックスは0〜20）．
-例えば親指の先端のインデックスは4です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">drawLandmarks</span>(){
-  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">prediction</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">predictions</span>){
-    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
-      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">point</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>[<span style="color:#a6e22e">i</span>];
-      <span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;#00ff00&#34;</span>); <span style="color:#75715e">// 塗りつぶしの色
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">noStroke</span>(); <span style="color:#75715e">// 線の色
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">text</span>(<span style="color:#a6e22e">str</span>(<span style="color:#a6e22e">i</span>), <span style="color:#a6e22e">point</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">point</span>[<span style="color:#ae81ff">1</span>]); <span style="color:#75715e">// テキストを描画
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">circle</span>(<span style="color:#a6e22e">point</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">point</span>[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">10</span>); <span style="color:#75715e">// 円を描画
-</span><span style="color:#75715e"></span>    }
-  }
-}
-</code></pre></div><p><a href="https://gyazo.com/988e323d3ebddb96faa2c10b72575398"><img src="https://i.gyazo.com/988e323d3ebddb96faa2c10b72575398.gif" alt="Image from Gyazo"></a></p>
-<p><code>drawLightSaber()</code>は検出された手の状態に合わせてライトセーバを描画します．
-親指の第1関節の座標と，小指の先端の座標から，ライトセーバの傾きを計算しています．
-ライトセーバの長さと傾きから，ライトセーバーの先端の座標を求め，
-<code>line()</code>で線の太さが'30&rsquo;の直線を描画しています．</p>
-<p><a href="https://gyazo.com/b7c25e986c415af5dae6b8c994523141"><img src="https://i.gyazo.com/b7c25e986c415af5dae6b8c994523141.png" alt="Image from Gyazo" width="300"/></a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">drawLightSaber</span>(){
-  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">prediction</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">predictions</span>){
-    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
-
-      <span style="color:#66d9ef">let</span> [<span style="color:#a6e22e">head_x</span>, <span style="color:#a6e22e">head_y</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>[<span style="color:#ae81ff">3</span>]; <span style="color:#75715e">// 親指の第1関節
-</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">let</span> [<span style="color:#a6e22e">tail_x</span>, <span style="color:#a6e22e">tail_y</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">prediction</span>.<span style="color:#a6e22e">landmarks</span>[<span style="color:#ae81ff">20</span>]; <span style="color:#75715e">// 小指の先端
-</span><span style="color:#75715e"></span>
-	  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">length</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">300</span>; <span style="color:#75715e">// ライトセーバの長さ
-</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">angle</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">atan2</span>((<span style="color:#a6e22e">tail_y</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">head_y</span>), (<span style="color:#a6e22e">tail_x</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">head_x</span>)); <span style="color:#75715e">// ライトセーバの傾き
-</span><span style="color:#75715e"></span>
-      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">target_x</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">head_x</span> <span style="color:#f92672">-</span> (<span style="color:#a6e22e">length</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">cos</span>(<span style="color:#a6e22e">angle</span>)); <span style="color:#75715e">// ライトセーバの先端のx座標
-</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">target_y</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">head_y</span> <span style="color:#f92672">-</span> (<span style="color:#a6e22e">length</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">sin</span>(<span style="color:#a6e22e">angle</span>)); <span style="color:#75715e">// ライトセーバの先端のy座標
-</span><span style="color:#75715e"></span>
-      <span style="color:#a6e22e">stroke</span>(<span style="color:#e6db74">&#34;#00ffff&#34;</span>); <span style="color:#75715e">// 線の色
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">strokeWeight</span>(<span style="color:#ae81ff">30</span>); <span style="color:#75715e">// 線の太さ
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">line</span>(<span style="color:#a6e22e">head_x</span>, <span style="color:#a6e22e">head_y</span>, <span style="color:#a6e22e">target_x</span>, <span style="color:#a6e22e">target_y</span>); <span style="color:#75715e">// ライトセーバを描画
-</span><span style="color:#75715e"></span>
+<p>HTMLは次のように記述します．
+<code>vue-p5</code>タグにおいて，<code>p5.js</code>の実装に必要な<code>setup()</code>と<code>draw()</code>を宣言します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h1</span>&gt;{{ title }}&lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;<span style="color:#f92672">vue-p5</span>
+    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">setup</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;setup&#34;</span>
+    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">draw</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;draw&#34;</span>&gt;
+  &lt;/<span style="color:#f92672">vue-p5</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p>JavaScriptで<code>Vue</code>クラスを定義します．
+キャンバスの幅と高さはいずれも500px，キャンバスの背景色は黒色にします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;#app&#39;</span>,
+  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
+  },
+  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+    <span style="color:#a6e22e">setup</span>(<span style="color:#a6e22e">sketch</span>){
+      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">createCanvas</span>(<span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">500</span>); <span style="color:#75715e">// キャンバスの大きさ
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>); <span style="color:#75715e">// キャンバスの背景色
+</span><span style="color:#75715e"></span>    },
+    <span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
     }
   }
+});
+</code></pre></div><p><a href="https://gyazo.com/e4c843b7d56447f0011cfe1b852f2d14"><img src="https://i.gyazo.com/e4c843b7d56447f0011cfe1b852f2d14.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  図形描画
+</h1>
+
+<p>プレイヤーが操作するパドルを四角形で表現します．
+<code>data</code>オプションで，パドルの位置を表す<code>player_x</code>と<code>player_y</code>を定義します．
+また，パドルの大きさは，幅が100，高さが50とします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
+  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">25</span>,
+  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
 }
-</code></pre></div><p><a href="https://gyazo.com/e90c2a14fe1d8d414a92594740567512"><img src="https://i.gyazo.com/e90c2a14fe1d8d414a92594740567512.gif" alt="Image from Gyazo"></a></p>
+</code></pre></div><p>上記で定義した<code>player_x</code>と<code>player_y</code>を利用して四角形を描きます．
+四角形を描く関数は<code>rect(x, y, width, height)</code>です．
+引数の<code>x</code>，<code>y</code>は四角形の左上の座標，<code>width</code>は幅，<code>height</code>は高さです．
+パドルの中心を<code>player_x</code>とするため，四角形のX座標は<code>x=this.player_x - 50</code>となります．
+また，<code>fill(color)</code>は，図形の塗りつぶしの色を設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+}
+</code></pre></div><p><a href="https://gyazo.com/b65e8970b939f81d67f67513561596b7"><img src="https://i.gyazo.com/b65e8970b939f81d67f67513561596b7.png" alt="Image from Gyazo"></a></p>
+<p>次にプレイヤーがパドルで跳ね返すボールを円で表現します．
+<code>data</code>オプションで，ボールの位置を表す<code>ball_x</code>と<code>ball_y</code>を定義します．
+また，ボールの直径は20とします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
+  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">25</span>,
+  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
+  <span style="color:#a6e22e">ball_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>,
+  <span style="color:#a6e22e">ball_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+}
+</code></pre></div><p>上記で定義した<code>ball_x</code>と<code>ball_y</code>を利用して円を描きます．
+円を描く関数は<code>circle(x, y, diameter)</code>です．
+引数の<code>x</code>，<code>y</code>は円の中心の座標，<code>diameter</code>は直径です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+  
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+}
+</code></pre></div><p><a href="https://gyazo.com/3c68d93636a8a9f30a40b4e1d2768292"><img src="https://i.gyazo.com/3c68d93636a8a9f30a40b4e1d2768292.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  アニメーション
+</h1>
+
+<p><code>draw()</code>でボールのY座標を更新することで，ボールの落下をアニメーションで表現します．
+<code>data</code>オプションで，ボールのY方向への速度を定義します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
+  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">25</span>,
+  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
+  <span style="color:#a6e22e">ball_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>,
+  <span style="color:#a6e22e">ball_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+  <span style="color:#a6e22e">ball_y_speed</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
+}
+</code></pre></div><p>ボールのY座標である<code>ball_y</code>に速度を加算することで，ボールの位置を更新します．
+この場合，ボールは確かに落下しますが，移動後のボールが削除されず，軌跡として残ってしまいます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+  
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+  
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+}
+</code></pre></div><p><a href="https://gyazo.com/fe3a145757c4d3abd5e42f4743440100"><img src="https://i.gyazo.com/fe3a145757c4d3abd5e42f4743440100.gif" alt="Image from Gyazo"></a></p>
+<p>そこで，<code>draw()</code>の最初で，<code>background(color)</code>を用いて背景色を黒にリセットします．
+これで，ボールの落下が表現できました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>); <span style="color:#75715e">// 背景色でリセット
+</span><span style="color:#75715e"></span>
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+  
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+  
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>; <span style="color:#75715e">// Y座標を更新
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p><a href="https://gyazo.com/f287824188a626ead198d247a1be52ed"><img src="https://i.gyazo.com/f287824188a626ead198d247a1be52ed.gif" alt="Image from Gyazo"></a></p>
+<p>同様にボールのX座標も更新するようにしましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
+  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">25</span>,
+  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
+  <span style="color:#a6e22e">ball_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>,
+  <span style="color:#a6e22e">ball_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+  <span style="color:#a6e22e">ball_x_speed</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
+  <span style="color:#a6e22e">ball_y_speed</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
+}
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
+
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+  
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+  
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>;
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+}
+</code></pre></div><p><a href="https://gyazo.com/e1d99010e822b0feede3b769833533f5"><img src="https://i.gyazo.com/e1d99010e822b0feede3b769833533f5.gif" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  イベントの処理
+</h1>
+
+<p>マウスの位置に合わせてパドルを動かしましょう．
+マウスの移動を検知するには，<code>mouseMoved()</code>を定義します．
+HTMLの<code>vue-p5</code>タグでmouseMovedを宣言する必要があることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+  &lt;<span style="color:#f92672">h1</span>&gt;{{ title }}&lt;/<span style="color:#f92672">h1</span>&gt;
+  &lt;<span style="color:#f92672">vue-p5</span>
+    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">setup</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;setup&#34;</span>
+    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">draw</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;draw&#34;</span>
+	<span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">mouseMoved</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mouseMoved&#34;</span>&gt;
+  &lt;/<span style="color:#f92672">vue-p5</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
+</code></pre></div><p>マウスのX座標は<code>mouseX</code>，Y座標は<code>mouseY</code>で取得可能です．
+ここでは，マウスのX座標だけを用いて，パドルの位置を設定しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">mouseMoved</span>(<span style="color:#a6e22e">sketch</span>){
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">mouseX</span>;
+}
+</code></pre></div><p><a href="https://gyazo.com/abf1831d3db386f08e0dcf83dfdff22d"><img src="https://i.gyazo.com/abf1831d3db386f08e0dcf83dfdff22d.gif" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  衝突の処理
+</h1>
+
+<p>上と左右の壁に衝突したときに，ボールの速度を反転させて，逆方向に移動させます．
+ボールの直径が20であることから，半径10だけ壁からずらした座標を基準に衝突を判定します．
+左右の壁に衝突したときはX方向の速度を反転し，上の壁に衝突したときはY方向の速度を反転します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
+
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+  
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+  
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>;
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+
+  <span style="color:#75715e">// 左右の壁に衝突したらX方向の速度を反転
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">490</span>){
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>
+  }
+  
+  <span style="color:#75715e">// 上の壁に衝突したらY方向の速度を反転
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>){
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+  }
+  
+}
+</code></pre></div><p><a href="https://gyazo.com/09e33d25fe6a80ed22144d08d493b266"><img src="https://i.gyazo.com/09e33d25fe6a80ed22144d08d493b266.gif" alt="Image from Gyazo"></a></p>
+<p>パドルと衝突したときに，ボールのY方向の速度を反転させます．
+このとき，パドルの左側に衝突したときは，ボールを左側に加速させ，パドルの右側に衝突したときは，ボールを右側に加速させます．
+この加速がないと，ボールは同じ軌道を何度も繰り返してしまいます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
+
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+  
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+  
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>;
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+
+  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">490</span>){
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>
+  }
+  
+  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>){
+    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+  }
+
+  <span style="color:#75715e">// パドルと衝突したらY方向の速度を反転
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>((<span style="color:#ae81ff">490</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">500</span>)){
+  
+    <span style="color:#75715e">// パドルの左側ならY方向の速度を1だけ減らす
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>((<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span>)){
+      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>; <span style="color:#75715e">// 左方向に加速
+</span><span style="color:#75715e"></span>    }
+	<span style="color:#75715e">// パドルの右側ならY方向の速度を1だけ増やす
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>((<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">50</span>)){
+      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>; <span style="color:#75715e">// 右方向に加速
+</span><span style="color:#75715e"></span>    }
+  }
+
+}
+</code></pre></div><p><a href="https://gyazo.com/c0692765695ffc8fa8c70dbca69b737e"><img src="https://i.gyazo.com/c0692765695ffc8fa8c70dbca69b737e.gif" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   アプリの確認
 </h1>
 
-<p class="codepen" data-height="265" data-theme-id="light" data-default-tab="js,result" data-user="nmukai" data-slug-hash="gOLqdYQ" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="Chapter12">
-  <span>See the Pen <a href="https://codepen.io/nmukai/pen/gOLqdYQ">
-  Chapter12</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
+<p class="codepen" data-height="750" data-theme-id="dark" data-default-tab="result" data-slug-hash="LYQbYvq" data-user="nmukai" data-token="62f1dc39b3b0c47adab1840c9b8fec5e" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/nmukai/pen/LYQbYvq/62f1dc39b3b0c47adab1840c9b8fec5e">
+  Chapter11 課題</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
   on <a href="https://codepen.io">CodePen</a>.</span>
 </p>
 <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
@@ -332,8 +451,9 @@ Webカメラが利用可能なPC環境で実装してください．</p>
   課題
 </h1>
 
-<p>ライトセーバを自由に改良してみてください．
-課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
+<p>次の図を参考にブロックを画面に配置し，ボールがブロックと衝突したら非表示にしてください．</p>
+<p><a href="https://gyazo.com/f3c422a3042dd65c648b2eb8ab18caf2"><img src="https://i.gyazo.com/f3c422a3042dd65c648b2eb8ab18caf2.gif" alt="Image from Gyazo"></a></p>
+<p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
 提出方法は初回の<a href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/">Webアプリの開発</a>を参考にしてください．</p>
 <h3>参考書籍</h3>
 
