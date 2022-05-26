@@ -87,14 +87,10 @@
 
 
 
-  <meta property="og:description" content="相関分析とは相関分析とは，2つの変数XとYの関係性を分析する方法です． 例えば，暑い日にはアイスクリームの売上数が増加すると考えられます． このとき，「X:温度」と「Y:アイスクリームの売上数」には関係がありそうです． 一般に，相関分析には相関係数と呼ばれる評価指標が用いられます（正確にはピアソンの積率相関係数と呼ばれる）． 相関係数は-1から1の範囲で与えられ，1に近いほど正の相関，-1に近いほど負の相関を示します．
-   相関係数 相関の強さ     0.7～1.0 強い正の相関   0.4～0.7 正の相関   0.2～0.4 弱い正の相関   -0.2～0.2 相関なし   -0.4～-0.2 弱い負の相関   -0.7～-0.4 負の相関   -1.0～-0.7 強い負の相関    正の相関は，Xが増加するとYも増加する関係を表し，負の相関は，Xが増加するとYが減少する関係性を表します． 先の「温度」と「アイスクリームの売上数」の例では，温度が増加すると，売上数も増加するので正の相関となります． 相関係数はアンケートの分析などでも用いられるメジャーな分析手法の一つです． ここでは，日進市の気温と降水量のオープンデータを対象に相関分析を適用してみましょう．
-オープンデータを相関分析それでは，Google Colaboratoryを利用して，オープンデータの相関分析に挑戦しましょう．
-ノートブックの作成 まずは，ノートブックを作成します． ノートブックの名前は chapter2.ipynb に設定します．
-
-前回と同様に相関分析に利用するライブラリを導入します．
-matplotlib，pandas，そして，新たに数値計算ライブラリのNumPyをインポートします． numpyの別名としてnpを指定しています．
-!pip install japanize-matplotlib import matplotlib.pyplot as plt import japanize_matplotlib import pandas as pd import numpy as np データフレーム（pandas） pandasを利用して， CSV形式のオープンデータ（kion." />
+  <meta property="og:description" content="相関分析とは相関分析とは，2つの変数XとYの関係性を分析する方法です． 例えば，暑い日にはアイスクリームの売上数が増加すると考えられます． このとき，「X:気温」と「Y:アイスクリームの売上数」には関係がありそうです． 一般に，相関分析には相関係数と呼ばれる評価指標が用いられます（正確にはピアソンの積率相関係数と呼ばれる）． 相関係数は-1から1の範囲で与えられ，1に近いほど正の相関，-1に近いほど負の相関を示します．
+相関係数は次の式で定義されます． 上記の例で考えると$x_i=\{x_1, x_2, \cdots, x_n\}$は気温を表し， $y_i=\{y_1, y_2, \cdots, y_n\}$はアイスクリームの売上を表します． また，相関係数の式は，xとyの共分散 $\sigma_{xy}$， xの標準偏差 $\sigma_x$， yの標準偏差 $\sigma_y$を用いて表すことも可能です．
+$$ 相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2} \cdot \sqrt{\sum (y_i - \bar{y})^2}} = \frac{\sigma_{xy}}{\sigma_x \cdot \sigma_y} $$
+   相関係数 相関の強さ     0.7～1.0 強い正の相関   0.4～0.7 正の相関   0.2～0.4 弱い正の相関   -0.2～0.2 相関なし   -0.4～-0.2 弱い負の相関   -0." />
 
 
 
@@ -109,14 +105,10 @@ matplotlib，pandas，そして，新たに数値計算ライブラリのNumPy�
 
 
 
-  <meta name="twitter:description" content="相関分析とは相関分析とは，2つの変数XとYの関係性を分析する方法です． 例えば，暑い日にはアイスクリームの売上数が増加すると考えられます． このとき，「X:温度」と「Y:アイスクリームの売上数」には関係がありそうです． 一般に，相関分析には相関係数と呼ばれる評価指標が用いられます（正確にはピアソンの積率相関係数と呼ばれる）． 相関係数は-1から1の範囲で与えられ，1に近いほど正の相関，-1に近いほど負の相関を示します．
-   相関係数 相関の強さ     0.7～1.0 強い正の相関   0.4～0.7 正の相関   0.2～0.4 弱い正の相関   -0.2～0.2 相関なし   -0.4～-0.2 弱い負の相関   -0.7～-0.4 負の相関   -1.0～-0.7 強い負の相関    正の相関は，Xが増加するとYも増加する関係を表し，負の相関は，Xが増加するとYが減少する関係性を表します． 先の「温度」と「アイスクリームの売上数」の例では，温度が増加すると，売上数も増加するので正の相関となります． 相関係数はアンケートの分析などでも用いられるメジャーな分析手法の一つです． ここでは，日進市の気温と降水量のオープンデータを対象に相関分析を適用してみましょう．
-オープンデータを相関分析それでは，Google Colaboratoryを利用して，オープンデータの相関分析に挑戦しましょう．
-ノートブックの作成 まずは，ノートブックを作成します． ノートブックの名前は chapter2.ipynb に設定します．
-
-前回と同様に相関分析に利用するライブラリを導入します．
-matplotlib，pandas，そして，新たに数値計算ライブラリのNumPyをインポートします． numpyの別名としてnpを指定しています．
-!pip install japanize-matplotlib import matplotlib.pyplot as plt import japanize_matplotlib import pandas as pd import numpy as np データフレーム（pandas） pandasを利用して， CSV形式のオープンデータ（kion." />
+  <meta name="twitter:description" content="相関分析とは相関分析とは，2つの変数XとYの関係性を分析する方法です． 例えば，暑い日にはアイスクリームの売上数が増加すると考えられます． このとき，「X:気温」と「Y:アイスクリームの売上数」には関係がありそうです． 一般に，相関分析には相関係数と呼ばれる評価指標が用いられます（正確にはピアソンの積率相関係数と呼ばれる）． 相関係数は-1から1の範囲で与えられ，1に近いほど正の相関，-1に近いほど負の相関を示します．
+相関係数は次の式で定義されます． 上記の例で考えると$x_i=\{x_1, x_2, \cdots, x_n\}$は気温を表し， $y_i=\{y_1, y_2, \cdots, y_n\}$はアイスクリームの売上を表します． また，相関係数の式は，xとyの共分散 $\sigma_{xy}$， xの標準偏差 $\sigma_x$， yの標準偏差 $\sigma_y$を用いて表すことも可能です．
+$$ 相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2} \cdot \sqrt{\sum (y_i - \bar{y})^2}} = \frac{\sigma_{xy}}{\sigma_x \cdot \sigma_y} $$
+   相関係数 相関の強さ     0.7～1.0 強い正の相関   0.4～0.7 正の相関   0.2～0.4 弱い正の相関   -0.2～0.2 相関なし   -0.4～-0.2 弱い負の相関   -0." />
 
 
 
@@ -190,9 +182,16 @@ matplotlib，pandas，そして，新たに数値計算ライブラリのNumPy�
 
 <p>相関分析とは，2つの変数XとYの関係性を分析する方法です．
 例えば，暑い日にはアイスクリームの売上数が増加すると考えられます．
-このとき，「X:温度」と「Y:アイスクリームの売上数」には関係がありそうです．
+このとき，「X:気温」と「Y:アイスクリームの売上数」には関係がありそうです．
 一般に，相関分析には<strong>相関係数</strong>と呼ばれる評価指標が用いられます（正確には<strong>ピアソンの積率相関係数</strong>と呼ばれる）．
 相関係数は-1から1の範囲で与えられ，1に近いほど<strong>正の相関</strong>，-1に近いほど<strong>負の相関</strong>を示します．</p>
+<p>相関係数は次の式で定義されます．
+上記の例で考えると$x_i=\{x_1, x_2, \cdots, x_n\}$は気温を表し，
+$y_i=\{y_1, y_2, \cdots, y_n\}$はアイスクリームの売上を表します．
+また，相関係数の式は，xとyの共分散 $\sigma_{xy}$， xの標準偏差 $\sigma_x$， yの標準偏差 $\sigma_y$を用いて表すことも可能です．</p>
+<p>$$
+相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2} \cdot \sqrt{\sum (y_i - \bar{y})^2}} = \frac{\sigma_{xy}}{\sigma_x \cdot \sigma_y}
+$$</p>
 <table>
 <thead>
 <tr>
@@ -232,7 +231,7 @@ matplotlib，pandas，そして，新たに数値計算ライブラリのNumPy�
 </tbody>
 </table>
 <p>正の相関は，Xが増加するとYも増加する関係を表し，負の相関は，Xが増加するとYが減少する関係性を表します．
-先の「温度」と「アイスクリームの売上数」の例では，温度が増加すると，売上数も増加するので正の相関となります．
+先の「気温」と「アイスクリームの売上数」の例では，気温が増加すると，売上数も増加するので正の相関となります．
 <strong>相関係数</strong>はアンケートの分析などでも用いられるメジャーな分析手法の一つです．
 ここでは，日進市の気温と降水量のオープンデータを対象に相関分析を適用してみましょう．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
@@ -294,11 +293,27 @@ fig<span style="color:#f92672">.</span>plot(x, y)
 </code></pre></div><p><a href="https://gyazo.com/95c24d825a8c68d201ff6e337b557586"><img src="https://i.gyazo.com/95c24d825a8c68d201ff6e337b557586.png" alt="Image from Gyazo"></a></p>
 <h3 id="相関係数">相関係数</h3>
 <p>相関係数は<code>corr()</code>で算出することができます．
-この結果，<strong>日平均気温</strong> と <strong>降水量の合計</strong> の相関係数は$0.56$となりました．
+この結果，<strong>日平均気温</strong> と <strong>降水量の合計</strong> の相関係数は約$0.56$となりました．
 これは　<strong>日平均気温</strong> と <strong>降水量の合計</strong> に「正の相関がある」ことを示しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[[<span style="color:#e6db74">&#34;日平均気温&#34;</span>, <span style="color:#e6db74">&#34;降水量の合計&#34;</span>]]<span style="color:#f92672">.</span>corr()
 </code></pre></div><p><a href="https://gyazo.com/aeafdba231c58c538186488a9c18b060"><img src="https://i.gyazo.com/aeafdba231c58c538186488a9c18b060.png" alt="Image from Gyazo"></a></p>
-<h2 id="日照時間と降水量の合計">日照時間と降水量の合計</h2>
+<p>上記の値が，共分散 $\sigma_{xy}$ と標準偏差$\sigma_x$，$\sigma_y$で算出されることを確認しましょう．
+データフレームから，日平均気温と降水量の合計を，<code>tolist()</code>を利用してリストとして取得します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># x:日平均気温 y:降水量の合計</span>
+x <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#34;日平均気温&#34;</span>]<span style="color:#f92672">.</span>tolist()
+y <span style="color:#f92672">=</span> df[<span style="color:#e6db74">&#34;降水量の合計&#34;</span>]<span style="color:#f92672">.</span>tolist()
+</code></pre></div><p><code>np.cov()</code>を利用して，xとyの共分散行列（$2\times2$の行列）を取得します．
+ここで必要なのは，日平均気温と降水量の合計の共分散であるため，行列の<code>[0][1]</code>を取得し，変数<code>cov</code>に代入しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 共分散行列からxとyの共分散を取得</span>
+cov <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>cov(x, y)[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>]
+<span style="color:#66d9ef">print</span>(cov) <span style="color:#75715e"># -&gt; 404.92605042016794</span>
+</code></pre></div><p>上記で求めた共分散<code>cov</code>と，<code>np.std()</code>で算出したxとyの標準偏差を用いて，相関係数を算出します．
+ここで，<code>ddof=1</code>は，不偏標準偏差を算出するためのオプションです．
+相関係数は<code>0.557747</code>となり，完全に一致していることが確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 相関係数を算出</span>
+cor <span style="color:#f92672">=</span> cov <span style="color:#f92672">/</span> (np<span style="color:#f92672">.</span>std(x, ddof<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>std(y, ddof<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+<span style="color:#66d9ef">print</span>(cor) <span style="color:#75715e"># -&gt; 0.5577472292139701</span>
+</code></pre></div><h2 id="日照時間と降水量の合計">日照時間と降水量の合計</h2>
 <p>次に「X:日照時間」と「Y:降水量の合計」の関係を探ります．
 日照時間が多い日には雨が少なく，日照時間が少ない日には雨が少ないことが予想されます．</p>
 <h3 id="散布図-1">散布図</h3>
