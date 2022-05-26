@@ -333,8 +333,8 @@ Robotクラスを継承して作成しましょう．</p>
 また，メソッドを<code>メソッド名(){}</code>として定義します．
 ここでは，<code>name</code>プロパティと<code>age</code>プロパティ，そして，<code>hello</code>メソッドを定義しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">david</span> <span style="color:#f92672">=</span> {
-  <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;david&#34;</span>,
-  <span style="color:#a6e22e">age</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
+  <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;david&#34;</span>,
+  <span style="color:#e6db74">&#34;age&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
   <span style="color:#a6e22e">hello</span>(){
       document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;Hello, my name is </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">name</span><span style="color:#e6db74">}</span><span style="color:#e6db74">!&lt;/p&gt;`</span>);
       document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;I&#39;m </span><span style="color:#e6db74">${</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">age</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> years old.&lt;/p&gt;`</span>);
@@ -349,20 +349,27 @@ Robotクラスを継承して作成しましょう．</p>
 JSONでは全てのデータが文字列として表現されます．
 ただし，メソッドはJSONに変換できないので注意が必要です．
 ここでは，<code>name</code>プロパティと<code>age</code>プロパティがJSONに変換されていることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// オブジェクトからJSONに変換
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">json</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">david</span>);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// オブジェクトからJSON文字列に変換
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">json</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">david</span>);
 document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;json=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">json</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>);
 </code></pre></div><p><a href="https://gyazo.com/f1fb8e04994d84f81bc54b5cc81610e8"><img src="https://i.gyazo.com/f1fb8e04994d84f81bc54b5cc81610e8.png" alt="Image from Gyazo"></a></p>
 <p>逆にJSONからオブジェクトに，<code>JSON.parse()</code>で変換することも出来ます．
 変換されたオブジェクトは連想配列としても扱うことができます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JSONからオブジェクトに変換
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">obj</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">parse</span>(<span style="color:#a6e22e">json</span>);
-document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;obj.name=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">name</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>);
-document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;obj.age=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">age</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>);
-</code></pre></div><p><a href="https://gyazo.com/88046327f6b79ac73b08bf86315481bb"><img src="https://i.gyazo.com/88046327f6b79ac73b08bf86315481bb.png" alt="Image from Gyazo"></a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;obj[&#34;name&#34;]=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">obj</span>[<span style="color:#e6db74">&#34;name&#34;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>);
-document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;obj[&#34;age&#34;]=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">obj</span>[<span style="color:#e6db74">&#34;age&#34;</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>);
-</code></pre></div><p><a href="https://gyazo.com/23cb9c6f3d150582c0f053b39744398a"><img src="https://i.gyazo.com/23cb9c6f3d150582c0f053b39744398a.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JSON文字列からオブジェクトに変換
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">obj</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">parse</span>(<span style="color:#e6db74">&#39;{&#34;name&#34;:&#34;Ken&#34;, &#34;age&#34;:20}&#39;</span>);
+document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;obj.name=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">name</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>); <span style="color:#75715e">// -&gt; Ken
+</span><span style="color:#75715e"></span>document.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">`&lt;p&gt;obj.age=</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">obj</span>.<span style="color:#a6e22e">age</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/p&gt;`</span>); <span style="color:#75715e">// -&gt; 20
+</span></code></pre></div><p><a href="https://gyazo.com/5b145f9efebf649b957aac750eb79895"><img src="https://i.gyazo.com/5b145f9efebf649b957aac750eb79895.png" alt="Image from Gyazo"></a></p>
+<!--
+[![Image from Gyazo](https://i.gyazo.com/88046327f6b79ac73b08bf86315481bb.png)](https://gyazo.com/88046327f6b79ac73b08bf86315481bb)
+
+```javascript
+document.write(`<p>obj["name"]=${obj["name"]}</p>`);
+document.write(`<p>obj["age"]=${obj["age"]}</p>`);
+```
+
+[![Image from Gyazo](https://i.gyazo.com/23cb9c6f3d150582c0f053b39744398a.png)](https://gyazo.com/23cb9c6f3d150582c0f053b39744398a)
+-->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   アプリの確認
 </h1>
