@@ -89,9 +89,12 @@
 
   <meta property="og:description" content="フラクタル図形  Turtleグラフィックスを利用して フラクタル図形 を描いてみましょう． フラクタル図形 とは，図形の一部が図形の全体と 自己相似 な関係を持つ図形のことです． 特定の処理を再帰的に繰り返して実行することで描くことができます． フラクタル図形は自然界でも観測が可能で，「シダの葉」や「雲の形」はフラクタル図形とされています． ここでは，フラクタルの性質を持つ「コッホ曲線」と「2分木」を描くことに挑戦しましょう．
 準備  Muエディタを起動したら，Python3 モードを選択しましょう． ツールバーにある「保存」をクリックして，「chapter7.py」という名前でスクリプトを保存します． また，Turtleグラフィックスのライブラリ（モジュール）をインポートしておきましょう．
-# Turtleグラフィックスのライブラリをインポート from turtle import * コッホ曲線  コッホ曲線は次の図に示す操作を再起的に適用することで描くことができます． 直線を三分割し，中央の線分を底辺とした正三角形を描きます． このとき，図形全体を構成する4つの線分は同じ長さとなります． この処理を，各線分に対して再起的に適用することで， 2次，3次など高次のコッホ曲線を描くことができます．
+# Turtleグラフィックスのライブラリをインポート from turtle import * コッホ曲線  コッホ曲線は次の図に示す操作を再帰的に適用することで描くことができます． 直線を三分割し，中央の線分を底辺とした正三角形を描きます． このとき，図形全体を構成する4つの線分は同じ長さとなります． この処理を，各線分に対して再起的に適用することで， 2次，3次など高次のコッホ曲線を描くことができます．
 
-# n次のコッホ曲線 def koch(n, length): if n == 0: forward(length) return # 再帰の終了 # n-1次の直線の長さ next_length = length / 3 koch(n-1, next_length) left(60) koch(n-1, next_length) right(120) koch(n-1, next_length) left(60) koch(n-1, next_length) speed(0) penup() goto(-200, 0) pendown() n = 0 # 次数 length = 400 # 直線の長さ koch(n, length)" />
+再帰を利用しない実装 関数koch()を定義して，再帰を利用しない方法で1次のコッホ曲線を描いてみましょう．
+# 1次のコッホ曲線 def koch(length): next_length = length / 3 forward(next_length) left(60) forward(next_length) right(120) forward(next_length) left(60) forward(next_length) speed(0) penup() goto(-200, 0) pendown() length = 400 # 直線の長さ koch(length) 
+上記の1次のコッホ曲線の最初の辺だけ2次に変更してみましょう． 最初のforward(next_length)を，自己相似となるように，次のように置き換えます． このとき，2次のコッホ曲線の1辺の長さはlengthの1/9になります．
+# 1次のコッホ曲線（最初の辺だけ2次に） def koch(length): next_length = length / 3 #---------- # 最初の辺だけ2次に変更 next_next_length = length / 3 / 3 forward(next_next_length) left(60) forward(next_next_length) right(120) forward(next_next_length) left(60) forward(next_next_length) #--------- left(60) forward(next_length) right(120) forward(next_length) left(60) forward(next_length)" />
 
 
 
@@ -108,9 +111,12 @@
 
   <meta name="twitter:description" content="フラクタル図形  Turtleグラフィックスを利用して フラクタル図形 を描いてみましょう． フラクタル図形 とは，図形の一部が図形の全体と 自己相似 な関係を持つ図形のことです． 特定の処理を再帰的に繰り返して実行することで描くことができます． フラクタル図形は自然界でも観測が可能で，「シダの葉」や「雲の形」はフラクタル図形とされています． ここでは，フラクタルの性質を持つ「コッホ曲線」と「2分木」を描くことに挑戦しましょう．
 準備  Muエディタを起動したら，Python3 モードを選択しましょう． ツールバーにある「保存」をクリックして，「chapter7.py」という名前でスクリプトを保存します． また，Turtleグラフィックスのライブラリ（モジュール）をインポートしておきましょう．
-# Turtleグラフィックスのライブラリをインポート from turtle import * コッホ曲線  コッホ曲線は次の図に示す操作を再起的に適用することで描くことができます． 直線を三分割し，中央の線分を底辺とした正三角形を描きます． このとき，図形全体を構成する4つの線分は同じ長さとなります． この処理を，各線分に対して再起的に適用することで， 2次，3次など高次のコッホ曲線を描くことができます．
+# Turtleグラフィックスのライブラリをインポート from turtle import * コッホ曲線  コッホ曲線は次の図に示す操作を再帰的に適用することで描くことができます． 直線を三分割し，中央の線分を底辺とした正三角形を描きます． このとき，図形全体を構成する4つの線分は同じ長さとなります． この処理を，各線分に対して再起的に適用することで， 2次，3次など高次のコッホ曲線を描くことができます．
 
-# n次のコッホ曲線 def koch(n, length): if n == 0: forward(length) return # 再帰の終了 # n-1次の直線の長さ next_length = length / 3 koch(n-1, next_length) left(60) koch(n-1, next_length) right(120) koch(n-1, next_length) left(60) koch(n-1, next_length) speed(0) penup() goto(-200, 0) pendown() n = 0 # 次数 length = 400 # 直線の長さ koch(n, length)" />
+再帰を利用しない実装 関数koch()を定義して，再帰を利用しない方法で1次のコッホ曲線を描いてみましょう．
+# 1次のコッホ曲線 def koch(length): next_length = length / 3 forward(next_length) left(60) forward(next_length) right(120) forward(next_length) left(60) forward(next_length) speed(0) penup() goto(-200, 0) pendown() length = 400 # 直線の長さ koch(length) 
+上記の1次のコッホ曲線の最初の辺だけ2次に変更してみましょう． 最初のforward(next_length)を，自己相似となるように，次のように置き換えます． このとき，2次のコッホ曲線の1辺の長さはlengthの1/9になります．
+# 1次のコッホ曲線（最初の辺だけ2次に） def koch(length): next_length = length / 3 #---------- # 最初の辺だけ2次に変更 next_next_length = length / 3 / 3 forward(next_next_length) left(60) forward(next_next_length) right(120) forward(next_next_length) left(60) forward(next_next_length) #--------- left(60) forward(next_length) right(120) forward(next_length) left(60) forward(next_length)" />
 
 
 
@@ -200,12 +206,65 @@
   コッホ曲線
 </h1>
 
-<p>コッホ曲線は次の図に示す操作を再起的に適用することで描くことができます．
+<p>コッホ曲線は次の図に示す操作を再帰的に適用することで描くことができます．
 直線を三分割し，中央の線分を底辺とした正三角形を描きます．
 このとき，図形全体を構成する4つの線分は同じ長さとなります．
 この処理を，各線分に対して再起的に適用することで，
 2次，3次など高次のコッホ曲線を描くことができます．</p>
 <p><a href="https://gyazo.com/8d53740f8b508e58f65f8f0ac6cbfeb3"><img src="https://i.gyazo.com/8d53740f8b508e58f65f8f0ac6cbfeb3.png" alt="Image from Gyazo"></a></p>
+<h2 id="再帰を利用しない実装">再帰を利用しない実装</h2>
+<p>関数<code>koch()</code>を定義して，再帰を利用しない方法で1次のコッホ曲線を描いてみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 1次のコッホ曲線</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">koch</span>(length):
+
+    next_length <span style="color:#f92672">=</span> length <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>
+
+	forward(next_length)
+    left(<span style="color:#ae81ff">60</span>)
+	forward(next_length)
+    right(<span style="color:#ae81ff">120</span>)
+	forward(next_length)
+    left(<span style="color:#ae81ff">60</span>)
+	forward(next_length)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">speed(<span style="color:#ae81ff">0</span>)
+penup()
+goto(<span style="color:#f92672">-</span><span style="color:#ae81ff">200</span>, <span style="color:#ae81ff">0</span>)
+pendown()
+
+length <span style="color:#f92672">=</span> <span style="color:#ae81ff">400</span> <span style="color:#75715e"># 直線の長さ</span>
+koch(length)
+</code></pre></div><p><a href="https://gyazo.com/1547441d65b54f7094eb38f351ba607b"><img src="https://i.gyazo.com/1547441d65b54f7094eb38f351ba607b.png" alt="Image from Gyazo" width="400"/></a></p>
+<p>上記の1次のコッホ曲線の最初の辺だけ2次に変更してみましょう．
+最初の<code>forward(next_length)</code>を，自己相似となるように，次のように置き換えます．
+このとき，2次のコッホ曲線の1辺の長さは<code>length</code>の1/9になります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 1次のコッホ曲線（最初の辺だけ2次に）</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">koch</span>(length):
+    next_length <span style="color:#f92672">=</span> length <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>
+    
+    <span style="color:#75715e">#----------</span>
+    <span style="color:#75715e"># 最初の辺だけ2次に変更</span>
+    next_next_length <span style="color:#f92672">=</span> length <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>
+	
+    forward(next_next_length)
+    left(<span style="color:#ae81ff">60</span>)
+    forward(next_next_length)
+    right(<span style="color:#ae81ff">120</span>)
+    forward(next_next_length)
+    left(<span style="color:#ae81ff">60</span>)
+    forward(next_next_length)
+    <span style="color:#75715e">#---------</span>
+    
+    left(<span style="color:#ae81ff">60</span>)
+    forward(next_length)
+    right(<span style="color:#ae81ff">120</span>)
+    forward(next_length)
+    left(<span style="color:#ae81ff">60</span>)
+    forward(next_length)
+</code></pre></div><p><a href="https://gyazo.com/d17cb9c71cebdb2835d5633fa4591965"><img src="https://i.gyazo.com/d17cb9c71cebdb2835d5633fa4591965.png" alt="Image from Gyazo" width="400"/></a></p>
+<h2 id="再帰を利用した実装">再帰を利用した実装</h2>
+<p>関数<code>koch()</code>を，再帰を利用してコッホ曲線を描くように修正しましょう．
+<code>forward(next_length)</code>が，<code>koch(n-1, next_length)</code>に置き換わっています．
+再帰的に<code>koch()</code>を実行するときは，次元<code>n</code>を1だけ小さくし，<code>n</code>が0になったときに再帰処理を停止しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># n次のコッホ曲線</span>
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">koch</span>(n, length):
     <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
@@ -247,12 +306,90 @@ koch(n, length)
   2分木
 </h1>
 
-<p>2分木は次の図に示す操作を再起的に適用することで描くことができます．
+<p>2分木は次の図に示す操作を再帰的に適用することで描くことができます．
 1次では直線を描き，2次では左の枝と右の枝に分岐します．
 左の枝は，左に30°回転し，その長さを0.8倍します．
 右の枝は，右に30°回転し，その長さを0.5倍します．
 この処理を，再起的に適用することで，3次，4次など高次の2分木を描くことができます．</p>
 <p><a href="https://gyazo.com/a7c82ddd0dacd5a28a33d31faeb90df8"><img src="https://i.gyazo.com/a7c82ddd0dacd5a28a33d31faeb90df8.png" alt="Image from Gyazo"></a></p>
+<h2 id="再帰を利用しない実装-1">再帰を利用しない実装</h2>
+<p>関数<code>tree()</code>を定義して，再帰を利用しない方法で2次の2分木を描いてみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 2次の2分木</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tree</span>(length, angle):
+
+    forward(length)
+
+	<span style="color:#75715e"># 左の枝</span>
+    left(angle)
+    next_left_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.8</span> <span style="color:#f92672">*</span> length <span style="color:#75715e"># 枝の長さを0.8倍</span>
+    forward(next_left_length)
+    backward(next_left_length)
+
+	<span style="color:#75715e"># 右の枝</span>
+    right(angle <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>)
+    next_right_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> length <span style="color:#75715e"># 枝の長さを0.5倍</span>
+    forward(next_right_length)
+    backward(next_right_length)
+
+	<span style="color:#75715e"># 始点に戻る</span>
+    left(angle)
+    backward(length)	
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">speed(<span style="color:#ae81ff">0</span>)
+penup()
+goto(<span style="color:#ae81ff">100</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">200</span>)
+setheading(<span style="color:#ae81ff">90</span>)
+pendown()
+
+length <span style="color:#f92672">=</span> <span style="color:#ae81ff">150</span> <span style="color:#75715e"># 枝の長さ</span>
+angle <span style="color:#f92672">=</span> <span style="color:#ae81ff">30</span> <span style="color:#75715e"># 分岐の角度</span>
+tree(length, angle)
+</code></pre></div><p><a href="https://gyazo.com/65562d03bf931181e3b3f6834ed4ff9e"><img src="https://i.gyazo.com/65562d03bf931181e3b3f6834ed4ff9e.png" alt="Image from Gyazo" width="400"/></a></p>
+<p>上記の2次の2分木の左の枝だけ3次に変更してみましょう．
+最初の<code>forward(next_left_length)</code>と<code>wabckward(next_left_length)</code>を，自己相似となるように，次のように置き換えます．
+このとき，3次の2分木の左の枝の長さは<code>length * 0.8 * 0.8</code>，右の枝の長さは<code>length * 0.8 * 0.5</code>になります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 2次の2分木（左の枝だけ3次に）</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tree</span>(length, angle):
+
+    forward(length)
+
+	<span style="color:#75715e"># 左の枝</span>
+    left(angle)
+    next_left_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.8</span> <span style="color:#f92672">*</span> length <span style="color:#75715e"># 枝の長さを0.8倍</span>
+    
+    <span style="color:#75715e">#----------</span>
+    <span style="color:#75715e"># 左の枝だけ2次に変更</span>
+    forward(next_left_length)
+
+	<span style="color:#75715e"># 左の枝</span>
+    left(angle)
+    next_next_left_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.8</span> <span style="color:#f92672">*</span> next_left_length <span style="color:#75715e"># 枝の長さを0.8倍</span>
+    forward(next_next_left_length)
+    backward(next_next_left_length)
+
+	<span style="color:#75715e"># 右の枝</span>
+    right(angle <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>)
+    next_next_right_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> next_left_length <span style="color:#75715e"># 枝の長さを0.5倍</span>
+    forward(next_next_right_length)
+    backward(next_next_right_length)
+
+	<span style="color:#75715e"># 始点に戻る</span>
+    left(angle)
+    backward(next_left_length) 
+    <span style="color:#75715e">#----------</span>
+
+	<span style="color:#75715e"># 右の枝</span>
+    right(angle <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>)
+    next_right_length <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> length <span style="color:#75715e"># 枝の長さを0.5倍</span>
+    forward(next_right_length)
+    backward(next_right_length)
+
+	<span style="color:#75715e"># 始点に戻る</span>
+    left(angle)
+    backward(length)
+</code></pre></div><p><a href="https://gyazo.com/0e949224c62b0740cda5935108cde75c"><img src="https://i.gyazo.com/0e949224c62b0740cda5935108cde75c.png" alt="Image from Gyazo" width="400"/></a></p>
+<h2 id="再帰を利用した実装-1">再帰を利用した実装</h2>
+<p>関数tree()を，再帰を利用して2分木を描くように修正しましょう．
+コッホ曲線と同じように，再帰的にtree()を実行するときは，次元nを1だけ小さくし，nが0になったときに再帰処理を停止しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># n次の2分木</span>
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tree</span>(n, length, angle):
     <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
@@ -306,7 +443,7 @@ tree(n, length, angle)
 <p>次の課題に取組んでください．</p>
 <ul>
 <li>次の図を参考に中央の線分を正方形に置き換えたコッホ曲線を描いてください</li>
-<li>2次，3次，4次のコッホ曲線を描いてください</li>
+<li>1次，2次，3次のコッホ曲線を描いてください</li>
 </ul>
 <p><a href="https://gyazo.com/1fa94dab03efd1c718b55ed3f1930dd9"><img src="https://i.gyazo.com/1fa94dab03efd1c718b55ed3f1930dd9.png" alt="Image from Gyazo"></a></p>
 <p><a href="https://gyazo.com/47e62e155bd957f2b26cde60a5a2dd38"><img src="https://i.gyazo.com/47e62e155bd957f2b26cde60a5a2dd38.png" alt="Image from Gyazo"></a></p>
