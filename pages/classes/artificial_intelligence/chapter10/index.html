@@ -367,8 +367,12 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
 
     <span style="color:#66d9ef">return</span> mutated
 </code></pre></div><h2 id="解の探索">解の探索</h2>
-<p>上記の実装だと最良解の推移がわからないため，下記のコードを<code>value</code>関数に追加します．
-目的関数が最大の状態と値を記録し，更新があったときに表示します，</p>
+<p>解を探索する前に，評価が最も高い状態（<code>max_state</code>）と評価値（<code>max_value</code>）を記録する変数を宣言します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 評価が最も高い状態と評価値</span>
+max_state <span style="color:#f92672">=</span> START
+max_value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</code></pre></div><p>探索中に発見した最良解の評価値を出力するため，下記のコードを<code>value</code>関数に追加します．
+暫定的に評価が高い状態を更新していきます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">value</span>(self, state):
 
     <span style="color:#f92672">...</span>
@@ -386,14 +390,13 @@ START <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">return</span> value
 </code></pre></div><p>遺伝的アルゴリズム<code>genetic</code>を用いて解を探索します
 ここで，<code>population_size</code>は1世代の個体の数，<code>mutation_chance</code>は突然変異の確率，<code>iterations_limit</code>は世代交代の数です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 初期状態の評価</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> FloydProblem(initial_state<span style="color:#f92672">=</span>START)
+
+<span style="color:#75715e"># 初期状態の評価</span>
 max_state <span style="color:#f92672">=</span> START
-max_value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-<span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> NUMBERS:
-    max_value <span style="color:#f92672">+=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sqrt(n)
+max_value <span style="color:#f92672">=</span> problem<span style="color:#f92672">.</span>value(max_state)
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;max state: {max_state}({max_value:.3f})&#34;</span>)
 
-problem <span style="color:#f92672">=</span> FloydProblem(initial_state<span style="color:#f92672">=</span>START)
 result <span style="color:#f92672">=</span> genetic(problem, population_size<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, mutation_chance<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, iterations_limit<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>)
 </code></pre></div><p>この結果，目的関数が$-0.015$に収束します．
 これは，下記のグループに分けられたことを意味しています（AとBが逆の場合も同じ）．</p>
