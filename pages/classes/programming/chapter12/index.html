@@ -243,7 +243,7 @@ if文よりもスッキリと表現できることが多いので活用しまし
 <p>2Dゲームにおいて，マップを表現する方法の一つが，画像をタイル状に並べる方法です．
 ここでは，自由にマップをデザインするために，独自にMapクラスを定義してみます．</p>
 <h2 id="mapの仕組み">Mapの仕組み</h2>
-<p>マップの素材として，<a href="https://kenney.nl/">KENNY</a>で提供されている次の4種類のタイル画像を用います．
+<p>マップの素材として，<a href="https://kenney.nl/">KENNY</a>の<a href="https://kenney.nl/assets/rpg-base">RGB Base</a>で提供されている次の4種類のタイル画像を用います．
 それぞれ，平地，海，道路，草を表しており，画像サイズは32ピクセル×32ピクセルです．
 画像ファイルをダウンロードしたら，imagesフォルダにコピーしてください．</p>
 <ul>
@@ -266,14 +266,14 @@ if文よりもスッキリと表現できることが多いので活用しまし
     <span style="color:#e6db74">&#34;g&#34;</span>: <span style="color:#e6db74">&#34;tile3&#34;</span>,  <span style="color:#75715e"># 草</span>
 }
 </code></pre></div><p>タイル画像をスクリーンにタイル状に敷き詰めます．
-ここでは，説明のため，3枚×4枚のタイルを敷き詰めることを考えます．
-3×4の2重構造のリストを生成し，表示するタイル画像に対応する文字（<code>f</code>,<code>s</code>,<code>r</code>,<code>g</code>）を設定しておきます．
+ここでは，説明のため，4枚×3枚のタイルを敷き詰めることを考えます．
+4×3の2重構造のリストを生成し，表示するタイル画像に対応する文字（<code>f</code>,<code>s</code>,<code>r</code>,<code>g</code>）を設定しておきます．
 スクリーンに描画する際には，この文字に対応する画像ファイルを，ディクショナリ<code>map_dic</code>を用いて選択します．</p>
 <p><a href="https://gyazo.com/49deb249db38701f10968a3a895120ac"><img src="https://i.gyazo.com/49deb249db38701f10968a3a895120ac.png" alt="Image from Gyazo"></a></p>
 <p>画像サイズが32ピクセル×32ピクセルであるのに対し，
 実際のスクリーンのサイズは640ピクセル×480ピクセルです．
 このため，20枚×15枚のタイル画像を並べることになります．
-次に示す<code>map_data</code>が20×4の2重構造のリストです．</p>
+次に示す<code>map_data</code>が20×15の2重構造のリストです．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map_data <span style="color:#f92672">=</span> [
     [<span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>, <span style="color:#e6db74">&#34;s&#34;</span>],
     [<span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>, <span style="color:#e6db74">&#34;f&#34;</span>],
