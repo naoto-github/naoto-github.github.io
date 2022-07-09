@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+  
+<html>
+  
+  <head>
+    <title>デジタル昆虫探検図鑑</title>
+    
+    <!-- Vue.js -->
+    <script src="./lib/vue.js"></script>
+    
+    <!-- leaflet.js -->
+    <script src="./lib/leaflet.js"></script>
+    <link rel="stylesheet" href="./lib/leaflet.css"> 
+    
+    <!-- bootstrap -->
+    <script src="./lib/bootstrap.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+    
+    <!-- jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous">
+    </script>
+    
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap" rel="stylesheet">   
+    
+    <!-- exifr -->
+    <script src="https://cdn.jsdelivr.net/npm/exifr/dist/lite.umd.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>{{ title }}</h1>
+      
+      <form class="form-inline">        
+        <label>緯度:</label>
+        <input id="input-lat" type="text" class="input-small" v-model="lat" v-on:move="updateLat()">
+        <label>経度:</label>
+        <input id="input-lng" type="text" class="input-small" v-model="lng" v-on:move="updateLng()">
+        <button type="button" class="btn btn-primary" v-on:click="toggle()">
+          昆虫画像のアップロード
+        </button>
+        <button type="button" class="btn btn-info" v-on:click="load()">
+          データの読込
+        </button>
+        <button type="button" class="btn btn-info">
+          <a v-bind:href="download_url" download>データの保存</a>
+        </button>
+        
+        <!-- JSONファイル読み込み用 -->
+        <input
+          style="display: none"
+          ref="input"
+          type="file"
+          accept="application\/json"
+          @change="selectedFile()"
+        >
+      </form>
+      
+      <div class="modal" v-bind:style="visibility">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">画像アップロード</h3>
+            </div>
+            <div class="modal-body">
+              <h4>1枚ずつ画像をドラッグ＆ドロップしてください</h4>
+              <div class="drop_area" @dragenter="dragEnter" @dragleave="dragLeave" @dragover.prevent="dragOver" @drop.prevent="dropFile" v-bind:class="{enter: isEnter}">
+                ファイルアップロード
+              </div>
+              <div>
+                <h4>ファイル情報</h4>
+                  <p>
+                    <label>チーム名を選んでください</label>
+                    <select class="form-select" v-model="image_team">
+                      <option value="チームA" selected>チームA</option>
+                      <option value="チームB">チームB</option>
+                      <option value="チームC">チームC</option>
+                      <option value="チームD">チームD</option>
+                      <option value="チームE">チームE</option>
+                    </select>
+                  </p>
+                  <p>
+                    <label>アイコンを選んでください</label>
+                    <select class="form-select" v-model="image_icon">
+                      <option value="icon_humei.png" selected>不明</option>
+                      <option value="icon_kabuto.png">カブトムシ</option>
+                      <option value="icon_kuwagata.png">クワガタ</option>
+                      <option value="icon_chou.png">チョウ</option>
+                      <option value="icon_semi.png">セミ</option>
+                      <option value="icon_hachi.png">ハチ</option>
+                      <option value="icon_batta.png">バッタ</option>
+                    </select>
+                  </p>                
+                  <p>ファイル名: {{ image_name }}</p>
+                  <p>緯度: {{ image_lat }} </p>
+                  <p>経度: {{ image_lng }} </p>         
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" v-on:click="upload()">アップロード</button>
+              <button type="button" class="btn btn-secondary" v-on:click="toggle()">閉じる</button>
+            </div>
+          </div>
+        </div>
+      </div>    
+    </div>
+ 
+    <div id="map"></div>
+    
+    <!-- <script src="collections.json"></script> -->
+    <script src="main.js"></script>
+  </body> 
+
+</html>
+
