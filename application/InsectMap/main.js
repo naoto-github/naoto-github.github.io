@@ -7,6 +7,9 @@ let collections = [];
 // マーカー・オブジェクト
 let markers = [];
 
+// マーカーのインデックス
+let marker_index = 0;
+
 // マーカーの追加
 function makeMarker(collection){
   let team = collection.team;
@@ -153,6 +156,26 @@ vue = new Vue({
       }
       else if(key == "o"){
         map.zoomOut();
+      }
+      else if(key == "n"){
+        if(markers.length > 0){
+          let marker = markers[marker_index];
+          map.panTo(marker.getLatLng());
+          marker_index += 1;
+          if(markers.length <= marker_index){
+            marker_index = 0;
+          }
+        }
+      }
+      else if(key == "p"){
+        if(markers.length > 0){
+          let marker = markers[marker_index];
+          map.panTo(marker.getLatLng());
+          marker_index -= 1;
+          if(marker_index < 0){
+            marker_index = markers.length - 1;
+          }
+        }
       }
     });
   },

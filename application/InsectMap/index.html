@@ -38,22 +38,31 @@
   <body>
     <div id="app">
       <h1>{{ title }}</h1>
+      <p>
+        <b>h</b>: ホームに戻る
+        <b>n</b>: 次のマーカーへ
+        <b>p</b>: 前のマーカーへ
+        <b>i</b>: ズームイン
+        <b>o</b>: ズームアウト
+      </p>
       
       <form class="form-inline">        
         <label>緯度:</label>
         <input id="input-lat" type="text" class="input-small" v-model="lat" v-on:move="updateLat()">
         <label>経度:</label>
         <input id="input-lng" type="text" class="input-small" v-model="lng" v-on:move="updateLng()">
-        <button type="button" class="btn btn-primary" v-on:click="toggle()">
+        <button type="button" class="btn btn-success" v-on:click="toggle()">
           昆虫画像のアップロード
         </button>
-        <button type="button" class="btn btn-info" v-on:click="load()">
+        <button type="button" class="btn btn-primary" v-on:click="load()">
           データの読込
         </button>
-        <button type="button" class="btn btn-info">
+        <button type="button" class="btn btn-primary">
           <a v-bind:href="download_url" download>データの保存</a>
         </button>
-        
+        <button type="button" class="btn btn-info">
+          <a href="https://mukai-lab.info/application/InsectMap/collections.json" type="application/json" download>サンプルデータ</a>
+        </button>
         <!-- JSONファイル読み込み用 -->
         <input
           style="display: none"
@@ -90,7 +99,7 @@
                   <p>
                     <label>アイコンを選んでください</label>
                     <select class="form-select" v-model="image_icon">
-                      <option value="icon_humei.png" selected>不明</option>
+                      <option value="icon_humei.png" selected>その他</option>
                       <option value="icon_kabuto.png">カブトムシ</option>
                       <option value="icon_kuwagata.png">クワガタ</option>
                       <option value="icon_chou.png">チョウ</option>
