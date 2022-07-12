@@ -112,7 +112,11 @@ vue = new Vue({
       marker.addTo(map);
       markers.push(marker);
     }
-       
+
+    // ダウンロード用のURL
+    let blob = new Blob([JSON.stringify(collections, null, '  ')], {type: 'application\/json'});
+    this.download_url = URL.createObjectURL(blob);
+    
     // 地図を移動させたときのイベント処理
     let circle_radius = this.circle_radius;
     map.on("moveend", function(e){
@@ -284,8 +288,13 @@ vue = new Vue({
             marker.addTo(map);
             markers.push(marker);
           }
+          
+          // ダウンロード用のURL
+          let blob = new Blob([JSON.stringify(collections, null, '  ')], {type: 'application\/json'});
+          this.download_url = URL.createObjectURL(blob);
         }
-        await reader.readAsText(file);          
+        await reader.readAsText(file);   
+        
       }
       
     }
