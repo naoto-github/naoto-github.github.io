@@ -71,6 +71,7 @@ vue = new Vue({
     image_base64: "",
     image_file: null,
     download_url: "",
+    gps_flg: false,
   },
   mounted: function(){
     
@@ -115,7 +116,7 @@ vue = new Vue({
     }
 
     // ダウンロード用のURL
-    let blob = new Blob([JSON.stringify(collections,ll, '  ')], {type: 'application\/json'});
+    let blob = new Blob([JSON.stringify(collections)], {type: 'application\/json'});
     this.download_url = URL.createObjectURL(blob);
     
     // 地図を移動させたときのイベント処理
@@ -202,7 +203,8 @@ vue = new Vue({
         this.image_lat = 0;
         this.image_lng = 0;
         this.image_base64 = "";
-        this.$refs.file_input.value = null;
+        this.$refs.image_input.value = "";
+        this.gps_flg = false;
       }
       else{
         this.visibility = "visibility: hidden";
@@ -219,17 +221,27 @@ vue = new Vue({
     dragOver(){
       // console.log("dragOver");
     },
-    async selectFile(){
+    async uploadFile(){
       //console.log("select");
       this.files = [...event.target.files];
       if(this.files.length > 0){
         this.image_file = this.files[0]
-        let latlng = await exifr.gps(this.image_file);
         
+        // 画像ファイル名の取得
         this.image_name = this.image_file.name;
-        this.image_lat = latlng["latitude"];
-        this.image_lng = latlng["longitude"];
         
+        // 緯度経度の取得
+        try{
+          let latlng = await exifr.gps(this.image_file);
+          this.image_lat = latlng["latitude"];
+          this.image_lng = latlng["longitude"];
+        }
+        catch(e){
+          this.image_lat = 0;
+          this.image_lng = 0;
+          this.gps_flg = true;
+        }
+          
         // 画像をbase64に変換
         let reader = new FileReader();
         reader.onload = (event) =>{
@@ -246,11 +258,21 @@ vue = new Vue({
       
       if(this.files.length > 0){
         this.image_file = this.files[0]
-        let latlng = await exifr.gps(this.image_file);
         
+        // 画像ファイル名の取得
         this.image_name = this.image_file.name;
-        this.image_lat = latlng["latitude"];
-        this.image_lng = latlng["longitude"];
+        
+        // 緯度経度の取得
+        try{
+          let latlng = await exifr.gps(this.image_file);
+          this.image_lat = latlng["latitude"];
+          this.image_lng = latlng["longitude"];
+        }
+        catch(e){
+          this.image_lat = 0;
+          this.image_lng = 0;
+          this.gps_flg = true;
+        }
         
         // 画像をbase64に変換
         let reader = new FileReader();
@@ -288,9 +310,11 @@ vue = new Vue({
       this.download_url = URL.createObjectURL(blob);
     },
     load(){
+      this.$refs.input.value = "";
       this.$refs.input.click();
     },
     async selectedFile() {
+      console.log("selectedFile")
       this.isUploading = true;
 
       let file = this.$refs.input.files[0]
@@ -325,6 +349,7 @@ vue = new Vue({
         map.removeLayer(marker);
       }
       markers = [];
+      collections = [];
     }
   },
 });

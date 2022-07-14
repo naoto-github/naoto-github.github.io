@@ -83,7 +83,7 @@
             </div>
             <div class="modal-body">
               <h4>1枚ずつ画像をドラッグ＆ドロップしてください</h4>
-              <input ref="file_input" @change="selectFile()" type="file">
+              <input ref="image_input" @change="uploadFile()" type="file">
               <div class="drop_area" @dragenter="dragEnter" @dragleave="dragLeave" @dragover.prevent="dragOver" @drop.prevent="dropFile" v-bind:class="{enter: isEnter}">
                 ファイルアップロード
               </div>
@@ -115,7 +115,8 @@
                     </p>                
                     <p>ファイル名: {{ image_name }}</p>
                     <p>緯度: {{ image_lat }} </p>
-                    <p>経度: {{ image_lng }} </p>         
+                    <p>経度: {{ image_lng }} </p>   
+                    <p v-show="gps_flg" style="color:red">GPS情報が含まれていません</p>
                   </div>
                   <div style="display:table; width:100%;">
                     <div style="display:table-cell; vertical-align: middle; text-align:center">
