@@ -69,6 +69,7 @@ vue = new Vue({
     image_lat: 0,
     image_lng: 0,
     image_base64: "",
+    image_file: null,
     download_url: "",
   },
   mounted: function(){
@@ -114,7 +115,7 @@ vue = new Vue({
     }
 
     // ダウンロード用のURL
-    let blob = new Blob([JSON.stringify(collections, null, '  ')], {type: 'application\/json'});
+    let blob = new Blob([JSON.stringify(collections,ll, '  ')], {type: 'application\/json'});
     this.download_url = URL.createObjectURL(blob);
     
     // 地図を移動させたときのイベント処理
@@ -201,6 +202,7 @@ vue = new Vue({
         this.image_lat = 0;
         this.image_lng = 0;
         this.image_base64 = "";
+        this.$refs.file_input.value = null;
       }
       else{
         this.visibility = "visibility: hidden";
@@ -217,16 +219,14 @@ vue = new Vue({
     dragOver(){
       // console.log("dragOver");
     },
-    async dropFile(){
-      // console.log("dropFile");
-      this.files = [...event.dataTransfer.files]
-      this.isEnter = false;
-      
+    async selectFile(){
+      //console.log("select");
+      this.files = [...event.target.files];
       if(this.files.length > 0){
-        let file = this.files[0]
-        let latlng = await exifr.gps(file);
+        this.image_file = this.files[0]
+        let latlng = await exifr.gps(this.image_file);
         
-        this.image_name = file.name;
+        this.image_name = this.image_file.name;
         this.image_lat = latlng["latitude"];
         this.image_lng = latlng["longitude"];
         
@@ -236,7 +236,29 @@ vue = new Vue({
           this.image_base64 = event.currentTarget.result;
           // console.log(this.image_base64);
         }
-        await reader.readAsDataURL(file);
+        await reader.readAsDataURL(this.image_file);
+      }
+    },
+    async dropFile(){
+      // console.log("dropFile");
+      this.files = [...event.dataTransfer.files]
+      this.isEnter = false;
+      
+      if(this.files.length > 0){
+        this.image_file = this.files[0]
+        let latlng = await exifr.gps(this.image_file);
+        
+        this.image_name = this.image_file.name;
+        this.image_lat = latlng["latitude"];
+        this.image_lng = latlng["longitude"];
+        
+        // 画像をbase64に変換
+        let reader = new FileReader();
+        reader.onload = (event) =>{
+          this.image_base64 = event.currentTarget.result;
+          // console.log(this.image_base64);
+        }
+        await reader.readAsDataURL(this.image_file);
         
       }
     },
@@ -297,6 +319,12 @@ vue = new Vue({
         
       }
       
+    },
+    clear(){
+      for(let marker of markers){
+        map.removeLayer(marker);
+      }
+      markers = [];
     }
   },
 });

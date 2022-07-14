@@ -3,7 +3,7 @@
 <html>
   
   <head>
-    <title>デジタル昆虫探検図鑑</title>
+    <title>デジタル昆虫探検マップ</title>
     
     <!-- Vue.js -->
     <script src="./lib/vue.js"></script>
@@ -38,7 +38,7 @@
   <body>
     <div id="app">
       <h1>{{ title }}</h1>
-      <p>
+      <p style="margin-bottom:10px">
         <b>h</b>: ホームに戻る
         <b>n</b>: 次のマーカーへ
         <b>p</b>: 前のマーカーへ
@@ -63,6 +63,8 @@
         <button type="button" class="btn btn-info">
           <a href="https://mukai-lab.info/application/InsectMap/collections.json" type="application/json" download>サンプルデータ</a>
         </button>
+        <button type="button" class="btn btn-info" v-on:click="clear()">データのクリア
+        </button>
         <!-- JSONファイル読み込み用 -->
         <input
           style="display: none"
@@ -81,36 +83,46 @@
             </div>
             <div class="modal-body">
               <h4>1枚ずつ画像をドラッグ＆ドロップしてください</h4>
+              <input ref="file_input" @change="selectFile()" type="file">
               <div class="drop_area" @dragenter="dragEnter" @dragleave="dragLeave" @dragover.prevent="dragOver" @drop.prevent="dropFile" v-bind:class="{enter: isEnter}">
                 ファイルアップロード
               </div>
               <div>
-                <h4>ファイル情報</h4>
-                  <p>
-                    <label>チーム名を選んでください</label>
-                    <select class="form-select" v-model="image_team">
-                      <option value="チームA" selected>チームA</option>
-                      <option value="チームB">チームB</option>
-                      <option value="チームC">チームC</option>
-                      <option value="チームD">チームD</option>
-                      <option value="チームE">チームE</option>
-                    </select>
-                  </p>
-                  <p>
-                    <label>アイコンを選んでください</label>
-                    <select class="form-select" v-model="image_icon">
-                      <option value="icon_humei.png" selected>その他</option>
-                      <option value="icon_kabuto.png">カブトムシ</option>
-                      <option value="icon_kuwagata.png">クワガタ</option>
-                      <option value="icon_chou.png">チョウ</option>
-                      <option value="icon_semi.png">セミ</option>
-                      <option value="icon_hachi.png">ハチ</option>
-                      <option value="icon_batta.png">バッタ</option>
-                    </select>
-                  </p>                
-                  <p>ファイル名: {{ image_name }}</p>
-                  <p>緯度: {{ image_lat }} </p>
-                  <p>経度: {{ image_lng }} </p>         
+                <div style="display:flex">
+                  <div>
+                    <h4>ファイル情報</h4>
+                    <p>
+                      <label>チーム名を選んでください</label>
+                      <select class="form-select" v-model="image_team">
+                        <option value="チームA" selected>チームA</option>
+                        <option value="チームB">チームB</option>
+                        <option value="チームC">チームC</option>
+                        <option value="チームD">チームD</option>
+                        <option value="チームE">チームE</option>
+                      </select>
+                    </p>
+                    <p>
+                      <label>アイコンを選んでください</label>
+                      <select class="form-select" v-model="image_icon">
+                        <option value="icon_humei.png" selected>その他</option>
+                        <option value="icon_kabuto.png">カブトムシ</option>
+                        <option value="icon_kuwagata.png">クワガタ</option>
+                        <option value="icon_chou.png">チョウ</option>
+                        <option value="icon_semi.png">セミ</option>
+                        <option value="icon_hachi.png">ハチ</option>
+                        <option value="icon_batta.png">バッタ</option>
+                      </select>
+                    </p>                
+                    <p>ファイル名: {{ image_name }}</p>
+                    <p>緯度: {{ image_lat }} </p>
+                    <p>経度: {{ image_lng }} </p>         
+                  </div>
+                  <div style="display:table; width:100%;">
+                    <div style="display:table-cell; vertical-align: middle; text-align:center">
+                      <img v-bind:src="image_base64" width="200px">
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="modal-footer">
