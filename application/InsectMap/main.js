@@ -165,22 +165,22 @@ vue = new Vue({
       }
       else if(key == "n"){
         if(markers.length > 0){
-          let marker = markers[marker_index];
-          map.panTo(marker.getLatLng());
           marker_index += 1;
           if(markers.length <= marker_index){
             marker_index = 0;
-          }
+          }          
+          let marker = markers[marker_index];
+          map.panTo(marker.getLatLng());
         }
       }
       else if(key == "p"){
         if(markers.length > 0){
-          let marker = markers[marker_index];
-          map.panTo(marker.getLatLng());
           marker_index -= 1;
           if(marker_index < 0){
             marker_index = markers.length - 1;
           }
+          let marker = markers[marker_index];
+          map.panTo(marker.getLatLng());
         }
       }
     });
@@ -302,6 +302,7 @@ vue = new Vue({
       let marker = makeMarker(collection);
       marker.addTo(map);
       markers.push(marker);
+      marker_index = markers.length - 1;
       
       map.panTo(marker.getLatLng());
       
@@ -334,6 +335,10 @@ vue = new Vue({
             marker.addTo(map);
             markers.push(marker);
           }
+          
+          marker_index = 0;
+          let marker = markers[marker_index];
+          map.panTo(marker.getLatLng());
           
           // ダウンロード用のURL
           let blob = new Blob([JSON.stringify(collections, null, '  ')], {type: 'application\/json'});
