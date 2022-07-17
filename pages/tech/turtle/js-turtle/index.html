@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    js-turtleで図形を描こう! | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="js-turtleで図形を描こう!" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/tech/turtle/js-turtle/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="js-turtleとは  この模擬授業では，タートル・グラフィクスと呼ばれるコンピュータ・グラフィックスを記述するための方法を用いて図形を描くことに挑戦します． タートル・グラフィックスでは，ペンの代わりとなるカメを動かすことで，キャンバス上に直線や矩形などの図形を描く仕組みとなっており，プログラミング学習に最適とされています． タートル・グラフィックスの歴史は古く，1960年代にプログラミング言語LOGOに導入されたことから始まり，現在ではJavaScriptやPythonなど主要なプログラミング言語で利用可能になっています． JavaScriptでタートル・グラフィックスを利用するための追加機能（ライブラリ）がjs-turtleです． ここでは，Webページを記述するために用いられるJavaScriptで，タートル・グラフィックスに挑戦しましょう．
+
+プログラミング環境  CodePenというオンラインのプログラミング環境を利用します． 下図のように，CodePenの画面に表示されている JS というボタンをクリックしてみましょう． コード（プログラム）を記述するためのエディタが表示されます． このエディタに記述したコードに合わせて，右側のキャンバスにプレビュー（プログラムの結果）が表示されます． もう一度 JS をクリックすると，エディタが非表示になり，キャンバスが大きく表示されるので，適宜切り替えて確認しましょう．
+
+See the Pen js-turtleで図形を描こう！ by Naoto Mukai (@nmukai) on CodePen.  座標系の確認  タートル・グラフィックスの座標系を確認しましょう． キャンバスの中央にある緑色の矢印がカメです． このカメの座標は$(x,y) = (0, 0)$です． カメには向きがあり，最初は上方向 $\theta=0$ を向いています． キャンバスの右後方にXは増加し，上方向にYは増加します．
+
+具体例を考えてみましょう． 下記の4種類の座標はどこにあるでしょうか．
+ $(x, y)=(200, 200)$ $(x, y)=(200, -200)$ $(x, y)=(-200, -200)$ $(x, y)=(-200,200)$" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="js-turtleで図形を描こう!" />
+
+
+
+  <meta name="twitter:description" content="js-turtleとは  この模擬授業では，タートル・グラフィクスと呼ばれるコンピュータ・グラフィックスを記述するための方法を用いて図形を描くことに挑戦します． タートル・グラフィックスでは，ペンの代わりとなるカメを動かすことで，キャンバス上に直線や矩形などの図形を描く仕組みとなっており，プログラミング学習に最適とされています． タートル・グラフィックスの歴史は古く，1960年代にプログラミング言語LOGOに導入されたことから始まり，現在ではJavaScriptやPythonなど主要なプログラミング言語で利用可能になっています． JavaScriptでタートル・グラフィックスを利用するための追加機能（ライブラリ）がjs-turtleです． ここでは，Webページを記述するために用いられるJavaScriptで，タートル・グラフィックスに挑戦しましょう．
+
+プログラミング環境  CodePenというオンラインのプログラミング環境を利用します． 下図のように，CodePenの画面に表示されている JS というボタンをクリックしてみましょう． コード（プログラム）を記述するためのエディタが表示されます． このエディタに記述したコードに合わせて，右側のキャンバスにプレビュー（プログラムの結果）が表示されます． もう一度 JS をクリックすると，エディタが非表示になり，キャンバスが大きく表示されるので，適宜切り替えて確認しましょう．
+
+See the Pen js-turtleで図形を描こう！ by Naoto Mukai (@nmukai) on CodePen.  座標系の確認  タートル・グラフィックスの座標系を確認しましょう． キャンバスの中央にある緑色の矢印がカメです． このカメの座標は$(x,y) = (0, 0)$です． カメには向きがあり，最初は上方向 $\theta=0$ を向いています． キャンバスの右後方にXは増加し，上方向にYは増加します．
+
+具体例を考えてみましょう． 下記の4種類の座標はどこにあるでしょうか．
+ $(x, y)=(200, 200)$ $(x, y)=(200, -200)$ $(x, y)=(-200, -200)$ $(x, y)=(-200,200)$" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">js-turtleで図形を描こう!</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  js-turtleとは
+</h1>
+
+<p>この模擬授業では，<a href="https://en.wikipedia.org/wiki/Turtle_graphics">タートル・グラフィクス</a>と呼ばれるコンピュータ・グラフィックスを記述するための方法を用いて図形を描くことに挑戦します．
+タートル・グラフィックスでは，ペンの代わりとなるカメを動かすことで，キャンバス上に直線や矩形などの図形を描く仕組みとなっており，プログラミング学習に最適とされています．
+タートル・グラフィックスの歴史は古く，1960年代にプログラミング言語LOGOに導入されたことから始まり，現在ではJavaScriptやPythonなど主要なプログラミング言語で利用可能になっています．
+JavaScriptでタートル・グラフィックスを利用するための追加機能（ライブラリ）が<a href="https://hanumanum.github.io/js-turtle/index_en.html">js-turtle</a>です．
+ここでは，Webページを記述するために用いられるJavaScriptで，タートル・グラフィックスに挑戦しましょう．</p>
+<p><a href="https://gyazo.com/d3259978c28483fa881196a8ca87de9f"><img src="https://i.gyazo.com/d3259978c28483fa881196a8ca87de9f.png" alt="Image from Gyazo" width="300"/></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  プログラミング環境
+</h1>
+
+<p><a href="https://codepen.io/">CodePen</a>というオンラインのプログラミング環境を利用します．
+下図のように，CodePenの画面に表示されている <strong>JS</strong> というボタンをクリックしてみましょう．
+コード（プログラム）を記述するためのエディタが表示されます．
+このエディタに記述したコードに合わせて，右側のキャンバスにプレビュー（プログラムの結果）が表示されます．
+もう一度 <strong>JS</strong> をクリックすると，エディタが非表示になり，キャンバスが大きく表示されるので，適宜切り替えて確認しましょう．</p>
+<p><a href="https://gyazo.com/33d77681074ab0fa41155475deed2b19"><img src="https://i.gyazo.com/33d77681074ab0fa41155475deed2b19.png" alt="Image from Gyazo"></a></p>
+<p class="codepen" data-height="1000" data-theme-id="dark" data-default-tab="result" data-slug-hash="qBoRXBE" data-editable="true" data-user="nmukai" data-token="4387846625d14dec1aa3f70c7ab2aec4" style="height: 1000px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/nmukai/pen/qBoRXBE/4387846625d14dec1aa3f70c7ab2aec4">
+  js-turtleで図形を描こう！</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  座標系の確認
+</h1>
+
+<p>タートル・グラフィックスの座標系を確認しましょう．
+キャンバスの中央にある緑色の矢印がカメです．
+このカメの座標は$(x,y) = (0, 0)$です．
+カメには向きがあり，最初は上方向 $\theta=0$ を向いています．
+キャンバスの右後方にXは増加し，上方向にYは増加します．</p>
+<p><a href="https://gyazo.com/9ba034dfd43bbc84db6ce6612d8fd312"><img src="https://i.gyazo.com/9ba034dfd43bbc84db6ce6612d8fd312.png" alt="Image from Gyazo"></a></p>
+<p>具体例を考えてみましょう．
+下記の4種類の座標はどこにあるでしょうか．</p>
+<ul>
+<li>$(x, y)=(200, 200)$</li>
+<li>$(x, y)=(200, -200)$</li>
+<li>$(x, y)=(-200, -200)$</li>
+<li>$(x, y)=(-200,200)$</li>
+</ul>
+<p><a href="https://gyazo.com/1f7b78d7a16d50d3126883f20e5d4389"><img src="https://i.gyazo.com/1f7b78d7a16d50d3126883f20e5d4389.png" alt="Image from Gyazo"></a></p>
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/tech/turtle/js-turtle/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
