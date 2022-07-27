@@ -50,16 +50,49 @@ function makeMarker(collection){
   return marker;   
 }
 
+// サイズを縮小したbase64画像への変換
+function convert(base64, target_width, target_height){
+  let width;
+  let height;
+  
+  let image = new Image();
+  image.src = base64;
+  
+  image.onload = function(){
+    if(image.width > image.height){
+      let ratio = image.height / image.width;
+      width = target_width;
+      height = target_height * ratio;
+    }
+    else{
+      let ratio = image.width / image.height;
+      width = target_width * ratio;
+      height = target_height;
+    }
+
+    let canvas =  $("<canvas id='canvas' width='0' height='0' ></canvas>").attr('width', width).attr('height', height);
+    let ctx = canvas[0].getContext("2d");
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, width, height);
+
+    let base64 = canvas.get(0).toDataURL("image/jpeg");
+    return base64;
+  }
+}
+
 // Vueオブジェクト
 vue = new Vue({
   el: "#app",
   data: {
     title: "デジタル昆虫探検マップ",
-    start_latlng: L.latLng(35.555239, 136.91756),
+    start_latlng: L.latLng(config.default_lat, config.default_lng),
     lat: 0,
     lng: 0,
-    zoom: 17,
-    circle_radius: 50,
+    zoom: config.default_zoom,
+    min_zoom: config.default_min_zoom,
+    max_zoom: config.default_max_zoom,
+    circle_radius: config.default_circle_radius,
     visibility: "visibility: hidden",
     isEnter: false,
     image_team: "チームA",
@@ -87,8 +120,8 @@ vue = new Vue({
       zoomControl: false,
       attributionControl: false,
       zoom: this.zoom,
-      minZoom: this.zoom,
-      maxZoom: this.zoom+1,
+      minZoom: this.min_zoom,
+      maxZoom: this.max_zoom,
       keyboardPanDelta: 40,
     });
     
@@ -243,12 +276,52 @@ vue = new Vue({
         }
           
         // 画像をbase64に変換
+        let image = new Image();
         let reader = new FileReader();
         reader.onload = (event) =>{
-          this.image_base64 = event.currentTarget.result;
-          // console.log(this.image_base64);
+          image.src = event.currentTarget.result;       
         }
         await reader.readAsDataURL(this.image_file);
+        
+        //**************************************
+        // 画像の縮小
+        let base64;
+        let promise = new Promise(function(resolve){
+          
+          image.onload = () =>{
+            let width;
+            let height;
+            let target_width = 500;
+            let target_height = 500;
+
+            if(image.width > image.height){
+              let ratio = image.height / image.width;
+              width = target_width;
+              height = target_height * ratio;
+            }
+            else{
+              let ratio = image.width / image.height;
+              width = target_width * ratio;
+              height = target_height;
+            }
+
+            let canvas =  $("<canvas id='canvas' width='0' height='0' ></canvas>").attr('width', width).attr('height', height);
+            let ctx = canvas[0].getContext("2d");
+
+            ctx.clearRect(0, 0, width, height);
+            ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, width, height);
+
+            base64 = canvas.get(0).toDataURL("image/jpeg");
+            //console.log(base64);
+            
+            resolve();
+          }
+        })
+        
+        await promise.then((value) => {
+          this.image_base64 = base64;
+        })
+        //**************************************
       }
     },
     async dropFile(){
@@ -275,12 +348,52 @@ vue = new Vue({
         }
         
         // 画像をbase64に変換
+        let image = new Image();
         let reader = new FileReader();
         reader.onload = (event) =>{
-          this.image_base64 = event.currentTarget.result;
-          // console.log(this.image_base64);
+          image.src = event.currentTarget.result;       
         }
         await reader.readAsDataURL(this.image_file);
+        
+        //**************************************
+        // 画像の縮小
+        let base64;
+        let promise = new Promise(function(resolve){
+          
+          image.onload = () =>{
+            let width;
+            let height;
+            let target_width = 500;
+            let target_height = 500;
+
+            if(image.width > image.height){
+              let ratio = image.height / image.width;
+              width = target_width;
+              height = target_height * ratio;
+            }
+            else{
+              let ratio = image.width / image.height;
+              width = target_width * ratio;
+              height = target_height;
+            }
+
+            let canvas =  $("<canvas id='canvas' width='0' height='0' ></canvas>").attr('width', width).attr('height', height);
+            let ctx = canvas[0].getContext("2d");
+
+            ctx.clearRect(0, 0, width, height);
+            ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, width, height);
+
+            base64 = canvas.get(0).toDataURL("image/jpeg");
+            //console.log(base64);
+            
+            resolve();
+          }
+        })
+        
+        await promise.then((value) => {
+          this.image_base64 = base64;
+        })
+        //**************************************
         
       }
     },
