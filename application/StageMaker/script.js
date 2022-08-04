@@ -201,7 +201,7 @@ function selectDownload(){
   
   var link = document.createElement( 'a' );
 	link.href = window.URL.createObjectURL(blob);
-	link.download = "stage1.json";
+	link.download = "original.json";
 	link.click();
 
 }
