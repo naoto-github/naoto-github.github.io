@@ -10,6 +10,9 @@ let markers = [];
 // マーカーのインデックス
 let marker_index = 0;
 
+// デフォルトのチーム名
+let default_team_name = "大浦ファミリー";
+
 // マーカーの追加
 function makeMarker(collection){
   let team = collection.team;
@@ -95,7 +98,7 @@ vue = new Vue({
     circle_radius: config.default_circle_radius,
     visibility: "visibility: hidden",
     isEnter: false,
-    image_team: "チームA",
+    image_team: default_team_name,
     image_icon: "icon_humei.png",
     image_files: [],
     image_name: "",
@@ -230,7 +233,7 @@ vue = new Vue({
     toggle(){
       if(this.visibility == "visibility: hidden"){
         this.visibility = "visibility: visible";
-        this.image_team = "チームA";
+        this.image_team = default_team_name;
         this.image_icon = "icon_humei.png";
         this.image_name = "";
         this.image_lat = 0;
