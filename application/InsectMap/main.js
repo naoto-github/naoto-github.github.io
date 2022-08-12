@@ -11,7 +11,7 @@ let markers = [];
 let marker_index = 0;
 
 // デフォルトのチーム名
-let default_team_name = "大浦ファミリー";
+let default_team_name = "チームA";
 
 // マーカーの追加
 function makeMarker(collection){
