@@ -2,7 +2,7 @@
 let map;
 
 // 昆虫の採集データ
-let collections = [];
+// let collections = [];
 
 // マーカー・オブジェクト
 let markers = [];
@@ -35,7 +35,7 @@ function makeMarker(collection){
     <div class="insect">
       <h3>${team}</h3>
       <div>
-        <img src="${image}" width="500px">
+        <img class="popup-image" src="${image}">
       </div>
     </div>
     `;
@@ -44,7 +44,7 @@ function makeMarker(collection){
     maxWidth: 550,
     maxHeight: 550,
     autoPan: false,
-    offset: L.point(320, 200),
+    offset: L.point(325, 275),
   });
       
   popup.setContent(popupContent);
@@ -58,7 +58,7 @@ function convert(base64, target_width, target_height){
   let width;
   let height;
   
-  let image = new Image();
+  let image = Image();
   image.src = base64;
   
   image.onload = function(){
