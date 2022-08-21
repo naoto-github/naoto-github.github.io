@@ -13,6 +13,12 @@ let radius;
 let p1_x;
 let p1_y;
 
+let drawing_flg = false;
+let x1;
+let y1;
+let x2;
+let y2;
+
 let inside_button = false;
 
 objects = []
@@ -21,42 +27,42 @@ function setup(){
   createCanvas(1200, 800);
   background(0, 0, 0);
   
-  button_ball = createButton('Ball');
+  button_ball = createButton('ボール');
   button_ball.size(100, 50)
   button_ball.position(200, 800);
   button_ball.mousePressed(selectBall);
   button_ball.mouseOver(() => {inside_button = true});
   button_ball.mouseOut(() => {inside_button = false});
   
-  button_goal = createButton('Goal');
+  button_goal = createButton('ゴール');
   button_goal.size(100, 50)
   button_goal.position(300, 800);
   button_goal.mousePressed(selectGoal);
   button_goal.mouseOver(() => {inside_button = true});
   button_goal.mouseOut(() => {inside_button = false});
   
-  button_slope = createButton('Slope');
+  button_slope = createButton('スロープ');
   button_slope.size(100, 50)
   button_slope.position(400, 800);
   button_slope.mousePressed(selectSlope);
   button_slope.mouseOver(() => {inside_button = true});
   button_slope.mouseOut(() => {inside_button = false});  
   
-  button_lift = createButton('Lift');
+  button_lift = createButton('リフト');
   button_lift.size(100, 50)
   button_lift.position(500, 800);
   button_lift.mousePressed(selectLift);
   button_lift.mouseOver(() => {inside_button = true});
   button_lift.mouseOut(() => {inside_button = false});  
   
-  button_jump = createButton('Jump');
+  button_jump = createButton('ジャンプ');
   button_jump.size(100, 50)
   button_jump.position(600, 800);
   button_jump.mousePressed(selectJump);
   button_jump.mouseOver(() => {inside_button = true});
   button_jump.mouseOut(() => {inside_button = false});  
   
-  button_undo = createButton('Undo');
+  button_undo = createButton('やり直し');
   button_undo.size(100, 50)
   button_undo.position(700, 800);
   button_undo.mousePressed(selectUndo);
@@ -64,7 +70,7 @@ function setup(){
   button_undo.mouseOver(() => {inside_button = true});
   button_undo.mouseOut(() => {inside_button = false});  
   
-  button_clear = createButton('Clear');
+  button_clear = createButton('クリア');
   button_clear.size(100, 50)
   button_clear.position(800, 800);
   button_clear.mousePressed(selectClear);
@@ -72,7 +78,7 @@ function setup(){
   button_clear.mouseOver(() => {inside_button = true});
   button_clear.mouseOut(() => {inside_button = false});  
   
-  button_download = createButton('Download');
+  button_download = createButton('ダウンロード');
   button_download.size(100, 50)
   button_download.position(900, 800);
   button_download.mousePressed(selectDownload);
@@ -85,6 +91,23 @@ function draw(){
   background(0, 0, 0);
   for(let object of objects){
     object.paint();
+  }
+  
+  switch(type){
+    case 2:
+      if(drawing_flg){
+        fill("white");
+        noStroke();
+        rect(x1, y1, (x2-x1), (y2-y1));
+      }
+      break
+    case 3:
+      if(drawing_flg){
+        stroke("blue");
+        strokeWeight(20);
+        line(x1, y1, x2, y2);
+      }
+      break
   }
 }
 
@@ -137,8 +160,18 @@ function mouseDragged(){
   
   switch(type){
     case 2:
+      x1 = Math.min(p1_x, mouseX)
+      y1 = Math.min(p1_y, mouseY)
+      x2 = Math.max(p1_x, mouseX)
+      y2 = Math.max(p1_y, mouseY)
+      drawing_flg = true;
       break
    case 3:
+      x1 = p1_x
+      y1 = p1_y
+      x2 = mouseX
+      y2 = mouseY
+      drawing_flg = true;
       break
   }
 }
@@ -155,12 +188,22 @@ function mouseReleased(){
       y1 = Math.min(p1_y, mouseY)
       x2 = Math.max(p1_x, mouseX)
       y2 = Math.max(p1_y, mouseY)
-      slope = new Slope(x1, y1, x2, y2);
-      objects.push(slope);
+      
+      if(x1 != x2 && x2 != y2){
+        slope = new Slope(x1, y1, x2, y2);
+        objects.push(slope);
+      }
+      
+      drawing_flg = false;
       break
     case 3:
-      lift = new Lift(p1_x, p1_y, mouseX, mouseY);
-      objects.push(lift);
+      if(p1_x != mouseX && p1_y != mouseY){
+        lift = new Lift(p1_x, p1_y, mouseX, mouseY);
+        objects.push(lift);
+      }
+      
+      drawing_flg = false;
+      
       break
   }
 }
