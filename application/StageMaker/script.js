@@ -3,6 +3,7 @@ let button_goal;
 let button_slope;
 let button_lift;
 let button_jump;
+let button_worp;
 let type;
 
 let button_undo;
@@ -62,9 +63,16 @@ function setup(){
   button_jump.mouseOver(() => {inside_button = true});
   button_jump.mouseOut(() => {inside_button = false});  
   
+  button_worp = createButton('ワープ');
+  button_worp.size(100, 50)
+  button_worp.position(700, 800);
+  button_worp.mousePressed(selectWorp);
+  button_worp.mouseOver(() => {inside_button = true});
+  button_worp.mouseOut(() => {inside_button = false}); 
+  
   button_undo = createButton('やり直し');
   button_undo.size(100, 50)
-  button_undo.position(700, 800);
+  button_undo.position(800, 800);
   button_undo.mousePressed(selectUndo);
   button_undo.style("background", "#cc0000");
   button_undo.mouseOver(() => {inside_button = true});
@@ -72,7 +80,7 @@ function setup(){
   
   button_clear = createButton('クリア');
   button_clear.size(100, 50)
-  button_clear.position(800, 800);
+  button_clear.position(900, 800);
   button_clear.mousePressed(selectClear);
   button_clear.style("background", "#cc0000");
   button_clear.mouseOver(() => {inside_button = true});
@@ -80,7 +88,7 @@ function setup(){
   
   button_download = createButton('ダウンロード');
   button_download.size(100, 50)
-  button_download.position(900, 800);
+  button_download.position(1000, 800);
   button_download.mousePressed(selectDownload);
   button_download.style("background", "#00cc00");  
   button_download.mouseOver(() => {inside_button = true});
@@ -149,6 +157,10 @@ function mousePressed(){
       jump = new Jump(mouseX, mouseY);
       objects.push(jump);
       break
+    case 5:
+      worp = new Worp(mouseX, mouseY);
+      objects.push(worp);
+      break;
   }
 }
 
@@ -229,6 +241,10 @@ function selectJump(){
   type = 4;
 }
 
+function selectWorp(){
+  type = 5;
+}
+
 function selectUndo(){
   objects.pop();
 }
@@ -274,6 +290,7 @@ function toJSON(){
   json = {};
   
   jumps = [];
+  worps = [];
   slopes = [];
   lifts = [];
   
@@ -294,6 +311,9 @@ function toJSON(){
     else if(object instanceof Jump){
       jumps.push(object);
     }
+    else if(object instanceof Worp){
+      worps.push(object);
+    }
     else if(object instanceof Slope){
       slopes.push(object);
     }
@@ -311,6 +331,16 @@ function toJSON(){
     json_list.push(json_jump);
   }
   json["jumps"] = json_list;
+  
+  json_list = []
+  for(let worp of worps){
+    json_worp = {
+      "x": worp.x,
+      "y": worp.y
+    }
+    json_list.push(json_worp);
+  }
+  json["worps"] = json_list;
   
   json_list = []
   for(let slope of slopes){
@@ -377,6 +407,19 @@ class Jump{
     fill("green");
     noStroke();
     ellipse(this.x, this.y, this.radius, this.radius);
+  }
+}
+
+class Worp{
+  constructor(x, y){
+    this.x = x;
+    this.y = y;
+    this.length = 20;
+  }
+  paint(){
+    fill("cyan");
+    noStroke();
+    rect(this.x-this.length, this.y-this.length, this.length*2, this.length*2);
   }
 }
 
