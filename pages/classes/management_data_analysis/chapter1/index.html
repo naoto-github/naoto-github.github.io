@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    Pythonの基本 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="Pythonの基本" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter1/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="授業目的と学習方法  この授業では，ビジネスや日常生活における意思決定の場面において， 論理的に問題を捉えて最適な行動を選択できるようになるために， 統計に基づくデータサイエンスのスキルを学ぶことを目的とします． 近年は高速な計算機（PC）を用いて，多種多様なデータを大量に分析することが可能になり， データサイエンス が一つの学問として注目される様になりました． 本授業を履修した学生には，この授業で学んだデータサイエンスのスキルをレポートや卒業論文で活かすことはもちろん， 世の中に存在する社会課題の解決手段として応用することを期待しています．
+データ分析のためのツールとして，次のソフトウェアを利用します． Excel は分析対象のデータの概要を把握するために用い， Jupyter Lab はPythonで実装されたデータ分析手法を適用するために用います． 多くの学生はExcelの利用経験があると思いますが，Pythonによるプログラミングは初めてかもしれません． この授業では，実際にデータに触れながら，Pythonの使い方に関しても学習してもらいます．
+ 表計算ソフト Microsoft Excel Pythonのプログラミング環境 Jupyter Lab  Jupyter Lab  Pythonのプログラム開発にはJupyter Labを利用します． Jupyter Labは，ChromeやEdgeなどのブラウザで動作するウェブ・アプリケーションです． 公式サイトが公開しているオンラインの体験版の利用も可能ですが， ローカルのPCにインストールして利用する方が良いでしょう（大学のPCにインストールされています）． Jupyter Labを起動して，Python 3 のノートブックを開きましょう． 最初にノートブックに名前を付けて保存します． ここでは，chapter1.ipynbという名前に設定しましょう．
+
+Jupyter Labは，セル と呼ばれるテキストフィールドにプログラムを入力する仕組みになっています． セルに次のコードを入力してみましょう．
+# 加算をするプログラム 1&#43;2 コードを入力したら，Runボタン をクリックしましょう（[Shift]&#43;[Enter] でもOK）． するとプログラムが実行され，その結果3が表示されます．
+
+このように，Jupyter Labでは，ユーザはセルにプログラムを入力しながら，インタラクティブにプログラムの開発が可能です． 本授業のテーマであるデータ分析はもちろん，機械学習やAIなどのプログラム開発にも用いられます．
+Pythonの基本  これから，Pythonを利用してデータ分析に取り組む上で最低限知っておくべきPythonの基本を学んでおきましょう．
+print関数 数値や文字列を画面に出力するには print関数 を用います． 文字列を出力する際は&quot;で括る必要があることに注意してください． 後に説明する 変数 出力することもできます． セルに複数行のコードを入力したときは，print関数を用いなくとも最後のコードの実行結果は， 必ず画面に出力される仕組みになっています．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="Pythonの基本" />
+
+
+
+  <meta name="twitter:description" content="授業目的と学習方法  この授業では，ビジネスや日常生活における意思決定の場面において， 論理的に問題を捉えて最適な行動を選択できるようになるために， 統計に基づくデータサイエンスのスキルを学ぶことを目的とします． 近年は高速な計算機（PC）を用いて，多種多様なデータを大量に分析することが可能になり， データサイエンス が一つの学問として注目される様になりました． 本授業を履修した学生には，この授業で学んだデータサイエンスのスキルをレポートや卒業論文で活かすことはもちろん， 世の中に存在する社会課題の解決手段として応用することを期待しています．
+データ分析のためのツールとして，次のソフトウェアを利用します． Excel は分析対象のデータの概要を把握するために用い， Jupyter Lab はPythonで実装されたデータ分析手法を適用するために用います． 多くの学生はExcelの利用経験があると思いますが，Pythonによるプログラミングは初めてかもしれません． この授業では，実際にデータに触れながら，Pythonの使い方に関しても学習してもらいます．
+ 表計算ソフト Microsoft Excel Pythonのプログラミング環境 Jupyter Lab  Jupyter Lab  Pythonのプログラム開発にはJupyter Labを利用します． Jupyter Labは，ChromeやEdgeなどのブラウザで動作するウェブ・アプリケーションです． 公式サイトが公開しているオンラインの体験版の利用も可能ですが， ローカルのPCにインストールして利用する方が良いでしょう（大学のPCにインストールされています）． Jupyter Labを起動して，Python 3 のノートブックを開きましょう． 最初にノートブックに名前を付けて保存します． ここでは，chapter1.ipynbという名前に設定しましょう．
+
+Jupyter Labは，セル と呼ばれるテキストフィールドにプログラムを入力する仕組みになっています． セルに次のコードを入力してみましょう．
+# 加算をするプログラム 1&#43;2 コードを入力したら，Runボタン をクリックしましょう（[Shift]&#43;[Enter] でもOK）． するとプログラムが実行され，その結果3が表示されます．
+
+このように，Jupyter Labでは，ユーザはセルにプログラムを入力しながら，インタラクティブにプログラムの開発が可能です． 本授業のテーマであるデータ分析はもちろん，機械学習やAIなどのプログラム開発にも用いられます．
+Pythonの基本  これから，Pythonを利用してデータ分析に取り組む上で最低限知っておくべきPythonの基本を学んでおきましょう．
+print関数 数値や文字列を画面に出力するには print関数 を用います． 文字列を出力する際は&quot;で括る必要があることに注意してください． 後に説明する 変数 出力することもできます． セルに複数行のコードを入力したときは，print関数を用いなくとも最後のコードの実行結果は， 必ず画面に出力される仕組みになっています．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">Pythonの基本</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  授業目的と学習方法
+</h1>
+
+<p>この授業では，ビジネスや日常生活における意思決定の場面において，
+論理的に問題を捉えて最適な行動を選択できるようになるために，
+統計に基づくデータサイエンスのスキルを学ぶことを目的とします．
+近年は高速な計算機（PC）を用いて，多種多様なデータを大量に分析することが可能になり，
+<strong>データサイエンス</strong> が一つの学問として注目される様になりました．
+本授業を履修した学生には，この授業で学んだデータサイエンスのスキルをレポートや卒業論文で活かすことはもちろん，
+世の中に存在する社会課題の解決手段として応用することを期待しています．</p>
+<p>データ分析のためのツールとして，次のソフトウェアを利用します．
+<strong>Excel</strong> は分析対象のデータの概要を把握するために用い，
+<strong>Jupyter Lab</strong> は<a href="https://www.python.org/">Python</a>で実装されたデータ分析手法を適用するために用います．
+多くの学生はExcelの利用経験があると思いますが，Pythonによるプログラミングは初めてかもしれません．
+この授業では，実際にデータに触れながら，Pythonの使い方に関しても学習してもらいます．</p>
+<ul>
+<li>表計算ソフト <a href="https://www.microsoft.com/ja-jp/microsoft-365/excel">Microsoft Excel</a></li>
+<li>Pythonのプログラミング環境 <a href="https://jupyter.org/">Jupyter Lab</a></li>
+</ul>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Jupyter Lab
+</h1>
+
+<p>Pythonのプログラム開発には<a href="https://jupyter.org/">Jupyter Lab</a>を利用します．
+Jupyter Labは，ChromeやEdgeなどのブラウザで動作するウェブ・アプリケーションです．
+公式サイトが公開しているオンラインの<a href="https://jupyter.org/try-jupyter/lab?path=notebooks%2FIntro.ipynb">体験版</a>の利用も可能ですが，
+ローカルのPCにインストールして利用する方が良いでしょう（大学のPCにインストールされています）．
+Jupyter Labを起動して，<strong>Python 3</strong> のノートブックを開きましょう．
+最初にノートブックに名前を付けて保存します．
+ここでは，<strong>chapter1.ipynb</strong>という名前に設定しましょう．</p>
+<p><a href="https://gyazo.com/01c053b8a1980a13ea1806eddeb9a897"><img src="https://i.gyazo.com/01c053b8a1980a13ea1806eddeb9a897.png" alt="Image from Gyazo"></a></p>
+<p>Jupyter Labは，<strong>セル</strong> と呼ばれるテキストフィールドにプログラムを入力する仕組みになっています．
+セルに次のコードを入力してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 加算をするプログラム</span>
+<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>
+</code></pre></div><p>コードを入力したら，<strong>Runボタン</strong> をクリックしましょう（<strong>[Shift]+[Enter]</strong> でもOK）．
+するとプログラムが実行され，その結果<code>3</code>が表示されます．</p>
+<p><a href="https://gyazo.com/a132c8950f2af4b4dc358504296c8742"><img src="https://i.gyazo.com/a132c8950f2af4b4dc358504296c8742.png" alt="Image from Gyazo"></a></p>
+<p>このように，Jupyter Labでは，ユーザはセルにプログラムを入力しながら，インタラクティブにプログラムの開発が可能です．
+本授業のテーマであるデータ分析はもちろん，機械学習やAIなどのプログラム開発にも用いられます．</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Pythonの基本
+</h1>
+
+<p>これから，Pythonを利用してデータ分析に取り組む上で最低限知っておくべきPythonの基本を学んでおきましょう．</p>
+<h2 id="print関数">print関数</h2>
+<p>数値や文字列を画面に出力するには <strong>print関数</strong> を用います．
+文字列を出力する際は<code>&quot;</code>で括る必要があることに注意してください．
+後に説明する <strong>変数</strong> 出力することもできます．
+セルに複数行のコードを入力したときは，print関数を用いなくとも最後のコードの実行結果は，
+必ず画面に出力される仕組みになっています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">3</span>) <span style="color:#75715e"># 数値を出力</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Three&#34;</span>) <span style="color:#75715e"># 文字列（半角文字）を出力</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;三&#34;</span>) <span style="color:#75715e"># 文字列（全角文字）を出力</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">3
+Three
+三
+</code></pre></div><h2 id="四則演算">四則演算</h2>
+<p><strong>加算</strong>，<strong>減算</strong>，<strong>乗算</strong>，<strong>除算</strong>，<strong>商</strong>, <strong>剰余</strong>，<strong>累乗</strong>を計算します．
+それぞれ，演算子は<code>+</code>，<code>-</code>，<code>*</code>，<code>/</code>，<code>//</code>，<code>%</code>，<code>**</code>を用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 加算</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 減算</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 乗算</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 除算</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 商</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 剰余</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 累乗</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">7
+3
+10
+2.5
+1
+25
+</code></pre></div><h2 id="変数">変数</h2>
+<p>数値や文字列などの値を記憶させるには <strong>変数</strong> を利用します．
+変数に値を記録させることを <strong>代入</strong> と呼びます．
+変数名には，アルファベット，数字，アンダースコア<code>_</code>を利用することができます．
+変数名の最初の文字に数字を用いることはできないことに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e"># 変数xに10を代入する</span>
+y <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.01</span>
+xyz <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;abc&#34;</span>
+name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;山田太郎&#34;</span>
+</code></pre></div><p>変数に記憶させた値を表示するにはprint関数を用います．
+変数と文字列を組み合わせて表示するには <strong>フォーマット文字列（f文字列）</strong> を利用します．
+出力する文字列の前に<code>f</code>を付け，文字列に埋め込む変数には<code>{}</code>を付けます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(x)
+<span style="color:#66d9ef">print</span>(y)
+<span style="color:#66d9ef">print</span>(xyz)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;name:{name}&#34;</span>) <span style="color:#75715e"># フォーマット文字列</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">10
+0.01
+abc
+name:山田太郎
+</code></pre></div><h2 id="リスト">リスト</h2>
+<p>上述の変数は一つの値しか記憶させることができません．
+複数の値を記憶させるには <strong>リスト</strong> を用います．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
+y <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.3</span>, <span style="color:#ae81ff">0.5</span>]
+z <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;c&#34;</span>]
+</code></pre></div><p>リストに記憶させた値を出力するにはprint関数を持ちます．
+リストの各要素を取得するには <strong>要素番号</strong> を利用します．
+要素番号は <strong>0</strong> から始まることに注意してください．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(x) <span style="color:#75715e"># リストxを出力</span>
+<span style="color:#66d9ef">print</span>(y[<span style="color:#ae81ff">0</span>]) <span style="color:#75715e"># リストyの0番の要素を出力</span>
+<span style="color:#66d9ef">print</span>(z[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>]) <span style="color:#75715e"># リストzの1番から3番までの要素を出力（3番は含まない）</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">[1, 2, 3, 4, 5]
+0.1
+[&#39;b&#39;, &#39;c&#39;]
+</code></pre></div><p>リストの長さを取得するには <strong>len関数</strong> を利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(len(x))
+<span style="color:#66d9ef">print</span>(len(y))
+<span style="color:#66d9ef">print</span>(len(z))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">5
+3
+3
+</code></pre></div><p>連続した整数のリストを生成するには <strong>range関数</strong> を利用します．
+生成された値をリストとして用いるには <strong>list関数</strong> でリストに変換する必要があることに注意してください（変換しないと <strong>range型</strong> と呼ばれるデータ型になる）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> range(<span style="color:#ae81ff">5</span>) <span style="color:#75715e"># 0から5までの整数のリストを生成（5は含まない）</span>
+<span style="color:#66d9ef">print</span>(list(x))
+
+y <span style="color:#f92672">=</span> range(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>) <span style="color:#75715e"># 5から10までの整数のリストを生成（10は含まない）</span>
+<span style="color:#66d9ef">print</span>(list(y))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">[0, 1, 2, 3, 4]
+[5, 6, 7, 8, 9]
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Pythonの制御構文
+</h1>
+
+<h2 id="if文">if文</h2>
+<p>条件に応じてプログラムを分岐させるには <strong>if文</strong> を利用します．
+このとき，比較演算子という表現を利用して <strong>条件式</strong> を記述します．
+比較演算子の結果は<code>True（真）</code>，または，<code>False（偽）</code>のいずれかとなります．</p>
+<table>
+<thead>
+<tr>
+<th>比較演算子</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x == y</td>
+<td>xとyは等しい</td>
+</tr>
+<tr>
+<td>x != y</td>
+<td>xとyは異なる</td>
+</tr>
+<tr>
+<td>x &gt; y</td>
+<td>xはyより大きい</td>
+</tr>
+<tr>
+<td>x &lt; y</td>
+<td>xはyより小さい</td>
+</tr>
+<tr>
+<td>x &gt;= y</td>
+<td>xはy以上</td>
+</tr>
+<tr>
+<td>x &lt;= y</td>
+<td>xはy以下</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span>)
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">5</span>)
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">15</span>)
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>)
+<span style="color:#66d9ef">print</span>(x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">15</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">True
+True
+False
+False
+True
+</code></pre></div><p>条件式を利用してif文を記述します．
+次のコードは，<code>x</code>が10のときに，「xは10」と出力します．
+条件式は<code>x == 10</code>で表されており，この条件式が<code>True</code>のときだけ<code>:</code>以降のコードが実行されます．
+ここで，<code>:</code>以降のコードはブロックと呼ばれ，インデント（字下げ）が必要です．
+一般的には，インデントは4文字文のスペース（空白）で表しますが，<strong>タブ・キー</strong> で入力することが可能です．
+<code>x</code>の値を変えて出力結果を確認しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+<span style="color:#66d9ef">if</span> x <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span>:
+	<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは10&#34;</span>) <span style="color:#75715e"># インデントが必要</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">xは10
+</code></pre></div><p>上記のコードでは，条件式<code>x == 10</code>が<code>False</code>のときは何も出力されません．
+<code>False</code>のときにも特定の処理を実行するには次のように記述します．
+次のコードは，<code>x</code>が10とは異なるときに，「xは10ではない」と出力します．
+<code>x</code>の値を変えて出力結果を確認しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+<span style="color:#66d9ef">if</span> x <span style="color:#f92672">==</span> <span style="color:#ae81ff">10</span>:
+	<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは10&#34;</span>)
+<span style="color:#66d9ef">else</span>:
+	<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;xは10ではない&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">xは10ではない
+</code></pre></div><h2 id="for文">for文</h2>
+<p>特定の処理を繰り返して実行するときは <strong>for文</strong> を利用します．
+for文ではリストを利用して，繰り返す回数を指定します．
+次のコードでは，リスト<code>[0,1,2]</code>を指定して，繰り返しを実行しています．
+このとき，変数<code>i</code>にはリストから要素が一つずつ取り出されて代入されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]:
+	<span style="color:#66d9ef">print</span>(i) <span style="color:#75715e"># インデントが必要</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">0
+1
+2
+</code></pre></div><p>リストの代わりにrange関数を利用することも可能です．
+次のコードでは，range関数を利用して，リスト<code>[0,1,2,3,4]</code>と同じ処理を実行しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+	<span style="color:#66d9ef">print</span>(i)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">0
+1
+2
+3
+4
+</code></pre></div><p>文字列のリストも同様に処理が可能です．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#34;a&#34;</span>, <span style="color:#e6db74">&#34;b&#34;</span>, <span style="color:#e6db74">&#34;c&#34;</span>]:
+	<span style="color:#66d9ef">print</span>(i)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">a
+b
+c
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
+ノートブックのファイル名は <strong>chapter1.ipynb</strong> としてください．</p>
+<p><a href="https://gyazo.com/969bb0cbfd9c8a5a9a7b45f1a57b376c"><img src="https://i.gyazo.com/969bb0cbfd9c8a5a9a7b45f1a57b376c.png" alt="Image from Gyazo"></a></p>
+<h3>参考書籍</h3>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798171948&linkId=70dbac2599f82106144687868e9ee83d"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798158348&linkId=6d28ae246d652ea9ac954c14940de2aa"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B096VMZ57K&linkId=1be78c3d5e926492d7292df6bbd04d0a"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B07PD237GQ&linkId=bd38a144cee47b0747240149f144904a"></iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/management_data_analysis/chapter1/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
