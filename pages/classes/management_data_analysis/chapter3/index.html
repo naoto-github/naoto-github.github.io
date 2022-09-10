@@ -289,8 +289,16 @@ $$</p>
 横軸は表が出る回数$x$，縦軸は頻度であり，$x=5$が最も高い頻度であることがわかります．</p>
 <p><a href="https://gyazo.com/ab9263420f1f55df622f7292583d3370"><img src="https://i.gyazo.com/ab9263420f1f55df622f7292583d3370.png" alt="Image from Gyazo"></a></p>
 <p>この縦軸の値をサンプル数の300で割り，確率$P(x)$で表すと2項分布となります．
-$x=5$となる確率は$P(5) \simeq 0.22$であることがわかります．</p>
+$x=5$となる確率は$P(5) \simeq 0.23$であることがわかります．</p>
 <p><a href="https://gyazo.com/9999f29f9f61982ce48a01bffb87860c"><img src="https://i.gyazo.com/9999f29f9f61982ce48a01bffb87860c.png" alt="Image from Gyazo"></a></p>
+<h2 id="関数で2項分布">関数で2項分布</h2>
+<p>上記の2項分布の確率は，300のサンプルから算出した値です．
+公式に従った2項分布の確率は，Excelの<code>binomdist</code>関数を利用して算出することが可能です．
+表が出る回数$x$，試行回数$n$，表が出る確率$p$の確率は，$BINOM.DIST(x, n, p, FALSE)$で計算します．
+例えば，$x=5$，$n=10$，$p=1/2$の確率を計算すると，$P(5) \simeq 0.25$となることがわかります．</p>
+<p>$$
+=BINOM.DIST(5,10,0.5,FALSE)
+$$</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   Pythonで2項分布
 </h1>
@@ -305,28 +313,51 @@ df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>re
 display(df)
 </code></pre></div><p><a href="https://gyazo.com/f357bfcb2e866df021d1a32795f43c6c"><img src="https://i.gyazo.com/f357bfcb2e866df021d1a32795f43c6c.png" alt="Image from Gyazo"></a></p>
 <h2 id="ヒストグラムの作成-1">ヒストグラムの作成</h2>
+<p>まずはヒストグラムを作成しましょう．
+1回目〜10回目までの，表が出た回数の合計を<code>sum</code>関数で求めます（<code>axis=1</code>は行方向に計算），</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;1回目&#34;</span>,<span style="color:#e6db74">&#34;2回目&#34;</span>,<span style="color:#e6db74">&#34;3回目&#34;</span>,<span style="color:#e6db74">&#34;4回目&#34;</span>,<span style="color:#e6db74">&#34;5回目&#34;</span>,<span style="color:#e6db74">&#34;6回目&#34;</span>,<span style="color:#e6db74">&#34;7回目&#34;</span>,<span style="color:#e6db74">&#34;8回目&#34;</span>,<span style="color:#e6db74">&#34;9回目&#34;</span>,<span style="color:#e6db74">&#34;10回目&#34;</span>]]<span style="color:#f92672">.</span>sum(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>assign(x<span style="color:#f92672">=</span>x)
+</code></pre></div><p>算出した合計$x=\{6,6,5,5,3,\cdots\}$を，<code>assign</code>関数でデータフレームの右端に追加します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>assign(x<span style="color:#f92672">=</span>x)
 display(df)
 </code></pre></div><p><a href="https://gyazo.com/ccbf9ff4664010ea4843f5ddde510818"><img src="https://i.gyazo.com/ccbf9ff4664010ea4843f5ddde510818.png" alt="Image from Gyazo"></a></p>
+<p>次に，<code>groupby</code>関数で<code>x</code>の値ごとにグループ集計し，ヒストグラムを作成します．
+<code>x</code>は0から10までの11通りの値をとります．
+集計した結果を<code>df_hist</code>に代入します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_hist <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;x&#34;</span>, <span style="color:#e6db74">&#34;実験者ID&#34;</span>]]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;x&#34;</span>)<span style="color:#f92672">.</span>count()
 display(df_hist)
 </code></pre></div><p><a href="https://gyazo.com/afa050342b52ac96bcdaa487735a7543"><img src="https://i.gyazo.com/afa050342b52ac96bcdaa487735a7543.png" alt="Image from Gyazo"></a></p>
+<p>ヒストグラムを棒グラフで表現します．
+グラフ生成に必要なライブラリである<a href="https://matplotlib.org/">matplotlib</a>と
+<a href="https://github.com/uehara1414/japanize-matplotlib">japanize_matplotlib</a>をインポートとしておきます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
 <span style="color:#f92672">import</span> japanize_matplotlib
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_hist<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>bar()
+</code></pre></div><p>棒グラフを生成するには，<code>plot.bar</code>関数を利用します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_hist<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>bar()
 </code></pre></div><p><a href="https://gyazo.com/12823c7a36ca68fe4e2535854b9c4338"><img src="https://i.gyazo.com/12823c7a36ca68fe4e2535854b9c4338.png" alt="Image from Gyazo"></a></p>
+<p>縦軸の頻度を300で割ることで，確率分布として表します．
+Excelのグラフと一致していることを確認しましょう．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">(df_hist <span style="color:#f92672">/</span> <span style="color:#ae81ff">300</span>)<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>bar()
 </code></pre></div><p><a href="https://gyazo.com/c3a7e3e7b544d80af9a84b6624bc89e9"><img src="https://i.gyazo.com/c3a7e3e7b544d80af9a84b6624bc89e9.png" alt="Image from Gyazo"></a></p>
-<h2 id="真の2項分布">真の2項分布</h2>
+<h2 id="関数で2項分布-1">関数で2項分布</h2>
+<p>最後に関数を利用して公式に従った2項分布を算出します．
+2項分布の確率計算には，数値計算ライブラリの<a href="https://scipy.org/">scipy</a>をインポートします．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> binom
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">binom<span style="color:#f92672">.</span>pmf(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.5</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">0.24609375000000025
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dist <span style="color:#f92672">=</span> binom<span style="color:#f92672">.</span>pmf([<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">9</span>,<span style="color:#ae81ff">10</span>], <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.5</span>)
+</code></pre></div><p>2項分布の確率の算出は<code>binom.pmf</code>関数を利用します．
+引数は表が出る回数$x=5$，試行回数$n=10$，表が出る確率$p=0.5$を指定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">binom<span style="color:#f92672">.</span>pmf(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.5</span>)
+</code></pre></div><p>この結果，$P(5) \simeq 0.25$となり，Excelの関数を利用して算出した確率と一致します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">0.24609375000000025
+</code></pre></div><p>$x=5$だけでなく，11通りある全ての$x$について計算してみます．
+<code>x=[0,1,2,3,4,5,6,7,8,9,10]</code>を指定します．
+計算結果は<code>dist</code>に代入します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dist <span style="color:#f92672">=</span> binom<span style="color:#f92672">.</span>pmf([<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">9</span>,<span style="color:#ae81ff">10</span>], <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.5</span>)
 <span style="color:#66d9ef">print</span>(dist)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">[0.00097656 0.00976563 0.04394531 0.1171875  0.20507813 0.24609375
+</code></pre></div><p>算出された確率分布は次のようになりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">[0.00097656 0.00976563 0.04394531 0.1171875  0.20507813 0.24609375
  0.20507813 0.1171875  0.04394531 0.00976563 0.00097656]
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_binom <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({<span style="color:#e6db74">&#34;x&#34;</span>:dist})
+</code></pre></div><p>これを棒グラフで表すと次の様になります．
+上記で求めた300サンプルの確率分布とよく似ていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_binom <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({<span style="color:#e6db74">&#34;x&#34;</span>:dist})
 df_binom<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>bar()
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x&#34;</span>)
 </code></pre></div><p><a href="https://gyazo.com/cbe3059f4bf6b3f5b380d1d6426061f9"><img src="https://i.gyazo.com/cbe3059f4bf6b3f5b380d1d6426061f9.png" alt="Image from Gyazo"></a></p>
@@ -334,6 +365,14 @@ plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x
   課題
 </h1>
 
+<p>次の2項分布の確率を調べなさい．</p>
+<ul>
+<li>1/3の確率で表がでるコインを，5回投げて，3回表が出る確率</li>
+<li>均等な確率で目が出るサイコロを，5回投げて，偶数が3回出る確率</li>
+</ul>
+<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
+ノートブックのファイル名は <strong>chapter3.ipynb</strong> としてください．</p>
 <h3>参考書籍</h3>
 
 <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798171948&linkId=70dbac2599f82106144687868e9ee83d"></iframe>
