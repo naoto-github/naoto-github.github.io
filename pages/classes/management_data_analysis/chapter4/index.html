@@ -239,20 +239,46 @@ u005,男,165.2,78.2
 ダウンロードしたファイルをExcelで開いてください．</p>
 <h2 id="平均と分散の算出">平均と分散の算出</h2>
 <p>上述したように正規分布の確率密度を計算するには平均$\mu$と分散$\sigma^2$が必要です．
-まずは，男性の身長の平均を，<code>average</code>関数で算出しましょう．</p>
+まずは，男性の身長の平均を，セル$F2$に<code>average</code>関数で算出しましょう．
+身長の平均は167.3になります．</p>
 <p>$$
-=average()
+=average(C2:C101)
 $$</p>
-<p>次に男性の身長の分散を，<code>var</code>関数で算出しましょう．</p>
+<p>男性の身長の分散を，セル$G2$に<code>var</code>関数で算出しましょう．
+身長の分散は50.5になります．</p>
 <p>$$
-=var()
+=var(C2:C101)
 $$</p>
-<p>標準偏差は分散の平方根ですが，<code>std</code>関数でも求めることができます．</p>
+<p>男性の身長の標準偏差を，セル$H2$に<code>stdev</code>関数で算出しましょう（標準偏差は分散の平方根でも求まります）．
+身長の標準偏差は7.1になります．</p>
 <p>$$
-=std()
+=stdev(C2:C101)
 $$</p>
-<p>同様に男性の体重に関しても算出してください．</p>
+<p><a href="https://gyazo.com/f94abf27e26c11779ca422f3519423ca"><img src="https://i.gyazo.com/f94abf27e26c11779ca422f3519423ca.png" alt="Image from Gyazo"></a></p>
+<p>同様に男性の体重に関してもセル$J2$，$K2$，$L$に算出してください．
+体重の平均は67.7，分散は132.8，標準偏差は11.5になります．</p>
+<p><a href="https://gyazo.com/56797eb80993582d974d4fa8d81c7b1e"><img src="https://i.gyazo.com/56797eb80993582d974d4fa8d81c7b1e.png" alt="Image from Gyazo"></a></p>
 <h2 id="関数で正規分布">関数で正規分布</h2>
+<p>公式に従った正規分布の確率密度を<code>normdist</code>関数で算出しましょう．
+身長$x$，平均$\mu$，標準偏差$\sigma$の確率密度は，$norm.dist(x, \mu, \sigma, FALSE)$と入力します．</p>
+<p>身長に関しては$130 \leq x \leq 200$を対象とします．
+$F5$から$F75$に130〜200を入力し，$G列$に<code>norm.dist</code>関数で確率密度を計算します．</p>
+<p>$$
+=norm.dist(F5,$F$2,$H$2,FALSE)
+$$</p>
+<p><a href="https://gyazo.com/7b25219cb5497969aa3120248fab55e3"><img src="https://i.gyazo.com/7b25219cb5497969aa3120248fab55e3.png" alt="Image from Gyazo"></a></p>
+<p>算出した確率密度を折れ線グラフで表すと次のようになります．
+平均身長がピークとなった釣鐘状の関数であることがわかります．</p>
+<p><a href="https://gyazo.com/32d8c0e2ccac3af7becbfc3ba588f2a7"><img src="https://i.gyazo.com/32d8c0e2ccac3af7becbfc3ba588f2a7.png" alt="Image from Gyazo"></a></p>
+<p>体重に関しては$30 \leq x \leq 00$を対象とします．
+$I5$から$I75$に30〜100を入力し，$J列$に<code>norm.dist</code>関数で確率密度を計算します．</p>
+<p>$$
+=norm.dist(I5,$J$2,$L$2,FALSE)
+$$</p>
+<p><a href="https://gyazo.com/bfff45f8007b44d21ebc2e034724c758"><img src="https://i.gyazo.com/bfff45f8007b44d21ebc2e034724c758.png" alt="Image from Gyazo"></a></p>
+<p>算出した確率密度を折れ線グラフで表すと次のようになります．
+身長と同様に平均体重がピークとなった釣鐘状の関数ですが，標準偏差が身長よりも体重の方が大きいため，平べったい形状になっていることがわかります．</p>
+<p><a href="https://gyazo.com/2bf11b2dc04b5f971a0637dd9709f897"><img src="https://i.gyazo.com/2bf11b2dc04b5f971a0637dd9709f897.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   Pythonで正規分布
 </h1>
