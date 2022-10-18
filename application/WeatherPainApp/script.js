@@ -64,9 +64,16 @@ new Vue({
       // デバイスの切断
       device.gatt.disconnect();
     },
-    send(){
+    getWeatherData(){
       if(rx_characteristic){
         let text = "GET\n";
+        let encodedText = new TextEncoder().encode(text); // UTF-8でエンコード
+        rx_characteristic.writeValue(encodedText);
+      }
+    },
+    playSound(){
+      if(rx_characteristic){
+        let text = "PLAY\n";
         let encodedText = new TextEncoder().encode(text); // UTF-8でエンコード
         rx_characteristic.writeValue(encodedText);
       }
