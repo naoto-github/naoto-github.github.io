@@ -245,7 +245,7 @@ w0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.52</span> 
 <span style="color:#66d9ef">for</span> w1 <span style="color:#f92672">in</span> x_:
     E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2乗誤差</span>
     y_<span style="color:#f92672">.</span>append(E) <span style="color:#75715e"># リストに要素を追加</span>
-  
+
 plt<span style="color:#f92672">.</span>plot(x_, y_)
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w1&#34;</span>) <span style="color:#75715e"># 水平軸のラベル</span>
 </code></pre></div><p><a href="https://gyazo.com/67a72d8cb7002155c4761f2aa95f0888"><img src="https://i.gyazo.com/67a72d8cb7002155c4761f2aa95f0888.png" alt="Image from Gyazo"></a></p>
@@ -268,10 +268,10 @@ plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w
 <p>目的関数$E$は，$w_0$と$w_1$に対して，下に凸のお椀型の形状をしていることがわかりました．
 最急降下法では，初期値として$w_0$と$w_1$に適当な値を設定し，坂を下る方向に$w_0$と$w_1$を更新することで最適値を探します．
 このためには，誤差$E$を$w_0$と$w_1$で偏微分し，接線の傾きを計算します．</p>
-<p>$$ \frac{\partial E}{\partial w_0} = 2 \cdot \frac{1}{2} \sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -1 $$
-$$ =  -\sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) $$</p>
-<p>$$ \frac{\partial E}{\partial w_1} = 2 \cdot \frac{1}{2} \sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -x_n $$
-$$ =  -\sum^{N}_{n=0} (y_n - w_0 -w_1 x_n) x_n $$</p>
+<p>$$ \frac{\partial E}{\partial w_0} = 2 \cdot \frac{1}{2} \sum^{N-1}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -1 $$
+$$ =  -\sum^{N-1}_{n=0} (y_n - w_0 -w_1 x_n) $$</p>
+<p>$$ \frac{\partial E}{\partial w_1} = 2 \cdot \frac{1}{2} \sum^{N-1}_{n=0} (y_n - w_0 -w_1 x_n) \cdot -x_n $$
+$$ =  -\sum^{N-1}_{n=0} (y_n - w_0 -w_1 x_n) x_n $$</p>
 <p>接線の傾き$\frac{\partial E}{\partial w_0} &lt; 0$のときは，
 $w_0$を増加させることで，より誤差を小さくすることができます．
 逆に，接線の傾き$\frac{\partial E}{\partial w_0} &gt; 0$のときは，
