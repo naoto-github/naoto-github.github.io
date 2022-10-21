@@ -16,7 +16,7 @@ new Vue({
 	item_list: [],
     },
     mounted: function(){
-	localStorage.clear();
+	//localStorage.clear();
 
 	// IDリストの取得
 	this.id_list = JSON.parse(localStorage.getItem("id_list"))
@@ -125,7 +125,10 @@ new Vue({
 	},
 	clearWeatherData(){
 	    localStorage.clear();
+	    this.id_list = [];
 	    this.item_list = [];
+	    console.log(this.id_list);
+	    console.log(this.item_list);	    
 	},
 	playSound(){
 	    if(rx_characteristic){
