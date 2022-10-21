@@ -3,41 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
-  <link rel="manifest" href="./manifest.json">
+  <link rel="manifest" href="./manifest.json">  
   <title>Weather Pain App</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js" integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
 
   <div id="main">
     <h1>{{ title }}</h1>
-    <p><a href="https://lancaster-university.github.io/microbit-docs/resources/bluetooth/bluetooth_profile.html">Microbit's UUID</a></p>
-    <p>接続手順</p>
-    <ol>
-      <li>ブラウザはChromeを利用する</li>
-      <li>Chromeでchrome://flags/にアクセスし<b>Experimental Web Platform features</b>を有効にする</li>
-      <li>Chromeを再起動する</li>
-    </ol>
+    
     <div>
-      <p>Microbitとの接続</p>
+      <h3>Microbitとの接続</h3>
       <p>
         <button v-on:click="connect">接続</button>
         <button v-on:click="disconnect">切断</button>
       </p>
     </div>
+    
     <div>
-      <p>気候データの受信</p>
-      <p><button v-on:click="getWeatherData">気候データ</button></p>
+      <h3>気候データ</h3>
       <p>
-        温度: <input type="text" v-bind:value="temperature">
-        湿度: <input type="text" v-bind:value="humidity">
-        気圧: <input type="text" v-bind:value="pressure">
+	<button v-on:click="getWeatherData">取得</button>
+	<button v-on:click="clearWeatherData">クリア</button>
       </p>
+      
+      <table border="1">
+	<tr>
+	  <!-- <th>ID</th> -->
+	  <th>日時</th>
+	  <th>温度</th>
+	  <th>湿度</th>
+	  <th>気圧</th>
+	</tr>
+	<tr v-for="item in item_list">
+	  <!-- <td> {{ item.id }} </td> -->
+	  <td> {{ item.date }} </td>
+	  <td> {{ item.temperature }} </td>
+	  <td> {{ item.humidity }} </td>
+	  <td> {{ item.pressure }} </td>	  
+	</tr>
+      </table>
+      
     </div>
     <div>
-      <p>サウンドの再生</p>
-      <p><button v-on:click="playSound">サウンド再生</button></p>
+      <h3>サウンドの再生</h3>
+      <p><button v-on:click="playSound">再生</button></p>
     </div>
+
+    <div>      
+      <h3>接続方法</h3>
+      <ol>
+	<li>ブラウザはChromeを利用する</li>
+	<li>Chromeでchrome://flags/にアクセスし<b>Experimental Web Platform features</b>を有効にする</li>
+	<li>Chromeを再起動する</li>
+      </ol>
+
+      <h3>参考</h3>
+      <ul>
+	<li><a href="https://lancaster-university.github.io/microbit-docs/resources/bluetooth/bluetooth_profile.html">Microbit's UUID</a></li>
+	<li><a href="https://www.data.ai/en/apps/ios/app/bluenet-web-ble-browser/">Bluefy</a></li>
+      </ul>
+    </div>
+    
   </div>
 
   <script>
