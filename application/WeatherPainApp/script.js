@@ -16,7 +16,7 @@ new Vue({
 	item_list: [],
     },
     mounted: function(){
-	//localStorage.clear();
+	localStorage.clear();
 
 	// IDリストの取得
 	this.id_list = JSON.parse(localStorage.getItem("id_list"))
