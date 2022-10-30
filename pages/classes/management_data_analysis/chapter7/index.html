@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-    統計的仮説検定③・ANOVAとTukey検定 | mLAB
+    統計的仮説検定③・ANOVA | mLAB
   </title>
 
   
@@ -67,7 +67,7 @@
   
   
 
-  <meta property="og:title" content="統計的仮説検定③・ANOVAとTukey検定" />
+  <meta property="og:title" content="統計的仮説検定③・ANOVA" />
 
 
 
@@ -102,7 +102,7 @@ $$ 1 - (1 - \alpha)^3 = 1 - 0." />
 <meta name="twitter:site" content="@nmukai1978" />
 
 
-  <meta name="twitter:title" content="統計的仮説検定③・ANOVAとTukey検定" />
+  <meta name="twitter:title" content="統計的仮説検定③・ANOVA" />
 
 
 
@@ -172,7 +172,7 @@ $$ 1 - (1 - \alpha)^3 = 1 - 0." />
 <main>
   <div class="post">
     
-    <h1 class="post-title">統計的仮説検定③・ANOVAとTukey検定</h1>
+    <h1 class="post-title">統計的仮説検定③・ANOVA</h1>
 <div class="post-line"></div>
     
     
@@ -238,9 +238,10 @@ $$</p>
 有意水準が高くなることことから，「有意差有り」という結果に繋がりやすく，インチキな結果と捉えかねられません．</p>
 <h2 id="anova分散分析">ANOVA（分散分析）</h2>
 <p>そこで，3群以上の平均値差の検定には <strong>ANOVA（Analysis of Variance）</strong> という手法が用いられます．
-日本語では分散分析と呼ばれますが，平均値の差を検定する手法です．
-ANOVAの帰無仮説と対立仮説は次のように表すことができます．
-対立仮説は，3群のうち1つだけ母平均が異なる場合でも成立することに注意が必要です．</p>
+日本語では分散分析と呼ばれますが，平均値の差を検定する手法です．</p>
+<h3 id="帰無仮説と対立仮説">帰無仮説と対立仮説</h3>
+<p>ANOVAの帰無仮説と対立仮説は次のように表すことができます．
+対立仮説は，3群のうち1つだけ母平均が異なる場合でも成立することに注意が必要です（ANOVAではどの組み合わせの郡で有意差があったかは判断できない）．</p>
 <h4 id="帰無仮説-3群が属する母集団の平均は等しい">帰無仮説: 「3群が属する母集団の平均は等しい」</h4>
 <ul>
 <li>$\mu_A = \mu_B = \mu_C$</li>
@@ -252,12 +253,184 @@ ANOVAの帰無仮説と対立仮説は次のように表すことができます
 <li>$\mu_A = \mu_C \neq \mu_B$</li>
 <li>$\mu_A \neq \mu_B \neq \mu_C$</li>
 </ul>
-<p>分散分析の検定統計量は <strong>F比</strong> が用いられます．</p>
+<h3 id="検定統計量">検定統計量</h3>
+<p>分散分析の検定統計量は <strong>F比</strong> が用いられます．
+F比は <strong>効果の分散</strong> と <strong>誤差の分散</strong> の比を表しています．</p>
 <p>$$
 F比 = \frac{効果の分散}{誤差の分散} = \frac{群間平方和 / 群間の自由度}{群内平方和 / 群内の自由度}
 $$</p>
+<p>次のグラフは3つの小学校の50メートル走のタイムのバイオリンプロット（確率分布をカーネル密度推定で算出したグラフ）です．
+効果の分散は，バイオリン同士の距離の大きさを表し，郡間でタイムに差があったことを示す値です．
+一方，誤差の分散は，バイオリン自体の大きさを表し，郡内におけるタイムの散らばりを示す値です．
+このため，F比が大きいほど，郡間の有意差が大きくなることを示します．</p>
+<p><a href="https://gyazo.com/4f66631d859a904f64de52b0c51d5869"><img src="https://i.gyazo.com/4f66631d859a904f64de52b0c51d5869.png" alt="Image from Gyazo"></a></p>
 <p>この検定統計量は，3群が属する母集団の平均が等しいとき（帰無仮説が成立するとき），F分布に従うことが知られています．
-F分布は <strong>群間の自由度$df_1$</strong> と <strong>群内の自由度$df_2$</strong> によって形状が定まります．</p>
+F分布は <strong>群間の自由度 dfn(degree of freedom numerator)</strong> と <strong>群内の自由度 dfd(degree of freedom denominator)</strong> によって形状が定まります．
+郡間の自由度は，郡（A小学校，B小学校，C小学校）の数から1を引いた値です．
+また，郡内の自由度は，サンプルサイズ（$n=15$）から，郡の数を引いた値です．</p>
+<p>$$
+dfn = 3 - 1 = 2
+$$</p>
+<p>$$
+dfd = 15 - 3 = 12
+$$</p>
+<p>次に郡間の自由度 $dfn=2$，郡内の自由度$dfd=12$のF分布の累積分布を示します．
+有意水準を$\alpha=0.05$(5%)とするとき，棄却域は$F &gt; 3.89$となります．</p>
+<p><a href="https://gyazo.com/f51535c97169aef8d72d140bbeb91041"><img src="https://i.gyazo.com/f51535c97169aef8d72d140bbeb91041.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  データセット
+</h1>
+
+<p>ここでは，次のCSV形式のデータセットを利用します．
+下記のURLからファイルをダウンロードしてください．
+3つの小学校の生徒の50メートル走のタイムです．</p>
+<p><a href="https://mukai-lab.info/classes/management_data_analysis/dataset6.csv"><i class="fas fa-cloud-download-alt"></i> dataset6.csv</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">A小学校, B小学校, C小学校
+12.4, 11.5, 10.9
+11.8, 12.3, 10.6
+10.3, 13.2, 11.1
+12, 10.8, 9.9
+13.2, 11.3, 10.2
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  ExcelでANOVA
+</h1>
+
+<p>Excelの分析ツールを利用してANOVAを試してみましょう．
+ダウンロードしたファイルをExcelで開いてください．</p>
+<h2 id="分析ツール">分析ツール</h2>
+<p>分析ツールから「分散分析: 一元配置」を選びましょう．</p>
+<p><a href="https://gyazo.com/63cf82eb617addf1c3b09205790329d1"><img src="https://i.gyazo.com/63cf82eb617addf1c3b09205790329d1.png" alt="Image from Gyazo"></a></p>
+<p>「入力範囲」は$A1:C6$を入力し，「先頭行をラベルとして使用」にチェックを入れます．
+「有意水準$\alpha$」は0.05（5%）に設定します．</p>
+<p><a href="https://gyazo.com/c4b4173809b99474b23793d3a2be5434"><img src="https://i.gyazo.com/c4b4173809b99474b23793d3a2be5434.png" alt="Image from Gyazo"></a></p>
+<p>次のような結果が算出されます．
+「観測された分散比」がF比を表しており，$4$となることがわかります．
+また，郡間の自由度は2，郡内の自由度が12であることも示されています．
+さらに，棄却域は$F&gt;3.89$であり，P値は$0.047$となっています．
+この結果，$0.047 &lt; \alpha=0.05$であることから，帰無仮説は棄却され，3郡間で <strong>有意差がある</strong> とみなすことになります．</p>
+<p><a href="https://gyazo.com/d4a2520690fae6ef60bbee57f75beed1"><img src="https://i.gyazo.com/d4a2520690fae6ef60bbee57f75beed1.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  PythonでANOVA
+</h1>
+
+<p>Pythonを利用してANOVAを試してみましょう．
+Jupyter Labを起動して，<strong>Pytohn 3</strong>のノートブックを開きます．
+ノートブックの名前は <strong>chapter7.ipynb</strong> とします．
+<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>などのライブラリをインポートしておきましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> japanize_matplotlib
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+</code></pre></div><h2 id="データセットの読込">データセットの読込</h2>
+<p><code>read_csv</code>関数でデータセットを読み込みます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;dataset6.csv&#34;</span>)
+display(df)
+</code></pre></div><p><a href="https://gyazo.com/31e4451d1e903507165abe326347e939"><img src="https://i.gyazo.com/31e4451d1e903507165abe326347e939.png" alt="Image from Gyazo"></a></p>
+<h2 id="f比の算出">F比の算出</h2>
+<p>公式に従ってF比を算出してみましょう．</p>
+<h3 id="郡間平方和">郡間平方和</h3>
+<p>効果の分散は次の式で算出できます．</p>
+<p>$$
+効果の分散 = \frac{郡間平方和}{郡間の自由度}
+$$</p>
+<p>式中の郡間平方和は，各郡の平均値を期待値とした，ばらつきの大きさです．
+最初に各郡の平均値を算出します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mu <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>mean()
+<span style="color:#66d9ef">print</span>(mu)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">A小学校    11.94
+B小学校    11.82
+C小学校    10.54
+dtype: float64
+</code></pre></div><p>次に，算出した平均値を期待値と考え，サンプルのデータを期待値に置き換えます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sn_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame()
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    sn_df <span style="color:#f92672">=</span> sn_df<span style="color:#f92672">.</span>append(mu, ignore_index<span style="color:#f92672">=</span>True)
+display(sn_df)
+</code></pre></div><p><a href="https://gyazo.com/b73af9150102c0698baaf675bf536a6d"><img src="https://i.gyazo.com/b73af9150102c0698baaf675bf536a6d.png" alt="Image from Gyazo"></a></p>
+<p>この期待値から，3郡全体の平均値を引くことで，相対的な期待値を算出します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sn_df <span style="color:#f92672">=</span> sn_df <span style="color:#f92672">-</span> mu<span style="color:#f92672">.</span>mean()
+display(sn_df)
+</code></pre></div><p><a href="https://gyazo.com/1fc319874663cb09203c10890ac1c9b4"><img src="https://i.gyazo.com/1fc319874663cb09203c10890ac1c9b4.png" alt="Image from Gyazo"></a></p>
+<p>この相対的な期待値の平方和を算出します．
+この値が郡間平方和を表し，$6.02$となりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sn <span style="color:#f92672">=</span> (sn_df <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>sum()
+<span style="color:#66d9ef">print</span>(sn)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">6.021333333333326
+</code></pre></div><h3 id="郡内平方和">郡内平方和</h3>
+<p>誤差の分散は次の式で算出できます．</p>
+<p>$$
+誤差の分散 = \frac{郡内平方和}{郡内の自由度}
+$$</p>
+<p>式中の郡内平方和は，元データから各郡の平均値を引いた値のばらつきの大きさです．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sd_df <span style="color:#f92672">=</span> df <span style="color:#f92672">-</span> mu
+display(sd_df)
+</code></pre></div><p><a href="https://gyazo.com/e7c8961555966d1f7954cc018062eb38"><img src="https://i.gyazo.com/e7c8961555966d1f7954cc018062eb38.png" alt="Image from Gyazo"></a></p>
+<p>この値の平方和を算出します．
+この値が，郡内平方和を表し，$9.03$となりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sd <span style="color:#f92672">=</span> (sd_df <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>sum()
+<span style="color:#66d9ef">print</span>(sd)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">9.031999999999991
+</code></pre></div><h3 id="f比">F比</h3>
+<p>最後にF比を算出します．
+ここで，郡間の自由度は$dfn=3-1=2$，郡内の自由度は$dfd=15-3=12$であることに注意してください．
+この結果，F比は$4.0$となりました．
+これは，Excelで算出された値と一致しています．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dfn <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+dfd <span style="color:#f92672">=</span> <span style="color:#ae81ff">12</span>
+f_rate <span style="color:#f92672">=</span> (sn <span style="color:#f92672">/</span> dfn) <span style="color:#f92672">/</span> (sd <span style="color:#f92672">/</span> dfd)
+<span style="color:#66d9ef">print</span>(f_rate)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">3.9999999999999987
+</code></pre></div><h2 id="p値の算出">P値の算出</h2>
+<p>F分布の累積分布は<code>f.cdf</code>関数を利用します．
+P値を算出するには，1から累積された確率（面積）を引く必要があることに注意してください．
+この結果，P値は$0.047$となりました．
+これは，Excelで算出された値と一致しており，$0.047 &lt; \alpha=0.05$であることから，帰無仮説は棄却されます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> f
+
+p_value <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> f<span style="color:#f92672">.</span>cdf(<span style="color:#ae81ff">4.0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">12</span>)
+<span style="color:#66d9ef">print</span>(p_value)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">0.04665600000000003
+</code></pre></div><h2 id="f_oneway関数を利用したf比とp値の算出">f_oneway関数を利用したF比とP値の算出</h2>
+<p>F比とP値は<code>f_oneway</code>関数を利用して算出することができます．
+F比（statistics）は$4.0$，P値は$0.047$になりました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> f_oneway
+
+result <span style="color:#f92672">=</span> f_oneway(df[<span style="color:#e6db74">&#34;A小学校&#34;</span>], df[<span style="color:#e6db74">&#34;B小学校&#34;</span>], df[<span style="color:#e6db74">&#34;C小学校&#34;</span>])
+<span style="color:#66d9ef">print</span>(result)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">F_onewayResult(statistic=4.000000000000006, pvalue=0.04665599999999978)
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  補足
+</h1>
+
+<p>ANOVAではどの組み合わせの郡で有意差があったかは判断できないことから，<strong>テューキーの検定</strong> と呼ばれる方法が合わせて用いられることがあります．</p>
+<p>同じデータセットにテューキー検定を適用した結果は次のようになります．
+0（A小学校）と2（C小学校）の組み合わせのP値が0.061と最も低く，2郡間で傾向が異なる可能性が示唆されました（有意水準5%での有意差は認められないけれど）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> tukey_hsd
+
+result <span style="color:#f92672">=</span> tukey_hsd(df[<span style="color:#e6db74">&#34;A小学校&#34;</span>], df[<span style="color:#e6db74">&#34;B小学校&#34;</span>], df[<span style="color:#e6db74">&#34;C小学校&#34;</span>])
+<span style="color:#66d9ef">print</span>(result)
+</code></pre></div><p><a href="https://gyazo.com/263557adfc6b2ab61dfe2b3979aa5562"><img src="https://i.gyazo.com/263557adfc6b2ab61dfe2b3979aa5562.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>データセットにD小学校のデータを加えて，4郡の母集団の平均に有意差があるかANOVAで調べなさい．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df2 <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>assign(D小学校<span style="color:#f92672">=</span>[<span style="color:#ae81ff">11.3</span>, <span style="color:#ae81ff">10.5</span>, <span style="color:#ae81ff">11.2</span>, <span style="color:#ae81ff">11.4</span>, <span style="color:#ae81ff">12.6</span>])
+display(df2)
+</code></pre></div><p><a href="https://gyazo.com/e208150a8d996f54319ccd64838aa3c7"><img src="https://i.gyazo.com/e208150a8d996f54319ccd64838aa3c7.png" alt="Image from Gyazo"></a></p>
+<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
+ノートブックのファイル名は <strong>chapter7.ipynb</strong> としてください．</p>
+<h3>参考書籍</h3>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798171948&linkId=70dbac2599f82106144687868e9ee83d"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798158348&linkId=6d28ae246d652ea9ac954c14940de2aa"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B096VMZ57K&linkId=1be78c3d5e926492d7292df6bbd04d0a"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B07PD237GQ&linkId=bd38a144cee47b0747240149f144904a"></iframe>
+
 
 
     
