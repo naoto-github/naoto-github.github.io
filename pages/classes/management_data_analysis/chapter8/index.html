@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    線形計画法①・最適生産計画 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="線形計画法①・最適生産計画" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter8/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="線形計画法と最適生産計画  線形計画法（Linear Programming: LP） とは， 対象の問題の制約や目的が1次式で表される線形計画問題において， 制約を満たしながら，目的を達成する計画（変数）を導出するための手法です． また， 最適生産計画 は，利益を最大化するために， 製品の生産に要する原材料や部品などのコストや在庫数を最適化する問題のことであり， ここでは線形計画問題の一つとして扱います．
+最初に次の例題を考えます．
+例題   A社では2種類の製品A,Bを生産しています． 製品Aを1kg作るには原料1が5kg，原料2が3kg，原料3が2kg必要です． 製品Bを1kg作るには原料1が3kg，原料2が4kg，原料3が1kg必要です． 倉庫には原料1が100kg，原料2が80kg，原料3が90kgあります． 製品Aの利益は1kg当たり10万円，製品Bの利益は1kg当たり8万円であるとき， 最大の利益を得るには，製品A，Bをどれだけ生産すれば良いでしょうか．     製品(kg) 原料1(kg) 原料2(kg) 原料3(kg) 利益(万円)     A 5 3 2 10   B 3 4 3 8    この問題を定式化するために， 目的関数 と 制約条件 を定義します． 製品Aの生産数を$x$，製品Bの生産数を$y$とすると，目的関数を表す利益は次のように定義できます．
+$$ 利益 = 10x &#43; 8y $$
+原料1，原料2，原料3の制約条件を定義します． 原料が倉庫にある在庫を超えないことが条件となります．
+$$ 原料1の制約条件: 5x &#43; 3y \leq 100 $$" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="線形計画法①・最適生産計画" />
+
+
+
+  <meta name="twitter:description" content="線形計画法と最適生産計画  線形計画法（Linear Programming: LP） とは， 対象の問題の制約や目的が1次式で表される線形計画問題において， 制約を満たしながら，目的を達成する計画（変数）を導出するための手法です． また， 最適生産計画 は，利益を最大化するために， 製品の生産に要する原材料や部品などのコストや在庫数を最適化する問題のことであり， ここでは線形計画問題の一つとして扱います．
+最初に次の例題を考えます．
+例題   A社では2種類の製品A,Bを生産しています． 製品Aを1kg作るには原料1が5kg，原料2が3kg，原料3が2kg必要です． 製品Bを1kg作るには原料1が3kg，原料2が4kg，原料3が1kg必要です． 倉庫には原料1が100kg，原料2が80kg，原料3が90kgあります． 製品Aの利益は1kg当たり10万円，製品Bの利益は1kg当たり8万円であるとき， 最大の利益を得るには，製品A，Bをどれだけ生産すれば良いでしょうか．     製品(kg) 原料1(kg) 原料2(kg) 原料3(kg) 利益(万円)     A 5 3 2 10   B 3 4 3 8    この問題を定式化するために， 目的関数 と 制約条件 を定義します． 製品Aの生産数を$x$，製品Bの生産数を$y$とすると，目的関数を表す利益は次のように定義できます．
+$$ 利益 = 10x &#43; 8y $$
+原料1，原料2，原料3の制約条件を定義します． 原料が倉庫にある在庫を超えないことが条件となります．
+$$ 原料1の制約条件: 5x &#43; 3y \leq 100 $$" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">線形計画法①・最適生産計画</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  線形計画法と最適生産計画
+</h1>
+
+<p><strong>線形計画法（Linear Programming: LP）</strong> とは，
+対象の問題の制約や目的が1次式で表される線形計画問題において，
+制約を満たしながら，目的を達成する計画（変数）を導出するための手法です．
+また， <strong>最適生産計画</strong> は，利益を最大化するために，
+製品の生産に要する原材料や部品などのコストや在庫数を最適化する問題のことであり，
+ここでは線形計画問題の一つとして扱います．</p>
+<p>最初に次の例題を考えます．</p>
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    例題
+  </h3>
+
+  <p>
+    
+
+A社では2種類の製品A,Bを生産しています．
+製品Aを1kg作るには原料1が5kg，原料2が3kg，原料3が2kg必要です．
+製品Bを1kg作るには原料1が3kg，原料2が4kg，原料3が1kg必要です．
+倉庫には原料1が100kg，原料2が80kg，原料3が90kgあります．
+製品Aの利益は1kg当たり10万円，製品Bの利益は1kg当たり8万円であるとき，
+最大の利益を得るには，製品A，Bをどれだけ生産すれば良いでしょうか．
+
+  </p>
+  
+</div>
+
+<table>
+<thead>
+<tr>
+<th>製品(kg)</th>
+<th>原料1(kg)</th>
+<th>原料2(kg)</th>
+<th>原料3(kg)</th>
+<th>利益(万円)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>5</td>
+<td>3</td>
+<td>2</td>
+<td>10</td>
+</tr>
+<tr>
+<td>B</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>この問題を定式化するために， <strong>目的関数</strong> と <strong>制約条件</strong> を定義します．
+製品Aの生産数を$x$，製品Bの生産数を$y$とすると，目的関数を表す利益は次のように定義できます．</p>
+<p>$$
+利益 = 10x + 8y
+$$</p>
+<p>原料1，原料2，原料3の制約条件を定義します．
+原料が倉庫にある在庫を超えないことが条件となります．</p>
+<p>$$
+原料1の制約条件: 5x + 3y \leq 100
+$$</p>
+<p>$$
+原料2の制約条件: 3x + 4y \leq 80
+$$</p>
+<p>$$
+原料3の制約条件: 2x + 3y \leq 90
+$$</p>
+<p>上記の制約条件を満たしながら，目的関数を最大化することが狙いです（問題によっては最小化の場合もある）．
+目的関数と制約条件はいずれも1次式で表されていることに注意してください．</p>
+<p>問題の特徴を理解するために，制約条件を変形し，$y$について解いてみましょう．</p>
+<p>$$
+原料1の制約条件: y \leq \frac{100 - 5x}{3}
+$$</p>
+<p>$$
+原料2の制約条件: y \leq \frac{80 - 3x}{4}
+$$</p>
+<p>$$
+原料3の制約条件: y \leq \frac{90 - 2x}{3}
+$$</p>
+<p>$x$を0から25に変化させたときの$y$をグラフで表します．
+$y$は全ての制約条件を満たす必要があることから， <strong>実行可能解</strong> は3本の直線より下の範囲となります．
+例えば，$x=10$，$y=10$は範囲内にあるため実行可能解です．</p>
+<p><a href="https://gyazo.com/ffa8139db9c9ec4a7345c9dee899f6bd"><img src="https://i.gyazo.com/ffa8139db9c9ec4a7345c9dee899f6bd.png" alt="Image from Gyazo"></a></p>
+<p>この実行可能解の範囲で，目的関数が最大となる$x$と$y$の組み合わせを探します．
+ある$x$において，利益が最大となるのは，$y$が一番下の直線上にあるときです．
+例えば，$x=10$のときは，原料2の制約条件が対象となり，$y=12.5$となります（生産数は整数のため実際は$y=12$）．</p>
+<p><a href="https://gyazo.com/0b48710fd66696588f95da316923ed05"><img src="https://i.gyazo.com/0b48710fd66696588f95da316923ed05.png" alt="Image from Gyazo"></a></p>
+<p>上記の考え方に基づき，$x$を変化させたときの利益をグラフで表します．
+この結果，$x=15$のときに利益が最大となることがわかります（$y=8$のとき）．</p>
+<p><a href="https://gyazo.com/61614e7dea4b08d55006c7948ea7c5d0"><img src="https://i.gyazo.com/61614e7dea4b08d55006c7948ea7c5d0.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  データセット
+</h1>
+
+<p>ここでは，次のCSV形式のデータセットを利用します．
+下記のURLからファイルをダウンロードしてください．
+上述と同じ最適生産計画の問題です．</p>
+<p><a href="https://mukai-lab.info/classes/management_data_analysis/dataset7.csv"><i class="fas fa-cloud-download-alt"></i> dataset6.csv</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">製品,原料1,原料2,原料3,利益
+A,5,3,2,10
+B,3,4,3,8
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Excelで最適生産計画
+</h1>
+
+<p>Excelのソルバーを利用して最適生産計画を解きましょう．
+ダウンロードしたファイルをExcelで開いてください．</p>
+<h2 id="変数">変数</h2>
+<p>B5にAの生産量$x$，B6にBの生産量$y$を入力します．
+ここでは仮に$x=5$，$y=5$を入力しておきます．</p>
+<p><a href="https://gyazo.com/c32c7ce0fd14007d5cafe37748614363"><img src="https://i.gyazo.com/c32c7ce0fd14007d5cafe37748614363.png" alt="Image from Gyazo"></a></p>
+<h2 id="目的関数">目的関数</h2>
+<p>B8に目的関数を表す<code>=B5*E2+B6*E3</code>を入力します．
+$x=5$，$y=5$であるため，目的関数は$10 \cdot 5 +8 \cdot 5=90$となります．</p>
+<p><a href="https://gyazo.com/69d03b00ed623c995c6f512ef124de88"><img src="https://i.gyazo.com/69d03b00ed623c995c6f512ef124de88.png" alt="Image from Gyazo"></a></p>
+<h2 id="制約条件">制約条件</h2>
+<p>B10に原料1の制約条件，B11に原料2の制約条件，B12に原料3の制約条件を入力します．
+それぞれ，<code>=B5*B2+B6*B3</code>，<code>=B5*C2+B6*C3</code>，<code>=B5*D2+B6*D3</code>で表されます．
+また，D10，D11，D12に，原料の上限（在庫）を入力しておきます．</p>
+<p><a href="https://gyazo.com/63abbcf76f8a6d7091d650baac63b862"><img src="https://i.gyazo.com/63abbcf76f8a6d7091d650baac63b862.png" alt="Image from Gyazo"></a></p>
+<h2 id="ソルバー">ソルバー</h2>
+<p>データ・タブからソルバーを選択します．
+ソルバーのパラメータに，目的セル（目的関数），変数セル（変数），制約条件の対象（制約条件）を設定します．
+このとき，$x$と$y$は生産数であるため，制約条件として <strong>整数（int）</strong> を設定しておきます．
+また，解決方法は <strong>シンプレックスLP（シンプレックス法）</strong> を選択します．</p>
+<p><a href="https://gyazo.com/4e09a9367d1349974d167ef0da86808b"><img src="https://i.gyazo.com/4e09a9367d1349974d167ef0da86808b.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/55490a280b634bb1f84d8a398801b984"><img src="https://i.gyazo.com/55490a280b634bb1f84d8a398801b984.png" alt="Image from Gyazo"></a></p>
+<p>最後に解決ボタンをクリックすると，最適な$x$と$y$が導出されます．
+この結果，$x=15$，$y=8$が最適解であり，そのときの利益は$214$となることが分かります．
+また，この解が全ての制約条件を満たしていることも分かります．</p>
+<p><a href="https://gyazo.com/00b848e3aff658d55abab27e83914586"><img src="https://i.gyazo.com/00b848e3aff658d55abab27e83914586.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Pythonで最適生産計画
+</h1>
+
+<p>Pythonを利用して最適生産計画を解きましょう．
+Jupyter Labを起動して，<strong>Pytohn 3</strong>のノートブックを開きます．
+ノートブックの名前は <strong>chapter8.ipynb</strong> とします．
+<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>などのライブラリをインポートしておきましょう．
+ここでは，最適化問題を解くために <a href="https://pypi.org/project/PuLP/">PuLP</a>を新たにインポートします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> japanize_matplotlib
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> pulp <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</code></pre></div><h2 id="データセットの読込">データセットの読込</h2>
+<p><code>read_csv</code>関数でデータセットを読み込みます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;dataset7.csv&#34;</span>)
+display(df)
+</code></pre></div><p><a href="https://gyazo.com/c8fc0bc081ac0aea7f9ae1b09f54002d"><img src="https://i.gyazo.com/c8fc0bc081ac0aea7f9ae1b09f54002d.png" alt="Image from Gyazo"></a></p>
+<h2 id="変数-1">変数</h2>
+<p>PuLPを利用して変数を定義します．
+変数$x$と$y$は，0以上の整数であるため，下限を表す<code>lowBound=0</code>，データのカテゴリを表す<code>cat=&quot;Integer&quot;</code>を設定します．
+この他に，上限を表す<code>upBound</code>を設定することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 変数</span>
+x <span style="color:#f92672">=</span> LpVariable(<span style="color:#e6db74">&#34;x&#34;</span>, lowBound<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, cat<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Integer&#34;</span>)
+y <span style="color:#f92672">=</span> LpVariable(<span style="color:#e6db74">&#34;y&#34;</span>, lowBound<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, cat<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Integer&#34;</span>)
+</code></pre></div><h2 id="問題">問題</h2>
+<p>最適生産計画の問題を表す変数を宣言します．
+ここで，<code>LpMaximize</code>は最大化を表しています．
+最小化を表す場合は<code>LpMinmize</code>を設定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 問題</span>
+problem <span style="color:#f92672">=</span> LpProblem(<span style="color:#e6db74">&#34;最適生産計画&#34;</span>, LpMaximize)
+</code></pre></div><h2 id="目的関数-1">目的関数</h2>
+<p>目的関数を定義します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 目的関数</span>
+problem <span style="color:#f92672">+=</span> x <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#34;利益&#34;</span>][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> y <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#34;利益&#34;</span>][<span style="color:#ae81ff">1</span>]
+</code></pre></div><h2 id="制約条件-1">制約条件</h2>
+<p>制約条件を定義します（条件に名前を付けることができます）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 原料1の制約条件</span>
+problem <span style="color:#f92672">+=</span> x <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#34;原料1&#34;</span>][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> y <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#34;原料1&#34;</span>][<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">100</span>, <span style="color:#e6db74">&#34;原料1の制約条件&#34;</span>
+
+<span style="color:#75715e"># 原料2の制約条件</span>
+problem <span style="color:#f92672">+=</span> x <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#34;原料2&#34;</span>][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> y <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#34;原料2&#34;</span>][<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">80</span>, <span style="color:#e6db74">&#34;原料2の制約条件&#34;</span>
+
+<span style="color:#75715e"># 原料3の制約条件</span>
+problem <span style="color:#f92672">+=</span> x <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#34;原料3&#34;</span>][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> y <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#34;原料3&#34;</span>][<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">90</span>, <span style="color:#e6db74">&#34;原料3の制約条件&#34;</span>
+</code></pre></div><h2 id="問題の確認">問題の確認</h2>
+<p>定義した問題を確認してみましょう．
+目的関数，制約条件，変数の条件などを確認することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(problem)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">最適生産計画:
+MAXIMIZE
+10*x + 8*y + 0
+SUBJECT TO
+原料1の制約条件: 5 x + 3 y &lt;= 100
+
+原料2の制約条件: 3 x + 4 y &lt;= 80
+
+原料3の制約条件: 2 x + 3 y &lt;= 90
+
+VARIABLES
+0 &lt;= x Integer
+0 &lt;= y Integer
+</code></pre></div><h2 id="解決">解決</h2>
+<p><code>solve()</code>関数で問題を解きます．
+この関数の戻り値が<code>1(Optimal)</code>のときは，最適解が得られたことを表します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 最適化</span>
+<span style="color:#75715e"># 1: Optimal Solution Found</span>
+<span style="color:#75715e"># 0: No Solution Found</span>
+<span style="color:#75715e"># -1: No Solution Exists </span>
+
+status <span style="color:#f92672">=</span> problem<span style="color:#f92672">.</span>solve()
+<span style="color:#66d9ef">print</span>(LpStatus[status])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Optimal
+</code></pre></div><p>導出された最適解を確認しましょう．
+Excelのソルバーで導出された解と同じ，$x=15$，$y=8$が最適解となったことが分かります．
+また利益の最大値が214となったことも確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 最適化された変数の確認</span>
+<span style="color:#66d9ef">print</span>(x<span style="color:#f92672">.</span>varValue)
+<span style="color:#66d9ef">print</span>(y<span style="color:#f92672">.</span>varValue)
+
+<span style="color:#75715e"># 利益</span>
+<span style="color:#66d9ef">print</span>(problem<span style="color:#f92672">.</span>objective<span style="color:#f92672">.</span>value())
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">15.0
+8.0
+214.0
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>制約条件に原料4のデータを加えて，利益を最大とする$x$と$y$を導出してください．
+このとき，製品Aを1kg作るには原料4が3kg，製品Bを1kg作るには原料4が2kg必要とします．
+また，原料4の在庫は50kgとします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df2 <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>assign(<span style="color:#960050;background-color:#1e0010">原料</span><span style="color:#ae81ff">4</span><span style="color:#f92672">=</span>[<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>]) 
+display(df2)
+</code></pre></div><p><a href="https://gyazo.com/8ba0a55b62a0f9afb000050c78af30db"><img src="https://i.gyazo.com/8ba0a55b62a0f9afb000050c78af30db.png" alt="Image from Gyazo"></a></p>
+<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
+ノートブックのファイル名は <strong>chapter8.ipynb</strong> としてください．</p>
+<h3>参考書籍</h3>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798171948&linkId=70dbac2599f82106144687868e9ee83d"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798158348&linkId=6d28ae246d652ea9ac954c14940de2aa"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B096VMZ57K&linkId=1be78c3d5e926492d7292df6bbd04d0a"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B07PD237GQ&linkId=bd38a144cee47b0747240149f144904a"></iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/management_data_analysis/chapter8/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
