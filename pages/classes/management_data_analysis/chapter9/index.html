@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    線形計画法②・最短経路問題 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="線形計画法②・最短経路問題" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter9/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="最短経路問題  重み付き有向グラフの2点間を結ぶ最短経路を導出する 最短経路問題 に挑戦しましょう． 最短経路問題も，最適生産計画と同様に，線形計画問題の一つとして扱うことが可能です．
+例題   AからFまでの6つの都市（ノード）がある． Aを始点，Fを終点としたとき，2都市間を結ぶ最短の経路を求めよ． このとき，都市間の移動はエッジの向きに限定される． また，都市間の距離（コスト）は，エッジの重みとして与えられる．  
+まずは，解となり得る経路を列挙してみましょう． 経路の距離を比較してみると，$A \rightarrow B \rightarrow D \rightarrow F$が最短であることが分かります．
+$$ A \rightarrow B \rightarrow D \rightarrow F （距離: 13） $$
+$$ A \rightarrow C \rightarrow E \rightarrow F （距離: 17） $$
+$$ A \rightarrow D \rightarrow F （距離: 14） $$
+$$ A \rightarrow E \rightarrow F （距離: 19） $$
+問題を定式化するために，変数$x_{ij}$を導入します． ノード$i$からノード$j$の経路を含むときは$x_{ij}=1$，経路を含まないときは$x_{ij}=0$とします． この$x_{ij}$を用いて，目的関数は次のように定義することができます． ここで，$w_{ij}$は，ノード$i$からノード$j$までの距離，$E$はエッジの集合を表します．
+$$ 経路長 = \sum_{i,j \in E} w_{ij} \cdot x_{ij} $$" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="線形計画法②・最短経路問題" />
+
+
+
+  <meta name="twitter:description" content="最短経路問題  重み付き有向グラフの2点間を結ぶ最短経路を導出する 最短経路問題 に挑戦しましょう． 最短経路問題も，最適生産計画と同様に，線形計画問題の一つとして扱うことが可能です．
+例題   AからFまでの6つの都市（ノード）がある． Aを始点，Fを終点としたとき，2都市間を結ぶ最短の経路を求めよ． このとき，都市間の移動はエッジの向きに限定される． また，都市間の距離（コスト）は，エッジの重みとして与えられる．  
+まずは，解となり得る経路を列挙してみましょう． 経路の距離を比較してみると，$A \rightarrow B \rightarrow D \rightarrow F$が最短であることが分かります．
+$$ A \rightarrow B \rightarrow D \rightarrow F （距離: 13） $$
+$$ A \rightarrow C \rightarrow E \rightarrow F （距離: 17） $$
+$$ A \rightarrow D \rightarrow F （距離: 14） $$
+$$ A \rightarrow E \rightarrow F （距離: 19） $$
+問題を定式化するために，変数$x_{ij}$を導入します． ノード$i$からノード$j$の経路を含むときは$x_{ij}=1$，経路を含まないときは$x_{ij}=0$とします． この$x_{ij}$を用いて，目的関数は次のように定義することができます． ここで，$w_{ij}$は，ノード$i$からノード$j$までの距離，$E$はエッジの集合を表します．
+$$ 経路長 = \sum_{i,j \in E} w_{ij} \cdot x_{ij} $$" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">線形計画法②・最短経路問題</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  最短経路問題
+</h1>
+
+<p>重み付き有向グラフの2点間を結ぶ最短経路を導出する <strong>最短経路問題</strong> に挑戦しましょう．
+最短経路問題も，最適生産計画と同様に，線形計画問題の一つとして扱うことが可能です．</p>
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    例題
+  </h3>
+
+  <p>
+    
+
+AからFまでの6つの都市（ノード）がある．
+Aを始点，Fを終点としたとき，2都市間を結ぶ最短の経路を求めよ．
+このとき，都市間の移動はエッジの向きに限定される．
+また，都市間の距離（コスト）は，エッジの重みとして与えられる．
+
+
+  </p>
+  
+</div>
+
+<p><a href="https://gyazo.com/5ceb656090e82aef94b1c7f0641b266c"><img src="https://i.gyazo.com/5ceb656090e82aef94b1c7f0641b266c.png" alt="Image from Gyazo"></a></p>
+<p>まずは，解となり得る経路を列挙してみましょう．
+経路の距離を比較してみると，$A \rightarrow B \rightarrow D \rightarrow F$が最短であることが分かります．</p>
+<p>$$
+A \rightarrow B \rightarrow D \rightarrow F （距離: 13）
+$$</p>
+<p>$$
+A \rightarrow C \rightarrow E  \rightarrow F （距離: 17）
+$$</p>
+<p>$$
+A \rightarrow D \rightarrow F （距離: 14）
+$$</p>
+<p>$$
+A \rightarrow E \rightarrow F （距離: 19）
+$$</p>
+<p>問題を定式化するために，変数$x_{ij}$を導入します．
+ノード$i$からノード$j$の経路を含むときは$x_{ij}=1$，経路を含まないときは$x_{ij}=0$とします．
+この$x_{ij}$を用いて，目的関数は次のように定義することができます．
+ここで，$w_{ij}$は，ノード$i$からノード$j$までの距離，$E$はエッジの集合を表します．</p>
+<p>$$
+経路長 = \sum_{i,j \in E} w_{ij} \cdot x_{ij}
+$$</p>
+<p>例えば，$A \rightarrow D \rightarrow F$の経路の場合は，$x_{AD}=1,x_{DF}=1$であり，その他は$0$となります．
+経路長は，次の式で計算され，その値は14となります（$x_{ij}=0$の項は消える）．</p>
+<p>$$
+経路長 = w_{AD} \cdot x_{AD} + w_{DF} \cdot x_{DF} = 11 \cdot 1 + 3 \cdot 1 = 14
+$$</p>
+<table>
+<thead>
+<tr>
+<th>$x_{AB}$</th>
+<th>$x_{AC}$</th>
+<th>$x_{AD}$</th>
+<th>$x_{AE}$</th>
+<th>$x_{BD}$</th>
+<th>$x_{CE}$</th>
+<th>$x_{DF}$</th>
+<th>$x_{EF}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>$w_{AB}$</th>
+<th>$w_{AC}$</th>
+<th>$w_{AD}$</th>
+<th>$w_{AE}$</th>
+<th>$w_{BD}$</th>
+<th>$w_{CE}$</th>
+<th>$w_{DF}$</th>
+<th>$w_{EF}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>4</td>
+<td>11</td>
+<td>14</td>
+<td>3</td>
+<td>8</td>
+<td>3</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>次に制約条件を定義します．
+制約条件は，<strong>始点の条件</strong>，<strong>終点の条件</strong>，<strong>中間地点の条件</strong>の3種類に分類されます．</p>
+<p>始点の条件を考えます．
+経路は必ずAから始まるため，Aから他のノードに遷移するための経路$x_{Aj} = \left\{ x_{AB}, x_{AC}, x_{AD}, x_{AE} \right\}$のいずれかが，必ず最短経路に含まれることになります．
+よって，次の条件を満たすことになります．</p>
+<p>$$
+Aの条件: x_{AB} + x_{AC} + x_{AD} + x_{AE} = 1
+$$</p>
+<p>終点の条件を考えます．
+経路は必ずFで終わるため，他のノードからFに遷移するための経路$x_{iF} = \left\{ x_{DF}, x_{EF} \right\}$のいずれかが，必ず最短経路に含まれることになります．
+よって，次の条件を満たすことになります．</p>
+<p>$$
+Fの条件: x_{DF} + x_{EF} = 1
+$$</p>
+<p>中間地点の条件を考えます．
+ここでは，中間地点であるDを例に考えます．
+Dを通過する場合は，他のノードからDに遷移するための経路$x_{iD} = \left\{ x_{AD}, x_{BD} \right\}$のいずれかが，必ず最短経路に含まれることになります．
+同様に，Dから他のノードに遷移するための経路$x_{Dj} = \left\{ x_{DF} \right\}$も，必ず最短経路に含まれることになります．
+よって，次の条件を満たすことになります．
+この条件はDを通過しない場合も成立することに注意してください（$x_{AD}=0$，$x_{BD}=0$，$x_{DF}=0$であるため）．</p>
+<p>$$
+Dの条件: (x_{AD} + x_{BD}) - x_{DF} = 0
+$$</p>
+<p>他の中間地点となるノードにも条件が設定できます．</p>
+<p>$$
+Bの条件: x_{AB} - x_{BD} = 0
+$$</p>
+<p>$$
+Cの条件: x_{AC} - x_{CE} = 0
+$$</p>
+<p>$$
+Eの条件: (x_{AE} + x_{CE}) - x_{EF} = 0
+$$</p>
+<p>上記の目的関数と制約条件を利用して，線形計画問題を解くことで，最短経路の算出が可能となります．</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  データセット
+</h1>
+
+<p>ここでは，次のCSV形式のデータセットを利用します．
+下記のURLからファイルをダウンロードしてください．
+上述と同じ最短経路問題であり，エッジに付与された距離（コスト）を表しています．</p>
+<p><a href="https://mukai-lab.info/classes/management_data_analysis/dataset8.csv"><i class="fas fa-cloud-download-alt"></i> dataset6.csv</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">始点,終点,コスト
+A,B,7
+A,C,4
+A,D,11
+A,E,14
+B,D,3
+C,E,8
+D,F,3
+E,F,5
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Excelで最短経路問題
+</h1>
+
+<p>Excelのソルバーを利用して最短経路問題を解きましょう．
+ダウンロードしたファイルをExcelで開いてください．</p>
+<h2 id="変数">変数</h2>
+<p>D列に変数$x_{ij}$を入力します．
+初期状態では，$A \rightarrow D \rightarrow F$を表すために，$x_{AD}=1$，$x_{DF}=1$に設定しましょう．</p>
+<p><a href="https://gyazo.com/ebc972ad18a4b5b77693bcaf38bd8e18"><img src="https://i.gyazo.com/ebc972ad18a4b5b77693bcaf38bd8e18.png" alt="Image from Gyazo"></a></p>
+<h2 id="目的関数">目的関数</h2>
+<p>B1１に目的関数を表す<code>=SUMPRODUCT(C2:C9,D2:D9)</code>を入力します．
+<code>SUMPRODUCT</code>関数は，指定された列（行）の要素同士を掛けてから，足し合わせた値を算出します．
+ここでは，$w_{AD} \cdot x_{AD} + w_{DF} \cdot x_{DF} = 14$となります．</p>
+<p><a href="https://gyazo.com/9d4a4aeb5826fab36cf5bdd714eafa63"><img src="https://i.gyazo.com/9d4a4aeb5826fab36cf5bdd714eafa63.png" alt="Image from Gyazo"></a></p>
+<h2 id="制約条件">制約条件</h2>
+<p>B13:D18に制約条件を入力します．
+B13は始点の条件である<code>=D2+D3+D4+D5</code>，B18は終点の条件である<code>=D8+D9</code>を入力します．
+その他は中間地点の条件であり，例えばBの制約条件であるB14は，<code>=D2-D6</code>と入力します．</p>
+<p><a href="https://gyazo.com/a49ff4d129577d06406fa34007957e7f"><img src="https://i.gyazo.com/a49ff4d129577d06406fa34007957e7f.png" alt="Image from Gyazo"></a></p>
+<h2 id="ソルバー">ソルバー</h2>
+<p>データ・タブからソルバーを選択します．
+ソルバーのパラメータに，目的セル（目的関数），変数セル（変数），制約条件の対象（制約条件）を設定します．
+このとき，$x_{ij}$は，0と1の2値であるため，
+制約条件としてバイナリ（bin）を設定しておきます．
+また，解決方法はGRG非線形を選択します（シンプレックス法でも解けるはずだがなぜか不安定）．</p>
+<p><a href="https://gyazo.com/b37fe472a1a95820f04d21328e7a992e"><img src="https://i.gyazo.com/b37fe472a1a95820f04d21328e7a992e.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/bde90d7f1ad106e4d2136a07b80d80f9"><img src="https://i.gyazo.com/bde90d7f1ad106e4d2136a07b80d80f9.png" alt="Image from Gyazo"></a></p>
+<p>最後に解決ボタンをクリックすると，最適な$x_{ij}$が導出されます．
+この結果，$A \rightarrow B \rightarrow D \rightarrow F$が最短経路として導出され，
+この経路の距離（コスト）が13であることも分かります．
+また，この解が全ての制約条件を満たしていることも分かります．</p>
+<p><a href="https://gyazo.com/d193fdfe8a4851c04f805a9bb5b40612"><img src="https://i.gyazo.com/d193fdfe8a4851c04f805a9bb5b40612.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Pythonで最短経路問題
+</h1>
+
+<p>Pythonを利用して最適生産計画を解きましょう．
+Jupyter Labを起動して，<strong>Pytohn 3</strong>のノートブックを開きます．
+ノートブックの名前は <strong>chapter9.ipynb</strong> とします．
+<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>，<code>PuLP</code>などのライブラリをインポートしておきましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> japanize_matplotlib
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> pulp <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</code></pre></div><h2 id="データセットの読込">データセットの読込</h2>
+<p><code>read_csv</code>関数でデータセットを読み込みます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;dataset8.csv&#34;</span>)
+display(df)
+</code></pre></div><h2 id="変数-1">変数</h2>
+<p>PuLPを利用して変数$x_{ij}$をリストで定義します．
+データのカテゴリとして<code>cat=&quot;Binary&quot;</code>を指定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 変数</span>
+x_list <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    x  <span style="color:#f92672">=</span> LpVariable(<span style="color:#e6db74">&#34;x&#34;</span> <span style="color:#f92672">+</span> str(i), cat<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Binary&#34;</span>)
+    x_list<span style="color:#f92672">.</span>append(x)
+</code></pre></div><h2 id="問題">問題</h2>
+<p>最短経路問題を定義します．
+ここで，<code>LpMinimize</code>を指定し，目的関数を最小化することを指定します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 問題</span>
+problem <span style="color:#f92672">=</span> LpProblem(<span style="color:#e6db74">&#34;最短経路問題&#34;</span>, LpMinimize)
+</code></pre></div><h2 id="目的関数-1">目的関数</h2>
+<p>目的関数を定義します．
+<code>lpSum()</code>関数は，LpVariable型の変数の加算を表します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 目的関数</span>
+problem <span style="color:#f92672">+=</span> lpSum(x_list <span style="color:#f92672">*</span> df[<span style="color:#e6db74">&#34;コスト&#34;</span>])
+</code></pre></div><h2 id="制約条件-1">制約条件</h2>
+<p>制約条件を定義します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 始点の条件</span>
+problem <span style="color:#f92672">+=</span> x_list[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> x_list[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> x_list[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> x_list[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Aの条件&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 終点の条件</span>
+problem <span style="color:#f92672">+=</span> x_list[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">+</span> x_list[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Fの条件&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 中間地点の条件</span>
+problem <span style="color:#f92672">+=</span> x_list[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">-</span> x_list[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;Bの条件&#34;</span>
+problem <span style="color:#f92672">+=</span> x_list[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> x_list[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;Cの条件&#34;</span>
+problem <span style="color:#f92672">+=</span> (x_list[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> x_list[<span style="color:#ae81ff">4</span>]) <span style="color:#f92672">-</span> x_list[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;Dの条件&#34;</span>
+problem <span style="color:#f92672">+=</span> (x_list[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">+</span> x_list[<span style="color:#ae81ff">5</span>]) <span style="color:#f92672">-</span> x_list[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;Eの条件&#34;</span>
+</code></pre></div><h2 id="問題の確認">問題の確認</h2>
+<p>定義した問題を確認してみましょう．
+目的関数，制約条件，変数の条件などを確認することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(problem)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">最短経路問題:
+MINIMIZE
+7*x0 + 4*x1 + 11*x2 + 14*x3 + 3*x4 + 8*x5 + 3*x6 + 5*x7 + 0
+SUBJECT TO
+Aの条件: x0 + x1 + x2 + x3 = 1
+
+Fの条件: x6 + x7 = 1
+
+Bの条件: x0 - x4 = 0
+
+Cの条件: x1 - x5 = 0
+
+Dの条件: x2 + x4 - x6 = 0
+
+Eの条件: x3 + x5 - x7 = 0
+
+VARIABLES
+0 &lt;= x0 &lt;= 1 Integer
+0 &lt;= x1 &lt;= 1 Integer
+0 &lt;= x2 &lt;= 1 Integer
+0 &lt;= x3 &lt;= 1 Integer
+0 &lt;= x4 &lt;= 1 Integer
+0 &lt;= x5 &lt;= 1 Integer
+0 &lt;= x6 &lt;= 1 Integer
+0 &lt;= x7 &lt;= 1 Integer
+</code></pre></div><h2 id="解決">解決</h2>
+<p><code>solve()</code>関数で問題を解きます．
+この関数の戻り値が<code>1(Optimal)</code>のときは，最適解が得られたことを表します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">status <span style="color:#f92672">=</span> problem<span style="color:#f92672">.</span>solve()
+<span style="color:#66d9ef">print</span>(LpStatus[status])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Optimal
+</code></pre></div><p>導出された最適解を確認しましょう．
+Excelのソルバーで導出された解と同じ，$A \rightarrow B \rightarrow D \rightarrow F$が最短経路として導出されたことが分かります．
+また，この経路の距離（コスト）が13であることも確認できます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 最適化された変数の確認</span>
+<span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> x_list:
+    <span style="color:#66d9ef">print</span>(x<span style="color:#f92672">.</span>varValue)
+
+<span style="color:#75715e"># 利益</span>
+<span style="color:#66d9ef">print</span>(problem<span style="color:#f92672">.</span>objective<span style="color:#f92672">.</span>value())
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">1.0
+0.0
+0.0
+0.0
+1.0
+0.0
+1.0
+0.0
+13.0
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>新たにノードGを追加し，AからFの最短経路を算出しなさい．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df2 <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>append({<span style="color:#e6db74">&#34;始点&#34;</span>:<span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;終点&#34;</span>:<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;コスト&#34;</span>:<span style="color:#ae81ff">1</span>}, ignore_index<span style="color:#f92672">=</span>True)
+df2 <span style="color:#f92672">=</span> df2<span style="color:#f92672">.</span>append({<span style="color:#e6db74">&#34;始点&#34;</span>:<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;終点&#34;</span>:<span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;コスト&#34;</span>:<span style="color:#ae81ff">2</span>}, ignore_index<span style="color:#f92672">=</span>True)
+display(df2)
+</code></pre></div><p><a href="https://gyazo.com/eb3f47fba7d5711b8e99fddf687cd884"><img src="https://i.gyazo.com/eb3f47fba7d5711b8e99fddf687cd884.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/8f54fb5933763e2433a1a55f76634c9d"><img src="https://i.gyazo.com/8f54fb5933763e2433a1a55f76634c9d.png" alt="Image from Gyazo"></a></p>
+<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
+ノートブックのファイル名は <strong>chapter9.ipynb</strong> としてください．</p>
+<h3>参考書籍</h3>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798171948&linkId=70dbac2599f82106144687868e9ee83d"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798158348&linkId=6d28ae246d652ea9ac954c14940de2aa"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B096VMZ57K&linkId=1be78c3d5e926492d7292df6bbd04d0a"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B07PD237GQ&linkId=bd38a144cee47b0747240149f144904a"></iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/management_data_analysis/chapter9/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
