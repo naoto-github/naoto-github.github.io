@@ -219,19 +219,19 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;y
 多項式基底の次数$d$を変えて回帰式と2乗誤差を求めるため，
 新たに<code>regression</code>という関数を定義します．
 関数<code>regression</code>の返値は回帰式のY軸の値と2乗誤差のタプルです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">regression</span>(data, sample, d): 
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">regression</span>(data, sample, d):
 
     <span style="color:#75715e"># サンプルで回帰式の係数</span>
     w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>polyfit(sample[<span style="color:#ae81ff">0</span>], sample[<span style="color:#ae81ff">1</span>], d)
-    
+
     <span style="color:#75715e"># f(x)を算出</span>
     fx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range((d<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)):
         fx <span style="color:#f92672">+=</span> w[i] <span style="color:#f92672">*</span> (data[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">**</span> (d <span style="color:#f92672">-</span> i))
-        
+
     <span style="color:#75715e"># 平均2乗誤差</span>
     e <span style="color:#f92672">=</span> sum((data[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> fx) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> len(data[<span style="color:#ae81ff">1</span>])
-    
+
     <span style="color:#66d9ef">return</span> fx, e
 </code></pre></div><p>最初に次数$d=1$の回帰式（回帰直線）を求めます．
 1本の直線で全体の傾向を近似していることがわかります．</p>
@@ -327,7 +327,7 @@ plt.legend()
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">polynominal</span>(w, x, d):
 
   fx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(d):
+  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(d<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
     fx <span style="color:#f92672">+=</span> w[i] <span style="color:#f92672">*</span> (x <span style="color:#f92672">**</span> i)
 
   <span style="color:#66d9ef">return</span> fx
@@ -364,6 +364,7 @@ L2ノルムはユークリッド距離を表しており，ここでは重みベ
 正則化により，重みは過剰に大きくならないように制約されます．
 ここで，$\lambda$は正則化のバランスを調整する係数です．</p>
 <p>$$RIDGE=\frac{1}{N} \sum_{n=0}^{N-1} (y_n - f(x_n))^2 + \lambda \sum_{d=0}^{D-1} w_d^2$$</p>
+<p><a href="https://gyazo.com/dbb45bd5be023fcbb61d6cd5525520cf"><img src="https://i.gyazo.com/dbb45bd5be023fcbb61d6cd5525520cf.png" alt="Image from Gyazo"></a></p>
 <p>リッジ回帰の目的関数を定義します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 正則化を加えた平均二乗誤差（リッジ回帰）</span>
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">ridge</span>(w, x, y, d, lam):
@@ -395,6 +396,7 @@ L1ノルムはマンハッタン距離を表しており，ここでは重みベ
 正則化により，不要な変数の重みが0になるように調整されます（特徴量選択と考えることもできる）．
 ここで，$\lambda$は正則化のバランスを調整する係数です．</p>
 <p>$$LASSO=\frac{1}{N} \sum_{n=0}^{N-1} (y_n - f(x_n))^2 + \lambda \sum_{d=0}^{D-1} |w_d|$$</p>
+<p><a href="https://gyazo.com/f1333e25a0e72375812532114801c526"><img src="https://i.gyazo.com/f1333e25a0e72375812532114801c526.png" alt="Image from Gyazo"></a></p>
 <p>ラッソ回帰の目的関数を定義します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 正則化を加えた平均二乗誤差（ラッソ回帰）</span>
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lasso</span>(w, x, y, d, lam):

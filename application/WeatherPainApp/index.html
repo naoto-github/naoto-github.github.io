@@ -6,11 +6,72 @@
   <link rel="manifest" href="./manifest.json">  
   <title>Weather Pain App</title>
 
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  
+  <!-- Onsen UI -->
+  <link rel="stylesheet" href="./onsen-ui/css/onsenui.css">
+  <link rel="stylesheet" href="./onsen-ui/css//onsen-css-components.min.css">
+  <script src="./onsen-ui/js/onsenui.min.js"></script>
+
+  <!-- uuid.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js" integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
 
+  <ons-navigator id="navigator" page="top.html"></ons-navigator>
+  
+  <template id="top.html">      
+    <ons-page id="top">
+      
+      <ons-toolbar>
+	<div class="center">Microbitとの接続</div>
+      </ons-toolbar>
+      
+      <p>
+        <button id="bt_connect">接続</button>
+        <button id="bt_disconnect">切断</button>
+      </p>
+      
+    </ons-page>
+  </template>
+  
+  <template id="database.html">
+    <ons-page id="database">
+      
+      <ons-toolbar>
+	<div class="center">気候データの取得</div>
+      </ons-toolbar>
+      
+      <p>
+	<button id="bt_get">取得</button>
+	<button id="bt_clear">クリア</button>
+      </p>
+      
+      <table border="1" id="item-table">
+	
+	<tr>
+	  <th>日時</th>
+	  <th>温度</th>
+	  <th>湿度</th>
+	  <th>気圧</th>
+	</tr>
+
+	<!--
+	<tr v-for="item in item_list">
+	  <td> {{ item.date }} </td>
+	  <td> {{ item.temperature }} </td>
+	  <td> {{ item.humidity }} </td>
+	  <td> {{ item.pressure }} </td>	  
+	</tr>
+	-->
+      </table>
+      
+    </ons-page>      
+  </template>    
+      
+  <!--
   <div id="main">
     <h1>{{ title }}</h1>
     
@@ -31,14 +92,12 @@
       
       <table border="1">
 	<tr>
-	  <!-- <th>ID</th> -->
 	  <th>日時</th>
 	  <th>温度</th>
 	  <th>湿度</th>
 	  <th>気圧</th>
 	</tr>
 	<tr v-for="item in item_list">
-	  <!-- <td> {{ item.id }} </td> -->
 	  <td> {{ item.date }} </td>
 	  <td> {{ item.temperature }} </td>
 	  <td> {{ item.humidity }} </td>
@@ -68,7 +127,10 @@
     </div>
     
   </div>
+  -->
 
+  <script src="main.js"></script>
+  
   <script>
     if('serviceWorker' in navigator){
 	navigator.serviceWorker.register('./sw.js').then(registration => {
@@ -77,9 +139,10 @@
 	    console.log('ServiceWorker registration failed.');
 	});
     }    
-  </script>
+  </script>    
   
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.8/vue.min.js'></script><script  src="./script.js"></script>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.8/vue.min.js'></script> -->
+  <!-- <script src="./script.js"></script> -->
 
 </body>
 </html>

@@ -7,7 +7,6 @@ let service;
 let tx_characteristic;
 let rx_characteristic;
 
-
 new Vue({
     el: "#main",
     data: {
@@ -32,7 +31,7 @@ new Vue({
 
 	console.log(this.id_list);
 	console.log(this.item_list);
-	
+
     },    
     methods: {
 	async connect(){
