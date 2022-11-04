@@ -27,7 +27,7 @@ ons.ready(function(){
 	    };
 	    
 	    bt_disconnect.onclick = function(){
-		
+		disconnect();
 	    };	    
 	}
 	else if(page.matches("#database")){
@@ -39,13 +39,39 @@ ons.ready(function(){
 	    };
 	    
 	    bt_clear.onclick = function(){
-	    };	    
+		clearWeatherData();
+	    };
+
+	    initTable();
 	}
 	
     });
 
 });
 
+function initTable(){
+    
+    // IDリストの取得
+    id_list = JSON.parse(localStorage.getItem("id_list"))
+    if(id_list == null){
+	id_list = []; // IDリストを初期化
+    }
+    
+    // レコードの追加
+    for(id of id_list){
+	let item = JSON.parse(localStorage.getItem(id))
+	item_list.push(item)
+    }
+
+    // レコードの表示
+    for(item of item_list){
+	// テーブルに追加
+	$("#item-table").append("<tr> + <td>" + item.date + "</td>" + "<td>" + item.temperature + "</td>" + "<td>" + item.humidity + "</td>" + "<td>" + item.pressure + "</td>" + "</tr>");	
+    }
+    
+}
+
+// Microbitへの接続
 async function connect(ons_navi){
     try{
 	// デバイスの検索
@@ -99,6 +125,13 @@ async function connect(ons_navi){
     }
 }
 
+// Microbitの切断
+function disconnect(){
+    // デバイスの切断
+    device.gatt.disconnect();
+}
+
+// 天候データの受信
 function setReceiveData(temperature, humidity, pressure){
     
     // UUIDの生成
@@ -106,7 +139,8 @@ function setReceiveData(temperature, humidity, pressure){
     
     // 時刻の生成
     let date = new Date();
-    
+
+    // 連想配列の作成
     item = {
 	"id": id,
 	"date": date.toLocaleString(),
@@ -115,26 +149,36 @@ function setReceiveData(temperature, humidity, pressure){
 	"pressure": pressure,
     }
 
+    // テーブルに追加
     $("#item-table").append("<tr> + <td>" + item.date + "</td>" + "<td>" + item.temperature + "</td>" + "<td>" + item.humidity + "</td>" + "<td>" + item.pressure + "</td>" + "</tr>");
     
     // IDの追加
-    this.id_list.push(id)
+    id_list.push(id)
     
     // レコードの追加
-    this.item_list.push(item)
+    item_list.push(item)
     
     // IDリストをローカルストレージに保存
-    localStorage.setItem("id_list", JSON.stringify(this.id_list))
+    localStorage.setItem("id_list", JSON.stringify(id_list))
     
     // データをローカルストレージに保存
-    localStorage.setItem(id, JSON.stringify(item));
-	    
+    localStorage.setItem(id, JSON.stringify(item));	    
 }
 
+// 天候データの取得依頼の送信
 function getWeatherData(){
     if(rx_characteristic){
 	let text = "GET\n";
 	let encodedText = new TextEncoder().encode(text); // UTF-8でエンコード
 	rx_characteristic.writeValue(encodedText);
     }
+}
+
+// 天候データの削除（ローカルストレージとテーブル）
+function clearWeatherData(){
+    localStorage.clear();
+    this.id_list = [];
+    this.item_list = [];
+    $("#item-table").empty();
+    $("#item-table").append("<tr><th>日時</th><th>温度</th><th>湿度</th><th>気圧</th></tr>");
 }
