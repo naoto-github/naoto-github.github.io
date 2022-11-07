@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    線形計画法③・巡回セールスマン問題 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="線形計画法③・巡回セールスマン問題" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter10/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="巡回セールスマン問題  例題   例題     都市 X Y     A 17 72   B 97 8   C 32 15   D 63 97   E 57 60   F 83 48    
+データセット  ここでは，次のCSV形式のデータセットを利用します． 下記のURLからファイルをダウンロードしてください． 上述と同じ巡回セールスマン問題であり，各都市の座標を表しています．
+ dataset9.csv
+都市,X,Y A,17,72 B,97,8 C,32,15 D,63,97 E,57,60 F,83,48 Excelで巡回セールスマン問題  Excelのソルバーを利用して巡回セールスマン問題を解きましょう． ダウンロードしたファイルをExcelで開いてください．
+
+Pythonで最短経路問題  Pythonを利用して最適生産計画を解きましょう． Jupyter Labを起動して，Pytohn 3のノートブックを開きます． ノートブックの名前は chapter10." />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="線形計画法③・巡回セールスマン問題" />
+
+
+
+  <meta name="twitter:description" content="巡回セールスマン問題  例題   例題     都市 X Y     A 17 72   B 97 8   C 32 15   D 63 97   E 57 60   F 83 48    
+データセット  ここでは，次のCSV形式のデータセットを利用します． 下記のURLからファイルをダウンロードしてください． 上述と同じ巡回セールスマン問題であり，各都市の座標を表しています．
+ dataset9.csv
+都市,X,Y A,17,72 B,97,8 C,32,15 D,63,97 E,57,60 F,83,48 Excelで巡回セールスマン問題  Excelのソルバーを利用して巡回セールスマン問題を解きましょう． ダウンロードしたファイルをExcelで開いてください．
+
+Pythonで最短経路問題  Pythonを利用して最適生産計画を解きましょう． Jupyter Labを起動して，Pytohn 3のノートブックを開きます． ノートブックの名前は chapter10." />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">線形計画法③・巡回セールスマン問題</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  巡回セールスマン問題
+</h1>
+
+<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
+  
+  <h3 style="color:#006600">
+    例題
+  </h3>
+
+  <p>
+    
+例題
+
+  </p>
+  
+</div>
+
+<table>
+<thead>
+<tr>
+<th>都市</th>
+<th>X</th>
+<th>Y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>17</td>
+<td>72</td>
+</tr>
+<tr>
+<td>B</td>
+<td>97</td>
+<td>8</td>
+</tr>
+<tr>
+<td>C</td>
+<td>32</td>
+<td>15</td>
+</tr>
+<tr>
+<td>D</td>
+<td>63</td>
+<td>97</td>
+</tr>
+<tr>
+<td>E</td>
+<td>57</td>
+<td>60</td>
+</tr>
+<tr>
+<td>F</td>
+<td>83</td>
+<td>48</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://gyazo.com/6560c6e931a47bf3ac10b98ad8b2a1b1"><img src="https://i.gyazo.com/6560c6e931a47bf3ac10b98ad8b2a1b1.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  データセット
+</h1>
+
+<p>ここでは，次のCSV形式のデータセットを利用します．
+下記のURLからファイルをダウンロードしてください．
+上述と同じ巡回セールスマン問題であり，各都市の座標を表しています．</p>
+<p><a href="https://mukai-lab.info/classes/management_data_analysis/dataset9.csv"><i class="fas fa-cloud-download-alt"></i> dataset9.csv</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">都市,X,Y
+A,17,72
+B,97,8
+C,32,15
+D,63,97
+E,57,60
+F,83,48
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Excelで巡回セールスマン問題
+</h1>
+
+<p>Excelのソルバーを利用して巡回セールスマン問題を解きましょう．
+ダウンロードしたファイルをExcelで開いてください．</p>
+<p><a href="https://gyazo.com/374185481293be03b4f44d7b32870ab5"><img src="https://i.gyazo.com/374185481293be03b4f44d7b32870ab5.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Pythonで最短経路問題
+</h1>
+
+<p>Pythonを利用して最適生産計画を解きましょう．
+Jupyter Labを起動して，<strong>Pytohn 3</strong>のノートブックを開きます．
+ノートブックの名前は <strong>chapter10.ipynb</strong> とします．
+<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>，<code>PuLP</code>などのライブラリをインポートしておきましょう．
+ユークリッド距離を計算する<code>scipy.spatial</code>，ネットワークを可視化する<code>networkx</code>もインポートします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> japanize_matplotlib
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> pulp <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">from</span> scipy.spatial <span style="color:#f92672">import</span> distance
+<span style="color:#f92672">import</span> networkx <span style="color:#f92672">as</span> nx
+</code></pre></div><h2 id="データセットの読込">データセットの読込</h2>
+<p><code>read_csv</code>関数でデータセットを読み込みます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;dataset9.csv&#34;</span>)
+display(df)
+</code></pre></div><h2 id="グラフの描画">グラフの描画</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># グラフの作成</span>
+graph <span style="color:#f92672">=</span> nx<span style="color:#f92672">.</span>DiGraph()
+
+<span style="color:#75715e"># ノードのラベル</span>
+node_list <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>]
+graph<span style="color:#f92672">.</span>add_nodes_from(node_list)
+	
+<span style="color:#75715e"># ノードの座標</span>
+pos_list <span style="color:#f92672">=</span> {}
+<span style="color:#66d9ef">for</span> i, row <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>iterrows():
+    city, x, y <span style="color:#f92672">=</span> row
+    pos_list[city] <span style="color:#f92672">=</span> (x, y)
+       
+<span style="color:#75715e"># グラフの描画</span>
+nx<span style="color:#f92672">.</span>draw(graph, pos<span style="color:#f92672">=</span>pos_list, with_labels<span style="color:#f92672">=</span>True)
+</code></pre></div><p><a href="https://gyazo.com/6560c6e931a47bf3ac10b98ad8b2a1b1"><img src="https://i.gyazo.com/6560c6e931a47bf3ac10b98ad8b2a1b1.png" alt="Image from Gyazo"></a></p>
+<h2 id="距離行列">距離行列</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 距離(コスト)</span>
+c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((len(df), len(df)))
+
+<span style="color:#66d9ef">for</span> i, row1 <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>iterrows():
+    <span style="color:#66d9ef">for</span> j, row2 <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>iterrows():
+        city1, x1, y1 <span style="color:#f92672">=</span> row1[<span style="color:#ae81ff">0</span>], row1[<span style="color:#ae81ff">1</span>], row1[<span style="color:#ae81ff">2</span>]
+        city2, x2, y2 <span style="color:#f92672">=</span> row2[<span style="color:#ae81ff">0</span>], row2[<span style="color:#ae81ff">1</span>], row2[<span style="color:#ae81ff">2</span>]					
+        dist <span style="color:#f92672">=</span> distance<span style="color:#f92672">.</span>euclidean((x1, y1), (x2, y2)) <span style="color:#75715e"># ユークリッド距離		</span>
+        c[i][j] <span style="color:#f92672">=</span> dist
+</code></pre></div><p><a href="https://gyazo.com/deb7605118cf382f4989ecf69addb80f"><img src="https://i.gyazo.com/deb7605118cf382f4989ecf69addb80f.png" alt="Image from Gyazo"></a></p>
+<h2 id="変数">変数</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 変数（隣接行列）</span>
+x <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    tmp <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(df)):
+        tmp<span style="color:#f92672">.</span>append(LpVariable(f<span style="color:#e6db74">&#34;x_{i}{j}&#34;</span>, cat<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Binary&#34;</span>))
+    x<span style="color:#f92672">.</span>append(tmp)
+	
+<span style="color:#66d9ef">print</span>(x)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[[x_00, x_01, x_02, x_03, x_04, x_05], [x_10, x_11, x_12, x_13, x_14, x_15], [x_20, x_21, x_22, x_23, x_24, x_25], [x_30, x_31, x_32, x_33, x_34, x_35], [x_40, x_41, x_42, x_43, x_44, x_45], [x_50, x_51, x_52, x_53, x_54, x_55]]
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 変数（ノードを訪問する順番）</span>
+u <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    u<span style="color:#f92672">.</span>append(LpVariable(f<span style="color:#e6db74">&#34;u_{i}&#34;</span>, cat<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Integer&#34;</span>, lowBound<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>, upBound<span style="color:#f92672">=</span>len(df)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+	
+<span style="color:#66d9ef">print</span>(u)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[u_0, u_1, u_2, u_3, u_4, u_5]
+</code></pre></div><h2 id="問題">問題</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 問題</span>
+problem <span style="color:#f92672">=</span> LpProblem(<span style="color:#e6db74">&#34;巡回セールスマン問題&#34;</span>, LpMinimize)
+</code></pre></div><h2 id="目的関数">目的関数</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 目的関数</span>
+cost <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(df)):
+        cost <span style="color:#f92672">+=</span> c[i][j] <span style="color:#f92672">*</span> x[i][j]
+
+problem <span style="color:#f92672">+=</span> cost
+</code></pre></div><h2 id="制約条件">制約条件</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 制約条件（始点の条件）</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(df)):
+        sum <span style="color:#f92672">+=</span> x[i][j]
+        
+    problem <span style="color:#f92672">+=</span> sum <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>, f<span style="color:#e6db74">&#34;{i}が始点&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 制約条件（終点の条件）</span>
+<span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(df)):
+    sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+        sum <span style="color:#f92672">+=</span> x[i][j]
+        
+    problem <span style="color:#f92672">+=</span> sum <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>, f<span style="color:#e6db74">&#34;{j}が終点&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 制約条件（同じノードに留まることを禁止）</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    problem <span style="color:#f92672">+=</span> x[i][i] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, f<span style="color:#e6db74">&#34;{i}に留まることを禁止&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 制約条件（部分経路を禁止）</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(df)):
+        <span style="color:#66d9ef">if</span> i <span style="color:#f92672">!=</span> j <span style="color:#f92672">and</span> j <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+            problem <span style="color:#f92672">+=</span> u[i] <span style="color:#f92672">-</span> u[j] <span style="color:#f92672">&lt;=</span> len(df) <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> x[i][j]) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, f<span style="color:#e6db74">&#34;{i}の次に{j}に到達&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># A（0）をスタート地点に設定</span>
+problem <span style="color:#f92672">+=</span> u[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;0をスタート地点に設定&#34;</span>
+</code></pre></div><h2 id="問題の確認">問題の確認</h2>
+<p>定義した問題を確認してみましょう．
+目的関数，制約条件，変数の条件などを確認することができます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(problem)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">巡回セールスマン問題:
+MINIMIZE
+102.44998779892558*x_01 + 58.9406481131655*x_02 + 52.354560450833695*x_03 + 41.7612260356422*x_04 + 70.22819946431775*x_05 + 102.44998779892558*x_10 + 65.37583651472461*x_12 + 95.2732911156112*x_13 + 65.60487786742691*x_14 + 42.37924020083418*x_15 + 58.9406481131655*x_20 + 65.37583651472461*x_21 + 87.66413177577246*x_23 + 51.478150704935004*x_24 + 60.74537019394976*x_25 + 52.354560450833695*x_30 + 95.2732911156112*x_31 + 87.66413177577246*x_32 + 37.48332962798263*x_34 + 52.92447448959697*x_35 + 41.7612260356422*x_40 + 65.60487786742691*x_41 + 51.478150704935004*x_42 + 37.48332962798263*x_43 + 28.635642126552707*x_45 + 70.22819946431775*x_50 + 42.37924020083418*x_51 + 60.74537019394976*x_52 + 52.92447448959697*x_53 + 28.635642126552707*x_54 + 0.0
+SUBJECT TO
+0が始点: x_00 + x_01 + x_02 + x_03 + x_04 + x_05 = 1
+
+1が始点: x_10 + x_11 + x_12 + x_13 + x_14 + x_15 = 1
+
+2が始点: x_20 + x_21 + x_22 + x_23 + x_24 + x_25 = 1
+
+3が始点: x_30 + x_31 + x_32 + x_33 + x_34 + x_35 = 1
+
+4が始点: x_40 + x_41 + x_42 + x_43 + x_44 + x_45 = 1
+
+5が始点: x_50 + x_51 + x_52 + x_53 + x_54 + x_55 = 1
+
+0が終点: x_00 + x_10 + x_20 + x_30 + x_40 + x_50 = 1
+
+1が終点: x_01 + x_11 + x_21 + x_31 + x_41 + x_51 = 1
+
+2が終点: x_02 + x_12 + x_22 + x_32 + x_42 + x_52 = 1
+
+3が終点: x_03 + x_13 + x_23 + x_33 + x_43 + x_53 = 1
+
+4が終点: x_04 + x_14 + x_24 + x_34 + x_44 + x_54 = 1
+
+5が終点: x_05 + x_15 + x_25 + x_35 + x_45 + x_55 = 1
+
+0に留まることを禁止: x_00 = 0
+
+1に留まることを禁止: x_11 = 0
+
+2に留まることを禁止: x_22 = 0
+
+3に留まることを禁止: x_33 = 0
+
+4に留まることを禁止: x_44 = 0
+
+5に留まることを禁止: x_55 = 0
+
+0の次に1に到達: u_0 - u_1 + 6 x_01 &lt;= 5
+
+0の次に2に到達: u_0 - u_2 + 6 x_02 &lt;= 5
+
+0の次に3に到達: u_0 - u_3 + 6 x_03 &lt;= 5
+
+0の次に4に到達: u_0 - u_4 + 6 x_04 &lt;= 5
+
+0の次に5に到達: u_0 - u_5 + 6 x_05 &lt;= 5
+
+1の次に2に到達: u_1 - u_2 + 6 x_12 &lt;= 5
+
+1の次に3に到達: u_1 - u_3 + 6 x_13 &lt;= 5
+
+1の次に4に到達: u_1 - u_4 + 6 x_14 &lt;= 5
+
+1の次に5に到達: u_1 - u_5 + 6 x_15 &lt;= 5
+
+2の次に1に到達: - u_1 + u_2 + 6 x_21 &lt;= 5
+
+2の次に3に到達: u_2 - u_3 + 6 x_23 &lt;= 5
+
+2の次に4に到達: u_2 - u_4 + 6 x_24 &lt;= 5
+
+2の次に5に到達: u_2 - u_5 + 6 x_25 &lt;= 5
+
+3の次に1に到達: - u_1 + u_3 + 6 x_31 &lt;= 5
+
+3の次に2に到達: - u_2 + u_3 + 6 x_32 &lt;= 5
+
+3の次に4に到達: u_3 - u_4 + 6 x_34 &lt;= 5
+
+3の次に5に到達: u_3 - u_5 + 6 x_35 &lt;= 5
+
+4の次に1に到達: - u_1 + u_4 + 6 x_41 &lt;= 5
+
+4の次に2に到達: - u_2 + u_4 + 6 x_42 &lt;= 5
+
+4の次に3に到達: - u_3 + u_4 + 6 x_43 &lt;= 5
+
+4の次に5に到達: u_4 - u_5 + 6 x_45 &lt;= 5
+
+5の次に1に到達: - u_1 + u_5 + 6 x_51 &lt;= 5
+
+5の次に2に到達: - u_2 + u_5 + 6 x_52 &lt;= 5
+
+5の次に3に到達: - u_3 + u_5 + 6 x_53 &lt;= 5
+
+5の次に4に到達: - u_4 + u_5 + 6 x_54 &lt;= 5
+
+0をスタート地点に設定: u_0 = 0
+
+VARIABLES
+0 &lt;= u_0 &lt;= 5 Integer
+0 &lt;= u_1 &lt;= 5 Integer
+0 &lt;= u_2 &lt;= 5 Integer
+0 &lt;= u_3 &lt;= 5 Integer
+0 &lt;= u_4 &lt;= 5 Integer
+0 &lt;= u_5 &lt;= 5 Integer
+0 &lt;= x_00 &lt;= 1 Integer
+0 &lt;= x_01 &lt;= 1 Integer
+0 &lt;= x_02 &lt;= 1 Integer
+0 &lt;= x_03 &lt;= 1 Integer
+0 &lt;= x_04 &lt;= 1 Integer
+0 &lt;= x_05 &lt;= 1 Integer
+0 &lt;= x_10 &lt;= 1 Integer
+0 &lt;= x_11 &lt;= 1 Integer
+0 &lt;= x_12 &lt;= 1 Integer
+0 &lt;= x_13 &lt;= 1 Integer
+0 &lt;= x_14 &lt;= 1 Integer
+0 &lt;= x_15 &lt;= 1 Integer
+0 &lt;= x_20 &lt;= 1 Integer
+0 &lt;= x_21 &lt;= 1 Integer
+0 &lt;= x_22 &lt;= 1 Integer
+0 &lt;= x_23 &lt;= 1 Integer
+0 &lt;= x_24 &lt;= 1 Integer
+0 &lt;= x_25 &lt;= 1 Integer
+0 &lt;= x_30 &lt;= 1 Integer
+0 &lt;= x_31 &lt;= 1 Integer
+0 &lt;= x_32 &lt;= 1 Integer
+0 &lt;= x_33 &lt;= 1 Integer
+0 &lt;= x_34 &lt;= 1 Integer
+0 &lt;= x_35 &lt;= 1 Integer
+0 &lt;= x_40 &lt;= 1 Integer
+0 &lt;= x_41 &lt;= 1 Integer
+0 &lt;= x_42 &lt;= 1 Integer
+0 &lt;= x_43 &lt;= 1 Integer
+0 &lt;= x_44 &lt;= 1 Integer
+0 &lt;= x_45 &lt;= 1 Integer
+0 &lt;= x_50 &lt;= 1 Integer
+0 &lt;= x_51 &lt;= 1 Integer
+0 &lt;= x_52 &lt;= 1 Integer
+0 &lt;= x_53 &lt;= 1 Integer
+0 &lt;= x_54 &lt;= 1 Integer
+0 &lt;= x_55 &lt;= 1 Integer
+</code></pre></div><h2 id="解決">解決</h2>
+<p><code>solve()</code>関数で問題を解きます．
+この関数の戻り値が<code>1(Optimal)</code>のときは，最適解が得られたことを表します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">status <span style="color:#f92672">=</span> problem<span style="color:#f92672">.</span>solve()
+<span style="color:#66d9ef">print</span>(LpStatus[status])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Optimal
+</code></pre></div><p>導出された最適解を確認しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 最適化された変数の確認</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(df)):
+        value <span style="color:#f92672">=</span> x[i][j]<span style="color:#f92672">.</span>varValue
+        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;x[{i}][{j}]={value}&#34;</span>)
+        
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    value <span style="color:#f92672">=</span> u[i]<span style="color:#f92672">.</span>varValue
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;u[{i}]={value}&#34;</span>)
+    
+<span style="color:#75715e"># 距離</span>
+<span style="color:#66d9ef">print</span>(problem<span style="color:#f92672">.</span>objective<span style="color:#f92672">.</span>value())
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">x[0][0]=0.0
+x[0][1]=0.0
+x[0][2]=1.0
+x[0][3]=0.0
+x[0][4]=0.0
+x[0][5]=0.0
+x[1][0]=0.0
+x[1][1]=0.0
+x[1][2]=0.0
+x[1][3]=0.0
+x[1][4]=0.0
+x[1][5]=1.0
+x[2][0]=0.0
+x[2][1]=1.0
+x[2][2]=0.0
+x[2][3]=0.0
+x[2][4]=0.0
+x[2][5]=0.0
+x[3][0]=1.0
+x[3][1]=0.0
+x[3][2]=0.0
+x[3][3]=0.0
+x[3][4]=0.0
+x[3][5]=0.0
+x[4][0]=0.0
+x[4][1]=0.0
+x[4][2]=0.0
+x[4][3]=1.0
+x[4][4]=0.0
+x[4][5]=0.0
+x[5][0]=0.0
+x[5][1]=0.0
+x[5][2]=0.0
+x[5][3]=0.0
+x[5][4]=1.0
+x[5][5]=0.0
+u[0]=0.0
+u[1]=2.0
+u[2]=1.0
+u[3]=5.0
+u[4]=4.0
+u[5]=3.0
+285.1692570340933
+</code></pre></div><h2 id="最短経路の描画">最短経路の描画</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 経路に含まれるエッジのリスト</span>
+edge_list <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(df)):
+        value <span style="color:#f92672">=</span> x[i][j]<span style="color:#f92672">.</span>varValue
+        <span style="color:#66d9ef">if</span> value <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+            edge <span style="color:#f92672">=</span> (node_list[i], node_list[j])
+            edge_list<span style="color:#f92672">.</span>append(edge)
+            
+<span style="color:#66d9ef">print</span>(edge_list)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># グラフの作成</span>
+graph <span style="color:#f92672">=</span> nx<span style="color:#f92672">.</span>DiGraph()
+graph<span style="color:#f92672">.</span>add_nodes_from(node_list)
+
+<span style="color:#75715e"># 最短経路の描画</span>
+graph<span style="color:#f92672">.</span>add_edges_from(edge_list)
+nx<span style="color:#f92672">.</span>draw(graph, pos<span style="color:#f92672">=</span>pos_list, with_labels<span style="color:#f92672">=</span>True)
+</code></pre></div><p><a href="https://gyazo.com/828f1a87a41d0d976155339b734461ec"><img src="https://i.gyazo.com/828f1a87a41d0d976155339b734461ec.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
+ノートブックのファイル名は <strong>chapter10.ipynb</strong> としてください．</p>
+<h3>参考書籍</h3>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798171948&linkId=70dbac2599f82106144687868e9ee83d"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798158348&linkId=6d28ae246d652ea9ac954c14940de2aa"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B096VMZ57K&linkId=1be78c3d5e926492d7292df6bbd04d0a"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B07PD237GQ&linkId=bd38a144cee47b0747240149f144904a"></iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/management_data_analysis/chapter10/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
