@@ -260,21 +260,21 @@ F比は <strong>効果の分散</strong> と <strong>誤差の分散</strong> �
 F比 = \frac{効果の分散}{誤差の分散} = \frac{群間平方和 / 群間の自由度}{群内平方和 / 群内の自由度}
 $$</p>
 <p>次のグラフは3つの小学校の50メートル走のタイムのバイオリンプロット（確率分布をカーネル密度推定で算出したグラフ）です．
-効果の分散は，バイオリン同士の距離の大きさを表し，郡間でタイムに差があったことを示す値です．
-一方，誤差の分散は，バイオリン自体の大きさを表し，郡内におけるタイムの散らばりを示す値です．
-このため，F比が大きいほど，郡間の有意差が大きくなることを示します．</p>
+効果の分散は，バイオリン同士の距離の大きさを表し，群間でタイムに差があったことを示す値です．
+一方，誤差の分散は，バイオリン自体の大きさを表し，群内におけるタイムの散らばりを示す値です．
+このため，F比が大きいほど，群間の有意差が大きくなることを示します．</p>
 <p><a href="https://gyazo.com/4f66631d859a904f64de52b0c51d5869"><img src="https://i.gyazo.com/4f66631d859a904f64de52b0c51d5869.png" alt="Image from Gyazo"></a></p>
 <p>この検定統計量は，3群が属する母集団の平均が等しいとき（帰無仮説が成立するとき），F分布に従うことが知られています．
 F分布は <strong>群間の自由度 dfn(degree of freedom numerator)</strong> と <strong>群内の自由度 dfd(degree of freedom denominator)</strong> によって形状が定まります．
-郡間の自由度は，郡（A小学校，B小学校，C小学校）の数から1を引いた値です．
-また，郡内の自由度は，サンプルサイズ（$n=15$）から，郡の数を引いた値です．</p>
+群間の自由度は，群（A小学校，B小学校，C小学校）の数から1を引いた値です．
+また，群内の自由度は，サンプルサイズ（$n=15$）から，群の数を引いた値です．</p>
 <p>$$
 dfn = 3 - 1 = 2
 $$</p>
 <p>$$
 dfd = 15 - 3 = 12
 $$</p>
-<p>次に郡間の自由度 $dfn=2$，郡内の自由度$dfd=12$のF分布の累積分布を示します．
+<p>次に群間の自由度 $dfn=2$，群内の自由度$dfd=12$のF分布の累積分布を示します．
 有意水準を$\alpha=0.05$(5%)とするとき，棄却域は$F &gt; 3.89$となります．</p>
 <p><a href="https://gyazo.com/f51535c97169aef8d72d140bbeb91041"><img src="https://i.gyazo.com/f51535c97169aef8d72d140bbeb91041.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
@@ -305,9 +305,9 @@ $$</p>
 <p><a href="https://gyazo.com/c4b4173809b99474b23793d3a2be5434"><img src="https://i.gyazo.com/c4b4173809b99474b23793d3a2be5434.png" alt="Image from Gyazo"></a></p>
 <p>次のような結果が算出されます．
 「観測された分散比」がF比を表しており，$4$となることがわかります．
-また，郡間の自由度は2，郡内の自由度が12であることも示されています．
+また，群間の自由度は2，群内の自由度が12であることも示されています．
 さらに，棄却域は$F&gt;3.89$であり，P値は$0.047$となっています．
-この結果，$0.047 &lt; \alpha=0.05$であることから，帰無仮説は棄却され，3郡間で <strong>有意差がある</strong> とみなすことになります．</p>
+この結果，$0.047 &lt; \alpha=0.05$であることから，帰無仮説は棄却され，3群間で <strong>有意差がある</strong> とみなすことになります．</p>
 <p><a href="https://gyazo.com/d4a2520690fae6ef60bbee57f75beed1"><img src="https://i.gyazo.com/d4a2520690fae6ef60bbee57f75beed1.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   PythonでANOVA
@@ -328,13 +328,13 @@ display(df)
 </code></pre></div><p><a href="https://gyazo.com/31e4451d1e903507165abe326347e939"><img src="https://i.gyazo.com/31e4451d1e903507165abe326347e939.png" alt="Image from Gyazo"></a></p>
 <h2 id="f比の算出">F比の算出</h2>
 <p>公式に従ってF比を算出してみましょう．</p>
-<h3 id="郡間平方和">郡間平方和</h3>
+<h3 id="群間平方和">群間平方和</h3>
 <p>効果の分散は次の式で算出できます．</p>
 <p>$$
-効果の分散 = \frac{郡間平方和}{郡間の自由度}
+効果の分散 = \frac{群間平方和}{群間の自由度}
 $$</p>
-<p>式中の郡間平方和は，各郡の平均値を期待値とした，ばらつきの大きさです．
-最初に各郡の平均値を算出します．</p>
+<p>式中の群間平方和は，各群の平均値を期待値とした，ばらつきの大きさです．
+最初に各群の平均値を算出します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mu <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>mean()
 <span style="color:#66d9ef">print</span>(mu)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">A小学校    11.94
@@ -347,32 +347,32 @@ dtype: float64
     sn_df <span style="color:#f92672">=</span> sn_df<span style="color:#f92672">.</span>append(mu, ignore_index<span style="color:#f92672">=</span>True)
 display(sn_df)
 </code></pre></div><p><a href="https://gyazo.com/b73af9150102c0698baaf675bf536a6d"><img src="https://i.gyazo.com/b73af9150102c0698baaf675bf536a6d.png" alt="Image from Gyazo"></a></p>
-<p>この期待値から，3郡全体の平均値を引くことで，相対的な期待値を算出します．</p>
+<p>この期待値から，3群全体の平均値を引くことで，相対的な期待値を算出します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sn_df <span style="color:#f92672">=</span> sn_df <span style="color:#f92672">-</span> mu<span style="color:#f92672">.</span>mean()
 display(sn_df)
 </code></pre></div><p><a href="https://gyazo.com/1fc319874663cb09203c10890ac1c9b4"><img src="https://i.gyazo.com/1fc319874663cb09203c10890ac1c9b4.png" alt="Image from Gyazo"></a></p>
 <p>この相対的な期待値の平方和を算出します．
-この値が郡間平方和を表し，$6.02$となりました．</p>
+この値が群間平方和を表し，$6.02$となりました．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sn <span style="color:#f92672">=</span> (sn_df <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>sum()
 <span style="color:#66d9ef">print</span>(sn)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">6.021333333333326
-</code></pre></div><h3 id="郡内平方和">郡内平方和</h3>
+</code></pre></div><h3 id="群内平方和">群内平方和</h3>
 <p>誤差の分散は次の式で算出できます．</p>
 <p>$$
-誤差の分散 = \frac{郡内平方和}{郡内の自由度}
+誤差の分散 = \frac{群内平方和}{群内の自由度}
 $$</p>
-<p>式中の郡内平方和は，元データから各郡の平均値を引いた値のばらつきの大きさです．</p>
+<p>式中の群内平方和は，元データから各群の平均値を引いた値のばらつきの大きさです．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sd_df <span style="color:#f92672">=</span> df <span style="color:#f92672">-</span> mu
 display(sd_df)
 </code></pre></div><p><a href="https://gyazo.com/e7c8961555966d1f7954cc018062eb38"><img src="https://i.gyazo.com/e7c8961555966d1f7954cc018062eb38.png" alt="Image from Gyazo"></a></p>
 <p>この値の平方和を算出します．
-この値が，郡内平方和を表し，$9.03$となりました．</p>
+この値が，群内平方和を表し，$9.03$となりました．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sd <span style="color:#f92672">=</span> (sd_df <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>sum()
 <span style="color:#66d9ef">print</span>(sd)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">9.031999999999991
 </code></pre></div><h3 id="f比">F比</h3>
 <p>最後にF比を算出します．
-ここで，郡間の自由度は$dfn=3-1=2$，郡内の自由度は$dfd=15-3=12$であることに注意してください．
+ここで，群間の自由度は$dfn=3-1=2$，群内の自由度は$dfd=15-3=12$であることに注意してください．
 この結果，F比は$4.0$となりました．
 これは，Excelで算出された値と一致しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dfn <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
@@ -402,9 +402,9 @@ result <span style="color:#f92672">=</span> f_oneway(df[<span style="color:#e6db
   補足
 </h1>
 
-<p>ANOVAではどの組み合わせの郡で有意差があったかは判断できないことから，<strong>テューキーの検定</strong> と呼ばれる方法が合わせて用いられることがあります．</p>
+<p>ANOVAではどの組み合わせの群で有意差があったかは判断できないことから，<strong>テューキーの検定</strong> と呼ばれる方法が合わせて用いられることがあります．</p>
 <p>同じデータセットにテューキー検定を適用した結果は次のようになります．
-0（A小学校）と2（C小学校）の組み合わせのP値が0.061と最も低く，2郡間で傾向が異なる可能性が示唆されました（有意水準5%での有意差は認められないけれど）．</p>
+0（A小学校）と2（C小学校）の組み合わせのP値が0.061と最も低く，2群間で傾向が異なる可能性が示唆されました（有意水準5%での有意差は認められないけれど）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> tukey_hsd
 
 result <span style="color:#f92672">=</span> tukey_hsd(df[<span style="color:#e6db74">&#34;A小学校&#34;</span>], df[<span style="color:#e6db74">&#34;B小学校&#34;</span>], df[<span style="color:#e6db74">&#34;C小学校&#34;</span>])
@@ -414,7 +414,7 @@ result <span style="color:#f92672">=</span> tukey_hsd(df[<span style="color:#e6d
   課題
 </h1>
 
-<p>データセットにD小学校のデータを加えて，4郡の母集団の平均に有意差があるかANOVAで調べなさい．</p>
+<p>データセットにD小学校のデータを加えて，4群の母集団の平均に有意差があるかANOVAで調べなさい．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df2 <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>assign(D小学校<span style="color:#f92672">=</span>[<span style="color:#ae81ff">11.3</span>, <span style="color:#ae81ff">10.5</span>, <span style="color:#ae81ff">11.2</span>, <span style="color:#ae81ff">11.4</span>, <span style="color:#ae81ff">12.6</span>])
 display(df2)
 </code></pre></div><p><a href="https://gyazo.com/e208150a8d996f54319ccd64838aa3c7"><img src="https://i.gyazo.com/e208150a8d996f54319ccd64838aa3c7.png" alt="Image from Gyazo"></a></p>
