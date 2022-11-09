@@ -87,12 +87,14 @@
 
 
 
-  <meta property="og:description" content="巡回セールスマン問題  例題   例題     都市 X Y     A 17 72   B 97 8   C 32 15   D 63 97   E 57 60   F 83 48    
+  <meta property="og:description" content="巡回セールスマン問題  計算量が多くNP困難な問題として知られる 巡回セールスマン問題 に挑戦しましょう． 前回の最短経路問題と同様に，線形計画問題の一つとして扱うことが可能です．
+例題   次の図に示されるようにAからFまでの6つの都市が点在している． 各都市の位置（座標）は$(X, Y)$で表されている． このとき，Aからスタートし，全ての都市を一度ずつ訪れてから， Aに戻ってくる経路のうち，最短の経路を求めよ．  
 データセット  ここでは，次のCSV形式のデータセットを利用します． 下記のURLからファイルをダウンロードしてください． 上述と同じ巡回セールスマン問題であり，各都市の座標を表しています．
  dataset9.csv
 都市,X,Y A,17,72 B,97,8 C,32,15 D,63,97 E,57,60 F,83,48 Excelで巡回セールスマン問題  Excelのソルバーを利用して巡回セールスマン問題を解きましょう． ダウンロードしたファイルをExcelで開いてください．
 
-Pythonで最短経路問題  Pythonを利用して最適生産計画を解きましょう． Jupyter Labを起動して，Pytohn 3のノートブックを開きます． ノートブックの名前は chapter10." />
+Pythonで最短経路問題  Pythonを利用して最適生産計画を解きましょう． Jupyter Labを起動して，Pytohn 3のノートブックを開きます． ノートブックの名前は chapter10.ipynb とします． pandas，matplotlib，numpy，PuLPなどのライブラリをインポートしておきましょう． ユークリッド距離を計算するscipy.spatial，ネットワークを可視化するnetworkxもインポートします．
+import pandas as pd import matplotlib.pyplot as plt import japanize_matplotlib import numpy as np from pulp import * from scipy.spatial import distance import networkx as nx データセットの読込 read_csv関数でデータセットを読み込みます．" />
 
 
 
@@ -107,12 +109,14 @@ Pythonで最短経路問題  Pythonを利用して最適生産計画を解きま
 
 
 
-  <meta name="twitter:description" content="巡回セールスマン問題  例題   例題     都市 X Y     A 17 72   B 97 8   C 32 15   D 63 97   E 57 60   F 83 48    
+  <meta name="twitter:description" content="巡回セールスマン問題  計算量が多くNP困難な問題として知られる 巡回セールスマン問題 に挑戦しましょう． 前回の最短経路問題と同様に，線形計画問題の一つとして扱うことが可能です．
+例題   次の図に示されるようにAからFまでの6つの都市が点在している． 各都市の位置（座標）は$(X, Y)$で表されている． このとき，Aからスタートし，全ての都市を一度ずつ訪れてから， Aに戻ってくる経路のうち，最短の経路を求めよ．  
 データセット  ここでは，次のCSV形式のデータセットを利用します． 下記のURLからファイルをダウンロードしてください． 上述と同じ巡回セールスマン問題であり，各都市の座標を表しています．
  dataset9.csv
 都市,X,Y A,17,72 B,97,8 C,32,15 D,63,97 E,57,60 F,83,48 Excelで巡回セールスマン問題  Excelのソルバーを利用して巡回セールスマン問題を解きましょう． ダウンロードしたファイルをExcelで開いてください．
 
-Pythonで最短経路問題  Pythonを利用して最適生産計画を解きましょう． Jupyter Labを起動して，Pytohn 3のノートブックを開きます． ノートブックの名前は chapter10." />
+Pythonで最短経路問題  Pythonを利用して最適生産計画を解きましょう． Jupyter Labを起動して，Pytohn 3のノートブックを開きます． ノートブックの名前は chapter10.ipynb とします． pandas，matplotlib，numpy，PuLPなどのライブラリをインポートしておきましょう． ユークリッド距離を計算するscipy.spatial，ネットワークを可視化するnetworkxもインポートします．
+import pandas as pd import matplotlib.pyplot as plt import japanize_matplotlib import numpy as np from pulp import * from scipy.spatial import distance import networkx as nx データセットの読込 read_csv関数でデータセットを読み込みます．" />
 
 
 
@@ -183,6 +187,8 @@ Pythonで最短経路問題  Pythonを利用して最適生産計画を解きま
   巡回セールスマン問題
 </h1>
 
+<p>計算量が多く<a href="https://ja.wikipedia.org/wiki/NP%E5%9B%B0%E9%9B%A3">NP困難</a>な問題として知られる <strong>巡回セールスマン問題</strong> に挑戦しましょう．
+前回の最短経路問題と同様に，線形計画問題の一つとして扱うことが可能です．</p>
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
   <h3 style="color:#006600">
@@ -191,54 +197,26 @@ Pythonで最短経路問題  Pythonを利用して最適生産計画を解きま
 
   <p>
     
-例題
+次の図に示されるようにAからFまでの6つの都市が点在している．
+各都市の位置（座標）は$(X, Y)$で表されている．
+このとき，Aからスタートし，全ての都市を一度ずつ訪れてから，
+Aに戻ってくる経路のうち，最短の経路を求めよ．
 
   </p>
   
 </div>
 
-<table>
-<thead>
-<tr>
-<th>都市</th>
-<th>X</th>
-<th>Y</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A</td>
-<td>17</td>
-<td>72</td>
-</tr>
-<tr>
-<td>B</td>
-<td>97</td>
-<td>8</td>
-</tr>
-<tr>
-<td>C</td>
-<td>32</td>
-<td>15</td>
-</tr>
-<tr>
-<td>D</td>
-<td>63</td>
-<td>97</td>
-</tr>
-<tr>
-<td>E</td>
-<td>57</td>
-<td>60</td>
-</tr>
-<tr>
-<td>F</td>
-<td>83</td>
-<td>48</td>
-</tr>
-</tbody>
-</table>
-<p><a href="https://gyazo.com/6560c6e931a47bf3ac10b98ad8b2a1b1"><img src="https://i.gyazo.com/6560c6e931a47bf3ac10b98ad8b2a1b1.png" alt="Image from Gyazo"></a></p>
+<!--
+| 都市 | X | Y |
+| --- | --- | ---|
+| A | 17 | 72 |
+| B | 97 | 8 |
+| C | 32 | 15 |
+| D | 63 | 97 |
+| E |57 | 60 |
+| F | 83 | 48 |
+-->
+<p><a href="https://gyazo.com/6fcba66d6b67f9f2e56bb4e240455b5b"><img src="https://i.gyazo.com/6fcba66d6b67f9f2e56bb4e240455b5b.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   データセット
 </h1>
@@ -370,7 +348,9 @@ problem <span style="color:#f92672">+=</span> u[<span style="color:#ae81ff">0</s
 <p>定義した問題を確認してみましょう．
 目的関数，制約条件，変数の条件などを確認することができます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(problem)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">巡回セールスマン問題:
+</code></pre></div><!--
+```txt
+巡回セールスマン問題:
 MINIMIZE
 102.44998779892558*x_01 + 58.9406481131655*x_02 + 52.354560450833695*x_03 + 41.7612260356422*x_04 + 70.22819946431775*x_05 + 102.44998779892558*x_10 + 65.37583651472461*x_12 + 95.2732911156112*x_13 + 65.60487786742691*x_14 + 42.37924020083418*x_15 + 58.9406481131655*x_20 + 65.37583651472461*x_21 + 87.66413177577246*x_23 + 51.478150704935004*x_24 + 60.74537019394976*x_25 + 52.354560450833695*x_30 + 95.2732911156112*x_31 + 87.66413177577246*x_32 + 37.48332962798263*x_34 + 52.92447448959697*x_35 + 41.7612260356422*x_40 + 65.60487786742691*x_41 + 51.478150704935004*x_42 + 37.48332962798263*x_43 + 28.635642126552707*x_45 + 70.22819946431775*x_50 + 42.37924020083418*x_51 + 60.74537019394976*x_52 + 52.92447448959697*x_53 + 28.635642126552707*x_54 + 0.0
 SUBJECT TO
@@ -410,102 +390,104 @@ SUBJECT TO
 
 5に留まることを禁止: x_55 = 0
 
-0の次に1に到達: u_0 - u_1 + 6 x_01 &lt;= 5
+0の次に1に到達: u_0 - u_1 + 6 x_01 <= 5
 
-0の次に2に到達: u_0 - u_2 + 6 x_02 &lt;= 5
+0の次に2に到達: u_0 - u_2 + 6 x_02 <= 5
 
-0の次に3に到達: u_0 - u_3 + 6 x_03 &lt;= 5
+0の次に3に到達: u_0 - u_3 + 6 x_03 <= 5
 
-0の次に4に到達: u_0 - u_4 + 6 x_04 &lt;= 5
+0の次に4に到達: u_0 - u_4 + 6 x_04 <= 5
 
-0の次に5に到達: u_0 - u_5 + 6 x_05 &lt;= 5
+0の次に5に到達: u_0 - u_5 + 6 x_05 <= 5
 
-1の次に2に到達: u_1 - u_2 + 6 x_12 &lt;= 5
+1の次に2に到達: u_1 - u_2 + 6 x_12 <= 5
 
-1の次に3に到達: u_1 - u_3 + 6 x_13 &lt;= 5
+1の次に3に到達: u_1 - u_3 + 6 x_13 <= 5
 
-1の次に4に到達: u_1 - u_4 + 6 x_14 &lt;= 5
+1の次に4に到達: u_1 - u_4 + 6 x_14 <= 5
 
-1の次に5に到達: u_1 - u_5 + 6 x_15 &lt;= 5
+1の次に5に到達: u_1 - u_5 + 6 x_15 <= 5
 
-2の次に1に到達: - u_1 + u_2 + 6 x_21 &lt;= 5
+2の次に1に到達: - u_1 + u_2 + 6 x_21 <= 5
 
-2の次に3に到達: u_2 - u_3 + 6 x_23 &lt;= 5
+2の次に3に到達: u_2 - u_3 + 6 x_23 <= 5
 
-2の次に4に到達: u_2 - u_4 + 6 x_24 &lt;= 5
+2の次に4に到達: u_2 - u_4 + 6 x_24 <= 5
 
-2の次に5に到達: u_2 - u_5 + 6 x_25 &lt;= 5
+2の次に5に到達: u_2 - u_5 + 6 x_25 <= 5
 
-3の次に1に到達: - u_1 + u_3 + 6 x_31 &lt;= 5
+3の次に1に到達: - u_1 + u_3 + 6 x_31 <= 5
 
-3の次に2に到達: - u_2 + u_3 + 6 x_32 &lt;= 5
+3の次に2に到達: - u_2 + u_3 + 6 x_32 <= 5
 
-3の次に4に到達: u_3 - u_4 + 6 x_34 &lt;= 5
+3の次に4に到達: u_3 - u_4 + 6 x_34 <= 5
 
-3の次に5に到達: u_3 - u_5 + 6 x_35 &lt;= 5
+3の次に5に到達: u_3 - u_5 + 6 x_35 <= 5
 
-4の次に1に到達: - u_1 + u_4 + 6 x_41 &lt;= 5
+4の次に1に到達: - u_1 + u_4 + 6 x_41 <= 5
 
-4の次に2に到達: - u_2 + u_4 + 6 x_42 &lt;= 5
+4の次に2に到達: - u_2 + u_4 + 6 x_42 <= 5
 
-4の次に3に到達: - u_3 + u_4 + 6 x_43 &lt;= 5
+4の次に3に到達: - u_3 + u_4 + 6 x_43 <= 5
 
-4の次に5に到達: u_4 - u_5 + 6 x_45 &lt;= 5
+4の次に5に到達: u_4 - u_5 + 6 x_45 <= 5
 
-5の次に1に到達: - u_1 + u_5 + 6 x_51 &lt;= 5
+5の次に1に到達: - u_1 + u_5 + 6 x_51 <= 5
 
-5の次に2に到達: - u_2 + u_5 + 6 x_52 &lt;= 5
+5の次に2に到達: - u_2 + u_5 + 6 x_52 <= 5
 
-5の次に3に到達: - u_3 + u_5 + 6 x_53 &lt;= 5
+5の次に3に到達: - u_3 + u_5 + 6 x_53 <= 5
 
-5の次に4に到達: - u_4 + u_5 + 6 x_54 &lt;= 5
+5の次に4に到達: - u_4 + u_5 + 6 x_54 <= 5
 
 0をスタート地点に設定: u_0 = 0
 
 VARIABLES
-0 &lt;= u_0 &lt;= 5 Integer
-0 &lt;= u_1 &lt;= 5 Integer
-0 &lt;= u_2 &lt;= 5 Integer
-0 &lt;= u_3 &lt;= 5 Integer
-0 &lt;= u_4 &lt;= 5 Integer
-0 &lt;= u_5 &lt;= 5 Integer
-0 &lt;= x_00 &lt;= 1 Integer
-0 &lt;= x_01 &lt;= 1 Integer
-0 &lt;= x_02 &lt;= 1 Integer
-0 &lt;= x_03 &lt;= 1 Integer
-0 &lt;= x_04 &lt;= 1 Integer
-0 &lt;= x_05 &lt;= 1 Integer
-0 &lt;= x_10 &lt;= 1 Integer
-0 &lt;= x_11 &lt;= 1 Integer
-0 &lt;= x_12 &lt;= 1 Integer
-0 &lt;= x_13 &lt;= 1 Integer
-0 &lt;= x_14 &lt;= 1 Integer
-0 &lt;= x_15 &lt;= 1 Integer
-0 &lt;= x_20 &lt;= 1 Integer
-0 &lt;= x_21 &lt;= 1 Integer
-0 &lt;= x_22 &lt;= 1 Integer
-0 &lt;= x_23 &lt;= 1 Integer
-0 &lt;= x_24 &lt;= 1 Integer
-0 &lt;= x_25 &lt;= 1 Integer
-0 &lt;= x_30 &lt;= 1 Integer
-0 &lt;= x_31 &lt;= 1 Integer
-0 &lt;= x_32 &lt;= 1 Integer
-0 &lt;= x_33 &lt;= 1 Integer
-0 &lt;= x_34 &lt;= 1 Integer
-0 &lt;= x_35 &lt;= 1 Integer
-0 &lt;= x_40 &lt;= 1 Integer
-0 &lt;= x_41 &lt;= 1 Integer
-0 &lt;= x_42 &lt;= 1 Integer
-0 &lt;= x_43 &lt;= 1 Integer
-0 &lt;= x_44 &lt;= 1 Integer
-0 &lt;= x_45 &lt;= 1 Integer
-0 &lt;= x_50 &lt;= 1 Integer
-0 &lt;= x_51 &lt;= 1 Integer
-0 &lt;= x_52 &lt;= 1 Integer
-0 &lt;= x_53 &lt;= 1 Integer
-0 &lt;= x_54 &lt;= 1 Integer
-0 &lt;= x_55 &lt;= 1 Integer
-</code></pre></div><h2 id="解決">解決</h2>
+0 <= u_0 <= 5 Integer
+0 <= u_1 <= 5 Integer
+0 <= u_2 <= 5 Integer
+0 <= u_3 <= 5 Integer
+0 <= u_4 <= 5 Integer
+0 <= u_5 <= 5 Integer
+0 <= x_00 <= 1 Integer
+0 <= x_01 <= 1 Integer
+0 <= x_02 <= 1 Integer
+0 <= x_03 <= 1 Integer
+0 <= x_04 <= 1 Integer
+0 <= x_05 <= 1 Integer
+0 <= x_10 <= 1 Integer
+0 <= x_11 <= 1 Integer
+0 <= x_12 <= 1 Integer
+0 <= x_13 <= 1 Integer
+0 <= x_14 <= 1 Integer
+0 <= x_15 <= 1 Integer
+0 <= x_20 <= 1 Integer
+0 <= x_21 <= 1 Integer
+0 <= x_22 <= 1 Integer
+0 <= x_23 <= 1 Integer
+0 <= x_24 <= 1 Integer
+0 <= x_25 <= 1 Integer
+0 <= x_30 <= 1 Integer
+0 <= x_31 <= 1 Integer
+0 <= x_32 <= 1 Integer
+0 <= x_33 <= 1 Integer
+0 <= x_34 <= 1 Integer
+0 <= x_35 <= 1 Integer
+0 <= x_40 <= 1 Integer
+0 <= x_41 <= 1 Integer
+0 <= x_42 <= 1 Integer
+0 <= x_43 <= 1 Integer
+0 <= x_44 <= 1 Integer
+0 <= x_45 <= 1 Integer
+0 <= x_50 <= 1 Integer
+0 <= x_51 <= 1 Integer
+0 <= x_52 <= 1 Integer
+0 <= x_53 <= 1 Integer
+0 <= x_54 <= 1 Integer
+0 <= x_55 <= 1 Integer
+```
+-->
+<h2 id="解決">解決</h2>
 <p><code>solve()</code>関数で問題を解きます．
 この関数の戻り値が<code>1(Optimal)</code>のときは，最適解が得られたことを表します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">status <span style="color:#f92672">=</span> problem<span style="color:#f92672">.</span>solve()
