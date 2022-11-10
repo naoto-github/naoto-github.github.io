@@ -19,12 +19,10 @@
       <guid>https://mukai-lab.info/pages/classes/management_data_analysis/chapter10/</guid>
       <description>巡回セールスマン問題  計算量が多くNP困難な問題として知られる 巡回セールスマン問題 に挑戦しましょう． 前回の最短経路問題と同様に，線形計画問題の一つとして扱うことが可能です．
 例題   次の図に示されるようにAからFまでの6つの都市が点在している． 各都市の位置（座標）は$(X, Y)$で表されている． このとき，Aからスタートし，全ての都市を一度ずつ訪れてから， Aに戻ってくる経路のうち，最短の経路を求めよ．  
-データセット  ここでは，次のCSV形式のデータセットを利用します． 下記のURLからファイルをダウンロードしてください． 上述と同じ巡回セールスマン問題であり，各都市の座標を表しています．
- dataset9.csv
-都市,X,Y A,17,72 B,97,8 C,32,15 D,63,97 E,57,60 F,83,48 Excelで巡回セールスマン問題  Excelのソルバーを利用して巡回セールスマン問題を解きましょう． ダウンロードしたファイルをExcelで開いてください．
-
-Pythonで最短経路問題  Pythonを利用して最適生産計画を解きましょう． Jupyter Labを起動して，Pytohn 3のノートブックを開きます． ノートブックの名前は chapter10.ipynb とします． pandas，matplotlib，numpy，PuLPなどのライブラリをインポートしておきましょう． ユークリッド距離を計算するscipy.spatial，ネットワークを可視化するnetworkxもインポートします．
-import pandas as pd import matplotlib.pyplot as plt import japanize_matplotlib import numpy as np from pulp import * from scipy.spatial import distance import networkx as nx データセットの読込 read_csv関数でデータセットを読み込みます．</description>
+まずは，6つの都市を巡る経路が幾つあるか数えてみましょう． 最初の都市はAで確定しているため，2番目に訪れる都市は5通りです． 同様に3番目に訪れる都市は4通りです． よって，都市数$n$における候補となる経路数は次の式で与えられます．
+$$ (n-1)! = 5! = 5 \times 4 \times 3 \times 2 \times 1 = 120 $$
+このとき，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow A$と， 訪れる順番を逆さまにした$A \rightarrow F \rightarrow E \rightarrow D \rightarrow C \rightarrow B \rightarrow A$は同じ距離になるため，実質的な候補となる経路は上記の半分となります．
+$$ \frac{(n-1)!}{2} = \frac{5!}{2} = \frac{5 \times 4 \times 3 \times 2 \times 1}{2} = \frac{120}{2} = 60 $$</description>
     </item>
     
     <item>

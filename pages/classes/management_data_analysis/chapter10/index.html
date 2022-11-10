@@ -89,12 +89,10 @@
 
   <meta property="og:description" content="巡回セールスマン問題  計算量が多くNP困難な問題として知られる 巡回セールスマン問題 に挑戦しましょう． 前回の最短経路問題と同様に，線形計画問題の一つとして扱うことが可能です．
 例題   次の図に示されるようにAからFまでの6つの都市が点在している． 各都市の位置（座標）は$(X, Y)$で表されている． このとき，Aからスタートし，全ての都市を一度ずつ訪れてから， Aに戻ってくる経路のうち，最短の経路を求めよ．  
-データセット  ここでは，次のCSV形式のデータセットを利用します． 下記のURLからファイルをダウンロードしてください． 上述と同じ巡回セールスマン問題であり，各都市の座標を表しています．
- dataset9.csv
-都市,X,Y A,17,72 B,97,8 C,32,15 D,63,97 E,57,60 F,83,48 Excelで巡回セールスマン問題  Excelのソルバーを利用して巡回セールスマン問題を解きましょう． ダウンロードしたファイルをExcelで開いてください．
-
-Pythonで最短経路問題  Pythonを利用して最適生産計画を解きましょう． Jupyter Labを起動して，Pytohn 3のノートブックを開きます． ノートブックの名前は chapter10.ipynb とします． pandas，matplotlib，numpy，PuLPなどのライブラリをインポートしておきましょう． ユークリッド距離を計算するscipy.spatial，ネットワークを可視化するnetworkxもインポートします．
-import pandas as pd import matplotlib.pyplot as plt import japanize_matplotlib import numpy as np from pulp import * from scipy.spatial import distance import networkx as nx データセットの読込 read_csv関数でデータセットを読み込みます．" />
+まずは，6つの都市を巡る経路が幾つあるか数えてみましょう． 最初の都市はAで確定しているため，2番目に訪れる都市は5通りです． 同様に3番目に訪れる都市は4通りです． よって，都市数$n$における候補となる経路数は次の式で与えられます．
+$$ (n-1)! = 5! = 5 \times 4 \times 3 \times 2 \times 1 = 120 $$
+このとき，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow A$と， 訪れる順番を逆さまにした$A \rightarrow F \rightarrow E \rightarrow D \rightarrow C \rightarrow B \rightarrow A$は同じ距離になるため，実質的な候補となる経路は上記の半分となります．
+$$ \frac{(n-1)!}{2} = \frac{5!}{2} = \frac{5 \times 4 \times 3 \times 2 \times 1}{2} = \frac{120}{2} = 60 $$" />
 
 
 
@@ -111,12 +109,10 @@ import pandas as pd import matplotlib.pyplot as plt import japanize_matplotlib i
 
   <meta name="twitter:description" content="巡回セールスマン問題  計算量が多くNP困難な問題として知られる 巡回セールスマン問題 に挑戦しましょう． 前回の最短経路問題と同様に，線形計画問題の一つとして扱うことが可能です．
 例題   次の図に示されるようにAからFまでの6つの都市が点在している． 各都市の位置（座標）は$(X, Y)$で表されている． このとき，Aからスタートし，全ての都市を一度ずつ訪れてから， Aに戻ってくる経路のうち，最短の経路を求めよ．  
-データセット  ここでは，次のCSV形式のデータセットを利用します． 下記のURLからファイルをダウンロードしてください． 上述と同じ巡回セールスマン問題であり，各都市の座標を表しています．
- dataset9.csv
-都市,X,Y A,17,72 B,97,8 C,32,15 D,63,97 E,57,60 F,83,48 Excelで巡回セールスマン問題  Excelのソルバーを利用して巡回セールスマン問題を解きましょう． ダウンロードしたファイルをExcelで開いてください．
-
-Pythonで最短経路問題  Pythonを利用して最適生産計画を解きましょう． Jupyter Labを起動して，Pytohn 3のノートブックを開きます． ノートブックの名前は chapter10.ipynb とします． pandas，matplotlib，numpy，PuLPなどのライブラリをインポートしておきましょう． ユークリッド距離を計算するscipy.spatial，ネットワークを可視化するnetworkxもインポートします．
-import pandas as pd import matplotlib.pyplot as plt import japanize_matplotlib import numpy as np from pulp import * from scipy.spatial import distance import networkx as nx データセットの読込 read_csv関数でデータセットを読み込みます．" />
+まずは，6つの都市を巡る経路が幾つあるか数えてみましょう． 最初の都市はAで確定しているため，2番目に訪れる都市は5通りです． 同様に3番目に訪れる都市は4通りです． よって，都市数$n$における候補となる経路数は次の式で与えられます．
+$$ (n-1)! = 5! = 5 \times 4 \times 3 \times 2 \times 1 = 120 $$
+このとき，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow A$と， 訪れる順番を逆さまにした$A \rightarrow F \rightarrow E \rightarrow D \rightarrow C \rightarrow B \rightarrow A$は同じ距離になるため，実質的な候補となる経路は上記の半分となります．
+$$ \frac{(n-1)!}{2} = \frac{5!}{2} = \frac{5 \times 4 \times 3 \times 2 \times 1}{2} = \frac{120}{2} = 60 $$" />
 
 
 
@@ -217,6 +213,169 @@ Aに戻ってくる経路のうち，最短の経路を求めよ．
 | F | 83 | 48 |
 -->
 <p><a href="https://gyazo.com/6fcba66d6b67f9f2e56bb4e240455b5b"><img src="https://i.gyazo.com/6fcba66d6b67f9f2e56bb4e240455b5b.png" alt="Image from Gyazo"></a></p>
+<p>まずは，6つの都市を巡る経路が幾つあるか数えてみましょう．
+最初の都市はAで確定しているため，2番目に訪れる都市は5通りです．
+同様に3番目に訪れる都市は4通りです．
+よって，都市数$n$における候補となる経路数は次の式で与えられます．</p>
+<p>$$
+(n-1)! = 5! = 5 \times 4 \times 3 \times 2 \times 1 = 120
+$$</p>
+<p>このとき，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow A$と，
+訪れる順番を逆さまにした$A \rightarrow F \rightarrow E \rightarrow D \rightarrow C \rightarrow B \rightarrow A$は同じ距離になるため，実質的な候補となる経路は上記の半分となります．</p>
+<p>$$
+\frac{(n-1)!}{2} = \frac{5!}{2} = \frac{5 \times 4 \times 3 \times 2 \times 1}{2} = \frac{120}{2} = 60
+$$</p>
+<p>この経路数は，階乗のオーダーで急激に大きくなってしまうため，$n$が大きくなると有限時間で解を得ることが困難になることが知られています（組合わせ爆発）．
+日本科学未来館の動画「<a href="https://youtu.be/Q4gTV4r0zRs">『フカシギの数え方』おねえさんといっしょ！みんなで数えてみよう</a>」が面白いので時間があれば視聴してみましょう．</p>
+<p>問題を定式化するために，変数$x_{ij}$を導入します．
+ノード$i$からノード$j$の経路を含むときは$x_{ij}=1$，経路を含まないときは$x_{ij}=0$とします．
+例えば，経路$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow A$は，
+次の行列$x_{ij}$で表すことができます．</p>
+<table>
+<thead>
+<tr>
+<th>i ＼ j</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>E</th>
+<th>F</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>$x_{AA}=0$</td>
+<td>$x_{AB}=1$</td>
+<td>$x_{AC}=0$</td>
+<td>$x_{AD}=0$</td>
+<td>$x_{AE}=0$</td>
+<td>$x_{AF}=0$</td>
+</tr>
+<tr>
+<td>B</td>
+<td>$x_{BA}=0$</td>
+<td>$x_{BB}=0$</td>
+<td>$x_{BC}=1$</td>
+<td>$x_{BD}=0$</td>
+<td>$x_{BE}=0$</td>
+<td>$x_{BF}=0$</td>
+</tr>
+<tr>
+<td>C</td>
+<td>$x_{CA}=0$</td>
+<td>$x_{CB}=0$</td>
+<td>$x_{CC}=0$</td>
+<td>$x_{CD}=1$</td>
+<td>$x_{CE}=0$</td>
+<td>$x_{CF}=0$</td>
+</tr>
+<tr>
+<td>D</td>
+<td>$x_{DA}=0$</td>
+<td>$x_{DB}=0$</td>
+<td>$x_{DC}=0$</td>
+<td>$x_{DD}=0$</td>
+<td>$x_{DE}=1$</td>
+<td>$x_{DF}=0$</td>
+</tr>
+<tr>
+<td>E</td>
+<td>$x_{EA}=0$</td>
+<td>$x_{EB}=0$</td>
+<td>$x_{EC}=0$</td>
+<td>$x_{ED}=0$</td>
+<td>$x_{EE}=0$</td>
+<td>$x_{EF}=1$</td>
+</tr>
+<tr>
+<td>F</td>
+<td>$x_{FA}=1$</td>
+<td>$x_{FB}=0$</td>
+<td>$x_{FC}=0$</td>
+<td>$x_{FD}=0$</td>
+<td>$x_{FE}=0$</td>
+<td>$x_{FF}=0$</td>
+</tr>
+</tbody>
+</table>
+<p>同様にノード$i$からノード$j$までの距離（コスト）を$w_{ij}$で表します．
+2ノード間の距離はノードの座標から算出が可能です．
+$w_{AA}$など同じノードの距離は$0$になります．</p>
+<table>
+<thead>
+<tr>
+<th align="left">i ＼ j</th>
+<th align="left">A</th>
+<th align="left">B</th>
+<th align="left">C</th>
+<th align="left">D</th>
+<th align="left">E</th>
+<th align="left">F</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">A</td>
+<td align="left">$w_{AA}=0$</td>
+<td align="left">$w_{AB}=102$</td>
+<td align="left">$w_{AC}=58$</td>
+<td align="left">$w_{AD}=52$</td>
+<td align="left">$w_{AE}=41$</td>
+<td align="left">$w_{AF}=70$</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="left">$w_{BA}=102$</td>
+<td align="left">$w_{BB}=0$</td>
+<td align="left">$w_{BC}=65$</td>
+<td align="left">$w_{BD}=95$</td>
+<td align="left">$w_{BE}=65$</td>
+<td align="left">$w_{BF}=42$</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">$w_{CA}=58$</td>
+<td align="left">$w_{CB}=65$</td>
+<td align="left">$w_{CC}=0$</td>
+<td align="left">$w_{CD}=87$</td>
+<td align="left">$w_{CE}=51$</td>
+<td align="left">$w_{CF}=60$</td>
+</tr>
+<tr>
+<td align="left">D</td>
+<td align="left">$w_{DA}=52$</td>
+<td align="left">$w_{DB}=95$</td>
+<td align="left">$w_{DC}=87$</td>
+<td align="left">$w_{DD}=0$</td>
+<td align="left">$w_{DE}=37$</td>
+<td align="left">$w_{DF}=52$</td>
+</tr>
+<tr>
+<td align="left">E</td>
+<td align="left">$w_{EA}=41$</td>
+<td align="left">$w_{EB}=65$</td>
+<td align="left">$w_{EC}=51$</td>
+<td align="left">$w_{ED}=37$</td>
+<td align="left">$w_{EE}=0$</td>
+<td align="left">$w_{EF}=28$</td>
+</tr>
+<tr>
+<td align="left">F</td>
+<td align="left">$w_{FA}=70$</td>
+<td align="left">$w_{FB}=42$</td>
+<td align="left">$w_{FC}=60$</td>
+<td align="left">$w_{FD}=52$</td>
+<td align="left">$w_{FE}=28$</td>
+<td align="left">$w_{FF}=0$</td>
+</tr>
+</tbody>
+</table>
+<p>上記の$x_{ij}$と$w_{ij}$を用いて目的関数は次のように定義できます．</p>
+<p>$$
+経路長 = \sum_{i, j \in E} w_{ij} \cdot x_{ij}
+$$</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   データセット
 </h1>
