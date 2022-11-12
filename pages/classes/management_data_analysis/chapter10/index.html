@@ -300,8 +300,8 @@ $$</p>
 </tr>
 </tbody>
 </table>
-<p>同様にノード$i$からノード$j$までの距離（コスト）を$w_{ij}$で表します．
-2ノード間の距離はノードの座標から算出が可能です．
+<p>同様にノード$i$からノード$j$までの距離（コスト）を行列$w_{ij}$で表します．
+2ノード間の距離はノードの座標から算出します．
 $w_{AA}$など同じノードの距離は$0$になります．</p>
 <table>
 <thead>
@@ -372,10 +372,40 @@ $w_{AA}$など同じノードの距離は$0$になります．</p>
 </tr>
 </tbody>
 </table>
-<p>上記の$x_{ij}$と$w_{ij}$を用いて目的関数は次のように定義できます．</p>
+<p>上記の$x_{ij}$と$w_{ij}$を用いて目的関数である経路長は次のように定義できます．
+この目的関数を最小化することを狙います．</p>
 <p>$$
 経路長 = \sum_{i, j \in E} w_{ij} \cdot x_{ij}
 $$</p>
+<p>例えば，経路$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow A$の経路長は次のように計算できます（$x_{ij}=0$の項は省略）．</p>
+<p>$$
+経路長 = 1 \times 102 + 1 \times 65 + 1 \times 87 + 1 \times 37 + 1 \times 28 + 1 \times 70 = 389
+$$</p>
+<p>次に制約条件を定義します．
+制約条件は，<strong>始点の条件</strong>，<strong>終点の条件</strong>，<strong>ループの禁止</strong> の3種類に分類されます（部分経路を回避するには，後述の <strong>MTZ制約(Miller-Tucker-Zemlin Formulation)</strong> が必要）．</p>
+<p>始点の条件は次の式で表されます．
+ここで，$\forall i$は任意のノード$i$を表します．
+例えば，ノード$A$を始点とすると，その次には$B,C,D,E,F$のいずれかに遷移します．
+このため，$x_{AA}+x_{AB}+x_{AC}+x_{AD}+x_{AE}+x_{EF}$は常に1となります．</p>
+<p>$$
+\sum_{j} x_{ij} = 1, \forall i
+$$</p>
+<p><a href="https://gyazo.com/b0de8c7280559927f0bf433039a6fde6"><img src="https://i.gyazo.com/b0de8c7280559927f0bf433039a6fde6.png" alt="Image from Gyazo"></a></p>
+<p>終点の条件は次の式で表されます．
+ここで，$\forall j$は任意のノード$j$を表します．
+例えば，ノード$A$を終点とすると，その前には$B,C,D,E,F$のいずれかに滞在してるはずです．
+このため，$x_{AA}+x_{BA}+x_{CA}+x_{DA}+x_{EA}+x_{FA}$は常に1となります．</p>
+<p>$$
+\sum_{i} x_{ij} = 1, \forall j
+$$</p>
+<p><a href="https://gyazo.com/054fde6105e0db1f45d477a3faeb8cea"><img src="https://i.gyazo.com/054fde6105e0db1f45d477a3faeb8cea.png" alt="Image from Gyazo"></a></p>
+<p>ループの禁止は次の式で表されます．
+例えば，ノード$A$から，同じノード$A$に遷移することはあり得ません．
+このため，$x_{AA}$は常に0です．</p>
+<p>$$
+x_{ii} = 0, \forall i
+$$</p>
+<p>上記の目的関数と制約条件を利用して，巡回セールスマン問題を解いてみましょう．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   データセット
 </h1>
@@ -397,6 +427,52 @@ F,83,48
 
 <p>Excelのソルバーを利用して巡回セールスマン問題を解きましょう．
 ダウンロードしたファイルをExcelで開いてください．</p>
+<h2 id="変数">変数</h2>
+<p>$E1:K7$に変数$x_{ij}$を入力します．
+初期状態では，経路$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow A$を表すために，$x_{AB}=1$，$x_{BC}=1$，$x_{CD}=1$，$x_{DE}=1$，$x_{EF}=1$，$x_{FA}=1$に設定しましょう．</p>
+<p><a href="https://gyazo.com/364df29ffc7f4a8b15b737eaeef1dbf2"><img src="https://i.gyazo.com/364df29ffc7f4a8b15b737eaeef1dbf2.png" alt="Image from Gyazo"></a></p>
+<h2 id="距離行列">距離行列</h2>
+<p>$E9:15$に距離行列$w_{ij}$を入力します．
+ノード間のコストはユークリッド距離で計算します．
+例えば，ノード$A$とノード$B$の距離を求める$G10$には次の式を入力します．</p>
+<p>$$
+=SQRT(($B$3-$B2)^2+($C$3-$C2)^2)
+$$</p>
+<p><a href="https://gyazo.com/7ea23e082648c01e4fdeb14621c4378f"><img src="https://i.gyazo.com/7ea23e082648c01e4fdeb14621c4378f.png" alt="Image from Gyazo"></a></p>
+<h2 id="目的関数">目的関数</h2>
+<p>$F17$に，<code>SUMPRODUCT</code>関数を利用して，目的関数を入力します．
+初期状態の経路$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E \rightarrow F \rightarrow A$の距離は$391.8$であることが分かります．</p>
+<p>$$
+=SUMPRODUCT(F2:K7,F10:K15)
+$$</p>
+<p><a href="https://gyazo.com/28bd1c86a3ff47305360be8a306b8eaf"><img src="https://i.gyazo.com/28bd1c86a3ff47305360be8a306b8eaf.png" alt="Image from Gyazo"></a></p>
+<h2 id="制約条件">制約条件</h2>
+<p>$E19:H24$に始点の制約条件を入力します．
+例えば，Aが始点となる条件を入力する$F19$には次の式を入力します．</p>
+<p>$$
+=SUM(F2:K2)
+$$</p>
+<p><a href="https://gyazo.com/2d3b00cc621b729555e833e00ce22168"><img src="https://i.gyazo.com/2d3b00cc621b729555e833e00ce22168.png" alt="Image from Gyazo"></a></p>
+<p>$E26:H31$に終点の制約条件を入力します．
+例えば，Aが終点となる条件を入力する$F26$には次の式を入力します．</p>
+<p>$$
+=SUM(F2:F7)
+$$</p>
+<p><a href="https://gyazo.com/143ffd826aaa6a94fec5b4270245185a"><img src="https://i.gyazo.com/143ffd826aaa6a94fec5b4270245185a.png" alt="Image from Gyazo"></a></p>
+<p>$E33:H38$にループの禁止の制約条件を入力します．
+例えば，AからAに戻るループを禁止する条件を入力する$F33$には次の式を入力します．</p>
+<p>$$
+=F2
+$$</p>
+<p><a href="https://gyazo.com/d530f4e397f703c4a09cd033ec56ef86"><img src="https://i.gyazo.com/d530f4e397f703c4a09cd033ec56ef86.png" alt="Image from Gyazo"></a></p>
+<h2 id="ソルバー">ソルバー</h2>
+<p>データ・タブからソルバーを選択します．
+ソルバーのパラメータに，目的セル（目的関数），変数セル（変数），制約条件の対象（制約条件）を設定します．
+このとき，$x_{ij}$は，0と1の2値であるため，
+制約条件としてバイナリ（bin）を設定しておきます．
+また，解決方法はGRG非線形を選択します．</p>
+<p><a href="https://gyazo.com/494c7d0fc8571456b458ce5b1cce7524"><img src="https://i.gyazo.com/494c7d0fc8571456b458ce5b1cce7524.png" alt="Image from Gyazo"></a></p>
+<p>最後に解決ボタンをクリックすると，次の結果が導出されます．</p>
 <p><a href="https://gyazo.com/374185481293be03b4f44d7b32870ab5"><img src="https://i.gyazo.com/374185481293be03b4f44d7b32870ab5.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   Pythonで最短経路問題
@@ -435,7 +511,7 @@ pos_list <span style="color:#f92672">=</span> {}
 <span style="color:#75715e"># グラフの描画</span>
 nx<span style="color:#f92672">.</span>draw(graph, pos<span style="color:#f92672">=</span>pos_list, with_labels<span style="color:#f92672">=</span>True)
 </code></pre></div><p><a href="https://gyazo.com/6560c6e931a47bf3ac10b98ad8b2a1b1"><img src="https://i.gyazo.com/6560c6e931a47bf3ac10b98ad8b2a1b1.png" alt="Image from Gyazo"></a></p>
-<h2 id="距離行列">距離行列</h2>
+<h2 id="距離行列-1">距離行列</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 距離(コスト)</span>
 c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((len(df), len(df)))
 
@@ -446,7 +522,7 @@ c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zer
         dist <span style="color:#f92672">=</span> distance<span style="color:#f92672">.</span>euclidean((x1, y1), (x2, y2)) <span style="color:#75715e"># ユークリッド距離		</span>
         c[i][j] <span style="color:#f92672">=</span> dist
 </code></pre></div><p><a href="https://gyazo.com/deb7605118cf382f4989ecf69addb80f"><img src="https://i.gyazo.com/deb7605118cf382f4989ecf69addb80f.png" alt="Image from Gyazo"></a></p>
-<h2 id="変数">変数</h2>
+<h2 id="変数-1">変数</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 変数（隣接行列）</span>
 x <span style="color:#f92672">=</span> []
 
@@ -469,7 +545,7 @@ u <span style="color:#f92672">=</span> []
 </code></pre></div><h2 id="問題">問題</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 問題</span>
 problem <span style="color:#f92672">=</span> LpProblem(<span style="color:#e6db74">&#34;巡回セールスマン問題&#34;</span>, LpMinimize)
-</code></pre></div><h2 id="目的関数">目的関数</h2>
+</code></pre></div><h2 id="目的関数-1">目的関数</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 目的関数</span>
 cost <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
@@ -478,7 +554,7 @@ cost <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
         cost <span style="color:#f92672">+=</span> c[i][j] <span style="color:#f92672">*</span> x[i][j]
 
 problem <span style="color:#f92672">+=</span> cost
-</code></pre></div><h2 id="制約条件">制約条件</h2>
+</code></pre></div><h2 id="制約条件-1">制約条件</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 制約条件（始点の条件）</span>
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
     sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
