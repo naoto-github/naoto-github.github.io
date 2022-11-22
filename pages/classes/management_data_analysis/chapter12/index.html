@@ -261,11 +261,29 @@ $$</p>
 </tr>
 </tbody>
 </table>
+<p>上記のデータを基に導出した回帰モデルは次の式で表されます．
+$w_0=-75.47$，$w_1=-0.30$，$w_2=2.03$に対応します．</p>
+<p>$$
+y = -75.47 + -0.30 \times x_1 + 2.03 \times x_2
+$$</p>
+<p>この回帰モデルをグラフで表すと，次の平面で表されます．
+この平面は，身長・座高と体重との関係を適切に表現できているように思われます．</p>
+<p><a href="https://gyazo.com/31e5eaab1f19cadb547e29f9f8970d0f"><img src="https://i.gyazo.com/31e5eaab1f19cadb547e29f9f8970d0f.jpg" alt="Image from Gyazo" width="400"/></a></p>
 <p>回帰モデルの適切な係数を導出するには，単回帰と同様に最小二乗法を利用します．
 観測された変数$y$と，回帰モデルで算出された値$f(x)$との残差平方和を最小化します．</p>
-<p>ここでは，算出された回帰モデルの当てはまりの良さを表す <strong>決定係数</strong> $R^2$ について確認しましょう．</p>
+<p>ここでは，算出された回帰モデルの当てはまりの良さを表す <strong>決定係数</strong> $R^2$ について確認しましょう．
+決定係数$R^2$は次の式で算出することができます．
+ここで，$\bar{y}$は$y$の平均値を表しています．
+最小二乗法は残差平方和を最小化する手法であるため，式中の分子を0に近付ける操作であると言えます．
+このため，$R^2$が1に近ければ相対的に残差が小さいことを示す指標となります．</p>
 <p>$$
-R^2 = 1 - \frac{y - f(x)}{y - \bar{y}}
+R^2 =  1 - \frac{残差平方和}{偏差平方和} = 1 - \sum_{i=0}^{n-1}\frac{(y_i - f(x_i))^2}{(y_i - \bar{y})^2}
+$$</p>
+<p><a href="https://gyazo.com/d361ade5d8142ac97b3d04f40b7ff06e"><img src="https://i.gyazo.com/d361ade5d8142ac97b3d04f40b7ff06e.png" alt="Image from Gyazo"></a></p>
+<p>しかし，重回帰分析においては，説明変数が増えるほど，決定係数$R^2$が大きくなる傾向があります．
+このため，説明変数の数を$m$，標本の大きさを$n$とするとき，次に示す <strong>自由度調整済みの決定係数</strong> が用いられます．</p>
+<p>$$
+R^2 = 1 - \sum_{i=0}^{n-1}\frac{(y_i - f(x_i))^2 / (n - m - 1)}{(y_i - \bar{y})^2 / (n-1)}
 $$</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   データセット
@@ -273,8 +291,7 @@ $$</p>
 
 <p>ここでは，次のCSV形式のデータセットを利用します．
 下記のURLからファイルをダウンロードしてください．
-運動能力のデータセットであり，体重（Weight[kg]），胴囲（Waist[cm]），心拍（Pulse），懸垂回数（Chins），腹筋回数（Shitups）で構成されます．
-説明変数として，体重，胴囲，心拍，目的変数（被説明変数）として懸垂回数，腹筋回数を用います．</p>
+運動能力のデータセットであり，体重（Weight[kg]），胴囲（Waist[cm]），心拍（Pulse），懸垂回数（Chins），腹筋回数（Shitups）で構成されます．</p>
 <p><a href="https://mukai-lab.info/classes/management_data_analysis/dataset11.csv"><i class="fas fa-cloud-download-alt"></i> dataset11.csv</a></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Weight,Waist,Pulse,Chins,Shitups
 87,91,50,5,162
@@ -301,6 +318,25 @@ $$</p>
   Excelで重回帰分析
 </h1>
 
+<p>Excelの分析ツールを利用して重回帰分析を試してみましょう．
+ダウンロードしたファイルをExcelで開いてください．
+説明変数として，体重$x_1$，胴囲$x_2$，心拍$x_3$，目的変数（被説明変数）として懸垂回数$y$を用います．
+回帰モデルは次の式を採用します．</p>
+<p>$$
+f(x) = w_0 \times 1 + w_1 \times x_1 + w_2 \times x_2 + w_3 \times x_3
+$$</p>
+<h2 id="分析ツール">分析ツール</h2>
+<p>分析ツールから「回帰分析」を選びましょう．</p>
+<p><a href="https://gyazo.com/eff24d41d6059fc4f1a93a53c7bf324d"><img src="https://i.gyazo.com/eff24d41d6059fc4f1a93a53c7bf324d.png" alt="Image from Gyazo"></a></p>
+<p>「入力Y範囲」に$D1:D21$，「入力X範囲」に$A1:C21$を入力します．
+このとき，「先頭行をラベルとして使用」にチェックを入れます．</p>
+<p><a href="https://gyazo.com/060a5e9634381174c2e29736267c30bc"><img src="https://i.gyazo.com/060a5e9634381174c2e29736267c30bc.png" alt="Image from Gyazo"></a></p>
+<p>次のような結果が算出されます．
+回帰モデルの係数は$w_0=45.65$，$w_1=0.15$，$w_2=-0.53$，$w_3=-0.01$となったことがわかります．
+また，決定係数$R^2$は0.32，自由度調整済み決定係数$R^2$は0.19となりました．
+一般に$R^2 \geq 0.5$のときに当てはまりが良いとみなすため，
+この回帰モデルの精度は高くないと言えます．</p>
+<p><a href="https://gyazo.com/d55650604f729e8c6426b315b92d54a7"><img src="https://i.gyazo.com/d55650604f729e8c6426b315b92d54a7.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   Pythonで重回帰分析
 </h1>
