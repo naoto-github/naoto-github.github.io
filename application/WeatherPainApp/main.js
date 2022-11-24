@@ -32,7 +32,7 @@ ons.ready(function(){
 	}
 	else if(page.matches("#database")){
 	    let bt_get = document.getElementById("bt_get");
-	    let bt_clear = document.getElementById("bt_clear");    
+	    let bt_clear = document.getElementById("bt_clear");
 	    
 	    bt_get.onclick = function(){
 		getWeatherData();
