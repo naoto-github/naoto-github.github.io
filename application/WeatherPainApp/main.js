@@ -10,44 +10,35 @@ let rx_characteristic;
 let id_list = []
 let item_list = []
 
-ons.ready(function(){
+
+async function getCurrentWeather(){
+
+    let lat = 0;
+    let lng = 0;
+    let base_url = "https://revgeo-forecastcode.herokuapp.com/"
     
-    let ons_navi = document.getElementById("navigator");
+    if(navigator.geolocation){
 
+	navigator.geolocation.getCurrentPosition(async function(position){
+	    lat = position.coords.latitude;
+	    lng = position.coords.longitude;
+	    
+	    $("#lat").val(lat);
+	    $("#lng").val(lng);
 
-    document.addEventListener("init", function(event){
-	let page = event.target;
+	    let url = base_url + "lat=" + lat + "+lon=" + lng;
+	    console.log(url);
 
-	if(page.matches("#top")){
-	    let bt_connect = document.getElementById("bt_connect");
-	    let bt_disconnect = document.getElementById("bt_disconnect");
-	    
-	    bt_connect.onclick = function(){
-		connect(ons_navi);	
-	    };
-	    
-	    bt_disconnect.onclick = function(){
-		disconnect();
-	    };	    
-	}
-	else if(page.matches("#database")){
-	    let bt_get = document.getElementById("bt_get");
-	    let bt_clear = document.getElementById("bt_clear");
-	    
-	    bt_get.onclick = function(){
-		getWeatherData();
-	    };
-	    
-	    bt_clear.onclick = function(){
-		clearWeatherData();
-	    };
+            let data = await fetch(url).then((response) => {
+		return response.json();
+            });
 
-	    initTable();
-	}
+	    $("#forecast").val(data)
+
+	});	
 	
-    });
-
-});
+    }
+}
 
 function initTable(){
     
@@ -115,7 +106,7 @@ async function connect(ons_navi){
 	rx_characteristic = await service.getCharacteristic(uuid_rx_characteristic);
 
 	// ページ遷移
-	ons_navi.pushPage("database.html");
+	ons_navi.pushPage("connect.html");
 	
     }catch(error){
 	console.log("[Error]: " + error);

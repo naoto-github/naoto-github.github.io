@@ -1,172 +1,149 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="./manifest.json">  
-  <title>Weather Pain App</title>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="./manifest.json">  
+    <title>天気通イヤホン</title>
+    
+    <!-- jQuery -->
+    <script src="./lib/jquery-3.6.1.min.js"></script>
+    
+    <!-- Onsen UI -->
+    <link rel="stylesheet" href="./lib/onsen-ui/css/onsenui.css">
+    <link rel="stylesheet" href="./lib/onsen-ui/css//onsen-css-components.min.css">
+    <script src="./lib/onsen-ui/js/onsenui.min.js"></script>
 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <!-- uuid.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js" integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- main.css -->
+    <link rel="stylesheet" href="main.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800&display=swap" rel="stylesheet">
+    
+  </head>
   
-  <!-- Onsen UI -->
-  <link rel="stylesheet" href="./onsen-ui/css/onsenui.css">
-  <link rel="stylesheet" href="./onsen-ui/css//onsen-css-components.min.css">
-  <script src="./onsen-ui/js/onsenui.min.js"></script>
+  <body>
+    
+    <ons-navigator id="navigator" page="top.html"></ons-navigator>
 
-  <!-- uuid.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js" integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <!-- main.css -->
-  <link rel="stylesheet" href="main.css">
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800&display=swap" rel="stylesheet">
-  
-</head>
-
-<body>
-
-  <ons-navigator id="navigator" page="top.html"></ons-navigator>
-  
-  <template id="top.html">            
-    <ons-page id="top">
-
-      <!-- <ons-toolbar> 
-        <div class="center">Microbitとの接続</div>
-      </ons-toolbar>  -->
-      
-      <section class="app_back">
-
-	<div class="title_block">
-          <div class="main_title">
-            天気痛イヤホン	    
-          </div>
-
-	  <div>
-	    <img width="150px" src="images/title_icon.png">
+    <!-- トップページ -->
+    <template id="top.html">
+      <ons-page id="top">
+	
+	<section class="title_back">
+	  
+	  <div class="title_block">
+	    <div class="main_title">
+              天気痛イヤホン	    
+	    </div>
+	  
+	    <div>
+	      <img width="150px" src="images/title_icon.png">
+	    </div>
+	    
+	    <div>
+              <ons-button id="bt_connect">
+		<span class="main_text">つなぐ</span>
+	      </ons-button>
+	    </div>
 	  </div>
 	  
-          <div>
-            <ons-button>
-	      <span class="main_text">つなぐ</span>
-	    </ons-button>
-          </div>
-	</div>
+	</section>
 
-      </section>
+	<script>
 
-    </ons-page>
-  </template>
-  
-  <template id="database.html">
-    <ons-page id="database">
-      
-      <ons-toolbar>
-	<div class="center">気候データの取得</div>
-      </ons-toolbar>
-      
-      <p>
-	<button id="bt_get">取得</button>
-	<button id="bt_clear">クリア</button>
-      </p>
-      
-      <table border="1" id="item-table">
+	  let ons_navi = document.getElementById("navigator");
+	  
+	  ons.getScriptPage().onInit = function() {
+              this.onShow = function(){
+		  $("#bt_connect").click(function(){
+		      connect(ons_navi);
+		  });
+	      };
+	      
+              this.onHide = function(){
+	      };
+	      
+              this.onDestroy = function(){
+	      };
+	  };	
+	</script>
 	
-	<tr>
-	  <th>日時</th>
-	  <th>温度</th>
-	  <th>湿度</th>
-	  <th>気圧</th>
-	</tr>
+      </ons-page>    
+    </template>
 
-	<!--
-	<tr v-for="item in item_list">
-	  <td> {{ item.date }} </td>
-	  <td> {{ item.temperature }} </td>
-	  <td> {{ item.humidity }} </td>
-	  <td> {{ item.pressure }} </td>	  
-	</tr>
-	-->
-      </table>
-      
-    </ons-page>      
-  </template>    
-      
-  <!--
-  <div id="main">
-    <h1>{{ title }}</h1>
+    <!-- 接続ページ -->
+    <template id="connect.html">
+      <ons-page id="connect">
+	
+	<section class="main_back">	
+	  <div class="main_block">
+	    
+	    <div style="margin:10px">
+	      <ons-input id="lat" modifier="underbar" placeholder="Latitude" readonly></ons-input>
+	    </div>
+	    <div style="margin:10px">
+	      <ons-input id="lng" modifier="underbar" placeholder="Longitude" readonly></ons-input>
+	    </div>
+
+	    <div id="forecast" style="margin:20px">
+	      No Data
+	    </p>
+	    
+	    <div>
+	      <ons-button id="bt_get">
+		<span class="main_text">データを取得</span>
+	      </ons-button>
+	    </div>
+	  </div>
+	</section>
+
+	<script>
+	  ons.getScriptPage().onInit = function() {
+              this.onShow = function(){
+		  getCurrentWeather();
+	      };
+	      
+              this.onHide = function(){
+	      };
+	      
+              this.onDestroy = function(){
+	      };
+	  };	
+	</script>
+
+      </ons-page>    
+    </template>
+
+    <!-- ヘルプページ -->
+    <template id="help.html">
+      <ons-page id="help">
+	<section class="main_back">
+	  <div style="margin:20px">
+	    <h3>接続方法</h3>
+	    <ol>
+	      <li>ブラウザはChromeを利用する</li>
+	    <li>Chromeでchrome://flags/にアクセスし<b>Experimental Web Platform features</b>を有効にする</li>
+	      <li>Chromeを再起動する</li>
+	    </ol>
+	    
+	    <h3>参考</h3>
+	    <ul>
+	      <li><a href="https://lancaster-university.github.io/microbit-docs/resources/bluetooth/bluetooth_profile.html">Microbit's UUID</a></li>
+	      <li><a href="https://www.data.ai/en/apps/ios/app/bluenet-web-ble-browser/">Bluefy</a></li>
+	    </ul>	  
+	  </div>
+	</section>      
+      </ons-page>
+    </template>
     
-    <div>
-      <h3>Microbitとの接続</h3>
-      <p>
-        <button v-on:click="connect">接続</button>
-        <button v-on:click="disconnect">切断</button>
-      </p>
-    </div>
-    
-    <div>
-      <h3>気候データ</h3>
-      <p>
-	<button v-on:click="getWeatherData">取得</button>
-	<button v-on:click="clearWeatherData">クリア</button>
-      </p>
-      
-      <table border="1">
-	<tr>
-	  <th>日時</th>
-	  <th>温度</th>
-	  <th>湿度</th>
-	  <th>気圧</th>
-	</tr>
-	<tr v-for="item in item_list">
-	  <td> {{ item.date }} </td>
-	  <td> {{ item.temperature }} </td>
-	  <td> {{ item.humidity }} </td>
-	  <td> {{ item.pressure }} </td>	  
-	</tr>
-      </table>
-      
-    </div>
-    <div>
-      <h3>サウンドの再生</h3>
-      <p><button v-on:click="playSound">再生</button></p>
-    </div>
+    <script src="main.js"></script>  
+    <script src="register.js"></script>
 
-    <div>      
-      <h3>接続方法</h3>
-      <ol>
-	<li>ブラウザはChromeを利用する</li>
-	<li>Chromeでchrome://flags/にアクセスし<b>Experimental Web Platform features</b>を有効にする</li>
-	<li>Chromeを再起動する</li>
-      </ol>
-
-      <h3>参考</h3>
-      <ul>
-	<li><a href="https://lancaster-university.github.io/microbit-docs/resources/bluetooth/bluetooth_profile.html">Microbit's UUID</a></li>
-	<li><a href="https://www.data.ai/en/apps/ios/app/bluenet-web-ble-browser/">Bluefy</a></li>
-      </ul>
-    </div>
-    
-  </div>
-  -->
-
-  <script src="main.js"></script>
-  
-  <script>
-    if('serviceWorker' in navigator){
-	navigator.serviceWorker.register('./sw.js').then(registration => {
-	    console.log('ServiceWorker registration successful.');
-	}).catch(err => {
-	    console.log('ServiceWorker registration failed.');
-	});
-    }    
-  </script>    
-  
-  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.8/vue.min.js'></script> -->
-  <!-- <script src="./script.js"></script> -->
-
-</body>
+  </body>
 </html>
