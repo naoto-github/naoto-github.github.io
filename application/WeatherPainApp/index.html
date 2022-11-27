@@ -55,14 +55,17 @@
 	  
 	</section>
 
-	<script>
-
-	  let ons_navi = document.getElementById("navigator");
+	<script>	  
 	  
 	  ons.getScriptPage().onInit = function() {
               this.onShow = function(){
 		  $("#bt_connect").click(function(){
+		      
+		      // Microbitに接続
 		      connect(ons_navi);
+
+		      // ページ遷移
+		      ons_navi.pushPage("top.html");			      
 		  });
 	      };
 	      
@@ -83,30 +86,80 @@
 	
 	<section class="main_back">	
 	  <div class="main_block">
-	    
-	    <div style="margin:10px">
-	      <ons-input id="lat" modifier="underbar" placeholder="Latitude" readonly></ons-input>
-	    </div>
-	    <div style="margin:10px">
-	      <ons-input id="lng" modifier="underbar" placeholder="Longitude" readonly></ons-input>
-	    </div>
 
-	    <div id="forecast" style="margin:20px">
-	      No Data
-	    </p>
+	    <p class="main_text">気象庁 天気予報</p>
+	    <select id="select_area" style="font-size:20px;margin:10px">
+	      <option value="愛知県西部">愛知県西部</option>	      
+	      <option value="愛知県東部">愛知県東部</option>
+	      <option value="岐阜県美濃地方">岐阜県美濃地方</option>
+	      <option value="岐阜県飛騨地方">岐阜県飛騨地方</option>
+	      <option value="三重県北中部">三重県北中部</option>
+	      <option value="三重県南部">三重県南部</option>
+	    </select>
+	    	    
+	    <div id="weather" style="margin:10px" class="main_text"></div>
+
+	    <img id="weather_image" style="margin:10px">
 	    
-	    <div>
-	      <ons-button id="bt_get">
-		<span class="main_text">データを取得</span>
-	      </ons-button>
+	    <div id="max_temp" style="margin:10px" class="main_text"></div>
+
+	    <div id="min_temp" style="margin:10px" class="main_text"></div>	    	    	    
+	    <div style="margin:20px">
+	      <div style="margin:10px">
+		<ons-button id="bt_get">
+		  <span class="main_text">データを登録</span>
+		</ons-button>
+	      </div>
+	      <div style="margin:10px">
+		<ons-button id="bt_browse">
+		  <span class="main_text">データを閲覧</span>
+		</ons-button>
+	      </div>
+	      <div style="margin:10px">
+		<ons-button id="bt_clear">
+		  <span class="main_text">初期化</span>
+		</ons-button>
+	      </div>	      
+	      <div style="margin:10px">
+		<ons-button id="bt_help">
+		  <span class="main_text">ヘルプ</span>
+		</ons-button>		
+	      </div>
 	    </div>
+	    
 	  </div>
 	</section>
 
 	<script>
+
 	  ons.getScriptPage().onInit = function() {
               this.onShow = function(){
 		  getCurrentWeather();
+		  loadStorage();
+
+		  $("#select_area").change(function(){
+		      getCurrentWeather();
+		  });
+
+		  $("#bt_get").click(function(){		      
+		      // ページ遷移
+		      ons_navi.pushPage("register.html");
+		  });
+
+		  $("#bt_browse").click(function(){		      
+		      // ページ遷移
+		      ons_navi.pushPage("browse.html");
+		  });		  		  
+
+		  $("#bt_clear").click(function(){		      
+		      clearStorage();
+		  });		  
+		  
+		  $("#bt_help").click(function(){		      
+		      // ページ遷移
+		      ons_navi.pushPage("help.html");
+		  });		  
+		  
 	      };
 	      
               this.onHide = function(){
@@ -120,9 +173,214 @@
       </ons-page>    
     </template>
 
+    <!-- 登録ページ -->
+    <template id="register.html">
+      <ons-page id="register">
+
+	<ons-toolbar>
+	  <div class="left">
+	    <ons-back-button>戻る</ons-back-button>
+	  </div>
+	</ons-toolbar>
+	
+	<section class="main_back">
+	  
+	  <div class="main_block">
+
+	    
+	    <div class="main_text">
+	      日時: <ons-input id="app_today_date" modifier="underbar" placeholder="日時" float></ons-input>
+	    </div>
+
+	    <div class="main_text">
+	      時刻: <ons-input id="app_today_time" modifier="underbar" placeholder="時刻" float></ons-input>
+	    </div>	    
+
+	    <div class="main_text">
+	      地域: <ons-input id="app_area" modifier="underbar" placeholder="地域" float></ons-input>
+	    </div>	    
+	    
+	    <div class="main_text">
+	      天気: <ons-input id="app_weather" modifier="underbar" placeholder="天気" float></ons-input>
+	    </div>	    
+
+	    <div class="main_text">
+	      最高気温: <ons-input id="app_max_temp" modifier="underbar" placeholder="最高気温" float></ons-input>
+	    </div>	    
+
+	    <div class="main_text">
+	      最低気温: <ons-input id="app_min_temp" modifier="underbar" placeholder="最低気温" float></ons-input>
+	    </div>	    	    
+	    
+	    <div class="main_text">
+	      温度: <ons-input id="app_temperature" modifier="underbar" placeholder="温度" float></ons-input>
+	    </div>
+
+	    <div class="main_text">
+	      湿度: <ons-input id="app_humidity" modifier="underbar" placeholder="湿度" float></ons-input>
+	    </div>
+
+	    <div class="main_text">
+	      気圧: <ons-input id="app_pressure" modifier="underbar" placeholder="気圧" float></ons-input>
+	    </div>
+
+	    <div>
+	      <select id="select_pain" style="font-size:20px;margin:10px">
+		<option value="1">痛くない</option>
+		<option value="2">すこし痛い</option>
+		<option value="3">痛い</option>		
+		<option value="4">とても痛い</option>	      		
+	      </select>
+
+	      <div>
+		<img id="pain_image" src="./images/pain-1.png" style="width:100px">
+	      </div>
+	      
+	    </div>
+	    
+	    <div style="margin:20px">
+              <ons-button id="bt_register">
+		<span class="main_text">登録</span>
+	      </ons-button>	      
+	    </div>
+	  </div>
+	  
+	</section>
+
+	<script>	  
+	  
+	  ons.getScriptPage().onInit = function() {
+
+	      getSensorData();
+	      
+              this.onShow = function(){
+
+		  $("#select_pain").change(function(){
+		      let value = $("#select_pain option:selected").val();
+		      let image_path = "./images/pain-" + value + ".png";
+		      $("#pain_image").attr("src", image_path);
+		  });
+		  
+		  $("#bt_register").click(function(){
+		      let pain = $("#select_pain option:selected").text();
+		      let pain_level = $("#select_pain option:selected").val();
+		      app_item.setPainData(pain, pain_level);
+		      console.log(app_item.toItem());
+
+		      saveStorage(app_item);
+		      
+		      options = {
+			  title: "確認",
+			  callback: function(){
+			      ons_navi.popPage();
+			  }
+		      }
+		      
+		      ons.notification.alert("登録されました", options);
+		      
+		  });
+		  
+	      };
+	      
+              this.onHide = function(){
+	      };
+	      
+              this.onDestroy = function(){
+	      };
+	  };	
+	</script>
+	
+      </ons-page>    
+    </template>
+
+    <!-- 閲覧ページ -->
+    <template id="browse.html">
+      <ons-page id="browse">
+
+	<ons-toolbar>
+	  <div class="left">
+	    <ons-back-button>戻る</ons-back-button>
+	  </div>
+	</ons-toolbar>
+	
+	<section class="main_back">
+	  <ons-list id="item_list">
+	    <ons-list-header class="main_text" style="padding:10px">データ</ons-list-header>
+	  </ons-list>
+	</section>
+
+	<script>
+
+	  ons.getScriptPage().onInit = function() {
+              this.onShow = function(){
+		  setItemList();
+
+		  $("#item_list ons-list-item").click(function(){
+		      let id = $(this).attr("value");
+		      let item = item_list[id];
+		      app_item.loadItem(item);
+		      console.log(app_item.toItem());
+
+		      let dialog = $("#dialog")[0];
+		      if(dialog){
+			  app_item.setDialog(dialog);
+			  dialog.show();
+		      }
+		      else{
+			  ons.createElement('dialog.html', { append: true })
+			      .then(function(dialog) {
+				  app_item.setDialog(dialog);
+				  dialog.show();
+			      });
+		      }
+		  });
+	      };
+	      
+              this.onHide = function(){
+	      };
+	      
+              this.onDestroy = function(){
+	      };
+	  };	
+	</script>	
+      </ons-page>
+    </template>
+
+    <!-- ダイアログ -->
+    <template id="dialog.html">
+      <ons-dialog id="dialog">
+
+	<section style="padding:10px">
+	  <p id="d_today_date"></p>
+	  <p id="d_today_time"></p>
+	  <p id="d_area"></p>
+	  <p id="d_weather"></p>
+	  <p id="d_max_temp"></p>
+	  <p id="d_min_temp"></p>
+	  <p id="d_temperature"></p>
+	  <p id="d_humidity"></p>
+	  <p id="d_pressure"></p>
+	  <p id="d_pain"></p>	  	  
+	  <div>
+	    <ons-button id="close_dialog">
+	      <span class="main_text">閉じる</span>
+	    </ons-button>
+	  </div>
+	</section>
+	
+      </ons-dialog>
+    </template>
+    
     <!-- ヘルプページ -->
     <template id="help.html">
       <ons-page id="help">
+
+	<ons-toolbar>
+	  <div class="left">
+	    <ons-back-button>戻る</ons-back-button>
+	  </div>
+	</ons-toolbar>
+	
 	<section class="main_back">
 	  <div style="margin:20px">
 	    <h3>接続方法</h3>
@@ -141,9 +399,13 @@
 	</section>      
       </ons-page>
     </template>
-    
-    <script src="main.js"></script>  
-    <script src="register.js"></script>
+
+    <script src="AppItem.js"></script>
+    <script src="StrageManager.js"></script>    
+    <script src="main.js"></script>
+    <script src="MicrobitManager.js"></script>
+    <script src="WeatherManager.js"></script>  
+    <script src="weather_code.js"></script>
 
   </body>
 </html>
