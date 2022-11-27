@@ -116,6 +116,11 @@
 		</ons-button>
 	      </div>
 	      <div style="margin:10px">
+		<ons-button id="bt_download">
+		  <span class="main_text">ダウンロード</span>
+		</ons-button>
+	      </div>	      
+	      <div style="margin:10px">
 		<ons-button id="bt_clear">
 		  <span class="main_text">初期化</span>
 		</ons-button>
@@ -151,6 +156,17 @@
 		      ons_navi.pushPage("browse.html");
 		  });		  		  
 
+		  $("#bt_download").click(function(){		      
+		      let json = JSON.stringify(item_list);
+		      let blob = new Blob([json], { type: 'application/json' });
+		      let dummy_a_el = document.createElement("a");
+		      document.body.appendChild(dummy_a_el);
+		      dummy_a_el.href = window.URL.createObjectURL(blob);
+		      dummy_a_el.download = 'data.json';
+		      dummy_a_el.click();
+		      document.body.removeChild(dummy_a_el);
+		  });		  
+		  
 		  $("#bt_clear").click(function(){		      
 		      clearStorage();
 		  });		  
@@ -405,7 +421,7 @@
     <script src="main.js"></script>
     <script src="MicrobitManager.js"></script>
     <script src="WeatherManager.js"></script>  
-    <script src="weather_code.js"></script>
+    <script src="WeatherCode.js"></script>
 
   </body>
 </html>
