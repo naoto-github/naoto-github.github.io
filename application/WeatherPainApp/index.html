@@ -46,8 +46,8 @@
 	      <img width="150px" src="images/title_icon.png">
 	    </div>
 	    
-	    <div>
-              <ons-button id="bt_connect">
+	    <div style="margin:20px">
+              <ons-button modifier="large" id="bt_connect">
 		<span class="main_text">つなぐ</span>
 	      </ons-button>
 	    </div>
@@ -106,33 +106,28 @@
 	    <div id="min_temp" style="margin:10px" class="main_text"></div>	    	    	    
 	    <div style="margin:20px">
 	      <div style="margin:10px">
-		<ons-button id="bt_get">
+		<ons-button modifier="large" id="bt_get">
 		  <span class="main_text">データを登録</span>
 		</ons-button>
 	      </div>
 	      <div style="margin:10px">
-		<ons-button id="bt_browse">
+		<ons-button modifier="large" id="bt_browse">
 		  <span class="main_text">データを閲覧</span>
 		</ons-button>
 	      </div>
 	      <div style="margin:10px">
-		<ons-button id="bt_download">
-		  <span class="main_text">ダウンロード</span>
-		</ons-button>
-	      </div>	      
-	      <div style="margin:10px">
-		<ons-button id="bt_clear">
+		<ons-button modifier="large" id="bt_clear">
 		  <span class="main_text">初期化</span>
 		</ons-button>
 	      </div>	      
 	      <div style="margin:10px">
-		<ons-button id="bt_help">
+		<ons-button modifier="large" id="bt_help">
 		  <span class="main_text">ヘルプ</span>
 		</ons-button>		
 	      </div>
 	    </div>
 	    
-	  </div>
+	  </div>	  
 	</section>
 
 	<script>
@@ -155,17 +150,6 @@
 		      // ページ遷移
 		      ons_navi.pushPage("browse.html");
 		  });		  		  
-
-		  $("#bt_download").click(function(){		      
-		      let json = JSON.stringify(item_list);
-		      let blob = new Blob([json], { type: 'application/json' });
-		      let dummy_a_el = document.createElement("a");
-		      document.body.appendChild(dummy_a_el);
-		      dummy_a_el.href = window.URL.createObjectURL(blob);
-		      dummy_a_el.download = 'data.json';
-		      dummy_a_el.click();
-		      document.body.removeChild(dummy_a_el);
-		  });		  
 		  
 		  $("#bt_clear").click(function(){		      
 		      clearStorage();
@@ -255,7 +239,7 @@
 	    </div>
 	    
 	    <div style="margin:20px">
-              <ons-button id="bt_register">
+              <ons-button modifier="large" id="bt_register">
 		<span class="main_text">登録</span>
 	      </ons-button>	      
 	    </div>
@@ -320,11 +304,24 @@
 	</ons-toolbar>
 	
 	<section class="main_back">
+	  
 	  <ons-list id="item_list">
 	    <ons-list-header class="main_text" style="padding:10px">データ</ons-list-header>
 	  </ons-list>
+	  
+	  <div style="margin:10px">
+	    <ons-button modifier="large" id="bt_download">
+	      <span class="main_text">ダウンロード</span>
+	    </ons-button>
+	  </div>
+
 	</section>
 
+	<!-- ダミー -->
+	<div style="display:hidden">
+	  <a id="download_link"></a>
+	</div>
+	
 	<script>
 
 	  ons.getScriptPage().onInit = function() {
@@ -350,6 +347,17 @@
 			      });
 		      }
 		  });
+
+		  $("#bt_download").click(function(){		      
+		      let json = JSON.stringify(item_list);
+		      let blob = new Blob([json], { type: 'application/json' });
+		      let dummy_a_el = document.getElementById("download_link");
+		      dummy_a_el.href = window.URL.createObjectURL(blob);
+		      dummy_a_el.download = "data.json";
+		      dummy_a_el.click();
+		      console.log("download");
+		  });		  
+		  
 	      };
 	      
               this.onHide = function(){
