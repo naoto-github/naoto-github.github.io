@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="./manifest.json">  
+    <link rel="manifest" href="./manifest.json">
     <title>天気通イヤホン</title>
-    
+
     <!-- jQuery -->
     <script src="./lib/jquery-3.6.1.min.js"></script>
-    
+
     <!-- Onsen UI -->
     <link rel="stylesheet" href="./lib/onsen-ui/css/onsenui.css">
     <link rel="stylesheet" href="./lib/onsen-ui/css//onsen-css-components.min.css">
@@ -16,94 +16,94 @@
 
     <!-- uuid.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js" integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+
     <!-- main.css -->
     <link rel="stylesheet" href="main.css">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800&display=swap" rel="stylesheet">
-    
+
   </head>
-  
+
   <body>
-    
+
     <ons-navigator id="navigator" page="top.html"></ons-navigator>
 
     <!-- トップページ -->
     <template id="top.html">
       <ons-page id="top">
-	
+
 	<section class="title_back">
-	  
+
 	  <div class="title_block">
 	    <div class="main_title">
-              天気痛イヤホン	    
+              天気痛イヤホン
 	    </div>
-	  
+
 	    <div>
 	      <img width="150px" src="images/title_icon.png">
 	    </div>
-	    
+
 	    <div style="margin:20px">
               <ons-button modifier="large" id="bt_connect">
 		<span class="main_text">つなぐ</span>
 	      </ons-button>
 	    </div>
 	  </div>
-	  
+
 	</section>
 
-	<script>	  
-	  
+	<script>
+
 	  ons.getScriptPage().onInit = function() {
               this.onShow = function(){
 		  $("#bt_connect").click(function(){
-		      
+
 		      // Microbitに接続
 		      connect(ons_navi);
 
 		      // ページ遷移
-		      ons_navi.pushPage("top.html");			      
+		      ons_navi.pushPage("top.html");
 		  });
 	      };
-	      
+
               this.onHide = function(){
 	      };
-	      
+
               this.onDestroy = function(){
 	      };
-	  };	
+	  };
 	</script>
-	
-      </ons-page>    
+
+      </ons-page>
     </template>
 
     <!-- 接続ページ -->
     <template id="connect.html">
       <ons-page id="connect">
-	
-	<section class="main_back">	
+
+	<section class="main_back">
 	  <div class="main_block">
 
 	    <p class="main_text">気象庁 天気予報</p>
 	    <select id="select_area" style="font-size:20px;margin:10px">
-	      <option value="愛知県西部">愛知県西部</option>	      
+	      <option value="愛知県西部">愛知県西部</option>
 	      <option value="愛知県東部">愛知県東部</option>
 	      <option value="岐阜県美濃地方">岐阜県美濃地方</option>
 	      <option value="岐阜県飛騨地方">岐阜県飛騨地方</option>
 	      <option value="三重県北中部">三重県北中部</option>
 	      <option value="三重県南部">三重県南部</option>
 	    </select>
-	    	    
+
 	    <div id="weather" style="margin:10px" class="main_text"></div>
 
 	    <img id="weather_image" style="margin:10px">
-	    
+
 	    <div id="max_temp" style="margin:10px" class="main_text"></div>
 
-	    <div id="min_temp" style="margin:10px" class="main_text"></div>	    	    	    
+	    <div id="min_temp" style="margin:10px" class="main_text"></div>
 	    <div style="margin:20px">
 	      <div style="margin:10px">
 		<ons-button modifier="large" id="bt_get">
@@ -119,15 +119,15 @@
 		<ons-button modifier="large" id="bt_clear">
 		  <span class="main_text">初期化</span>
 		</ons-button>
-	      </div>	      
+	      </div>
 	      <div style="margin:10px">
 		<ons-button modifier="large" id="bt_help">
 		  <span class="main_text">ヘルプ</span>
-		</ons-button>		
+		</ons-button>
 	      </div>
 	    </div>
-	    
-	  </div>	  
+
+	  </div>
 	</section>
 
 	<script>
@@ -141,36 +141,36 @@
 		      getCurrentWeather();
 		  });
 
-		  $("#bt_get").click(function(){		      
+		  $("#bt_get").click(function(){
 		      // ページ遷移
 		      ons_navi.pushPage("register.html");
 		  });
 
-		  $("#bt_browse").click(function(){		      
+		  $("#bt_browse").click(function(){
 		      // ページ遷移
 		      ons_navi.pushPage("browse.html");
-		  });		  		  
-		  
-		  $("#bt_clear").click(function(){		      
+		  });
+
+		  $("#bt_clear").click(function(){
 		      clearStorage();
-		  });		  
-		  
-		  $("#bt_help").click(function(){		      
+		  });
+
+		  $("#bt_help").click(function(){
 		      // ページ遷移
 		      ons_navi.pushPage("help.html");
-		  });		  
-		  
+		  });
+
 	      };
-	      
+
               this.onHide = function(){
 	      };
-	      
+
               this.onDestroy = function(){
 	      };
-	  };	
+	  };
 	</script>
 
-      </ons-page>    
+      </ons-page>
     </template>
 
     <!-- 登録ページ -->
@@ -182,36 +182,36 @@
 	    <ons-back-button>戻る</ons-back-button>
 	  </div>
 	</ons-toolbar>
-	
+
 	<section class="main_back">
-	  
+
 	  <div class="main_block">
 
-	    
+
 	    <div class="main_text">
 	      日時: <ons-input id="app_today_date" modifier="underbar" placeholder="日時" float></ons-input>
 	    </div>
 
 	    <div class="main_text">
 	      時刻: <ons-input id="app_today_time" modifier="underbar" placeholder="時刻" float></ons-input>
-	    </div>	    
+	    </div>
 
 	    <div class="main_text">
 	      地域: <ons-input id="app_area" modifier="underbar" placeholder="地域" float></ons-input>
-	    </div>	    
-	    
+	    </div>
+
 	    <div class="main_text">
 	      天気: <ons-input id="app_weather" modifier="underbar" placeholder="天気" float></ons-input>
-	    </div>	    
+	    </div>
 
 	    <div class="main_text">
 	      最高気温: <ons-input id="app_max_temp" modifier="underbar" placeholder="最高気温" float></ons-input>
-	    </div>	    
+	    </div>
 
 	    <div class="main_text">
 	      最低気温: <ons-input id="app_min_temp" modifier="underbar" placeholder="最低気温" float></ons-input>
-	    </div>	    	    
-	    
+	    </div>
+
 	    <div class="main_text">
 	      温度: <ons-input id="app_temperature" modifier="underbar" placeholder="温度" float></ons-input>
 	    </div>
@@ -228,31 +228,31 @@
 	      <select id="select_pain" style="font-size:20px;margin:10px">
 		<option value="1">痛くない</option>
 		<option value="2">すこし痛い</option>
-		<option value="3">痛い</option>		
-		<option value="4">とても痛い</option>	      		
+		<option value="3">痛い</option>
+		<option value="4">とても痛い</option>
 	      </select>
 
 	      <div>
 		<img id="pain_image" src="./images/pain-1.png" style="width:100px">
 	      </div>
-	      
+
 	    </div>
-	    
+
 	    <div style="margin:20px">
               <ons-button modifier="large" id="bt_register">
 		<span class="main_text">登録</span>
-	      </ons-button>	      
+	      </ons-button>
 	    </div>
 	  </div>
-	  
+
 	</section>
 
-	<script>	  
-	  
+	<script>
+
 	  ons.getScriptPage().onInit = function() {
 
 	      getSensorData();
-	      
+
               this.onShow = function(){
 
 		  $("#select_pain").change(function(){
@@ -260,7 +260,7 @@
 		      let image_path = "./images/pain-" + value + ".png";
 		      $("#pain_image").attr("src", image_path);
 		  });
-		  
+
 		  $("#bt_register").click(function(){
 		      let pain = $("#select_pain option:selected").text();
 		      let pain_level = $("#select_pain option:selected").val();
@@ -268,29 +268,29 @@
 		      console.log(app_item.toItem());
 
 		      saveStorage(app_item);
-		      
+
 		      options = {
 			  title: "確認",
 			  callback: function(){
 			      ons_navi.popPage();
 			  }
 		      }
-		      
+
 		      ons.notification.alert("登録されました", options);
-		      
+
 		  });
-		  
+
 	      };
-	      
+
               this.onHide = function(){
 	      };
-	      
+
               this.onDestroy = function(){
 	      };
-	  };	
+	  };
 	</script>
-	
-      </ons-page>    
+
+      </ons-page>
     </template>
 
     <!-- 閲覧ページ -->
@@ -302,13 +302,13 @@
 	    <ons-back-button>戻る</ons-back-button>
 	  </div>
 	</ons-toolbar>
-	
+
 	<section class="main_back">
-	  
+
 	  <ons-list id="item_list">
 	    <ons-list-header class="main_text" style="padding:10px">データ</ons-list-header>
 	  </ons-list>
-	  
+
 	  <div style="margin:10px">
 	    <ons-button modifier="large" id="bt_download">
 	      <span class="main_text">ダウンロード</span>
@@ -321,7 +321,7 @@
 	<div style="display:hidden">
 	  <a id="download_link"></a>
 	</div>
-	
+
 	<script>
 
 	  ons.getScriptPage().onInit = function() {
@@ -348,25 +348,30 @@
 		      }
 		  });
 
-		  $("#bt_download").click(function(){		      
+		  $("#bt_download").click(function(){
+
+          let today = new Date()
+          let today_string = today.getTime();
+          let filename = "data-" + today_string + ".json";
+
 		      let json = JSON.stringify(item_list);
 		      let blob = new Blob([json], { type: 'application/json' });
 		      let dummy_a_el = document.getElementById("download_link");
 		      dummy_a_el.href = window.URL.createObjectURL(blob);
-		      dummy_a_el.download = "data.json";
+		      dummy_a_el.download = filename;
 		      dummy_a_el.click();
 		      console.log("download");
-		  });		  
-		  
+		  });
+
 	      };
-	      
+
               this.onHide = function(){
 	      };
-	      
+
               this.onDestroy = function(){
 	      };
-	  };	
-	</script>	
+	  };
+	</script>
       </ons-page>
     </template>
 
@@ -384,17 +389,17 @@
 	  <p id="d_temperature"></p>
 	  <p id="d_humidity"></p>
 	  <p id="d_pressure"></p>
-	  <p id="d_pain"></p>	  	  
+	  <p id="d_pain"></p>
 	  <div>
 	    <ons-button id="close_dialog">
 	      <span class="main_text">閉じる</span>
 	    </ons-button>
 	  </div>
 	</section>
-	
+
       </ons-dialog>
     </template>
-    
+
     <!-- ヘルプページ -->
     <template id="help.html">
       <ons-page id="help">
@@ -404,7 +409,7 @@
 	    <ons-back-button>戻る</ons-back-button>
 	  </div>
 	</ons-toolbar>
-	
+
 	<section class="main_back">
 	  <div style="margin:20px">
 	    <h3>接続方法</h3>
@@ -413,22 +418,22 @@
 	    <li>Chromeでchrome://flags/にアクセスし<b>Experimental Web Platform features</b>を有効にする</li>
 	      <li>Chromeを再起動する</li>
 	    </ol>
-	    
+
 	    <h3>参考</h3>
 	    <ul>
 	      <li><a href="https://lancaster-university.github.io/microbit-docs/resources/bluetooth/bluetooth_profile.html">Microbit's UUID</a></li>
 	      <li><a href="https://www.data.ai/en/apps/ios/app/bluenet-web-ble-browser/">Bluefy</a></li>
-	    </ul>	  
+	    </ul>
 	  </div>
-	</section>      
+	</section>
       </ons-page>
     </template>
 
     <script src="AppItem.js"></script>
-    <script src="StrageManager.js"></script>    
+    <script src="StrageManager.js"></script>
     <script src="main.js"></script>
     <script src="MicrobitManager.js"></script>
-    <script src="WeatherManager.js"></script>  
+    <script src="WeatherManager.js"></script>
     <script src="WeatherCode.js"></script>
 
   </body>
