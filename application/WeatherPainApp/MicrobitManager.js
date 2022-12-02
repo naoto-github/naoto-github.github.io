@@ -2,6 +2,7 @@ const uuid_uart_service = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
 const uuid_tx_characteristic = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
 const uuid_rx_characteristic = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
 
+let device;
 let server;
 let service;
 let tx_characteristic;
@@ -89,20 +90,25 @@ async function connect(ons_navi){
 	
 	// 送信用
 	rx_characteristic = await service.getCharacteristic(uuid_rx_characteristic);
-
-	// ページ遷移
-	ons_navi.pushPage("connect.html");
 	
     }catch(error){
 	console.log("[Error]: " + error);
 
+	// データ登録ボタンを無効化
+	disabled_bt_get = true;
+		
     }
+
+    // ページ遷移
+    ons_navi.pushPage("connect.html");	    
 }
 
 // Microbitの切断
 function disconnect(){
     // デバイスの切断
-    device.gatt.disconnect();
+    if(device != null){
+	device.gatt.disconnect();
+    }
 }
 
 // センサーデータの取得依頼の送信

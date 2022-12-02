@@ -51,6 +51,11 @@
 		<span class="main_text">つなぐ</span>
 	      </ons-button>
 	    </div>
+	    <div style="margin:20px">
+              <ons-button modifier="large" id="bt_disconnect">
+		<span class="main_text">つながない</span>
+	      </ons-button>
+	    </div>	    
 	  </div>
 
 	</section>
@@ -64,9 +69,22 @@
 		      // Microbitに接続
 		      connect(ons_navi);
 
-		      // ページ遷移
-		      ons_navi.pushPage("top.html");
+		      // データ取得ボタンを有効化
+		      disabled_bt_get = false;
+		      
 		  });
+
+		  $("#bt_disconnect").click(function(){
+
+		      // Microbitを切断
+		      disconnect()
+		      
+		      // ページ遷移
+		      ons_navi.pushPage("connect.html");
+
+		      // データ取得ボタンを無効化
+		      disabled_bt_get = true;
+		  });		  
 	      };
 
               this.onHide = function(){
@@ -106,7 +124,7 @@
 	    <div id="min_temp" style="margin:10px" class="main_text"></div>
 	    <div style="margin:20px">
 	      <div style="margin:10px">
-		<ons-button modifier="large" id="bt_get">
+		<ons-button modifier="large" id="bt_get">		  
 		  <span class="main_text">データを登録</span>
 		</ons-button>
 	      </div>
@@ -136,6 +154,9 @@
               this.onShow = function(){
 		  getCurrentWeather();
 		  loadStorage();
+
+		  // データ登録ボタンの有効化・無効化
+		  $("#bt_get").prop("disabled", disabled_bt_get);
 
 		  $("#select_area").change(function(){
 		      getCurrentWeather();
