@@ -87,7 +87,7 @@
 
 
 
-  <meta property="og:description" content="自動微分  PyTorchでは 自動微分 という機能が実装されており， テンソルで作成した式（ 計算グラフ と呼ぶ）の傾き（勾配）が保持されます． この自動微分はパーセプトロンの重みやバイアスの学習に欠かせない機能です．
+  <meta property="og:description" content="自動微分PyTorchでは 自動微分 という機能が実装されており， テンソルで作成した式（ 計算グラフ と呼ぶ）の傾き（勾配）が保持されます． この自動微分はパーセプトロンの重みやバイアスの学習に欠かせない機能です．
 ノートブックを作成し，ノートブックのタイトルをchapter3 に設定します． まずは，PyTorchをインストールし，PyTorch，Numpy，Matplotlibをインポートします．
 !pip install torch !pip install torchvision import torch import torch.nn as nn import numpy as np import matplotlib.pyplot as plt テンソルxを2.0で初期化します． このxを自動微分の対象とするためrequires_grad=Trueをオプションとして設定します．
 x = torch.tensor([2.0], requires_grad=True) # x=2 print(x) #出力 tensor([2.], requires_grad=True) 定義したxを用いて計算グラフyを定義します． ここで，$x=2$であるため，$y=9$となります．
@@ -107,7 +107,7 @@ y = x * x &#43; 2 * x &#43; 1 print(y) #出力 tensor([9.], grad_fn=&lt;AddBackw
 
 
 
-  <meta name="twitter:description" content="自動微分  PyTorchでは 自動微分 という機能が実装されており， テンソルで作成した式（ 計算グラフ と呼ぶ）の傾き（勾配）が保持されます． この自動微分はパーセプトロンの重みやバイアスの学習に欠かせない機能です．
+  <meta name="twitter:description" content="自動微分PyTorchでは 自動微分 という機能が実装されており， テンソルで作成した式（ 計算グラフ と呼ぶ）の傾き（勾配）が保持されます． この自動微分はパーセプトロンの重みやバイアスの学習に欠かせない機能です．
 ノートブックを作成し，ノートブックのタイトルをchapter3 に設定します． まずは，PyTorchをインストールし，PyTorch，Numpy，Matplotlibをインポートします．
 !pip install torch !pip install torchvision import torch import torch.nn as nn import numpy as np import matplotlib.pyplot as plt テンソルxを2.0で初期化します． このxを自動微分の対象とするためrequires_grad=Trueをオプションとして設定します．
 x = torch.tensor([2.0], requires_grad=True) # x=2 print(x) #出力 tensor([2.], requires_grad=True) 定義したxを用いて計算グラフyを定義します． ここで，$x=2$であるため，$y=9$となります．
@@ -266,11 +266,11 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;x
 <li>平均2乗誤差(Mean Square Error : MSE)</li>
 <li>交差エントロピー(Cross Entropy : CE)</li>
 </ul>
-<p>ここでは下記の式で表される平均2乗誤差を採用します．
+<p>ここでは下記の式で表される平均2乗誤差を損失関数$L$として採用します．
 ここで，$z_i$は$i$番目のパーセプトロンの出力，$\hat{z_i}$は正しい出力です．
 また，$n$は学習データのサンプル数です．</p>
 <p>$$
-MSE = \frac{1}{n} \sum_i (z_i - \hat{z_i})^2
+L = \frac{1}{n} \sum_i (z_i - \hat{z_i})^2
 $$</p>
 <p>それでは，前回と同じ2入力・1出力の単純パーセプトロンを作成します．
 活性化関数にはシグモイド関数を採用します．</p>
@@ -311,7 +311,7 @@ tensor(<span style="color:#ae81ff">0.2365</span>, grad_fn<span style="color:#f92
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
 tensor(<span style="color:#ae81ff">0.2365</span>, grad_fn<span style="color:#f92672">=&lt;</span>DivBackward0<span style="color:#f92672">&gt;</span>)
 </code></pre></div><h2 id="勾配降下法">勾配降下法</h2>
-<p>平均2乗誤差$L$を微分（偏微分）し，
+<p>平均2乗誤差で表された損失関数$L$を微分（偏微分）し，
 パーセプトロンの重み$(w_1, w_2)$やバイアス$(w_0)$に応じた <strong>傾き（勾配）</strong> を求めます．</p>
 <p>$$
 \frac{dL}{dw_0}, \frac{dL}{dw_1}, \frac{dL}{dw_2}
@@ -326,10 +326,10 @@ $$</p>
 \frac{dL}{dw_2} = -0.0788
 $$</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss<span style="color:#f92672">.</span>backward()
-<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight)
-<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>grad)
-<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias)
-<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias<span style="color:#f92672">.</span>grad)
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight) <span style="color:#75715e"># 重みw1、w2</span>
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>weight<span style="color:#f92672">.</span>grad) <span style="color:#75715e"># 重みの偏微分　dL/dw1 dL/dw2</span>
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias) <span style="color:#75715e"># バイアス w0</span>
+<span style="color:#66d9ef">print</span>(network[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>bias<span style="color:#f92672">.</span>grad) <span style="color:#75715e"># バイアスの偏微分 dL/dw0</span>
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
 Parameter containing:
 tensor([[<span style="color:#f92672">-</span><span style="color:#ae81ff">0.2890</span>,  <span style="color:#ae81ff">0.5321</span>]], requires_grad<span style="color:#f92672">=</span>True)
@@ -339,7 +339,7 @@ tensor([<span style="color:#f92672">-</span><span style="color:#ae81ff">0.3343</
 tensor([<span style="color:#f92672">-</span><span style="color:#ae81ff">0.0264</span>])
 </code></pre></div><p>導出した傾きに応じてパーセプトロンの重みやバイアスを下記の更新式に従って微調整します．
 ここで，$\alpha=0.1$は <strong>学習率</strong> と呼ばれるパラメータで，学習の収束をコントールする役割を担っています．
-この微調整により平均2乗誤差$L$を最小化することができます．</p>
+この微調整により損失関数$L$を最小化することができます．</p>
 <p>$$
 w_0 = w_0 - \alpha \cdot \frac{dL}{dw_0} \\<br>
 w_1 = w_1 - \alpha \cdot \frac{dL}{dw_1} \\<br>
@@ -388,8 +388,8 @@ Parameter containing:
 tensor([[<span style="color:#ae81ff">117.0642</span>, <span style="color:#ae81ff">122.1144</span>]], requires_grad<span style="color:#f92672">=</span>True)
 Parameter containing:
 tensor([<span style="color:#f92672">-</span><span style="color:#ae81ff">130.2439</span>], requires_grad<span style="color:#f92672">=</span>True)
-</code></pre></div><p>更新の過程における損失（平均2乗誤差）の推移を可視化してみましょう．
-100回程度の繰り返しで，$MSE \simeq 0$に収束していることが確認できます．</p>
+</code></pre></div><p>更新の過程における損失$L$（平均2乗誤差）の推移を可視化してみましょう．
+100回程度の繰り返しで，$L \simeq 0$に収束していることが確認できます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(loss_history)
 plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;steps&#34;</span>)
 plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;loss&#34;</span>)
