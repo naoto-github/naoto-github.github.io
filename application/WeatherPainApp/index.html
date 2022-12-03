@@ -173,12 +173,26 @@
 		  });
 
 		  $("#bt_clear").click(function(){
-		      clearStorage();
+
+		      options = {
+			  title: "初期化",
+			  buttonLabels: ["はい", "いいえ"],
+			  callback: function(event){
+			      if(event == 0){				  
+				  clearStorage();
+			      }
+			  }
+		      }
+
+		      ons.notification.confirm("初期化しますか?", options);		      
+		      
+		      
 		  });
 
 		  $("#bt_help").click(function(){
 		      // ページ遷移
 		      ons_navi.pushPage("help.html");
+		      console.log("help");
 		  });
 
 	      };
@@ -200,7 +214,7 @@
 
 	<ons-toolbar>
 	  <div class="left">
-	    <ons-back-button>戻る</ons-back-button>
+	    <ons-back-button id="register-back">戻る</ons-back-button>
 	  </div>
 	</ons-toolbar>
 
@@ -301,6 +315,11 @@
 
 		  });
 
+		  $("#register-back")[0].onClick = function(){
+		      ons_navi.resetToPage("connect.html");
+		      console.log("back from register page");
+		  };		  
+
 	      };
 
               this.onHide = function(){
@@ -320,7 +339,7 @@
 
 	<ons-toolbar>
 	  <div class="left">
-	    <ons-back-button>戻る</ons-back-button>
+	    <ons-back-button id="browse-back">戻る</ons-back-button>
 	  </div>
 	</ons-toolbar>
 
@@ -371,9 +390,9 @@
 
 		  $("#bt_download").click(function(){
 
-          let today = new Date()
-          let today_string = today.getTime();
-          let filename = "data-" + today_string + ".json";
+		      let today = new Date()
+		      let today_string = today.getTime();
+		      let filename = "data-" + today_string + ".json";
 
 		      let json = JSON.stringify(item_list);
 		      let blob = new Blob([json], { type: 'application/json' });
@@ -384,6 +403,11 @@
 		      console.log("download");
 		  });
 
+		  $("#browse-back")[0].onClick = function(){
+		      ons_navi.resetToPage("connect.html");
+		      console.log("back from browse page");
+		  };
+		  
 	      };
 
               this.onHide = function(){
@@ -427,7 +451,7 @@
 
 	<ons-toolbar>
 	  <div class="left">
-	    <ons-back-button>戻る</ons-back-button>
+	    <ons-back-button id="help-back">戻る</ons-back-button>
 	  </div>
 	</ons-toolbar>
 
@@ -447,7 +471,16 @@
 	    </ul>
 	  </div>
 	</section>
-      </ons-page>
+	
+	<script>
+	  ons.getScriptPage().onInit = function() {
+	      $("#help-back")[0].onClick = function(){
+		  ons_navi.resetToPage("connect.html");
+		  console.log("back from help page");
+	      };
+	  }	  
+	</script>	
+      </ons-page>      
     </template>
 
     <script src="AppItem.js"></script>

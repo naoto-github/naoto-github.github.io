@@ -33,7 +33,7 @@ function saveStorage(item){
 function clearStorage(){
     localStorage.clear();
     id_list = [];
-    item_list = [];    
+    item_list = {};    
 }
 
 function setItemList(){
