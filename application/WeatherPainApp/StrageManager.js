@@ -1,8 +1,11 @@
 // ローカルストレージ（IDのリスト）
-let id_list = []
+let id_list = [];
 
 // ローカルストレージ（AppItemのリスト）
-let item_list = {}
+let item_list = {};
+
+// 地域
+let area = "愛知県西部";
 
 function loadStorage(){
     
@@ -16,6 +19,13 @@ function loadStorage(){
     for(id of id_list){
 	let item = JSON.parse(localStorage.getItem(id))
 	item_list[item.id] = item;
+    }
+
+    // 地域のロード
+    area = localStorage.getItem("area");
+    if(area == null){
+	area = "愛知県西部";
+	localStorage.setItem("area", area);
     }
 }
 
@@ -33,7 +43,8 @@ function saveStorage(item){
 function clearStorage(){
     localStorage.clear();
     id_list = [];
-    item_list = {};    
+    item_list = {};
+    area = "愛知県西部";
 }
 
 function setItemList(){

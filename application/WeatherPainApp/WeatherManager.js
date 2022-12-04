@@ -23,15 +23,20 @@ let area_dict = {
 	"index": 0
     },
     "三重県南部":{
-	    "json": "240000.json",
+	"json": "240000.json",
 	"index": 1
     }	    			
 }
 
+// 地域の選択
+function setArea(){
+    $("#select_area").val(area);
+}
+
 // 気象庁の天気APIから情報取得
 async function getCurrentWeather(){
-    
-    let target_area = $("#select_area").val();
+ 
+    let target_area = area;
     let url = base_url + area_dict[target_area]["json"];    
     let data = await fetch(url).then((response) => {
 	return response.json();

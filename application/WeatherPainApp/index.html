@@ -151,18 +151,21 @@
 	<script>
 
 	  ons.getScriptPage().onInit = function() {
-              this.onShow = function(){
-		  getCurrentWeather();
+              this.onShow = function(){		  
 		  loadStorage();
-
+		  setArea(area);
+		  getCurrentWeather();
+		  
 		  // データ登録ボタンの有効化・無効化
 		  $("#bt_get").prop("disabled", disabled_bt_get);
 
 		  $("#select_area").change(function(){
+		      area = $("#select_area").val();
+		      localStorage.setItem("area", area);
 		      getCurrentWeather();
 		  });
 
-		  $("#bt_get").click(function(){
+		  $("#bt_get").click(function(){		      
 		      // ページ遷移
 		      ons_navi.pushPage("register.html");
 		  });
@@ -307,7 +310,13 @@
 		      options = {
 			  title: "確認",
 			  callback: function(){
-			      ons_navi.resetToPage("connect.html");
+
+			      options_navi = {
+				  "animation": "default",
+				  "pop": true,
+			      }
+			      
+			      ons_navi.resetToPage("connect.html", options_navi);		      
 			  }
 		      }
 
@@ -316,7 +325,13 @@
 		  });
 
 		  $("#register-back")[0].onClick = function(){
-		      ons_navi.resetToPage("connect.html");
+
+		      options = {
+			  "animation": "default",
+			  "pop": true,
+		      }
+		  
+		      ons_navi.resetToPage("connect.html", options);		      
 		      console.log("back from register page");
 		  };		  
 
@@ -404,7 +419,13 @@
 		  });
 
 		  $("#browse-back")[0].onClick = function(){
-		      ons_navi.resetToPage("connect.html");
+
+		      options = {
+			  "animation": "default",
+			  "pop": true,
+		      }
+		  
+		      ons_navi.resetToPage("connect.html", options);
 		      console.log("back from browse page");
 		  };
 		  
@@ -475,7 +496,13 @@
 	<script>
 	  ons.getScriptPage().onInit = function() {
 	      $("#help-back")[0].onClick = function(){
-		  ons_navi.resetToPage("connect.html");
+
+		  options = {
+		      "animation": "default",
+		      "pop": true,
+		  }
+		  
+		  ons_navi.resetToPage("connect.html", options);
 		  console.log("back from help page");
 	      };
 	  }	  
