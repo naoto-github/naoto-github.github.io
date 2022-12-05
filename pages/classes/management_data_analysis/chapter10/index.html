@@ -382,18 +382,18 @@ $$</p>
 経路長 = 1 \times 102 + 1 \times 65 + 1 \times 87 + 1 \times 37 + 1 \times 28 + 1 \times 70 = 389
 $$</p>
 <p>次に制約条件を定義します．
-制約条件は，<strong>始点の条件</strong>，<strong>終点の条件</strong>，<strong>ループの禁止</strong> の3種類に分類されます（部分経路を回避するには，後述の <strong>MTZ制約(Miller-Tucker-Zemlin Formulation)</strong> が必要）．</p>
-<p>始点の条件は次の式で表されます．
+制約条件は，<strong>出発条件</strong>，<strong>到着条件</strong>，<strong>ループの禁止</strong> の3種類に分類されます（部分経路を回避するには，後述の <strong>MTZ制約(Miller-Tucker-Zemlin Formulation)</strong> が必要）．</p>
+<p>出発条件は次の式で表されます．
 ここで，$\forall i$は任意のノード$i$を表します．
-例えば，ノード$A$を始点とすると，その次には$B,C,D,E,F$のいずれかに遷移します．
+例えば，ノード$A$から出発とすると，その次には$B,C,D,E,F$のいずれかに遷移します．
 このため，$x_{AA}+x_{AB}+x_{AC}+x_{AD}+x_{AE}+x_{EF}$は常に1となります．</p>
 <p>$$
 \sum_{j} x_{ij} = 1, \forall i
 $$</p>
 <p><a href="https://gyazo.com/b0de8c7280559927f0bf433039a6fde6"><img src="https://i.gyazo.com/b0de8c7280559927f0bf433039a6fde6.png" alt="Image from Gyazo"></a></p>
-<p>終点の条件は次の式で表されます．
+<p>到着条件は次の式で表されます．
 ここで，$\forall j$は任意のノード$j$を表します．
-例えば，ノード$A$を終点とすると，その前には$B,C,D,E,F$のいずれかに滞在してるはずです．
+例えば，ノード$A$に到着すると，その前には$B,C,D,E,F$のいずれかに滞在してるはずです．
 このため，$x_{AA}+x_{BA}+x_{CA}+x_{DA}+x_{EA}+x_{FA}$は常に1となります．</p>
 <p>$$
 \sum_{i} x_{ij} = 1, \forall j
@@ -447,14 +447,14 @@ $$</p>
 $$</p>
 <p><a href="https://gyazo.com/28bd1c86a3ff47305360be8a306b8eaf"><img src="https://i.gyazo.com/28bd1c86a3ff47305360be8a306b8eaf.png" alt="Image from Gyazo"></a></p>
 <h2 id="制約条件">制約条件</h2>
-<p>$E19:H24$に始点の制約条件を入力します．
-例えば，Aが始点となる条件を入力する$F19$には次の式を入力します．</p>
+<p>$E19:H24$に出発条件を入力します．
+例えば，Aから出発する条件を入力する$F19$には次の式を入力します．</p>
 <p>$$
 =SUM(F2:K2)
 $$</p>
 <p><a href="https://gyazo.com/2d3b00cc621b729555e833e00ce22168"><img src="https://i.gyazo.com/2d3b00cc621b729555e833e00ce22168.png" alt="Image from Gyazo"></a></p>
-<p>$E26:H31$に終点の制約条件を入力します．
-例えば，Aが終点となる条件を入力する$F26$には次の式を入力します．</p>
+<p>$E26:H31$にの到着条件を入力します．
+例えば，Aに到着する条件を入力する$F26$には次の式を入力します．</p>
 <p>$$
 =SUM(F2:F7)
 $$</p>
@@ -544,7 +544,7 @@ x <span style="color:#f92672">=</span> []
 	
 <span style="color:#66d9ef">print</span>(x)
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[[x_00, x_01, x_02, x_03, x_04, x_05], [x_10, x_11, x_12, x_13, x_14, x_15], [x_20, x_21, x_22, x_23, x_24, x_25], [x_30, x_31, x_32, x_33, x_34, x_35], [x_40, x_41, x_42, x_43, x_44, x_45], [x_50, x_51, x_52, x_53, x_54, x_55]]
-</code></pre></div><p>後述するMTZ制約のために，ノードの訪問する順番を表す変数$u_{i}$を定義します．
+</code></pre></div><p>後述するMTZ制約のために，ノードを訪問する順番を表す変数$u_{i}$を定義します．
 データのカテゴリとして<code>cat=Integer</code>を指定します．
 また，対象の問題が6都市であることから，最小値は0，最大値は5に設定します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 変数（ノードを訪問する順番）</span>
@@ -571,24 +571,24 @@ cost <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
 
 problem <span style="color:#f92672">+=</span> cost
 </code></pre></div><h2 id="制約条件-1">制約条件</h2>
-<p>始点の条件を定義します．
+<p>出発条件を定義します．
 隣接行列の行方向の加算を1に制約します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 制約条件（始点の条件）</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 制約条件（出発条件）</span>
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
     sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(df)):
         sum <span style="color:#f92672">+=</span> x[i][j]
         
-    problem <span style="color:#f92672">+=</span> sum <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>, f<span style="color:#e6db74">&#34;{i}が始点&#34;</span>
+    problem <span style="color:#f92672">+=</span> sum <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>, f<span style="color:#e6db74">&#34;{i}から出発&#34;</span>
 </code></pre></div><p>終点の条件を定義します．
 隣接行列の列方向の加算を1に制約します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 制約条件（終点の条件）</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 制約条件（到着条件）</span>
 <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(df)):
     sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
     <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
         sum <span style="color:#f92672">+=</span> x[i][j]
         
-    problem <span style="color:#f92672">+=</span> sum <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>, f<span style="color:#e6db74">&#34;{j}が終点&#34;</span>
+    problem <span style="color:#f92672">+=</span> sum <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>, f<span style="color:#e6db74">&#34;{j}に到着&#34;</span>
 </code></pre></div><p>ループの禁止の条件を定義します．
 同じノードに留まることを禁止します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 制約条件（ループの禁止）</span>
@@ -638,29 +638,29 @@ problem <span style="color:#f92672">+=</span> u[<span style="color:#ae81ff">0</s
 MINIMIZE
 102.44998779892558*x_01 + 58.9406481131655*x_02 + 52.354560450833695*x_03 + 41.7612260356422*x_04 + 70.22819946431775*x_05 + 102.44998779892558*x_10 + 65.37583651472461*x_12 + 95.2732911156112*x_13 + 65.60487786742691*x_14 + 42.37924020083418*x_15 + 58.9406481131655*x_20 + 65.37583651472461*x_21 + 87.66413177577246*x_23 + 51.478150704935004*x_24 + 60.74537019394976*x_25 + 52.354560450833695*x_30 + 95.2732911156112*x_31 + 87.66413177577246*x_32 + 37.48332962798263*x_34 + 52.92447448959697*x_35 + 41.7612260356422*x_40 + 65.60487786742691*x_41 + 51.478150704935004*x_42 + 37.48332962798263*x_43 + 28.635642126552707*x_45 + 70.22819946431775*x_50 + 42.37924020083418*x_51 + 60.74537019394976*x_52 + 52.92447448959697*x_53 + 28.635642126552707*x_54 + 0.0
 SUBJECT TO
-0が始点: x_00 + x_01 + x_02 + x_03 + x_04 + x_05 = 1
+0から出発: x_00 + x_01 + x_02 + x_03 + x_04 + x_05 = 1
 
-1が始点: x_10 + x_11 + x_12 + x_13 + x_14 + x_15 = 1
+1から出発: x_10 + x_11 + x_12 + x_13 + x_14 + x_15 = 1
 
-2が始点: x_20 + x_21 + x_22 + x_23 + x_24 + x_25 = 1
+2から出発: x_20 + x_21 + x_22 + x_23 + x_24 + x_25 = 1
 
-3が始点: x_30 + x_31 + x_32 + x_33 + x_34 + x_35 = 1
+3から出発: x_30 + x_31 + x_32 + x_33 + x_34 + x_35 = 1
 
-4が始点: x_40 + x_41 + x_42 + x_43 + x_44 + x_45 = 1
+4から出発: x_40 + x_41 + x_42 + x_43 + x_44 + x_45 = 1
 
-5が始点: x_50 + x_51 + x_52 + x_53 + x_54 + x_55 = 1
+5から出発: x_50 + x_51 + x_52 + x_53 + x_54 + x_55 = 1
 
-0が終点: x_00 + x_10 + x_20 + x_30 + x_40 + x_50 = 1
+0に到着: x_00 + x_10 + x_20 + x_30 + x_40 + x_50 = 1
 
-1が終点: x_01 + x_11 + x_21 + x_31 + x_41 + x_51 = 1
+1に到着: x_01 + x_11 + x_21 + x_31 + x_41 + x_51 = 1
 
-2が終点: x_02 + x_12 + x_22 + x_32 + x_42 + x_52 = 1
+2に到着: x_02 + x_12 + x_22 + x_32 + x_42 + x_52 = 1
 
-3が終点: x_03 + x_13 + x_23 + x_33 + x_43 + x_53 = 1
+3に到着: x_03 + x_13 + x_23 + x_33 + x_43 + x_53 = 1
 
-4が終点: x_04 + x_14 + x_24 + x_34 + x_44 + x_54 = 1
+4に到着: x_04 + x_14 + x_24 + x_34 + x_44 + x_54 = 1
 
-5が終点: x_05 + x_15 + x_25 + x_35 + x_45 + x_55 = 1
+5に到着: x_05 + x_15 + x_25 + x_35 + x_45 + x_55 = 1
 
 0に留まることを禁止: x_00 = 0
 
