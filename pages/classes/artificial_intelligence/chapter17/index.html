@@ -87,11 +87,12 @@
 
 
 
-  <meta property="og:description" content="ゲーム木  これまでは8パズルやハノイの塔など1人のプレイヤーが解く問題を対象にしていました． ここでは，プレイヤーとコンピュータが対戦するオセロや将棋などの対戦形式のゲームについて考えましょう．
+  <meta property="og:description" content="ゲーム木 これまでは8パズルやハノイの塔など1人のプレイヤーが解く問題を対象にしていました． ここでは，プレイヤーとコンピュータが対戦するオセロや将棋などの対戦形式のゲームについて考えましょう．
 人間とコンピュータとの対戦 対戦形式のゲームは，従来から人工知能の研究テーマとして取り組まれています． これまでに，人間（プロ棋士）とコンピュターとの対戦がメディアにも取り上げられています． 1997年には，IBMのDeep Blueが当時のチェスのチャンピオンに勝利しました， 2013年には，山本一成氏が開発したPonanzaがプロ棋士に勝利したことが注目されました． さらに，2016年には，ディープラーニングを取り入れたDeepMindのAlphaGoがプロ棋士に勝利しました． このように，対戦形式のゲームでは，既にコンピュータ（AI）が人間を超えるようになっています．
-    ゲーム 年 状況     オセロ 1980年 ムーアが世界チャンピオンの井上博に勝利   チェス 1997年 IBMのDeepBlueが世界チャンピオンのガルリ・カスパロフに勝利   将棋 2013年 山本一成が開発したPonanzaがプロ棋士の佐藤慎一に勝利   囲碁 2016年 DeepMindのAlphaGoがプロ棋士のイ・セドルに勝利    ゲーム木を利用した解の導出 対戦形式のゲームでは，プレイヤーの選択と，コンピュータの選択が交互に繰り返されます． このため，これまでの探索木では，適切な解を導出することができません． このような場合， ゲーム木（Game Tree） と呼ばれる手法が用いられます．
+ゲーム 年 状況 オセロ 1980年 ムーアが世界チャンピオンの井上博に勝利 チェス 1997年 IBMのDeepBlueが世界チャンピオンのガルリ・カスパロフに勝利 将棋 2013年 山本一成が開発したPonanzaがプロ棋士の佐藤慎一に勝利 囲碁 2016年 DeepMindのAlphaGoがプロ棋士のイ・セドルに勝利 ゲーム木を利用した解の導出 対戦形式のゲームでは，プレイヤーの選択と，コンピュータの選択が交互に繰り返されます． このため，これまでの探索木では，適切な解を導出することができません． このような場合， ゲーム木（Game Tree） と呼ばれる手法が用いられます．
 ゲーム木は次のような木構造で表されます． 木のルート（根）であるAはゲームの初期状態（盤面）であり，先手（黒）が手を打つ場面です． 先手が手を打つとBまたはCに遷移します． BとCは後手（白）が手を打つ場面です． 同様に，後手が手を打つと，BからD，E，F，また，CからG，H，I，のいずれかに遷移します． DからIは先手が手を打つ場面です． 最終的には，後手が手を打つ場面であるJからVに遷移します．
-JからVの状態（盤面）には，先手がどれぐらい有利かを表す評価が与えられます （評価を決める評価関数はゲームによって異なり，開発者が最も頭を悩ませる部分です）． 例えば，Jは3，Kは2，Lは7となっています． 先手にとっては，A - B - D - Lと遷移すると，最も評価の高い 7 になりますが， 後手は先手の評価を下げようと手を打つため，実際はLに到達することはできません．" />
+JからVの状態（盤面）には，先手がどれぐらい有利かを表す評価が与えられます （評価を決める評価関数はゲームによって異なり，開発者が最も頭を悩ませる部分です）． 例えば，Jは3，Kは2，Lは7となっています． 先手にとっては，A - B - D - Lと遷移すると，最も評価の高い 7 になりますが， 後手は先手の評価を下げようと手を打つため，実際はLに到達することはできません．
+そこで，ミニマックス法（minimax） を用いて解を導出します． 先手は評価を 最大化 ，後手は評価を 最小化 することから名付けられました． Dの場面では，先手が手を打つため，評価が最大となるLを選択します． よって，Dの評価もLと同じ7に設定します． 同様に，EからIの評価も設定します． Bの場面では，後手が手を打つため，評価が最小となるEを選択します． よって，Bの評価もEと同じ4に設定します． 同様に，Cの評価は3に設定されます． Aの場面では，先手が手を打つため，評価が最大なるBを選択します． よって，Aの評価はBと同じ4に設定されます． このため，A - B - E - Mに遷移することが先手にとって最良の選択となります．" />
 
 
 
@@ -106,11 +107,12 @@ JからVの状態（盤面）には，先手がどれぐらい有利かを表す
 
 
 
-  <meta name="twitter:description" content="ゲーム木  これまでは8パズルやハノイの塔など1人のプレイヤーが解く問題を対象にしていました． ここでは，プレイヤーとコンピュータが対戦するオセロや将棋などの対戦形式のゲームについて考えましょう．
+  <meta name="twitter:description" content="ゲーム木 これまでは8パズルやハノイの塔など1人のプレイヤーが解く問題を対象にしていました． ここでは，プレイヤーとコンピュータが対戦するオセロや将棋などの対戦形式のゲームについて考えましょう．
 人間とコンピュータとの対戦 対戦形式のゲームは，従来から人工知能の研究テーマとして取り組まれています． これまでに，人間（プロ棋士）とコンピュターとの対戦がメディアにも取り上げられています． 1997年には，IBMのDeep Blueが当時のチェスのチャンピオンに勝利しました， 2013年には，山本一成氏が開発したPonanzaがプロ棋士に勝利したことが注目されました． さらに，2016年には，ディープラーニングを取り入れたDeepMindのAlphaGoがプロ棋士に勝利しました． このように，対戦形式のゲームでは，既にコンピュータ（AI）が人間を超えるようになっています．
-    ゲーム 年 状況     オセロ 1980年 ムーアが世界チャンピオンの井上博に勝利   チェス 1997年 IBMのDeepBlueが世界チャンピオンのガルリ・カスパロフに勝利   将棋 2013年 山本一成が開発したPonanzaがプロ棋士の佐藤慎一に勝利   囲碁 2016年 DeepMindのAlphaGoがプロ棋士のイ・セドルに勝利    ゲーム木を利用した解の導出 対戦形式のゲームでは，プレイヤーの選択と，コンピュータの選択が交互に繰り返されます． このため，これまでの探索木では，適切な解を導出することができません． このような場合， ゲーム木（Game Tree） と呼ばれる手法が用いられます．
+ゲーム 年 状況 オセロ 1980年 ムーアが世界チャンピオンの井上博に勝利 チェス 1997年 IBMのDeepBlueが世界チャンピオンのガルリ・カスパロフに勝利 将棋 2013年 山本一成が開発したPonanzaがプロ棋士の佐藤慎一に勝利 囲碁 2016年 DeepMindのAlphaGoがプロ棋士のイ・セドルに勝利 ゲーム木を利用した解の導出 対戦形式のゲームでは，プレイヤーの選択と，コンピュータの選択が交互に繰り返されます． このため，これまでの探索木では，適切な解を導出することができません． このような場合， ゲーム木（Game Tree） と呼ばれる手法が用いられます．
 ゲーム木は次のような木構造で表されます． 木のルート（根）であるAはゲームの初期状態（盤面）であり，先手（黒）が手を打つ場面です． 先手が手を打つとBまたはCに遷移します． BとCは後手（白）が手を打つ場面です． 同様に，後手が手を打つと，BからD，E，F，また，CからG，H，I，のいずれかに遷移します． DからIは先手が手を打つ場面です． 最終的には，後手が手を打つ場面であるJからVに遷移します．
-JからVの状態（盤面）には，先手がどれぐらい有利かを表す評価が与えられます （評価を決める評価関数はゲームによって異なり，開発者が最も頭を悩ませる部分です）． 例えば，Jは3，Kは2，Lは7となっています． 先手にとっては，A - B - D - Lと遷移すると，最も評価の高い 7 になりますが， 後手は先手の評価を下げようと手を打つため，実際はLに到達することはできません．" />
+JからVの状態（盤面）には，先手がどれぐらい有利かを表す評価が与えられます （評価を決める評価関数はゲームによって異なり，開発者が最も頭を悩ませる部分です）． 例えば，Jは3，Kは2，Lは7となっています． 先手にとっては，A - B - D - Lと遷移すると，最も評価の高い 7 になりますが， 後手は先手の評価を下げようと手を打つため，実際はLに到達することはできません．
+そこで，ミニマックス法（minimax） を用いて解を導出します． 先手は評価を 最大化 ，後手は評価を 最小化 することから名付けられました． Dの場面では，先手が手を打つため，評価が最大となるLを選択します． よって，Dの評価もLと同じ7に設定します． 同様に，EからIの評価も設定します． Bの場面では，後手が手を打つため，評価が最小となるEを選択します． よって，Bの評価もEと同じ4に設定します． 同様に，Cの評価は3に設定されます． Aの場面では，先手が手を打つため，評価が最大なるBを選択します． よって，Aの評価はBと同じ4に設定されます． このため，A - B - E - Mに遷移することが先手にとって最良の選択となります．" />
 
 
 
@@ -166,6 +168,10 @@ JからVの状態（盤面）には，先手がどれぐらい有利かを表す
     </a>
   </div>
 </nav>
+
+        <div id="darkModeToggle" onclick="toggleDarkMode()">
+  &#9680; 
+</div>
 
         
 
@@ -266,175 +272,175 @@ JからVの状態（盤面）には，先手がどれぐらい有利かを表す
 <p>最初に木構造を表現する<a href="https://treelib.readthedocs.io/en/latest/">treelib</a>をインストールします．
 treelibはゲーム木を表現するために用います．
 セルで下記のコマンドを実行してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; !pip install treelib
-</code></pre></div><p>また，treelibに加え，下記のライブラリも導入しておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> treelib <span style="color:#f92672">import</span> Node, Tree
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> itertools
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>&gt; !pip install treelib
+</span></span></code></pre></div><p>また，treelibに加え，下記のライブラリも導入しておきましょう．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> treelib <span style="color:#f92672">import</span> Node, Tree
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> itertools
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   実装
 </h1>
 
 <p>ゲーム木を実装してみましょう．
 最初に状態（盤面）の評価を表す <code>Evaluation</code>クラスを定義します．
 Evaluationクラスは，「プレイヤー（先手または後手）」，「盤面の状態」，「盤面の評価」を保持します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 盤面の評価</span>
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Evaluation</span>():
-
-  <span style="color:#75715e"># 初期化</span>
-  <span style="color:#66d9ef">def</span> __init__(self, player, board, value):
-    self<span style="color:#f92672">.</span>player <span style="color:#f92672">=</span> player <span style="color:#75715e">#プレイヤー</span>
-    self<span style="color:#f92672">.</span>board <span style="color:#f92672">=</span> board <span style="color:#75715e"># 状態</span>
-    self<span style="color:#f92672">.</span>value <span style="color:#f92672">=</span> value <span style="color:#75715e"># 評価</span>
-    self<span style="color:#f92672">.</span>text <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>__str__()
-
-  <span style="color:#75715e"># 文字列化</span>
-  <span style="color:#66d9ef">def</span> __str__(self):
-    <span style="color:#66d9ef">return</span> f<span style="color:#e6db74">&#34;[{self.player} {self.board} {self.value}]&#34;</span>
-
-  <span style="color:#75715e"># 評価の更新</span>
-  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>(self, value):
-    self<span style="color:#f92672">.</span>value <span style="color:#f92672">=</span> value
-    self<span style="color:#f92672">.</span>text <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>__str__()
-</code></pre></div><p>treelibでゲーム木を表現します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 盤面の評価</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Evaluation</span>():
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 初期化</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __init__(self, player, board, value):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>player <span style="color:#f92672">=</span> player <span style="color:#75715e">#プレイヤー</span>
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>board <span style="color:#f92672">=</span> board <span style="color:#75715e"># 状態</span>
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>value <span style="color:#f92672">=</span> value <span style="color:#75715e"># 評価</span>
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>text <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>__str__()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 文字列化</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> __str__(self):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[</span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>player<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>board<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>self<span style="color:#f92672">.</span>value<span style="color:#e6db74">}</span><span style="color:#e6db74">]&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 評価の更新</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">update</span>(self, value):
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>value <span style="color:#f92672">=</span> value
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>text <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>__str__()
+</span></span></code></pre></div><p>treelibでゲーム木を表現します．
 先手は<code>Black</code>，後手は<code>White</code>で表現しています．
 また，盤面の状態は，先の図に合わせて，<code>A</code>から<code>V</code>としています（本来は駒の配置などを表現する）．
 盤面の評価も，先の図と同じ値に設定しています（本来は評価関数で計算する）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ゲーム木</span>
-tree <span style="color:#f92672">=</span> Tree()
-
-<span style="color:#75715e"># Blackの盤面（先手）</span>
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;A&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;A&#34;</span>, None))
-
-<span style="color:#75715e"># Whiteの盤面（後手）</span>
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, None), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>, None), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A&#34;</span>)
-
-<span style="color:#75715e"># Blackの盤面（先手）</span>
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>, None), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;B&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;E&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>, None), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;B&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, None), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;B&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>, None), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;C&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>, None), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;C&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;I&#34;</span>, <span style="color:#e6db74">&#34;I&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;I&#34;</span>, None), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;C&#34;</span>)
-
-<span style="color:#75715e"># Whiteの盤面（後手）</span>
-<span style="color:#75715e"># 評価は先手にとっての盤面の価値を表すことに注意</span>
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;J&#34;</span>, <span style="color:#e6db74">&#34;J&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;J&#34;</span>, <span style="color:#ae81ff">3</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;D&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;K&#34;</span>, <span style="color:#e6db74">&#34;K&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;K&#34;</span>, <span style="color:#ae81ff">2</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;D&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;L&#34;</span>, <span style="color:#e6db74">&#34;L&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;L&#34;</span>, <span style="color:#ae81ff">7</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;D&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;M&#34;</span>, <span style="color:#e6db74">&#34;M&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;M&#34;</span>, <span style="color:#ae81ff">4</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;E&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;N&#34;</span>, <span style="color:#e6db74">&#34;N&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;N&#34;</span>, <span style="color:#ae81ff">6</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;F&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;O&#34;</span>, <span style="color:#e6db74">&#34;O&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;O&#34;</span>, <span style="color:#ae81ff">2</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;F&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;P&#34;</span>, <span style="color:#e6db74">&#34;P&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;P&#34;</span>, <span style="color:#ae81ff">3</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;F&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;Q&#34;</span>, <span style="color:#e6db74">&#34;Q&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;Q&#34;</span>, <span style="color:#ae81ff">5</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;R&#34;</span>, <span style="color:#e6db74">&#34;R&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;R&#34;</span>, <span style="color:#ae81ff">4</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;S&#34;</span>, <span style="color:#e6db74">&#34;S&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;S&#34;</span>, <span style="color:#ae81ff">1</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;H&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;T&#34;</span>, <span style="color:#e6db74">&#34;T&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;T&#34;</span>, <span style="color:#ae81ff">3</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;H&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;U&#34;</span>, <span style="color:#e6db74">&#34;U&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;U&#34;</span>, <span style="color:#ae81ff">5</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;I&#34;</span>)
-tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;V&#34;</span>, <span style="color:#e6db74">&#34;V&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;V&#34;</span>, <span style="color:#ae81ff">6</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;I&#34;</span>)
-</code></pre></div><p>作成したゲーム木を表示します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># ゲーム木</span>
+</span></span><span style="display:flex;"><span>tree <span style="color:#f92672">=</span> Tree()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Blackの盤面（先手）</span>
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;A&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#66d9ef">None</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Whiteの盤面（後手）</span>
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#66d9ef">None</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#66d9ef">None</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Blackの盤面（先手）</span>
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#66d9ef">None</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;B&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;E&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>, <span style="color:#66d9ef">None</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;B&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#66d9ef">None</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;B&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#66d9ef">None</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;C&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#66d9ef">None</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;C&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;I&#34;</span>, <span style="color:#e6db74">&#34;I&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;Black&#34;</span>, <span style="color:#e6db74">&#34;I&#34;</span>, <span style="color:#66d9ef">None</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;C&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Whiteの盤面（後手）</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 評価は先手にとっての盤面の価値を表すことに注意</span>
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;J&#34;</span>, <span style="color:#e6db74">&#34;J&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;J&#34;</span>, <span style="color:#ae81ff">3</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;D&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;K&#34;</span>, <span style="color:#e6db74">&#34;K&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;K&#34;</span>, <span style="color:#ae81ff">2</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;D&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;L&#34;</span>, <span style="color:#e6db74">&#34;L&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;L&#34;</span>, <span style="color:#ae81ff">7</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;D&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;M&#34;</span>, <span style="color:#e6db74">&#34;M&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;M&#34;</span>, <span style="color:#ae81ff">4</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;E&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;N&#34;</span>, <span style="color:#e6db74">&#34;N&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;N&#34;</span>, <span style="color:#ae81ff">6</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;F&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;O&#34;</span>, <span style="color:#e6db74">&#34;O&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;O&#34;</span>, <span style="color:#ae81ff">2</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;F&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;P&#34;</span>, <span style="color:#e6db74">&#34;P&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;P&#34;</span>, <span style="color:#ae81ff">3</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;F&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;Q&#34;</span>, <span style="color:#e6db74">&#34;Q&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;Q&#34;</span>, <span style="color:#ae81ff">5</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;R&#34;</span>, <span style="color:#e6db74">&#34;R&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;R&#34;</span>, <span style="color:#ae81ff">4</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;G&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;S&#34;</span>, <span style="color:#e6db74">&#34;S&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;S&#34;</span>, <span style="color:#ae81ff">1</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;H&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;T&#34;</span>, <span style="color:#e6db74">&#34;T&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;T&#34;</span>, <span style="color:#ae81ff">3</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;H&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;U&#34;</span>, <span style="color:#e6db74">&#34;U&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;U&#34;</span>, <span style="color:#ae81ff">5</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;I&#34;</span>)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>create_node(<span style="color:#e6db74">&#34;V&#34;</span>, <span style="color:#e6db74">&#34;V&#34;</span>, data<span style="color:#f92672">=</span>Evaluation(<span style="color:#e6db74">&#34;White&#34;</span>, <span style="color:#e6db74">&#34;V&#34;</span>, <span style="color:#ae81ff">6</span>), parent<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;I&#34;</span>)
+</span></span></code></pre></div><p>作成したゲーム木を表示します．
 末端以外の状態の評価は<code>None</code>となっていることに注意してください．
 先の図と同じ木構造になっていることを確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ゲーム木の表示</span>
-tree<span style="color:#f92672">.</span>show(data_property<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[Black A None]
-<span style="color:#960050;background-color:#1e0010">├──</span> [White B None]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [Black D None]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White J <span style="color:#ae81ff">3</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White K <span style="color:#ae81ff">2</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White L <span style="color:#ae81ff">7</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [Black E None]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White M <span style="color:#ae81ff">4</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [Black F None]
-<span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">├──</span> [White N <span style="color:#ae81ff">6</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">├──</span> [White O <span style="color:#ae81ff">2</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">└──</span> [White P <span style="color:#ae81ff">3</span>]
-<span style="color:#960050;background-color:#1e0010">└──</span> [White C None]
-    <span style="color:#960050;background-color:#1e0010">├──</span> [Black G None]
-    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White Q <span style="color:#ae81ff">5</span>]
-    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White R <span style="color:#ae81ff">4</span>]
-    <span style="color:#960050;background-color:#1e0010">├──</span> [Black H None]
-    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White S <span style="color:#ae81ff">1</span>]
-    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White T <span style="color:#ae81ff">3</span>]
-    <span style="color:#960050;background-color:#1e0010">└──</span> [Black I None]
-        <span style="color:#960050;background-color:#1e0010">├──</span> [White U <span style="color:#ae81ff">5</span>]
-        <span style="color:#960050;background-color:#1e0010">└──</span> [White V <span style="color:#ae81ff">6</span>]
-</code></pre></div><p>ミニマックス法で，木の末端から評価を伝播させて，全ての状態（盤面）の評価を設定します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># ゲーム木の表示</span>
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>show(data_property<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[Black A <span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> [White B <span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [Black D <span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White J <span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White K <span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White L <span style="color:#ae81ff">7</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [Black E <span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White M <span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [Black F <span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">├──</span> [White N <span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">├──</span> [White O <span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">└──</span> [White P <span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">└──</span> [White C <span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">├──</span> [Black G <span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White Q <span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White R <span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">├──</span> [Black H <span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White S <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White T <span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">└──</span> [Black I <span style="color:#66d9ef">None</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">├──</span> [White U <span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">└──</span> [White V <span style="color:#ae81ff">6</span>]
+</span></span></code></pre></div><p>ミニマックス法で，木の末端から評価を伝播させて，全ての状態（盤面）の評価を設定します．
 深さが奇数のときは最大値を選択し，偶数のときは最小値を選択します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ミニマックス法</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">minimax</span>(tree):
-
-  <span style="color:#75715e"># ノードを取得</span>
-  nodes <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>all_nodes()
-
-  <span style="color:#75715e"># 降順で並べ替え</span>
-  nodes <span style="color:#f92672">=</span> sorted(nodes, key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: tree<span style="color:#f92672">.</span>depth(x), reverse<span style="color:#f92672">=</span>True)
-
-  <span style="color:#66d9ef">for</span> node <span style="color:#f92672">in</span> nodes:
-
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span>(node<span style="color:#f92672">.</span>is_root()):
-
-      parent <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>parent(node<span style="color:#f92672">.</span>identifier) <span style="color:#75715e"># 親ノード</span>
-      depth <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>depth(node) <span style="color:#75715e"># 深さ</span>
-
-      <span style="color:#66d9ef">if</span> depth <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
-        <span style="color:#66d9ef">if</span> parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value:
-          <span style="color:#75715e"># 最大値を選択</span>
-          parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>update(max(parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value, node<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value))
-        <span style="color:#66d9ef">else</span>:
-          parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>update(node<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value)
-      <span style="color:#66d9ef">else</span>:  
-        <span style="color:#66d9ef">if</span> parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value:
-          <span style="color:#75715e"># 最小値を選択</span>
-          parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>update(min(parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value, node<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value))
-        <span style="color:#66d9ef">else</span>:
-          parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>update(node<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value)
-
-  <span style="color:#66d9ef">return</span> tree
-</code></pre></div><p>再度，ゲーム木を表示します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># ミニマックス法</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">minimax</span>(tree):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># ノードを取得</span>
+</span></span><span style="display:flex;"><span>  nodes <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>all_nodes()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 降順で並べ替え</span>
+</span></span><span style="display:flex;"><span>  nodes <span style="color:#f92672">=</span> sorted(nodes, key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: tree<span style="color:#f92672">.</span>depth(x), reverse<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> node <span style="color:#f92672">in</span> nodes:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span>(node<span style="color:#f92672">.</span>is_root()):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      parent <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>parent(node<span style="color:#f92672">.</span>identifier) <span style="color:#75715e"># 親ノード</span>
+</span></span><span style="display:flex;"><span>      depth <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>depth(node) <span style="color:#75715e"># 深さ</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> depth <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value:
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># 最大値を選択</span>
+</span></span><span style="display:flex;"><span>          parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>update(max(parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value, node<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>          parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>update(node<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value)
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">else</span>:  
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value:
+</span></span><span style="display:flex;"><span>          <span style="color:#75715e"># 最小値を選択</span>
+</span></span><span style="display:flex;"><span>          parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>update(min(parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value, node<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>          parent<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>update(node<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> tree
+</span></span></code></pre></div><p>再度，ゲーム木を表示します．
 全ての状態（盤面）に評価が設定されていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tree <span style="color:#f92672">=</span> minimax(tree)
-tree<span style="color:#f92672">.</span>show(data_property<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[Black A <span style="color:#ae81ff">4</span>]
-<span style="color:#960050;background-color:#1e0010">├──</span> [White B <span style="color:#ae81ff">4</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [Black D <span style="color:#ae81ff">7</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White J <span style="color:#ae81ff">3</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White K <span style="color:#ae81ff">2</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White L <span style="color:#ae81ff">7</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [Black E <span style="color:#ae81ff">4</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White M <span style="color:#ae81ff">4</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [Black F <span style="color:#ae81ff">6</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">├──</span> [White N <span style="color:#ae81ff">6</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">├──</span> [White O <span style="color:#ae81ff">2</span>]
-<span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">└──</span> [White P <span style="color:#ae81ff">3</span>]
-<span style="color:#960050;background-color:#1e0010">└──</span> [White C <span style="color:#ae81ff">3</span>]
-    <span style="color:#960050;background-color:#1e0010">├──</span> [Black G <span style="color:#ae81ff">5</span>]
-    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White Q <span style="color:#ae81ff">5</span>]
-    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White R <span style="color:#ae81ff">4</span>]
-    <span style="color:#960050;background-color:#1e0010">├──</span> [Black H <span style="color:#ae81ff">3</span>]
-    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White S <span style="color:#ae81ff">1</span>]
-    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White T <span style="color:#ae81ff">3</span>]
-    <span style="color:#960050;background-color:#1e0010">└──</span> [Black I <span style="color:#ae81ff">6</span>]
-        <span style="color:#960050;background-color:#1e0010">├──</span> [White U <span style="color:#ae81ff">5</span>]
-        <span style="color:#960050;background-color:#1e0010">└──</span> [White V <span style="color:#ae81ff">6</span>]
-</code></pre></div><p>先手は<code>B</code>または<code>C</code>の評価の高い方を選択します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>tree <span style="color:#f92672">=</span> minimax(tree)
+</span></span><span style="display:flex;"><span>tree<span style="color:#f92672">.</span>show(data_property<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[Black A <span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">├──</span> [White B <span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [Black D <span style="color:#ae81ff">7</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White J <span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White K <span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White L <span style="color:#ae81ff">7</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [Black E <span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White M <span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [Black F <span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">├──</span> [White N <span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">├──</span> [White O <span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">│</span>       <span style="color:#960050;background-color:#1e0010">└──</span> [White P <span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">└──</span> [White C <span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">├──</span> [Black G <span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White Q <span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White R <span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">├──</span> [Black H <span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">├──</span> [White S <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">│</span>   <span style="color:#960050;background-color:#1e0010">└──</span> [White T <span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">└──</span> [Black I <span style="color:#ae81ff">6</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">├──</span> [White U <span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">└──</span> [White V <span style="color:#ae81ff">6</span>]
+</span></span></code></pre></div><p>先手は<code>B</code>または<code>C</code>の評価の高い方を選択します．
 ここでは，評価4の<code>B</code>が選択されることになります．
 この選択を1手ごとに繰り返します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getMax</span>(tree):
-
-  <span style="color:#75715e"># 降順で並べ替え</span>
-  nodes <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>children(tree<span style="color:#f92672">.</span>root)
-  nodes <span style="color:#f92672">=</span> sorted(nodes, key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value, reverse<span style="color:#f92672">=</span>True)
-
-  <span style="color:#75715e"># 評価が最大の状態を選択</span>
-  max_node <span style="color:#f92672">=</span> nodes[<span style="color:#ae81ff">0</span>]
-
-  <span style="color:#66d9ef">return</span> max_node
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">max_node <span style="color:#f92672">=</span> getMax(tree)
-<span style="color:#66d9ef">print</span>(max_node<span style="color:#f92672">.</span>data)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[White B <span style="color:#ae81ff">4</span>]
-</code></pre></div><!--
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getMax</span>(tree):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 降順で並べ替え</span>
+</span></span><span style="display:flex;"><span>  nodes <span style="color:#f92672">=</span> tree<span style="color:#f92672">.</span>children(tree<span style="color:#f92672">.</span>root)
+</span></span><span style="display:flex;"><span>  nodes <span style="color:#f92672">=</span> sorted(nodes, key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>value, reverse<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 評価が最大の状態を選択</span>
+</span></span><span style="display:flex;"><span>  max_node <span style="color:#f92672">=</span> nodes[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> max_node
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>max_node <span style="color:#f92672">=</span> getMax(tree)
+</span></span><span style="display:flex;"><span>print(max_node<span style="color:#f92672">.</span>data)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[White B <span style="color:#ae81ff">4</span>]
+</span></span></code></pre></div><!--
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   完成したノートブックの確認
 </h1>

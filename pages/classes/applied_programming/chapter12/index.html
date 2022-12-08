@@ -87,20 +87,17 @@
 
 
 
-  <meta property="og:description" content="プロジェクトの準備 --プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project12”を入力ます． また，JREは&rdquo;プロジェクト固有のJREを使用&ldquo;を選択します． 最後に，[完了]をクリックしましょう．
-
+  <meta property="og:description" content="プロジェクトの準備 Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project12”を入力ます． また，JREは&quot;プロジェクト固有のJREを使用&ldquo;を選択します． 最後に，[完了]をクリックしましょう．
 Applicationクラスを継承したMyApplicationクラスを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します． 次にスーパークラスを設定するために，[参照]ボタンから「スーパークラスの選択」を開き， 一致する項目からjavafx.application.Applicationを選択して，[OK]をクリックします． 最後に[完了]をクリックしましょう．
-
 Applicationクラスの抽象メソッドであるstartメソッドをオーバーライドしておきます． 下記コードを参考に，タイトルをProject 12，幅を800px，高さを500pxに設定しましょう． プログラムの実行後にウィンドウが表示されることを確認してください．
- 
-プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
- イメージの描画 --イメージの描画  今回はイメージをキャンバスに描画し，パラパラ漫画の要領でアニメーションさせることに挑戦していきましょう． 前準備として，下記のコードを参考にCanvasクラスをウィンドウに配置してください． レイアウトペインとしてVBoxクラスを利用しています． プログラムの実行後に表示されるウィンドウを確認してください．
- 
+プログラム実行時の注意 JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
+イメージの描画 今回はイメージをキャンバスに描画し，パラパラ漫画の要領でアニメーションさせることに挑戦していきましょう． 前準備として，下記のコードを参考にCanvasクラスをウィンドウに配置してください． レイアウトペインとしてVBoxクラスを利用しています． プログラムの実行後に表示されるウィンドウを確認してください．
 まずは，下記の「歩いている女性のイメージ（png画像）」をキャンバスに表示してみます． この２つのイメージを交互に表示することで歩いている様子の表現が可能です． walking1.pngとwalking2.pngをダウンロードしたら， プロジェクトのsrcフォルダにコピーしてください．
- 
 保存したイメージを読み込むには，下記のようにImageクラスを利用します （Imageクラスのコンストラクタの引数には，画像ファイルの位置を表すURLを指定します）． ここでは，２つのイメージを利用するため，Imageクラスの配列walkingを宣言して， walking[0]にwalking1.png，walking[1]にwalking2.pngをそれぞれ読み込みます．
 Image walking[] = new Image[2]; walking[0] = new Image(this.getClass().getResource(&#34;walking1.png&#34;).toString()); walking[1] = new Image(this.getClass().getResource(&#34;walking2.png&#34;).toString()); キャンバスにイメージを表示するには，GraphicsContextクラスのdrawImage()メソッドを利用します． drawImage()メソッドの３つの引数は，表示するイメージ，X座標，Y座標を表しています．
-gc.drawImage(walking[0], 0, 0); 下記のコードを参考に，新たにpaint()メソッドを定義して，walking1.pngの画像を表示してください． プログラムの実行後に表示されるウィンドウを確認してください．" />
+gc.drawImage(walking[0], 0, 0); 下記のコードを参考に，新たにpaint()メソッドを定義して，walking1.pngの画像を表示してください． プログラムの実行後に表示されるウィンドウを確認してください．
+アニメーションの描画 時間軸に沿ってイメージをアニメーションするにはTimelineクラスを利用します． まずは，Timelineクラスのコンストラクタの引数にKeyFrameクラスを渡します． このKeyFrameクラスには，アニメーションの1サイクルの時間(ミリ秒)と， ラムダ式を利用してサイクル毎に実行するメソッド（handle() メソッド）を指定します． 次に，setCycleCount()メソッドで「実行するサイクル数」を指定します． 引数にTimeline.INDEFINITEを指定すると無限に繰り返すことを意味します． 最後に，**play()**メソッドでアニメーションが開始されます．
+Timline timer = new Timeline(new KeyFrame(Duration.millis(500), event -&gt; handle())); timer." />
 
 
 
@@ -115,20 +112,17 @@ gc.drawImage(walking[0], 0, 0); 下記のコードを参考に，新たにpaint(
 
 
 
-  <meta name="twitter:description" content="プロジェクトの準備 --プロジェクトの準備  Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project12”を入力ます． また，JREは&rdquo;プロジェクト固有のJREを使用&ldquo;を選択します． 最後に，[完了]をクリックしましょう．
-
+  <meta name="twitter:description" content="プロジェクトの準備 Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project12”を入力ます． また，JREは&quot;プロジェクト固有のJREを使用&ldquo;を選択します． 最後に，[完了]をクリックしましょう．
 Applicationクラスを継承したMyApplicationクラスを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． まず，名前に”MyApplication”を入力します． 次にスーパークラスを設定するために，[参照]ボタンから「スーパークラスの選択」を開き， 一致する項目からjavafx.application.Applicationを選択して，[OK]をクリックします． 最後に[完了]をクリックしましょう．
-
 Applicationクラスの抽象メソッドであるstartメソッドをオーバーライドしておきます． 下記コードを参考に，タイトルをProject 12，幅を800px，高さを500pxに設定しましょう． プログラムの実行後にウィンドウが表示されることを確認してください．
- 
-プログラム実行時の注意  JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
- イメージの描画 --イメージの描画  今回はイメージをキャンバスに描画し，パラパラ漫画の要領でアニメーションさせることに挑戦していきましょう． 前準備として，下記のコードを参考にCanvasクラスをウィンドウに配置してください． レイアウトペインとしてVBoxクラスを利用しています． プログラムの実行後に表示されるウィンドウを確認してください．
- 
+プログラム実行時の注意 JavaFXはmainメソッドがなくともプログラムの実行が可能という特徴を持っています． しかし，Eclipseの現バージョンでは未対応のため，下記のコードをMyApplicationクラスに記述する必要があります． プログラム実行の前に，必ず下記のコードをソースコードに挿入してください．
+イメージの描画 今回はイメージをキャンバスに描画し，パラパラ漫画の要領でアニメーションさせることに挑戦していきましょう． 前準備として，下記のコードを参考にCanvasクラスをウィンドウに配置してください． レイアウトペインとしてVBoxクラスを利用しています． プログラムの実行後に表示されるウィンドウを確認してください．
 まずは，下記の「歩いている女性のイメージ（png画像）」をキャンバスに表示してみます． この２つのイメージを交互に表示することで歩いている様子の表現が可能です． walking1.pngとwalking2.pngをダウンロードしたら， プロジェクトのsrcフォルダにコピーしてください．
- 
 保存したイメージを読み込むには，下記のようにImageクラスを利用します （Imageクラスのコンストラクタの引数には，画像ファイルの位置を表すURLを指定します）． ここでは，２つのイメージを利用するため，Imageクラスの配列walkingを宣言して， walking[0]にwalking1.png，walking[1]にwalking2.pngをそれぞれ読み込みます．
 Image walking[] = new Image[2]; walking[0] = new Image(this.getClass().getResource(&#34;walking1.png&#34;).toString()); walking[1] = new Image(this.getClass().getResource(&#34;walking2.png&#34;).toString()); キャンバスにイメージを表示するには，GraphicsContextクラスのdrawImage()メソッドを利用します． drawImage()メソッドの３つの引数は，表示するイメージ，X座標，Y座標を表しています．
-gc.drawImage(walking[0], 0, 0); 下記のコードを参考に，新たにpaint()メソッドを定義して，walking1.pngの画像を表示してください． プログラムの実行後に表示されるウィンドウを確認してください．" />
+gc.drawImage(walking[0], 0, 0); 下記のコードを参考に，新たにpaint()メソッドを定義して，walking1.pngの画像を表示してください． プログラムの実行後に表示されるウィンドウを確認してください．
+アニメーションの描画 時間軸に沿ってイメージをアニメーションするにはTimelineクラスを利用します． まずは，Timelineクラスのコンストラクタの引数にKeyFrameクラスを渡します． このKeyFrameクラスには，アニメーションの1サイクルの時間(ミリ秒)と， ラムダ式を利用してサイクル毎に実行するメソッド（handle() メソッド）を指定します． 次に，setCycleCount()メソッドで「実行するサイクル数」を指定します． 引数にTimeline.INDEFINITEを指定すると無限に繰り返すことを意味します． 最後に，**play()**メソッドでアニメーションが開始されます．
+Timline timer = new Timeline(new KeyFrame(Duration.millis(500), event -&gt; handle())); timer." />
 
 
 
@@ -185,6 +179,10 @@ gc.drawImage(walking[0], 0, 0); 下記のコードを参考に，新たにpaint(
   </div>
 </nav>
 
+        <div id="darkModeToggle" onclick="toggleDarkMode()">
+  &#9680; 
+</div>
+
         
 
 <main>
@@ -204,7 +202,7 @@ gc.drawImage(walking[0], 0, 0); 下記のコードを参考に，新たにpaint(
 <p>Eclipseで新規にプロジェクトを作成しましょう．
 メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます．
 ここでは，プロジェクト名に”Project12”を入力ます．
-また，JREは&rdquo;<strong>プロジェクト固有のJREを使用</strong>&ldquo;を選択します．
+また，JREは&quot;<strong>プロジェクト固有のJREを使用</strong>&ldquo;を選択します．
 最後に，[完了]をクリックしましょう．</p>
 <!--[![https://gyazo.com/93f2cadc9148cb6b30d45c22302345cf](https://i.gyazo.com/93f2cadc9148cb6b30d45c22302345cf.png)](https://gyazo.com/93f2cadc9148cb6b30d45c22302345cf)-->
 <p><a href="https://gyazo.com/3a9a83ab3c9adbf4a8d9b93116b6e25a"><img src="https://i.gyazo.com/3a9a83ab3c9adbf4a8d9b93116b6e25a.png" alt="https://gyazo.com/3a9a83ab3c9adbf4a8d9b93116b6e25a"></a></p>
@@ -250,13 +248,13 @@ gc.drawImage(walking[0], 0, 0); 下記のコードを参考に，新たにpaint(
 （<strong>Imageクラス</strong>のコンストラクタの引数には，画像ファイルの位置を表す<strong>URL</strong>を指定します）．
 ここでは，２つのイメージを利用するため，Imageクラスの配列walkingを宣言して，
 walking[0]に<strong>walking1.png</strong>，walking[1]に<strong>walking2.png</strong>をそれぞれ読み込みます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Image walking<span style="color:#f92672">[]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Image<span style="color:#f92672">[</span>2<span style="color:#f92672">];</span>
-walking<span style="color:#f92672">[</span>0<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Image<span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getResource</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;walking1.png&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span>
-walking<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Image<span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getResource</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;walking2.png&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span>
-</code></pre></div><p>キャンバスにイメージを表示するには，<strong>GraphicsContext</strong>クラスの<code>drawImage()</code>メソッドを利用します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Image walking<span style="color:#f92672">[]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Image<span style="color:#f92672">[</span><span style="color:#ae81ff">2</span><span style="color:#f92672">];</span>
+</span></span><span style="display:flex;"><span>walking<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Image<span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getResource</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;walking1.png&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>walking<span style="color:#f92672">[</span><span style="color:#ae81ff">1</span><span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Image<span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">().</span><span style="color:#a6e22e">getResource</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;walking2.png&#34;</span><span style="color:#f92672">).</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span>
+</span></span></code></pre></div><p>キャンバスにイメージを表示するには，<strong>GraphicsContext</strong>クラスの<code>drawImage()</code>メソッドを利用します．
 <code>drawImage()</code>メソッドの３つの引数は，<strong>表示するイメージ</strong>，<strong>X座標</strong>，<strong>Y座標</strong>を表しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">gc<span style="color:#f92672">.</span><span style="color:#a6e22e">drawImage</span><span style="color:#f92672">(</span>walking<span style="color:#f92672">[</span>0<span style="color:#f92672">],</span> 0<span style="color:#f92672">,</span> 0<span style="color:#f92672">);</span>
-</code></pre></div><p>下記のコードを参考に，新たに<code>paint()</code>メソッドを定義して，<strong>walking1.png</strong>の画像を表示してください．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>gc<span style="color:#f92672">.</span><span style="color:#a6e22e">drawImage</span><span style="color:#f92672">(</span>walking<span style="color:#f92672">[</span><span style="color:#ae81ff">0</span><span style="color:#f92672">],</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">);</span>
+</span></span></code></pre></div><p>下記のコードを参考に，新たに<code>paint()</code>メソッドを定義して，<strong>walking1.png</strong>の画像を表示してください．
 プログラムの実行後に表示されるウィンドウを確認してください．</p>
 <script type="application/javascript" src="https://gist.github.com/naoto-github/8792d000d30b2c9fe303.js"></script>
 
@@ -273,10 +271,10 @@ walking<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>
 次に，<strong>setCycleCount()<strong>メソッドで「実行するサイクル数」を指定します．
 引数に</strong>Timeline.INDEFINITE</strong>を指定すると無限に繰り返すことを意味します．
 最後に，**play()**メソッドでアニメーションが開始されます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Timline timer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Timeline<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> KeyFrame<span style="color:#f92672">(</span>Duration<span style="color:#f92672">.</span><span style="color:#a6e22e">millis</span><span style="color:#f92672">(</span>500<span style="color:#f92672">),</span> event <span style="color:#f92672">-&gt;</span> handle<span style="color:#f92672">()));</span>
-timer<span style="color:#f92672">.</span><span style="color:#a6e22e">setCycleCount</span><span style="color:#f92672">(</span>Timeline<span style="color:#f92672">.</span><span style="color:#a6e22e">INDEFINITE</span><span style="color:#f92672">);</span>
-timer<span style="color:#f92672">.</span><span style="color:#a6e22e">play</span><span style="color:#f92672">();</span>
-</code></pre></div><p>下記のコードを参考に，<strong>walking1.png</strong>と<strong>walking2.png</strong>を交互に表示するアニメーションを作成してください．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Timline timer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Timeline<span style="color:#f92672">(</span><span style="color:#66d9ef">new</span> KeyFrame<span style="color:#f92672">(</span>Duration<span style="color:#f92672">.</span><span style="color:#a6e22e">millis</span><span style="color:#f92672">(</span><span style="color:#ae81ff">500</span><span style="color:#f92672">),</span> event <span style="color:#f92672">-&gt;</span> handle<span style="color:#f92672">()));</span>
+</span></span><span style="display:flex;"><span>timer<span style="color:#f92672">.</span><span style="color:#a6e22e">setCycleCount</span><span style="color:#f92672">(</span>Timeline<span style="color:#f92672">.</span><span style="color:#a6e22e">INDEFINITE</span><span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>timer<span style="color:#f92672">.</span><span style="color:#a6e22e">play</span><span style="color:#f92672">();</span>
+</span></span></code></pre></div><p>下記のコードを参考に，<strong>walking1.png</strong>と<strong>walking2.png</strong>を交互に表示するアニメーションを作成してください．
 アニメーションのサイクル数を把握するために，int型の変数timeを宣言しています．
 このtimeを２で割った余りを配列番号に指定することで，0，1，0，1という繰り返しを実現していることに注意してください．
 プログラムの実行後に表示されるウィンドウを確認してください．</p>

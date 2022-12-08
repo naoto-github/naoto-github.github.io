@@ -87,15 +87,12 @@
 
 
 
-  <meta property="og:description" content="p5.jsでアニメーション  p5.jsでアニメーションを表現するには，フレームごとに図形を少しずつ動かすことで，パラパラ漫画のように図形が動いているように錯覚させます． 1秒間に切り替わるフレーム数のことは，フレームレートと呼ばれます（単位はfps）． p5.jsのフレームレートは，ディスプレイのフレームレートに基づいて決定され， 一般に60fpsが用いられることが多いです． ここでは，「ブロックくずし」を作成しながら，アニメーションや衝突の処理について学びます．
-CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter12」に設定しましょう．
-
+  <meta property="og:description" content="p5.jsでアニメーション p5.jsでアニメーションを表現するには，フレームごとに図形を少しずつ動かすことで，パラパラ漫画のように図形が動いているように錯覚させます． 1秒間に切り替わるフレーム数のことは，フレームレートと呼ばれます（単位はfps）． p5.jsのフレームレートは，ディスプレイのフレームレートに基づいて決定され， 一般に60fpsが用いられることが多いです． ここでは，「ブロックくずし」を作成しながら，アニメーションや衝突の処理について学びます．
+CodePenの準備 CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter12」に設定しましょう．
 前回と同様にVue.jsとvue-p5のライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11，vue-p5はhttps://unpkg.com/vue-p5を直接入力してください．
-
-vue-p5  HTMLは次のように記述します． vue-p5タグにおいて，p5.jsの実装に必要なsetup()とdraw()を宣言します．
+vue-p5 HTMLは次のように記述します． vue-p5タグにおいて，p5.jsの実装に必要なsetup()とdraw()を宣言します．
 &lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt;{{ title }}&lt;/h1&gt; &lt;vue-p5 @setup=&#34;setup&#34; @draw=&#34;draw&#34;&gt; &lt;/vue-p5&gt; &lt;/div&gt; JavaScriptでVueクラスを定義します． キャンバスの幅と高さはいずれも500px，キャンバスの背景色は黒色にします．
-// JavaScript new Vue({ el: &#39;#app&#39;, data: { title: &#34;ブロックくずし&#34;, }, methods: { setup(sketch){ sketch.createCanvas(500, 500); // キャンバスの大きさ  sketch.background(&#34;black&#34;); // キャンバスの背景色  }, draw(sketch){ } } }); 
-図形描画  プレイヤーが操作するパドルを四角形で表現します． dataオプションで，パドルの位置を表すplayer_xとplayer_yを定義します． また，パドルの大きさは，幅が100，高さが50とします．
+// JavaScript new Vue({ el: &#39;#app&#39;, data: { title: &#34;ブロックくずし&#34;, }, methods: { setup(sketch){ sketch.createCanvas(500, 500); // キャンバスの大きさ sketch.background(&#34;black&#34;); // キャンバスの背景色 }, draw(sketch){ } } }); 図形描画 プレイヤーが操作するパドルを四角形で表現します． dataオプションで，パドルの位置を表すplayer_xとplayer_yを定義します． また，パドルの大きさは，幅が100，高さが50とします．
 data: { title: &#34;ブロックくずし&#34;, player_x: 250, player_y: 490, } 上記で定義したplayer_xとplayer_yを利用して四角形を描きます． 四角形を描く関数はrect(x, y, width, height)です． 引数のx，yは四角形の左上の座標，widthは幅，heightは高さです． パドルの中心をplayer_xとするため，四角形のX座標はx=this." />
 
 
@@ -111,15 +108,12 @@ data: { title: &#34;ブロックくずし&#34;, player_x: 250, player_y: 490, } 
 
 
 
-  <meta name="twitter:description" content="p5.jsでアニメーション  p5.jsでアニメーションを表現するには，フレームごとに図形を少しずつ動かすことで，パラパラ漫画のように図形が動いているように錯覚させます． 1秒間に切り替わるフレーム数のことは，フレームレートと呼ばれます（単位はfps）． p5.jsのフレームレートは，ディスプレイのフレームレートに基づいて決定され， 一般に60fpsが用いられることが多いです． ここでは，「ブロックくずし」を作成しながら，アニメーションや衝突の処理について学びます．
-CodePenの準備  CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter12」に設定しましょう．
-
+  <meta name="twitter:description" content="p5.jsでアニメーション p5.jsでアニメーションを表現するには，フレームごとに図形を少しずつ動かすことで，パラパラ漫画のように図形が動いているように錯覚させます． 1秒間に切り替わるフレーム数のことは，フレームレートと呼ばれます（単位はfps）． p5.jsのフレームレートは，ディスプレイのフレームレートに基づいて決定され， 一般に60fpsが用いられることが多いです． ここでは，「ブロックくずし」を作成しながら，アニメーションや衝突の処理について学びます．
+CodePenの準備 CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter12」に設定しましょう．
 前回と同様にVue.jsとvue-p5のライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11，vue-p5はhttps://unpkg.com/vue-p5を直接入力してください．
-
-vue-p5  HTMLは次のように記述します． vue-p5タグにおいて，p5.jsの実装に必要なsetup()とdraw()を宣言します．
+vue-p5 HTMLは次のように記述します． vue-p5タグにおいて，p5.jsの実装に必要なsetup()とdraw()を宣言します．
 &lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt;{{ title }}&lt;/h1&gt; &lt;vue-p5 @setup=&#34;setup&#34; @draw=&#34;draw&#34;&gt; &lt;/vue-p5&gt; &lt;/div&gt; JavaScriptでVueクラスを定義します． キャンバスの幅と高さはいずれも500px，キャンバスの背景色は黒色にします．
-// JavaScript new Vue({ el: &#39;#app&#39;, data: { title: &#34;ブロックくずし&#34;, }, methods: { setup(sketch){ sketch.createCanvas(500, 500); // キャンバスの大きさ  sketch.background(&#34;black&#34;); // キャンバスの背景色  }, draw(sketch){ } } }); 
-図形描画  プレイヤーが操作するパドルを四角形で表現します． dataオプションで，パドルの位置を表すplayer_xとplayer_yを定義します． また，パドルの大きさは，幅が100，高さが50とします．
+// JavaScript new Vue({ el: &#39;#app&#39;, data: { title: &#34;ブロックくずし&#34;, }, methods: { setup(sketch){ sketch.createCanvas(500, 500); // キャンバスの大きさ sketch.background(&#34;black&#34;); // キャンバスの背景色 }, draw(sketch){ } } }); 図形描画 プレイヤーが操作するパドルを四角形で表現します． dataオプションで，パドルの位置を表すplayer_xとplayer_yを定義します． また，パドルの大きさは，幅が100，高さが50とします．
 data: { title: &#34;ブロックくずし&#34;, player_x: 250, player_y: 490, } 上記で定義したplayer_xとplayer_yを利用して四角形を描きます． 四角形を描く関数はrect(x, y, width, height)です． 引数のx，yは四角形の左上の座標，widthは幅，heightは高さです． パドルの中心をplayer_xとするため，四角形のX座標はx=this." />
 
 
@@ -177,6 +171,10 @@ data: { title: &#34;ブロックくずし&#34;, player_x: 250, player_y: 490, } 
   </div>
 </nav>
 
+        <div id="darkModeToggle" onclick="toggleDarkMode()">
+  &#9680; 
+</div>
+
         
 
 <main>
@@ -213,32 +211,32 @@ Vue.jsのバージョンは2.6.11，vue-p5は<code>https://unpkg.com/vue-p5</cod
 
 <p>HTMLは次のように記述します．
 <code>vue-p5</code>タグにおいて，<code>p5.js</code>の実装に必要な<code>setup()</code>と<code>draw()</code>を宣言します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
-&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt;{{ title }}&lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">vue-p5</span>
-    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">setup</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;setup&#34;</span>
-    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">draw</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;draw&#34;</span>&gt;
-  &lt;/<span style="color:#f92672">vue-p5</span>&gt;
-&lt;/<span style="color:#f92672">div</span>&gt;
-</code></pre></div><p>JavaScriptで<code>Vue</code>クラスを定義します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">h1</span>&gt;{{ title }}&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">vue-p5</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">setup</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;setup&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">draw</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;draw&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">vue-p5</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div><p>JavaScriptで<code>Vue</code>クラスを定義します．
 キャンバスの幅と高さはいずれも500px，キャンバスの背景色は黒色にします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
-  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;#app&#39;</span>,
-  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
-  },
-  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
-    <span style="color:#a6e22e">setup</span>(<span style="color:#a6e22e">sketch</span>){
-      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">createCanvas</span>(<span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">500</span>); <span style="color:#75715e">// キャンバスの大きさ
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>); <span style="color:#75715e">// キャンバスの背景色
-</span><span style="color:#75715e"></span>    },
-    <span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-    }
-  }
-});
-</code></pre></div><p><a href="https://gyazo.com/e4c843b7d56447f0011cfe1b852f2d14"><img src="https://i.gyazo.com/e4c843b7d56447f0011cfe1b852f2d14.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// JavaScript
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;#app&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">setup</span>(<span style="color:#a6e22e">sketch</span>){
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">createCanvas</span>(<span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">500</span>); <span style="color:#75715e">// キャンバスの大きさ
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>); <span style="color:#75715e">// キャンバスの背景色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p><a href="https://gyazo.com/e4c843b7d56447f0011cfe1b852f2d14"><img src="https://i.gyazo.com/e4c843b7d56447f0011cfe1b852f2d14.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   図形描画
 </h1>
@@ -246,105 +244,105 @@ Vue.jsのバージョンは2.6.11，vue-p5は<code>https://unpkg.com/vue-p5</cod
 <p>プレイヤーが操作するパドルを四角形で表現します．
 <code>data</code>オプションで，パドルの位置を表す<code>player_x</code>と<code>player_y</code>を定義します．
 また，パドルの大きさは，幅が100，高さが50とします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
-  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">250</span>,
-  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
-}
-</code></pre></div><p>上記で定義した<code>player_x</code>と<code>player_y</code>を利用して四角形を描きます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">250</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上記で定義した<code>player_x</code>と<code>player_y</code>を利用して四角形を描きます．
 四角形を描く関数は<code>rect(x, y, width, height)</code>です．
 引数の<code>x</code>，<code>y</code>は四角形の左上の座標，<code>width</code>は幅，<code>height</code>は高さです．
 パドルの中心を<code>player_x</code>とするため，四角形のX座標は<code>x=this.player_x - 50</code>となります．
 また，<code>fill(color)</code>は，図形の塗りつぶしの色を設定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
-}
-</code></pre></div><p><a href="https://gyazo.com/b65e8970b939f81d67f67513561596b7"><img src="https://i.gyazo.com/b65e8970b939f81d67f67513561596b7.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="https://gyazo.com/b65e8970b939f81d67f67513561596b7"><img src="https://i.gyazo.com/b65e8970b939f81d67f67513561596b7.png" alt="Image from Gyazo"></a></p>
 <p>次にプレイヤーがパドルで跳ね返すボールを円で表現します．
 <code>data</code>オプションで，ボールの位置を表す<code>ball_x</code>と<code>ball_y</code>を定義します．
 また，ボールの直径は20とします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
-  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">250</span>,
-  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
-  <span style="color:#a6e22e">ball_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>,
-  <span style="color:#a6e22e">ball_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
-}
-</code></pre></div><p>上記で定義した<code>ball_x</code>と<code>ball_y</code>を利用して円を描きます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">250</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ball_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ball_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上記で定義した<code>ball_x</code>と<code>ball_y</code>を利用して円を描きます．
 円を描く関数は<code>circle(x, y, diameter)</code>です．
 引数の<code>x</code>，<code>y</code>は円の中心の座標，<code>diameter</code>は直径です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
-}
-</code></pre></div><p><a href="https://gyazo.com/3c68d93636a8a9f30a40b4e1d2768292"><img src="https://i.gyazo.com/3c68d93636a8a9f30a40b4e1d2768292.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="https://gyazo.com/3c68d93636a8a9f30a40b4e1d2768292"><img src="https://i.gyazo.com/3c68d93636a8a9f30a40b4e1d2768292.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   アニメーション
 </h1>
 
 <p><code>draw()</code>でボールのY座標を更新することで，ボールの落下をアニメーションで表現します．
 <code>data</code>オプションで，ボールのY方向への速度を定義します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
-  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">250</span>,
-  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
-  <span style="color:#a6e22e">ball_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>,
-  <span style="color:#a6e22e">ball_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
-  <span style="color:#a6e22e">ball_y_speed</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
-}
-</code></pre></div><p>ボールのY座標である<code>ball_y</code>に速度を加算することで，ボールの位置を更新します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">250</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ball_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ball_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ball_y_speed</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>ボールのY座標である<code>ball_y</code>に速度を加算することで，ボールの位置を更新します．
 この場合，ボールは確かに落下しますが，移動後のボールが削除されず，軌跡として残ってしまいます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
-
-  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
-}
-</code></pre></div><p><a href="https://gyazo.com/fe3a145757c4d3abd5e42f4743440100"><img src="https://i.gyazo.com/fe3a145757c4d3abd5e42f4743440100.gif" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="https://gyazo.com/fe3a145757c4d3abd5e42f4743440100"><img src="https://i.gyazo.com/fe3a145757c4d3abd5e42f4743440100.gif" alt="Image from Gyazo"></a></p>
 <p>そこで，<code>draw()</code>の最初で，<code>background(color)</code>を用いて背景色を黒にリセットします．
 これで，ボールの落下が表現できました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>); <span style="color:#75715e">// 背景色でリセット
-</span><span style="color:#75715e"></span>
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
-
-  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>; <span style="color:#75715e">// Y座標を更新
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p><a href="https://gyazo.com/f287824188a626ead198d247a1be52ed"><img src="https://i.gyazo.com/f287824188a626ead198d247a1be52ed.gif" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>); <span style="color:#75715e">// 背景色でリセット
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>; <span style="color:#75715e">// Y座標を更新
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p><a href="https://gyazo.com/f287824188a626ead198d247a1be52ed"><img src="https://i.gyazo.com/f287824188a626ead198d247a1be52ed.gif" alt="Image from Gyazo"></a></p>
 <p>同様にボールのX座標も更新するようにしましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
-  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">25</span>,
-  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
-  <span style="color:#a6e22e">ball_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>,
-  <span style="color:#a6e22e">ball_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
-  <span style="color:#a6e22e">ball_x_speed</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
-  <span style="color:#a6e22e">ball_y_speed</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
-}
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
-
-  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>;
-  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
-}
-</code></pre></div><p><a href="https://gyazo.com/e1d99010e822b0feede3b769833533f5"><img src="https://i.gyazo.com/e1d99010e822b0feede3b769833533f5.gif" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;ブロックくずし&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">player_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">25</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">player_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">490</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ball_x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">240</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ball_y</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ball_x_speed</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ball_y_speed</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="https://gyazo.com/e1d99010e822b0feede3b769833533f5"><img src="https://i.gyazo.com/e1d99010e822b0feede3b769833533f5.gif" alt="Image from Gyazo"></a></p>
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
   
   <h3 style="color:#006600">
@@ -368,21 +366,21 @@ Vue.jsのバージョンは2.6.11，vue-p5は<code>https://unpkg.com/vue-p5</cod
 <p>マウスの位置に合わせてパドルを動かしましょう．
 マウスの移動を検知するには，<code>mouseMoved()</code>を定義します．
 HTMLの<code>vue-p5</code>タグでmouseMovedを宣言する必要があることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
-&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt;{{ title }}&lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">vue-p5</span>
-    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">setup</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;setup&#34;</span>
-    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">draw</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;draw&#34;</span>
-	<span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">mouseMoved</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mouseMoved&#34;</span>&gt;
-  &lt;/<span style="color:#f92672">vue-p5</span>&gt;
-&lt;/<span style="color:#f92672">div</span>&gt;
-</code></pre></div><p>マウスのX座標は<code>mouseX</code>，Y座標は<code>mouseY</code>で取得可能です．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">h1</span>&gt;{{ title }}&lt;/<span style="color:#f92672">h1</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">vue-p5</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">setup</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;setup&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">draw</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;draw&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">mouseMoved</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mouseMoved&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">vue-p5</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div><p>マウスのX座標は<code>mouseX</code>，Y座標は<code>mouseY</code>で取得可能です．
 ここでは，マウスのX座標だけを用いて，パドルの位置を設定しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">mouseMoved</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">mouseX</span>;
-}
-</code></pre></div><p><a href="https://gyazo.com/abf1831d3db386f08e0dcf83dfdff22d"><img src="https://i.gyazo.com/abf1831d3db386f08e0dcf83dfdff22d.gif" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">mouseMoved</span>(<span style="color:#a6e22e">sketch</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">mouseX</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="https://gyazo.com/abf1831d3db386f08e0dcf83dfdff22d"><img src="https://i.gyazo.com/abf1831d3db386f08e0dcf83dfdff22d.gif" alt="Image from Gyazo"></a></p>
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
   
   <h3 style="color:#006600">
@@ -407,70 +405,70 @@ HTMLの<code>vue-p5</code>タグでmouseMovedを宣言する必要があるこ�
 <p>上と左右の壁に衝突したときに，ボールの速度を反転させて，逆方向に移動させます．
 ボールの直径が20であることから，半径10だけ壁からずらした座標を基準に衝突を判定します．
 左右の壁に衝突したときはX方向の速度を反転し，上の壁に衝突したときはY方向の速度を反転します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
-
-  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>;
-  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
-
-  <span style="color:#75715e">// 左右の壁に衝突したらX方向の速度を反転
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">490</span>){
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>
-  }
-
-  <span style="color:#75715e">// 上の壁に衝突したらY方向の速度を反転
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>){
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
-  }
-
-}
-</code></pre></div><p><a href="https://gyazo.com/09e33d25fe6a80ed22144d08d493b266"><img src="https://i.gyazo.com/09e33d25fe6a80ed22144d08d493b266.gif" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 左右の壁に衝突したらX方向の速度を反転
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">490</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 上の壁に衝突したらY方向の速度を反転
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="https://gyazo.com/09e33d25fe6a80ed22144d08d493b266"><img src="https://i.gyazo.com/09e33d25fe6a80ed22144d08d493b266.gif" alt="Image from Gyazo"></a></p>
 <p>パドルと衝突したときに，ボールのY方向の速度を反転させます．
 このとき，パドルの左側に衝突したときは，ボールを左側に加速させ，パドルの右側に衝突したときは，ボールを右側に加速させます．
 この加速がないと，ボールは同じ軌道を何度も繰り返してしまいます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
-
-  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>;
-  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
-
-  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">490</span>){
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>
-  }
-
-  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>){
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
-  }
-
-  <span style="color:#75715e">// パドルと衝突したらY方向の速度を反転
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>((<span style="color:#ae81ff">490</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">500</span>)){
-
-    <span style="color:#75715e">// パドルの左側ならY方向の速度を1だけ減らす
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>((<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span>)){
-      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
-      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>; <span style="color:#75715e">// 左方向に加速
-</span><span style="color:#75715e"></span>    }
-	<span style="color:#75715e">// パドルの右側ならY方向の速度を1だけ増やす
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>((<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">50</span>)){
-      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
-      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>; <span style="color:#75715e">// 右方向に加速
-</span><span style="color:#75715e"></span>    }
-  }
-
-}
-</code></pre></div><p><a href="https://gyazo.com/c0692765695ffc8fa8c70dbca69b737e"><img src="https://i.gyazo.com/c0692765695ffc8fa8c70dbca69b737e.gif" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_y</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">50</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;yellow&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>, <span style="color:#ae81ff">20</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">+=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">||</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">490</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>){
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// パドルと衝突したらY方向の速度を反転
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>((<span style="color:#ae81ff">490</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">500</span>)){
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// パドルの左側ならY方向の速度を1だけ減らす
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>((<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">50</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span>)){
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>; <span style="color:#75715e">// 左方向に加速
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// パドルの右側ならY方向の速度を1だけ増やす
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>((<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">player_x</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">50</span>)){
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_y_speed</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ball_x_speed</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>; <span style="color:#75715e">// 右方向に加速
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><a href="https://gyazo.com/c0692765695ffc8fa8c70dbca69b737e"><img src="https://i.gyazo.com/c0692765695ffc8fa8c70dbca69b737e.gif" alt="Image from Gyazo"></a></p>
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
   
   <h3 style="color:#006600">

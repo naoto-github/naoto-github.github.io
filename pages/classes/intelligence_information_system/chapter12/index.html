@@ -87,12 +87,12 @@
 
 
 
-  <meta property="og:description" content="クラスタリング  これまで取り上げた手法は全て 教師あり学習 でした． 今回は，正解（教師）が与えられない 教師なし学習 に注目します． 教師なし学習の一つが クラスタリング と呼ばれる手法です． クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります． 分類と混同されがちですが，正解（教師）は存在しないため， 同じクラスタに割り当てられたデータは 似ている とみなすことができますが， その割り当てが 正しい， 正しくない といった判断は出来ないことに注意してください． また，クラスタリングには，階層型手法 と 非階層型手法 に分かれますが， ここでは非階層型手法を取り上げることにします．
-ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter12 とします． また，numpy，matplotlib.pyplot, scikit-learn，pandas を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt from sklearn.cluster import KMeans import pandas as pd データの準備  ユニセフ・世界子供白書が公開している人口統計指標のデータを用います． ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します． ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します． 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．
-data = pd.read_csv(&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;) display(data.head()) #最初の5件だけ表示 
-一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．
-japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(japan)" />
+  <meta property="og:description" content="クラスタリング これまで取り上げた手法は全て 教師あり学習 でした． 今回は，正解（教師）が与えられない 教師なし学習 に注目します． 教師なし学習の一つが クラスタリング と呼ばれる手法です． クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります． 分類と混同されがちですが，正解（教師）は存在しないため， 同じクラスタに割り当てられたデータは 似ている とみなすことができますが， その割り当てが 正しい， 正しくない といった判断は出来ないことに注意してください． また，クラスタリングには，階層型手法 と 非階層型手法 に分かれますが， ここでは非階層型手法を取り上げることにします．
+ノートブックの作成 Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter12 とします． また，numpy，matplotlib.pyplot, scikit-learn，pandas を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from sklearn.cluster import KMeans import pandas as pd データの準備 ユニセフ・世界子供白書が公開している人口統計指標のデータを用います． ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します． ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します． 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．
+data = pd.read_csv(&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;) display(data.head()) #最初の5件だけ表示 一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．
+japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(japan) 散布図で出生率，死亡率を可視化してみましょう． 他国と比較すると，日本の少子高齢化が極めて大きな問題であることが分かります（この授業の趣旨ではありませんが）．
+plt.scatter(data[&#34;出生率&#34;], data[&#34;死亡率&#34;]) plt." />
 
 
 
@@ -107,12 +107,12 @@ japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(j
 
 
 
-  <meta name="twitter:description" content="クラスタリング  これまで取り上げた手法は全て 教師あり学習 でした． 今回は，正解（教師）が与えられない 教師なし学習 に注目します． 教師なし学習の一つが クラスタリング と呼ばれる手法です． クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります． 分類と混同されがちですが，正解（教師）は存在しないため， 同じクラスタに割り当てられたデータは 似ている とみなすことができますが， その割り当てが 正しい， 正しくない といった判断は出来ないことに注意してください． また，クラスタリングには，階層型手法 と 非階層型手法 に分かれますが， ここでは非階層型手法を取り上げることにします．
-ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter12 とします． また，numpy，matplotlib.pyplot, scikit-learn，pandas を導入しておいてください．
-import numpy as np import matplotlib.pyplot as plt from sklearn.cluster import KMeans import pandas as pd データの準備  ユニセフ・世界子供白書が公開している人口統計指標のデータを用います． ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します． ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します． 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．
-data = pd.read_csv(&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;) display(data.head()) #最初の5件だけ表示 
-一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．
-japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(japan)" />
+  <meta name="twitter:description" content="クラスタリング これまで取り上げた手法は全て 教師あり学習 でした． 今回は，正解（教師）が与えられない 教師なし学習 に注目します． 教師なし学習の一つが クラスタリング と呼ばれる手法です． クラスタリングは，対象データの類似度を基に，グループ（クラスタ）に分けることが目的となります． 分類と混同されがちですが，正解（教師）は存在しないため， 同じクラスタに割り当てられたデータは 似ている とみなすことができますが， その割り当てが 正しい， 正しくない といった判断は出来ないことに注意してください． また，クラスタリングには，階層型手法 と 非階層型手法 に分かれますが， ここでは非階層型手法を取り上げることにします．
+ノートブックの作成 Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter12 とします． また，numpy，matplotlib.pyplot, scikit-learn，pandas を導入しておいてください．
+import numpy as np import matplotlib.pyplot as plt from sklearn.cluster import KMeans import pandas as pd データの準備 ユニセフ・世界子供白書が公開している人口統計指標のデータを用います． ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します． ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します． 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．
+data = pd.read_csv(&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;) display(data.head()) #最初の5件だけ表示 一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．
+japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(japan) 散布図で出生率，死亡率を可視化してみましょう． 他国と比較すると，日本の少子高齢化が極めて大きな問題であることが分かります（この授業の趣旨ではありませんが）．
+plt.scatter(data[&#34;出生率&#34;], data[&#34;死亡率&#34;]) plt." />
 
 
 
@@ -169,6 +169,10 @@ japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(j
   </div>
 </nav>
 
+        <div id="darkModeToggle" onclick="toggleDarkMode()">
+  &#9680; 
+</div>
+
         
 
 <main>
@@ -200,11 +204,11 @@ japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(j
 <p>Colabにアクセスし，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>chapter12</strong> とします．
 また，<strong>numpy</strong>，<strong>matplotlib.pyplot</strong>, <strong>scikit-learn</strong>，<strong>pandas</strong> を導入しておいてください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">from</span> sklearn.cluster <span style="color:#f92672">import</span> KMeans
-<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.cluster <span style="color:#f92672">import</span> KMeans
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   データの準備
 </h1>
 
@@ -212,20 +216,20 @@ japan = data[data[&#34;国&#34;] == &#34;日本&#34;] #日本を表示 display(j
 ここでは，世界各国の2016年度の出生率（人口1,000人に対する出生数）と死亡率（人口1,000人に対する死亡数）のデータに着目します．
 ウェブで公開されているデータを読み込み，pandasのデータフレームを生成します．
 例えば，アフガニスタンの死亡率は7，出生率は33であることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;</span>)
-display(data<span style="color:#f92672">.</span>head()) <span style="color:#75715e">#最初の5件だけ表示</span>
-</code></pre></div><p><a href="https://gyazo.com/69e05244ac4316e602ba666e57bc68f6"><img src="https://i.gyazo.com/69e05244ac4316e602ba666e57bc68f6.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;http://mukai-lab.info/classes/intelligence_information_system/population2016.csv&#34;</span>)
+</span></span><span style="display:flex;"><span>display(data<span style="color:#f92672">.</span>head()) <span style="color:#75715e">#最初の5件だけ表示</span>
+</span></span></code></pre></div><p><a href="https://gyazo.com/69e05244ac4316e602ba666e57bc68f6"><img src="https://i.gyazo.com/69e05244ac4316e602ba666e57bc68f6.png" alt="Image from Gyazo"></a></p>
 <p>一方，日本の死亡率は11，出生率は8であり，少子高齢化が進んでいることが読み取れます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">japan <span style="color:#f92672">=</span> data[data[<span style="color:#e6db74">&#34;国&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;日本&#34;</span>] <span style="color:#75715e">#日本を表示</span>
-display(japan)
-</code></pre></div><p><a href="https://gyazo.com/6e885d4f7d6ae2761b11e326e3c18537"><img src="https://i.gyazo.com/6e885d4f7d6ae2761b11e326e3c18537.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>japan <span style="color:#f92672">=</span> data[data[<span style="color:#e6db74">&#34;国&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;日本&#34;</span>] <span style="color:#75715e">#日本を表示</span>
+</span></span><span style="display:flex;"><span>display(japan)
+</span></span></code></pre></div><p><a href="https://gyazo.com/6e885d4f7d6ae2761b11e326e3c18537"><img src="https://i.gyazo.com/6e885d4f7d6ae2761b11e326e3c18537.png" alt="Image from Gyazo"></a></p>
 <p>散布図で出生率，死亡率を可視化してみましょう．
 他国と比較すると，日本の少子高齢化が極めて大きな問題であることが分かります（この授業の趣旨ではありませんが）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>], data[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
-plt<span style="color:#f92672">.</span>scatter(japan[<span style="color:#e6db74">&#34;出生率&#34;</span>], japan[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/55be18219bb2264d955f327cdfd1af9e"><img src="https://i.gyazo.com/55be18219bb2264d955f327cdfd1af9e.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>], data[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(japan[<span style="color:#e6db74">&#34;出生率&#34;</span>], japan[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
+</span></span></code></pre></div><p><a href="https://gyazo.com/55be18219bb2264d955f327cdfd1af9e"><img src="https://i.gyazo.com/55be18219bb2264d955f327cdfd1af9e.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   k平均法
 </h1>
@@ -237,20 +241,20 @@ k平均法では，あらかじめ分割するクラスタ数$k$を決める必�
 <p>クラスタの位置は，クラスタの中心を表すベクトル ${\bf c} = ( c_1, c_2, c_3 ) $ で表すことにします．
 ここでは，$c_1 = (10, 10)$，$c_2 = (20, 10)$，$c_3 = (30, 10)$を初期値とします．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">c1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>])
-c2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">10</span>])
-c3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">10</span>])
-clusters <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([c1, c2, c3])
-<span style="color:#66d9ef">print</span>(clusters)
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[[<span style="color:#ae81ff">10</span> <span style="color:#ae81ff">10</span>]
- [<span style="color:#ae81ff">20</span> <span style="color:#ae81ff">10</span>]
- [<span style="color:#ae81ff">30</span> <span style="color:#ae81ff">10</span>]]
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>],data[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
-plt<span style="color:#f92672">.</span>scatter(clusters[:,<span style="color:#ae81ff">0</span>], clusters[:,<span style="color:#ae81ff">1</span>])
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/c9d7083190c095cabaaebda0350c824e"><img src="https://i.gyazo.com/c9d7083190c095cabaaebda0350c824e.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>c1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>])
+</span></span><span style="display:flex;"><span>c2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">10</span>])
+</span></span><span style="display:flex;"><span>c3 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">10</span>])
+</span></span><span style="display:flex;"><span>clusters <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([c1, c2, c3])
+</span></span><span style="display:flex;"><span>print(clusters)
+</span></span></code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>[[<span style="color:#ae81ff">10</span> <span style="color:#ae81ff">10</span>]
+</span></span><span style="display:flex;"><span> [<span style="color:#ae81ff">20</span> <span style="color:#ae81ff">10</span>]
+</span></span><span style="display:flex;"><span> [<span style="color:#ae81ff">30</span> <span style="color:#ae81ff">10</span>]]
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>],data[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(clusters[:,<span style="color:#ae81ff">0</span>], clusters[:,<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
+</span></span></code></pre></div><p><a href="https://gyazo.com/c9d7083190c095cabaaebda0350c824e"><img src="https://i.gyazo.com/c9d7083190c095cabaaebda0350c824e.png" alt="Image from Gyazo"></a></p>
 <h2 id="クラスタとの距離">クラスタとの距離</h2>
 <p>次に，各データがどのクラスタに属するかを調べます．
 一般には，各データとクラスタとのユークリッド距離を類似度とみなし，
@@ -263,71 +267,71 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;M
 \sqrt{(7 - 10)^2 + (33 - 10)^2} = 23.19
 $$</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">distance</span>(data, clusters):
-    d <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> data<span style="color:#f92672">.</span>iterrows():
-        x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([row[<span style="color:#e6db74">&#34;出生率&#34;</span>], row[<span style="color:#e6db74">&#34;死亡率&#34;</span>]])
-		<span style="color:#75715e">#clustersの要素cに対するユークリッド距離を計算</span>
-        value <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> c:  np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(x <span style="color:#f92672">-</span> c), clusters))
-        d<span style="color:#f92672">.</span>append(value)
-    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(d)
-
-d <span style="color:#f92672">=</span> distance(data, clusters) <span style="color:#75715e">#c1,c2,c3までの距離</span>
-<span style="color:#66d9ef">print</span>(d[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">23.19482701</span> <span style="color:#ae81ff">13.34166406</span>  <span style="color:#ae81ff">4.24264069</span>]
- [ <span style="color:#ae81ff">3.60555128</span>  <span style="color:#ae81ff">8.54400375</span> <span style="color:#ae81ff">18.24828759</span>]
- [<span style="color:#ae81ff">13.92838828</span>  <span style="color:#ae81ff">5.83095189</span>  <span style="color:#ae81ff">8.60232527</span>]
- [<span style="color:#ae81ff">32.01562119</span> <span style="color:#ae81ff">22.02271555</span> <span style="color:#ae81ff">12.04159458</span>]
- [ <span style="color:#ae81ff">7.21110255</span>  <span style="color:#ae81ff">5.65685425</span> <span style="color:#ae81ff">14.56021978</span>]]
-</code></pre></div><p>距離が最小となるクラスタの要素番号を調べます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">distance</span>(data, clusters):
+</span></span><span style="display:flex;"><span>    d <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> data<span style="color:#f92672">.</span>iterrows():
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([row[<span style="color:#e6db74">&#34;出生率&#34;</span>], row[<span style="color:#e6db74">&#34;死亡率&#34;</span>]])
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">#clustersの要素cに対するユークリッド距離を計算</span>
+</span></span><span style="display:flex;"><span>        value <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> c:  np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(x <span style="color:#f92672">-</span> c), clusters))
+</span></span><span style="display:flex;"><span>        d<span style="color:#f92672">.</span>append(value)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(d)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>d <span style="color:#f92672">=</span> distance(data, clusters) <span style="color:#75715e">#c1,c2,c3までの距離</span>
+</span></span><span style="display:flex;"><span>print(d[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
+</span></span></code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[[<span style="color:#ae81ff">23.19482701</span> <span style="color:#ae81ff">13.34166406</span>  <span style="color:#ae81ff">4.24264069</span>]
+</span></span><span style="display:flex;"><span> [ <span style="color:#ae81ff">3.60555128</span>  <span style="color:#ae81ff">8.54400375</span> <span style="color:#ae81ff">18.24828759</span>]
+</span></span><span style="display:flex;"><span> [<span style="color:#ae81ff">13.92838828</span>  <span style="color:#ae81ff">5.83095189</span>  <span style="color:#ae81ff">8.60232527</span>]
+</span></span><span style="display:flex;"><span> [<span style="color:#ae81ff">32.01562119</span> <span style="color:#ae81ff">22.02271555</span> <span style="color:#ae81ff">12.04159458</span>]
+</span></span><span style="display:flex;"><span> [ <span style="color:#ae81ff">7.21110255</span>  <span style="color:#ae81ff">5.65685425</span> <span style="color:#ae81ff">14.56021978</span>]]
+</span></span></code></pre></div><p>距離が最小となるクラスタの要素番号を調べます．
 ここは，<strong>argmin</strong> 関数を用いています．
 この関数は，配列に記録されている最も小さな値の要素番号を取得します．
 例えば，アフガニスタンの場合は，クラスタ$c_3$が最小であり，
 その要素番号である$2$が取得されます（配列の要素番号は$0$から）．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">assign</span>(distance):
-    a <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> distance:
-        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmin(d)
-        a<span style="color:#f92672">.</span>append(index)
-    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(a)
-        
-a <span style="color:#f92672">=</span> assign(d)
-<span style="color:#66d9ef">print</span>(a[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[2 0 1 2 1]
-</code></pre></div><h2 id="クラスタの中心ベクトルの更新">クラスタの中心ベクトルの更新</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">assign</span>(distance):
+</span></span><span style="display:flex;"><span>    a <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> d <span style="color:#f92672">in</span> distance:
+</span></span><span style="display:flex;"><span>        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmin(d)
+</span></span><span style="display:flex;"><span>        a<span style="color:#f92672">.</span>append(index)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(a)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> assign(d)
+</span></span><span style="display:flex;"><span>print(a[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">5</span>])
+</span></span></code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>[2 0 1 2 1]
+</span></span></code></pre></div><h2 id="クラスタの中心ベクトルの更新">クラスタの中心ベクトルの更新</h2>
 <p>クラスタの中心ベクトルを更新します．
 中心ベクトルは，各クラスタに属するデータの <strong>重心（平均）</strong> で表されます．
 この結果，中心ベクトルは，クラスタの中心に移動します．
 上記の操作を繰り返し，中心ベクトルの変化がなくなったとき，適したクラスタが得られたとみなします．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateClusters</span>(data, clusters, a):
-    updated <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(clusters<span style="color:#f92672">.</span>ndim<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
-        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(a <span style="color:#f92672">==</span> i)
-        d <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>iloc[index]
-        size <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(index)<span style="color:#f92672">.</span>size
-        c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([d[<span style="color:#e6db74">&#34;出生率&#34;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> size, d[<span style="color:#e6db74">&#34;死亡率&#34;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> size])
-        updated<span style="color:#f92672">.</span>append(c)
-    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(updated)
-
-clusters <span style="color:#f92672">=</span> updateClusters(data, clusters, a)
-<span style="color:#66d9ef">print</span>(clusters)
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[[<span style="color:#ae81ff">11.27941176</span>  <span style="color:#ae81ff">9.05882353</span>]
- [<span style="color:#ae81ff">20.15</span>        <span style="color:#ae81ff">6.1</span>       ]
- [<span style="color:#ae81ff">34.55357143</span>  <span style="color:#ae81ff">8.23214286</span>]]
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(clusters<span style="color:#f92672">.</span>ndim <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
-    index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(a <span style="color:#f92672">==</span> i)
-    d <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>iloc[index]
-    plt<span style="color:#f92672">.</span>scatter(d[<span style="color:#e6db74">&#34;出生率&#34;</span>],d[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
-    
-plt<span style="color:#f92672">.</span>scatter(clusters[:,<span style="color:#ae81ff">0</span>], clusters[:,<span style="color:#ae81ff">1</span>])
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/7df30a0171c87c747308753ac489fa5b"><img src="https://i.gyazo.com/7df30a0171c87c747308753ac489fa5b.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateClusters</span>(data, clusters, a):
+</span></span><span style="display:flex;"><span>    updated <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(clusters<span style="color:#f92672">.</span>ndim<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(a <span style="color:#f92672">==</span> i)
+</span></span><span style="display:flex;"><span>        d <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>iloc[index]
+</span></span><span style="display:flex;"><span>        size <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(index)<span style="color:#f92672">.</span>size
+</span></span><span style="display:flex;"><span>        c <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([d[<span style="color:#e6db74">&#34;出生率&#34;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> size, d[<span style="color:#e6db74">&#34;死亡率&#34;</span>]<span style="color:#f92672">.</span>sum() <span style="color:#f92672">/</span> size])
+</span></span><span style="display:flex;"><span>        updated<span style="color:#f92672">.</span>append(c)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(updated)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>clusters <span style="color:#f92672">=</span> updateClusters(data, clusters, a)
+</span></span><span style="display:flex;"><span>print(clusters)
+</span></span></code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[[<span style="color:#ae81ff">11.27941176</span>  <span style="color:#ae81ff">9.05882353</span>]
+</span></span><span style="display:flex;"><span> [<span style="color:#ae81ff">20.15</span>        <span style="color:#ae81ff">6.1</span>       ]
+</span></span><span style="display:flex;"><span> [<span style="color:#ae81ff">34.55357143</span>  <span style="color:#ae81ff">8.23214286</span>]]
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(clusters<span style="color:#f92672">.</span>ndim <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>    index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(a <span style="color:#f92672">==</span> i)
+</span></span><span style="display:flex;"><span>    d <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>iloc[index]
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>scatter(d[<span style="color:#e6db74">&#34;出生率&#34;</span>],d[<span style="color:#e6db74">&#34;死亡率&#34;</span>])
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(clusters[:,<span style="color:#ae81ff">0</span>], clusters[:,<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;Birth Rate&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;Mortality Rate&#34;</span>)
+</span></span></code></pre></div><p><a href="https://gyazo.com/7df30a0171c87c747308753ac489fa5b"><img src="https://i.gyazo.com/7df30a0171c87c747308753ac489fa5b.png" alt="Image from Gyazo"></a></p>
 <p>上記の操作をクラスタの中心ベクトルが収束するまで繰り返します．
 最終的に得られた結果を最適なクラスタリングとみなします．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
@@ -338,27 +342,27 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;M
 k平均法を適用するには <strong>cluster.KMeans</strong> 関数を用います．
 クラスタ数は <code>n_clusters</code>で指定します．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">km <span style="color:#f92672">=</span> KMeans(n_clusters<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
-km<span style="color:#f92672">.</span>fit(data[[<span style="color:#e6db74">&#34;出生率&#34;</span>, <span style="color:#e6db74">&#34;死亡率&#34;</span>]])
-
-<span style="color:#66d9ef">print</span>(km<span style="color:#f92672">.</span>labels_) <span style="color:#75715e"># 所属するクラスタ</span>
-<span style="color:#66d9ef">print</span>(km<span style="color:#f92672">.</span>cluster_centers_) <span style="color:#75715e"># クラスタの中心</span>
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span>
- <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span>
- <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span>
- <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span>
- <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span>]
-[[<span style="color:#ae81ff">20.26153846</span>  <span style="color:#ae81ff">5.96923077</span>]
- [<span style="color:#ae81ff">35.03773585</span>  <span style="color:#ae81ff">8.41509434</span>]
- [<span style="color:#ae81ff">11.16666667</span>  <span style="color:#ae81ff">9.22727273</span>]]
-</code></pre></div><p>クラスラリングの結果を散布図で可視化してみましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>km <span style="color:#f92672">=</span> KMeans(n_clusters<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>km<span style="color:#f92672">.</span>fit(data[[<span style="color:#e6db74">&#34;出生率&#34;</span>, <span style="color:#e6db74">&#34;死亡率&#34;</span>]])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(km<span style="color:#f92672">.</span>labels_) <span style="color:#75715e"># 所属するクラスタ</span>
+</span></span><span style="display:flex;"><span>print(km<span style="color:#f92672">.</span>cluster_centers_) <span style="color:#75715e"># クラスタの中心</span>
+</span></span></code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>[[<span style="color:#ae81ff">20.26153846</span>  <span style="color:#ae81ff">5.96923077</span>]
+</span></span><span style="display:flex;"><span> [<span style="color:#ae81ff">35.03773585</span>  <span style="color:#ae81ff">8.41509434</span>]
+</span></span><span style="display:flex;"><span> [<span style="color:#ae81ff">11.16666667</span>  <span style="color:#ae81ff">9.22727273</span>]]
+</span></span></code></pre></div><p>クラスラリングの結果を散布図で可視化してみましょう．
 3つのクラスタが構成されていることがわかります．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>], data[<span style="color:#e6db74">&#34;死亡率&#34;</span>], c<span style="color:#f92672">=</span>km<span style="color:#f92672">.</span>labels_)
-<span style="color:#66d9ef">for</span> x,y <span style="color:#f92672">in</span> km<span style="color:#f92672">.</span>cluster_centers_:
-  plt<span style="color:#f92672">.</span>scatter(x, y)
-</code></pre></div><p><a href="https://gyazo.com/7f0ecfb3cec57ed4dc9e3655c5a208ad"><img src="https://i.gyazo.com/7f0ecfb3cec57ed4dc9e3655c5a208ad.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(data[<span style="color:#e6db74">&#34;出生率&#34;</span>], data[<span style="color:#e6db74">&#34;死亡率&#34;</span>], c<span style="color:#f92672">=</span>km<span style="color:#f92672">.</span>labels_)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> x,y <span style="color:#f92672">in</span> km<span style="color:#f92672">.</span>cluster_centers_:
+</span></span><span style="display:flex;"><span>  plt<span style="color:#f92672">.</span>scatter(x, y)
+</span></span></code></pre></div><p><a href="https://gyazo.com/7f0ecfb3cec57ed4dc9e3655c5a208ad"><img src="https://i.gyazo.com/7f0ecfb3cec57ed4dc9e3655c5a208ad.png" alt="Image from Gyazo"></a></p>
 <p>最後に，各クラスタにどのような国が所属しているか確認してみましょう．
 クラスタ$c_2$は，出生率が高く，死亡率が低いグループです．
 アフガニスタンなど治安が悪い国や，アンゴラなどの発展途上国が含まれています．
@@ -366,17 +370,17 @@ km<span style="color:#f92672">.</span>fit(data[[<span style="color:#e6db74">&#34
 オーストラリアやオーストリアなど経済発展が進んだ国が含まれています．
 クラスタ$c_1$は，その中間であり，アルジェリアやアルゼンチンなどが含まれています．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">labels <span style="color:#f92672">=</span> km<span style="color:#f92672">.</span>labels_
-
-index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>)
-display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
-
-index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>)
-display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
-
-index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>)
-display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
-</code></pre></div><p><a href="https://gyazo.com/1b270c17f184295f57d535138a13e761"><img src="https://i.gyazo.com/1b270c17f184295f57d535138a13e761.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>labels <span style="color:#f92672">=</span> km<span style="color:#f92672">.</span>labels_
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>index <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>where(labels<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f92672">.</span>head())
+</span></span></code></pre></div><p><a href="https://gyazo.com/1b270c17f184295f57d535138a13e761"><img src="https://i.gyazo.com/1b270c17f184295f57d535138a13e761.png" alt="Image from Gyazo"></a></p>
 <!-- <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
@@ -401,11 +405,11 @@ display(data<span style="color:#f92672">.</span>iloc[index]<span style="color:#f
 
 <p>scikit-learnの <strong>アヤメ</strong>の データセットをk平均法でクラスタリングしてください（クラスタ数は3）．
 このとき，<strong>がく片の長さ（Sepal Length）</strong> と<strong>がく片の幅（Sepal Width）</strong> のみを対象とすること．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_iris
-iris <span style="color:#f92672">=</span> load_iris()
-data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(iris<span style="color:#f92672">.</span>data)
-data<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;がく片の長さ&#34;</span>,<span style="color:#e6db74">&#34;がく片の幅&#34;</span>,<span style="color:#e6db74">&#34;花弁の長さ&#34;</span>,<span style="color:#e6db74">&#34;花弁の幅&#34;</span>]
-</code></pre></div><p><a href="https://gyazo.com/282fe892fb26bfbaa6c86b5df920ba59"><img src="https://i.gyazo.com/282fe892fb26bfbaa6c86b5df920ba59.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_iris
+</span></span><span style="display:flex;"><span>iris <span style="color:#f92672">=</span> load_iris()
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(iris<span style="color:#f92672">.</span>data)
+</span></span><span style="display:flex;"><span>data<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;がく片の長さ&#34;</span>,<span style="color:#e6db74">&#34;がく片の幅&#34;</span>,<span style="color:#e6db74">&#34;花弁の長さ&#34;</span>,<span style="color:#e6db74">&#34;花弁の幅&#34;</span>]
+</span></span></code></pre></div><p><a href="https://gyazo.com/282fe892fb26bfbaa6c86b5df920ba59"><img src="https://i.gyazo.com/282fe892fb26bfbaa6c86b5df920ba59.png" alt="Image from Gyazo"></a></p>
 <p>課題を完成させたら，<strong>chapter12.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
 このとき，必ず事前に下記の設定を行ってから提出してください．</p>
