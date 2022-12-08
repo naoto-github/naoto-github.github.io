@@ -294,20 +294,7 @@ $$</p>
 <p>Excelを利用してロジスティック回帰を試してみましょう．
 ダウンロードしたファイルをExcelで開いてください，
 がく片の長さ$x_1$とがく片の幅$x_2$の2つの変数を利用して，アヤメの種類を分類します．</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Pythonでロジスティック回帰
-</h1>
-
-<p>Pythonを利用してロジスティック回帰を試してみましょう．
-Jupyter Labを起動して，<strong>Pytohn 3</strong>のノートブックを開きます．
-ノートブックの名前は <strong>chapter13.ipynb</strong> とします．
-<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>, <code>SciPy</code>などのライブラリをインポートしておきましょう．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> japanize_matplotlib
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize
-</span></span></code></pre></div><h2 id="変数">変数</h2>
+<h2 id="変数">変数</h2>
 <p>$H3$，$H4$，$H5$に係数$w_0$，$w_1$，$w_2$を入力します．
 ここでは仮に$w_0=1$，$w_1=1$，$w_2=1$とします．</p>
 <p><a href="https://gyazo.com/fbd1f6c822ce35f06a86ffc35f2670aa"><img src="https://i.gyazo.com/fbd1f6c822ce35f06a86ffc35f2670aa.png" alt="Image from Gyazo"></a></p>
@@ -324,9 +311,55 @@ Jupyter Labを起動して，<strong>Pytohn 3</strong>のノートブックを�
 <h2 id="対数尤度">対数尤度</h2>
 <p>$P$列に尤度を計算します．
 例えば，$L2$には次の式を入力します．
-IF関数を利用して，種類がversicolorのときは<code>1-K2</code>，virginicaの時は<code>K2</code>を尤度とします．</p>
+<code>IF</code>関数を利用して，種類がversicolorのときは<code>1-K2</code>，virginicaの時は<code>K2</code>を尤度とします．</p>
 <p><code>=IF(E2=&quot;versicolor&quot;,1-K2,K2)</code></p>
+<p>$Q$列に対数尤度を計算します．
+例えば，$Q2$には次の式を入力します．
+<code>LOG10(x)</code>関数は$log_{10}(x)$を表す関数です．</p>
+<p><code>=LOG10(L2)</code></p>
+<p><a href="https://gyazo.com/746fc4fd5f66191cf07b1675ff3d4c02"><img src="https://i.gyazo.com/746fc4fd5f66191cf07b1675ff3d4c02.png" alt="Image from Gyazo"></a></p>
+<p>$H6$に対数尤度の和$L$を計算します．
+計算結果は$-210.77$になります．
+この値を最大化することが目的となります．</p>
+<p><code>=SUM(M2:M101)</code></p>
+<p><a href="https://gyazo.com/973c8baab7d3743f1318bb916a0e17ce"><img src="https://i.gyazo.com/973c8baab7d3743f1318bb916a0e17ce.png" alt="Image from Gyazo"></a></p>
+<h2 id="ソルバー">ソルバー</h2>
+<p>ソルバーを設定します．
+目的セルは対数尤度$L$が計算された$H6$です．
+変数セルは係数$w_1$，$w_2$，$w_3$が入力された$H2:H4$です．
+最後に「制約のない変数を非負数にする」のチェックを外して，「解決」をクリックしてください．
+この結果，$w_1=-13.05$，$w_2=1.90$，$w_3=0.40$が得られ，対数尤度$L=-23.96$になりました．</p>
+<p><a href="https://gyazo.com/00f9ca81f984758d6c2866d98ce0332b"><img src="https://i.gyazo.com/00f9ca81f984758d6c2866d98ce0332b.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/291f86902081d4dc3dc2bf5c896df58f"><img src="https://i.gyazo.com/291f86902081d4dc3dc2bf5c896df58f.png" alt="Image from Gyazo"></a></p>
+<h2 id="正解率">正解率</h2>
+<p>導出された係数を用いて，分類の正解率を算出しましょう．
+$N$列に分類されたアヤメの種類を計算します．
+例えば，$N2$には次の式を入力します．
+<code>IF</code>関数を利用して，ロジスティック関数である$K2$が0.5以上なら<code>virginica</code>，それ以外なら<code>versicolor</code>と判定します．</p>
+<p><code>=IF(K2&gt;=0.5, &quot;virginica&quot;,&quot;versicolor&quot;)</code></p>
+<p>本来のアヤメの種類を表す$E$列と，分類（予測）されたアヤメの種類を表す$N$列が一致しているかどうかを$O$列で表します．
+例えば，$O2$には次の式を入力します．
+一致するときは<code>1</code>，異なるときは<code>0</code>が設定されます．</p>
+<p><code>=IF(E2=N2,1,0)</code></p>
+<p><a href="https://gyazo.com/0d03b60705d78db41ffc3272ecdaa3a0"><img src="https://i.gyazo.com/0d03b60705d78db41ffc3272ecdaa3a0.png" alt="Image from Gyazo"></a></p>
+<p>$O$列の<code>1</code>が入力されたセルを<code>SUM</code>関数でカウントし，$H8$に入力します．
+この結果，$75$件のアヤメの種類が一致したことがわかります．
+サンプル数は100件であるため，正解率は$75\%$ということになります（正確には交差検証が必要）．</p>
+<p><a href="https://gyazo.com/58770c03e6080fae809a885b3d72905e"><img src="https://i.gyazo.com/58770c03e6080fae809a885b3d72905e.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Pythonでロジスティック回帰
+</h1>
+
+<p>Pythonを利用してロジスティック回帰を試してみましょう．
+Jupyter Labを起動して，<strong>Pytohn 3</strong>のノートブックを開きます．
+ノートブックの名前は <strong>chapter13.ipynb</strong> とします．
+<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>, <code>SciPy</code>などのライブラリをインポートしておきましょう．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> japanize_matplotlib
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   補足
 </h1>
 
