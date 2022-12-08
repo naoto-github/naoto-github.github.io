@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    回帰分析③・ロジスティック回帰 | mLAB
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
+  <link rel="stylesheet" href="/css/custom.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
+
+  
+  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
+
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
+
+  
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	     tex2jax: {
+	        inlineMath: [['$','$']]
+        }
+    });
+  </script>
+
+  
+  
+
+  
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  
+  
+  
+
+  <meta property="og:title" content="回帰分析③・ロジスティック回帰" />
+
+
+
+  <meta property="og:type" content="article" />
+
+
+
+  <meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter13/" />
+
+
+
+  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+
+  <meta property="og:site_name" content="mLAB" />
+
+
+
+  <meta property="og:description" content="ロジスティック回帰  ロジスティック関数への回帰を利用した分類手法である ロジスティック回帰 を取り上げます． 「回帰」となっていますが，「分類」のためのアルゴリズムであることに注意してください． ここでは，アヤメ（Iris）の分類問題に挑戦します． アヤメは草地に自生している多年草です．
+
+アヤメは種類に応じてがく片と花弁の特徴が異なります． 次の表は Versicolor と Virginica という種類のアヤメのデータです． 各データはがく片の長さ$x_1$，がく片の幅$x_2$，花弁の長さ$x_3$，花弁の幅$x_4$の4つの属性で構成されています． これら4つの変数$x_1, x_2, x_3, x_4$を利用して，アヤメの種類（Versicolor，または，Virginica）を当てることが目的となります．
+   がく片の長さ$x_1$ がく片の幅$x_2$ 花弁の長さ$x_3$ 花弁の幅$x_4$ 種類     7.0 3.2 4.7 1.4 versicolor   6.9 3.1 4.9 1.5 versicolor   6.3 3.3 6.0 2.5 virginica   5.8 2.7 5.1 1.9 virginica    ここでは，がく片の長さ$x_1$とがく片の幅$x_2$の2種類の変数を利用したロジスティック回帰による分類を考えます． まず，係数$W = \left\{ w_0, w_1, w_2 \right\}$と，変数$X = \left\{ 1, x_1, x_2 \right\}$の内積を$g(x)$とします．" />
+
+
+
+  
+  
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@nmukai1978" />
+
+
+  <meta name="twitter:title" content="回帰分析③・ロジスティック回帰" />
+
+
+
+  <meta name="twitter:description" content="ロジスティック回帰  ロジスティック関数への回帰を利用した分類手法である ロジスティック回帰 を取り上げます． 「回帰」となっていますが，「分類」のためのアルゴリズムであることに注意してください． ここでは，アヤメ（Iris）の分類問題に挑戦します． アヤメは草地に自生している多年草です．
+
+アヤメは種類に応じてがく片と花弁の特徴が異なります． 次の表は Versicolor と Virginica という種類のアヤメのデータです． 各データはがく片の長さ$x_1$，がく片の幅$x_2$，花弁の長さ$x_3$，花弁の幅$x_4$の4つの属性で構成されています． これら4つの変数$x_1, x_2, x_3, x_4$を利用して，アヤメの種類（Versicolor，または，Virginica）を当てることが目的となります．
+   がく片の長さ$x_1$ がく片の幅$x_2$ 花弁の長さ$x_3$ 花弁の幅$x_4$ 種類     7.0 3.2 4.7 1.4 versicolor   6.9 3.1 4.9 1.5 versicolor   6.3 3.3 6.0 2.5 virginica   5.8 2.7 5.1 1.9 virginica    ここでは，がく片の長さ$x_1$とがく片の幅$x_2$の2種類の変数を利用したロジスティック回帰による分類を考えます． まず，係数$W = \left\{ w_0, w_1, w_2 \right\}$と，変数$X = \left\{ 1, x_1, x_2 \right\}$の内積を$g(x)$とします．" />
+
+
+
+  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
+
+
+  
+</head>
+
+    <body>
+        <nav class="nav">
+  <div class="nav-container">
+    
+    <a href="/">
+    <h2 class="nav-title">
+      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
+      <span>mLAB</span>
+      
+
+<ul id="menu">
+  
+  
+  <li>
+    <a href="/">Top</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/classes/">Classes</a>
+  </li>
+  
+  
+  
+  <li>
+    <a href="/posts/">Comics</a>
+  </li>
+  
+  
+</ul>
+
+<script>
+  $(function(){
+    $("#menu").slicknav({
+      label: "メニュー"
+    });
+  });
+</script>
+
+
+
+    </h2>
+    </a>
+  </div>
+</nav>
+
+        
+
+<main>
+  <div class="post">
+    
+    <h1 class="post-title">回帰分析③・ロジスティック回帰</h1>
+<div class="post-line"></div>
+    
+    
+
+    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  ロジスティック回帰
+</h1>
+
+<p>ロジスティック関数への回帰を利用した分類手法である <strong>ロジスティック回帰</strong> を取り上げます．
+「回帰」となっていますが，「分類」のためのアルゴリズムであることに注意してください．
+ここでは，<a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">アヤメ（Iris）</a>の分類問題に挑戦します．
+アヤメは草地に自生している多年草です．</p>
+<p><a title="Qwert1234, Public domain, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Iris_sanguinea_01.JPG"><img width="256" alt="Iris sanguinea 01" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Iris_sanguinea_01.JPG/256px-Iris_sanguinea_01.JPG"></a></p>
+<p>アヤメは種類に応じてがく片と花弁の特徴が異なります．
+次の表は <strong>Versicolor</strong> と <strong>Virginica</strong> という種類のアヤメのデータです．
+各データはがく片の長さ$x_1$，がく片の幅$x_2$，花弁の長さ$x_3$，花弁の幅$x_4$の4つの属性で構成されています．
+これら4つの変数$x_1, x_2, x_3, x_4$を利用して，アヤメの種類（Versicolor，または，Virginica）を当てることが目的となります．</p>
+<table>
+<thead>
+<tr>
+<th>がく片の長さ$x_1$</th>
+<th>がく片の幅$x_2$</th>
+<th>花弁の長さ$x_3$</th>
+<th>花弁の幅$x_4$</th>
+<th>種類</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7.0</td>
+<td>3.2</td>
+<td>4.7</td>
+<td>1.4</td>
+<td>versicolor</td>
+</tr>
+<tr>
+<td>6.9</td>
+<td>3.1</td>
+<td>4.9</td>
+<td>1.5</td>
+<td>versicolor</td>
+</tr>
+<tr>
+<td>6.3</td>
+<td>3.3</td>
+<td>6.0</td>
+<td>2.5</td>
+<td>virginica</td>
+</tr>
+<tr>
+<td>5.8</td>
+<td>2.7</td>
+<td>5.1</td>
+<td>1.9</td>
+<td>virginica</td>
+</tr>
+</tbody>
+</table>
+<p>ここでは，がく片の長さ$x_1$とがく片の幅$x_2$の2種類の変数を利用したロジスティック回帰による分類を考えます．
+まず，係数$W = \left\{ w_0, w_1, w_2 \right\}$と，変数$X = \left\{ 1, x_1, x_2 \right\}$の内積を$g(x)$とします．</p>
+<p>$$
+g(X) = W \cdot X = w_0 \cdot 1 + w_1 \cdot x_1 + w_2 \cdot x_2
+$$</p>
+<p>この$g(x)$を用いて <strong>ロジスティック関数</strong> は次のように定義されます．</p>
+<p>$$
+f(X) = \frac{1}{1 + e^{-g(X)}} = \frac{1}{1 + e^{-(w_0 + w_1 \cdot x_1 + w_2 \cdot x_2})}
+$$</p>
+<p>例として，$w_0=0$，$w_1=1$，$w_2=0$のときを考えましょう．
+このとき，ロジスティック関数$f(x)$は次のように表されます．
+$x_1$が大きくなると$f(x)$は1に漸近し，$x_1$が小さくなると$f(x)$は0に漸近することがわかります．</p>
+<p>$$
+f(X) = \frac{1}{1 + e^{-x_1}}
+$$</p>
+<p><a href="https://gyazo.com/f8687be9e8d7bf11e3d3ac1457a45345"><img src="https://i.gyazo.com/f8687be9e8d7bf11e3d3ac1457a45345.png" alt="Image from Gyazo"></a></p>
+<p>同様に$w_0=5$，$w_1=1$，$w_2=0$と，$w_0=0$，$w_1=3$，$w_2=0$も合わせてプロットしてみます．
+係数を変えるとロジスティック関数の傾きの変化や，左右への平行移動が確認できます．</p>
+<p>$$
+f(X) = \frac{1}{1 + e^{-(5 + x_1)}}
+$$</p>
+<p>$$
+f(X) = \frac{1}{1 + e^{-(3 \cdot x_1)}}
+$$</p>
+<p><a href="https://gyazo.com/f27c9435c32a1226cbc84fc598e678dc"><img src="https://i.gyazo.com/f27c9435c32a1226cbc84fc598e678dc.png" alt="Image from Gyazo"></a></p>
+<p>ロジスティック回帰は2値の分類が基本であり，$f(X)$は一方の値の分類確率を表し，<strong>尤度</strong> と呼ばれます．例えば，$f(X)$がvirginicaである尤度（確率）を表すとすると，$1-f(X)$はversicolorである尤度（確率）を表します．
+この尤度（確率）を観測されたサンプルごとに掛け合わせた <strong>尤度関数（同時確率）</strong> $L$ を最大化するような係数$W$を求めることが目的となります．
+ここで，種類がversinicaのサンプルを$X^{nica}$，versicolorのサンプルと$X^{color}$と表すとすると，$L$は次のように表されます．</p>
+<p>$$
+L = \prod_{i} f(X_{i}^{nica}) \times \prod_{j} (1 - f(X_{c}^{color}))
+$$</p>
+<p>サンプル数が多い場合，$f(X) \leq 1$であることから，$L$は非常に小さな値になってしまう傾向があります．
+このため，一般的には$L$の対数を用いた <strong>対数尤度</strong> $log(L)$が用いられます．
+このとき，$\log(a \times b) = \log(a) + \log(b)$のように，乗算を和算に変換できることも嬉しい点です．</p>
+<p>$$
+\log(L) = \sum_{i} \log(f(X_{i}^{nica})) + \sum_{j} (1 - \log(f(X_{c}^{color})))
+$$</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  データセット
+</h1>
+
+<p>ここでは，次のCSV形式のデータセットを利用します．
+下記のURLからファイルをダウンロードしてください．
+<a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">アヤメ（Iris）</a>のデータセットであり，がく片の長さ（Sepal Length），がく片の幅（Sepal Width），花弁の長さ（Petal Length），花弁の幅（Petal Width）の4つの属性で構成される．
+ターゲット（target）は，分類目標となる各レコードのカテゴリ（ラベル）であり，<code>versicolor</code>と<code>virginica</code>の2種類である．</p>
+<p><a href="https://mukai-lab.info/classes/management_data_analysis/dataset12.csv"><i class="fas fa-cloud-download-alt"></i> dataset12.csv</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">sepal length,sepal width,petal length,petal width,target
+
+6.4,3.2,4.5,1.5,versicolor
+6.9,3.1,4.9,1.5,versicolor
+5.5,2.3,4.0,1.3,versicolor
+6.5,2.8,4.6,1.5,versicolor
+・・省略・・
+6.3,3.3,6.0,2.5,virginica
+5.8,2.7,5.1,1.9,virginica
+7.1,3.0,5.9,2.1,virginica
+6.3,2.9,5.6,1.8,virginica
+6.5,3.0,5.8,2.2,virginica
+・・省略・・
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Excelでロジスティック回帰
+</h1>
+
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  Pythonでロジスティック回帰
+</h1>
+
+<p>Pythonを利用して重回帰分析を試してみましょう．
+Jupyter Labを起動して，<strong>Pytohn 3</strong>のノートブックを開きます．
+ノートブックの名前は <strong>chapter13.ipynb</strong> とします．
+<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>, <code>SciPy</code>などのライブラリをインポートしておきましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> japanize_matplotlib
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  補足
+</h1>
+
+<p>Pythonの<a href="https://scikit-learn.org/stable/">scikit-learn</a>を利用すると簡単にロジスティック回帰を実行できます．</p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
+ノートブックのファイル名は <strong>chapter13.ipynb</strong> としてください．</p>
+<h3>参考書籍</h3>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798171948&linkId=70dbac2599f82106144687868e9ee83d"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798158348&linkId=6d28ae246d652ea9ac954c14940de2aa"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B096VMZ57K&linkId=1be78c3d5e926492d7292df6bbd04d0a"></iframe>
+
+<iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B07PD237GQ&linkId=bd38a144cee47b0747240149f144904a"></iframe>
+
+
+
+    
+
+    
+    <div id="sns-box" style="display:flex; justify-content:center; align-items: center;">
+
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="nmukai1978" data-hashtags="mlab" data-dnt="true" data-show-count="false"></a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+  <div class="fb-share-button" data-href="https://mukai-lab.info/pages/classes/management_data_analysis/chapter13/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmukai-lab.info%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+    
+</div>
+
+
+    <div class="pagination">
+      <a href="/"><span>Top</span></a>
+      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
+    </div>
+    
+  </div>
+
+  
+  <div>
+
+  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
+    <p>
+      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+      この公式サイトでは，授業で使用している教材を公開すると共に，
+      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
+    </p>
+  </div>  
+
+</div>
+
+  
+  
+  
+
+    
+  
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77390013-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</main>
+
+
+        <footer>
+  <div>
+    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
+  </div>
+</footer>
+
+
+    </body>
+</html>
