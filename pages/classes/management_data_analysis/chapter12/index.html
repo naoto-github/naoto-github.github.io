@@ -87,7 +87,7 @@
 
 
 
-  <meta property="og:description" content="重回帰分析と決定係数説明変数が複数の変数$x_1, x_2, \cdots, x_m$で構成される 重回帰分析 に着目します． 重回帰分析の回帰モデルは次の式で表されます． ここで，$W = \left\{ w_0, w_1, \cdots, w_m \right\}$は回帰モデルの係数です． また，$x_0=1$とみなすことで，説明変数は$X = \left\{ 1, x_1, \cdots, x_m \right\}$のように表すことができます． この結果，回帰係数は$W$と$X$の内積で表されます．
+  <meta property="og:description" content="重回帰分析と決定係数  説明変数が複数の変数$x_1, x_2, \cdots, x_m$で構成される 重回帰分析 に着目します． 重回帰分析の回帰モデルは次の式で表されます． ここで，$W = \left\{ w_0, w_1, \cdots, w_m \right\}$は回帰モデルの係数です． また，$x_0=1$とみなすことで，説明変数は$X = \left\{ 1, x_1, \cdots, x_m \right\}$のように表すことができます． この結果，回帰係数は$W$と$X$の内積で表されます．
 $$ f(X) = W \cdot X = \sum_{i=0}^{m}w_ix_i = w_0 \cdot 1 &#43; w_1 \cdot x_1 &#43; \cdots &#43; w_m \cdot x_m $$
 例えば，変数$x_1$を身長，変数$x_2$を座高，変数$y$を体重とした回帰分析を考えます． 次の表はe-Statで公開されている5歳から14歳までの男性の身長，座高，体重の平均です（分かりやすさのため，ここでは多重共線性を考慮しない）．
    年齢 身長$x_1$ 座高$x_2$ 体重$y$     5 110.7 61.9 19.0   6 116.7 64." />
@@ -105,7 +105,7 @@ $$ f(X) = W \cdot X = \sum_{i=0}^{m}w_ix_i = w_0 \cdot 1 &#43; w_1 \cdot x_1 &#4
 
 
 
-  <meta name="twitter:description" content="重回帰分析と決定係数説明変数が複数の変数$x_1, x_2, \cdots, x_m$で構成される 重回帰分析 に着目します． 重回帰分析の回帰モデルは次の式で表されます． ここで，$W = \left\{ w_0, w_1, \cdots, w_m \right\}$は回帰モデルの係数です． また，$x_0=1$とみなすことで，説明変数は$X = \left\{ 1, x_1, \cdots, x_m \right\}$のように表すことができます． この結果，回帰係数は$W$と$X$の内積で表されます．
+  <meta name="twitter:description" content="重回帰分析と決定係数  説明変数が複数の変数$x_1, x_2, \cdots, x_m$で構成される 重回帰分析 に着目します． 重回帰分析の回帰モデルは次の式で表されます． ここで，$W = \left\{ w_0, w_1, \cdots, w_m \right\}$は回帰モデルの係数です． また，$x_0=1$とみなすことで，説明変数は$X = \left\{ 1, x_1, \cdots, x_m \right\}$のように表すことができます． この結果，回帰係数は$W$と$X$の内積で表されます．
 $$ f(X) = W \cdot X = \sum_{i=0}^{m}w_ix_i = w_0 \cdot 1 &#43; w_1 \cdot x_1 &#43; \cdots &#43; w_m \cdot x_m $$
 例えば，変数$x_1$を身長，変数$x_2$を座高，変数$y$を体重とした回帰分析を考えます． 次の表はe-Statで公開されている5歳から14歳までの男性の身長，座高，体重の平均です（分かりやすさのため，ここでは多重共線性を考慮しない）．
    年齢 身長$x_1$ 座高$x_2$ 体重$y$     5 110.7 61.9 19.0   6 116.7 64." />
@@ -439,6 +439,7 @@ Z <span style="color:#f92672">=</span> []
 Z <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(Z) <span style="color:#75715e"># 回帰モデル f(x)</span>
     
 ax<span style="color:#f92672">.</span>plot_surface(X, Y, Z, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>)
+ax<span style="color:#f92672">.</span>view_init(<span style="color:#f92672">-</span><span style="color:#ae81ff">140</span>, <span style="color:#ae81ff">60</span>) <span style="color:#75715e"># カメラの仰角と方位角</span>
 ax<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#34;Weight&#34;</span>)
 ax<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#34;Waist&#34;</span>)
 ax<span style="color:#f92672">.</span>set_zlabel(<span style="color:#e6db74">&#34;Chins&#34;</span>)
@@ -478,7 +479,7 @@ Z <span style="color:#f92672">=</span> lr<span style="color:#f92672">.</span>pre
 <span style="color:#75715e"># 自由度調整済み決定係数</span>
 N <span style="color:#f92672">=</span> len(df)
 k <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
-<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> ((np<span style="color:#f92672">.</span>sum(rss_list) <span style="color:#f92672">/</span> (N <span style="color:#f92672">-</span> k <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">/</span> (np<span style="color:#f92672">.</span>sum(yss_list) <span style="color:#f92672">/</span> (len(df) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>))))
+<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> ((np<span style="color:#f92672">.</span>sum(rss_list) <span style="color:#f92672">/</span> (N <span style="color:#f92672">-</span> k <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">/</span> (np<span style="color:#f92672">.</span>sum(yss_list) <span style="color:#f92672">/</span> (N <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>))))
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0.3195658543022284</span>
 <span style="color:#ae81ff">0.19198445198389635</span>
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
