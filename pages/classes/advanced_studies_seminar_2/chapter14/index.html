@@ -87,14 +87,16 @@
 
 
 
-  <meta property="og:description" content="因子分析とは -- 因子分析とは  因子分析は，主成分分析と同じ多変量解析の手法の一つです． 主成分分析は観測された変数を合成することが目的であるのに対し， 因子分析は観測された変数そのものが 潜在変数（因子） の合成であるとみなします． 下図は，主成分分析と因子分析の違いを表しています． 主成分は，全ての変数を合成することで求められます． 一方，因子は，独自因子 と 共通因子 に分かれており， 独自因子 は特定の変数に影響するのに対し，共通因子 は複数の変数に影響を与えます．
-
+  <meta property="og:description" content="因子分析とは 因子分析は，主成分分析と同じ多変量解析の手法の一つです． 主成分分析は観測された変数を合成することが目的であるのに対し， 因子分析は観測された変数そのものが 潜在変数（因子） の合成であるとみなします． 下図は，主成分分析と因子分析の違いを表しています． 主成分は，全ての変数を合成することで求められます． 一方，因子は，独自因子 と 共通因子 に分かれており， 独自因子 は特定の変数に影響するのに対し，共通因子 は複数の変数に影響を与えます．
 主成分分析は，次元を圧縮することで，データを可視化することに向いていますが，変数間の関係を分析することは苦手です． 一方，因子分析は得られた 因子 は変数間の関係を表しており，データの分析に適しています． しかし，因子分析は，主成分分析より数学的に難解であり，その仕組を完全に理解することは容易ではありません． 因子分析だけで本が一冊書けてしまう程であり，統計だけではなく，行列，ベクトルなどの知識が不可欠です． 今回も，理解 より 使える ことを重要視して，因子分析を学びましょう． 対象のデータとして，５教科の 成績のデータ（CSV形式） を使用するので，事前にダウンロードしておきましょう．
- ファイルをダウンロードしたら，read.csv 関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう．
-score &lt;- read.csv(&#34;score.csv&#34;) スクリプトの作成 -- スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタ を表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter14としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-主成分得点と因子得点 -- 主成分得点と因子  ここで，もう一度，主成分分析と因子分析の違いを整理しておきましょう． 主成分得点は下記の式で表すことができます． ここで，x_1，x_2は， 国語や算数の得点など 変数 を表しており，
-w_1，w_2は， それら変数の 重み であると共に，主成分を表すベクトルでした．
-f(X) = w_1 \times x_1 &#43; w_2 \times x_2  一方，因子分析は下記の式で表すことができます． ここで，f_1(X)，f_2(X)は因子得点と呼ばれます． この因子得点は，共通因子の影響を得点に換算した推定値であり，個体ごとに得点が決まります． また，w_1，w_2は，因子得点の重みであり，因子負荷量 と呼びます． 主成分を表すベクトルとは異なり，||w|| = 1という条件は満たしません（ベクトルの長さにも意味があります）． 注意すべきは，独自因子のeであり，これが主成分分析との大きな違いを生みます （e=0とすると主成分分析と同じアプローチになる）．" />
+ファイルをダウンロードしたら，read.csv 関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう．
+score &lt;- read.csv(&#34;score.csv&#34;) スクリプトの作成 コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタ を表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter14としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+主成分得点と因子 ここで，もう一度，主成分分析と因子分析の違いを整理しておきましょう． 主成分得点は下記の式で表すことができます． ここで，は， 国語や算数の得点など 変数 を表しており，
+は， それら変数の 重み であると共に，主成分を表すベクトルでした．
+一方，因子分析は下記の式で表すことができます． ここで，は因子得点と呼ばれます． この因子得点は，共通因子の影響を得点に換算した推定値であり，個体ごとに得点が決まります． また，は，因子得点の重みであり，因子負荷量 と呼びます． 主成分を表すベクトルとは異なり，という条件は満たしません（ベクトルの長さにも意味があります）． 注意すべきは，独自因子のであり，これが主成分分析との大きな違いを生みます （とすると主成分分析と同じアプローチになる）．
+データの標準化 因子分析を始める前にデータを標準化します． 標準化とは，対象となるデータの平均を0， 分散を1にすることを意味します．
+R言語では，scale関数で簡単に標準化が可能です． 標準化すると下記のように得点が変換されます．
+&gt; data &lt;- scale(as." />
 
 
 
@@ -109,14 +111,16 @@ f(X) = w_1 \times x_1 &#43; w_2 \times x_2  一方，因子分析は下記の式
 
 
 
-  <meta name="twitter:description" content="因子分析とは -- 因子分析とは  因子分析は，主成分分析と同じ多変量解析の手法の一つです． 主成分分析は観測された変数を合成することが目的であるのに対し， 因子分析は観測された変数そのものが 潜在変数（因子） の合成であるとみなします． 下図は，主成分分析と因子分析の違いを表しています． 主成分は，全ての変数を合成することで求められます． 一方，因子は，独自因子 と 共通因子 に分かれており， 独自因子 は特定の変数に影響するのに対し，共通因子 は複数の変数に影響を与えます．
-
+  <meta name="twitter:description" content="因子分析とは 因子分析は，主成分分析と同じ多変量解析の手法の一つです． 主成分分析は観測された変数を合成することが目的であるのに対し， 因子分析は観測された変数そのものが 潜在変数（因子） の合成であるとみなします． 下図は，主成分分析と因子分析の違いを表しています． 主成分は，全ての変数を合成することで求められます． 一方，因子は，独自因子 と 共通因子 に分かれており， 独自因子 は特定の変数に影響するのに対し，共通因子 は複数の変数に影響を与えます．
 主成分分析は，次元を圧縮することで，データを可視化することに向いていますが，変数間の関係を分析することは苦手です． 一方，因子分析は得られた 因子 は変数間の関係を表しており，データの分析に適しています． しかし，因子分析は，主成分分析より数学的に難解であり，その仕組を完全に理解することは容易ではありません． 因子分析だけで本が一冊書けてしまう程であり，統計だけではなく，行列，ベクトルなどの知識が不可欠です． 今回も，理解 より 使える ことを重要視して，因子分析を学びましょう． 対象のデータとして，５教科の 成績のデータ（CSV形式） を使用するので，事前にダウンロードしておきましょう．
- ファイルをダウンロードしたら，read.csv 関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう．
-score &lt;- read.csv(&#34;score.csv&#34;) スクリプトの作成 -- スクリプトの作成  コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタ を表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter14としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-主成分得点と因子得点 -- 主成分得点と因子  ここで，もう一度，主成分分析と因子分析の違いを整理しておきましょう． 主成分得点は下記の式で表すことができます． ここで，x_1，x_2は， 国語や算数の得点など 変数 を表しており，
-w_1，w_2は， それら変数の 重み であると共に，主成分を表すベクトルでした．
-f(X) = w_1 \times x_1 &#43; w_2 \times x_2  一方，因子分析は下記の式で表すことができます． ここで，f_1(X)，f_2(X)は因子得点と呼ばれます． この因子得点は，共通因子の影響を得点に換算した推定値であり，個体ごとに得点が決まります． また，w_1，w_2は，因子得点の重みであり，因子負荷量 と呼びます． 主成分を表すベクトルとは異なり，||w|| = 1という条件は満たしません（ベクトルの長さにも意味があります）． 注意すべきは，独自因子のeであり，これが主成分分析との大きな違いを生みます （e=0とすると主成分分析と同じアプローチになる）．" />
+ファイルをダウンロードしたら，read.csv 関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう．
+score &lt;- read.csv(&#34;score.csv&#34;) スクリプトの作成 コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタ を表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter14としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+主成分得点と因子 ここで，もう一度，主成分分析と因子分析の違いを整理しておきましょう． 主成分得点は下記の式で表すことができます． ここで，は， 国語や算数の得点など 変数 を表しており，
+は， それら変数の 重み であると共に，主成分を表すベクトルでした．
+一方，因子分析は下記の式で表すことができます． ここで，は因子得点と呼ばれます． この因子得点は，共通因子の影響を得点に換算した推定値であり，個体ごとに得点が決まります． また，は，因子得点の重みであり，因子負荷量 と呼びます． 主成分を表すベクトルとは異なり，という条件は満たしません（ベクトルの長さにも意味があります）． 注意すべきは，独自因子のであり，これが主成分分析との大きな違いを生みます （とすると主成分分析と同じアプローチになる）．
+データの標準化 因子分析を始める前にデータを標準化します． 標準化とは，対象となるデータの平均を0， 分散を1にすることを意味します．
+R言語では，scale関数で簡単に標準化が可能です． 標準化すると下記のように得点が変換されます．
+&gt; data &lt;- scale(as." />
 
 
 
@@ -207,8 +211,8 @@ f(X) = w_1 \times x_1 &#43; w_2 \times x_2  一方，因子分析は下記の式
 
 <p>ファイルをダウンロードしたら，<strong>read.csv</strong> 関数を利用して，
 変数scoreにデータフレームとして読み込んでおきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">score <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">read.csv</span>(<span style="color:#e6db74">&#34;score.csv&#34;</span>)
-</code></pre></div><!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スクリプトの作成 -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>score <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">read.csv</span>(<span style="color:#e6db74">&#34;score.csv&#34;</span>)
+</span></span></code></pre></div><!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スクリプトの作成 -->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   スクリプトの作成
 </h1>
@@ -261,31 +265,31 @@ f(X) = w_1 \times x_1 &#43; w_2 \times x_2  一方，因子分析は下記の式
 </p>
 <p>R言語では，<strong>scale</strong>関数で簡単に標準化が可能です．
 標準化すると下記のように得点が変換されます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> data <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">scale</span>(<span style="color:#a6e22e">as.matrix</span>(score[2<span style="color:#f92672">:</span><span style="color:#ae81ff">6</span>]))
-<span style="color:#f92672">&gt;</span> data
-		国語    算数   理科   英語   社会
- [1,] <span style="color:#ae81ff">-0.904</span>  <span style="color:#ae81ff">0.6452</span> <span style="color:#ae81ff">-0.399</span> <span style="color:#ae81ff">-0.981</span> <span style="color:#ae81ff">-0.616</span>
- [2,] <span style="color:#ae81ff">-0.472</span>  <span style="color:#ae81ff">1.1769</span>  <span style="color:#ae81ff">0.651</span> <span style="color:#ae81ff">-1.088</span> <span style="color:#ae81ff">-0.130</span>
- [3,]  <span style="color:#ae81ff">1.169</span>  <span style="color:#ae81ff">0.1666</span>  <span style="color:#ae81ff">0.967</span>  <span style="color:#ae81ff">1.587</span>  <span style="color:#ae81ff">0.965</span>
- [4,] <span style="color:#ae81ff">-1.768</span>  <span style="color:#ae81ff">0.4856</span> <span style="color:#ae81ff">-1.135</span> <span style="color:#ae81ff">-0.981</span>  <span style="color:#ae81ff">0.235</span>
- [5,]  <span style="color:#ae81ff">0.132</span>  <span style="color:#ae81ff">0.9642</span>  <span style="color:#ae81ff">0.756</span> <span style="color:#ae81ff">-1.462</span>  <span style="color:#ae81ff">0.843</span>
- [6,] <span style="color:#ae81ff">-1.768</span> <span style="color:#ae81ff">-1.4286</span> <span style="color:#ae81ff">-0.925</span>  <span style="color:#ae81ff">0.250</span> <span style="color:#ae81ff">-0.494</span>
- [7,]  <span style="color:#ae81ff">1.169</span> <span style="color:#ae81ff">-0.8437</span> <span style="color:#ae81ff">-1.135</span>  <span style="color:#ae81ff">1.533</span> <span style="color:#ae81ff">-1.224</span>
- [8,]  <span style="color:#ae81ff">0.651</span>  <span style="color:#ae81ff">0.8047</span>  <span style="color:#ae81ff">0.651</span> <span style="color:#ae81ff">-1.248</span>  <span style="color:#ae81ff">1.451</span>
- [9,]  <span style="color:#ae81ff">0.564</span> <span style="color:#ae81ff">-1.2159</span> <span style="color:#ae81ff">-1.135</span>  <span style="color:#ae81ff">0.838</span>  <span style="color:#ae81ff">1.451</span>
-[10,]  <span style="color:#ae81ff">0.478</span> <span style="color:#ae81ff">-0.1524</span> <span style="color:#ae81ff">-0.084</span>  <span style="color:#ae81ff">0.143</span> <span style="color:#ae81ff">-0.616</span>
-[11,] <span style="color:#ae81ff">-0.213</span> <span style="color:#ae81ff">-0.5246</span>  <span style="color:#ae81ff">0.126</span>  <span style="color:#ae81ff">0.464</span>  <span style="color:#ae81ff">1.208</span>
-[12,] <span style="color:#ae81ff">-0.818</span> <span style="color:#ae81ff">-1.5349</span> <span style="color:#ae81ff">-0.189</span>  <span style="color:#ae81ff">0.678</span> <span style="color:#ae81ff">-1.102</span>
-[13,]  <span style="color:#ae81ff">1.342</span>  <span style="color:#ae81ff">0.0603</span> <span style="color:#ae81ff">-0.399</span>  <span style="color:#ae81ff">0.838</span> <span style="color:#ae81ff">-1.346</span>
-[14,] <span style="color:#ae81ff">-0.213</span> <span style="color:#ae81ff">-0.4183</span> <span style="color:#ae81ff">-0.294</span> <span style="color:#ae81ff">-0.339</span> <span style="color:#ae81ff">-0.981</span>
-[15,]  <span style="color:#ae81ff">0.651</span>  <span style="color:#ae81ff">1.8149</span>  <span style="color:#ae81ff">2.542</span> <span style="color:#ae81ff">-0.232</span>  <span style="color:#ae81ff">0.357</span>
-<span style="color:#a6e22e">attr</span>(,<span style="color:#e6db74">&#34;scaled:center&#34;</span>)
-国語 算数 理科 英語 社会 
-<span style="color:#ae81ff">70.5</span> <span style="color:#ae81ff">55.9</span> <span style="color:#ae81ff">75.8</span> <span style="color:#ae81ff">57.3</span> <span style="color:#ae81ff">76.1</span> 
-<span style="color:#a6e22e">attr</span>(,<span style="color:#e6db74">&#34;scaled:scale&#34;</span>)
- 国語  算数  理科  英語  社会 
-<span style="color:#ae81ff">11.58</span> <span style="color:#ae81ff">18.81</span>  <span style="color:#ae81ff">9.52</span> <span style="color:#ae81ff">18.70</span>  <span style="color:#ae81ff">8.22</span> 
-</code></pre></div><!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">因子数の決定 -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> data <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">scale</span>(<span style="color:#a6e22e">as.matrix</span>(score[2<span style="color:#f92672">:</span><span style="color:#ae81ff">6</span>]))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> data
+</span></span><span style="display:flex;"><span>		国語    算数   理科   英語   社会
+</span></span><span style="display:flex;"><span> [1,] <span style="color:#ae81ff">-0.904</span>  <span style="color:#ae81ff">0.6452</span> <span style="color:#ae81ff">-0.399</span> <span style="color:#ae81ff">-0.981</span> <span style="color:#ae81ff">-0.616</span>
+</span></span><span style="display:flex;"><span> [2,] <span style="color:#ae81ff">-0.472</span>  <span style="color:#ae81ff">1.1769</span>  <span style="color:#ae81ff">0.651</span> <span style="color:#ae81ff">-1.088</span> <span style="color:#ae81ff">-0.130</span>
+</span></span><span style="display:flex;"><span> [3,]  <span style="color:#ae81ff">1.169</span>  <span style="color:#ae81ff">0.1666</span>  <span style="color:#ae81ff">0.967</span>  <span style="color:#ae81ff">1.587</span>  <span style="color:#ae81ff">0.965</span>
+</span></span><span style="display:flex;"><span> [4,] <span style="color:#ae81ff">-1.768</span>  <span style="color:#ae81ff">0.4856</span> <span style="color:#ae81ff">-1.135</span> <span style="color:#ae81ff">-0.981</span>  <span style="color:#ae81ff">0.235</span>
+</span></span><span style="display:flex;"><span> [5,]  <span style="color:#ae81ff">0.132</span>  <span style="color:#ae81ff">0.9642</span>  <span style="color:#ae81ff">0.756</span> <span style="color:#ae81ff">-1.462</span>  <span style="color:#ae81ff">0.843</span>
+</span></span><span style="display:flex;"><span> [6,] <span style="color:#ae81ff">-1.768</span> <span style="color:#ae81ff">-1.4286</span> <span style="color:#ae81ff">-0.925</span>  <span style="color:#ae81ff">0.250</span> <span style="color:#ae81ff">-0.494</span>
+</span></span><span style="display:flex;"><span> [7,]  <span style="color:#ae81ff">1.169</span> <span style="color:#ae81ff">-0.8437</span> <span style="color:#ae81ff">-1.135</span>  <span style="color:#ae81ff">1.533</span> <span style="color:#ae81ff">-1.224</span>
+</span></span><span style="display:flex;"><span> [8,]  <span style="color:#ae81ff">0.651</span>  <span style="color:#ae81ff">0.8047</span>  <span style="color:#ae81ff">0.651</span> <span style="color:#ae81ff">-1.248</span>  <span style="color:#ae81ff">1.451</span>
+</span></span><span style="display:flex;"><span> [9,]  <span style="color:#ae81ff">0.564</span> <span style="color:#ae81ff">-1.2159</span> <span style="color:#ae81ff">-1.135</span>  <span style="color:#ae81ff">0.838</span>  <span style="color:#ae81ff">1.451</span>
+</span></span><span style="display:flex;"><span>[10,]  <span style="color:#ae81ff">0.478</span> <span style="color:#ae81ff">-0.1524</span> <span style="color:#ae81ff">-0.084</span>  <span style="color:#ae81ff">0.143</span> <span style="color:#ae81ff">-0.616</span>
+</span></span><span style="display:flex;"><span>[11,] <span style="color:#ae81ff">-0.213</span> <span style="color:#ae81ff">-0.5246</span>  <span style="color:#ae81ff">0.126</span>  <span style="color:#ae81ff">0.464</span>  <span style="color:#ae81ff">1.208</span>
+</span></span><span style="display:flex;"><span>[12,] <span style="color:#ae81ff">-0.818</span> <span style="color:#ae81ff">-1.5349</span> <span style="color:#ae81ff">-0.189</span>  <span style="color:#ae81ff">0.678</span> <span style="color:#ae81ff">-1.102</span>
+</span></span><span style="display:flex;"><span>[13,]  <span style="color:#ae81ff">1.342</span>  <span style="color:#ae81ff">0.0603</span> <span style="color:#ae81ff">-0.399</span>  <span style="color:#ae81ff">0.838</span> <span style="color:#ae81ff">-1.346</span>
+</span></span><span style="display:flex;"><span>[14,] <span style="color:#ae81ff">-0.213</span> <span style="color:#ae81ff">-0.4183</span> <span style="color:#ae81ff">-0.294</span> <span style="color:#ae81ff">-0.339</span> <span style="color:#ae81ff">-0.981</span>
+</span></span><span style="display:flex;"><span>[15,]  <span style="color:#ae81ff">0.651</span>  <span style="color:#ae81ff">1.8149</span>  <span style="color:#ae81ff">2.542</span> <span style="color:#ae81ff">-0.232</span>  <span style="color:#ae81ff">0.357</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">attr</span>(,<span style="color:#e6db74">&#34;scaled:center&#34;</span>)
+</span></span><span style="display:flex;"><span>国語 算数 理科 英語 社会 
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">70.5</span> <span style="color:#ae81ff">55.9</span> <span style="color:#ae81ff">75.8</span> <span style="color:#ae81ff">57.3</span> <span style="color:#ae81ff">76.1</span> 
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">attr</span>(,<span style="color:#e6db74">&#34;scaled:scale&#34;</span>)
+</span></span><span style="display:flex;"><span> 国語  算数  理科  英語  社会 
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">11.58</span> <span style="color:#ae81ff">18.81</span>  <span style="color:#ae81ff">9.52</span> <span style="color:#ae81ff">18.70</span>  <span style="color:#ae81ff">8.22</span> 
+</span></span></code></pre></div><!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">因子数の決定 -->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   因子数の決定
 </h1>
@@ -296,15 +300,15 @@ f(X) = w_1 \times x_1 &#43; w_2 \times x_2  一方，因子分析は下記の式
 <strong>因子数</strong> を決めるには対象のデータの <strong>相関行列</strong> の<strong>固有値</strong>と<strong>固有ベクトル</strong>を計算します．</p>
 <p><strong>相関行列</strong> は，各科目間の相関係数を行列で表現したもので，<strong>cor</strong>関数で求めることができます．
 下記が相関行列であり，対角成分の値を境に，対象な行列となっていることが分かります（例，国語と算数の相関係数は0.168）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> correlation <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">cor</span>(data)
-<span style="color:#f92672">&gt;</span> correlation
-	  国語   算数   理科   英語   社会
-国語 <span style="color:#ae81ff">1.000</span>  <span style="color:#ae81ff">0.168</span>  <span style="color:#ae81ff">0.332</span>  <span style="color:#ae81ff">0.448</span>  <span style="color:#ae81ff">0.117</span>
-算数 <span style="color:#ae81ff">0.168</span>  <span style="color:#ae81ff">1.000</span>  <span style="color:#ae81ff">0.713</span> <span style="color:#ae81ff">-0.624</span>  <span style="color:#ae81ff">0.272</span>
-理科 <span style="color:#ae81ff">0.332</span>  <span style="color:#ae81ff">0.713</span>  <span style="color:#ae81ff">1.000</span> <span style="color:#ae81ff">-0.244</span>  <span style="color:#ae81ff">0.340</span>
-英語 <span style="color:#ae81ff">0.448</span> <span style="color:#ae81ff">-0.624</span> <span style="color:#ae81ff">-0.244</span>  <span style="color:#ae81ff">1.000</span> <span style="color:#ae81ff">-0.210</span>
-社会 <span style="color:#ae81ff">0.117</span>  <span style="color:#ae81ff">0.272</span>  <span style="color:#ae81ff">0.340</span> <span style="color:#ae81ff">-0.210</span>  <span style="color:#ae81ff">1.000</span>
-</code></pre></div><p>この相関行列の固有値と固有ベクトルを求めます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> correlation <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">cor</span>(data)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> correlation
+</span></span><span style="display:flex;"><span>	  国語   算数   理科   英語   社会
+</span></span><span style="display:flex;"><span>国語 <span style="color:#ae81ff">1.000</span>  <span style="color:#ae81ff">0.168</span>  <span style="color:#ae81ff">0.332</span>  <span style="color:#ae81ff">0.448</span>  <span style="color:#ae81ff">0.117</span>
+</span></span><span style="display:flex;"><span>算数 <span style="color:#ae81ff">0.168</span>  <span style="color:#ae81ff">1.000</span>  <span style="color:#ae81ff">0.713</span> <span style="color:#ae81ff">-0.624</span>  <span style="color:#ae81ff">0.272</span>
+</span></span><span style="display:flex;"><span>理科 <span style="color:#ae81ff">0.332</span>  <span style="color:#ae81ff">0.713</span>  <span style="color:#ae81ff">1.000</span> <span style="color:#ae81ff">-0.244</span>  <span style="color:#ae81ff">0.340</span>
+</span></span><span style="display:flex;"><span>英語 <span style="color:#ae81ff">0.448</span> <span style="color:#ae81ff">-0.624</span> <span style="color:#ae81ff">-0.244</span>  <span style="color:#ae81ff">1.000</span> <span style="color:#ae81ff">-0.210</span>
+</span></span><span style="display:flex;"><span>社会 <span style="color:#ae81ff">0.117</span>  <span style="color:#ae81ff">0.272</span>  <span style="color:#ae81ff">0.340</span> <span style="color:#ae81ff">-0.210</span>  <span style="color:#ae81ff">1.000</span>
+</span></span></code></pre></div><p>この相関行列の固有値と固有ベクトルを求めます．
 固有値と固有ベクトルの意味は割愛しますが，行列を複数の<strong>ベクトル</strong>に分解すると考えてください．
 詳しく知りたい場合は，kenmatsu4氏の
 「<a href="http://qiita.com/kenmatsu4/items/2a8573e3c878fc2da306">固有値・固有ベクトルとは何かを可視化してみる</a>」が分かりやすいです．
@@ -354,17 +358,17 @@ f(X) = w_1 \times x_1 &#43; w_2 \times x_2  一方，因子分析は下記の式
 <p>固有値と固有ベクトルを求めるには，<strong>eigen</strong>関数を利用します．
 5つの固有値が抽出され，1以上となるのは，2.268と，1.468の2つであることが分かります．
 よって，因子数は<strong>２</strong> が適切だと考えます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">eigen <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">eigen</span>(correlation)
-<span style="color:#f92672">&gt;</span> eigen<span style="color:#f92672">$</span>value
-[1] <span style="color:#ae81ff">2.268</span> <span style="color:#ae81ff">1.468</span> <span style="color:#ae81ff">0.811</span> <span style="color:#ae81ff">0.341</span> <span style="color:#ae81ff">0.112</span>
-<span style="color:#f92672">&gt;</span> eigen<span style="color:#f92672">$</span>vector
-	   [,<span style="color:#ae81ff">1</span>]    [,<span style="color:#ae81ff">2</span>]    [,<span style="color:#ae81ff">3</span>]    [,<span style="color:#ae81ff">4</span>]    [,<span style="color:#ae81ff">5</span>]
-[1,] <span style="color:#ae81ff">-0.107</span> <span style="color:#ae81ff">-0.7609</span> <span style="color:#ae81ff">-0.1268</span>  <span style="color:#ae81ff">0.5411</span> <span style="color:#ae81ff">-0.3175</span>
-[2,] <span style="color:#ae81ff">-0.611</span>  <span style="color:#ae81ff">0.0304</span> <span style="color:#ae81ff">-0.3094</span>  <span style="color:#ae81ff">0.2508</span>  <span style="color:#ae81ff">0.6833</span>
-[3,] <span style="color:#ae81ff">-0.550</span> <span style="color:#ae81ff">-0.2685</span> <span style="color:#ae81ff">-0.1830</span> <span style="color:#ae81ff">-0.7069</span> <span style="color:#ae81ff">-0.3035</span>
-[4,]  <span style="color:#ae81ff">0.428</span> <span style="color:#ae81ff">-0.5802</span>  <span style="color:#ae81ff">0.0649</span> <span style="color:#ae81ff">-0.3776</span>  <span style="color:#ae81ff">0.5771</span>
-[5,] <span style="color:#ae81ff">-0.359</span> <span style="color:#ae81ff">-0.1068</span>  <span style="color:#ae81ff">0.9222</span>  <span style="color:#ae81ff">0.0448</span>  <span style="color:#ae81ff">0.0847</span>
-</code></pre></div><!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">共通因子の推定 -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>eigen <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">eigen</span>(correlation)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> eigen<span style="color:#f92672">$</span>value
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">2.268</span> <span style="color:#ae81ff">1.468</span> <span style="color:#ae81ff">0.811</span> <span style="color:#ae81ff">0.341</span> <span style="color:#ae81ff">0.112</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> eigen<span style="color:#f92672">$</span>vector
+</span></span><span style="display:flex;"><span>	   [,<span style="color:#ae81ff">1</span>]    [,<span style="color:#ae81ff">2</span>]    [,<span style="color:#ae81ff">3</span>]    [,<span style="color:#ae81ff">4</span>]    [,<span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>[1,] <span style="color:#ae81ff">-0.107</span> <span style="color:#ae81ff">-0.7609</span> <span style="color:#ae81ff">-0.1268</span>  <span style="color:#ae81ff">0.5411</span> <span style="color:#ae81ff">-0.3175</span>
+</span></span><span style="display:flex;"><span>[2,] <span style="color:#ae81ff">-0.611</span>  <span style="color:#ae81ff">0.0304</span> <span style="color:#ae81ff">-0.3094</span>  <span style="color:#ae81ff">0.2508</span>  <span style="color:#ae81ff">0.6833</span>
+</span></span><span style="display:flex;"><span>[3,] <span style="color:#ae81ff">-0.550</span> <span style="color:#ae81ff">-0.2685</span> <span style="color:#ae81ff">-0.1830</span> <span style="color:#ae81ff">-0.7069</span> <span style="color:#ae81ff">-0.3035</span>
+</span></span><span style="display:flex;"><span>[4,]  <span style="color:#ae81ff">0.428</span> <span style="color:#ae81ff">-0.5802</span>  <span style="color:#ae81ff">0.0649</span> <span style="color:#ae81ff">-0.3776</span>  <span style="color:#ae81ff">0.5771</span>
+</span></span><span style="display:flex;"><span>[5,] <span style="color:#ae81ff">-0.359</span> <span style="color:#ae81ff">-0.1068</span>  <span style="color:#ae81ff">0.9222</span>  <span style="color:#ae81ff">0.0448</span>  <span style="color:#ae81ff">0.0847</span>
+</span></span></code></pre></div><!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">共通因子の推定 -->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   共通因子の推定
 </h1>
@@ -424,41 +428,41 @@ f(X) = w_1 \times x_1 &#43; w_2 \times x_2  一方，因子分析は下記の式
 <p>それでは，<strong>factanal</strong>関数を利用して，<strong>因子負荷量</strong>を導出します．
 引数の<strong>factors</strong>は因子数，<strong>rotation</strong>は回転方法，<strong>scores</strong>は因子得点の計算方法を表します
 （回転方法と因子得点の計算方法は後述）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> result <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">factanal</span>(data,factors<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,rotation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;none&#34;</span>,scores<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;regression&#34;</span>)
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">print</span>(result,cutoff<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-
-Call<span style="color:#f92672">:</span>
-<span style="color:#a6e22e">factanal</span>(x <span style="color:#f92672">=</span> data, factors <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, scores <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;regression&#34;</span>, rotation <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;none&#34;</span>)
-
-Uniquenesses<span style="color:#f92672">:</span>
- 国語  算数  理科  英語  社会 
-<span style="color:#ae81ff">0.426</span> <span style="color:#ae81ff">0.080</span> <span style="color:#ae81ff">0.350</span> <span style="color:#ae81ff">0.005</span> <span style="color:#ae81ff">0.898</span> 
-
-Loadings<span style="color:#f92672">:</span>
-	 Factor1 Factor2
-国語  <span style="color:#ae81ff">0.431</span>   <span style="color:#ae81ff">0.623</span> 
-算数 <span style="color:#ae81ff">-0.647</span>   <span style="color:#ae81ff">0.709</span> 
-理科 <span style="color:#ae81ff">-0.267</span>   <span style="color:#ae81ff">0.761</span> 
-英語  <span style="color:#ae81ff">0.997</span>   <span style="color:#ae81ff">0.029</span> 
-社会 <span style="color:#ae81ff">-0.216</span>   <span style="color:#ae81ff">0.236</span> 
-
-			   Factor1 Factor2
-SS loadings      <span style="color:#ae81ff">1.716</span>   <span style="color:#ae81ff">1.526</span>
-Proportion Var   <span style="color:#ae81ff">0.343</span>   <span style="color:#ae81ff">0.305</span>
-Cumulative Var   <span style="color:#ae81ff">0.343</span>   <span style="color:#ae81ff">0.648</span>
-
-Test of the hypothesis that <span style="color:#ae81ff">2</span> factors are sufficient.
-The chi square statistic is <span style="color:#ae81ff">0.74</span> on <span style="color:#ae81ff">1</span> degree of freedom.
-The p<span style="color:#f92672">-</span>value is <span style="color:#ae81ff">0.39</span> 
-</code></pre></div><p>上記の結果から， <strong>因子負荷量（Factor Loadings）</strong> を読み取ると，
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> result <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">factanal</span>(data,factors<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,rotation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;none&#34;</span>,scores<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;regression&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">print</span>(result,cutoff<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Call<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">factanal</span>(x <span style="color:#f92672">=</span> data, factors <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, scores <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;regression&#34;</span>, rotation <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;none&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Uniquenesses<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span> 国語  算数  理科  英語  社会 
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0.426</span> <span style="color:#ae81ff">0.080</span> <span style="color:#ae81ff">0.350</span> <span style="color:#ae81ff">0.005</span> <span style="color:#ae81ff">0.898</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Loadings<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	 Factor1 Factor2
+</span></span><span style="display:flex;"><span>国語  <span style="color:#ae81ff">0.431</span>   <span style="color:#ae81ff">0.623</span> 
+</span></span><span style="display:flex;"><span>算数 <span style="color:#ae81ff">-0.647</span>   <span style="color:#ae81ff">0.709</span> 
+</span></span><span style="display:flex;"><span>理科 <span style="color:#ae81ff">-0.267</span>   <span style="color:#ae81ff">0.761</span> 
+</span></span><span style="display:flex;"><span>英語  <span style="color:#ae81ff">0.997</span>   <span style="color:#ae81ff">0.029</span> 
+</span></span><span style="display:flex;"><span>社会 <span style="color:#ae81ff">-0.216</span>   <span style="color:#ae81ff">0.236</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			   Factor1 Factor2
+</span></span><span style="display:flex;"><span>SS loadings      <span style="color:#ae81ff">1.716</span>   <span style="color:#ae81ff">1.526</span>
+</span></span><span style="display:flex;"><span>Proportion Var   <span style="color:#ae81ff">0.343</span>   <span style="color:#ae81ff">0.305</span>
+</span></span><span style="display:flex;"><span>Cumulative Var   <span style="color:#ae81ff">0.343</span>   <span style="color:#ae81ff">0.648</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Test of the hypothesis that <span style="color:#ae81ff">2</span> factors are sufficient.
+</span></span><span style="display:flex;"><span>The chi square statistic is <span style="color:#ae81ff">0.74</span> on <span style="color:#ae81ff">1</span> degree of freedom.
+</span></span><span style="display:flex;"><span>The p<span style="color:#f92672">-</span>value is <span style="color:#ae81ff">0.39</span> 
+</span></span></code></pre></div><p>上記の結果から， <strong>因子負荷量（Factor Loadings）</strong> を読み取ると，
 <strong>因子1（Factor1）</strong> は，英語と算数の影響が強く，
 <strong>因子2（Factor2）</strong> は，算数と理科の影響が強いことが分かります．
 また，独自性（Uniquenesses）を読み取ると，
 算数と英語の値が低く，共通因子で上手く説明できることが分かります．
 最後に，求めた因子負荷量をグラフで表しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plot</span>(result<span style="color:#f92672">$</span>loadings,xlim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">-1</span>,<span style="color:#ae81ff">1</span>),ylim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">-1</span>,<span style="color:#ae81ff">1</span>))
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">text</span>(result<span style="color:#f92672">$</span>loadings,<span style="color:#a6e22e">rownames</span>(result<span style="color:#f92672">$</span>loadings))
-</code></pre></div><p><a href="https://gyazo.com/af52c329bff0b2a6dcc257dba0a93836"><img src="https://i.gyazo.com/af52c329bff0b2a6dcc257dba0a93836.png" alt="https://gyazo.com/af52c329bff0b2a6dcc257dba0a93836"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plot</span>(result<span style="color:#f92672">$</span>loadings,xlim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">-1</span>,<span style="color:#ae81ff">1</span>),ylim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">-1</span>,<span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">text</span>(result<span style="color:#f92672">$</span>loadings,<span style="color:#a6e22e">rownames</span>(result<span style="color:#f92672">$</span>loadings))
+</span></span></code></pre></div><p><a href="https://gyazo.com/af52c329bff0b2a6dcc257dba0a93836"><img src="https://i.gyazo.com/af52c329bff0b2a6dcc257dba0a93836.png" alt="https://gyazo.com/af52c329bff0b2a6dcc257dba0a93836"></a></p>
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">因子の回転 -->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   因子の回転
@@ -468,33 +472,33 @@ The p<span style="color:#f92672">-</span>value is <span style="color:#ae81ff">0.
 軸の回転には直交回転の<strong>バリマックス法</strong>，斜向回転の<strong>プロマックス法</strong>がありますが，
 ここでは，<strong>バリマックス法</strong>を採用します．
 直交回転とは，因子の軸が互いに直交したまま，回転することを意味します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> result2 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">factanal</span>(data,factors<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,rotation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;varimax&#34;</span>,scores<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;regression&#34;</span>)
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">print</span>(result2,cutoff<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
-
-Call<span style="color:#f92672">:</span>
-<span style="color:#a6e22e">factanal</span>(x <span style="color:#f92672">=</span> data, factors <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, scores <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;regression&#34;</span>, rotation <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;varimax&#34;</span>)
-
-Uniquenesses<span style="color:#f92672">:</span>
- 国語  算数  理科  英語  社会 
-<span style="color:#ae81ff">0.426</span> <span style="color:#ae81ff">0.080</span> <span style="color:#ae81ff">0.350</span> <span style="color:#ae81ff">0.005</span> <span style="color:#ae81ff">0.898</span> 
-
-Loadings<span style="color:#f92672">:</span>
-	 Factor1 Factor2
-国語  <span style="color:#ae81ff">0.233</span>   <span style="color:#ae81ff">0.721</span> 
-算数  <span style="color:#ae81ff">0.956</span>  <span style="color:#ae81ff">-0.083</span> 
-理科  <span style="color:#ae81ff">0.767</span>   <span style="color:#ae81ff">0.250</span> 
-英語 <span style="color:#ae81ff">-0.583</span>   <span style="color:#ae81ff">0.809</span> 
-社会  <span style="color:#ae81ff">0.319</span>  <span style="color:#ae81ff">-0.028</span> 
-
-			   Factor1 Factor2
-SS loadings      <span style="color:#ae81ff">1.996</span>   <span style="color:#ae81ff">1.245</span>
-Proportion Var   <span style="color:#ae81ff">0.399</span>   <span style="color:#ae81ff">0.249</span>
-Cumulative Var   <span style="color:#ae81ff">0.399</span>   <span style="color:#ae81ff">0.648</span>
-
-Test of the hypothesis that <span style="color:#ae81ff">2</span> factors are sufficient.
-The chi square statistic is <span style="color:#ae81ff">0.74</span> on <span style="color:#ae81ff">1</span> degree of freedom.
-The p<span style="color:#f92672">-</span>value is <span style="color:#ae81ff">0.39</span> 
-</code></pre></div><p>上記の結果から，<strong>因子負荷量（Factor Loadings）</strong> を読み取ると，
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> result2 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">factanal</span>(data,factors<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,rotation<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;varimax&#34;</span>,scores<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;regression&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">print</span>(result2,cutoff<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Call<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">factanal</span>(x <span style="color:#f92672">=</span> data, factors <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, scores <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;regression&#34;</span>, rotation <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;varimax&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Uniquenesses<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span> 国語  算数  理科  英語  社会 
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0.426</span> <span style="color:#ae81ff">0.080</span> <span style="color:#ae81ff">0.350</span> <span style="color:#ae81ff">0.005</span> <span style="color:#ae81ff">0.898</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Loadings<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>	 Factor1 Factor2
+</span></span><span style="display:flex;"><span>国語  <span style="color:#ae81ff">0.233</span>   <span style="color:#ae81ff">0.721</span> 
+</span></span><span style="display:flex;"><span>算数  <span style="color:#ae81ff">0.956</span>  <span style="color:#ae81ff">-0.083</span> 
+</span></span><span style="display:flex;"><span>理科  <span style="color:#ae81ff">0.767</span>   <span style="color:#ae81ff">0.250</span> 
+</span></span><span style="display:flex;"><span>英語 <span style="color:#ae81ff">-0.583</span>   <span style="color:#ae81ff">0.809</span> 
+</span></span><span style="display:flex;"><span>社会  <span style="color:#ae81ff">0.319</span>  <span style="color:#ae81ff">-0.028</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			   Factor1 Factor2
+</span></span><span style="display:flex;"><span>SS loadings      <span style="color:#ae81ff">1.996</span>   <span style="color:#ae81ff">1.245</span>
+</span></span><span style="display:flex;"><span>Proportion Var   <span style="color:#ae81ff">0.399</span>   <span style="color:#ae81ff">0.249</span>
+</span></span><span style="display:flex;"><span>Cumulative Var   <span style="color:#ae81ff">0.399</span>   <span style="color:#ae81ff">0.648</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Test of the hypothesis that <span style="color:#ae81ff">2</span> factors are sufficient.
+</span></span><span style="display:flex;"><span>The chi square statistic is <span style="color:#ae81ff">0.74</span> on <span style="color:#ae81ff">1</span> degree of freedom.
+</span></span><span style="display:flex;"><span>The p<span style="color:#f92672">-</span>value is <span style="color:#ae81ff">0.39</span> 
+</span></span></code></pre></div><p>上記の結果から，<strong>因子負荷量（Factor Loadings）</strong> を読み取ると，
 <strong>因子1（Factor1）</strong> は，算数と理科の影響が強く，
 <strong>因子2（Factor2）</strong> は，国語と英語の影響が強いことが分かります．
 また，独自性（Uniquenesses）に関しては，回転前と同じ値です．
@@ -504,9 +508,9 @@ The p<span style="color:#f92672">-</span>value is <span style="color:#ae81ff">0.
 このとき，社会は独自性が強く，理系因子，文系因子のどちらの影響も弱いことが分かります．
 最後に，求めた因子負荷量をグラフで表しておきます．
 先程のグラフと比べると，軸の直交を保ちながら，回転していることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plot</span>(result2<span style="color:#f92672">$</span>loadings,xlim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">-1</span>,<span style="color:#ae81ff">1</span>),ylim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">-1</span>))
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">text</span>(result2<span style="color:#f92672">$</span>loadings,<span style="color:#a6e22e">rownames</span>(result2<span style="color:#f92672">$</span>loadings))
-</code></pre></div><p><a href="https://gyazo.com/e431dcd8a27803ca4c9300f79f5db2a5"><img src="https://i.gyazo.com/e431dcd8a27803ca4c9300f79f5db2a5.png" alt="https://gyazo.com/e431dcd8a27803ca4c9300f79f5db2a5"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plot</span>(result2<span style="color:#f92672">$</span>loadings,xlim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">-1</span>,<span style="color:#ae81ff">1</span>),ylim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">-1</span>))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">text</span>(result2<span style="color:#f92672">$</span>loadings,<span style="color:#a6e22e">rownames</span>(result2<span style="color:#f92672">$</span>loadings))
+</span></span></code></pre></div><p><a href="https://gyazo.com/e431dcd8a27803ca4c9300f79f5db2a5"><img src="https://i.gyazo.com/e431dcd8a27803ca4c9300f79f5db2a5.png" alt="https://gyazo.com/e431dcd8a27803ca4c9300f79f5db2a5"></a></p>
 <!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">因子得点 -->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   因子得点
@@ -518,80 +522,80 @@ The p<span style="color:#f92672">-</span>value is <span style="color:#ae81ff">0.
 いずれも推定値であり，正確な値を求めることはできません．
 ここでは<strong>回帰法</strong>を採用し，データ，相関行列の逆行列，因子負荷行列を掛けて因子得点を算出します．
 因子得点は平均0，分散1で標準化されていることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> data <span style="color:#f92672">%*%</span> <span style="color:#a6e22e">solve</span>(correlation) <span style="color:#f92672">%*%</span> result2<span style="color:#f92672">$</span>loadings
-		  Factor1    Factor2
- [1,]  <span style="color:#ae81ff">0.41451018</span> <span style="color:#ae81ff">-0.9142532</span>
- [2,]  <span style="color:#ae81ff">1.05474389</span> <span style="color:#ae81ff">-0.5843555</span>
- [3,]  <span style="color:#ae81ff">0.22592718</span>  <span style="color:#ae81ff">2.1020917</span>
- [4,]  <span style="color:#ae81ff">0.09254249</span> <span style="color:#ae81ff">-1.1557858</span>
- [5,]  <span style="color:#ae81ff">1.05882559</span> <span style="color:#ae81ff">-1.0257496</span>
- [6,] <span style="color:#ae81ff">-1.43614656</span> <span style="color:#ae81ff">-0.7290921</span>
- [7,] <span style="color:#ae81ff">-0.90884192</span>  <span style="color:#ae81ff">1.2319116</span>
- [8,]  <span style="color:#ae81ff">0.96771712</span> <span style="color:#ae81ff">-0.8236710</span>
- [9,] <span style="color:#ae81ff">-1.09443243</span>  <span style="color:#ae81ff">0.2522387</span>
-[10,] <span style="color:#ae81ff">-0.10346988</span>  <span style="color:#ae81ff">0.1067041</span>
-[11,] <span style="color:#ae81ff">-0.41795516</span>  <span style="color:#ae81ff">0.2682362</span>
-[12,] <span style="color:#ae81ff">-1.34922263</span> <span style="color:#ae81ff">-0.1318741</span>
-[13,] <span style="color:#ae81ff">-0.01703708</span>  <span style="color:#ae81ff">1.0186440</span>
-[14,] <span style="color:#ae81ff">-0.35255045</span> <span style="color:#ae81ff">-0.6608092</span>
-[15,]  <span style="color:#ae81ff">1.86538968</span>  <span style="color:#ae81ff">1.0457642</span>
-</code></pre></div><p><strong>factanal</strong>関数と同時に求められた因子得点（result2$scores）と比較してみましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> data <span style="color:#f92672">%*%</span> <span style="color:#a6e22e">solve</span>(correlation) <span style="color:#f92672">%*%</span> result2<span style="color:#f92672">$</span>loadings
+</span></span><span style="display:flex;"><span>		  Factor1    Factor2
+</span></span><span style="display:flex;"><span> [1,]  <span style="color:#ae81ff">0.41451018</span> <span style="color:#ae81ff">-0.9142532</span>
+</span></span><span style="display:flex;"><span> [2,]  <span style="color:#ae81ff">1.05474389</span> <span style="color:#ae81ff">-0.5843555</span>
+</span></span><span style="display:flex;"><span> [3,]  <span style="color:#ae81ff">0.22592718</span>  <span style="color:#ae81ff">2.1020917</span>
+</span></span><span style="display:flex;"><span> [4,]  <span style="color:#ae81ff">0.09254249</span> <span style="color:#ae81ff">-1.1557858</span>
+</span></span><span style="display:flex;"><span> [5,]  <span style="color:#ae81ff">1.05882559</span> <span style="color:#ae81ff">-1.0257496</span>
+</span></span><span style="display:flex;"><span> [6,] <span style="color:#ae81ff">-1.43614656</span> <span style="color:#ae81ff">-0.7290921</span>
+</span></span><span style="display:flex;"><span> [7,] <span style="color:#ae81ff">-0.90884192</span>  <span style="color:#ae81ff">1.2319116</span>
+</span></span><span style="display:flex;"><span> [8,]  <span style="color:#ae81ff">0.96771712</span> <span style="color:#ae81ff">-0.8236710</span>
+</span></span><span style="display:flex;"><span> [9,] <span style="color:#ae81ff">-1.09443243</span>  <span style="color:#ae81ff">0.2522387</span>
+</span></span><span style="display:flex;"><span>[10,] <span style="color:#ae81ff">-0.10346988</span>  <span style="color:#ae81ff">0.1067041</span>
+</span></span><span style="display:flex;"><span>[11,] <span style="color:#ae81ff">-0.41795516</span>  <span style="color:#ae81ff">0.2682362</span>
+</span></span><span style="display:flex;"><span>[12,] <span style="color:#ae81ff">-1.34922263</span> <span style="color:#ae81ff">-0.1318741</span>
+</span></span><span style="display:flex;"><span>[13,] <span style="color:#ae81ff">-0.01703708</span>  <span style="color:#ae81ff">1.0186440</span>
+</span></span><span style="display:flex;"><span>[14,] <span style="color:#ae81ff">-0.35255045</span> <span style="color:#ae81ff">-0.6608092</span>
+</span></span><span style="display:flex;"><span>[15,]  <span style="color:#ae81ff">1.86538968</span>  <span style="color:#ae81ff">1.0457642</span>
+</span></span></code></pre></div><p><strong>factanal</strong>関数と同時に求められた因子得点（result2$scores）と比較してみましょう．
 値が一致していることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> result2<span style="color:#f92672">$</span>scores
-	  Factor1 Factor2
- [1,]  <span style="color:#ae81ff">0.4145</span>  <span style="color:#ae81ff">-0.914</span>
- [2,]  <span style="color:#ae81ff">1.0547</span>  <span style="color:#ae81ff">-0.584</span>
- [3,]  <span style="color:#ae81ff">0.2259</span>   <span style="color:#ae81ff">2.102</span>
- [4,]  <span style="color:#ae81ff">0.0925</span>  <span style="color:#ae81ff">-1.156</span>
- [5,]  <span style="color:#ae81ff">1.0588</span>  <span style="color:#ae81ff">-1.026</span>
- [6,] <span style="color:#ae81ff">-1.4361</span>  <span style="color:#ae81ff">-0.729</span>
- [7,] <span style="color:#ae81ff">-0.9088</span>   <span style="color:#ae81ff">1.232</span>
- [8,]  <span style="color:#ae81ff">0.9677</span>  <span style="color:#ae81ff">-0.824</span>
- [9,] <span style="color:#ae81ff">-1.0944</span>   <span style="color:#ae81ff">0.252</span>
-[10,] <span style="color:#ae81ff">-0.1035</span>   <span style="color:#ae81ff">0.107</span>
-[11,] <span style="color:#ae81ff">-0.4180</span>   <span style="color:#ae81ff">0.268</span>
-[12,] <span style="color:#ae81ff">-1.3492</span>  <span style="color:#ae81ff">-0.132</span>
-[13,] <span style="color:#ae81ff">-0.0170</span>   <span style="color:#ae81ff">1.019</span>
-[14,] <span style="color:#ae81ff">-0.3526</span>  <span style="color:#ae81ff">-0.661</span>
-[15,]  <span style="color:#ae81ff">1.8654</span>   <span style="color:#ae81ff">1.046</span>
-</code></pre></div><p>因子得点をグラフで表しましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> result2<span style="color:#f92672">$</span>scores
+</span></span><span style="display:flex;"><span>	  Factor1 Factor2
+</span></span><span style="display:flex;"><span> [1,]  <span style="color:#ae81ff">0.4145</span>  <span style="color:#ae81ff">-0.914</span>
+</span></span><span style="display:flex;"><span> [2,]  <span style="color:#ae81ff">1.0547</span>  <span style="color:#ae81ff">-0.584</span>
+</span></span><span style="display:flex;"><span> [3,]  <span style="color:#ae81ff">0.2259</span>   <span style="color:#ae81ff">2.102</span>
+</span></span><span style="display:flex;"><span> [4,]  <span style="color:#ae81ff">0.0925</span>  <span style="color:#ae81ff">-1.156</span>
+</span></span><span style="display:flex;"><span> [5,]  <span style="color:#ae81ff">1.0588</span>  <span style="color:#ae81ff">-1.026</span>
+</span></span><span style="display:flex;"><span> [6,] <span style="color:#ae81ff">-1.4361</span>  <span style="color:#ae81ff">-0.729</span>
+</span></span><span style="display:flex;"><span> [7,] <span style="color:#ae81ff">-0.9088</span>   <span style="color:#ae81ff">1.232</span>
+</span></span><span style="display:flex;"><span> [8,]  <span style="color:#ae81ff">0.9677</span>  <span style="color:#ae81ff">-0.824</span>
+</span></span><span style="display:flex;"><span> [9,] <span style="color:#ae81ff">-1.0944</span>   <span style="color:#ae81ff">0.252</span>
+</span></span><span style="display:flex;"><span>[10,] <span style="color:#ae81ff">-0.1035</span>   <span style="color:#ae81ff">0.107</span>
+</span></span><span style="display:flex;"><span>[11,] <span style="color:#ae81ff">-0.4180</span>   <span style="color:#ae81ff">0.268</span>
+</span></span><span style="display:flex;"><span>[12,] <span style="color:#ae81ff">-1.3492</span>  <span style="color:#ae81ff">-0.132</span>
+</span></span><span style="display:flex;"><span>[13,] <span style="color:#ae81ff">-0.0170</span>   <span style="color:#ae81ff">1.019</span>
+</span></span><span style="display:flex;"><span>[14,] <span style="color:#ae81ff">-0.3526</span>  <span style="color:#ae81ff">-0.661</span>
+</span></span><span style="display:flex;"><span>[15,]  <span style="color:#ae81ff">1.8654</span>   <span style="color:#ae81ff">1.046</span>
+</span></span></code></pre></div><p>因子得点をグラフで表しましょう．
 横軸が理系因子，縦軸が文系因子を表しています．
 グラフから，石井健二や高木健は理系要素が強く，
 福島萌子や中谷章は文系要素が強いことが読み取れます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plot</span>(result2<span style="color:#f92672">$</span>scores,xlim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">-1.5</span>,<span style="color:#ae81ff">1.5</span>),ylim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">-1.5</span>,<span style="color:#ae81ff">1.5</span>))
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">text</span>(result2<span style="color:#f92672">$</span>scores,labels<span style="color:#f92672">=</span>score[,<span style="color:#ae81ff">1</span>])
-</code></pre></div><p><a href="https://gyazo.com/42e1a12b4419dc6061c712f704d067b6"><img src="https://i.gyazo.com/42e1a12b4419dc6061c712f704d067b6.png" alt="https://gyazo.com/42e1a12b4419dc6061c712f704d067b6"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plot</span>(result2<span style="color:#f92672">$</span>scores,xlim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">-1.5</span>,<span style="color:#ae81ff">1.5</span>),ylim<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">-1.5</span>,<span style="color:#ae81ff">1.5</span>))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">text</span>(result2<span style="color:#f92672">$</span>scores,labels<span style="color:#f92672">=</span>score[,<span style="color:#ae81ff">1</span>])
+</span></span></code></pre></div><p><a href="https://gyazo.com/42e1a12b4419dc6061c712f704d067b6"><img src="https://i.gyazo.com/42e1a12b4419dc6061c712f704d067b6.png" alt="https://gyazo.com/42e1a12b4419dc6061c712f704d067b6"></a></p>
 <p>因子負荷量と因子得点から独自因子を推定してみましょう．
 下記のように，標準化されたデータから，因子負荷量と因子得点の積を引いた値（共通因子）が独自因子です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> common <span style="color:#f92672">&lt;-</span> result2<span style="color:#f92672">$</span>scores <span style="color:#f92672">%*%</span> <span style="color:#a6e22e">t</span>(result2<span style="color:#f92672">$</span>loadings)
-<span style="color:#f92672">&gt;</span> unique <span style="color:#f92672">&lt;-</span> data <span style="color:#f92672">-</span> common
-<span style="color:#f92672">&gt;</span> unique
-		国語    算数    理科      英語    社会
- [1,] <span style="color:#ae81ff">-0.342</span>  <span style="color:#ae81ff">0.1731</span> <span style="color:#ae81ff">-0.4883</span>  <span style="color:#ae81ff">0.001046</span> <span style="color:#ae81ff">-0.7737</span>
- [2,] <span style="color:#ae81ff">-0.297</span>  <span style="color:#ae81ff">0.1204</span> <span style="color:#ae81ff">-0.0110</span>  <span style="color:#ae81ff">0.000226</span> <span style="color:#ae81ff">-0.4820</span>
- [3,] <span style="color:#ae81ff">-0.399</span>  <span style="color:#ae81ff">0.1254</span>  <span style="color:#ae81ff">0.2676</span>  <span style="color:#ae81ff">0.016967</span>  <span style="color:#ae81ff">0.9515</span>
- [4,] <span style="color:#ae81ff">-0.956</span>  <span style="color:#ae81ff">0.3011</span> <span style="color:#ae81ff">-0.9165</span>  <span style="color:#ae81ff">0.008880</span>  <span style="color:#ae81ff">0.1732</span>
- [5,]  <span style="color:#ae81ff">0.625</span> <span style="color:#ae81ff">-0.1329</span>  <span style="color:#ae81ff">0.2014</span> <span style="color:#ae81ff">-0.014525</span>  <span style="color:#ae81ff">0.4770</span>
- [6,] <span style="color:#ae81ff">-0.907</span> <span style="color:#ae81ff">-0.1168</span>  <span style="color:#ae81ff">0.3587</span>  <span style="color:#ae81ff">0.002645</span> <span style="color:#ae81ff">-0.0575</span>
- [7,]  <span style="color:#ae81ff">0.493</span>  <span style="color:#ae81ff">0.1272</span> <span style="color:#ae81ff">-0.7461</span>  <span style="color:#ae81ff">0.006390</span> <span style="color:#ae81ff">-0.9000</span>
- [8,]  <span style="color:#ae81ff">1.019</span> <span style="color:#ae81ff">-0.1885</span>  <span style="color:#ae81ff">0.1156</span> <span style="color:#ae81ff">-0.017252</span>  <span style="color:#ae81ff">1.1197</span>
- [9,]  <span style="color:#ae81ff">0.638</span> <span style="color:#ae81ff">-0.1491</span> <span style="color:#ae81ff">-0.3588</span> <span style="color:#ae81ff">-0.004140</span>  <span style="color:#ae81ff">1.8067</span>
-[10,]  <span style="color:#ae81ff">0.425</span> <span style="color:#ae81ff">-0.0447</span> <span style="color:#ae81ff">-0.0314</span> <span style="color:#ae81ff">-0.004049</span> <span style="color:#ae81ff">-0.5801</span>
-[11,] <span style="color:#ae81ff">-0.309</span> <span style="color:#ae81ff">-0.1030</span>  <span style="color:#ae81ff">0.3794</span>  <span style="color:#ae81ff">0.002813</span>  <span style="color:#ae81ff">1.3485</span>
-[12,] <span style="color:#ae81ff">-0.408</span> <span style="color:#ae81ff">-0.2566</span>  <span style="color:#ae81ff">0.8781</span> <span style="color:#ae81ff">-0.002201</span> <span style="color:#ae81ff">-0.6764</span>
-[13,]  <span style="color:#ae81ff">0.611</span>  <span style="color:#ae81ff">0.1612</span> <span style="color:#ae81ff">-0.6409</span>  <span style="color:#ae81ff">0.003507</span> <span style="color:#ae81ff">-1.3117</span>
-[14,]  <span style="color:#ae81ff">0.346</span> <span style="color:#ae81ff">-0.1363</span>  <span style="color:#ae81ff">0.1413</span> <span style="color:#ae81ff">-0.009367</span> <span style="color:#ae81ff">-0.8871</span>
-[15,] <span style="color:#ae81ff">-0.538</span>  <span style="color:#ae81ff">0.1194</span>  <span style="color:#ae81ff">0.8510</span>  <span style="color:#ae81ff">0.009060</span> <span style="color:#ae81ff">-0.2082</span>
-</code></pre></div><p>次に，独自因子の分散が，独自性と一致することを確認しましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> common <span style="color:#f92672">&lt;-</span> result2<span style="color:#f92672">$</span>scores <span style="color:#f92672">%*%</span> <span style="color:#a6e22e">t</span>(result2<span style="color:#f92672">$</span>loadings)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> unique <span style="color:#f92672">&lt;-</span> data <span style="color:#f92672">-</span> common
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> unique
+</span></span><span style="display:flex;"><span>		国語    算数    理科      英語    社会
+</span></span><span style="display:flex;"><span> [1,] <span style="color:#ae81ff">-0.342</span>  <span style="color:#ae81ff">0.1731</span> <span style="color:#ae81ff">-0.4883</span>  <span style="color:#ae81ff">0.001046</span> <span style="color:#ae81ff">-0.7737</span>
+</span></span><span style="display:flex;"><span> [2,] <span style="color:#ae81ff">-0.297</span>  <span style="color:#ae81ff">0.1204</span> <span style="color:#ae81ff">-0.0110</span>  <span style="color:#ae81ff">0.000226</span> <span style="color:#ae81ff">-0.4820</span>
+</span></span><span style="display:flex;"><span> [3,] <span style="color:#ae81ff">-0.399</span>  <span style="color:#ae81ff">0.1254</span>  <span style="color:#ae81ff">0.2676</span>  <span style="color:#ae81ff">0.016967</span>  <span style="color:#ae81ff">0.9515</span>
+</span></span><span style="display:flex;"><span> [4,] <span style="color:#ae81ff">-0.956</span>  <span style="color:#ae81ff">0.3011</span> <span style="color:#ae81ff">-0.9165</span>  <span style="color:#ae81ff">0.008880</span>  <span style="color:#ae81ff">0.1732</span>
+</span></span><span style="display:flex;"><span> [5,]  <span style="color:#ae81ff">0.625</span> <span style="color:#ae81ff">-0.1329</span>  <span style="color:#ae81ff">0.2014</span> <span style="color:#ae81ff">-0.014525</span>  <span style="color:#ae81ff">0.4770</span>
+</span></span><span style="display:flex;"><span> [6,] <span style="color:#ae81ff">-0.907</span> <span style="color:#ae81ff">-0.1168</span>  <span style="color:#ae81ff">0.3587</span>  <span style="color:#ae81ff">0.002645</span> <span style="color:#ae81ff">-0.0575</span>
+</span></span><span style="display:flex;"><span> [7,]  <span style="color:#ae81ff">0.493</span>  <span style="color:#ae81ff">0.1272</span> <span style="color:#ae81ff">-0.7461</span>  <span style="color:#ae81ff">0.006390</span> <span style="color:#ae81ff">-0.9000</span>
+</span></span><span style="display:flex;"><span> [8,]  <span style="color:#ae81ff">1.019</span> <span style="color:#ae81ff">-0.1885</span>  <span style="color:#ae81ff">0.1156</span> <span style="color:#ae81ff">-0.017252</span>  <span style="color:#ae81ff">1.1197</span>
+</span></span><span style="display:flex;"><span> [9,]  <span style="color:#ae81ff">0.638</span> <span style="color:#ae81ff">-0.1491</span> <span style="color:#ae81ff">-0.3588</span> <span style="color:#ae81ff">-0.004140</span>  <span style="color:#ae81ff">1.8067</span>
+</span></span><span style="display:flex;"><span>[10,]  <span style="color:#ae81ff">0.425</span> <span style="color:#ae81ff">-0.0447</span> <span style="color:#ae81ff">-0.0314</span> <span style="color:#ae81ff">-0.004049</span> <span style="color:#ae81ff">-0.5801</span>
+</span></span><span style="display:flex;"><span>[11,] <span style="color:#ae81ff">-0.309</span> <span style="color:#ae81ff">-0.1030</span>  <span style="color:#ae81ff">0.3794</span>  <span style="color:#ae81ff">0.002813</span>  <span style="color:#ae81ff">1.3485</span>
+</span></span><span style="display:flex;"><span>[12,] <span style="color:#ae81ff">-0.408</span> <span style="color:#ae81ff">-0.2566</span>  <span style="color:#ae81ff">0.8781</span> <span style="color:#ae81ff">-0.002201</span> <span style="color:#ae81ff">-0.6764</span>
+</span></span><span style="display:flex;"><span>[13,]  <span style="color:#ae81ff">0.611</span>  <span style="color:#ae81ff">0.1612</span> <span style="color:#ae81ff">-0.6409</span>  <span style="color:#ae81ff">0.003507</span> <span style="color:#ae81ff">-1.3117</span>
+</span></span><span style="display:flex;"><span>[14,]  <span style="color:#ae81ff">0.346</span> <span style="color:#ae81ff">-0.1363</span>  <span style="color:#ae81ff">0.1413</span> <span style="color:#ae81ff">-0.009367</span> <span style="color:#ae81ff">-0.8871</span>
+</span></span><span style="display:flex;"><span>[15,] <span style="color:#ae81ff">-0.538</span>  <span style="color:#ae81ff">0.1194</span>  <span style="color:#ae81ff">0.8510</span>  <span style="color:#ae81ff">0.009060</span> <span style="color:#ae81ff">-0.2082</span>
+</span></span></code></pre></div><p>次に，独自因子の分散が，独自性と一致することを確認しましょう．
 データの分散から，共通因子の分散を引いた値が，独自性を表します．
 因子得点は推定値のため，完全には一致しませんが，おおよそ同じ値となることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">apply</span>(data,<span style="color:#ae81ff">2</span>,var) <span style="color:#f92672">-</span> <span style="color:#a6e22e">apply</span>(common,<span style="color:#ae81ff">2</span>,var)
-   国語    算数    理科    英語    社会 
-<span style="color:#ae81ff">0.46521</span> <span style="color:#ae81ff">0.13185</span> <span style="color:#ae81ff">0.40771</span> <span style="color:#ae81ff">0.00991</span> <span style="color:#ae81ff">0.90352</span> 
-<span style="color:#f92672">&gt;</span> result2<span style="color:#f92672">$</span>uniquenesses
- 国語  算数  理科  英語  社会 
-<span style="color:#ae81ff">0.426</span> <span style="color:#ae81ff">0.080</span> <span style="color:#ae81ff">0.350</span> <span style="color:#ae81ff">0.005</span> <span style="color:#ae81ff">0.898</span> 
-</code></pre></div><!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">apply</span>(data,<span style="color:#ae81ff">2</span>,var) <span style="color:#f92672">-</span> <span style="color:#a6e22e">apply</span>(common,<span style="color:#ae81ff">2</span>,var)
+</span></span><span style="display:flex;"><span>   国語    算数    理科    英語    社会 
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0.46521</span> <span style="color:#ae81ff">0.13185</span> <span style="color:#ae81ff">0.40771</span> <span style="color:#ae81ff">0.00991</span> <span style="color:#ae81ff">0.90352</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> result2<span style="color:#f92672">$</span>uniquenesses
+</span></span><span style="display:flex;"><span> 国語  算数  理科  英語  社会 
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0.426</span> <span style="color:#ae81ff">0.080</span> <span style="color:#ae81ff">0.350</span> <span style="color:#ae81ff">0.005</span> <span style="color:#ae81ff">0.898</span> 
+</span></span></code></pre></div><!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>

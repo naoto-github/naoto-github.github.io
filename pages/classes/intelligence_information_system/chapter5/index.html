@@ -87,13 +87,12 @@
 
 
 
-  <meta property="og:description" content="基底関数  これまでは回帰式として線形関数（一次式）を採用してきました．
+  <meta property="og:description" content="基底関数 これまでは回帰式として線形関数（一次式）を採用してきました．
 $$f(x) = w_0 &#43; w_1 x $$
 しかし，下記のようなデータを対象とする場合は，直線ではなく曲線を用いた方が，傾向を正しく表現できそうです． このデータは，愛知県衛生研究所が公開しているインフルエンザの発症数です． 変数$x$は 経過週 ，変数$y$は インフルエンザの報告数（定点当たり） を表しています．
-x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) #週 y = np.array([0.26,0.25,0.19,0.34,0.89,1.78,2.51,4.81,10.97,18.02,19.28,32.42,62.12,62.18,62.60,49.18,32.57,25.93,21.17,14.68]) #報告数 
-このような場合は，基底関数 を利用します． 線形関数の$x$を，任意の$\phi(x)$という基底関数に置き換えるという方法です． 基底関数には，どんな関数を用いても良いのですが，よく用いられるのは， 多項式基底 や ガウス基底 と呼ばれる関数です． 今回は，これら 基底関数 を利用した回帰について学びます．
-ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter5 とします． ここでは，numpy と matplotlib.pyplotに加え， 最適化処理のためのScipyをインポートします．
-import numpy as np import matplotlib." />
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) #週 y = np.array([0.26,0.25,0.19,0.34,0.89,1.78,2.51,4.81,10.97,18.02,19.28,32.42,62.12,62.18,62.60,49.18,32.57,25.93,21.17,14.68]) #報告数 このような場合は，基底関数 を利用します． 線形関数の$x$を，任意の$\phi(x)$という基底関数に置き換えるという方法です． 基底関数には，どんな関数を用いても良いのですが，よく用いられるのは， 多項式基底 や ガウス基底 と呼ばれる関数です． 今回は，これら 基底関数 を利用した回帰について学びます．
+ノートブックの作成 Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter5 とします． ここでは，numpy と matplotlib.pyplotに加え， 最適化処理のためのScipyをインポートします．
+import numpy as np import matplotlib.pyplot as plt from scipy." />
 
 
 
@@ -108,13 +107,12 @@ import numpy as np import matplotlib." />
 
 
 
-  <meta name="twitter:description" content="基底関数  これまでは回帰式として線形関数（一次式）を採用してきました．
+  <meta name="twitter:description" content="基底関数 これまでは回帰式として線形関数（一次式）を採用してきました．
 $$f(x) = w_0 &#43; w_1 x $$
 しかし，下記のようなデータを対象とする場合は，直線ではなく曲線を用いた方が，傾向を正しく表現できそうです． このデータは，愛知県衛生研究所が公開しているインフルエンザの発症数です． 変数$x$は 経過週 ，変数$y$は インフルエンザの報告数（定点当たり） を表しています．
-x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) #週 y = np.array([0.26,0.25,0.19,0.34,0.89,1.78,2.51,4.81,10.97,18.02,19.28,32.42,62.12,62.18,62.60,49.18,32.57,25.93,21.17,14.68]) #報告数 
-このような場合は，基底関数 を利用します． 線形関数の$x$を，任意の$\phi(x)$という基底関数に置き換えるという方法です． 基底関数には，どんな関数を用いても良いのですが，よく用いられるのは， 多項式基底 や ガウス基底 と呼ばれる関数です． 今回は，これら 基底関数 を利用した回帰について学びます．
-ノートブックの作成  Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter5 とします． ここでは，numpy と matplotlib.pyplotに加え， 最適化処理のためのScipyをインポートします．
-import numpy as np import matplotlib." />
+x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) #週 y = np.array([0.26,0.25,0.19,0.34,0.89,1.78,2.51,4.81,10.97,18.02,19.28,32.42,62.12,62.18,62.60,49.18,32.57,25.93,21.17,14.68]) #報告数 このような場合は，基底関数 を利用します． 線形関数の$x$を，任意の$\phi(x)$という基底関数に置き換えるという方法です． 基底関数には，どんな関数を用いても良いのですが，よく用いられるのは， 多項式基底 や ガウス基底 と呼ばれる関数です． 今回は，これら 基底関数 を利用した回帰について学びます．
+ノートブックの作成 Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter5 とします． ここでは，numpy と matplotlib.pyplotに加え， 最適化処理のためのScipyをインポートします．
+import numpy as np import matplotlib.pyplot as plt from scipy." />
 
 
 
@@ -191,9 +189,9 @@ import numpy as np import matplotlib." />
 <p>しかし，下記のようなデータを対象とする場合は，直線ではなく曲線を用いた方が，傾向を正しく表現できそうです．
 このデータは，<a href="http://www.pref.aichi.jp/eiseiken/">愛知県衛生研究所</a>が公開しているインフルエンザの発症数です．
 変数$x$は <strong>経過週</strong> ，変数$y$は <strong>インフルエンザの報告数（定点当たり）</strong> を表しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">20</span>]) <span style="color:#75715e">#週</span>
-y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0.26</span>,<span style="color:#ae81ff">0.25</span>,<span style="color:#ae81ff">0.19</span>,<span style="color:#ae81ff">0.34</span>,<span style="color:#ae81ff">0.89</span>,<span style="color:#ae81ff">1.78</span>,<span style="color:#ae81ff">2.51</span>,<span style="color:#ae81ff">4.81</span>,<span style="color:#ae81ff">10.97</span>,<span style="color:#ae81ff">18.02</span>,<span style="color:#ae81ff">19.28</span>,<span style="color:#ae81ff">32.42</span>,<span style="color:#ae81ff">62.12</span>,<span style="color:#ae81ff">62.18</span>,<span style="color:#ae81ff">62.60</span>,<span style="color:#ae81ff">49.18</span>,<span style="color:#ae81ff">32.57</span>,<span style="color:#ae81ff">25.93</span>,<span style="color:#ae81ff">21.17</span>,<span style="color:#ae81ff">14.68</span>]) <span style="color:#75715e">#報告数</span>
-</code></pre></div><p><a href="https://gyazo.com/326520da8fef2e55d91d676e2efaa49c"><img src="https://i.gyazo.com/326520da8fef2e55d91d676e2efaa49c.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">17</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">20</span>]) <span style="color:#75715e">#週</span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0.26</span>,<span style="color:#ae81ff">0.25</span>,<span style="color:#ae81ff">0.19</span>,<span style="color:#ae81ff">0.34</span>,<span style="color:#ae81ff">0.89</span>,<span style="color:#ae81ff">1.78</span>,<span style="color:#ae81ff">2.51</span>,<span style="color:#ae81ff">4.81</span>,<span style="color:#ae81ff">10.97</span>,<span style="color:#ae81ff">18.02</span>,<span style="color:#ae81ff">19.28</span>,<span style="color:#ae81ff">32.42</span>,<span style="color:#ae81ff">62.12</span>,<span style="color:#ae81ff">62.18</span>,<span style="color:#ae81ff">62.60</span>,<span style="color:#ae81ff">49.18</span>,<span style="color:#ae81ff">32.57</span>,<span style="color:#ae81ff">25.93</span>,<span style="color:#ae81ff">21.17</span>,<span style="color:#ae81ff">14.68</span>]) <span style="color:#75715e">#報告数</span>
+</span></span></code></pre></div><p><a href="https://gyazo.com/326520da8fef2e55d91d676e2efaa49c"><img src="https://i.gyazo.com/326520da8fef2e55d91d676e2efaa49c.png" alt="Image from Gyazo"></a></p>
 <p>このような場合は，<strong>基底関数</strong> を利用します．
 線形関数の$x$を，任意の$\phi(x)$という基底関数に置き換えるという方法です．
 基底関数には，どんな関数を用いても良いのですが，よく用いられるのは，
@@ -207,10 +205,10 @@ y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arr
 ノートブックのタイトルは <strong>chapter5</strong> とします．
 ここでは，<strong>numpy</strong> と <strong>matplotlib.pyplot</strong>に加え，
 最適化処理のための<a href="https://www.scipy.org/">Scipy</a>をインポートします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   多項式基底
 </h1>
 
@@ -225,35 +223,35 @@ y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arr
 <p>$$ = w_0 \cdot x^0 + w_1 \cdot x^1 + w_2 \cdot x^2 + w_3 \cdot x^3 $$</p>
 <p>$$ = w_0  + w_1 \cdot x + w_2 \cdot x^2 + w_3 \cdot x^3 $$</p>
 <p>この回帰式を関数 <strong>fx</strong> として定義しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(w, x): <span style="color:#75715e"># 回帰式の関数定義</span>
-  y_ <span style="color:#f92672">=</span> w[<span style="color:#ae81ff">0</span>]  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">3</span>
-  <span style="color:#66d9ef">return</span> y_
-</code></pre></div><h3 id="目的関数">目的関数</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(w, x): <span style="color:#75715e"># 回帰式の関数定義</span>
+</span></span><span style="display:flex;"><span>  y_ <span style="color:#f92672">=</span> w[<span style="color:#ae81ff">0</span>]  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> y_
+</span></span></code></pre></div><h3 id="目的関数">目的関数</h3>
 <p>目的関数$E$は，これまでと同じ2乗誤差で与えます．</p>
 <p>$$E=\sum_{n=0}^{N-1} (y_n - f(x_n))^2$$</p>
 <p>この目的関数を関数 <strong>gx</strong> として定義しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gx</span>(w, x, y): <span style="color:#75715e"># 目的関数（2乗誤差）の関数定義</span>
-  y_ <span style="color:#f92672">=</span> fx(w, x)
-  e <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum((y <span style="color:#f92672">-</span> y_) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)
-  <span style="color:#66d9ef">return</span> e
-</code></pre></div><h3 id="数値解の導出">数値解の導出</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gx</span>(w, x, y): <span style="color:#75715e"># 目的関数（2乗誤差）の関数定義</span>
+</span></span><span style="display:flex;"><span>  y_ <span style="color:#f92672">=</span> fx(w, x)
+</span></span><span style="display:flex;"><span>  e <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum((y <span style="color:#f92672">-</span> y_) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> e
+</span></span></code></pre></div><h3 id="数値解の導出">数値解の導出</h3>
 <p>数値解の導出には， <strong>SciPy</strong> のを利用します．
 同ライブラリの <strong>minimize</strong> 関数は，指定した関数を最小化するようなパラメータを導出してくれます．
 引数には，目的関数 <strong>gx</strong> ，パラメータの初期値 <strong>w_init</strong> ，
 最適化の対象とならないパラメータ <strong>(x, y)</strong> ， 最適化アルゴリズム <strong>powell</strong> を指定します．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]) <span style="color:#75715e"># パラメータの初期値</span>
-result <span style="color:#f92672">=</span> minimize(gx, w_init, args<span style="color:#f92672">=</span>(x, y), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;powell&#34;</span>) <span style="color:#75715e"># Powell法で最適化</span>
-<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x) <span style="color:#75715e"># 導出されたパラメータ</span>
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[ <span style="color:#ae81ff">20.22701023</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">14.62576848</span>   <span style="color:#ae81ff">2.32622593</span>  <span style="color:#f92672">-</span><span style="color:#ae81ff">0.08134343</span>]
-</code></pre></div><p>この結果，$w_0 \simeq 20.23$，$w_1 \simeq -14.63$，$w_2 \simeq 2.32$，$w_3 \simeq 0.08$であることがわかりました．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]) <span style="color:#75715e"># パラメータの初期値</span>
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> minimize(gx, w_init, args<span style="color:#f92672">=</span>(x, y), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;powell&#34;</span>) <span style="color:#75715e"># Powell法で最適化</span>
+</span></span><span style="display:flex;"><span>print(result<span style="color:#f92672">.</span>x) <span style="color:#75715e"># 導出されたパラメータ</span>
+</span></span></code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>[ <span style="color:#ae81ff">20.22701023</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">14.62576848</span>   <span style="color:#ae81ff">2.32622593</span>  <span style="color:#f92672">-</span><span style="color:#ae81ff">0.08134343</span>]
+</span></span></code></pre></div><p>この結果，$w_0 \simeq 20.23$，$w_1 \simeq -14.63$，$w_2 \simeq 2.32$，$w_3 \simeq 0.08$であることがわかりました．
 この値を基に回帰式をグラフ化すると，曲線を利用して対象のデータを近似していることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(x, y)
-plt<span style="color:#f92672">.</span>plot(x, fx(result<span style="color:#f92672">.</span>x, x))
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;week&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;infuluenza&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/2cef45d08e8ae7d46127ddcbf8f25b5d"><img src="https://i.gyazo.com/2cef45d08e8ae7d46127ddcbf8f25b5d.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(x, y)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(x, fx(result<span style="color:#f92672">.</span>x, x))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;week&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;infuluenza&#34;</span>)
+</span></span></code></pre></div><p><a href="https://gyazo.com/2cef45d08e8ae7d46127ddcbf8f25b5d"><img src="https://i.gyazo.com/2cef45d08e8ae7d46127ddcbf8f25b5d.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ガウス基底
 </h1>
@@ -266,17 +264,17 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;i
 - \frac{ (x - \mu_i)^2}{2s^2}
 \right) $$</p>
 <p>ガウス基底を関数 <strong>gauss</strong> として定義しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gauss</span>(x, mu, s):
-  g <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>exp( <span style="color:#f92672">-</span>(x <span style="color:#f92672">-</span> mu) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">/</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> s<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>))
-  <span style="color:#66d9ef">return</span> g
-</code></pre></div><p>ガウス基底の形状を確認しましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gauss</span>(x, mu, s):
+</span></span><span style="display:flex;"><span>  g <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>exp( <span style="color:#f92672">-</span>(x <span style="color:#f92672">-</span> mu) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">/</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> s<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> g
+</span></span></code></pre></div><p>ガウス基底の形状を確認しましょう．
 $\mu=0$，$s=3$のグラフを描いてみます．
 ガウス基底は上に凸の分布であり，正規分布（ガウス分布）と同じ形状であることが分かります．
 正規分布の正規化（面積の総和を1にする）のための係数を取り除いた式がガウス基底です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.1</span>)
-y_ <span style="color:#f92672">=</span> gauss(x_, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>)
-plt<span style="color:#f92672">.</span>plot(x_, y_)
-</code></pre></div><p><a href="https://gyazo.com/923da2cb717e170091075b741f9919e7"><img src="https://i.gyazo.com/923da2cb717e170091075b741f9919e7.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">0.1</span>)
+</span></span><span style="display:flex;"><span>y_ <span style="color:#f92672">=</span> gauss(x_, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(x_, y_)
+</span></span></code></pre></div><p><a href="https://gyazo.com/923da2cb717e170091075b741f9919e7"><img src="https://i.gyazo.com/923da2cb717e170091075b741f9919e7.png" alt="Image from Gyazo"></a></p>
 <h3 id="回帰式-1">回帰式</h3>
 <p>4つの基底関数を組み合わせることにします．
 このとき，$\phi_0(x)=1$とするため，実際は残りの3つのガウス基底を組み合わせることになります．</p>
@@ -286,38 +284,38 @@ plt<span style="color:#f92672">.</span>plot(x_, y_)
 <p>これは3つのガウス基底を均等な間隔で配置することを意味しています．</p>
 <p><a href="https://gyazo.com/f4d0250462943eb5fe9b686dd0a3949d"><img src="https://i.gyazo.com/f4d0250462943eb5fe9b686dd0a3949d.png" alt="Image from Gyazo"></a></p>
 <p>この回帰式を関数 <strong>fx</strong> として定義しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(w, x): <span style="color:#75715e"># 回帰式の関数定義</span>
-  y_ <span style="color:#f92672">=</span> w[<span style="color:#ae81ff">0</span>]  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> gauss(x, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>) <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> gauss(x, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>)  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> gauss(x, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">5</span>)
-  <span style="color:#66d9ef">return</span> y_
-</code></pre></div><h3 id="目的関数-1">目的関数</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(w, x): <span style="color:#75715e"># 回帰式の関数定義</span>
+</span></span><span style="display:flex;"><span>  y_ <span style="color:#f92672">=</span> w[<span style="color:#ae81ff">0</span>]  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> gauss(x, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>) <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> gauss(x, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">5</span>)  <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> gauss(x, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> y_
+</span></span></code></pre></div><h3 id="目的関数-1">目的関数</h3>
 <p>目的関数$E$は，多項式基底と同じ2乗誤差で与えます．</p>
 <h3 id="数値解の導出-1">数値解の導出</h3>
 <p>多項式基底と同様に <strong>SciPy</strong> で最適化します．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]) <span style="color:#75715e"># パラメータの初期値</span>
-result <span style="color:#f92672">=</span> minimize(gx, w_init, args<span style="color:#f92672">=</span>(x, y), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;powell&#34;</span>) <span style="color:#75715e"># Powell法で最適化</span>
-<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x) <span style="color:#75715e"># 導出されたパラメータ</span>
-</code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">[<span style="color:#f92672">-</span><span style="color:#ae81ff">60.68720705</span>  <span style="color:#ae81ff">74.75886194</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">44.73746539</span> <span style="color:#ae81ff">130.07080173</span>]
-</code></pre></div><p>この結果，$w_0 \simeq -60.69$，$w_1 \simeq -74.76$，$w_2 \simeq -44.74$，$w_3 \simeq 130.07$であることがわかりました．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>w_init <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]) <span style="color:#75715e"># パラメータの初期値</span>
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> minimize(gx, w_init, args<span style="color:#f92672">=</span>(x, y), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;powell&#34;</span>) <span style="color:#75715e"># Powell法で最適化</span>
+</span></span><span style="display:flex;"><span>print(result<span style="color:#f92672">.</span>x) <span style="color:#75715e"># 導出されたパラメータ</span>
+</span></span></code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>[<span style="color:#f92672">-</span><span style="color:#ae81ff">60.68720705</span>  <span style="color:#ae81ff">74.75886194</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">44.73746539</span> <span style="color:#ae81ff">130.07080173</span>]
+</span></span></code></pre></div><p>この結果，$w_0 \simeq -60.69$，$w_1 \simeq -74.76$，$w_2 \simeq -44.74$，$w_3 \simeq 130.07$であることがわかりました．
 この値を基に回帰式をグラフ化すると，多項式基底と同様に曲線で対象のデータを近似していることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">plt<span style="color:#f92672">.</span>scatter(x, y)
-plt<span style="color:#f92672">.</span>plot(x, fx(result<span style="color:#f92672">.</span>x, x))
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;week&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;infuluenza&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/9f7c3b83215916769f8ba6ac6d0ab8a7"><img src="https://i.gyazo.com/9f7c3b83215916769f8ba6ac6d0ab8a7.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(x, y)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(x, fx(result<span style="color:#f92672">.</span>x, x))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;week&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;infuluenza&#34;</span>)
+</span></span></code></pre></div><p><a href="https://gyazo.com/9f7c3b83215916769f8ba6ac6d0ab8a7"><img src="https://i.gyazo.com/9f7c3b83215916769f8ba6ac6d0ab8a7.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
 <p>下記のデータの回帰式を求めてください．
 回帰式は3次の多項式を基底とすること．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 経過月</span>
-x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">48</span>, <span style="color:#ae81ff">1</span>)
-
-<span style="color:#75715e"># 株価</span>
-y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">8000</span>,<span style="color:#ae81ff">10500</span>,<span style="color:#ae81ff">10600</span>,<span style="color:#ae81ff">11000</span>,<span style="color:#ae81ff">12600</span>,<span style="color:#ae81ff">14000</span>,<span style="color:#ae81ff">12100</span>,<span style="color:#ae81ff">10800</span>,<span style="color:#ae81ff">9000</span>,<span style="color:#ae81ff">7680</span>,<span style="color:#ae81ff">8480</span>,<span style="color:#ae81ff">9040</span>,<span style="color:#ae81ff">10300</span>,<span style="color:#ae81ff">11100</span>,<span style="color:#ae81ff">11500</span>,<span style="color:#ae81ff">16900</span>,<span style="color:#ae81ff">18500</span>,<span style="color:#ae81ff">18200</span>,<span style="color:#ae81ff">26200</span>,<span style="color:#ae81ff">27500</span>,<span style="color:#ae81ff">41800</span>,<span style="color:#ae81ff">64800</span>,<span style="color:#ae81ff">49600</span>,<span style="color:#ae81ff">47200</span>,<span style="color:#ae81ff">50800</span>,<span style="color:#ae81ff">56100</span>,<span style="color:#ae81ff">74000</span>,<span style="color:#ae81ff">86800</span>,<span style="color:#ae81ff">82300</span>,<span style="color:#ae81ff">83300</span>,<span style="color:#ae81ff">66800</span>,<span style="color:#ae81ff">75500</span>,<span style="color:#ae81ff">71700</span>,<span style="color:#ae81ff">79500</span>,<span style="color:#ae81ff">84900</span>,<span style="color:#ae81ff">117000</span>,<span style="color:#ae81ff">111000</span>,<span style="color:#ae81ff">94400</span>,<span style="color:#ae81ff">93500</span>,<span style="color:#ae81ff">87900</span>,<span style="color:#ae81ff">82000</span>,<span style="color:#ae81ff">88900</span>,<span style="color:#ae81ff">86200</span>,<span style="color:#ae81ff">87900</span>,<span style="color:#ae81ff">86800</span>,<span style="color:#ae81ff">75400</span>,<span style="color:#ae81ff">87000</span>,<span style="color:#ae81ff">90800</span>])
-</code></pre></div><p>課題を完成させたら，<strong>chapter5.ipynb</strong> を保存し，
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 経過月</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">48</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 株価</span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">8000</span>,<span style="color:#ae81ff">10500</span>,<span style="color:#ae81ff">10600</span>,<span style="color:#ae81ff">11000</span>,<span style="color:#ae81ff">12600</span>,<span style="color:#ae81ff">14000</span>,<span style="color:#ae81ff">12100</span>,<span style="color:#ae81ff">10800</span>,<span style="color:#ae81ff">9000</span>,<span style="color:#ae81ff">7680</span>,<span style="color:#ae81ff">8480</span>,<span style="color:#ae81ff">9040</span>,<span style="color:#ae81ff">10300</span>,<span style="color:#ae81ff">11100</span>,<span style="color:#ae81ff">11500</span>,<span style="color:#ae81ff">16900</span>,<span style="color:#ae81ff">18500</span>,<span style="color:#ae81ff">18200</span>,<span style="color:#ae81ff">26200</span>,<span style="color:#ae81ff">27500</span>,<span style="color:#ae81ff">41800</span>,<span style="color:#ae81ff">64800</span>,<span style="color:#ae81ff">49600</span>,<span style="color:#ae81ff">47200</span>,<span style="color:#ae81ff">50800</span>,<span style="color:#ae81ff">56100</span>,<span style="color:#ae81ff">74000</span>,<span style="color:#ae81ff">86800</span>,<span style="color:#ae81ff">82300</span>,<span style="color:#ae81ff">83300</span>,<span style="color:#ae81ff">66800</span>,<span style="color:#ae81ff">75500</span>,<span style="color:#ae81ff">71700</span>,<span style="color:#ae81ff">79500</span>,<span style="color:#ae81ff">84900</span>,<span style="color:#ae81ff">117000</span>,<span style="color:#ae81ff">111000</span>,<span style="color:#ae81ff">94400</span>,<span style="color:#ae81ff">93500</span>,<span style="color:#ae81ff">87900</span>,<span style="color:#ae81ff">82000</span>,<span style="color:#ae81ff">88900</span>,<span style="color:#ae81ff">86200</span>,<span style="color:#ae81ff">87900</span>,<span style="color:#ae81ff">86800</span>,<span style="color:#ae81ff">75400</span>,<span style="color:#ae81ff">87000</span>,<span style="color:#ae81ff">90800</span>])
+</span></span></code></pre></div><p>課題を完成させたら，<strong>chapter5.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
 このとき，必ず事前に下記の設定を行ってから提出してください．</p>
 <ul>
