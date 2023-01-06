@@ -87,11 +87,12 @@
 
 
 
-  <meta property="og:description" content="ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-7 とします． ノートブックの作成方法に関しては第1回の資料を参考にしてください．
+  <meta property="og:description" content="ノートブックの作成 Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-7 とします． ノートブックの作成方法に関しては第1回の資料を参考にしてください．
 最初に Simple AI をインストールします． セルで下記のコマンドを実行してください．
-!pip install simpleai 迷路問題  今回も前回と同じ 迷路問題を取り上げます．
-迷路問題   初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ．ただし，隣り合う状態への移動にかかるコストは$1$とする． 迷路問題の状態空間モデルを確認しておきましょう．
-状態空間モデル   $A$から$Y$までの25の状態から，冗長な状態を取り除く．例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する．この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．行動は移動可能な状態のペアとして定義する．例えば，$S1$からは，$S2$と$S7$に移動可能なため，下記のように表現できる．$S1 \rightarrow S2$$S1 \rightarrow S7$同様に全ての状態について列挙すると，合わせて31通りの行動が定義できる． See the Pen 迷路問題 by Naoto Mukai (@nmukai)on CodePen.ヒューリスティック探索  前回紹介した幅優先探索と深さ優先探索は知識を用いない探索手法でした． ヒューリスティック探索とは，必ず正解に到達できるわけではないけれど， ある程度のレベルで正解に近い解を得ることが出来る知識（ヒューリスティックス） を利用した探索手法のことです．" />
+!pip install simpleai 迷路問題 今回も前回と同じ 迷路問題を取り上げます．
+迷路問題 初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ．ただし，隣り合う状態への移動にかかるコストは$1$とする．迷路問題の状態空間モデルを確認しておきましょう．
+状態空間モデル $A$から$Y$までの25の状態から，冗長な状態を取り除く．例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する．この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．行動は移動可能な状態のペアとして定義する．例えば，$S1$からは，$S2$と$S7$に移動可能なため，下記のように表現できる．$S1 \rightarrow S2$$S1 \rightarrow S7$同様に全ての状態について列挙すると，合わせて31通りの行動が定義できる．See the Pen 迷路問題 by Naoto Mukai (@nmukai)on CodePen.ヒューリスティック探索 前回紹介した幅優先探索と深さ優先探索は知識を用いない探索手法でした． ヒューリスティック探索とは，必ず正解に到達できるわけではないけれど， ある程度のレベルで正解に近い解を得ることが出来る知識（ヒューリスティックス） を利用した探索手法のことです．
+迷路問題におけるヒューリスティックスとしてマンハッタン距離を用います．マンハッタン距離とは，ある状態$S$から目的状態までの各座標（ここでは$x$座標と$y$座標）の差の総和を距離とする指標であり，ここでは$h(S)$で表します．例えば，$S1$から$S17$までのマンハッタン距離は，$x$座標の差は$4$，$y$座標の差は$4$であるため，これを合計して$8$になります．$$h(S1) = 8$$同様に，$S12$から$S17$までのマンハッタン距離は，$x$座標の差は$2$，$y$座標の差は$1$であるため，これを合計して$3$になります．$$h(S12) = 3$$A*アルゴリズム 今回は，ヒューリスティック探索の一つである A*アルゴリズム（エースターアルゴリズム） を紹介します． A*アルゴリズムでは，下記の評価関数$f(S)$が最小となる状態を優先して探索します． $h(S)$は先に述べたマンハッタン距離を表し， $g(S)$は状態$S$に到達するまでにかかったコストを表しています． ここで注意すべきことは， $g(S)$は既に確定したコストであるのに対し， $h(S)$は将来のコストの推定値であるということです．" />
 
 
 
@@ -106,11 +107,12 @@
 
 
 
-  <meta name="twitter:description" content="ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-7 とします． ノートブックの作成方法に関しては第1回の資料を参考にしてください．
+  <meta name="twitter:description" content="ノートブックの作成 Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-7 とします． ノートブックの作成方法に関しては第1回の資料を参考にしてください．
 最初に Simple AI をインストールします． セルで下記のコマンドを実行してください．
-!pip install simpleai 迷路問題  今回も前回と同じ 迷路問題を取り上げます．
-迷路問題   初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ．ただし，隣り合う状態への移動にかかるコストは$1$とする． 迷路問題の状態空間モデルを確認しておきましょう．
-状態空間モデル   $A$から$Y$までの25の状態から，冗長な状態を取り除く．例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する．この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．行動は移動可能な状態のペアとして定義する．例えば，$S1$からは，$S2$と$S7$に移動可能なため，下記のように表現できる．$S1 \rightarrow S2$$S1 \rightarrow S7$同様に全ての状態について列挙すると，合わせて31通りの行動が定義できる． See the Pen 迷路問題 by Naoto Mukai (@nmukai)on CodePen.ヒューリスティック探索  前回紹介した幅優先探索と深さ優先探索は知識を用いない探索手法でした． ヒューリスティック探索とは，必ず正解に到達できるわけではないけれど， ある程度のレベルで正解に近い解を得ることが出来る知識（ヒューリスティックス） を利用した探索手法のことです．" />
+!pip install simpleai 迷路問題 今回も前回と同じ 迷路問題を取り上げます．
+迷路問題 初期状態$A$から目的状態$Y$に至るまでの最短経路とコスト（距離）を求めよ．ただし，隣り合う状態への移動にかかるコストは$1$とする．迷路問題の状態空間モデルを確認しておきましょう．
+状態空間モデル $A$から$Y$までの25の状態から，冗長な状態を取り除く．例えば，$A \rightarrow B \rightarrow C \rightarrow D \rightarrow E$という経路においては，$B$，$C$，$D$に分岐は存在せず，通り抜けることしかしないため，これらの状態を省略する．この結果，$S1$から$S17$までの，17通りの状態で問題を表現する．行動は移動可能な状態のペアとして定義する．例えば，$S1$からは，$S2$と$S7$に移動可能なため，下記のように表現できる．$S1 \rightarrow S2$$S1 \rightarrow S7$同様に全ての状態について列挙すると，合わせて31通りの行動が定義できる．See the Pen 迷路問題 by Naoto Mukai (@nmukai)on CodePen.ヒューリスティック探索 前回紹介した幅優先探索と深さ優先探索は知識を用いない探索手法でした． ヒューリスティック探索とは，必ず正解に到達できるわけではないけれど， ある程度のレベルで正解に近い解を得ることが出来る知識（ヒューリスティックス） を利用した探索手法のことです．
+迷路問題におけるヒューリスティックスとしてマンハッタン距離を用います．マンハッタン距離とは，ある状態$S$から目的状態までの各座標（ここでは$x$座標と$y$座標）の差の総和を距離とする指標であり，ここでは$h(S)$で表します．例えば，$S1$から$S17$までのマンハッタン距離は，$x$座標の差は$4$，$y$座標の差は$4$であるため，これを合計して$8$になります．$$h(S1) = 8$$同様に，$S12$から$S17$までのマンハッタン距離は，$x$座標の差は$2$，$y$座標の差は$1$であるため，これを合計して$3$になります．$$h(S12) = 3$$A*アルゴリズム 今回は，ヒューリスティック探索の一つである A*アルゴリズム（エースターアルゴリズム） を紹介します． A*アルゴリズムでは，下記の評価関数$f(S)$が最小となる状態を優先して探索します． $h(S)$は先に述べたマンハッタン距離を表し， $g(S)$は状態$S$に到達するまでにかかったコストを表しています． ここで注意すべきことは， $g(S)$は既に確定したコストであるのに対し， $h(S)$は将来のコストの推定値であるということです．" />
 
 
 
@@ -187,8 +189,8 @@
 ノートブックの作成方法に関しては<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参考にしてください．</p>
 <p>最初に <strong>Simple AI</strong> をインストールします．
 セルで下記のコマンドを実行してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install simpleai
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>!pip install simpleai
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   迷路問題
 </h1>
 
@@ -335,153 +337,153 @@ A*アルゴリズムの効率は用いるヒューリスティックスに影響
 <strong>探索問題の型</strong> を表す<code>SearchPrblem</code>，
 <strong>A*アルゴリズム</strong> の<code>astar</code> ，幅優先探索の<code>breadth_first</code>をインポートします．
 数値計算ライブラリの<code>numpy</code>もインポートしておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, astar, breadth_first
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-</code></pre></div><p>最初に各状態の座標を定義します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">S1 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S1&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
-S2 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S2&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>)
-S3 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S3&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
-S4 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S4&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>)
-S5 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S5&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">2</span>)
-S6 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S6&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">2</span>)
-S7 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S7&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
-S8 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S8&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)
-S9 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S9&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>)
-S10 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S10&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>)
-S11 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S11&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>)
-S12 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S12&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>)
-S13 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S13&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>)
-S14 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S14&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>)
-S15 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S15&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>)
-S16 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S16&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>)
-S17 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S17&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)
-</code></pre></div><p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> simpleai.search <span style="color:#f92672">import</span> SearchProblem, astar, breadth_first
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span></code></pre></div><p>最初に各状態の座標を定義します．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>S1 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S1&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>S2 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S2&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>S3 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S3&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>S4 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S4&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>S5 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S5&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>S6 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S6&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>S7 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S7&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>S8 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S8&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>S9 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S9&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>S10 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S10&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>S11 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S11&#34;</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>S12 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S12&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>S13 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S13&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>S14 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S14&#34;</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>S15 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S15&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>S16 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S16&#34;</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>S17 <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#34;S17&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><p>次に <strong>初期状態</strong> と <strong>目的状態</strong> を定義します．
 初期状態は$1$，目的状態は$17$です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> S1
-GOAL  <span style="color:#f92672">=</span> S17
-</code></pre></div><p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>START <span style="color:#f92672">=</span> S1
+</span></span><span style="display:flex;"><span>GOAL  <span style="color:#f92672">=</span> S17
+</span></span></code></pre></div><p>インポートした<code>SearchProblem</code>クラスをオーバライドして，
 迷路問題を表す<code>MazeProblem</code>を定義します．
 オーバライドするメソッドは，<code>actions</code>，<code>result</code>，<code>is_goal</code>，<code>cost</code>，<code>heuristic</code>の5種類です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MazeProblem</span>(SearchProblem):
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
-        <span style="color:#f92672">...</span>
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-        <span style="color:#f92672">...</span>
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-        <span style="color:#f92672">...</span>
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
-        <span style="color:#f92672">...</span>
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heuristic</span>(self, state):
-        <span style="color:#f92672">...</span>     
-</code></pre></div><h3 id="actionsself-state">actions(self, state)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MazeProblem</span>(SearchProblem):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heuristic</span>(self, state):
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">...</span>     
+</span></span></code></pre></div><h3 id="actionsself-state">actions(self, state)</h3>
 <p>実行可能な行動のリストを返します．
 行動は全部で31パターンが存在します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
-  list <span style="color:#f92672">=</span> []
-
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S1:
-      list <span style="color:#f92672">=</span> [S2, S7]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S2:
-      list <span style="color:#f92672">=</span> [S1, S6]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S3:
-      list <span style="color:#f92672">=</span> [S4]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S4:
-      list <span style="color:#f92672">=</span> [S3, S5, S8]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S5:
-      list <span style="color:#f92672">=</span> [S4]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S6:
-      list <span style="color:#f92672">=</span> [S2]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S7:
-      list <span style="color:#f92672">=</span> [S1, S8, S14]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S8:
-      list <span style="color:#f92672">=</span> [S4, S7, S12]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S9:
-      list <span style="color:#f92672">=</span> [S10, S13]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S10:
-      list <span style="color:#f92672">=</span> [S9, S17]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S11:
-      list <span style="color:#f92672">=</span> [S12]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S12:
-      list <span style="color:#f92672">=</span> [S8, S11, S13]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S13:
-      list <span style="color:#f92672">=</span> [S9, S12]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S14:
-      list <span style="color:#f92672">=</span> [S7, S15]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S15:
-      list <span style="color:#f92672">=</span> [S14]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S16:
-      list <span style="color:#f92672">=</span> [S17]
-  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S17:
-      list <span style="color:#f92672">=</span> [S10, S16]
-
-  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{state} -&gt; {list}&#34;</span>)   
-
-  <span style="color:#66d9ef">return</span> list
-</code></pre></div><h3 id="resultself-state-action">result(self, state, action)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">actions</span>(self, state):
+</span></span><span style="display:flex;"><span>  list <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S1:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S2, S7]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S2:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S1, S6]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S3:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S4]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S4:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S3, S5, S8]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S5:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S4]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S6:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S2]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S7:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S1, S8, S14]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S8:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S4, S7, S12]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S9:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S10, S13]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S10:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S9, S17]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S11:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S12]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S12:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S8, S11, S13]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S13:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S9, S12]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S14:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S7, S15]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S15:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S14]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S16:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S17]
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> state <span style="color:#f92672">==</span> S17:
+</span></span><span style="display:flex;"><span>      list <span style="color:#f92672">=</span> [S10, S16]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>state<span style="color:#e6db74">}</span><span style="color:#e6db74"> -&gt; </span><span style="color:#e6db74">{</span>list<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> list
+</span></span></code></pre></div><h3 id="resultself-state-action">result(self, state, action)</h3>
 <p>行動<code>action</code>を，そのまま次の状態として扱います．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
-    <span style="color:#66d9ef">return</span> action
-</code></pre></div><h3 id="is_goalself-state">is_goal(self, state)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">result</span>(self, state, action):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> action
+</span></span></code></pre></div><h3 id="is_goalself-state">is_goal(self, state)</h3>
 <p>状態<code>state</code>が<code>GOAL</code>と一致すれば目的状態に達したと判断します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
-    <span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL
-</code></pre></div><h3 id="costself-state-action-state2">cost(self, state, action, state2)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_goal</span>(self, state):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> state <span style="color:#f92672">==</span> GOAL
+</span></span></code></pre></div><h3 id="costself-state-action-state2">cost(self, state, action, state2)</h3>
 <p>状態間のコストを定義します（$g(S)$ではないことに注意）．
 現在の状態$state$と，遷移先の状態$state2$は，
 $x$軸または$y$軸に沿って直線的に接続されているため，その座標の差をコストとします．
 計算方法は，マンハッタン距離と同じとなりますが，
 接続されている状態同士の実際のコストであり，推定値ではないことに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
-    x1, y1 <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>]
-    x2, y2 <span style="color:#f92672">=</span> state2[<span style="color:#ae81ff">1</span>], state2[<span style="color:#ae81ff">2</span>]
-    c <span style="color:#f92672">=</span> abs(x1 <span style="color:#f92672">-</span> x2) <span style="color:#f92672">+</span> abs(y1 <span style="color:#f92672">-</span> y2)
-    <span style="color:#66d9ef">return</span> c
-</code></pre></div><h3 id="heuristicself-state">heuristic(self, state)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
+</span></span><span style="display:flex;"><span>    x1, y1 <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>    x2, y2 <span style="color:#f92672">=</span> state2[<span style="color:#ae81ff">1</span>], state2[<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>    c <span style="color:#f92672">=</span> abs(x1 <span style="color:#f92672">-</span> x2) <span style="color:#f92672">+</span> abs(y1 <span style="color:#f92672">-</span> y2)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> c
+</span></span></code></pre></div><h3 id="heuristicself-state">heuristic(self, state)</h3>
 <p>ヒューリスティックス$h(S)$を定義します．
 現在の状態$state$から目的状態$GOAL$までのマンハッタン距離です．
 上記とは異なり，計算されたコストはあくまで推定値です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heuristic</span>(self, state):
-    x1, y1 <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>]
-    x2, y2 <span style="color:#f92672">=</span> GOAL[<span style="color:#ae81ff">1</span>], GOAL[<span style="color:#ae81ff">2</span>]
-    h <span style="color:#f92672">=</span> abs(x1 <span style="color:#f92672">-</span> x2) <span style="color:#f92672">+</span> abs(y1 <span style="color:#f92672">-</span> y2)
-    <span style="color:#66d9ef">return</span> h
-</code></pre></div><h2 id="解の探索">解の探索</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heuristic</span>(self, state):
+</span></span><span style="display:flex;"><span>    x1, y1 <span style="color:#f92672">=</span> state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>    x2, y2 <span style="color:#f92672">=</span> GOAL[<span style="color:#ae81ff">1</span>], GOAL[<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>    h <span style="color:#f92672">=</span> abs(x1 <span style="color:#f92672">-</span> x2) <span style="color:#f92672">+</span> abs(y1 <span style="color:#f92672">-</span> y2)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> h
+</span></span></code></pre></div><h2 id="解の探索">解の探索</h2>
 <p>A*アルゴリズム<code>astar</code>を用いて探索します．
 探索順番は$S1,S2,S7,\cdots,S5,S10$となっていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> MazeProblem(initial_state<span style="color:#f92672">=</span>START)
-result <span style="color:#f92672">=</span> astar(problem, graph_search<span style="color:#f92672">=</span>True)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">(&#39;S1&#39;, 1, 1) -&gt; [(&#39;S2&#39;, 5, 1), (&#39;S7&#39;, 1, 3)]
-(&#39;S2&#39;, 5, 1) -&gt; [(&#39;S1&#39;, 1, 1), (&#39;S6&#39;, 5, 2)]
-(&#39;S7&#39;, 1, 3) -&gt; [(&#39;S1&#39;, 1, 1), (&#39;S8&#39;, 3, 3), (&#39;S14&#39;, 1, 5)]
-(&#39;S6&#39;, 5, 2) -&gt; [(&#39;S2&#39;, 5, 1)]
-(&#39;S8&#39;, 3, 3) -&gt; [(&#39;S4&#39;, 3, 2), (&#39;S12&#39;, 3, 4)]
-(&#39;S14&#39;, 1, 5) -&gt; [(&#39;S7&#39;, 1, 3), (&#39;S15&#39;, 3, 5)]
-(&#39;S12&#39;, 3, 4) -&gt; [(&#39;S8&#39;, 3, 3), (&#39;S11&#39;, 2, 4), (&#39;S13&#39;, 4, 4)]
-(&#39;S15&#39;, 3, 5) -&gt; [(&#39;S14&#39;, 1, 5)]
-(&#39;S13&#39;, 4, 4) -&gt; [(&#39;S9&#39;, 4, 3), (&#39;S12&#39;, 3, 4)]
-(&#39;S4&#39;, 3, 2) -&gt; [(&#39;S3&#39;, 2, 2), (&#39;S5&#39;, 4, 2), (&#39;S8&#39;, 3, 3)]
-(&#39;S11&#39;, 2, 4) -&gt; [(&#39;S12&#39;, 3, 4)]
-(&#39;S9&#39;, 4, 3) -&gt; [(&#39;S10&#39;, 5, 3), (&#39;S13&#39;, 4, 4)]
-(&#39;S5&#39;, 4, 2) -&gt; [(&#39;S4&#39;, 3, 2)]
-(&#39;S10&#39;, 5, 3) -&gt; [(&#39;S9&#39;, 4, 3), (&#39;S17&#39;, 5, 5)]
-</code></pre></div><p>最終状態，パス，コスト，探索数を確認してみましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>problem <span style="color:#f92672">=</span> MazeProblem(initial_state<span style="color:#f92672">=</span>START)
+</span></span><span style="display:flex;"><span>result <span style="color:#f92672">=</span> astar(problem, graph_search<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>(&#39;S1&#39;, 1, 1) -&gt; [(&#39;S2&#39;, 5, 1), (&#39;S7&#39;, 1, 3)]
+</span></span><span style="display:flex;"><span>(&#39;S2&#39;, 5, 1) -&gt; [(&#39;S1&#39;, 1, 1), (&#39;S6&#39;, 5, 2)]
+</span></span><span style="display:flex;"><span>(&#39;S7&#39;, 1, 3) -&gt; [(&#39;S1&#39;, 1, 1), (&#39;S8&#39;, 3, 3), (&#39;S14&#39;, 1, 5)]
+</span></span><span style="display:flex;"><span>(&#39;S6&#39;, 5, 2) -&gt; [(&#39;S2&#39;, 5, 1)]
+</span></span><span style="display:flex;"><span>(&#39;S8&#39;, 3, 3) -&gt; [(&#39;S4&#39;, 3, 2), (&#39;S12&#39;, 3, 4)]
+</span></span><span style="display:flex;"><span>(&#39;S14&#39;, 1, 5) -&gt; [(&#39;S7&#39;, 1, 3), (&#39;S15&#39;, 3, 5)]
+</span></span><span style="display:flex;"><span>(&#39;S12&#39;, 3, 4) -&gt; [(&#39;S8&#39;, 3, 3), (&#39;S11&#39;, 2, 4), (&#39;S13&#39;, 4, 4)]
+</span></span><span style="display:flex;"><span>(&#39;S15&#39;, 3, 5) -&gt; [(&#39;S14&#39;, 1, 5)]
+</span></span><span style="display:flex;"><span>(&#39;S13&#39;, 4, 4) -&gt; [(&#39;S9&#39;, 4, 3), (&#39;S12&#39;, 3, 4)]
+</span></span><span style="display:flex;"><span>(&#39;S4&#39;, 3, 2) -&gt; [(&#39;S3&#39;, 2, 2), (&#39;S5&#39;, 4, 2), (&#39;S8&#39;, 3, 3)]
+</span></span><span style="display:flex;"><span>(&#39;S11&#39;, 2, 4) -&gt; [(&#39;S12&#39;, 3, 4)]
+</span></span><span style="display:flex;"><span>(&#39;S9&#39;, 4, 3) -&gt; [(&#39;S10&#39;, 5, 3), (&#39;S13&#39;, 4, 4)]
+</span></span><span style="display:flex;"><span>(&#39;S5&#39;, 4, 2) -&gt; [(&#39;S4&#39;, 3, 2)]
+</span></span><span style="display:flex;"><span>(&#39;S10&#39;, 5, 3) -&gt; [(&#39;S9&#39;, 4, 3), (&#39;S17&#39;, 5, 5)]
+</span></span></code></pre></div><p>最終状態，パス，コスト，探索数を確認してみましょう．
 初期状態$S1$から目的状態$S17$までのパスは，
 $S1, S7, S8, S12, S13, S9, S10, S17$であり，
 そのコストは$10$となっています．
 ここでのコストはステップ数ではなく，
 得られたパスの実際のコスト（距離）となっていることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>state)
-<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>path())
-<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>cost)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">(&#39;S17&#39;, 5, 5)
-[(None, (&#39;S1&#39;, 1, 1)), ((&#39;S7&#39;, 1, 3), (&#39;S7&#39;, 1, 3)), ((&#39;S8&#39;, 3, 3), (&#39;S8&#39;, 3, 3)), ((&#39;S12&#39;, 3, 4), (&#39;S12&#39;, 3, 4)), ((&#39;S13&#39;, 4, 4), (&#39;S13&#39;, 4, 4)), ((&#39;S9&#39;, 4, 3), (&#39;S9&#39;, 4, 3)), ((&#39;S10&#39;, 5, 3), (&#39;S10&#39;, 5, 3)), ((&#39;S17&#39;, 5, 5), (&#39;S17&#39;, 5, 5))]
-10
-</code></pre></div><!--
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(result<span style="color:#f92672">.</span>state)
+</span></span><span style="display:flex;"><span>print(result<span style="color:#f92672">.</span>path())
+</span></span><span style="display:flex;"><span>print(result<span style="color:#f92672">.</span>cost)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>(&#39;S17&#39;, 5, 5)
+</span></span><span style="display:flex;"><span>[(None, (&#39;S1&#39;, 1, 1)), ((&#39;S7&#39;, 1, 3), (&#39;S7&#39;, 1, 3)), ((&#39;S8&#39;, 3, 3), (&#39;S8&#39;, 3, 3)), ((&#39;S12&#39;, 3, 4), (&#39;S12&#39;, 3, 4)), ((&#39;S13&#39;, 4, 4), (&#39;S13&#39;, 4, 4)), ((&#39;S9&#39;, 4, 3), (&#39;S9&#39;, 4, 3)), ((&#39;S10&#39;, 5, 3), (&#39;S10&#39;, 5, 3)), ((&#39;S17&#39;, 5, 5), (&#39;S17&#39;, 5, 5))]
+</span></span><span style="display:flex;"><span>10
+</span></span></code></pre></div><!--
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   完成したノートブックの確認
 </h1>
@@ -496,36 +498,36 @@ $S1, S7, S8, S12, S13, S9, S10, S17$であり，
 <p>8パズルを <strong>A*アルゴリズム</strong> と <strong>幅優先探索</strong>  で解き，その探索に掛かる時間を示せ．
 また，その時間の差について考察せよ．</p>
 <p>このとき，初期状態と目的状態は下記に設定すること．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START <span style="color:#f92672">=</span> (
-    <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>,
-    <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">4</span>,
-    <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">2</span>
-)
-
-GOAL <span style="color:#f92672">=</span> (
-    <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>,
-    <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>,
-    <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>
-)
-</code></pre></div><p>状態間のコストとヒューリスティックスは下記のように実装する．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>START <span style="color:#f92672">=</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>GOAL <span style="color:#f92672">=</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>状態間のコストとヒューリスティックスは下記のように実装する．
 <code>cost</code>は状態間のコストが常に1であることを表している．
 また，<code>heuristic</code>は目的状態と異なるタイルの数をカウントしている．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
-	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heuristic</span>(self, state):
-
-  s <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(state)
-  g <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(GOAL)
-  h <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>sum(s <span style="color:#f92672">==</span> g)
-
-  <span style="color:#66d9ef">return</span> h
-</code></pre></div><p>探索に掛かる時間を計測するには，次のように<code>%time</code>を用いる．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cost</span>(self, state, action, state2):
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">heuristic</span>(self, state):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  s <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(state)
+</span></span><span style="display:flex;"><span>  g <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(GOAL)
+</span></span><span style="display:flex;"><span>  h <span style="color:#f92672">=</span> <span style="color:#ae81ff">9</span> <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>sum(s <span style="color:#f92672">==</span> g)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> h
+</span></span></code></pre></div><p>探索に掛かる時間を計測するには，次のように<code>%time</code>を用いる．
 実行結果の<code>Wall time</code>が探索に掛かった時間である．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> EightPuzzle(initial_state<span style="color:#f92672">=</span>START)
-<span style="color:#f92672">%</span>time result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span>True) <span style="color:#75715e"># 幅優先探索の時間を計測</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">problem <span style="color:#f92672">=</span> EightPuzzle(initial_state<span style="color:#f92672">=</span>START)
-<span style="color:#f92672">%</span>time result <span style="color:#f92672">=</span> astar(problem, graph_search<span style="color:#f92672">=</span>True) <span style="color:#75715e"># A*の時間を計測</span>
-</code></pre></div><p>Google Colaboratoryで作成した <strong>AI-7.ipynb</strong> を保存し，
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>problem <span style="color:#f92672">=</span> EightPuzzle(initial_state<span style="color:#f92672">=</span>START)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>time result <span style="color:#f92672">=</span> breadth_first(problem, graph_search<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#75715e"># 幅優先探索の時間を計測</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>problem <span style="color:#f92672">=</span> EightPuzzle(initial_state<span style="color:#f92672">=</span>START)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">%</span>time result <span style="color:#f92672">=</span> astar(problem, graph_search<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>) <span style="color:#75715e"># A*の時間を計測</span>
+</span></span></code></pre></div><p>Google Colaboratoryで作成した <strong>AI-7.ipynb</strong> を保存し，
 <strong>ノートブック（.ipynb）</strong> をダウンロードして提出しなさい．
 提出の前に必ず下記の設定を行うこと．</p>
 <ul>
