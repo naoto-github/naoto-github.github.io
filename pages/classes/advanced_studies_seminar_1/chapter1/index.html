@@ -87,12 +87,15 @@
 
 
 
-  <meta property="og:description" content="ニューラルネットワークとは  ニューラルネットワーク（Neural Netowork） とは， 生物の脳を数理的に表現したモデルのことであり， 1943年に外科医であったウォーレン・マカロック（Warren McCulloch）氏と， 数学者であったウォルター・ピッツ（Walter Pitts）氏が考案した形式ニューロンが起源とされています．
+  <meta property="og:description" content="ニューラルネットワークとは ニューラルネットワーク（Neural Netowork） とは， 生物の脳を数理的に表現したモデルのことであり， 1943年に外科医であったウォーレン・マカロック（Warren McCulloch）氏と， 数学者であったウォルター・ピッツ（Walter Pitts）氏が考案した形式ニューロンが起源とされています．
 1940年代~60年代の第1次AIブームに大きく注目され， 単純パーセプトロン と呼ばれるニューラルネットワークが提案されます． その後，1980年代の第2次AIブームにおいて， ニューラルネットワークの学習アルゴリズムである バックプロパゲーション（誤差逆伝播法） が確立し， 多層パーセプトロン へ発展します．
 近年は第3次AIブームであり，ニューラルネットワークをさらに多層化させた ディープラーニング（深層学習） が提案され，画像認識などの分野で高い性能を示しています． 今後もディープラーニングは進化し，自動運転やロボット技術に応用され， 我々の生活を支える必要不可欠な技術になると予想されます． 本授業では，ニューラルネットワークの歴史を追いながら， Google Colaboratory（Colab） で実装することで，その技術を理解することを目標とします． また，ディープラーニングの実装には，Pytorch を採用します．
-ニューロン  ニューロン（神経細胞）は，動物の神経を構成する細胞であり，電気的に情報を伝える役割を担っています． 入力部分が樹状突起，伝送路が軸索，出力が軸索末端となっており，他のニューロンからの伝わった刺激（電気パルス）を 変化させて次のニューロンに伝えるという仕組みになっています． 人間の脳は100億から1000億のニューロンが存在すると考えられており， 立体的で複雑な回路網が形成されているそうです． このニューロンの仕組みの数式モデルが 形式ニューロン であり， 後に発展するディープラーニングの基礎となっています．
-
-Jupyter Notebookのインストール  Jupyetr Notebookをインストールします． 過去に人工知能などの授業で既にインストール済みの場合はスキップして構いません． [Python](https://www.python.org)　のインストール・パッケージをダウンロードしましよう． このとき，Pythonのバージョンは**3.x**を選択してください． インストールを始める前に，ファイルをインストールするためのフォルダを作成します． 大学で環境を構築する場合は，**Hドライブ** に，**MyPython** という名前でフォルダを作成してください． それでは，インストーラを実行しましょう． **Customize installation** を選択し， パッケージ管理システムの **pip** が同時にインストールされることを確認してください． [![Image from Gyazo](https://i.gyazo.com/e1fc572f43e771cb3901a76e927a84bd.png)](https://gyazo.com/e1fc572f43e771cb3901a76e927a84bd) [![Image from Gyazo](https://i.gyazo.com/294b8b48f53df91303d1c26bfaf7ada8.png)](https://gyazo.com/294b8b48f53df91303d1c26bfaf7ada8) このとき，インストールするフォルダは，上記で作成した**H:\MyPython**とすることに注意してください． [!" />
+ニューロン ニューロン（神経細胞）は，動物の神経を構成する細胞であり，電気的に情報を伝える役割を担っています． 入力部分が樹状突起，伝送路が軸索，出力が軸索末端となっており，他のニューロンからの伝わった刺激（電気パルス）を 変化させて次のニューロンに伝えるという仕組みになっています． 人間の脳は100億から1000億のニューロンが存在すると考えられており， 立体的で複雑な回路網が形成されているそうです． このニューロンの仕組みの数式モデルが 形式ニューロン であり， 後に発展するディープラーニングの基礎となっています．
+Google Colaboratoryの基本 ブラウザでPythonの実装が可能なGoogle Colaboratoryを利用します．
+ノートブックの作成 Google Colaboratoryにアクセスしたら，ノートブックを新規作成します． ノートブックを作成したら，ノートブックのタイトル（ファイル名）を設定します． 今回のタイトルは「chapter1.ipynb」としましょう．
+Colabの使い方 Colabではコードセルと呼ばれる入力フィールドにPythonのコードを入力します． コードセルを増やして，1&#43;2，2*3，print(&quot;Hello World!&quot;)と入力してみましょう． 入力したらコードセルの左端にある「セルを実行」をクリックします． 実行するとコードセルの実行結果である3，6，Hello World!が出力されることが確認できます． printは文字を出力するためのPythonの命令文です． このように，適宜，コードセルを増やしながら，Pythonのコードを追加で記述して行きます．
+ライブラリのインストール Google Colaboratoryではpipコマンドを利用して，ライブラリをインストールすることが可能です． ここでは，ディープラーニングのライブラリであるPytorch をインストールしてみます．
+!pip install torch !pip install torchvision ライブラリのインポート インストールしたPyTorchをインポートします． インポートとは，プログラムで該当のライブラリを利用可能な状態にすることです． 下記のコードを入力したら，Run ボタンをクリックします（Shift &#43; EnterでもOK）．" />
 
 
 
@@ -107,12 +110,15 @@ Jupyter Notebookのインストール  Jupyetr Notebookをインストールし�
 
 
 
-  <meta name="twitter:description" content="ニューラルネットワークとは  ニューラルネットワーク（Neural Netowork） とは， 生物の脳を数理的に表現したモデルのことであり， 1943年に外科医であったウォーレン・マカロック（Warren McCulloch）氏と， 数学者であったウォルター・ピッツ（Walter Pitts）氏が考案した形式ニューロンが起源とされています．
+  <meta name="twitter:description" content="ニューラルネットワークとは ニューラルネットワーク（Neural Netowork） とは， 生物の脳を数理的に表現したモデルのことであり， 1943年に外科医であったウォーレン・マカロック（Warren McCulloch）氏と， 数学者であったウォルター・ピッツ（Walter Pitts）氏が考案した形式ニューロンが起源とされています．
 1940年代~60年代の第1次AIブームに大きく注目され， 単純パーセプトロン と呼ばれるニューラルネットワークが提案されます． その後，1980年代の第2次AIブームにおいて， ニューラルネットワークの学習アルゴリズムである バックプロパゲーション（誤差逆伝播法） が確立し， 多層パーセプトロン へ発展します．
 近年は第3次AIブームであり，ニューラルネットワークをさらに多層化させた ディープラーニング（深層学習） が提案され，画像認識などの分野で高い性能を示しています． 今後もディープラーニングは進化し，自動運転やロボット技術に応用され， 我々の生活を支える必要不可欠な技術になると予想されます． 本授業では，ニューラルネットワークの歴史を追いながら， Google Colaboratory（Colab） で実装することで，その技術を理解することを目標とします． また，ディープラーニングの実装には，Pytorch を採用します．
-ニューロン  ニューロン（神経細胞）は，動物の神経を構成する細胞であり，電気的に情報を伝える役割を担っています． 入力部分が樹状突起，伝送路が軸索，出力が軸索末端となっており，他のニューロンからの伝わった刺激（電気パルス）を 変化させて次のニューロンに伝えるという仕組みになっています． 人間の脳は100億から1000億のニューロンが存在すると考えられており， 立体的で複雑な回路網が形成されているそうです． このニューロンの仕組みの数式モデルが 形式ニューロン であり， 後に発展するディープラーニングの基礎となっています．
-
-Jupyter Notebookのインストール  Jupyetr Notebookをインストールします． 過去に人工知能などの授業で既にインストール済みの場合はスキップして構いません． [Python](https://www.python.org)　のインストール・パッケージをダウンロードしましよう． このとき，Pythonのバージョンは**3.x**を選択してください． インストールを始める前に，ファイルをインストールするためのフォルダを作成します． 大学で環境を構築する場合は，**Hドライブ** に，**MyPython** という名前でフォルダを作成してください． それでは，インストーラを実行しましょう． **Customize installation** を選択し， パッケージ管理システムの **pip** が同時にインストールされることを確認してください． [![Image from Gyazo](https://i.gyazo.com/e1fc572f43e771cb3901a76e927a84bd.png)](https://gyazo.com/e1fc572f43e771cb3901a76e927a84bd) [![Image from Gyazo](https://i.gyazo.com/294b8b48f53df91303d1c26bfaf7ada8.png)](https://gyazo.com/294b8b48f53df91303d1c26bfaf7ada8) このとき，インストールするフォルダは，上記で作成した**H:\MyPython**とすることに注意してください． [!" />
+ニューロン ニューロン（神経細胞）は，動物の神経を構成する細胞であり，電気的に情報を伝える役割を担っています． 入力部分が樹状突起，伝送路が軸索，出力が軸索末端となっており，他のニューロンからの伝わった刺激（電気パルス）を 変化させて次のニューロンに伝えるという仕組みになっています． 人間の脳は100億から1000億のニューロンが存在すると考えられており， 立体的で複雑な回路網が形成されているそうです． このニューロンの仕組みの数式モデルが 形式ニューロン であり， 後に発展するディープラーニングの基礎となっています．
+Google Colaboratoryの基本 ブラウザでPythonの実装が可能なGoogle Colaboratoryを利用します．
+ノートブックの作成 Google Colaboratoryにアクセスしたら，ノートブックを新規作成します． ノートブックを作成したら，ノートブックのタイトル（ファイル名）を設定します． 今回のタイトルは「chapter1.ipynb」としましょう．
+Colabの使い方 Colabではコードセルと呼ばれる入力フィールドにPythonのコードを入力します． コードセルを増やして，1&#43;2，2*3，print(&quot;Hello World!&quot;)と入力してみましょう． 入力したらコードセルの左端にある「セルを実行」をクリックします． 実行するとコードセルの実行結果である3，6，Hello World!が出力されることが確認できます． printは文字を出力するためのPythonの命令文です． このように，適宜，コードセルを増やしながら，Pythonのコードを追加で記述して行きます．
+ライブラリのインストール Google Colaboratoryではpipコマンドを利用して，ライブラリをインストールすることが可能です． ここでは，ディープラーニングのライブラリであるPytorch をインストールしてみます．
+!pip install torch !pip install torchvision ライブラリのインポート インストールしたPyTorchをインポートします． インポートとは，プログラムで該当のライブラリを利用可能な状態にすることです． 下記のコードを入力したら，Run ボタンをクリックします（Shift &#43; EnterでもOK）．" />
 
 
 
@@ -312,15 +318,15 @@ Pythonで実装が可能であり，下記の特徴があります．
 <h2 id="ライブラリのインストール">ライブラリのインストール</h2>
 <p>Google Colaboratoryでは<code>pip</code>コマンドを利用して，ライブラリをインストールすることが可能です．
 ここでは，ディープラーニングのライブラリである<a href="https://pytorch.org/">Pytorch</a> をインストールしてみます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install torch
-!pip install torchvision
-</code></pre></div><p><a href="https://gyazo.com/23c454c5390791d97d6a0568069f730e"><img src="https://i.gyazo.com/23c454c5390791d97d6a0568069f730e.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>!pip install torch
+</span></span><span style="display:flex;"><span>!pip install torchvision
+</span></span></code></pre></div><p><a href="https://gyazo.com/23c454c5390791d97d6a0568069f730e"><img src="https://i.gyazo.com/23c454c5390791d97d6a0568069f730e.png" alt="Image from Gyazo"></a></p>
 <h2 id="ライブラリのインポート">ライブラリのインポート</h2>
 <p>インストールしたPyTorchをインポートします．
 インポートとは，プログラムで該当のライブラリを利用可能な状態にすることです．
 下記のコードを入力したら，<strong>Run</strong> ボタンをクリックします（Shift + EnterでもOK）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
-</code></pre></div><h2 id="テンソルの演算">テンソルの演算</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span></code></pre></div><h2 id="テンソルの演算">テンソルの演算</h2>
 <p>PyTorchでは <strong>テンソル</strong> と呼ばれるデータ型を利用して，ニューラルネットワークの情報伝達を表現します．
 ここでは，テンソルの基本的な使い方を学びます．</p>
 <h3 id="テンソルの作成">テンソルの作成</h3>
@@ -333,29 +339,29 @@ Pythonで実装が可能であり，下記の特徴があります．
 \begin{array}{ccc}
 0 &amp; 1 &amp; 2
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
-<span style="color:#66d9ef">print</span>(t)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
-</code></pre></div><p><strong>2次元のテンソル（行列）</strong> を作成してみます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
+</span></span><span style="display:flex;"><span>print(t)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
+</span></span></code></pre></div><p><strong>2次元のテンソル（行列）</strong> を作成してみます．
 2次元のテンソルは，複数のベクトルを組み合わせて表現します．
 ここでは，$(0,1,2)$と$(3,4,5)$の2つのベクトルを組み合わせます．</p>
 <p>$$
 \left(
 \begin{array}{ccc}
-0 &amp; 1 &amp; 2 \\\<br>
+0 &amp; 1 &amp; 2 \\\
 3 &amp; 4 &amp; 5<br>
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]])
-<span style="color:#66d9ef">print</span>(t)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>],
-        [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]])
-</code></pre></div><h3 id="テンソルの転置">テンソルの転置</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]])
+</span></span><span style="display:flex;"><span>print(t)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]])
+</span></span></code></pre></div><h3 id="テンソルの転置">テンソルの転置</h3>
 <p>テンソルの軸を<code>transpose()</code>で入れ替えます（行列の転置）．
 引数は入れ替える次元を指定します．
 ここでは，<code>t</code>は2次元配列と同じ構造であるため，
@@ -363,104 +369,104 @@ tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</sp
 <p>$$
 \left(
 \begin{array}{ccc}
-0 &amp; 1 &amp; 2 \\\<br>
+0 &amp; 1 &amp; 2 \\\
 3 &amp; 4 &amp; 5<br>
 \end{array}
 \right)^T =
 \left(
 \begin{array}{ccc}
-0 &amp; 3 \\\<br>
-1 &amp; 4 \\\<br>
+0 &amp; 3 \\\
+1 &amp; 4 \\\
 2 &amp; 5
 \end{array}
 \right)
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>],
-        [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>],
-        [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>]])
-</code></pre></div><h3 id="テンソルの加算">テンソルの加算</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>t<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>]])
+</span></span></code></pre></div><h3 id="テンソルの加算">テンソルの加算</h3>
 <p>テンソルとスカラ値の加算を<code>add()</code>で求めます．
 テンソルの各成分にスカラ値が加算されます．</p>
 <p>$$
 \left(
 \begin{array}{ccc}
-0 &amp; 1 &amp; 2 \\\<br>
+0 &amp; 1 &amp; 2 \\\
 3 &amp; 4 &amp; 5
 \end{array}
 \right) + 1 = \left(
 \begin{array}{ccc}
-1 &amp; 2 &amp; 3 \\\<br>
+1 &amp; 2 &amp; 3 \\\
 4 &amp; 5 &amp; 6
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">torch<span style="color:#f92672">.</span>add(t, <span style="color:#ae81ff">1</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-tensor([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>],
-        [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]])
-</code></pre></div><p>テンソル同士の加算も<code>add()</code>で求めることができます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>add(t, <span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>tensor([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>]])
+</span></span></code></pre></div><p>テンソル同士の加算も<code>add()</code>で求めることができます．
 テンソルの一致する$(i,j)$成分同士が加算されます．</p>
 <p>$$
 \left(
 \begin{array}{ccc}
-0 &amp; 1 &amp; 2 \\\<br>
+0 &amp; 1 &amp; 2 \\\
 3 &amp; 4 &amp; 5
 \end{array}
 \right) +
 \left(
 \begin{array}{ccc}
-0 &amp; 1 &amp; 2 \\\<br>
+0 &amp; 1 &amp; 2 \\\
 3 &amp; 4 &amp; 5
 \end{array}
 \right) =
 \left(
 \begin{array}{ccc}
-0 &amp; 2 &amp; 4 \\\<br>
+0 &amp; 2 &amp; 4 \\\
 6 &amp; 8 &amp; 10
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">torch<span style="color:#f92672">.</span>add(t, t)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>],
-        [<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">10</span>]])
-</code></pre></div><h3 id="テンソルの乗算">テンソルの乗算</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>add(t, t)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">10</span>]])
+</span></span></code></pre></div><h3 id="テンソルの乗算">テンソルの乗算</h3>
 <p>テンソルとスカラ値の乗算を<code>mul()</code>で求めます．
 テンソルの各成分にスカラ値が乗算されます．</p>
 <p>$$
 \left(
 \begin{array}{ccc}
-0 &amp; 1 &amp; 2 \\\<br>
+0 &amp; 1 &amp; 2 \\\
 3 &amp; 4 &amp; 5
 \end{array}
 \right) \times 2 = \left(
 \begin{array}{ccc}
-0 &amp; 2 &amp; 4 \\\<br>
+0 &amp; 2 &amp; 4 \\\
 6 &amp; 8 &amp; 10
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">torch<span style="color:#f92672">.</span>mul(t, <span style="color:#ae81ff">2</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-tensor([[ <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">2</span>,  <span style="color:#ae81ff">4</span>],
-        [ <span style="color:#ae81ff">6</span>,  <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">10</span>]])
-</code></pre></div><p>テンソルとベクトルの内積を<code>mv()</code>で求めます．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>mul(t, <span style="color:#ae81ff">2</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>tensor([[ <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">2</span>,  <span style="color:#ae81ff">4</span>],
+</span></span><span style="display:flex;"><span>        [ <span style="color:#ae81ff">6</span>,  <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">10</span>]])
+</span></span></code></pre></div><p>テンソルとベクトルの内積を<code>mv()</code>で求めます．</p>
 <p>$$
 t_1 = \left(
 \begin{array}{ccc}
-0 &amp; 1 &amp; 2 \\\<br>
+0 &amp; 1 &amp; 2 \\\
 3 &amp; 4 &amp; 5
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
 <p>$$
 t_2 = \left(
 \begin{array}{ccc}
 2 &amp; 2 &amp; 2
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
 <p>$$
 t_1 \times t_2 = \left(
@@ -471,58 +477,58 @@ t_1 \times t_2 = \left(
 \begin{array}{ccc}
 6 &amp; 24
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t1 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]])
-t2 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>])
-torch<span style="color:#f92672">.</span>mv(t1, t2)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-tensor([ <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">24</span>])
-</code></pre></div><p>テンソル同士の内積を<code>mm()</code>で求めます．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>t1 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]])
+</span></span><span style="display:flex;"><span>t2 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>])
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>mv(t1, t2)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>tensor([ <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">24</span>])
+</span></span></code></pre></div><p>テンソル同士の内積を<code>mm()</code>で求めます．</p>
 <p>$$
 t_3 = \left(
 \begin{array}{ccc}
-1 &amp; 1 \\\<br>
-2 &amp; 2 \\\<br>
+1 &amp; 1 \\\
+2 &amp; 2 \\\
 3 &amp; 3
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
 <p>$$
 t_1 \times t_3 = \left(
 \begin{array}{ccc}
-0 \cdot 1 + 1 \cdot 2 + 2 \cdot 3 &amp; 0 \cdot 1 + 1 \cdot 2 + 2 \cdot 3 \\\<br>
+0 \cdot 1 + 1 \cdot 2 + 2 \cdot 3 &amp; 0 \cdot 1 + 1 \cdot 2 + 2 \cdot 3 \\\
 3 \cdot 1 + 4 \cdot 2 + 5 \cdot 3 &amp; 3 \cdot 1 + 4 \cdot 2 + 5 \cdot 3
 \end{array}
 \right) = \left(
 \begin{array}{ccc}
-8 &amp; 8 \\\<br>
+8 &amp; 8 \\\
 26 &amp; 26
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t3 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>]])
-torch<span style="color:#f92672">.</span>mm(t1, t3)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-tensor([[ <span style="color:#ae81ff">8</span>,  <span style="color:#ae81ff">8</span>],
-        [<span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">26</span>]])
-</code></pre></div><h2 id="テンソルの形状">テンソルの形状</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>t3 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>]])
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>mm(t1, t3)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>tensor([[ <span style="color:#ae81ff">8</span>,  <span style="color:#ae81ff">8</span>],
+</span></span><span style="display:flex;"><span>        [<span style="color:#ae81ff">26</span>, <span style="color:#ae81ff">26</span>]])
+</span></span></code></pre></div><h2 id="テンソルの形状">テンソルの形状</h2>
 <p>テンソルの形状を<code>shape</code>で確認します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(t1<span style="color:#f92672">.</span>shape)
-<span style="color:#66d9ef">print</span>(t2<span style="color:#f92672">.</span>shape)
-<span style="color:#66d9ef">print</span>(t3<span style="color:#f92672">.</span>shape)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>]) <span style="color:#75715e"># 2次元テンソル（行列）</span>
-torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>]) <span style="color:#75715e"># 1次元テンソル（ベクトル）</span>
-torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>]) <span style="color:#75715e"># 2次元テンソル（行列）</span>
-</code></pre></div><h2 id="テンソルのデータ型">テンソルのデータ型</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(t1<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span>print(t2<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span>print(t3<span style="color:#f92672">.</span>shape)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>]) <span style="color:#75715e"># 2次元テンソル（行列）</span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>]) <span style="color:#75715e"># 1次元テンソル（ベクトル）</span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">2</span>]) <span style="color:#75715e"># 2次元テンソル（行列）</span>
+</span></span></code></pre></div><h2 id="テンソルのデータ型">テンソルのデータ型</h2>
 <p>テンソルのデータ型を<code>type()</code>で確認します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>((torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]))<span style="color:#f92672">.</span>type())
-<span style="color:#66d9ef">print</span>((torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.2</span>]))<span style="color:#f92672">.</span>type())
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-torch<span style="color:#f92672">.</span>LongTensor <span style="color:#75715e">#64ビット符号付き整数</span>
-torch<span style="color:#f92672">.</span>FloatTensor <span style="color:#75715e">#32ビット浮動小数点</span>
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print((torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]))<span style="color:#f92672">.</span>type())
+</span></span><span style="display:flex;"><span>print((torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.2</span>]))<span style="color:#f92672">.</span>type())
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>LongTensor <span style="color:#75715e">#64ビット符号付き整数</span>
+</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>FloatTensor <span style="color:#75715e">#32ビット浮動小数点</span>
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
