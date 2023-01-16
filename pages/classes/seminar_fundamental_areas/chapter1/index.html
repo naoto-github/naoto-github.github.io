@@ -87,15 +87,19 @@
 
 
 
-  <meta property="og:description" content="オープンデータとは 平成２４年，日本において公共データの活用促進を目的として電子行政オープンデータ戦略が策定されました． この戦略では，「公共データ活用の推進」「公共データ活用のための環境整備」が具体的な施策とされており， これらの施策の鍵となるのがオープンデータです．
+  <meta property="og:description" content="オープンデータとは平成２４年，日本において公共データの活用促進を目的として電子行政オープンデータ戦略が策定されました． この戦略では，「公共データ活用の推進」「公共データ活用のための環境整備」が具体的な施策とされており， これらの施策の鍵となるのがオープンデータです．
 オープンデータは下記に従うことを条件としています．
-機械判読に適したデータ形式 二次利用が可能な利用ルールで公開 つまり，行政（地方自治体）が保持している統計データや施設データなどを， 誰もが再利用や再頒布ができることを条件に，コンピュータに扱いやすい形式で公開されたデータをオープンデータと呼びます． 企業や個人のデータでも上記に従えばオープンデータですが，ここでは，行政のデータにターゲットを絞ります（オープンガバメントデータと呼ぶこともあります）． 一般に，再利用や再頒布が可能なソフトウェアのことはオープンソースと呼ばれることも合わせて覚えておきましょう．
+ 機械判読に適したデータ形式 二次利用が可能な利用ルールで公開  つまり，行政（地方自治体）が保持している統計データや施設データなどを， 誰もが再利用や再頒布ができることを条件に，コンピュータに扱いやすい形式で公開されたデータをオープンデータと呼びます． 企業や個人のデータでも上記に従えばオープンデータですが，ここでは，行政のデータにターゲットを絞ります（オープンガバメントデータと呼ぶこともあります）． 一般に，再利用や再頒布が可能なソフトウェアのことはオープンソースと呼ばれることも合わせて覚えておきましょう．
 ここで，ポイントとなるのは，「機械判読に適したデータとは何か？」ということです． 一般に小規模のデータを管理するときには，エクセル を採用することが多いです． 文化情報学部では，１年後期に開講されている「コンピュータと情報 Ⅱ」において，エクセルの使い方を学習します． たしかに，エクセルは，デザイン（書式）や関数など様々な機能を提供しており，人間にとってはとても便利なソフトウェアです． しかし，これらのデータをコンピュータで処理しようとするとき，これらの機能が却って冗長となり，コンピュータによる判読が難しい状況が起こります．
 具体例をみてみましょう． まずは，エクセル形式（.xlsx）で表現された日進市の人口のデータ（jinkou.xlsx）です． タイトル部分に太字，表部分に罫線などのデザイン（書式）が設定されていることが分かります． これらは，エクセルを利用している人間が見るためのデザインであり，データの本質ではありません． また，エクセル形式の実態は，XMLや画像などで構成されるZIPファイルであり， エクセルなどの専用のソフトウェアでしか開くことはできません．
+
 次に，CSV形式（.csv）で表現された日進市の人口のデータ（jinkou.csv）です． CSVは「しーえすぶい」と読み，オープンデータで頻繁に採用されるデータ形式です． データが「,（カンマ）」で区切られて表現されるだけで，エクセルのようなデザイン（書式）は含みません． このため，一般的なエディタ（メモ帳）でも開くことができます（エクセルでも開けます）． エクセル形式に比べると，人間にとっては理解しにくいですが，コンピュータの判読には優れています．
 ﻿町名,男,女,総数,世帯数 赤池町,1693,1647,3340,1315 浅田町,2593,2431,5024,2086 梅森町,1017,1034,2051,876 野方町,171,173,344,143 蟹甲町,171,200,371,152 折戸町,1404,1381,2785,1073 今回の授業では，日進市のオープンデータポータルサイトで公開されている CSV形式のデータをプログラミング言語のPythonで可視化することを目的とします．
-公開されているオープンデータ オープンデータはウェブで公開されるのが一般的であり， 総務省が運用するData.go.jpがオープンデータのカタログサイトとして知られています． このサイトでは，国土交通省，経済産業省などの組織別のデータセット，また，行財政や観光などのトピックに関するデータ・セットが提供されています． 例えば，観光 というキーワードで検索すると，「平成28年度 国際経済調査事業報告書」，「平成28年度 商店街インバウンド・空き店舗実態調査」などのデータセットがヒットします（平成30年2月28日現在）． しかし，残念ながら，これらの多くはPDF形式での提供であり，「機械判読に適したデータ」ではありません． 現状では，まだまだオープンデータの整備は不十分と言えるでしょう．
+公開されているオープンデータオープンデータはウェブで公開されるのが一般的であり， 総務省が運用するData.go.jpがオープンデータのカタログサイトとして知られています． このサイトでは，国土交通省，経済産業省などの組織別のデータセット，また，行財政や観光などのトピックに関するデータ・セットが提供されています． 例えば，観光 というキーワードで検索すると，「平成28年度 国際経済調査事業報告書」，「平成28年度 商店街インバウンド・空き店舗実態調査」などのデータセットがヒットします（平成30年2月28日現在）． しかし，残念ながら，これらの多くはPDF形式での提供であり，「機械判読に適したデータ」ではありません． 現状では，まだまだオープンデータの整備は不十分と言えるでしょう．
 この他，内閣府のまち・ひと・しごと創生本部が提供している地域経済分析システム（RESAS）が注目されています． RESAS（りーさす）は，総務省が提供している統計情報 e-Statのオープンデータなどを可視化するためのシステムです． 地方自治体の現状や課題を発見することを目的としており，情報を直感的にわかりやすく見える化することができます． 例えば，2015年の愛知県名古屋市の 人口マップ を下記のように可視化することができます． マウスで各市区町村をホバーすると人口が表示され，名古屋市千種区は164,696人であることが分かります． また，人口推移や人口ピラミッドなどのグラフも簡単に描画することができます． このようにデータを可視化して，分かりやすく伝えることも，オープンデータの活用に必要な要素です．
+
+
+
 愛知県下においては，オープンデータに関する取り組みを精力的に進める自治体の一つに 日進市 があります．日進市のウェブサイトでは，オープンデータポータルサイトを開設しており， 住民向け情報（暮らしの情報），事業者向け情報，行政活動情報，観光情報の区分に分けてオープンデータを公開しています． また，平成28年度には，瀬戸市，尾張旭市，豊明市，日進市，みよし市，長久手市，東郷町の7市町で 「7市町オープンデータ検討会」を組織し，連携してオープンデータの整備を始めています． これまでに，7市町が共通のフォーマットで，子育て支援施設，教育機関などのデータを各自治体のウェブサイトで公開しています． 今回は日進市のオープンデータポータルサイトで公開されている 人口データ を加工して利用します． 下記のリンクをダウンロードして確認してください．" />
 
 
@@ -111,15 +115,19 @@
 
 
 
-  <meta name="twitter:description" content="オープンデータとは 平成２４年，日本において公共データの活用促進を目的として電子行政オープンデータ戦略が策定されました． この戦略では，「公共データ活用の推進」「公共データ活用のための環境整備」が具体的な施策とされており， これらの施策の鍵となるのがオープンデータです．
+  <meta name="twitter:description" content="オープンデータとは平成２４年，日本において公共データの活用促進を目的として電子行政オープンデータ戦略が策定されました． この戦略では，「公共データ活用の推進」「公共データ活用のための環境整備」が具体的な施策とされており， これらの施策の鍵となるのがオープンデータです．
 オープンデータは下記に従うことを条件としています．
-機械判読に適したデータ形式 二次利用が可能な利用ルールで公開 つまり，行政（地方自治体）が保持している統計データや施設データなどを， 誰もが再利用や再頒布ができることを条件に，コンピュータに扱いやすい形式で公開されたデータをオープンデータと呼びます． 企業や個人のデータでも上記に従えばオープンデータですが，ここでは，行政のデータにターゲットを絞ります（オープンガバメントデータと呼ぶこともあります）． 一般に，再利用や再頒布が可能なソフトウェアのことはオープンソースと呼ばれることも合わせて覚えておきましょう．
+ 機械判読に適したデータ形式 二次利用が可能な利用ルールで公開  つまり，行政（地方自治体）が保持している統計データや施設データなどを， 誰もが再利用や再頒布ができることを条件に，コンピュータに扱いやすい形式で公開されたデータをオープンデータと呼びます． 企業や個人のデータでも上記に従えばオープンデータですが，ここでは，行政のデータにターゲットを絞ります（オープンガバメントデータと呼ぶこともあります）． 一般に，再利用や再頒布が可能なソフトウェアのことはオープンソースと呼ばれることも合わせて覚えておきましょう．
 ここで，ポイントとなるのは，「機械判読に適したデータとは何か？」ということです． 一般に小規模のデータを管理するときには，エクセル を採用することが多いです． 文化情報学部では，１年後期に開講されている「コンピュータと情報 Ⅱ」において，エクセルの使い方を学習します． たしかに，エクセルは，デザイン（書式）や関数など様々な機能を提供しており，人間にとってはとても便利なソフトウェアです． しかし，これらのデータをコンピュータで処理しようとするとき，これらの機能が却って冗長となり，コンピュータによる判読が難しい状況が起こります．
 具体例をみてみましょう． まずは，エクセル形式（.xlsx）で表現された日進市の人口のデータ（jinkou.xlsx）です． タイトル部分に太字，表部分に罫線などのデザイン（書式）が設定されていることが分かります． これらは，エクセルを利用している人間が見るためのデザインであり，データの本質ではありません． また，エクセル形式の実態は，XMLや画像などで構成されるZIPファイルであり， エクセルなどの専用のソフトウェアでしか開くことはできません．
+
 次に，CSV形式（.csv）で表現された日進市の人口のデータ（jinkou.csv）です． CSVは「しーえすぶい」と読み，オープンデータで頻繁に採用されるデータ形式です． データが「,（カンマ）」で区切られて表現されるだけで，エクセルのようなデザイン（書式）は含みません． このため，一般的なエディタ（メモ帳）でも開くことができます（エクセルでも開けます）． エクセル形式に比べると，人間にとっては理解しにくいですが，コンピュータの判読には優れています．
 ﻿町名,男,女,総数,世帯数 赤池町,1693,1647,3340,1315 浅田町,2593,2431,5024,2086 梅森町,1017,1034,2051,876 野方町,171,173,344,143 蟹甲町,171,200,371,152 折戸町,1404,1381,2785,1073 今回の授業では，日進市のオープンデータポータルサイトで公開されている CSV形式のデータをプログラミング言語のPythonで可視化することを目的とします．
-公開されているオープンデータ オープンデータはウェブで公開されるのが一般的であり， 総務省が運用するData.go.jpがオープンデータのカタログサイトとして知られています． このサイトでは，国土交通省，経済産業省などの組織別のデータセット，また，行財政や観光などのトピックに関するデータ・セットが提供されています． 例えば，観光 というキーワードで検索すると，「平成28年度 国際経済調査事業報告書」，「平成28年度 商店街インバウンド・空き店舗実態調査」などのデータセットがヒットします（平成30年2月28日現在）． しかし，残念ながら，これらの多くはPDF形式での提供であり，「機械判読に適したデータ」ではありません． 現状では，まだまだオープンデータの整備は不十分と言えるでしょう．
+公開されているオープンデータオープンデータはウェブで公開されるのが一般的であり， 総務省が運用するData.go.jpがオープンデータのカタログサイトとして知られています． このサイトでは，国土交通省，経済産業省などの組織別のデータセット，また，行財政や観光などのトピックに関するデータ・セットが提供されています． 例えば，観光 というキーワードで検索すると，「平成28年度 国際経済調査事業報告書」，「平成28年度 商店街インバウンド・空き店舗実態調査」などのデータセットがヒットします（平成30年2月28日現在）． しかし，残念ながら，これらの多くはPDF形式での提供であり，「機械判読に適したデータ」ではありません． 現状では，まだまだオープンデータの整備は不十分と言えるでしょう．
 この他，内閣府のまち・ひと・しごと創生本部が提供している地域経済分析システム（RESAS）が注目されています． RESAS（りーさす）は，総務省が提供している統計情報 e-Statのオープンデータなどを可視化するためのシステムです． 地方自治体の現状や課題を発見することを目的としており，情報を直感的にわかりやすく見える化することができます． 例えば，2015年の愛知県名古屋市の 人口マップ を下記のように可視化することができます． マウスで各市区町村をホバーすると人口が表示され，名古屋市千種区は164,696人であることが分かります． また，人口推移や人口ピラミッドなどのグラフも簡単に描画することができます． このようにデータを可視化して，分かりやすく伝えることも，オープンデータの活用に必要な要素です．
+
+
+
 愛知県下においては，オープンデータに関する取り組みを精力的に進める自治体の一つに 日進市 があります．日進市のウェブサイトでは，オープンデータポータルサイトを開設しており， 住民向け情報（暮らしの情報），事業者向け情報，行政活動情報，観光情報の区分に分けてオープンデータを公開しています． また，平成28年度には，瀬戸市，尾張旭市，豊明市，日進市，みよし市，長久手市，東郷町の7市町で 「7市町オープンデータ検討会」を組織し，連携してオープンデータの整備を始めています． これまでに，7市町が共通のフォーマットで，子育て支援施設，教育機関などのデータを各自治体のウェブサイトで公開しています． 今回は日進市のオープンデータポータルサイトで公開されている 人口データ を加工して利用します． 下記のリンクをダウンロードして確認してください．" />
 
 
@@ -221,14 +229,14 @@ CSVは「しーえすぶい」と読み，オープンデータで頻繁に採�
 データが「,（カンマ）」で区切られて表現されるだけで，エクセルのようなデザイン（書式）は含みません．
 このため，一般的なエディタ（メモ帳）でも開くことができます（エクセルでも開けます）．
 エクセル形式に比べると，人間にとっては理解しにくいですが，コンピュータの判読には優れています．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>﻿町名,男,女,総数,世帯数
-</span></span><span style="display:flex;"><span>赤池町,1693,1647,3340,1315
-</span></span><span style="display:flex;"><span>浅田町,2593,2431,5024,2086
-</span></span><span style="display:flex;"><span>梅森町,1017,1034,2051,876
-</span></span><span style="display:flex;"><span>野方町,171,173,344,143
-</span></span><span style="display:flex;"><span>蟹甲町,171,200,371,152
-</span></span><span style="display:flex;"><span>折戸町,1404,1381,2785,1073
-</span></span></code></pre></div><p>今回の授業では，<a href="http://www.city.nisshin.lg.jp/opendata/index.html">日進市のオープンデータポータルサイト</a>で公開されている
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">﻿町名,男,女,総数,世帯数
+赤池町,1693,1647,3340,1315
+浅田町,2593,2431,5024,2086
+梅森町,1017,1034,2051,876
+野方町,171,173,344,143
+蟹甲町,171,200,371,152
+折戸町,1404,1381,2785,1073
+</code></pre></div><p>今回の授業では，<a href="http://www.city.nisshin.lg.jp/opendata/index.html">日進市のオープンデータポータルサイト</a>で公開されている
 CSV形式のデータをプログラミング言語のPythonで可視化することを目的とします．</p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   公開されているオープンデータ
@@ -280,69 +288,69 @@ RESAS（りーさす）は，総務省が提供している<a href="https://www.
 最初にグラフ描画ライブラリの<a href="https://matplotlib.org/">matplotlib</a>を
 日本語化する<a href="https://pypi.org/project/japanize-matplotlib/">japanize-matploblib</a>を <strong>pipコマンド</strong> でインストールします．
 先頭に「<code>!</code>」を付けることに注意してください．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>!pip install japanize-matplotlib
-</span></span></code></pre></div><p>上記の<a href="https://matplotlib.org/">matplotlib</a>に加えて，
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install japanize-matplotlib
+</code></pre></div><p>上記の<a href="https://matplotlib.org/">matplotlib</a>に加えて，
 データ解析ライブラリである<a href="https://pandas.pydata.org/">pandas</a>をインポートします．
 <code>pyplot</code>の別名として<code>plt</code>，<code>pandas</code>の別名として<code>pd</code>を指定しています．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> japanize_matplotlib
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pandas <span style="color:#66d9ef">as</span> pd
-</span></span></code></pre></div><h2 id="データフレームpandas">データフレーム（pandas）</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> japanize_matplotlib
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+</code></pre></div><h2 id="データフレームpandas">データフレーム（pandas）</h2>
 <p><a href="https://pandas.pydata.org/">pandas</a>を利用して，
 CSV形式のオープンデータ（<a href="https://mukai-lab.info/classes/seminar_fundamental_areas/csv/nisshin_population.csv">nisshin_population.csv</a>）を読み込みます．
 読み込まれたデータは <strong>データフレーム</strong> と呼ばれる形式で保持されます．
 ここでは，<code>df</code>という変数（データを記録する箱）にデータフレームが代入されます．
 データフレームは2次元の表であり，エクセルのワークシートと同じような概念です．
 行番号として$0,1,\cdots,100$，列ラベルとして<code>年齢</code>，<code>合計</code>，<code>男</code> などが設定されています．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># nisshin_population.csv</span>
-</span></span><span style="display:flex;"><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://mukai-lab.info/classes/seminar_fundamental_areas/csv/nisshin_population.csv&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># データフレームの生成</span>
-</span></span><span style="display:flex;"><span>df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(url)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># HTMLで表示(=display(df))</span>
-</span></span><span style="display:flex;"><span>df
-</span></span></code></pre></div><p><a href="https://gyazo.com/2bc704f6055ffeb0f6bce6a02848d39e"><img src="https://i.gyazo.com/2bc704f6055ffeb0f6bce6a02848d39e.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># nisshin_population.csv</span>
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://mukai-lab.info/classes/seminar_fundamental_areas/csv/nisshin_population.csv&#34;</span>
+
+<span style="color:#75715e"># データフレームの生成</span>
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(url)
+
+<span style="color:#75715e"># HTMLで表示(=display(df))</span>
+df
+</code></pre></div><p><a href="https://gyazo.com/2bc704f6055ffeb0f6bce6a02848d39e"><img src="https://i.gyazo.com/2bc704f6055ffeb0f6bce6a02848d39e.png" alt="Image from Gyazo"></a></p>
 <h2 id="データの抽出">データの抽出</h2>
 <p>列ラベルを指定して，データを抽出するには，<code>df[列ラベル]</code>と記述します．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df[<span style="color:#e6db74">&#34;男&#34;</span>]
-</span></span></code></pre></div><p><a href="https://gyazo.com/795cc3968da5fe88fff10dfcfeac5da4"><img src="https://i.gyazo.com/795cc3968da5fe88fff10dfcfeac5da4.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[<span style="color:#e6db74">&#34;男&#34;</span>]
+</code></pre></div><p><a href="https://gyazo.com/795cc3968da5fe88fff10dfcfeac5da4"><img src="https://i.gyazo.com/795cc3968da5fe88fff10dfcfeac5da4.png" alt="Image from Gyazo"></a></p>
 <p>複数の列ラベルを指定して，データを抽出するには，<code>df[列ラベル1,列ラベル2,...]</code>と記述します．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df[[<span style="color:#e6db74">&#34;年齢&#34;</span>,<span style="color:#e6db74">&#34;男&#34;</span>,<span style="color:#e6db74">&#34;女&#34;</span>]]
-</span></span></code></pre></div><p><a href="https://gyazo.com/3491b9f8cb10eec757f47ea67285fd85"><img src="https://i.gyazo.com/3491b9f8cb10eec757f47ea67285fd85.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[[<span style="color:#e6db74">&#34;年齢&#34;</span>,<span style="color:#e6db74">&#34;男&#34;</span>,<span style="color:#e6db74">&#34;女&#34;</span>]]
+</code></pre></div><p><a href="https://gyazo.com/3491b9f8cb10eec757f47ea67285fd85"><img src="https://i.gyazo.com/3491b9f8cb10eec757f47ea67285fd85.png" alt="Image from Gyazo"></a></p>
 <p>行番号を指定して，データを抽出するには，<code>df[先頭の行番号:後尾の行番号]</code>と記述します．
 このとき抽出されるのは，後尾の行番号は含まず，一つ前のデータまでが含まれることに注意してください．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df[<span style="color:#ae81ff">18</span>:<span style="color:#ae81ff">22</span>]
-</span></span></code></pre></div><p><a href="https://gyazo.com/277a96b080b2ccbf992ff7168905f4c7"><img src="https://i.gyazo.com/277a96b080b2ccbf992ff7168905f4c7.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[<span style="color:#ae81ff">18</span>:<span style="color:#ae81ff">22</span>]
+</code></pre></div><p><a href="https://gyazo.com/277a96b080b2ccbf992ff7168905f4c7"><img src="https://i.gyazo.com/277a96b080b2ccbf992ff7168905f4c7.png" alt="Image from Gyazo"></a></p>
 <p>条件を設定してデータを抽出することができます．
 例えば，<code>年齢</code>が<code>20</code>のデータを抽出するには下記のように記述します．
 ここで，<code>==</code>は左辺と右辺が一致することを意味します．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df[df[<span style="color:#e6db74">&#34;年齢&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">20</span>]
-</span></span></code></pre></div><p><a href="https://gyazo.com/1a59b6213358555ab13be35b571a3ee1"><img src="https://i.gyazo.com/1a59b6213358555ab13be35b571a3ee1.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[df[<span style="color:#e6db74">&#34;年齢&#34;</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">20</span>]
+</code></pre></div><p><a href="https://gyazo.com/1a59b6213358555ab13be35b571a3ee1"><img src="https://i.gyazo.com/1a59b6213358555ab13be35b571a3ee1.png" alt="Image from Gyazo"></a></p>
 <p>複数の条件を設定してデータを抽出することができます．
 例えば，<code>年齢</code>が<code>18</code>以上，<code>21</code>以下であるデータを抽出するには下記のように記述します．
 ここで，<code>&gt;=</code>は「左辺は右辺以上である」，<code>&lt;=</code>は「左辺は右辺以下である」ことを意味します．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df[(df[<span style="color:#e6db74">&#34;年齢&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">18</span>) <span style="color:#f92672">&amp;</span> (df[<span style="color:#e6db74">&#34;年齢&#34;</span>] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">21</span>)]
-</span></span></code></pre></div><p><a href="https://gyazo.com/c2ae60d1ec316caabc0366cfe7caa26b"><img src="https://i.gyazo.com/c2ae60d1ec316caabc0366cfe7caa26b.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[(df[<span style="color:#e6db74">&#34;年齢&#34;</span>] <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">18</span>) <span style="color:#f92672">&amp;</span> (df[<span style="color:#e6db74">&#34;年齢&#34;</span>] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">21</span>)]
+</code></pre></div><p><a href="https://gyazo.com/c2ae60d1ec316caabc0366cfe7caa26b"><img src="https://i.gyazo.com/c2ae60d1ec316caabc0366cfe7caa26b.png" alt="Image from Gyazo"></a></p>
 <h2 id="グラフの作成">グラフの作成</h2>
 <p><a href="https://matplotlib.org/">matplotlib</a>を利用して，データをグラフで可視化します．
 棒グラフを作成するには<code>df.plot.bar()</code>を用います．
 ここで，<code>x</code>はX軸，<code>y</code>はY軸，<code>figsize</code>はグラフの大きさを意味します．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>bar(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;年齢&#34;</span>, y<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;女&#34;</span>], figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
-</span></span></code></pre></div><p><a href="https://gyazo.com/861a97a17d4664e7277872691356df18"><img src="https://i.gyazo.com/861a97a17d4664e7277872691356df18.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>bar(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;年齢&#34;</span>, y<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;女&#34;</span>], figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+</code></pre></div><p><a href="https://gyazo.com/861a97a17d4664e7277872691356df18"><img src="https://i.gyazo.com/861a97a17d4664e7277872691356df18.png" alt="Image from Gyazo"></a></p>
 <p>折れ線グラフを作成するには<code>df.plot.line()</code>を用います．
 ここでは，Y軸に<code>男</code>と<code>女</code>のデータを指定しています．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>line(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;年齢&#34;</span>, y<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;男&#34;</span>, <span style="color:#e6db74">&#34;女&#34;</span>], figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
-</span></span></code></pre></div><p><a href="https://gyazo.com/694d8c8c68d745b71614765dc3fdb9f6"><img src="https://i.gyazo.com/694d8c8c68d745b71614765dc3fdb9f6.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>line(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;年齢&#34;</span>, y<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;男&#34;</span>, <span style="color:#e6db74">&#34;女&#34;</span>], figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>))
+</code></pre></div><p><a href="https://gyazo.com/694d8c8c68d745b71614765dc3fdb9f6"><img src="https://i.gyazo.com/694d8c8c68d745b71614765dc3fdb9f6.png" alt="Image from Gyazo"></a></p>
 <p>横棒グラフを作成するには<code>df.plot.barh()</code>を用います．
 ここでは，5歳間隔で人口を集計します．
 <code>df.rolling()</code>を用いると指定した区間のデータをまとめて対象にすることができ，
 <code>sum()</code>によって対象の区間の合計を算出します．
 また，列番号に<code>[::5]</code>と指定することで，5列おきにデータが抽出されます．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>df_population <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;男&#34;</span>, <span style="color:#e6db74">&#34;女&#34;</span>]]<span style="color:#f92672">.</span>rolling(<span style="color:#ae81ff">5</span>)<span style="color:#f92672">.</span>sum() <span style="color:#75715e"># 5歳分を合計</span>
-</span></span><span style="display:flex;"><span>df_population <span style="color:#f92672">=</span> df_population[::<span style="color:#ae81ff">5</span>] <span style="color:#75715e"># 5歳間隔で抽出</span>
-</span></span><span style="display:flex;"><span>df_population[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>barh(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>)) <span style="color:#75715e"># 0歳を除く</span>
-</span></span></code></pre></div><p><a href="https://gyazo.com/ab52336c1413347e0d61a4ca72ce275a"><img src="https://i.gyazo.com/ab52336c1413347e0d61a4ca72ce275a.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_population <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;男&#34;</span>, <span style="color:#e6db74">&#34;女&#34;</span>]]<span style="color:#f92672">.</span>rolling(<span style="color:#ae81ff">5</span>)<span style="color:#f92672">.</span>sum() <span style="color:#75715e"># 5歳分を合計</span>
+df_population <span style="color:#f92672">=</span> df_population[::<span style="color:#ae81ff">5</span>] <span style="color:#75715e"># 5歳間隔で抽出</span>
+df_population[<span style="color:#ae81ff">1</span>:]<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>barh(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">8</span>)) <span style="color:#75715e"># 0歳を除く</span>
+</code></pre></div><p><a href="https://gyazo.com/ab52336c1413347e0d61a4ca72ce275a"><img src="https://i.gyazo.com/ab52336c1413347e0d61a4ca72ce275a.png" alt="Image from Gyazo"></a></p>
 <p>本日のノートブックは下記URLで確認できます．</p>
 <p><a href="https://colab.research.google.com/drive/1yI_qfbDa4_iyXxuHapWOl-4LQfjQBGp_?usp=sharing"><i class="fas fa-external-link-square-alt"></i> chapter1.ipynb</a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
