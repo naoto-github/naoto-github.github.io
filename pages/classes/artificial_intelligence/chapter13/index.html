@@ -87,7 +87,7 @@
 
 
 
-  <meta property="og:description" content="TD学習TD学習（Temporal Difference Learning） は，強化学習の手法の一つであり， 前回紹介した「状態$s_x$における価値$V(s_x)$」の更新式を一般化したものです．
+  <meta property="og:description" content="TD学習 TD学習（Temporal Difference Learning） は，強化学習の手法の一つであり， 前回紹介した「状態$s_x$における価値$V(s_x)$」の更新式を一般化したものです．
 前回の更新式を振り返りましょう． 次の式は，状態$s_x$で報酬$r$を得られたときの更新式です． この式は状態の遷移を考慮していません． このため，ランダムに状態$s_x$が選択されるときに適用します．
 $$ V&rsquo;(s_x) = (1 - \alpha) \cdot V(s_x) &#43; \alpha \cdot r $$
 次の式は，状態$s_x$から状態$s_y$に遷移したときの更新式です． 将来の状態$s_y$の価値を基に，現在の状態$s_x$の価値を算出しています（ブートストラップ型学習）． このため，$s_x \rightarrow s_y$のように状態遷移が生じるときに適用します
@@ -108,7 +108,7 @@ $$ V&rsquo;(s_x) = (1 - \alpha) \cdot V(s_x) &#43; \alpha (r &#43; \gamma \cdot 
 
 
 
-  <meta name="twitter:description" content="TD学習TD学習（Temporal Difference Learning） は，強化学習の手法の一つであり， 前回紹介した「状態$s_x$における価値$V(s_x)$」の更新式を一般化したものです．
+  <meta name="twitter:description" content="TD学習 TD学習（Temporal Difference Learning） は，強化学習の手法の一つであり， 前回紹介した「状態$s_x$における価値$V(s_x)$」の更新式を一般化したものです．
 前回の更新式を振り返りましょう． 次の式は，状態$s_x$で報酬$r$を得られたときの更新式です． この式は状態の遷移を考慮していません． このため，ランダムに状態$s_x$が選択されるときに適用します．
 $$ V&rsquo;(s_x) = (1 - \alpha) \cdot V(s_x) &#43; \alpha \cdot r $$
 次の式は，状態$s_x$から状態$s_y$に遷移したときの更新式です． 将来の状態$s_y$の価値を基に，現在の状態$s_x$の価値を算出しています（ブートストラップ型学習）． このため，$s_x \rightarrow s_y$のように状態遷移が生じるときに適用します
@@ -217,8 +217,8 @@ $$</p>
 ノートブックのタイトルは <strong>AI-13</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
 <p>ネットワーク分析のためのライブラリ<a href="https://networkx.org/documentation/stable/index.html">NetworkX</a>をインストールします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">!</span>pip install network
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span>pip install network
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   宝探しゲーム
 </h1>
 
@@ -250,65 +250,65 @@ $$</p>
 </h1>
 
 <p>ネットワーク（グラフ）を分析する<code>networkx</code>と，乱数を生成する<code>random</code>をインポートします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> networkx <span style="color:#f92672">as</span> nx
-<span style="color:#f92672">import</span> random
-</code></pre></div><p>対象のネットワーク（グラフ）を作成します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> networkx <span style="color:#66d9ef">as</span> nx
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
+</span></span></code></pre></div><p>対象のネットワーク（グラフ）を作成します．
 ノードは状態を表し$s_A, s_B, \cdots, s_J$の10種類が存在します．
 エッジは遷移可能な状態を表しています．
 例えば，状態$s_A$からは，$s_B$と$s_C$に遷移が可能です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># グラフの初期化</span>
-graph <span style="color:#f92672">=</span> nx<span style="color:#f92672">.</span>Graph()
-
-<span style="color:#75715e"># ノード</span>
-nodes <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#e6db74">&#34;I&#34;</span>, <span style="color:#e6db74">&#34;J&#34;</span>]
-graph<span style="color:#f92672">.</span>add_nodes_from(nodes)
-
-<span style="color:#75715e"># エッジ</span>
-edges <span style="color:#f92672">=</span> [(<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>), (<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>), (<span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>), (<span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>), (<span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>), (<span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>), (<span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>), (<span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;I&#34;</span>), (<span style="color:#e6db74">&#34;E&#34;</span>, <span style="color:#e6db74">&#34;J&#34;</span>)]
-graph<span style="color:#f92672">.</span>add_edges_from(edges)
-
-<span style="color:#75715e"># 描画</span>
-nx<span style="color:#f92672">.</span>draw(graph, with_labels<span style="color:#f92672">=</span>True)
-</code></pre></div><p><a href="https://gyazo.com/a9791034f9b822e94ef25325d2380939"><img src="https://i.gyazo.com/a9791034f9b822e94ef25325d2380939.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># グラフの初期化</span>
+</span></span><span style="display:flex;"><span>graph <span style="color:#f92672">=</span> nx<span style="color:#f92672">.</span>Graph()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ノード</span>
+</span></span><span style="display:flex;"><span>nodes <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#e6db74">&#34;I&#34;</span>, <span style="color:#e6db74">&#34;J&#34;</span>]
+</span></span><span style="display:flex;"><span>graph<span style="color:#f92672">.</span>add_nodes_from(nodes)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># エッジ</span>
+</span></span><span style="display:flex;"><span>edges <span style="color:#f92672">=</span> [(<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>), (<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>), (<span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>), (<span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;E&#34;</span>), (<span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>), (<span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>), (<span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>), (<span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;I&#34;</span>), (<span style="color:#e6db74">&#34;E&#34;</span>, <span style="color:#e6db74">&#34;J&#34;</span>)]
+</span></span><span style="display:flex;"><span>graph<span style="color:#f92672">.</span>add_edges_from(edges)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 描画</span>
+</span></span><span style="display:flex;"><span>nx<span style="color:#f92672">.</span>draw(graph, with_labels<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><p><a href="https://gyazo.com/a9791034f9b822e94ef25325d2380939"><img src="https://i.gyazo.com/a9791034f9b822e94ef25325d2380939.png" alt="Image from Gyazo"></a></p>
 <p>特定の状態に到達したときに得られる報酬を定義します．
 状態$s_H$に到達したときに報酬$+100$，状態$s_F$に到達したときに報酬$+30$を獲得します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 報酬</span>
-rewards <span style="color:#f92672">=</span> {
-    <span style="color:#e6db74">&#34;A&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;B&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;C&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;D&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;E&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;F&#34;</span>: <span style="color:#ae81ff">30</span>,
-    <span style="color:#e6db74">&#34;G&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;H&#34;</span>: <span style="color:#ae81ff">100</span>,
-    <span style="color:#e6db74">&#34;I&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;J&#34;</span>: <span style="color:#ae81ff">0</span>
-}
-</code></pre></div><p>ノード間の状態遷移を<code>move()</code>として定義します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 報酬</span>
+</span></span><span style="display:flex;"><span>rewards <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;A&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;B&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;C&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;D&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;E&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;F&#34;</span>: <span style="color:#ae81ff">30</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;G&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;H&#34;</span>: <span style="color:#ae81ff">100</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;I&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;J&#34;</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>ノード間の状態遷移を<code>move()</code>として定義します．
 遷移可能な状態が複数ある場合は<code>random.choice()</code>でランダムに一つを選択します．
 遷移可能な状態が存在しない$s_J$，$s_H$，$s_I$，$s_F$，$s_G$に到達した場合は，
 状態$s_A$に戻ることにします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">move</span>(state):
-
-  <span style="color:#75715e"># 現在の状態から選択可能なエッジ</span>
-  candidates <span style="color:#f92672">=</span> []
-  <span style="color:#66d9ef">for</span> edge <span style="color:#f92672">in</span> edges:
-    <span style="color:#66d9ef">if</span> edge[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> state:
-      candidates<span style="color:#f92672">.</span>append(edge)
-
-  <span style="color:#66d9ef">if</span>(len(candidates) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>):
-    <span style="color:#75715e"># 候補がなければ初期状態に戻る</span>
-    next_state <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span>
-  <span style="color:#66d9ef">else</span>:
-    <span style="color:#75715e"># ランダムに次の状態を選択</span>
-    next_state <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice(candidates)[<span style="color:#ae81ff">1</span>]
-
-  <span style="color:#75715e"># 得られる報酬</span>
-  reward <span style="color:#f92672">=</span> rewards[state]
-
-  <span style="color:#66d9ef">return</span> (next_state, reward)
-</code></pre></div><p>状態$s_A$をスタートとして，10回の状態遷移を繰り返してみます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">move</span>(state):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 現在の状態から選択可能なエッジ</span>
+</span></span><span style="display:flex;"><span>  candidates <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> edge <span style="color:#f92672">in</span> edges:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> edge[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> state:
+</span></span><span style="display:flex;"><span>      candidates<span style="color:#f92672">.</span>append(edge)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(len(candidates) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 候補がなければ初期状態に戻る</span>
+</span></span><span style="display:flex;"><span>    next_state <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># ランダムに次の状態を選択</span>
+</span></span><span style="display:flex;"><span>    next_state <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice(candidates)[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 得られる報酬</span>
+</span></span><span style="display:flex;"><span>  reward <span style="color:#f92672">=</span> rewards[state]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> (next_state, reward)
+</span></span></code></pre></div><p>状態$s_A$をスタートとして，10回の状態遷移を繰り返してみます．
 この結果，次のように状態遷移を実行したことがわかります．</p>
 <p>$$
 A \rightarrow C \rightarrow G
@@ -319,61 +319,61 @@ $$</p>
 <p>$$
 A \rightarrow B \rightarrow D \rightarrow H (+100)
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-  next_state, reward <span style="color:#f92672">=</span> move(state)
-  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{state} -&gt; {next_state} reward={reward}&#34;</span>)
-  state <span style="color:#f92672">=</span> next_state
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">A <span style="color:#f92672">-&gt;</span> C reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-C <span style="color:#f92672">-&gt;</span> G reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-G <span style="color:#f92672">-&gt;</span> A reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-A <span style="color:#f92672">-&gt;</span> C reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-C <span style="color:#f92672">-&gt;</span> F reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-F <span style="color:#f92672">-&gt;</span> A reward<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>
-A <span style="color:#f92672">-&gt;</span> B reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-B <span style="color:#f92672">-&gt;</span> D reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-D <span style="color:#f92672">-&gt;</span> H reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-H <span style="color:#f92672">-&gt;</span> A reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
-</code></pre></div><p>それでは，<strong>TD学習</strong> で状態$s_x$の価値$V(s_x)$を算出してみましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>state <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+</span></span><span style="display:flex;"><span>  next_state, reward <span style="color:#f92672">=</span> move(state)
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>state<span style="color:#e6db74">}</span><span style="color:#e6db74"> -&gt; </span><span style="color:#e6db74">{</span>next_state<span style="color:#e6db74">}</span><span style="color:#e6db74"> reward=</span><span style="color:#e6db74">{</span>reward<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>  state <span style="color:#f92672">=</span> next_state
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>A <span style="color:#f92672">-&gt;</span> C reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>C <span style="color:#f92672">-&gt;</span> G reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>G <span style="color:#f92672">-&gt;</span> A reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>A <span style="color:#f92672">-&gt;</span> C reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>C <span style="color:#f92672">-&gt;</span> F reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>F <span style="color:#f92672">-&gt;</span> A reward<span style="color:#f92672">=</span><span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>A <span style="color:#f92672">-&gt;</span> B reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>B <span style="color:#f92672">-&gt;</span> D reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>D <span style="color:#f92672">-&gt;</span> H reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>H <span style="color:#f92672">-&gt;</span> A reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+</span></span></code></pre></div><p>それでは，<strong>TD学習</strong> で状態$s_x$の価値$V(s_x)$を算出してみましょう．
 まずは，各状態の価値を0で初期化します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 価値</span>
-values <span style="color:#f92672">=</span> {
-    <span style="color:#e6db74">&#34;A&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;B&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;C&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;D&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;E&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;F&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;G&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;H&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;I&#34;</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#e6db74">&#34;J&#34;</span>: <span style="color:#ae81ff">0</span>
-}
-</code></pre></div><p>状態遷移を10,000回繰り返し，TD学習で状態$s_x$の価値$V(s_x)$を推定します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 価値</span>
+</span></span><span style="display:flex;"><span>values <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;A&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;B&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;C&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;D&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;E&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;F&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;G&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;H&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;I&#34;</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;J&#34;</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>状態遷移を10,000回繰り返し，TD学習で状態$s_x$の価値$V(s_x)$を推定します．
 このとき，学習率は$0.01$，割引率は$0.9$に設定しています．
 また，価値がループして伝搬することを防ぐため，
 状態$s_A$の価値$V(s_A)$は$0$とみなすことにしています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.01</span>
-gamma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span>
-state <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10000</span>):
-
-  next_state, reward <span style="color:#f92672">=</span> move(state)
-
-  <span style="color:#75715e"># 次の状態の価値</span>
-  <span style="color:#66d9ef">if</span> next_state <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;A&#34;</span>:
-    next_value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-  <span style="color:#66d9ef">else</span>:
-    next_value <span style="color:#f92672">=</span> values[next_state]
-
-  <span style="color:#75715e"># TD学習</span>
-  values[state] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> values[state] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (reward  <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> next_value)
-
-  <span style="color:#75715e"># 状態の更新</span>
-  state <span style="color:#f92672">=</span> next_state
-</code></pre></div><p>この結果，状態$s_x$の価値$V(s_x)$は次のように算出されました．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.01</span>
+</span></span><span style="display:flex;"><span>gamma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span>
+</span></span><span style="display:flex;"><span>state <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10000</span>):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  next_state, reward <span style="color:#f92672">=</span> move(state)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 次の状態の価値</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> next_state <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;A&#34;</span>:
+</span></span><span style="display:flex;"><span>    next_value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    next_value <span style="color:#f92672">=</span> values[next_state]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># TD学習</span>
+</span></span><span style="display:flex;"><span>  values[state] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> values[state] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (reward  <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> next_value)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 状態の更新</span>
+</span></span><span style="display:flex;"><span>  state <span style="color:#f92672">=</span> next_state
+</span></span></code></pre></div><p>この結果，状態$s_x$の価値$V(s_x)$は次のように算出されました．
 ここで，状態の価値に応じて，遷移する状態を選択することを考えます．</p>
 <ul>
 <li>$s_A$では，$s_C=11.6$より，$s_B=18.4$の方が価値が高いため，状態$s_B$を選択</li>
@@ -385,19 +385,19 @@ state <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#3
 A \rightarrow B \rightarrow D \rightarrow H (+100)
 $$</p>
 <p>このように，TD学習で状態の価値を定めることで，エージェントの最適な方策（状態遷移の選択方法）を得ることができます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> state <span style="color:#f92672">in</span> values:
-  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;state={state} value={values[state]}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state<span style="color:#f92672">=</span>A value<span style="color:#f92672">=</span><span style="color:#ae81ff">13.988914011222555</span>
-state<span style="color:#f92672">=</span>B value<span style="color:#f92672">=</span><span style="color:#ae81ff">18.4207396271639</span>
-state<span style="color:#f92672">=</span>C value<span style="color:#f92672">=</span><span style="color:#ae81ff">11.640561941925904</span>
-state<span style="color:#f92672">=</span>D value<span style="color:#f92672">=</span><span style="color:#ae81ff">37.423600796056085</span>
-state<span style="color:#f92672">=</span>E value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>
-state<span style="color:#f92672">=</span>F value<span style="color:#f92672">=</span><span style="color:#ae81ff">29.961695017091582</span>
-state<span style="color:#f92672">=</span>G value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>
-state<span style="color:#f92672">=</span>H value<span style="color:#f92672">=</span><span style="color:#ae81ff">96.97275395867995</span>
-state<span style="color:#f92672">=</span>I value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>
-state<span style="color:#f92672">=</span>J value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>
-</code></pre></div><!--
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> state <span style="color:#f92672">in</span> values:
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;state=</span><span style="color:#e6db74">{</span>state<span style="color:#e6db74">}</span><span style="color:#e6db74"> value=</span><span style="color:#e6db74">{</span>values[state]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>state<span style="color:#f92672">=</span>A value<span style="color:#f92672">=</span><span style="color:#ae81ff">13.988914011222555</span>
+</span></span><span style="display:flex;"><span>state<span style="color:#f92672">=</span>B value<span style="color:#f92672">=</span><span style="color:#ae81ff">18.4207396271639</span>
+</span></span><span style="display:flex;"><span>state<span style="color:#f92672">=</span>C value<span style="color:#f92672">=</span><span style="color:#ae81ff">11.640561941925904</span>
+</span></span><span style="display:flex;"><span>state<span style="color:#f92672">=</span>D value<span style="color:#f92672">=</span><span style="color:#ae81ff">37.423600796056085</span>
+</span></span><span style="display:flex;"><span>state<span style="color:#f92672">=</span>E value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>
+</span></span><span style="display:flex;"><span>state<span style="color:#f92672">=</span>F value<span style="color:#f92672">=</span><span style="color:#ae81ff">29.961695017091582</span>
+</span></span><span style="display:flex;"><span>state<span style="color:#f92672">=</span>G value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>
+</span></span><span style="display:flex;"><span>state<span style="color:#f92672">=</span>H value<span style="color:#f92672">=</span><span style="color:#ae81ff">96.97275395867995</span>
+</span></span><span style="display:flex;"><span>state<span style="color:#f92672">=</span>I value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>
+</span></span><span style="display:flex;"><span>state<span style="color:#f92672">=</span>J value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>
+</span></span></code></pre></div><!--
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   完成したノートブックの確認
 </h1>
