@@ -11,7 +11,7 @@
 
     <!-- Onsen UI -->
     <link rel="stylesheet" href="./lib/onsen-ui/css/onsenui.css">
-    <link rel="stylesheet" href="./lib/onsen-ui/css//onsen-css-components.min.css">
+    <link rel="stylesheet" href="./lib/onsen-ui/css/onsen-css-components.min.css">
     <script src="./lib/onsen-ui/js/onsenui.min.js"></script>
 
     <!-- uuid.js -->
@@ -25,9 +25,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800&display=swap" rel="stylesheet">
 
+    <!-- PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    
   </head>
 
   <body>
+
+    <!-- Python Libralies -->
+    <py-config>
+      packages = ["pandas", "scikit-learn", "numpy"]
+    </py-config>
 
     <ons-navigator id="navigator" page="top.html"></ons-navigator>
 
@@ -71,6 +80,9 @@
 
 		      // データ取得ボタンを有効化
 		      disabled_bt_get = false;
+
+		      // 天気痛の予測ボタンを有効化
+		      disabled_bt_prediction = false;
 		      
 		  });
 
@@ -84,6 +96,9 @@
 
 		      // データ取得ボタンを無効化
 		      disabled_bt_get = true;
+
+		      // 天気痛の予測ボタンを無効化
+		      disabled_bt_prediction = true;
 		  });		  
 	      };
 
@@ -129,6 +144,11 @@
 		</ons-button>
 	      </div>
 	      <div style="margin:10px">
+		<ons-button modifier="large" id="bt_prediction">
+		  <span class="main_text">天気痛を予測</span>
+		</ons-button>
+	      </div>	      	      
+	      <div style="margin:10px">
 		<ons-button modifier="large" id="bt_browse">
 		  <span class="main_text">データを閲覧</span>
 		</ons-button>
@@ -159,6 +179,9 @@
 		  // データ登録ボタンの有効化・無効化
 		  $("#bt_get").prop("disabled", disabled_bt_get);
 
+		  // 天気痛の予測ボタンの有効化・無効化
+		  $("#bt_prediction").prop("disabled", disabled_bt_prediction);		  
+
 		  $("#select_area").change(function(){
 		      area = $("#select_area").val();
 		      localStorage.setItem("area", area);
@@ -174,6 +197,11 @@
 		      // ページ遷移
 		      ons_navi.pushPage("browse.html");
 		  });
+
+		  $("#bt_prediction").click(function(){
+		      // ページ遷移
+		      ons_navi.pushPage("prediction.html");
+		  });		  
 
 		  $("#bt_clear").click(function(){
 
@@ -441,6 +469,109 @@
       </ons-page>
     </template>
 
+    <!-- 天気痛を予測 -->
+    <template id="prediction.html">      
+      <ons-page id="prediction">
+	
+	<ons-toolbar>
+	  <div class="left">
+	    <ons-back-button id="prediction-back">戻る</ons-back-button>
+	  </div>
+	</ons-toolbar>
+
+	<section class="main_back">
+
+	  <div class="main_block">
+	  
+	    <div class="main_text">
+	      温度: <ons-input id="prediction-temperature" modifier="underbar" placeholder="温度" float></ons-input>
+	    </div>
+	    
+	    <div class="main_text">
+	      湿度: <ons-input id="prediction-humidity" modifier="underbar" placeholder="湿度" float></ons-input>
+	    </div>
+	    
+	    <div class="main_text">
+	      気圧: <ons-input id="prediction-pressure" modifier="underbar" placeholder="気圧" float></ons-input>
+	    </div>
+
+	    <div style="margin:20px">
+	      <ons-button modifier="large" id="bt_svm">
+		<span class="main_text">予測</span>
+	      </ons-button>
+	    </div>
+	      
+	    <div id="prediction-result" class="main_text">
+	    </div>
+
+	  </div>	   
+
+	</section>
+
+	<py-script>
+import pandas as pd
+import numpy as np
+from sklearn import svm
+from pyodide.http import open_url
+from pyodide import create_proxy
+from sklearn.preprocessing import MinMaxScaler
+	  
+url = "https://mukai-lab.info/application/WeatherPainApp/data/data-oversampling.csv"
+
+resampled_df = pd.read_csv(open_url(url))
+X = np.array(resampled_df[["temperature", "humidity", "pressure"]])
+Y = np.array(resampled_df["pain"])
+
+mms = MinMaxScaler()
+scaler = mms.fit(X)
+
+x = scaler.transform(X)	  
+svc = svm.SVC(probability=True, C=100, gamma=1.0, kernel="rbf", random_state=0)
+svc.fit(x, Y)
+
+def setup():
+  function_proxy = create_proxy(runSVM)
+  document.getElementById("bt_svm").addEventListener("click", function_proxy);
+	  
+def runSVM(event):
+
+  prediction_temperature = int(Element("prediction-temperature").element.value);
+  prediction_humidity = int(Element("prediction-humidity").element.value);
+  prediction_pressure = int(Element("prediction-pressure").element.value);
+
+  console.log(str(prediction_temperature) + "," + str(prediction_humidity) + "," + str(prediction_pressure))
+
+  x = scaler.transform([[prediction_temperature, prediction_humidity, prediction_pressure]])
+  probability = svc.predict_proba(x)
+  probability_text = str("{:.2f}".format(probability[0][1] * 100))      
+  prediction_result = Element("prediction-result")
+  prediction_result.element.innerText = "天気痛の確率は" + probability_text + "%"
+
+setup()
+	</py-script>  		  
+	
+	<script>
+
+	  getSensorData();
+	  
+	  ons.getScriptPage().onInit = function() {	     
+	      
+	      $("#prediction-back")[0].onClick = function(){
+
+		  options = {
+		      "animation": "default",
+		      "pop": true,
+		  }
+		  
+		  ons_navi.resetToPage("connect.html", options);
+		  console.log("back from prediction page");
+	      };
+	  }	  
+	</script>		
+	
+      </ons-page>
+    </template>
+    
     <!-- ダイアログ -->
     <template id="dialog.html">
       <ons-dialog id="dialog">

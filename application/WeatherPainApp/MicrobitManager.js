@@ -80,6 +80,10 @@ async function connect(ons_navi){
 		$("#app_temperature").val(app_item.temperature);
 		$("#app_humidity").val(app_item.humidity);
 		$("#app_pressure").val(app_item.pressure);
+
+		$("#prediction-temperature").val(app_item.temperature);
+		$("#prediction-humidity").val(app_item.humidity);
+		$("#prediction-pressure").val(app_item.pressure);		
 		
 		//this.setReceiveData(tokens[0], tokens[1], tokens[2]);
 		
