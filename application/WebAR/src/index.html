@@ -1,0 +1,164 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+    
+    <!-- 文字コード -->
+    <meta charset="utf-8" />
+
+    <!-- ライブラリのインポート -->
+    <script src="lib/aframe.min.js"></script>
+    <script src="lib/aframe-ar.js"></script>
+    <script src="lib/aframe-extras.loaders.min.js"></script>
+    <script src="lib/gesture-detector.js"></script>
+    <script src="lib/gesture-handler.js"></script> 
+  </head>
+  
+  <body style="margin: 0; overflow: hidden;">
+
+    <a-scene
+      vr-mode-ui="enabled: false;"
+      loading-screen="enabled: false;"
+      renderer="logarithmicDepthBuffer: true;"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+      id="scene"
+      embedded
+      gesture-detector>
+
+      <a-assets>
+        <a-asset-item id="dog-model" src="./models/dog_cc0.gltf"></a-asset-item>
+        <a-asset-item id="bear-model" src="./models/bear_cc0.gltf"></a-asset-item>
+        <video id="sasuke-video" src="./video/sasuke.mp4" loop="false" preload="auto"></video>
+        <video id="hutaba-video" src="./video/hutaba.mp4" loop="false" preload="auto"></video>
+      </a-assets>
+
+      <a-marker
+        id="markerIconDog"
+        type="pattern"
+        preset="custom"
+        url="./markers/pattern-dog_icon_marker.txt"
+        raycaster="objects: .clickable"
+        emitevents="true"
+        cursor="fuse: false; rayOrigin: mouse;">
+
+        <a-entity
+          id="modelDog"
+          scale="1.0 1.0 1.0"
+          position="0 0.5 1"
+          rotation="270 0 0"
+          animation-mixer="loop: repeat"
+          gltf-model="#dog-model"
+          class="clickable"
+          gesture-handler></a-entity>
+      </a-marker>
+
+      <a-marker
+        id="markerIconBear"
+        type="pattern"
+        preset="custom"
+        url="./markers/pattern-bear_icon_marker.txt"
+        raycaster="objects: .clickable"
+        emitevents="true"
+        cursor="fuse: false; rayOrigin: mouse;">
+
+        <a-entity
+          id="modelBear"
+          scale="1.0 1.0 1.0"
+          position="0 0.5 1"
+          rotation="270 0 0"
+          animation-mixer="loop: repeat"
+          gltf-model="#bear-model"
+          class="clickable"
+          gesture-handler></a-entity>
+      </a-marker>
+      
+      <a-marker
+        id="markerSasuke"
+        type="pattern"
+        preset="custom"
+        url="./markers/pattern-sasuke_marker.txt"
+        raycaster="objects: .clickable"
+        emitevents="true"
+        cursor="fuse: false; rayOrigin: mouse;"
+        markerhandler>
+
+        <a-video
+          id="videoSasuke"
+          src="#sasuke-video"
+          width="3"
+          height="2"
+          position="0 0 0"
+          rotation="270 0 0"
+          play="false"></a-video>
+      </a-marker>
+      
+       <a-marker
+        id="markerHutaba"
+        type="pattern"
+        preset="custom"
+        url="./markers/pattern-hutaba_marker.txt"
+        raycaster="objects: .clickable"
+        emitevents="true"
+        cursor="fuse: false; rayOrigin: mouse;"
+        markerhandler>
+
+        <a-video
+          id="videoHutaba"
+          src="#hutaba-video"
+          width="3"
+          height="2"
+          position="0 0 0"
+          rotation="270 0 0"
+          play="false"></a-video>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+
+    </a-scene>
+    
+    <script>
+      
+      let sasuke_video = document.getElementById("sasuke-video");
+      let hutaba_video = document.getElementById("hutaba-video");
+      
+      AFRAME.registerComponent("markerhandler", {
+        init: function(){
+         
+          let marker = this.el;
+          
+          if(marker.id == "markerSasuke"){
+            marker.addEventListener("markerFound", function(){
+              sasuke_video.play();
+              console.log("play");
+            });
+
+            marker.addEventListener("markerLost", function(){
+              sasuke_video.pause();
+              console.log("pause");
+            })
+          }
+          
+          if(marker.id == "markerHutaba"){
+            marker.addEventListener("markerFound", function(){
+              hutaba_video.play();
+              console.log("play");
+            });
+
+            marker.addEventListener("markerLost", function(){
+              hutaba_video.pause();
+              console.log("pause");
+            })
+          }
+        }
+      })
+      
+      /*
+      window.addEventListener("click", function(){
+        let video = document.getElementById("sasuke-video");
+        console.log(video);
+        video.play();
+        console.log("play")
+      });
+      */
+    </script>
+  </body>
+</html>
