@@ -1,3 +1,8 @@
+<!-- 
+CC0 素材データ
+https://market.pmnd.rs/
+-->
+
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
@@ -11,6 +16,7 @@
     <script src="lib/aframe-extras.loaders.min.js"></script>
     <script src="lib/gesture-detector.js"></script>
     <script src="lib/gesture-handler.js"></script> 
+
   </head>
   
   <body style="margin: 0; overflow: hidden;">
@@ -19,11 +25,12 @@
       vr-mode-ui="enabled: false;"
       loading-screen="enabled: false;"
       renderer="logarithmicDepthBuffer: true;"
-      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
       id="scene"
       embedded
       gesture-detector>
 
+      <!-- アセット -->
       <a-assets>
         <a-asset-item id="dog-model" src="./models/dog_cc0.gltf"></a-asset-item>
         <a-asset-item id="bear-model" src="./models/bear_cc0.gltf"></a-asset-item>
@@ -31,6 +38,7 @@
         <video id="hutaba-video" src="./video/hutaba.mp4" loop="false" preload="auto"></video>
       </a-assets>
 
+      <!-- イヌのマーカー -->
       <a-marker
         id="markerIconDog"
         type="pattern"
@@ -51,6 +59,7 @@
           gesture-handler></a-entity>
       </a-marker>
 
+      <!-- クマのマーカー -->
       <a-marker
         id="markerIconBear"
         type="pattern"
@@ -71,6 +80,7 @@
           gesture-handler></a-entity>
       </a-marker>
       
+      <!-- 佐助邸のマーカー -->
       <a-marker
         id="markerSasuke"
         type="pattern"
@@ -91,7 +101,8 @@
           play="false"></a-video>
       </a-marker>
       
-       <a-marker
+      <!-- 双葉館のマーカー -->
+      <a-marker
         id="markerHutaba"
         type="pattern"
         preset="custom"
@@ -111,6 +122,26 @@
           play="false"></a-video>
       </a-marker>
 
+      <!-- 赤色の立方体 -->
+      <a-marker id="marker00" type='barcode' value="0">
+        <a-box position="0 0.5 0" color="red"></a-box>
+      </a-marker>      
+    
+      <!-- 黄色の立方体 -->
+      <a-marker id="marker01" type='barcode' value="1">
+        <a-box position="0 0.5 0" color="yellow"></a-box>
+      </a-marker>
+
+      <!-- 青色の球体 -->
+      <a-marker id="marker02" type='barcode' value="2">
+        <a-sphere position="0 0.5 0" radius="0.5" color="blue"></a-sphere>
+      </a-marker>      
+    
+      <!-- 緑色の球体 -->
+      <a-marker id="marker03" type='barcode' value="3">
+        <a-sphere position="0 0.5 0" radius="0.5" color="green"></a-sphere>
+      </a-marker>      
+
       <a-entity camera></a-entity>
 
     </a-scene>
@@ -125,6 +156,7 @@
          
           let marker = this.el;
           
+          // 佐助邸の動画再生
           if(marker.id == "markerSasuke"){
             marker.addEventListener("markerFound", function(){
               sasuke_video.play();
@@ -137,6 +169,7 @@
             })
           }
           
+          // 双葉館の動画再生
           if(marker.id == "markerHutaba"){
             marker.addEventListener("markerFound", function(){
               hutaba_video.play();
@@ -151,6 +184,7 @@
         }
       })
       
+      // スクリーンをクリックして動画再生
       /*
       window.addEventListener("click", function(){
         let video = document.getElementById("sasuke-video");
@@ -160,5 +194,6 @@
       });
       */
     </script>
+    
   </body>
 </html>
