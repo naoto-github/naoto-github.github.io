@@ -87,8 +87,13 @@
 
 
 
-  <meta property="og:description" content="オープンストリートマップの道路グラフデータのプロット経路探索課題Google Colaboratoryで作成した chapter5.ipynb を保存し， ノートブック（.ipynb） をダウンロードして提出しなさい． また，使用した CSVファイル も一緒に提出すること． 提出の前に必ず下記の設定を行うこと．
- ノートブックの設定で「セルの出力を除外する」のチェックを外す ノートブックの変更内容を保存して固定  参考書籍" />
+  <meta property="og:description" content="オープンストリートマップの道路グラフオープンストリートマップは，エクスポート機能を利用することで，OSMという専用のファイル形式でデータをダウンロードすることができます （ライセンスはOpen Database License (ODbL)）． OSMはマークアップ言語のXML(Extensible Markup Language)で記述されており，道路グラフのノードを表す node や，属性を表す tag などの要素で構成されています． 例えば椙山女学園大学の文化情報学部を表すノードは次のように記述されています． これらのデータを利用することで，地図上の2点間の経路を探索することができます． ここでは，PythonライブラリのOSMnxを利用して，椙山女学園大学の周辺の道路グラフを取得し，任意の2点間の経路探索に挑戦します．
+&lt;node id=&#34;1423989393&#34; visible=&#34;true&#34; version=&#34;2&#34; changeset=&#34;100839679&#34; timestamp=&#34;2021-03-11T11:46:43Z&#34; user=&#34;Psjk2106&#34; uid=&#34;6909898&#34; lat=&#34;35.1587968&#34; lon=&#34;136.9874163&#34;&gt; &lt;tag k=&#34;amenity&#34; v=&#34;university&#34;/&gt; &lt;tag k=&#34;name&#34; v=&#34;椙山女学園大学（文化情報学部）&#34;/&gt; &lt;tag k=&#34;note&#34; v=&#34;National-Land Numerical Information (Public Facility) 2006, MLIT Japan&#34;/&gt; &lt;tag k=&#34;note:ja&#34; v=&#34;国土数値情報（公共施設データ）平成19年　国土交通省&#34;/&gt; &lt;tag k=&#34;source&#34; v=&#34;KSJ2&#34;/&gt; &lt;tag k=&#34;source_ref&#34; v=&#34;http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html&#34;/&gt; &lt;/node&gt; 道路グラフのプロット&gt;
+それでは，Google Colaboratoryを利用して，オープンストリートマップの道路グラフを取得してみましょう．
+ノートブックの作成 まずは，ノートブックを作成します． ノートブックの名前は chapter5.ipynb に設定します．
+
+地図を表示するためのfolium，オープンストリートマップのデータを取得するためのOSMnx，さらに経路探索に必要なscikit-learnをインストールします．
+!pip install folium !" />
 
 
 
@@ -103,8 +108,13 @@
 
 
 
-  <meta name="twitter:description" content="オープンストリートマップの道路グラフデータのプロット経路探索課題Google Colaboratoryで作成した chapter5.ipynb を保存し， ノートブック（.ipynb） をダウンロードして提出しなさい． また，使用した CSVファイル も一緒に提出すること． 提出の前に必ず下記の設定を行うこと．
- ノートブックの設定で「セルの出力を除外する」のチェックを外す ノートブックの変更内容を保存して固定  参考書籍" />
+  <meta name="twitter:description" content="オープンストリートマップの道路グラフオープンストリートマップは，エクスポート機能を利用することで，OSMという専用のファイル形式でデータをダウンロードすることができます （ライセンスはOpen Database License (ODbL)）． OSMはマークアップ言語のXML(Extensible Markup Language)で記述されており，道路グラフのノードを表す node や，属性を表す tag などの要素で構成されています． 例えば椙山女学園大学の文化情報学部を表すノードは次のように記述されています． これらのデータを利用することで，地図上の2点間の経路を探索することができます． ここでは，PythonライブラリのOSMnxを利用して，椙山女学園大学の周辺の道路グラフを取得し，任意の2点間の経路探索に挑戦します．
+&lt;node id=&#34;1423989393&#34; visible=&#34;true&#34; version=&#34;2&#34; changeset=&#34;100839679&#34; timestamp=&#34;2021-03-11T11:46:43Z&#34; user=&#34;Psjk2106&#34; uid=&#34;6909898&#34; lat=&#34;35.1587968&#34; lon=&#34;136.9874163&#34;&gt; &lt;tag k=&#34;amenity&#34; v=&#34;university&#34;/&gt; &lt;tag k=&#34;name&#34; v=&#34;椙山女学園大学（文化情報学部）&#34;/&gt; &lt;tag k=&#34;note&#34; v=&#34;National-Land Numerical Information (Public Facility) 2006, MLIT Japan&#34;/&gt; &lt;tag k=&#34;note:ja&#34; v=&#34;国土数値情報（公共施設データ）平成19年　国土交通省&#34;/&gt; &lt;tag k=&#34;source&#34; v=&#34;KSJ2&#34;/&gt; &lt;tag k=&#34;source_ref&#34; v=&#34;http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html&#34;/&gt; &lt;/node&gt; 道路グラフのプロット&gt;
+それでは，Google Colaboratoryを利用して，オープンストリートマップの道路グラフを取得してみましょう．
+ノートブックの作成 まずは，ノートブックを作成します． ノートブックの名前は chapter5.ipynb に設定します．
+
+地図を表示するためのfolium，オープンストリートマップのデータを取得するためのOSMnx，さらに経路探索に必要なscikit-learnをインストールします．
+!pip install folium !" />
 
 
 
@@ -171,25 +181,162 @@
     
     
 
-    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+    <p><a href="https://gyazo.com/9f1e94f6a6777682cc63e5a2d0d2b17e"><img src="https://i.gyazo.com/9f1e94f6a6777682cc63e5a2d0d2b17e.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   オープンストリートマップの道路グラフ
 </h1>
 
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  データのプロット
+<p><a href="https://www.openstreetmap.org/">オープンストリートマップ</a>は，エクスポート機能を利用することで，<strong>OSM</strong>という専用のファイル形式でデータをダウンロードすることができます
+（ライセンスは<a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL)</a>）．
+OSMはマークアップ言語のXML(Extensible Markup Language)で記述されており，道路グラフのノードを表す <strong>node</strong> や，属性を表す <strong>tag</strong> などの要素で構成されています．
+例えば椙山女学園大学の文化情報学部を表すノードは次のように記述されています．
+これらのデータを利用することで，地図上の2点間の経路を探索することができます．
+ここでは，Pythonライブラリの<a href="https://osmnx.readthedocs.io/en/stable/">OSMnx</a>を利用して，椙山女学園大学の周辺の道路グラフを取得し，任意の2点間の経路探索に挑戦します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"> <span style="color:#f92672">&lt;node</span> <span style="color:#a6e22e">id=</span><span style="color:#e6db74">&#34;1423989393&#34;</span> <span style="color:#a6e22e">visible=</span><span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">changeset=</span><span style="color:#e6db74">&#34;100839679&#34;</span> <span style="color:#a6e22e">timestamp=</span><span style="color:#e6db74">&#34;2021-03-11T11:46:43Z&#34;</span> <span style="color:#a6e22e">user=</span><span style="color:#e6db74">&#34;Psjk2106&#34;</span> <span style="color:#a6e22e">uid=</span><span style="color:#e6db74">&#34;6909898&#34;</span> <span style="color:#a6e22e">lat=</span><span style="color:#e6db74">&#34;35.1587968&#34;</span> <span style="color:#a6e22e">lon=</span><span style="color:#e6db74">&#34;136.9874163&#34;</span><span style="color:#f92672">&gt;</span>
+  <span style="color:#f92672">&lt;tag</span> <span style="color:#a6e22e">k=</span><span style="color:#e6db74">&#34;amenity&#34;</span> <span style="color:#a6e22e">v=</span><span style="color:#e6db74">&#34;university&#34;</span><span style="color:#f92672">/&gt;</span>
+  <span style="color:#f92672">&lt;tag</span> <span style="color:#a6e22e">k=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">v=</span><span style="color:#e6db74">&#34;椙山女学園大学（文化情報学部）&#34;</span><span style="color:#f92672">/&gt;</span>
+  <span style="color:#f92672">&lt;tag</span> <span style="color:#a6e22e">k=</span><span style="color:#e6db74">&#34;note&#34;</span> <span style="color:#a6e22e">v=</span><span style="color:#e6db74">&#34;National-Land Numerical Information (Public Facility) 2006, MLIT Japan&#34;</span><span style="color:#f92672">/&gt;</span>
+  <span style="color:#f92672">&lt;tag</span> <span style="color:#a6e22e">k=</span><span style="color:#e6db74">&#34;note:ja&#34;</span> <span style="color:#a6e22e">v=</span><span style="color:#e6db74">&#34;国土数値情報（公共施設データ）平成19年　国土交通省&#34;</span><span style="color:#f92672">/&gt;</span>
+  <span style="color:#f92672">&lt;tag</span> <span style="color:#a6e22e">k=</span><span style="color:#e6db74">&#34;source&#34;</span> <span style="color:#a6e22e">v=</span><span style="color:#e6db74">&#34;KSJ2&#34;</span><span style="color:#f92672">/&gt;</span>
+  <span style="color:#f92672">&lt;tag</span> <span style="color:#a6e22e">k=</span><span style="color:#e6db74">&#34;source_ref&#34;</span> <span style="color:#a6e22e">v=</span><span style="color:#e6db74">&#34;http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-P02-v2_0.html&#34;</span><span style="color:#f92672">/&gt;</span>
+ <span style="color:#f92672">&lt;/node&gt;</span>
+</code></pre></div><p><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  道路グラフのプロット
 </h1>
-
+&gt;</p>
+<p>それでは，<a href="https://colab.research.google.com/">Google Colaboratory</a>を利用して，オープンストリートマップの道路グラフを取得してみましょう．</p>
+<h2 id="ノートブックの作成">ノートブックの作成</h2>
+<p>まずは，ノートブックを作成します．
+ノートブックの名前は <strong>chapter5.ipynb</strong> に設定します．</p>
+<p><a href="https://gyazo.com/f98654ecfe6ddd2ea6e6b193272de297"><img src="https://i.gyazo.com/f98654ecfe6ddd2ea6e6b193272de297.png" alt="Image from Gyazo"></a></p>
+<p>地図を表示するための<a href="https://python-visualization.github.io/folium/">folium</a>，オープンストリートマップのデータを取得するための<a href="https://osmnx.readthedocs.io/en/stable/">OSMnx</a>，さらに経路探索に必要な<a href="https://scikit-learn.org/stable/">scikit-learn</a>をインストールします．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install folium
+!pip install osmnx
+!pip install scikit-learn
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> folium
+<span style="color:#f92672">import</span> geopandas <span style="color:#f92672">as</span> gpd
+<span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+<span style="color:#f92672">import</span> osmnx <span style="color:#f92672">as</span> ox
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> sklearn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</code></pre></div><h2 id="道路グラフの取得">道路グラフの取得</h2>
+<p><strong>ジオコーディング</strong> を利用して，椙山女学園大学の緯度・経度を取得します．
+ジオコーディングとは，住所や地名から対応する緯度・経度に変換することを意味します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># ジオコーディングで緯度・経度を取得（星ヶ丘キャンパス）</span>
+lat, lon <span style="color:#f92672">=</span> ox<span style="color:#f92672">.</span>geocoder<span style="color:#f92672">.</span>geocode(<span style="color:#e6db74">&#34;椙山女学園大学&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;lat={lat} lon={lon}&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">lat=35.160005549999994 lon=136.9875383967455
+</code></pre></div><p>取得した緯度・経度を利用して，周辺の道路グラフを取得します．
+取得するデータの範囲は<code>dist</code>で指定します．
+ここでは，<code>dist=1000</code>を指定し，中心座標から1,000メートルのデータを取得しています．
+取得したデータはノード数（交差点）が800，エッジ数（道路）が2203で構成されていることがわかります．
+また，<strong>MultiDiGraph</strong> は多重有向グラフを表し，2点のノード間に複数のエッジが存在する可能性があること（多重辺），また，エッジには向きがあること（有向辺）を意味しています
+（MultiDiGraphは<a href="https://networkx.org/">NetwrokX</a>のクラス）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 道路グラフの取得</span>
+graph <span style="color:#f92672">=</span> ox<span style="color:#f92672">.</span>graph<span style="color:#f92672">.</span>graph_from_point((lat, lon), dist<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+<span style="color:#66d9ef">print</span>(graph)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">MultiDiGraph with 800 nodes and 2203 edges
+</code></pre></div><p>それでは，取得した道路グラフを可視化してみましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 道路グラフを表示</span>
+ox<span style="color:#f92672">.</span>plot_graph(graph)
+</code></pre></div><p><a href="https://gyazo.com/162331302e76569b1cb6e23bb2f55654"><img src="https://i.gyazo.com/162331302e76569b1cb6e23bb2f55654.png" alt="Image from Gyazo"></a></p>
+<p>Foliumを利用して，オンライン地図と重ねて道路グラフを表示することもできます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># オンライン地図と重ねて道路グラフを表示</span>
+ox<span style="color:#f92672">.</span>plot_graph_folium(graph)
+</code></pre></div><p><a href="https://gyazo.com/22d98e5564083019bcde6703f63848e8"><img src="https://i.gyazo.com/22d98e5564083019bcde6703f63848e8.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   経路探索
 </h1>
 
+<p>取得した道路グラフから，始点と終点となるノードを選び，2点間の経路探索をしてみましょう．
+始点は椙山女学園大学に最も近いノードとします．
+任意の緯度・経度から最も近いノードのIDを検索するには<code>nearest_nodes()</code>を利用します．
+始点のノードIDとして<code>1906955364</code>が選択されました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 始点（星ヶ丘キャンパス）</span>
+start_lat, start_lon <span style="color:#f92672">=</span> ox<span style="color:#f92672">.</span>geocoder<span style="color:#f92672">.</span>geocode(<span style="color:#e6db74">&#34;椙山女学園大学&#34;</span>)
+start_id <span style="color:#f92672">=</span> ox<span style="color:#f92672">.</span>distance<span style="color:#f92672">.</span>nearest_nodes(graph, start_lon, start_lat)
+<span style="color:#66d9ef">print</span>(start_id)
+<span style="color:#66d9ef">print</span>(graph<span style="color:#f92672">.</span>nodes[start_id])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">1906955364
+1906955364
+{&#39;y&#39;: 35.1599814, &#39;x&#39;: 136.9873455, &#39;street_count&#39;: 3}
+</code></pre></div><p>同様に終点は星ヶ丘駅に最も近いノードとします．
+終点のノードIDとして<code>648692862</code>が選択されました．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 終点（星ヶ丘駅）</span>
+goal_lat, goal_lon <span style="color:#f92672">=</span> ox<span style="color:#f92672">.</span>geocoder<span style="color:#f92672">.</span>geocode(<span style="color:#e6db74">&#34;星ヶ丘駅&#34;</span>)
+goal_id <span style="color:#f92672">=</span> ox<span style="color:#f92672">.</span>distance<span style="color:#f92672">.</span>nearest_nodes(graph, goal_lon, goal_lat)
+<span style="color:#66d9ef">print</span>(goal_id)
+<span style="color:#66d9ef">print</span>(graph<span style="color:#f92672">.</span>nodes[goal_id])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">648692862
+{&#39;y&#39;: 35.1627781, &#39;x&#39;: 136.9858763, &#39;highway&#39;: &#39;traffic_signals&#39;, &#39;street_count&#39;: 4}
+</code></pre></div><p>上記の始点と終点で経路探索します．
+経路はノードIDのリストで与えられます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 経路探索</span>
+route <span style="color:#f92672">=</span> ox<span style="color:#f92672">.</span>distance<span style="color:#f92672">.</span>shortest_path(graph, start_id, goal_id)
+<span style="color:#66d9ef">print</span>(route)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[1906955364, 648692839, 2748834444, 5715309843, 5715309842, 7985515453, 5750754052, 7985515458, 648692837, 648692852, 648692853, 602231740, 648692862]
+</code></pre></div><p>それでは，探索された経路を可視化しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 道路グラフと経路を表示</span>
+ox<span style="color:#f92672">.</span>plot_graph_route(graph, route)
+</code></pre></div><p><a href="https://gyazo.com/b9b88caa90196745b6e22685f7cc8ee4"><img src="https://i.gyazo.com/b9b88caa90196745b6e22685f7cc8ee4.png" alt="Image from Gyazo"></a></p>
+<p>Foliumを利用して，オンライン地図と重ねて経路を表示しましょう．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># オンライン地図と重ねて経路を表示</span>
+ox<span style="color:#f92672">.</span>plot_route_folium(graph, route)
+</code></pre></div><p><a href="https://gyazo.com/756ba0cc0ec2f9dd6825b95648c47511"><img src="https://i.gyazo.com/756ba0cc0ec2f9dd6825b95648c47511.png" alt="Image from Gyazo"></a></p>
+<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  建物情報のプロット
+</h1>
+
+<p>属性情報の<code>tag</code>を利用して，建物情報を<a href="https://geopandas.org/en/stable/">GeoPandas</a>のデータ形式で取得することができます．
+建物は<code>building</code>キーで表され，その建物の用途を表すバリューで区別されます（詳細は<a href="https://wiki.openstreetmap.org/wiki/JA:Key:building">Wiki</a>を参照すること）．
+例えば，<code>apartments</code>は集合住宅（アパートやマンション），<code>retail</code>は物品販売を目的とした店舗を表します（例，<code>&lt;tag k=&quot;building v=&quot;apartments&quot;&gt;</code>）．</p>
+<p>それでは，<code>apartments</code>を指定して，建物情報を取得しましょう．
+「アーバンラフレ星ヶ丘」や，「サンハウス西山」などの集合住宅が取得できていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tags <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;building&#34;</span>: [<span style="color:#e6db74">&#34;apartments&#34;</span>]
+}
+
+residences <span style="color:#f92672">=</span> ox<span style="color:#f92672">.</span>geometries<span style="color:#f92672">.</span>geometries_from_point((lat, lon), tags<span style="color:#f92672">=</span>tags, dist<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+display(residences)
+</code></pre></div><p><a href="https://gyazo.com/38ad22c6e7e5650d99e226a7ae6c98b8"><img src="https://i.gyazo.com/38ad22c6e7e5650d99e226a7ae6c98b8.png" alt="Image from Gyazo"></a></p>
+<p>取得した建物情報を表すGeoPandasのデータ形式を可視化します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 建物情報（集合住宅）を表示</span>
+ox<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>plot_footprints(residences)
+</code></pre></div><p><a href="https://gyazo.com/46ffa5f68813f59847e51f868e554b84"><img src="https://i.gyazo.com/46ffa5f68813f59847e51f868e554b84.png" alt="Image from Gyazo"></a></p>
+<p>同様に，<code>retail</code>を指定して，建物情報を取得しましょう．
+「星ヶ丘三越」や「ヤマダ電機」などの店舗が取得できていることがわかります．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tags <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#34;building&#34;</span>: [<span style="color:#e6db74">&#34;retail&#34;</span>]
+}
+
+shops <span style="color:#f92672">=</span> ox<span style="color:#f92672">.</span>geometries<span style="color:#f92672">.</span>geometries_from_point((lat, lon), tags<span style="color:#f92672">=</span>tags, dist<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+display(shops)
+</code></pre></div><p><a href="https://gyazo.com/990901bcfa32789ccbb76a2e0df056ea"><img src="https://i.gyazo.com/990901bcfa32789ccbb76a2e0df056ea.png" alt="Image from Gyazo"></a></p>
+<p>取得した建物情報を表すGeoPandasのデータ形式を可視化します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 建物情報（店舗）を表示</span>
+ox<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>plot_footprints(shops)
+</code></pre></div><p><a href="https://gyazo.com/51c51bd864bad627231df2d1c803b983"><img src="https://i.gyazo.com/51c51bd864bad627231df2d1c803b983.png" alt="Image from Gyazo"></a></p>
+<p>取得したデータはGeoPandasのデータ形式であるため，Foliumにそのままデータを渡して，オンライン地図を表示することもできます．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[lat, lon], zoom_start<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span>)
+
+<span style="color:#75715e"># データフレームをGeoJSON形式に変換して地図に追加</span>
+folium<span style="color:#f92672">.</span>GeoJson(residences<span style="color:#f92672">.</span>to_json())<span style="color:#f92672">.</span>add_to(map)
+folium<span style="color:#f92672">.</span>GeoJson(shops<span style="color:#f92672">.</span>to_json())<span style="color:#f92672">.</span>add_to(map)
+
+map
+</code></pre></div><p><a href="https://gyazo.com/4e751a9f21ca9152eea864de4d4821c3"><img src="https://i.gyazo.com/4e751a9f21ca9152eea864de4d4821c3.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
+<p>次の条件に従って経路探索してください．</p>
+<ul>
+<li><strong>京都駅から2000メートルの範囲の道路グラフを取得</strong></li>
+<li><strong>京都駅から清水寺までの経路を探索</strong></li>
+<li><strong><code>plot_route_folium()</code>を利用して経路を可視化</strong></li>
+</ul>
 <p>Google Colaboratoryで作成した <strong>chapter5.ipynb</strong> を保存し，
 <strong>ノートブック（.ipynb）</strong> をダウンロードして提出しなさい．
-また，使用した <strong>CSVファイル</strong> も一緒に提出すること．
 提出の前に必ず下記の設定を行うこと．</p>
 <ul>
 <li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
