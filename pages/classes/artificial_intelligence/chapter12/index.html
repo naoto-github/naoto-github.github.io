@@ -87,13 +87,14 @@
 
 
 
-  <meta property="og:description" content="強化学習  強化学習(Reinforcement Learning) とは，自律的に行動するプログラム（ エージェント ）がある環境において， 観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です． DeepMind社が開発した囲碁プログラムの AlphaGo や， Atari社のビデオゲームをプレイする DQN(Deep Q-Network) などが強化学習の成果としてよく知られています． また，強化学習には，次に挙げるような手法が存在します．
- モンテカルロ法（Monte Carlo Methods） TD学習(Temporal Difference Learning) Q学習(Q-Learning)  ここでは，シンプルなトランプゲームを題材に強化学習の基本を学び， 最後に強化学習のツールキットであるOpenAI Gymを利用してQ学習を実装してみます．
-  -- ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
-完成したノートブックの確認  ノートブックの確認
-トランプゲーム  次に示す2つのルールを考えます． いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます． ルール1には引き分けがないことに注意してください．
-ルール1   同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する． 1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる． 逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)．   ルール2   2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる．   実装  乱数を生成するrandom，数値計算のためのnumpyに加え， プログレスバーを表示するtqdm.notebookをインポートします．
-import random import numpy as np from tqdm." />
+  <meta property="og:description" content="強化学習 強化学習(Reinforcement Learning) とは，自律的に行動するプログラム（ エージェント ）がある環境において， 観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です． DeepMind社が開発した囲碁プログラムの AlphaGo や， Atari社のビデオゲームをプレイする DQN(Deep Q-Network) などが強化学習の成果としてよく知られています． また，強化学習には，次に挙げるような手法が存在します．
+モンテカルロ法（Monte Carlo Methods） TD学習(Temporal Difference Learning) Q学習(Q-Learning) ここでは，シンプルなトランプゲームを題材に強化学習の基本を学び， 最後に強化学習のツールキットであるOpenAI Gymを利用してQ学習を実装してみます．
+ノートブックの作成 Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
+完成したノートブックの確認 ノートブックの確認
+トランプゲーム 次に示す2つのルールを考えます． いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます． ルール1には引き分けがないことに注意してください．
+ルール1 同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する． 1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる． 逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)． ルール2 2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる． 実装 乱数を生成するrandom，数値計算のためのnumpyに加え， プログレスバーを表示するtqdm.notebookをインポートします．
+import random import numpy as np from tqdm.notebook import tqdm ルール1の実装 それでは，ルール1を実装しましょう． 同じ絵柄のトランプを使用するため，カードの数字は$1,2,\cdots,13$の13種類です． このカードから，random.sample()でランダムに2枚を選択し，1枚目のカードの数字の方が大きければ100円を獲得し， 逆に小さければ100円を没収されます．
+# トランプ cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] def game(): # 2枚のカードを引く my_cards = random." />
 
 
 
@@ -108,13 +109,14 @@ import random import numpy as np from tqdm." />
 
 
 
-  <meta name="twitter:description" content="強化学習  強化学習(Reinforcement Learning) とは，自律的に行動するプログラム（ エージェント ）がある環境において， 観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です． DeepMind社が開発した囲碁プログラムの AlphaGo や， Atari社のビデオゲームをプレイする DQN(Deep Q-Network) などが強化学習の成果としてよく知られています． また，強化学習には，次に挙げるような手法が存在します．
- モンテカルロ法（Monte Carlo Methods） TD学習(Temporal Difference Learning) Q学習(Q-Learning)  ここでは，シンプルなトランプゲームを題材に強化学習の基本を学び， 最後に強化学習のツールキットであるOpenAI Gymを利用してQ学習を実装してみます．
-  -- ノートブックの作成  Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
-完成したノートブックの確認  ノートブックの確認
-トランプゲーム  次に示す2つのルールを考えます． いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます． ルール1には引き分けがないことに注意してください．
-ルール1   同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する． 1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる． 逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)．   ルール2   2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる．   実装  乱数を生成するrandom，数値計算のためのnumpyに加え， プログレスバーを表示するtqdm.notebookをインポートします．
-import random import numpy as np from tqdm." />
+  <meta name="twitter:description" content="強化学習 強化学習(Reinforcement Learning) とは，自律的に行動するプログラム（ エージェント ）がある環境において， 観測した現在の状態を基に，最適な行動を選択可能にするための学習方法です． DeepMind社が開発した囲碁プログラムの AlphaGo や， Atari社のビデオゲームをプレイする DQN(Deep Q-Network) などが強化学習の成果としてよく知られています． また，強化学習には，次に挙げるような手法が存在します．
+モンテカルロ法（Monte Carlo Methods） TD学習(Temporal Difference Learning) Q学習(Q-Learning) ここでは，シンプルなトランプゲームを題材に強化学習の基本を学び， 最後に強化学習のツールキットであるOpenAI Gymを利用してQ学習を実装してみます．
+ノートブックの作成 Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-12 とします． ノートブックの作成方法は第1回の資料を参照してください．
+完成したノートブックの確認 ノートブックの確認
+トランプゲーム 次に示す2つのルールを考えます． いずれのルールもゲームに勝てば100円を獲得し，負ければ100円が没収されます． ルール1には引き分けがないことに注意してください．
+ルール1 同じ絵柄のトランプから2枚のカードを順に引き，カードの数字を比較する． 1枚目のカードの数字が，2枚目のカードの数字より大きいとき，報酬として100円が与えられる． 逆に小さいときは，ペナルティとして100円が没収される(同じ数字になることはない)． ルール2 2人のプレイヤーが同じ絵柄のトランプから2枚のカードを順に引き，2枚のカードの数字を合計する． 2枚のカードの合計が，相手より大きいとき，報酬として100円が与えられ，逆に小さいときはペナルティとして100円が没収される（合計が同じ場合は引き分け）． ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる． 実装 乱数を生成するrandom，数値計算のためのnumpyに加え， プログレスバーを表示するtqdm.notebookをインポートします．
+import random import numpy as np from tqdm.notebook import tqdm ルール1の実装 それでは，ルール1を実装しましょう． 同じ絵柄のトランプを使用するため，カードの数字は$1,2,\cdots,13$の13種類です． このカードから，random.sample()でランダムに2枚を選択し，1枚目のカードの数字の方が大きければ100円を獲得し， 逆に小さければ100円を没収されます．
+# トランプ cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] def game(): # 2枚のカードを引く my_cards = random." />
 
 
 
@@ -268,50 +270,50 @@ Atari社のビデオゲームをプレイする <strong>DQN(Deep Q-Network)</str
 
 <p>乱数を生成する<code>random</code>，数値計算のための<code>numpy</code>に加え，
 プログレスバーを表示する<a href="https://tqdm.github.io/docs/notebook/">tqdm.notebook</a>をインポートします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> random
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">from</span> tqdm.notebook <span style="color:#f92672">import</span> tqdm
-</code></pre></div><h2 id="ルール1の実装">ルール1の実装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> random
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> tqdm.notebook <span style="color:#f92672">import</span> tqdm
+</span></span></code></pre></div><h2 id="ルール1の実装">ルール1の実装</h2>
 <p>それでは，ルール1を実装しましょう．
 同じ絵柄のトランプを使用するため，カードの数字は$1,2,\cdots,13$の13種類です．
 このカードから，<code>random.sample()</code>でランダムに2枚を選択し，1枚目のカードの数字の方が大きければ100円を獲得し，
 逆に小さければ100円を没収されます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># トランプ</span>
-cards <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>]
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">game</span>():
-  <span style="color:#75715e"># 2枚のカードを引く</span>
-  my_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
-  card1 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">0</span>]
-  card2 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">1</span>]
-
-  <span style="color:#66d9ef">if</span> card1 <span style="color:#f92672">&gt;</span> card2:
-    <span style="color:#66d9ef">return</span> (card1, <span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You win</span>
-  <span style="color:#66d9ef">else</span>:
-    <span style="color:#66d9ef">return</span> (card1, <span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You lose</span>
-</code></pre></div><p>このゲームを10回繰り返してみます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># トランプ</span>
+</span></span><span style="display:flex;"><span>cards <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">game</span>():
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 2枚のカードを引く</span>
+</span></span><span style="display:flex;"><span>  my_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>  card1 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>  card2 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> card1 <span style="color:#f92672">&gt;</span> card2:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (card1, <span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You win</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (card1, <span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You lose</span>
+</span></span></code></pre></div><p>このゲームを10回繰り返してみます．
 この結果，勝ちは4回，負けは6回だったため，-600円が所持金となりました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 所持金</span>
-money <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-  card, reward <span style="color:#f92672">=</span> game()
-  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{i}: card={card} reward={reward}&#34;</span>)
-  money <span style="color:#f92672">+=</span> reward
-
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Your money: {money}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">1</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">2</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">3</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">4</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">5</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">6</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">7</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">8</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">9</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-Your money: <span style="color:#f92672">-</span><span style="color:#ae81ff">600</span>
-</code></pre></div><p>カードの数字に応じて，得られる報酬の期待値（価値）が異なります．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 所持金</span>
+</span></span><span style="display:flex;"><span>money <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+</span></span><span style="display:flex;"><span>  card, reward <span style="color:#f92672">=</span> game()
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">: card=</span><span style="color:#e6db74">{</span>card<span style="color:#e6db74">}</span><span style="color:#e6db74"> reward=</span><span style="color:#e6db74">{</span>reward<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>  money <span style="color:#f92672">+=</span> reward
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Your money: </span><span style="color:#e6db74">{</span>money<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ae81ff">0</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">7</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">9</span>: card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>Your money: <span style="color:#f92672">-</span><span style="color:#ae81ff">600</span>
+</span></span></code></pre></div><p>カードの数字に応じて，得られる報酬の期待値（価値）が異なります．
 そこで，強化学習の考えに基づき，カードの数字の価値を求めてみましょう．
 カードの数字は <strong>状態$s$</strong> として定義され，13種類の状態が存在します．</p>
 <p>$$
@@ -322,173 +324,173 @@ $$</p>
 このとき，状態$s_x$の価値$V(s_x)$は，次の式を繰り返し適用することで求めることができます（得られる値は近似値）．
 ここで，$\alpha$は学習率と呼ばれ，$0&lt;\alpha&lt;1$の値を取ります．</p>
 <p>$$
-V'(s_x) = (1 - \alpha) \cdot V(s_x) + \alpha \cdot r
+V&rsquo;(s_x) = (1 - \alpha) \cdot V(s_x) + \alpha \cdot r
 $$</p>
 <p>最初に，カードの数字の価値を$0$で初期化します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># カードの数字の価値（報酬の期待値）</span>
-values <span style="color:#f92672">=</span> {
-    <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span>
-}
-</code></pre></div><p>次に，ゲームを100,000回繰り返して，上記の式を適用します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># カードの数字の価値（報酬の期待値）</span>
+</span></span><span style="display:flex;"><span>values <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>次に，ゲームを100,000回繰り返して，上記の式を適用します．
 このとき，学習率$\alpha$は$0.001$に設定しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 学習率</span>
-alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">100000</span>)):
-  card, reward <span style="color:#f92672">=</span> game()
-  values[card] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> values[card] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> reward
-
-<span style="color:#66d9ef">for</span> card <span style="color:#f92672">in</span> values:
-  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;card={card} value={values[card]:.2f}&#34;</span>)
-</code></pre></div><p>この結果，次に示す状態の価値$V(s_x)$が算出されました．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 学習率</span>
+</span></span><span style="display:flex;"><span>alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">100000</span>)):
+</span></span><span style="display:flex;"><span>  card, reward <span style="color:#f92672">=</span> game()
+</span></span><span style="display:flex;"><span>  values[card] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> values[card] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> reward
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> card <span style="color:#f92672">in</span> values:
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;card=</span><span style="color:#e6db74">{</span>card<span style="color:#e6db74">}</span><span style="color:#e6db74"> value=</span><span style="color:#e6db74">{</span>values[card]<span style="color:#e6db74">:</span><span style="color:#e6db74">.2f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>この結果，次に示す状態の価値$V(s_x)$が算出されました．
 $s_1$は常に負けるため価値は約$-100$，一方，$s_{13}$は常に勝利するため価値は約$100$になっています．
 また，$s_7$は，50%の確率で勝利し，50%の確率で負けるため，その価値は約$0$になっています．</p>
 <p>このように，ランダムにゲームを繰り返し，状態の価値（報酬の期待値）を推定する手法を  <strong>モンテカルロ法</strong>  と呼びます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">card<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">99.95</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">83.49</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">64.86</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">50.15</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">28.72</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">19.50</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">2.72</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">17.22</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">32.62</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">48.44</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">66.18</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">84.95</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">99.96</span>
-</code></pre></div><h2 id="ルール2の実装">ルール2の実装</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">99.95</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">83.49</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">64.86</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">50.15</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">28.72</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">19.50</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">2.72</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">17.22</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">32.62</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">48.44</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">66.18</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">84.95</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">99.96</span>
+</span></span></code></pre></div><h2 id="ルール2の実装">ルール2の実装</h2>
 <p>それでは，ルール2を実装しましょう．
 上述と同じように <strong>モンテカルロ法</strong> で状態の価値を算出します．
 プレイヤーのそれぞれが同じ絵柄のトランプを利用します（プレイヤーAは <strong>クラブ</strong>，プレイヤーBは <strong>ダイヤ</strong>）．
 プレイヤーは2枚のカードを引き，それらの合計を求めます．
 この合計が多い方が100円を獲得します（合計が同じ場合は0円の獲得）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># トランプ</span>
-cards <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>]
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">game</span>():
-  <span style="color:#75715e"># 2枚のカードを引く</span>
-  my_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
-  rival_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
-
-  card1 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">0</span>]
-  card2 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">1</span>]
-
-  <span style="color:#75715e"># カードの値を合計</span>
-  my_sum <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(my_cards)
-  rival_sum <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(rival_cards)
-
-  <span style="color:#66d9ef">if</span> my_sum <span style="color:#f92672">&gt;</span> rival_sum:
-    <span style="color:#66d9ef">return</span> (card1, card2, my_sum, <span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You win</span>
-  <span style="color:#66d9ef">elif</span> my_sum <span style="color:#f92672">==</span> rival_sum:
-    <span style="color:#66d9ef">return</span> (card1, card2, my_sum, <span style="color:#ae81ff">0</span>) <span style="color:#75715e"># Draw</span>
-  <span style="color:#66d9ef">else</span>:
-    <span style="color:#66d9ef">return</span> (card1, card2, my_sum, <span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You lose</span>
-</code></pre></div><p>このゲームを10回繰り返してみます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># トランプ</span>
+</span></span><span style="display:flex;"><span>cards <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>, <span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">13</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">game</span>():
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># 2枚のカードを引く</span>
+</span></span><span style="display:flex;"><span>  my_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>  rival_cards <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>sample(cards, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  card1 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>  card2 <span style="color:#f92672">=</span> my_cards[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># カードの値を合計</span>
+</span></span><span style="display:flex;"><span>  my_sum <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(my_cards)
+</span></span><span style="display:flex;"><span>  rival_sum <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(rival_cards)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> my_sum <span style="color:#f92672">&gt;</span> rival_sum:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (card1, card2, my_sum, <span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You win</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">elif</span> my_sum <span style="color:#f92672">==</span> rival_sum:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (card1, card2, my_sum, <span style="color:#ae81ff">0</span>) <span style="color:#75715e"># Draw</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (card1, card2, my_sum, <span style="color:#f92672">-</span><span style="color:#ae81ff">100</span>) <span style="color:#75715e"># You lose</span>
+</span></span></code></pre></div><p>このゲームを10回繰り返してみます．
 この結果，勝ちは5回，負けは4回，引き分けは1回だったため，100円が所持金となりました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 所持金</span>
-money <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-  card1, card2, sum, reward <span style="color:#f92672">=</span> game()
-  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{i}: card1={card1} card2={card2} sum={sum} reward={reward}&#34;</span>)
-  money <span style="color:#f92672">+=</span> reward
-
-<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Your money: {money}&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">1</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">17</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">2</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">3</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">4</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-<span style="color:#ae81ff">5</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">6</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">7</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">8</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">17</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-<span style="color:#ae81ff">9</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
-Your money: <span style="color:#ae81ff">100</span>
-</code></pre></div><p>カードの数字の合計を <strong>状態$s$</strong> と定義します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 所持金</span>
+</span></span><span style="display:flex;"><span>money <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+</span></span><span style="display:flex;"><span>  card1, card2, sum, reward <span style="color:#f92672">=</span> game()
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">: card1=</span><span style="color:#e6db74">{</span>card1<span style="color:#e6db74">}</span><span style="color:#e6db74"> card2=</span><span style="color:#e6db74">{</span>card2<span style="color:#e6db74">}</span><span style="color:#e6db74"> sum=</span><span style="color:#e6db74">{</span>sum<span style="color:#e6db74">}</span><span style="color:#e6db74"> reward=</span><span style="color:#e6db74">{</span>reward<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>  money <span style="color:#f92672">+=</span> reward
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Your money: </span><span style="color:#e6db74">{</span>money<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ae81ff">0</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">17</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span> reward<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">7</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">17</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">9</span>: card1<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> card2<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> sum<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span> reward<span style="color:#f92672">=-</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>Your money: <span style="color:#ae81ff">100</span>
+</span></span></code></pre></div><p>カードの数字の合計を <strong>状態$s$</strong> と定義します．
 最小値は$1+2=3$，最大値は$12+13=25$であり，23種類の状態が存在します．</p>
 <p>$$
 S = \{ s_3, s_4, \cdots, s_{25} \}
 $$</p>
 <p>先程と同様に，状態$s_x$の価値$V(s_x)$を算出してみます．
 最初に，カードの数字の合計の価値を$0$で初期化します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 数字の合計の価値（報酬の期待値）</span>
-sum_values <span style="color:#f92672">=</span> {
-    <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">14</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">15</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">16</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">17</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">18</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">19</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">20</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">21</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">22</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">23</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">24</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">25</span>: <span style="color:#ae81ff">0</span>
-}
-</code></pre></div><p>次に，ゲームを500,000回繰り返して，価値を算出する式を適用します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 数字の合計の価値（報酬の期待値）</span>
+</span></span><span style="display:flex;"><span>sum_values <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">14</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">15</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">16</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">17</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">18</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">19</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">20</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">21</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">22</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">23</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">24</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">25</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>次に，ゲームを500,000回繰り返して，価値を算出する式を適用します．
 このとき，学習率$\alpha$は$0.001$に設定しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 学習率</span>
-alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">500000</span>)):
-  card1, card2, sum, reward <span style="color:#f92672">=</span> game()
-  sum_values[sum] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> sum_values[sum] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> reward
-
-<span style="color:#66d9ef">for</span> sum <span style="color:#f92672">in</span> sum_values:
-  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;sum={sum} value={sum_values[sum]:.2f}&#34;</span>)
-</code></pre></div><p>この結果，次に示す状態の価値$V(s_x)$が算出されました．$s_3$は，引き分けを除き，その他の全ての合計値に負けるため価値は約-100，
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 学習率</span>
+</span></span><span style="display:flex;"><span>alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">500000</span>)):
+</span></span><span style="display:flex;"><span>  card1, card2, sum, reward <span style="color:#f92672">=</span> game()
+</span></span><span style="display:flex;"><span>  sum_values[sum] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> sum_values[sum] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> reward
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> sum <span style="color:#f92672">in</span> sum_values:
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;sum=</span><span style="color:#e6db74">{</span>sum<span style="color:#e6db74">}</span><span style="color:#e6db74"> value=</span><span style="color:#e6db74">{</span>sum_values[sum]<span style="color:#e6db74">:</span><span style="color:#e6db74">.2f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>この結果，次に示す状態の価値$V(s_x)$が算出されました．$s_3$は，引き分けを除き，その他の全ての合計値に負けるため価値は約-100，
 一方，$s_{25}$は，引き分けを除き，その他の全ての合計値に勝利するため価値は約100になっています（正確には100より少し小さい）．
 また，$s_{14}$は，50%の確率で勝利し，50%の確率で負けるため，その価値は約$0$になっています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sum<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">98.37</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">96.56</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">92.11</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">89.50</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">81.11</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">71.71</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">64.69</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">54.91</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">43.56</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">27.25</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">16.98</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.36</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">16.55</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">30.30</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">17</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">44.61</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">18</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">53.65</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">19</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">62.89</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">73.66</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">21</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">78.19</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">22</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">86.03</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">23</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">91.78</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">24</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">95.24</span>
-sum<span style="color:#f92672">=</span><span style="color:#ae81ff">25</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">98.67</span>
-</code></pre></div><p>ここで，ゲームのルールを思い出してみましょう．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">98.37</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">96.56</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">92.11</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">89.50</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">81.11</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">71.71</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">64.69</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">54.91</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">43.56</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">27.25</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">16.98</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">14</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.36</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">15</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">16.55</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">30.30</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">17</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">44.61</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">18</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">53.65</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">19</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">62.89</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">20</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">73.66</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">21</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">78.19</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">22</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">86.03</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">23</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">91.78</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">24</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">95.24</span>
+</span></span><span style="display:flex;"><span>sum<span style="color:#f92672">=</span><span style="color:#ae81ff">25</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">98.67</span>
+</span></span></code></pre></div><p>ここで，ゲームのルールを思い出してみましょう．</p>
 <p>「ただし，1枚目のカードを引いた時点で，ゲームから降りることを決めることができる．」</p>
 <p>つまり，1枚目を引いた時点でのカードの価値がわかれば無理に勝負をする必要はないことになります．
 そこで，1枚目のカードの価値を算出してみましょう．</p>
@@ -500,53 +502,53 @@ $$</p>
 報酬$r$が，カードの合計値の価値$V(s_x)$に置き換わっていることがわかります．
 このように，将来の状態の価値を基に，現在の状態の価値を更新する方法を <strong>ブートストラップ型学習</strong> と呼びます．</p>
 <p>$$
-V'(t_x) = (1 - \alpha) \cdot V(t_x) + \alpha \cdot V(s_x)
+V&rsquo;(t_x) = (1 - \alpha) \cdot V(t_x) + \alpha \cdot V(s_x)
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 1枚目のカードの価値（報酬の期待値）</span>
-card_values <span style="color:#f92672">=</span> {
-    <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
-    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span>
-}
-</code></pre></div><p>ゲームを500,000回繰り返して，ブートストラップ型学習で1枚目のカードの価値を算出します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 1枚目のカードの価値（報酬の期待値）</span>
+</span></span><span style="display:flex;"><span>card_values <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">2</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">3</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">4</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">5</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">6</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">7</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">8</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">9</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">10</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">11</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">12</span>: <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">13</span>: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>ゲームを500,000回繰り返して，ブートストラップ型学習で1枚目のカードの価値を算出します．
 このとき，学習率$\alpha$は$0.001$に設定しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 学習率</span>
-alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">500000</span>)):
-  card1, card2, sum, reward <span style="color:#f92672">=</span> game()
-  sum_values[sum] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> sum_values[sum] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> reward
-  card_values[card1] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> card_values[card1] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> sum_values[sum]
-
-<span style="color:#66d9ef">for</span> card <span style="color:#f92672">in</span> card_values:
-  <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;card={card} value={card_values[card]:.2f}&#34;</span>)
-</code></pre></div><p>この結果，次に示す状態の価値$V(t_x)$が算出されました．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 学習率</span>
+</span></span><span style="display:flex;"><span>alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> tqdm(range(<span style="color:#ae81ff">500000</span>)):
+</span></span><span style="display:flex;"><span>  card1, card2, sum, reward <span style="color:#f92672">=</span> game()
+</span></span><span style="display:flex;"><span>  sum_values[sum] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> sum_values[sum] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> reward
+</span></span><span style="display:flex;"><span>  card_values[card1] <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> card_values[card1] <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> sum_values[sum]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> card <span style="color:#f92672">in</span> card_values:
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;card=</span><span style="color:#e6db74">{</span>card<span style="color:#e6db74">}</span><span style="color:#e6db74"> value=</span><span style="color:#e6db74">{</span>card_values[card]<span style="color:#e6db74">:</span><span style="color:#e6db74">.2f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>この結果，次に示す状態の価値$V(t_x)$が算出されました．
 $t_1$の価値は約$-60$となり負ける可能性が高く，
 $t_{13}$の価値は約$60$となり勝つ可能性が高いことを示しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">card<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">60.76</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">51.00</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">41.24</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">32.77</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">19.22</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">9.60</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.58</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">9.65</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">18.31</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">33.06</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">40.74</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">51.62</span>
-card<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">62.09</span>
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">60.76</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">51.00</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">41.24</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">32.77</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">19.22</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">6</span> value<span style="color:#f92672">=-</span><span style="color:#ae81ff">9.60</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">7</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">0.58</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">9.65</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">9</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">18.31</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">33.06</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">11</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">40.74</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">51.62</span>
+</span></span><span style="display:flex;"><span>card<span style="color:#f92672">=</span><span style="color:#ae81ff">13</span> value<span style="color:#f92672">=</span><span style="color:#ae81ff">62.09</span>
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
