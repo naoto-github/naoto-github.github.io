@@ -246,16 +246,14 @@ lat <span style="color:#f92672">=</span> <span style="color:#ae81ff">35.1594195<
 lon <span style="color:#f92672">=</span> <span style="color:#ae81ff">136.9875942</span>
 </code></pre></div><p><code>folium.Map()</code>で地図を作成します．
 このとき，<code>location=[lat, lon]</code>で星ヶ丘キャンパスの緯度・経度を指定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[lat, lon])
-map
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[lat, lon])
 </code></pre></div><p>星ヶ丘キャンパスを中心とした地図が生成されますが，
 地図のズーム（倍率）が低いため，名古屋市を中心とした地図であることしかわかりません．</p>
 <p><a href="https://gyazo.com/dc05883a2f9cc93edd7efc64a24c88ba"><img src="https://i.gyazo.com/dc05883a2f9cc93edd7efc64a24c88ba.png" alt="Image from Gyazo"></a></p>
 <p>そこで，地図のズーム（倍率）<code>zoom_start</code>を<code>16</code>に設定します．
 今度は星ヶ丘キャンパスが地図の中心にあることが確認できます．
-オープンストリートマップのズーム（倍率）は0〜20まで設定が可能です（参考:<a href="https://wiki.openstreetmap.org/wiki/Zoom_levels">Zoom levels</a>）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">map <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[lat, lon], zoom_start<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>)
-map
+オープンストリートマップのズーム（倍率）は0〜18まで設定が可能です（参考:<a href="https://wiki.openstreetmap.org/wiki/Zoom_levels">Zoom levels</a>）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">folium<span style="color:#f92672">.</span>Map(location<span style="color:#f92672">=</span>[lat, lon], zoom_start<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>)
 </code></pre></div><p><a href="https://gyazo.com/ea481fa3560bda42ec917525d9a72c4a"><img src="https://i.gyazo.com/ea481fa3560bda42ec917525d9a72c4a.png" alt="Image from Gyazo"></a></p>
 <h2 id="データフレームpandas">データフレーム（pandas）</h2>
 <p><a href="https://pandas.pydata.org/">pandas</a>を利用して，
@@ -295,11 +293,11 @@ map
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">markers <span style="color:#f92672">=</span> []
 
 <span style="color:#66d9ef">for</span> index, row <span style="color:#f92672">in</span> df<span style="color:#f92672">.</span>iterrows():
-  name <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">0</span>]
-  lat <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">1</span>]
-  lon <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">2</span>]
-  text <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">3</span>]
-  url <span style="color:#f92672">=</span> row[<span style="color:#ae81ff">4</span>]
+  name <span style="color:#f92672">=</span> row[<span style="color:#e6db74">&#34;名称&#34;</span>]
+  lat <span style="color:#f92672">=</span> row[<span style="color:#e6db74">&#34;緯度&#34;</span>]
+  lon <span style="color:#f92672">=</span> row[<span style="color:#e6db74">&#34;経度&#34;</span>]
+  text <span style="color:#f92672">=</span> row[<span style="color:#e6db74">&#34;説明&#34;</span>]
+  url <span style="color:#f92672">=</span> row[<span style="color:#e6db74">&#34;Webサイト&#34;</span>]
   popup <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;&lt;div style=&#39;width:300px&#39;&gt;&lt;b&gt;{name}&lt;/b&gt;&lt;br&gt;{text}&lt;br&gt;&lt;a href=&#39;{url}&#39;&gt;{url}&lt;/a&gt;&lt;/div&gt;&#34;</span>
   marker <span style="color:#f92672">=</span> folium<span style="color:#f92672">.</span>Marker([lat, lon], tooltip<span style="color:#f92672">=</span>name, popup<span style="color:#f92672">=</span>popup)
   markers<span style="color:#f92672">.</span>append(marker)
