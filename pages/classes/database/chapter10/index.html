@@ -87,9 +87,11 @@
 
 
 
-  <meta property="og:description" content="データベースの復元  前回までに作成したデータベースを読み込むには，[File]→[Open DB]をクリックし， 保存した sqlite3.db を選択します． 復元したデータベースに【学生リスト】，【学部リスト】，【テニス部】，【サッカー部】，【商品リスト】があることを確認しましょう．
-sqlite3.db](https://mukai-lab.info/classes/database/sqlite3.db) --    学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか    【学生リスト】
-   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】" />
+  <meta property="og:description" content="データベースの復元 前回までに作成したデータベースを読み込むには，[File]→[Open DB]をクリックし， 保存した sqlite3.db を選択します． 復元したデータベースに【学生リスト】，【学部リスト】，【テニス部】，【サッカー部】，【商品リスト】があることを確認しましょう．
+学籍番号 氏名 学年 学部 よみがな A001 岩城隼人 2 工学部 いわきはやと A002 岩村優 1 工学部 いわむらゆう B003 杉江弘子 3 人文学部 すぎえひろこ C004 仙波あすか 1 国際関係学部 せんばあすか 【学生リスト】
+学部 キャンパス 教員数 工学部 春日井 30 人文学部 春日井 20 国際関係学部 名古屋 25 【学部リスト】
+学籍番号 氏名 学年 学部 よみがな A002 岩村優 1 工学部 いわむらゆう B003 杉江弘子 3 人文学部 すぎえひろこ C004 仙波あすか 1 国際関係学部 せんばあすか 【テニス部】
+学籍番号 氏名 学年 学部 よみがな A001 岩城隼人 2 工学部 いわきはやと B003 杉江弘子 3 人文学部 すぎえひろこ A005 内田弘 3 工学部 うちだひろし 【サッカー部】" />
 
 
 
@@ -104,9 +106,11 @@ sqlite3.db](https://mukai-lab.info/classes/database/sqlite3.db) --    学籍番�
 
 
 
-  <meta name="twitter:description" content="データベースの復元  前回までに作成したデータベースを読み込むには，[File]→[Open DB]をクリックし， 保存した sqlite3.db を選択します． 復元したデータベースに【学生リスト】，【学部リスト】，【テニス部】，【サッカー部】，【商品リスト】があることを確認しましょう．
-sqlite3.db](https://mukai-lab.info/classes/database/sqlite3.db) --    学籍番号 氏名 学年 学部 よみがな     A001 岩城隼人 2 工学部 いわきはやと   A002 岩村優 1 工学部 いわむらゆう   B003 杉江弘子 3 人文学部 すぎえひろこ   C004 仙波あすか 1 国際関係学部 せんばあすか    【学生リスト】
-   学部 キャンパス 教員数     工学部 春日井 30   人文学部 春日井 20   国際関係学部 名古屋 25    【学部リスト】" />
+  <meta name="twitter:description" content="データベースの復元 前回までに作成したデータベースを読み込むには，[File]→[Open DB]をクリックし， 保存した sqlite3.db を選択します． 復元したデータベースに【学生リスト】，【学部リスト】，【テニス部】，【サッカー部】，【商品リスト】があることを確認しましょう．
+学籍番号 氏名 学年 学部 よみがな A001 岩城隼人 2 工学部 いわきはやと A002 岩村優 1 工学部 いわむらゆう B003 杉江弘子 3 人文学部 すぎえひろこ C004 仙波あすか 1 国際関係学部 せんばあすか 【学生リスト】
+学部 キャンパス 教員数 工学部 春日井 30 人文学部 春日井 20 国際関係学部 名古屋 25 【学部リスト】
+学籍番号 氏名 学年 学部 よみがな A002 岩村優 1 工学部 いわむらゆう B003 杉江弘子 3 人文学部 すぎえひろこ C004 仙波あすか 1 国際関係学部 せんばあすか 【テニス部】
+学籍番号 氏名 学年 学部 よみがな A001 岩城隼人 2 工学部 いわきはやと B003 杉江弘子 3 人文学部 すぎえひろこ A005 内田弘 3 工学部 うちだひろし 【サッカー部】" />
 
 
 
@@ -382,49 +386,49 @@ sqlite3.db](https://mukai-lab.info/classes/database/sqlite3.db) --    学籍番�
 ここでは，和両立の条件を満たしている【テニス部】と【サッカー部】を対象に考えていきます．</p>
 <p>和集合演算には<strong>UNION</strong>を用います．
 <strong>テーブル名1</strong>と<strong>テーブル名2</strong>は対象のテーブルの名前です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 和集合演算 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>それでは，【テニス部】と【サッカー部】の和集合を求めてみましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 和集合演算 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>それでは，【テニス部】と【サッカー部】の和集合を求めてみましょう．
 ここで，注意して欲しいのは，
 いずれのリレーションにも共通の <strong>(B003,杉江弘子,3,人文学部,すぎえひろこ)</strong> です．
 和集合の結果には，該当のレコードは一つだけとなります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【テニス部】と【サッカー部】の和集合 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">サッカー部</span>;
-</code></pre></div><p><a href="https://gyazo.com/69091504a75648eac4782128da5843e1"><img src="https://i.gyazo.com/69091504a75648eac4782128da5843e1.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 【テニス部】と【サッカー部】の和集合 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">UNION</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">サッカー部</span>;
+</span></span></code></pre></div><p><a href="https://gyazo.com/69091504a75648eac4782128da5843e1"><img src="https://i.gyazo.com/69091504a75648eac4782128da5843e1.png" alt="Image from Gyazo"></a></p>
 <h3 id="差集合演算">差集合演算</h3>
 <p>差集合演算には<strong>EXCEPT</strong>を用います．
 <strong>テーブル名1</strong>と<strong>テーブル名2</strong>は対象のテーブルの名前です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 差集合演算 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">EXCEPT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>それでは，【テニス部】と【サッカー部】の差集合を求めてみましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 差集合演算 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">EXCEPT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>それでは，【テニス部】と【サッカー部】の差集合を求めてみましょう．
 【テニス部】から共通のレコードが取り除かれていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【テニス部】と【サッカー部】の差集合 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">EXCEPT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">サッカー部</span>;
-</code></pre></div><p><a href="https://gyazo.com/1a962c9616598c657535a5b62b5d4a30"><img src="https://i.gyazo.com/1a962c9616598c657535a5b62b5d4a30.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 【テニス部】と【サッカー部】の差集合 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">EXCEPT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">サッカー部</span>;
+</span></span></code></pre></div><p><a href="https://gyazo.com/1a962c9616598c657535a5b62b5d4a30"><img src="https://i.gyazo.com/1a962c9616598c657535a5b62b5d4a30.png" alt="Image from Gyazo"></a></p>
 <h3 id="共通集合演算">共通集合演算</h3>
 <p>共通集合演算には<strong>INTERSECT</strong>を用います．
 <strong>テーブル名1</strong>と<strong>テーブル名2</strong>は対象のテーブルの名前です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 共通集合演算 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">INTERSECT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>それでは，【テニス部】と【サッカー部】の共通集合を求めてみましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 共通集合演算 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">INTERSECT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>それでは，【テニス部】と【サッカー部】の共通集合を求めてみましょう．
 共通のレコードが結果に含まれていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【テニス部】と【サッカー部】の共通集合 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">INTERSECT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">サッカー部</span>;
-</code></pre></div><p><a href="https://gyazo.com/ce7dfe74dd18e501026aa15ffe78ef6c"><img src="https://i.gyazo.com/ce7dfe74dd18e501026aa15ffe78ef6c.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 【テニス部】と【サッカー部】の共通集合 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">INTERSECT</span> <span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#960050;background-color:#1e0010">サッカー部</span>;
+</span></span></code></pre></div><p><a href="https://gyazo.com/ce7dfe74dd18e501026aa15ffe78ef6c"><img src="https://i.gyazo.com/ce7dfe74dd18e501026aa15ffe78ef6c.png" alt="Image from Gyazo"></a></p>
 <h3 id="直積演算">直積演算</h3>
 <p>直積演算には<strong>CROSS JOIN</strong>を用います．
 <strong>テーブル名1</strong>と<strong>テーブル名2</strong>は対象のテーブルの名前です．
 これまでとは異なりCROSS JOINの後にSELECT文は不要です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 直積演算 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">CROSS</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>また，直積演算は次のように記述することも可能です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 直積演算 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span>, <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>それでは，【テニス部】と【サッカー部】の直積を求めてみましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 直積演算 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">CROSS</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>また，直積演算は次のように記述することも可能です．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 直積演算 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span>, <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>それでは，【テニス部】と【サッカー部】の直積を求めてみましょう．
 全ての組み合わせでレコードが構成されていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【テニス部】と【サッカー部】の直積 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">CROSS</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">サッカー部</span>;
-</code></pre></div><p><a href="https://gyazo.com/2d416fb7417c94c5dc6a04c14315ae16"><img src="https://i.gyazo.com/2d416fb7417c94c5dc6a04c14315ae16.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 【テニス部】と【サッカー部】の直積 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テニス部</span> <span style="color:#66d9ef">CROSS</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">サッカー部</span>;
+</span></span></code></pre></div><p><a href="https://gyazo.com/2d416fb7417c94c5dc6a04c14315ae16"><img src="https://i.gyazo.com/2d416fb7417c94c5dc6a04c14315ae16.png" alt="Image from Gyazo"></a></p>
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
   <h3 style="color:#006600">
@@ -497,52 +501,52 @@ SQLで表現可能であることを確認していきましょう（商演算�
 </ul>
 <h3 id="射影演算">射影演算</h3>
 <p>射影演算は <strong>SELECT文</strong> を用いるだけです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 射影演算 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">属性名</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span>;
-</code></pre></div><p>それでは，【学生リスト】を氏名とよみがなで射影してみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学生リスト】を氏名とよみがなで射影 **/</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">氏名</span>,<span style="color:#960050;background-color:#1e0010">よみがな</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>;
-</code></pre></div><p><a href="https://gyazo.com/e2d3212d5a1a38a5be2c16899958ee92"><img src="https://i.gyazo.com/e2d3212d5a1a38a5be2c16899958ee92.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 射影演算 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">属性名</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span>;
+</span></span></code></pre></div><p>それでは，【学生リスト】を氏名とよみがなで射影してみましょう．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 【学生リスト】を氏名とよみがなで射影 **/</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">氏名</span>,<span style="color:#960050;background-color:#1e0010">よみがな</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>;
+</span></span></code></pre></div><p><a href="https://gyazo.com/e2d3212d5a1a38a5be2c16899958ee92"><img src="https://i.gyazo.com/e2d3212d5a1a38a5be2c16899958ee92.png" alt="Image from Gyazo"></a></p>
 <p>次に，【学生リスト】を学部で射影してみましょう．
 「工学部」に所属している学生が2人いるため，射影した結果にも「工学部」が2回表示されます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学生リスト】を学部で射影 **/</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">学部</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>;
-</code></pre></div><p><a href="https://gyazo.com/312faf7b36ac7b701beefd624ba0b975"><img src="https://i.gyazo.com/312faf7b36ac7b701beefd624ba0b975.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 【学生リスト】を学部で射影 **/</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">学部</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>;
+</span></span></code></pre></div><p><a href="https://gyazo.com/312faf7b36ac7b701beefd624ba0b975"><img src="https://i.gyazo.com/312faf7b36ac7b701beefd624ba0b975.png" alt="Image from Gyazo"></a></p>
 <p>重複行を除外して「工学部」を1回だけ表示するには，<strong>DISTINCT句</strong> を利用します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学生リスト】を重複を避けて学部で射影 **/</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">DISTINCT</span> <span style="color:#960050;background-color:#1e0010">学部</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>;
-</code></pre></div><p><a href="https://gyazo.com/03880f469eeb3a0d1e2a711ba1e76ca7"><img src="https://i.gyazo.com/03880f469eeb3a0d1e2a711ba1e76ca7.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 【学生リスト】を重複を避けて学部で射影 **/</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#66d9ef">DISTINCT</span> <span style="color:#960050;background-color:#1e0010">学部</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>;
+</span></span></code></pre></div><p><a href="https://gyazo.com/03880f469eeb3a0d1e2a711ba1e76ca7"><img src="https://i.gyazo.com/03880f469eeb3a0d1e2a711ba1e76ca7.png" alt="Image from Gyazo"></a></p>
 <h3 id="選択演算">選択演算</h3>
 <p>選択演算は <strong>SELECT文</strong> と <strong>WHERE句</strong> を組み合わせるだけです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 選択演算 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">属性名</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">条件式</span>;
-</code></pre></div><p>それでは，【学生リスト】から工学部のレコードを選択しましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学生リスト】から工学部のレコードを選択 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">where</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;工学部&#34;</span>;
-</code></pre></div><p><a href="https://gyazo.com/c84e5b7e3079dfe89f68c4b931a67bde"><img src="https://i.gyazo.com/c84e5b7e3079dfe89f68c4b931a67bde.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 選択演算 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#960050;background-color:#1e0010">属性名</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span> <span style="color:#66d9ef">WHERE</span> <span style="color:#960050;background-color:#1e0010">条件式</span>;
+</span></span></code></pre></div><p>それでは，【学生リスト】から工学部のレコードを選択しましょう．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 【学生リスト】から工学部のレコードを選択 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">where</span> <span style="color:#960050;background-color:#1e0010">学部</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;工学部&#34;</span>;
+</span></span></code></pre></div><p><a href="https://gyazo.com/c84e5b7e3079dfe89f68c4b931a67bde"><img src="https://i.gyazo.com/c84e5b7e3079dfe89f68c4b931a67bde.png" alt="Image from Gyazo"></a></p>
 <h3 id="結合演算">結合演算</h3>
 <p>結合演算は，条件を指定して結合する方法（<strong>内部結合</strong>と<strong>外部結合</strong>）と，
 一致するドメインを条件として結合する方法（<strong>自然結合</strong>）があります．</p>
 <p>条件を指定して結合（内部結合）するには <strong>INNER JOIN</strong> を用います．
 <strong>テーブル名1</strong>と<strong>テーブル名2</strong>は対象のテーブルの名前です．
 <strong>ON</strong>の後に，結合の条件となる各テーブルの属性を指定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 内部結合 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">ON</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span>.<span style="color:#960050;background-color:#1e0010">属性名</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>.<span style="color:#960050;background-color:#1e0010">属性名</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>それでは，【学生リスト】と【学部リスト】を「学部」を条件に結合してみましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 内部結合 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span> <span style="color:#66d9ef">ON</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span>.<span style="color:#960050;background-color:#1e0010">属性名</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>.<span style="color:#960050;background-color:#1e0010">属性名</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>それでは，【学生リスト】と【学部リスト】を「学部」を条件に結合してみましょう．
 学部の属性値が一致するレコードが結合されていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学生リスト】と【学部リスト】を「学部」を条件に結合 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">学部リスト</span> <span style="color:#66d9ef">ON</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>.<span style="color:#960050;background-color:#1e0010">学部</span> <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">学部リスト</span>.<span style="color:#960050;background-color:#1e0010">学部</span>;
-</code></pre></div><p><a href="https://gyazo.com/bc3c651cc6b374386e8e5102e4d61b64"><img src="https://i.gyazo.com/bc3c651cc6b374386e8e5102e4d61b64.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 【学生リスト】と【学部リスト】を「学部」を条件に結合 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">学部リスト</span> <span style="color:#66d9ef">ON</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span>.<span style="color:#960050;background-color:#1e0010">学部</span> <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">学部リスト</span>.<span style="color:#960050;background-color:#1e0010">学部</span>;
+</span></span></code></pre></div><p><a href="https://gyazo.com/bc3c651cc6b374386e8e5102e4d61b64"><img src="https://i.gyazo.com/bc3c651cc6b374386e8e5102e4d61b64.png" alt="Image from Gyazo"></a></p>
 <p>一致するドメインを条件として結合(自然結合)するには <strong>NATURAL INNER JOIN</strong> を用います．
 上述の方法とは異なり，具体的に条件となる属性は指定しません．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 自然結合 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">NATURAL</span> <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
-</code></pre></div><p>それでは，【学生リスト】と【学部リスト】を自然結合してみましょう．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 自然結合 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">NATURAL</span> <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span><span style="color:#ae81ff">2</span>;
+</span></span></code></pre></div><p>それでは，【学生リスト】と【学部リスト】を自然結合してみましょう．
 自動的に「学部」を条件として結合されていることがわかります．
 また，冗長な属性は取り除かれています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* 【学生リスト】と【学部リスト】を自然結合 */</span>
-<span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">NATURAL</span> <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">学部リスト</span>;
-</code></pre></div><p><a href="https://gyazo.com/703bd2fb41bf47098442cb5aaebca7e1"><img src="https://i.gyazo.com/703bd2fb41bf47098442cb5aaebca7e1.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#75715e">/* 【学生リスト】と【学部リスト】を自然結合 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> <span style="color:#960050;background-color:#1e0010">学生リスト</span> <span style="color:#66d9ef">NATURAL</span> <span style="color:#66d9ef">INNER</span> <span style="color:#66d9ef">JOIN</span> <span style="color:#960050;background-color:#1e0010">学部リスト</span>;
+</span></span></code></pre></div><p><a href="https://gyazo.com/703bd2fb41bf47098442cb5aaebca7e1"><img src="https://i.gyazo.com/703bd2fb41bf47098442cb5aaebca7e1.png" alt="Image from Gyazo"></a></p>
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
   <h3 style="color:#006600">

@@ -87,15 +87,11 @@
 
 
 
-  <meta property="og:description" content="筋電位センサー  今回はBITalinoの 筋電位センサー（EMG） を利用してみましょう． 筋電位センサーの電極ケーブルは3極で構成され，中央が基準電極（REF），左右が正極（&#43;）と負極（-）を表しています． このように，2極の信号の差分を増幅して取得する方法は 作動増幅 と呼ばれ，生体センシングではよく用いられる方法です．
-
+  <meta property="og:description" content="筋電位センサー 今回はBITalinoの 筋電位センサー（EMG） を利用してみましょう． 筋電位センサーの電極ケーブルは3極で構成され，中央が基準電極（REF），左右が正極（&#43;）と負極（-）を表しています． このように，2極の信号の差分を増幅して取得する方法は 作動増幅 と呼ばれ，生体センシングではよく用いられる方法です．
 筋電位センサーを腕に取り付けます． 基準となる基準電極は肘の骨がある部分に配置します． また，正極と負極は筋繊維に沿って配置します．
-
 OpenSignalsでデータを取得してみましょう． まずは，BITalinoの設定を変更します． 今回はA1に筋電位センサー（EMG）を接続しているため，EMG を指定しています．
-
 計測を開始すると，0を平均として小さなスパイク状の波形が発生している． ここで，腕に力をいれると，波の振幅は大きくなることがわかります．
-
-Python APIを利用した筋電位の取得  それでは，Python APIを利用して筋電位のデータを取得してみましょう． データの取得方法は光センサーのときと全く同じです． しかし，取得されるデータはBITalino独自の単位となっているため， 一般的なミリボルト（mV）を単位とするには下記の式を用いて変換が必要です （詳細は公式ドキュメント参照）．
+Python APIを利用した筋電位の取得 それでは，Python APIを利用して筋電位のデータを取得してみましょう． データの取得方法は光センサーのときと全く同じです． しかし，取得されるデータはBITalino独自の単位となっているため， 一般的なミリボルト（mV）を単位とするには下記の式を用いて変換が必要です （詳細は公式ドキュメント参照）．
 $$ EMG(mV) = \frac{ (x / 2^n - 1 / 2) \cdot VCC \cdot 1000 }{ GAIN } $$
 上記の式において，$n$は信号のビット幅であり10ビット，$VCC$は電源電圧であり3.3ボルト，$GAIN$はセンサーゲインであり1009を指定します． この変換したデータ（mV）の 平均，標準偏差，最大値 を求めてみることにします．
 BITS = 10 # 信号のビット幅 VCC = 3.3 # 電源電圧 GAIN = 1009 # センサーゲイン emg = (((((data[:,5] / 2**BITS) - 1/2) * VCC) / GAIN) * 1000) # 単位変換（mV） emg = np." />
@@ -113,15 +109,11 @@ BITS = 10 # 信号のビット幅 VCC = 3.3 # 電源電圧 GAIN = 1009 # セン�
 
 
 
-  <meta name="twitter:description" content="筋電位センサー  今回はBITalinoの 筋電位センサー（EMG） を利用してみましょう． 筋電位センサーの電極ケーブルは3極で構成され，中央が基準電極（REF），左右が正極（&#43;）と負極（-）を表しています． このように，2極の信号の差分を増幅して取得する方法は 作動増幅 と呼ばれ，生体センシングではよく用いられる方法です．
-
+  <meta name="twitter:description" content="筋電位センサー 今回はBITalinoの 筋電位センサー（EMG） を利用してみましょう． 筋電位センサーの電極ケーブルは3極で構成され，中央が基準電極（REF），左右が正極（&#43;）と負極（-）を表しています． このように，2極の信号の差分を増幅して取得する方法は 作動増幅 と呼ばれ，生体センシングではよく用いられる方法です．
 筋電位センサーを腕に取り付けます． 基準となる基準電極は肘の骨がある部分に配置します． また，正極と負極は筋繊維に沿って配置します．
-
 OpenSignalsでデータを取得してみましょう． まずは，BITalinoの設定を変更します． 今回はA1に筋電位センサー（EMG）を接続しているため，EMG を指定しています．
-
 計測を開始すると，0を平均として小さなスパイク状の波形が発生している． ここで，腕に力をいれると，波の振幅は大きくなることがわかります．
-
-Python APIを利用した筋電位の取得  それでは，Python APIを利用して筋電位のデータを取得してみましょう． データの取得方法は光センサーのときと全く同じです． しかし，取得されるデータはBITalino独自の単位となっているため， 一般的なミリボルト（mV）を単位とするには下記の式を用いて変換が必要です （詳細は公式ドキュメント参照）．
+Python APIを利用した筋電位の取得 それでは，Python APIを利用して筋電位のデータを取得してみましょう． データの取得方法は光センサーのときと全く同じです． しかし，取得されるデータはBITalino独自の単位となっているため， 一般的なミリボルト（mV）を単位とするには下記の式を用いて変換が必要です （詳細は公式ドキュメント参照）．
 $$ EMG(mV) = \frac{ (x / 2^n - 1 / 2) \cdot VCC \cdot 1000 }{ GAIN } $$
 上記の式において，$n$は信号のビット幅であり10ビット，$VCC$は電源電圧であり3.3ボルト，$GAIN$はセンサーゲインであり1009を指定します． この変換したデータ（mV）の 平均，標準偏差，最大値 を求めてみることにします．
 BITS = 10 # 信号のビット幅 VCC = 3.3 # 電源電圧 GAIN = 1009 # センサーゲイン emg = (((((data[:,5] / 2**BITS) - 1/2) * VCC) / GAIN) * 1000) # 単位変換（mV） emg = np." />
@@ -223,30 +215,30 @@ BITS = 10 # 信号のビット幅 VCC = 3.3 # 電源電圧 GAIN = 1009 # セン�
 <p>$$ EMG(mV) = \frac{ (x / 2^n - 1 / 2) \cdot VCC \cdot 1000 }{ GAIN } $$</p>
 <p>上記の式において，$n$は信号のビット幅であり10ビット，$VCC$は電源電圧であり3.3ボルト，$GAIN$はセンサーゲインであり1009を指定します．
 この変換したデータ（mV）の <strong>平均</strong>，<strong>標準偏差</strong>，<strong>最大値</strong> を求めてみることにします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">BITS <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e"># 信号のビット幅</span>
-VCC <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.3</span> <span style="color:#75715e"># 電源電圧</span>
-GAIN <span style="color:#f92672">=</span> <span style="color:#ae81ff">1009</span> <span style="color:#75715e"># センサーゲイン</span>
-
-emg <span style="color:#f92672">=</span> (((((data[:,<span style="color:#ae81ff">5</span>] <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">**</span>BITS) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> VCC) <span style="color:#f92672">/</span> GAIN) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>) <span style="color:#75715e"># 単位変換（mV）</span>
-emg <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>abs(emg) <span style="color:#75715e"># 絶対値</span>
-
-<span style="color:#66d9ef">print</span>(emg)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Average:&#34;</span> <span style="color:#f92672">+</span> str(np<span style="color:#f92672">.</span>average(emg)))
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Standard Deviation:&#34;</span> <span style="color:#f92672">+</span> str(np<span style="color:#f92672">.</span>std(emg)))
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Maximum:&#34;</span> <span style="color:#f92672">+</span> str(np<span style="color:#f92672">.</span>max(emg)))
-</code></pre></div><p>下記は腕に力を入れていないときと，力をいれたときの比較です．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>BITS <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e"># 信号のビット幅</span>
+</span></span><span style="display:flex;"><span>VCC <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.3</span> <span style="color:#75715e"># 電源電圧</span>
+</span></span><span style="display:flex;"><span>GAIN <span style="color:#f92672">=</span> <span style="color:#ae81ff">1009</span> <span style="color:#75715e"># センサーゲイン</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>emg <span style="color:#f92672">=</span> (((((data[:,<span style="color:#ae81ff">5</span>] <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">**</span>BITS) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> VCC) <span style="color:#f92672">/</span> GAIN) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>) <span style="color:#75715e"># 単位変換（mV）</span>
+</span></span><span style="display:flex;"><span>emg <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>abs(emg) <span style="color:#75715e"># 絶対値</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(emg)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Average:&#34;</span> <span style="color:#f92672">+</span> str(np<span style="color:#f92672">.</span>average(emg)))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Standard Deviation:&#34;</span> <span style="color:#f92672">+</span> str(np<span style="color:#f92672">.</span>std(emg)))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Maximum:&#34;</span> <span style="color:#f92672">+</span> str(np<span style="color:#f92672">.</span>max(emg)))
+</span></span></code></pre></div><p>下記は腕に力を入れていないときと，力をいれたときの比較です．
 平均，標準偏差，最大値のいずれも，力を入れたときの方が大きな値となっています．
 これは，力をいれると波形の振幅が大きくなることが理由です．
 このため，適当な <strong>閾値</strong> を定めれば，どちらの状態かを判定することができそうです（後述では閾値を <strong>0.3</strong> に設定）．</p>
 <p>【力を入れていないとき】</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Average:0.02015357872893954 # 平均
-Standard Deviation:0.01117134026621993 # 標準偏差
-Maximum:0.04152084365708622 # 最大値
-</code></pre></div><p>【力を入れたとき】</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Average:0.06394209923191277 # 平均
-Standard Deviation:0.05738557855750504 # 標準偏差
-Maximum:0.35133021555996036 # 最大値
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>Average:0.02015357872893954 # 平均
+</span></span><span style="display:flex;"><span>Standard Deviation:0.01117134026621993 # 標準偏差
+</span></span><span style="display:flex;"><span>Maximum:0.04152084365708622 # 最大値
+</span></span></code></pre></div><p>【力を入れたとき】</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>Average:0.06394209923191277 # 平均
+</span></span><span style="display:flex;"><span>Standard Deviation:0.05738557855750504 # 標準偏差
+</span></span><span style="display:flex;"><span>Maximum:0.35133021555996036 # 最大値
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   コミュニケーション・ボードの実装
 </h1>
 
@@ -256,22 +248,22 @@ Maximum:0.35133021555996036 # 最大値
 <p>下記が閾値を利用して，力の有無を判定する関数です．
 この関数は，閾値（THRESHOLD）を <strong>0.3</strong> とし，
 取得した値が閾値を超えればTrue，越えなければFalseを返します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">selected</span>():
-    BITS <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e"># 信号のビット幅</span>
-    VCC <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.3</span> <span style="color:#75715e"># 操作電圧</span>
-    GAIN <span style="color:#f92672">=</span> <span style="color:#ae81ff">1009</span> <span style="color:#75715e"># センサーゲイン</span>
-    THRESHOLD <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.3</span> <span style="color:#75715e"># 閾値</span>
-
-    data <span style="color:#f92672">=</span> device<span style="color:#f92672">.</span>read(nSamples)
-    emg <span style="color:#f92672">=</span> (((((data[:,<span style="color:#ae81ff">5</span>] <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">**</span>BITS) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> VCC) <span style="color:#f92672">/</span> GAIN) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>) <span style="color:#75715e"># 単位変換（mV）</span>
-    emg <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>abs(emg) <span style="color:#75715e"># 絶対値</span>
-    max_value <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max(emg) <span style="color:#75715e"># 最大値</span>
-
-    <span style="color:#66d9ef">if</span> max_value <span style="color:#f92672">&gt;</span> THRESHOLD:
-        <span style="color:#66d9ef">return</span> True
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">return</span> False
-</code></pre></div><p>1秒ごとにフォーカスが移動するコミュニケーション・ボードを作成し，
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">selected</span>():
+</span></span><span style="display:flex;"><span>    BITS <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#75715e"># 信号のビット幅</span>
+</span></span><span style="display:flex;"><span>    VCC <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.3</span> <span style="color:#75715e"># 操作電圧</span>
+</span></span><span style="display:flex;"><span>    GAIN <span style="color:#f92672">=</span> <span style="color:#ae81ff">1009</span> <span style="color:#75715e"># センサーゲイン</span>
+</span></span><span style="display:flex;"><span>    THRESHOLD <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.3</span> <span style="color:#75715e"># 閾値</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> device<span style="color:#f92672">.</span>read(nSamples)
+</span></span><span style="display:flex;"><span>    emg <span style="color:#f92672">=</span> (((((data[:,<span style="color:#ae81ff">5</span>] <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">**</span>BITS) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> VCC) <span style="color:#f92672">/</span> GAIN) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>) <span style="color:#75715e"># 単位変換（mV）</span>
+</span></span><span style="display:flex;"><span>    emg <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>abs(emg) <span style="color:#75715e"># 絶対値</span>
+</span></span><span style="display:flex;"><span>    max_value <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max(emg) <span style="color:#75715e"># 最大値</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> max_value <span style="color:#f92672">&gt;</span> THRESHOLD:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span></code></pre></div><p>1秒ごとにフォーカスが移動するコミュニケーション・ボードを作成し，
 上記の関数でタイミングよく選択することで合成音声を発話します．
 下記の動画がデモとなります．</p>
 
