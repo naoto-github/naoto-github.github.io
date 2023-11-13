@@ -336,15 +336,23 @@ $$</p>
 <p>式中の群間平方和は，各群の平均値を期待値とした，ばらつきの大きさです．
 最初に各群の平均値を算出します．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mu <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>mean()
-<span style="color:#66d9ef">print</span>(mu)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">A小学校    11.94
+mu_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(mu)
+mu_df <span style="color:#f92672">=</span> mu_df<span style="color:#f92672">.</span>transpose()
+display(mu_df)
+</code></pre></div><p><a href="https://gyazo.com/29df06d5a825bc52dbde09bb6865d3b7"><img src="https://i.gyazo.com/29df06d5a825bc52dbde09bb6865d3b7.png" alt="Image from Gyazo"></a></p>
+<!--
+```txt
+A小学校    11.94
 B小学校    11.82
 C小学校    10.54
 dtype: float64
-</code></pre></div><p>次に，算出した平均値を期待値と考え，サンプルのデータを期待値に置き換えます．</p>
+```
+-->
+<p>次に，算出した平均値を期待値と考え，サンプルのデータを期待値に置き換えます．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sn_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame()
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(df)):
-    sn_df <span style="color:#f92672">=</span> sn_df<span style="color:#f92672">.</span>append(mu, ignore_index<span style="color:#f92672">=</span>True)
+    sn_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([sn_df, mu_df])
+sn_df <span style="color:#f92672">=</span> sn_df<span style="color:#f92672">.</span>reset_index(drop<span style="color:#f92672">=</span>True)
 display(sn_df)
 </code></pre></div><p><a href="https://gyazo.com/b73af9150102c0698baaf675bf536a6d"><img src="https://i.gyazo.com/b73af9150102c0698baaf675bf536a6d.png" alt="Image from Gyazo"></a></p>
 <p>この期待値から，3群全体の平均値を引くことで，相対的な期待値を算出します．</p>
