@@ -249,7 +249,7 @@ SQLiteはアプリに組み込まれるなどの形で，ソフトウェア（�
 テーブルに含まれる<strong>属性</strong>は <strong>データ型</strong> と <strong>制約</strong> と共に複数記述することが可能です．
 ここで，データ型とはデータの種類を表し，
 INTEGER（整数），REAL（小数），TEXT（文字列），BLOB（音声や画像）のいずれかを指定します．
-また，制約は主キーを指定するときに用いられ，省略することも可能です．</p>
+また，制約は主キーなどを指定するときに用いられ，省略することも可能です．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">/* CREATE文 */</span>
 <span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> <span style="color:#960050;background-color:#1e0010">テーブル名</span>
 (
@@ -287,7 +287,7 @@ INTEGER（整数），REAL（小数），TEXT（文字列），BLOB（音声や�
 <p>それでは，下記の【学生リスト】を作成してみましょう．
 学籍番号が主キーであることに注意してください．
 CREATE文で主キーを指定するには，
-制約として <strong>PRIMARY KEY</strong> と記述します．</p>
+制約として <strong>PRIMARY KEY</strong> と記述します（<strong>UNIQUE</strong>，<strong>NOT NULL</strong>なども可）．</p>
 <table>
 <thead>
 <tr>
@@ -387,6 +387,9 @@ SELECT文の詳しい使い方は次々回に解説します．</p>
   
 </div>
 
+<p>SQLiteでは，主キー制約（PRIMARY KEY）を設定しても，<code>NULL</code>でレコードを登録できてしまいます．
+これは，SQLiteの初期バージョンの不具合だそうで，互換性を維持するため現在でも<code>NULL</code>で登録できるようになっているそうです（参照: <a href="https://sqlite.org/lang_createtable.html#the_primary_key">SQLite Syntax</a>）．
+このため，<code>NULL</code>を許容しない場合は，<code>NOT NULL</code>制約を設定する必要があることに注意してください．</p>
 <div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
   
   <h3 style="color:#006600">
