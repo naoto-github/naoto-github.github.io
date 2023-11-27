@@ -87,7 +87,7 @@
 
 
 
-  <meta property="og:description" content="最短経路問題  重み付き有向グラフの2点間を結ぶ最短経路を導出する 最短経路問題 に挑戦しましょう． 最短経路問題も，最適生産計画と同様に，線形計画問題の一つとして扱うことが可能です．
+  <meta property="og:description" content="最短経路問題重み付き有向グラフの2点間を結ぶ最短経路を導出する 最短経路問題 に挑戦しましょう． 最短経路問題も，最適生産計画と同様に，線形計画問題の一つとして扱うことが可能です．
 例題   AからFまでの6つの都市（ノード）がある． Aを始点，Fを終点としたとき，2都市間を結ぶ最短の経路を求めよ． このとき，都市間の移動はエッジの向きに限定される． また，都市間の距離（コスト）は，エッジの重みとして与えられる．  
 まずは，解となり得る経路を列挙してみましょう． 経路の距離を比較してみると，$A \rightarrow B \rightarrow D \rightarrow F$が最短であることが分かります．
 $$ A \rightarrow B \rightarrow D \rightarrow F （距離: 13） $$
@@ -110,7 +110,7 @@ $$ 経路長 = \sum_{i,j \in E} w_{ij} \cdot x_{ij} $$" />
 
 
 
-  <meta name="twitter:description" content="最短経路問題  重み付き有向グラフの2点間を結ぶ最短経路を導出する 最短経路問題 に挑戦しましょう． 最短経路問題も，最適生産計画と同様に，線形計画問題の一つとして扱うことが可能です．
+  <meta name="twitter:description" content="最短経路問題重み付き有向グラフの2点間を結ぶ最短経路を導出する 最短経路問題 に挑戦しましょう． 最短経路問題も，最適生産計画と同様に，線形計画問題の一つとして扱うことが可能です．
 例題   AからFまでの6つの都市（ノード）がある． Aを始点，Fを終点としたとき，2都市間を結ぶ最短の経路を求めよ． このとき，都市間の移動はエッジの向きに限定される． また，都市間の距離（コスト）は，エッジの重みとして与えられる．  
 まずは，解となり得る経路を列挙してみましょう． 経路の距離を比較してみると，$A \rightarrow B \rightarrow D \rightarrow F$が最短であることが分かります．
 $$ A \rightarrow B \rightarrow D \rightarrow F （距離: 13） $$
@@ -477,8 +477,13 @@ Excelのソルバーで導出された解と同じ，$A \rightarrow B \rightarro
 </h1>
 
 <p>新たにノードGを追加し，AからFの最短経路を算出しなさい．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df2 <span style="color:#f92672">=</span> df<span style="color:#f92672">.</span>append({<span style="color:#e6db74">&#34;始点&#34;</span>:<span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;終点&#34;</span>:<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;コスト&#34;</span>:<span style="color:#ae81ff">1</span>}, ignore_index<span style="color:#f92672">=</span>True)
-df2 <span style="color:#f92672">=</span> df2<span style="color:#f92672">.</span>append({<span style="color:#e6db74">&#34;始点&#34;</span>:<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;終点&#34;</span>:<span style="color:#e6db74">&#34;D&#34;</span>, <span style="color:#e6db74">&#34;コスト&#34;</span>:<span style="color:#ae81ff">2</span>}, ignore_index<span style="color:#f92672">=</span>True)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_temp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame({
+    <span style="color:#e6db74">&#34;始点&#34;</span>: [<span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;G&#34;</span>],
+    <span style="color:#e6db74">&#34;終点&#34;</span>: [<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>],
+    <span style="color:#e6db74">&#34;コスト&#34;</span>: [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]
+})
+
+df2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat([df, df_temp])<span style="color:#f92672">.</span>reset_index(drop<span style="color:#f92672">=</span>True)
 display(df2)
 </code></pre></div><p><a href="https://gyazo.com/eb3f47fba7d5711b8e99fddf687cd884"><img src="https://i.gyazo.com/eb3f47fba7d5711b8e99fddf687cd884.png" alt="Image from Gyazo"></a></p>
 <p><a href="https://gyazo.com/8f54fb5933763e2433a1a55f76634c9d"><img src="https://i.gyazo.com/8f54fb5933763e2433a1a55f76634c9d.png" alt="Image from Gyazo"></a></p>
