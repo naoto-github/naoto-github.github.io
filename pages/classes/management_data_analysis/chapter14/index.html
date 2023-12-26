@@ -87,7 +87,7 @@
 
 
 
-  <meta property="og:description" content="主成分分析  主成分分析(Principal Component Analysis: PCA) は，複数の変数を合成して，少数の変数を生成することで，次元圧縮・削減することを目的とします． 合成された変数は 主成分 と呼ばれ，寄与率(全体に占める分散の割合) が大きい順に，第1主成分，第2主成分と呼ばれます．
+  <meta property="og:description" content="主成分分析主成分分析(Principal Component Analysis: PCA) は，複数の変数を合成して，少数の変数を生成することで，次元圧縮・削減することを目的とします． 合成された変数は 主成分 と呼ばれ，寄与率(全体に占める分散の割合) が大きい順に，第1主成分，第2主成分と呼ばれます．
 変数$X = (x_1, x_2, \cdots, x_n)$を合成した主成分を考えます． ここで，変数の重みを表す主成分負荷量（Loadings）を$W=(w_1, w_2, \cdots, w_n)$と表すことにします． ただし，主成分負荷量を表すベクトル$W$の長さは$|W|=1$とします． このとき，主成分の軸上の値となる主成分得点（Score）は，$X$と$W$の内積で表されます．
 $$ W \cdot X = w_1 \cdot x_1 &#43; w_2 \cdot x_2 &#43; \cdots &#43; w_n \cdot x_n $$
 $$ |W| = \sqrt{w_1^2 &#43; w_2^2 &#43; \cdots &#43; w_n^2} = 1 $$
@@ -107,7 +107,7 @@ $$ W \cdot X = |W| \cdot |X| \cdot \cos{\theta} = |X| \cdot \cos{\theta} $$" />
 
 
 
-  <meta name="twitter:description" content="主成分分析  主成分分析(Principal Component Analysis: PCA) は，複数の変数を合成して，少数の変数を生成することで，次元圧縮・削減することを目的とします． 合成された変数は 主成分 と呼ばれ，寄与率(全体に占める分散の割合) が大きい順に，第1主成分，第2主成分と呼ばれます．
+  <meta name="twitter:description" content="主成分分析主成分分析(Principal Component Analysis: PCA) は，複数の変数を合成して，少数の変数を生成することで，次元圧縮・削減することを目的とします． 合成された変数は 主成分 と呼ばれ，寄与率(全体に占める分散の割合) が大きい順に，第1主成分，第2主成分と呼ばれます．
 変数$X = (x_1, x_2, \cdots, x_n)$を合成した主成分を考えます． ここで，変数の重みを表す主成分負荷量（Loadings）を$W=(w_1, w_2, \cdots, w_n)$と表すことにします． ただし，主成分負荷量を表すベクトル$W$の長さは$|W|=1$とします． このとき，主成分の軸上の値となる主成分得点（Score）は，$X$と$W$の内積で表されます．
 $$ W \cdot X = w_1 \cdot x_1 &#43; w_2 \cdot x_2 &#43; \cdots &#43; w_n \cdot x_n $$
 $$ |W| = \sqrt{w_1^2 &#43; w_2^2 &#43; \cdots &#43; w_n^2} = 1 $$
@@ -436,7 +436,41 @@ plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;�
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 寄与率</span>
 pca<span style="color:#f92672">.</span>explained_variance_ratio_
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">array([0.58329665, 0.11521758])
-</code></pre></div><h3>参考書籍</h3>
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  課題
+</h1>
+
+<p>ワインのデータを主成分分析して，第1主成分と第2主成分を求めなさい．
+各データはアルコール度数，りんご酸など13の特徴量で構成されている．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_wine
+
+data <span style="color:#f92672">=</span> load_wine()
+
+wine_columns <span style="color:#f92672">=</span> [
+    <span style="color:#e6db74">&#34;アルコール度数&#34;</span>,
+    <span style="color:#e6db74">&#34;リンゴ酸&#34;</span>,
+    <span style="color:#e6db74">&#34;灰分&#34;</span>,
+    <span style="color:#e6db74">&#34;灰分のアルカリ度&#34;</span>,
+    <span style="color:#e6db74">&#34;マグネシウム&#34;</span>,
+    <span style="color:#e6db74">&#34;全フェノール含量&#34;</span>,
+    <span style="color:#e6db74">&#34;フラボノイド&#34;</span>,
+    <span style="color:#e6db74">&#34;非フラボノイドフェノール&#34;</span>,
+    <span style="color:#e6db74">&#34;プロアントシアニン&#34;</span>,
+    <span style="color:#e6db74">&#34;色の濃さ&#34;</span>,
+    <span style="color:#e6db74">&#34;色相&#34;</span>,
+    <span style="color:#e6db74">&#34;希釈ワイン溶液のOD280／OD315&#34;</span>,
+    <span style="color:#e6db74">&#34;プロリン&#34;</span>
+]
+
+wine_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">.</span>data)
+wine_df<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> wine_columns
+display(wine_df)
+</code></pre></div><p><a href="https://gyazo.com/f726d991894885fdac07aad091d859fd"><img src="https://i.gyazo.com/f726d991894885fdac07aad091d859fd.png" alt="Image from Gyazo"></a></p>
+<p><a href="https://gyazo.com/b48238df2f8ff8d8d57841d15bc64f10"><img src="https://i.gyazo.com/b48238df2f8ff8d8d57841d15bc64f10.png" alt="Image from Gyazo" width="400"/></a></p>
+<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
+ノートブックのファイル名は <strong>chapter14.ipynb</strong> としてください．</p>
+<h3>参考書籍</h3>
 
 <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=naotoassociat-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=4798171948&linkId=70dbac2599f82106144687868e9ee83d"></iframe>
 
