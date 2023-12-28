@@ -87,14 +87,12 @@
 
 
 
-  <meta property="og:description" content="畳み込みニューラルネットワーク畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
+  <meta property="og:description" content="畳み込みニューラルネットワーク 畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
 入力画像は，畳み込み層に入力され，プーリング層を経て， 全結合層で集約され，最終的に画像の分類を出力します． この畳み込み層とプーリング層の処理は，複数回繰り返されることがあります． 畳み込み層では複数のフィルタを用いて画像の特徴量を抽出します． プーリング層では特徴を失わないように画像サイズを縮小します（ダウンサンプリング）． 全結合層は多層パーセプトロンで用いられる一般的な層と同じです．
-
 畳み込み層 畳み込み層の仕組みを確認しましょう． 畳み込み層の目的は入力された複数の画像の特徴量をフィルタを利用して抽出することです． 下図は$4 \times 4$の入力画像に，$2 \times 2$のフィルタを適用した様子です． 入力画像からフィルタと同じ$2 \times 2$の画素を取り出し，フィルタの値と掛け合わせることで特徴量となります． この操作を1ピクセルだけずらしながら画像全体に適用すると$3 \times 3$の画像に変換されます． フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．
-
 それでは，この畳み込み層の振る舞いを再現してみましょう．
 ノートブックを作成し，ノートブックのタイトルをchapter6 に設定します． まずは，ライブラリのインストールとインポートを行います． ここでは，画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
-!pip install torch !pip install torchvision import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision." />
+!pip install torch !pip install torchvision import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib." />
 
 
 
@@ -109,14 +107,12 @@
 
 
 
-  <meta name="twitter:description" content="畳み込みニューラルネットワーク畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
+  <meta name="twitter:description" content="畳み込みニューラルネットワーク 畳み込みニューラルネットワーク(Convolutional Neural Network: CNN) は， 画像や動画の分類に用いられる特殊なニューラルネットワークです． CNNは， 畳み込み層(Convolutional Layer) ， プーリング層(Pooling Layer) ， 全結合層(Full Connected Layer) の3種類で構成されます．
 入力画像は，畳み込み層に入力され，プーリング層を経て， 全結合層で集約され，最終的に画像の分類を出力します． この畳み込み層とプーリング層の処理は，複数回繰り返されることがあります． 畳み込み層では複数のフィルタを用いて画像の特徴量を抽出します． プーリング層では特徴を失わないように画像サイズを縮小します（ダウンサンプリング）． 全結合層は多層パーセプトロンで用いられる一般的な層と同じです．
-
 畳み込み層 畳み込み層の仕組みを確認しましょう． 畳み込み層の目的は入力された複数の画像の特徴量をフィルタを利用して抽出することです． 下図は$4 \times 4$の入力画像に，$2 \times 2$のフィルタを適用した様子です． 入力画像からフィルタと同じ$2 \times 2$の画素を取り出し，フィルタの値と掛け合わせることで特徴量となります． この操作を1ピクセルだけずらしながら画像全体に適用すると$3 \times 3$の画像に変換されます． フィルタの値を変えることで，垂直方向の輪郭線や，水平方向の輪郭線を強調することが出来ます．
-
 それでは，この畳み込み層の振る舞いを再現してみましょう．
 ノートブックを作成し，ノートブックのタイトルをchapter6 に設定します． まずは，ライブラリのインストールとインポートを行います． ここでは，画像処理ライブラリのPillowと 数値計算ライブラリのScipyも追加します．
-!pip install torch !pip install torchvision import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision." />
+!pip install torch !pip install torchvision import torch import torch.nn as nn import torch.nn.functional as F import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib." />
 
 
 
@@ -212,71 +208,71 @@ CNNは， <strong>畳み込み層(Convolutional Layer)</strong> ， <strong>プ�
 まずは，ライブラリのインストールとインポートを行います．
 ここでは，画像処理ライブラリの<a href="http://www.pythonware.com/products/pil/">Pillow</a>と
 数値計算ライブラリの<a href="https://www.scipy.org/">Scipy</a>も追加します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install torch
-!pip install torchvision
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
-<span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
-<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#f92672">as</span> F
-<span style="color:#f92672">import</span> torch.optim <span style="color:#f92672">as</span> optim
-<span style="color:#f92672">import</span> torchvision
-<span style="color:#f92672">import</span> torchvision.transforms <span style="color:#f92672">as</span> transforms
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">from</span> scipy <span style="color:#f92672">import</span> signal
-<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-</code></pre></div><p>前回と同じ<a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10</a>データセットを利用します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>!pip install torch
+</span></span><span style="display:flex;"><span>!pip install torchvision
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.optim <span style="color:#66d9ef">as</span> optim
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torchvision
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torchvision.transforms <span style="color:#66d9ef">as</span> transforms
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy <span style="color:#f92672">import</span> signal
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+</span></span></code></pre></div><p>前回と同じ<a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10</a>データセットを利用します．
 また，簡単化のためRGB画像をグレースケール画像に変換します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, download<span style="color:#f92672">=</span>True)
-image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
-gray_image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;L&#39;</span>) <span style="color:#75715e">#グレースケールに変換</span>
-plt<span style="color:#f92672">.</span>imshow(gray_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>) <span style="color:#75715e">#グレースケールとして表示</span>
-</code></pre></div><p><a href="https://gyazo.com/d4844e881162d9abcd2b30dbd637088d"><img src="https://i.gyazo.com/d4844e881162d9abcd2b30dbd637088d.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>gray_image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;L&#39;</span>) <span style="color:#75715e">#グレースケールに変換</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(gray_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>) <span style="color:#75715e">#グレースケールとして表示</span>
+</span></span></code></pre></div><p><a href="https://gyazo.com/d4844e881162d9abcd2b30dbd637088d"><img src="https://i.gyazo.com/d4844e881162d9abcd2b30dbd637088d.png" alt="Image from Gyazo"></a></p>
 <p><strong>PIL.Image.Image</strong> を <strong>Numpy</strong> に変換します．
 $32 \times 32 $の行列でグレースケールの画素値が保持されています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">gray_image <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>asarray(gray_image)
-<span style="color:#66d9ef">print</span>(gray_image<span style="color:#f92672">.</span>shape)
-<span style="color:#66d9ef">print</span>(gray_image[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>])
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">32</span>)
-<span style="color:#ae81ff">61</span>
-</code></pre></div><p>水平方向の輪郭線を強調するための$3 \times 3$のフィルタを作成します．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>gray_image <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>asarray(gray_image)
+</span></span><span style="display:flex;"><span>print(gray_image<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span>print(gray_image[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>])
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">32</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">61</span>
+</span></span></code></pre></div><p>水平方向の輪郭線を強調するための$3 \times 3$のフィルタを作成します．</p>
 <p>$$
 \left(
 \begin{array}{ccc}
--1 &amp; -1 &amp; -1 \\\<br>
-2 &amp; 2 &amp; 2	\\\<br>
+-1 &amp; -1 &amp; -1 \\\
+2 &amp; 2 &amp; 2	\\\
 -1 &amp; -1 &amp; -1<br>
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">filter <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>],[<span style="color:#ae81ff">2.0</span>, <span style="color:#ae81ff">2.0</span>, <span style="color:#ae81ff">2.0</span>],[<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>]])
-<span style="color:#66d9ef">print</span>(filter<span style="color:#f92672">.</span>shape)
-<span style="color:#66d9ef">print</span>(filter)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)
-[[<span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span>]
- [ <span style="color:#ae81ff">2.</span>  <span style="color:#ae81ff">2.</span>  <span style="color:#ae81ff">2.</span>]
- [<span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span>]]
-</code></pre></div><p><code>signal.convolve2d()</code>で2次元の畳み込みを行います．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>filter <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>],[<span style="color:#ae81ff">2.0</span>, <span style="color:#ae81ff">2.0</span>, <span style="color:#ae81ff">2.0</span>],[<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>]])
+</span></span><span style="display:flex;"><span>print(filter<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span>print(filter)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>[[<span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span>]
+</span></span><span style="display:flex;"><span> [ <span style="color:#ae81ff">2.</span>  <span style="color:#ae81ff">2.</span>  <span style="color:#ae81ff">2.</span>]
+</span></span><span style="display:flex;"><span> [<span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1.</span>]]
+</span></span></code></pre></div><p><code>signal.convolve2d()</code>で2次元の畳み込みを行います．
 出力画像は$30 \times 30$に縮小されることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">converted_image <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>convolve2d(gray_image, filter, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;valid&#34;</span>)
-<span style="color:#66d9ef">print</span>(converted_image<span style="color:#f92672">.</span>shape)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-(<span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">30</span>)
-</code></pre></div><p>画像を <strong>Numpy</strong> から， <strong>PIL.Imgage.Image</strong> に戻して表示してみます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>converted_image <span style="color:#f92672">=</span> signal<span style="color:#f92672">.</span>convolve2d(gray_image, filter, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;valid&#34;</span>)
+</span></span><span style="display:flex;"><span>print(converted_image<span style="color:#f92672">.</span>shape)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">30</span>)
+</span></span></code></pre></div><p>画像を <strong>Numpy</strong> から， <strong>PIL.Imgage.Image</strong> に戻して表示してみます．
 水平方向の輪郭線に強く反応した画像が生成されていることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">converted_image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(converted_image)
-plt<span style="color:#f92672">.</span>imshow(converted_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/f920da097366590a8878c7f050511c6e"><img src="https://i.gyazo.com/f920da097366590a8878c7f050511c6e.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>converted_image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(converted_image)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(converted_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>)
+</span></span></code></pre></div><p><a href="https://gyazo.com/f920da097366590a8878c7f050511c6e"><img src="https://i.gyazo.com/f920da097366590a8878c7f050511c6e.png" alt="Image from Gyazo"></a></p>
 <p>同様の操作で垂直の輪郭線を強調するフィルタを適用すると下記の画像となります．</p>
 <p>$$
 \left(
 \begin{array}{ccc}
--1 &amp; 2 &amp; -1 \\\<br>
--1 &amp; 2 &amp; -1	\\\<br>
+-1 &amp; 2 &amp; -1 \\\
+-1 &amp; 2 &amp; -1	\\\
 -1 &amp; 2 &amp; -1<br>
 \end{array}
-\right)\<br>
+\right)\
 $$</p>
 <p><a href="https://gyazo.com/a493c53745059e91cfab6262bb2ff5c2"><img src="https://i.gyazo.com/a493c53745059e91cfab6262bb2ff5c2.png" alt="Image from Gyazo"></a></p>
 <p>このようにフィルタを複数用意することで，画像の異なる特徴を抽出することが可能です．
@@ -295,26 +291,26 @@ MAXプーリングは対象領域の最大値を代表値とする方法です�
 <p>ここでは，元の$32 \times 32$の画像にMAXプーリングを適用してみます（本来は畳み込み層の出力画像に適用する）．
 最初にプーリング後の値を記録する配列<code>pooled_image</code>を用意します．
 $2 \times 2$のMAXプーリングの適用後に画像サイズは$16 \times 16$になることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pooling_size <span style="color:#f92672">=</span> (<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
-image_size <span style="color:#f92672">=</span> gray_image<span style="color:#f92672">.</span>shape
-pooled_image <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(((int)(image_size[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">/</span>pooling_size[<span style="color:#ae81ff">1</span>]), (int)(image_size[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">/</span>pooling_size[<span style="color:#ae81ff">0</span>]))) <span style="color:#75715e"># 16x16の配列</span>
-</code></pre></div><p>$2 \times 2$の領域から，<code>np.max()</code>で最大値を選択し，<code>pooled_image</code>に記録します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>pooling_size <span style="color:#f92672">=</span> (<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>image_size <span style="color:#f92672">=</span> gray_image<span style="color:#f92672">.</span>shape
+</span></span><span style="display:flex;"><span>pooled_image <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(((int)(image_size[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">/</span>pooling_size[<span style="color:#ae81ff">1</span>]), (int)(image_size[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">/</span>pooling_size[<span style="color:#ae81ff">0</span>]))) <span style="color:#75715e"># 16x16の配列</span>
+</span></span></code></pre></div><p>$2 \times 2$の領域から，<code>np.max()</code>で最大値を選択し，<code>pooled_image</code>に記録します．
 平均プーリングの場合は，<code>np.mean()</code>を利用すればOKです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># MAXプーリング</span>
-<span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> range(pooled_image<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]):
-  <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(pooled_image<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]):
-    head_x <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> pooling_size[<span style="color:#ae81ff">0</span>]
-    head_y <span style="color:#f92672">=</span> y <span style="color:#f92672">*</span> pooling_size[<span style="color:#ae81ff">1</span>]
-    values <span style="color:#f92672">=</span> gray_image[head_y:head_y<span style="color:#f92672">+</span>pooling_size[<span style="color:#ae81ff">1</span>], head_x:head_x<span style="color:#f92672">+</span>pooling_size[<span style="color:#ae81ff">0</span>]]
-    pooled_image[y][x] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max(values) <span style="color:#75715e">#最大値を選択</span>
-</code></pre></div><p>MAXプーリング後の画像とサイズを表示します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># MAXプーリング</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> range(pooled_image<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">1</span>]):
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(pooled_image<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]):
+</span></span><span style="display:flex;"><span>    head_x <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> pooling_size[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>    head_y <span style="color:#f92672">=</span> y <span style="color:#f92672">*</span> pooling_size[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    values <span style="color:#f92672">=</span> gray_image[head_y:head_y<span style="color:#f92672">+</span>pooling_size[<span style="color:#ae81ff">1</span>], head_x:head_x<span style="color:#f92672">+</span>pooling_size[<span style="color:#ae81ff">0</span>]]
+</span></span><span style="display:flex;"><span>    pooled_image[y][x] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max(values) <span style="color:#75715e">#最大値を選択</span>
+</span></span></code></pre></div><p>MAXプーリング後の画像とサイズを表示します．
 元の画像の特徴が圧縮されていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">converted_image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(pooled_image)
-<span style="color:#66d9ef">print</span>(converted_image<span style="color:#f92672">.</span>size)
-plt<span style="color:#f92672">.</span>imshow(converted_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">16</span>)
-</code></pre></div><p><a href="https://gyazo.com/dde45eea521bc595483d29524ede822c"><img src="https://i.gyazo.com/dde45eea521bc595483d29524ede822c.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>converted_image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(pooled_image)
+</span></span><span style="display:flex;"><span>print(converted_image<span style="color:#f92672">.</span>size)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(converted_image, cmap<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gray&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">16</span>)
+</span></span></code></pre></div><p><a href="https://gyazo.com/dde45eea521bc595483d29524ede822c"><img src="https://i.gyazo.com/dde45eea521bc595483d29524ede822c.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ネットワークの学習
 </h1>
@@ -322,16 +318,16 @@ plt<span style="color:#f92672">.</span>imshow(converted_image, cmap<span style="
 <p>それでは，畳込みニューラルネットワークを利用して，CIFAR-10の分類に挑戦しましょう．
 <code>transform=Transforms.ToTensor()</code>オプションを設定して，
 PyTorchで処理可能な形式でデータセットを読み込みます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor())
-</code></pre></div><p>今回も分類問題の難易度を下げるため，
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor())
+</span></span></code></pre></div><p>今回も分類問題の難易度を下げるため，
 ラベルが0(airplane)，1(automobile)，2(bird)のみを対象とします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">my_dataset <span style="color:#f92672">=</span> []
-<span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> dataset:
-    <span style="color:#66d9ef">if</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
-        my_dataset<span style="color:#f92672">.</span>append((image, label))
-</code></pre></div><p>これをバッチサイズ$n=64$のミニバッチ用のデータセットとします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(dataset<span style="color:#f92672">=</span>my_dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>)
-</code></pre></div><p>4層で構成される畳み込みニューラルネットワークを定義します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>my_dataset <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> dataset:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+</span></span><span style="display:flex;"><span>        my_dataset<span style="color:#f92672">.</span>append((image, label))
+</span></span></code></pre></div><p>これをバッチサイズ$n=64$のミニバッチ用のデータセットとします．</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(dataset<span style="color:#f92672">=</span>my_dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>)
+</span></span></code></pre></div><p>4層で構成される畳み込みニューラルネットワークを定義します．
 これまでの方法とは異なり<code>nn.Module</code>を継承した新しいクラスとして定義します．
 コンストラクタである<code>__init__</code>で，畳み込み層1(<code>conv1</code>)，畳み込み層2(<code>conv2</code>)，
 結合層1(<code>fc1</code>)，結合層2(<code>fc2</code>)の順でネットワークの層を定義しています．
@@ -355,103 +351,103 @@ $2 \times 2$でプーリングすると$1/2$のサイズの$5 \times 5$に縮小
 <p><a href="https://gyazo.com/d9cf6509b5c4234e6abf80f891a8d736"><img src="https://i.gyazo.com/d9cf6509b5c4234e6abf80f891a8d736.png" alt="Image from Gyazo"></a></p>
 <p>結果的に，$16(フィルタ数) \times 5 \times 5 = 400$が結合層1の入力数になります(<code>view()</code>で1次元に変換してから入力)．
 これをもう一度，結合層2に伝搬・集約し，最終的にソフトマックスで各ラベルの確率を出力します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(nn<span style="color:#f92672">.</span>Module):
-    <span style="color:#66d9ef">def</span> __init__(self):
-        super(Net, self)<span style="color:#f92672">.</span>__init__()
-        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)) <span style="color:#75715e">#入力チャネル，出力チャネル，フィルタサイズ</span>
-        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)) <span style="color:#75715e">#入力チャネル，出力チャネル，フィルタサイズ</span>
-        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">64</span>) <span style="color:#75715e">#入力数，出力数</span>
-        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">3</span>) <span style="color:#75715e">#入力数，出力数</span>
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
-        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv1(x)), <span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x2でMAXプーリング</span>
-        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv2(x)), <span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x2でMAXプーリング</span>
-        x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>) <span style="color:#75715e">#1次元に整形</span>
-        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>fc1(x))
-        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(self<span style="color:#f92672">.</span>fc2(x), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-        <span style="color:#66d9ef">return</span> x
-
-network <span style="color:#f92672">=</span> Net()
-<span style="color:#66d9ef">print</span>(network)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-Net(
-  (conv1): Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>, kernel_size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), stride<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>))
-  (conv2): Conv2d(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), stride<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>))
-  (fc1): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">400</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, bias<span style="color:#f92672">=</span>True)
-  (fc2): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, bias<span style="color:#f92672">=</span>True)
-)
-</code></pre></div><p>ここで，学習データに対する正解率を確認してみます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(Net, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)) <span style="color:#75715e">#入力チャネル，出力チャネル，フィルタサイズ</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>, (<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>)) <span style="color:#75715e">#入力チャネル，出力チャネル，フィルタサイズ</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">64</span>) <span style="color:#75715e">#入力数，出力数</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>fc2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">3</span>) <span style="color:#75715e">#入力数，出力数</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv1(x)), <span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x2でMAXプーリング</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>max_pool2d(F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv2(x)), <span style="color:#ae81ff">2</span>) <span style="color:#75715e">#2x2でMAXプーリング</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">16</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>) <span style="color:#75715e">#1次元に整形</span>
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>fc1(x))
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>softmax(self<span style="color:#f92672">.</span>fc2(x), dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> x
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>network <span style="color:#f92672">=</span> Net()
+</span></span><span style="display:flex;"><span>print(network)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span>Net(
+</span></span><span style="display:flex;"><span>  (conv1): Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">6</span>, kernel_size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), stride<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>  (conv2): Conv2d(<span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>), stride<span style="color:#f92672">=</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>  (fc1): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">400</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>  (fc2): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>ここで，学習データに対する正解率を確認してみます．
 畳み込みニューラルネットワークの入力の形状は <strong>[バッチサイズ][チャネル数][縦][横]</strong> というテンソルになっている必要があるため，
 <code>torch.unsqueeze</code>で次元を拡張し，バッチサイズ$n=1$のデータセットとして，入力していることに注意してください．
 学習前であるため，$0.33$という低い正解率でした．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-<span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
-    image <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>unsqueeze(image, <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#次元を増やす</span>
-    z <span style="color:#f92672">=</span> network(image)
-    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
-    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
-
-acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(my_dataset)
-<span style="color:#66d9ef">print</span>(acc)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-<span style="color:#ae81ff">0.3333333333333333</span>
-</code></pre></div><p>損失関数と最適化関数を定義します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
+</span></span><span style="display:flex;"><span>    image <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>unsqueeze(image, <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#次元を増やす</span>
+</span></span><span style="display:flex;"><span>    z <span style="color:#f92672">=</span> network(image)
+</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
+</span></span><span style="display:flex;"><span>    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(my_dataset)
+</span></span><span style="display:flex;"><span>print(acc)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0.3333333333333333</span>
+</span></span></code></pre></div><p>損失関数と最適化関数を定義します．
 損失関数は <strong>ソフトマックス交差エントロピー</strong> ，
 最適化関数は <strong>Adam</strong> を採用しました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
-optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>Adam(network<span style="color:#f92672">.</span>parameters())
-</code></pre></div><p>ミニバッチ学習を10エポック繰り返します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+</span></span><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>Adam(network<span style="color:#f92672">.</span>parameters())
+</span></span></code></pre></div><p>ミニバッチ学習を10エポック繰り返します．
 損失の推移を可視化すると，エポックごとに損失が減少していることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss_history <span style="color:#f92672">=</span> []
-
-<span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-
-    loss_epoch <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-
-    <span style="color:#66d9ef">for</span> i, (images, labels) <span style="color:#f92672">in</span> enumerate(loader):
-
-        optimizer<span style="color:#f92672">.</span>zero_grad()
-        z <span style="color:#f92672">=</span> network(images)
-
-        loss <span style="color:#f92672">=</span> criterion(z, labels)
-        loss<span style="color:#f92672">.</span>backward()
-
-        loss_epoch <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
-
-        optimizer<span style="color:#f92672">.</span>step()
-
-    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{epoch} {loss_epoch / i}&#34;</span>)
-    loss_history<span style="color:#f92672">.</span>append(loss_epoch <span style="color:#f92672">/</span> i)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-<span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0.9353420349777254</span>
-<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0.8237722921065795</span>
-<span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0.7915834282707964</span>
-<span style="color:#ae81ff">3</span> <span style="color:#ae81ff">0.7671963142024146</span>
-<span style="color:#ae81ff">4</span> <span style="color:#ae81ff">0.7540506386858785</span>
-<span style="color:#ae81ff">5</span> <span style="color:#ae81ff">0.7422569465433431</span>
-<span style="color:#ae81ff">6</span> <span style="color:#ae81ff">0.7337749562202356</span>
-<span style="color:#ae81ff">7</span> <span style="color:#ae81ff">0.7245291201477377</span>
-<span style="color:#ae81ff">8</span> <span style="color:#ae81ff">0.7186577434723194</span>
-<span style="color:#ae81ff">9</span> <span style="color:#ae81ff">0.7188627052510905</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(loss_history)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;epoch&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;loss&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/3b6fad087fa4adef57e38843a46501cd"><img src="https://i.gyazo.com/3b6fad087fa4adef57e38843a46501cd.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>loss_history <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    loss_epoch <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, (images, labels) <span style="color:#f92672">in</span> enumerate(loader):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>        z <span style="color:#f92672">=</span> network(images)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> criterion(z, labels)
+</span></span><span style="display:flex;"><span>        loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        loss_epoch <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>loss_epoch <span style="color:#f92672">/</span> i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    loss_history<span style="color:#f92672">.</span>append(loss_epoch <span style="color:#f92672">/</span> i)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0.9353420349777254</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0.8237722921065795</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0.7915834282707964</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span> <span style="color:#ae81ff">0.7671963142024146</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span> <span style="color:#ae81ff">0.7540506386858785</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span> <span style="color:#ae81ff">0.7422569465433431</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span> <span style="color:#ae81ff">0.7337749562202356</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">7</span> <span style="color:#ae81ff">0.7245291201477377</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8</span> <span style="color:#ae81ff">0.7186577434723194</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">9</span> <span style="color:#ae81ff">0.7188627052510905</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(loss_history)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;epoch&#34;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;loss&#34;</span>)
+</span></span></code></pre></div><p><a href="https://gyazo.com/3b6fad087fa4adef57e38843a46501cd"><img src="https://i.gyazo.com/3b6fad087fa4adef57e38843a46501cd.png" alt="Image from Gyazo"></a></p>
 <p>最後に正解率を再度計算してみましょう．
 あくまで学習データに対する正解率であり，評価用のデータではないことに注意）．
 正解率は0.846となり，前回の多層パーセプトロンよりも，高い正解率を実現できました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-<span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
-    image <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>unsqueeze(image, <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#次元を増やす</span>
-    z <span style="color:#f92672">=</span> network(image)
-    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
-    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
-
-acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(my_dataset)
-<span style="color:#66d9ef">print</span>(acc)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-<span style="color:#ae81ff">0.8462</span>
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
+</span></span><span style="display:flex;"><span>    image <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>unsqueeze(image, <span style="color:#ae81ff">0</span>) <span style="color:#75715e">#次元を増やす</span>
+</span></span><span style="display:flex;"><span>    z <span style="color:#f92672">=</span> network(image)
+</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
+</span></span><span style="display:flex;"><span>    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(my_dataset)
+</span></span><span style="display:flex;"><span>print(acc)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0.8462</span>
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 

@@ -87,13 +87,13 @@
 
 
 
-  <meta property="og:description" content="DBPediaとはDBPediaは Wikipediaから情報を抽出し， Linked Open Data(LOD) として公開するプロジェクトのことです （LODはウェブでデータを公開・共有するための仕組みのこと）． DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲーム， 組織・団体，生物種，病気などのデータが多言語で管理されており， ジャパンサーチと同様にSPARQLのエンドポイントを介してデータの検索・取得が可能です． 今回はDBPediaから愛知県出身の日本のアーティストを検索してみましょう．
-ウェブページの作成SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，dbpedia.py というファイル名のCGIプログラムで作成します．
-&lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; 
-SPARQLで検索DBPediaのSPARQLのエンドポイントは下記のURLです．
+  <meta property="og:description" content="DBPediaとは DBPediaは Wikipediaから情報を抽出し， Linked Open Data(LOD) として公開するプロジェクトのことです （LODはウェブでデータを公開・共有するための仕組みのこと）． DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲーム， 組織・団体，生物種，病気などのデータが多言語で管理されており， ジャパンサーチと同様にSPARQLのエンドポイントを介してデータの検索・取得が可能です． 今回はDBPediaから愛知県出身の日本のアーティストを検索してみましょう．
+ウェブページの作成 SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，dbpedia.py というファイル名のCGIプログラムで作成します．
+&lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; SPARQLで検索 DBPediaのSPARQLのエンドポイントは下記のURLです．
 http://ja.dbpedia.org/sparql
 SPARQLの検索条件は下記のように記述します． 今回取得するのは，URL，名前(foaf:name)， 概要(dbpedia-owl:abstract)，出身地(prop-ja:origin)の4つのデータです． URLはジャンル(dbpedia-owl:genre) が　J-POP(dbpedia-ja:J-POP) であることを条件としています． また，検索結果から出身地に 愛知県 の文字が含まれるコンテンツだけを抽出しています．
-SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) } 新規に dbpedia.py を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）． dbpedia.py には下記のコードを記述します．" />
+SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) } 新規に dbpedia.py を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）． dbpedia.py には下記のコードを記述します．
+#!/usr/bin/env python from SPARQLWrapper import SPARQLWrapper, JSON print (&#34;Content-type:text/html\n\n&#34;) print(&#34;&lt;!" />
 
 
 
@@ -108,13 +108,13 @@ SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-P
 
 
 
-  <meta name="twitter:description" content="DBPediaとはDBPediaは Wikipediaから情報を抽出し， Linked Open Data(LOD) として公開するプロジェクトのことです （LODはウェブでデータを公開・共有するための仕組みのこと）． DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲーム， 組織・団体，生物種，病気などのデータが多言語で管理されており， ジャパンサーチと同様にSPARQLのエンドポイントを介してデータの検索・取得が可能です． 今回はDBPediaから愛知県出身の日本のアーティストを検索してみましょう．
-ウェブページの作成SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，dbpedia.py というファイル名のCGIプログラムで作成します．
-&lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; 
-SPARQLで検索DBPediaのSPARQLのエンドポイントは下記のURLです．
+  <meta name="twitter:description" content="DBPediaとは DBPediaは Wikipediaから情報を抽出し， Linked Open Data(LOD) として公開するプロジェクトのことです （LODはウェブでデータを公開・共有するための仕組みのこと）． DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲーム， 組織・団体，生物種，病気などのデータが多言語で管理されており， ジャパンサーチと同様にSPARQLのエンドポイントを介してデータの検索・取得が可能です． 今回はDBPediaから愛知県出身の日本のアーティストを検索してみましょう．
+ウェブページの作成 SPARQLの検索結果を表示するページを作成しましょう． 最初に index.html にリンクを追加します． 検索結果を表示するページは，dbpedia.py というファイル名のCGIプログラムで作成します．
+&lt;ul&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-api.py&#34;&gt;ジャパンサーチ 簡易Web API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/js-sparql.py&#34;&gt;ジャパンサーチ SPARQL&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&#34;cgi-bin/dbpedia.py&#34;&gt;DBPedia&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt; SPARQLで検索 DBPediaのSPARQLのエンドポイントは下記のURLです．
 http://ja.dbpedia.org/sparql
 SPARQLの検索条件は下記のように記述します． 今回取得するのは，URL，名前(foaf:name)， 概要(dbpedia-owl:abstract)，出身地(prop-ja:origin)の4つのデータです． URLはジャンル(dbpedia-owl:genre) が　J-POP(dbpedia-ja:J-POP) であることを条件としています． また，検索結果から出身地に 愛知県 の文字が含まれるコンテンツだけを抽出しています．
-SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) } 新規に dbpedia.py を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）． dbpedia.py には下記のコードを記述します．" />
+SELECT ?url ?name ?abstract ?origin WHERE{ ?url dbpedia-owl:genre dbpedia-ja:J-POP; foaf:name ?name; dbpedia-owl:abstract ?abstract; prop-ja:origin ?origin. FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;)) } 新規に dbpedia.py を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）． dbpedia.py には下記のコードを記述します．
+#!/usr/bin/env python from SPARQLWrapper import SPARQLWrapper, JSON print (&#34;Content-type:text/html\n\n&#34;) print(&#34;&lt;!" />
 
 
 
@@ -201,12 +201,12 @@ DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲ�
 <p>SPARQLの検索結果を表示するページを作成しましょう．
 最初に <strong>index.html</strong> にリンクを追加します．
 検索結果を表示するページは，<strong>dbpedia.py</strong> というファイル名のCGIプログラムで作成します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">ul</span>&gt;
-	&lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/js-api.py&#34;</span>&gt;ジャパンサーチ 簡易Web API&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
-	&lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/js-sparql.py&#34;</span>&gt;ジャパンサーチ SPARQL&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
-	&lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/dbpedia.py&#34;</span>&gt;DBPedia&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;      
-&lt;/<span style="color:#f92672">ul</span>&gt;
-</code></pre></div><p><a href="https://gyazo.com/c3c05f7a14ac9acafb5696349680bdd0"><img src="https://i.gyazo.com/c3c05f7a14ac9acafb5696349680bdd0.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">ul</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/js-api.py&#34;</span>&gt;ジャパンサーチ 簡易Web API&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/js-sparql.py&#34;</span>&gt;ジャパンサーチ SPARQL&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>	&lt;<span style="color:#f92672">li</span>&gt;&lt;<span style="color:#f92672">a</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cgi-bin/dbpedia.py&#34;</span>&gt;DBPedia&lt;/<span style="color:#f92672">a</span>&gt;&lt;/<span style="color:#f92672">li</span>&gt;      
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">ul</span>&gt;
+</span></span></code></pre></div><p><a href="https://gyazo.com/c3c05f7a14ac9acafb5696349680bdd0"><img src="https://i.gyazo.com/c3c05f7a14ac9acafb5696349680bdd0.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   SPARQLで検索
 </h1>
@@ -218,82 +218,82 @@ DBPediaでは，人物，地理，音楽アルバム，映画，ビデオ・ゲ�
 概要(dbpedia-owl:abstract)，出身地(prop-ja:origin)の4つのデータです．
 URLは<strong>ジャンル(dbpedia-owl:genre)</strong> が　<strong>J-POP(dbpedia-ja:J-POP)</strong> であることを条件としています．
 また，検索結果から出身地に <strong>愛知県</strong> の文字が含まれるコンテンツだけを抽出しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sparql" data-lang="sparql"><span style="color:#66d9ef">SELECT</span> ?url ?name ?abstract ?origin <span style="color:#66d9ef">WHERE</span>{
-  ?url dbpedia-owl:<span style="color:#f92672">genre</span> dbpedia-ja:<span style="color:#f92672">J-POP</span>;
-       foaf:<span style="color:#f92672">name</span> ?name;
-       dbpedia-owl:<span style="color:#f92672">abstract</span> ?abstract;
-       prop-ja:<span style="color:#f92672">origin</span> ?origin.
-       <span style="color:#66d9ef">FILTER</span>(<span style="color:#a6e22e">CONTAINS</span>(<span style="color:#a6e22e">str</span>(?origin), <span style="color:#e6db74">&#34;愛知県&#34;</span>))
-}
-</code></pre></div><p>新規に <strong>dbpedia.py</strong> を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sparql" data-lang="sparql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> ?url ?name ?abstract ?origin <span style="color:#66d9ef">WHERE</span>{
+</span></span><span style="display:flex;"><span>  ?url dbpedia-owl:<span style="color:#f92672">genre</span> dbpedia-ja:<span style="color:#f92672">J-POP</span>;
+</span></span><span style="display:flex;"><span>       foaf:<span style="color:#f92672">name</span> ?name;
+</span></span><span style="display:flex;"><span>       dbpedia-owl:<span style="color:#f92672">abstract</span> ?abstract;
+</span></span><span style="display:flex;"><span>       prop-ja:<span style="color:#f92672">origin</span> ?origin.
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">FILTER</span>(<span style="color:#a6e22e">CONTAINS</span>(<span style="color:#a6e22e">str</span>(?origin), <span style="color:#e6db74">&#34;愛知県&#34;</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>新規に <strong>dbpedia.py</strong> を作成し，cgi-binフォルダに配置します（実行権限の付与が必要）．
 <strong>dbpedia.py</strong> には下記のコードを記述します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
-
-<span style="color:#f92672">from</span> SPARQLWrapper <span style="color:#f92672">import</span> SPARQLWrapper, JSON
-
-<span style="color:#66d9ef">print</span> (<span style="color:#e6db74">&#34;Content-type:text/html</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>)
-
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;!DOCTYPE html&gt;&#34;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;html&gt;&#34;</span>)
-
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;head&gt;&#34;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;meta charset=&#39;utf-8&#39;&gt;&#34;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;title&gt;DBPedia&lt;/title&gt;&#34;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/head&gt;&#34;</span>)
-
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;body&gt;&#34;</span>)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;h1&gt;DBPedia&lt;/h1&gt;&#34;</span>);
-
-url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://ja.dbpedia.org/sparql&#34;</span>
-sparql <span style="color:#f92672">=</span> SPARQLWrapper(url)
-sparql<span style="color:#f92672">.</span>setReturnFormat(JSON)
-
-prefix <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
-</span><span style="color:#e6db74">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-</span><span style="color:#e6db74">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-</span><span style="color:#e6db74">PREFIX dbpedia-owl:  &lt;http://dbpedia.org/ontology/&gt;
-</span><span style="color:#e6db74">PREFIX dbpedia-ja: &lt;http://ja.dbpedia.org/resource/&gt;
-</span><span style="color:#e6db74">PREFIX category-ja: &lt;http://ja.dbpedia.org/resource/Category:&gt;
-</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
-
-query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
-</span><span style="color:#e6db74">SELECT ?url ?name ?abstract ?origin WHERE{
-</span><span style="color:#e6db74">  ?url dbpedia-owl:genre dbpedia-ja:J-POP;
-</span><span style="color:#e6db74">       foaf:name ?name;
-</span><span style="color:#e6db74">       dbpedia-owl:abstract ?abstract;
-</span><span style="color:#e6db74">       prop-ja:origin ?origin.
-</span><span style="color:#e6db74">       FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;))
-</span><span style="color:#e6db74">}
-</span><span style="color:#e6db74">&#34;&#34;&#34;</span>
-
-sparql<span style="color:#f92672">.</span>setQuery(prefix <span style="color:#f92672">+</span> query)
-results <span style="color:#f92672">=</span> sparql<span style="color:#f92672">.</span>query()<span style="color:#f92672">.</span>convert()
-
-table <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;table border=`1``&gt;&#34;</span>
-table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
-table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;name&lt;/th&gt;&#34;</span>
-table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;abstract&lt;/th&gt;&#34;</span>
-table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>
-
-<span style="color:#66d9ef">for</span> result <span style="color:#f92672">in</span> results[<span style="color:#e6db74">&#34;results&#34;</span>][<span style="color:#e6db74">&#34;bindings&#34;</span>]:
-
-    url <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;url&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]
-    name <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;name&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]
-    abstract <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;abstract&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]
-    origin <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;origin&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]    
-
-    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
-    table <span style="color:#f92672">+=</span> f<span style="color:#e6db74">&#34;&lt;td&gt;&lt;a href={url}&gt;{name}&lt;/a&gt;&lt;/td&gt;&#34;</span>
-    table <span style="color:#f92672">+=</span> f<span style="color:#e6db74">&#34;&lt;td&gt;{abstract}&lt;/td&gt;&#34;</span>
-    <span style="color:#75715e"># table += f&#34;&lt;td&gt;{origin}&lt;/td&gt;&#34;            </span>
-    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>
-
-<span style="color:#66d9ef">print</span>(table)
-
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/body&gt;&#34;</span>)
-
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&lt;/html&gt;&#34;</span>)
-</code></pre></div><p>下記が検索結果です．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> SPARQLWrapper <span style="color:#f92672">import</span> SPARQLWrapper, JSON
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print (<span style="color:#e6db74">&#34;Content-type:text/html</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&lt;!DOCTYPE html&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&lt;html&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&lt;head&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&lt;meta charset=&#39;utf-8&#39;&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&lt;title&gt;DBPedia&lt;/title&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&lt;/head&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&lt;body&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&lt;h1&gt;DBPedia&lt;/h1&gt;&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://ja.dbpedia.org/sparql&#34;</span>
+</span></span><span style="display:flex;"><span>sparql <span style="color:#f92672">=</span> SPARQLWrapper(url)
+</span></span><span style="display:flex;"><span>sparql<span style="color:#f92672">.</span>setReturnFormat(JSON)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prefix <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">PREFIX dbpedia-owl:  &lt;http://dbpedia.org/ontology/&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">PREFIX dbpedia-ja: &lt;http://ja.dbpedia.org/resource/&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">PREFIX category-ja: &lt;http://ja.dbpedia.org/resource/Category:&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">SELECT ?url ?name ?abstract ?origin WHERE{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  ?url dbpedia-owl:genre dbpedia-ja:J-POP;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">       foaf:name ?name;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">       dbpedia-owl:abstract ?abstract;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">       prop-ja:origin ?origin.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">       FILTER(CONTAINS(str(?origin), &#34;愛知県&#34;))
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sparql<span style="color:#f92672">.</span>setQuery(prefix <span style="color:#f92672">+</span> query)
+</span></span><span style="display:flex;"><span>results <span style="color:#f92672">=</span> sparql<span style="color:#f92672">.</span>query()<span style="color:#f92672">.</span>convert()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>table <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&lt;table border=`1``&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;name&lt;/th&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;th&gt;abstract&lt;/th&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> result <span style="color:#f92672">in</span> results[<span style="color:#e6db74">&#34;results&#34;</span>][<span style="color:#e6db74">&#34;bindings&#34;</span>]:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;url&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]
+</span></span><span style="display:flex;"><span>    name <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;name&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]
+</span></span><span style="display:flex;"><span>    abstract <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;abstract&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]
+</span></span><span style="display:flex;"><span>    origin <span style="color:#f92672">=</span> result[<span style="color:#e6db74">&#39;origin&#39;</span>][<span style="color:#e6db74">&#39;value&#39;</span>]    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;tr&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&lt;td&gt;&lt;a href=</span><span style="color:#e6db74">{</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">&gt;</span><span style="color:#e6db74">{</span>name<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/a&gt;&lt;/td&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;&lt;td&gt;</span><span style="color:#e6db74">{</span>abstract<span style="color:#e6db74">}</span><span style="color:#e6db74">&lt;/td&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># table += f&#34;&lt;td&gt;{origin}&lt;/td&gt;&#34;            </span>
+</span></span><span style="display:flex;"><span>    table <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;&lt;/tr&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(table)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&lt;/body&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;&lt;/html&gt;&#34;</span>)
+</span></span></code></pre></div><p>下記が検索結果です．
 愛知県出身の<a href="https://ja.wikipedia.org/wiki/%E5%8E%9F%E4%B8%80%E5%8D%9A">原一博</a>氏や
 <a href="https://ja.wikipedia.org/wiki/%E9%88%B4%E6%9C%A8%E6%97%A9%E6%99%BA%E5%AD%90">鈴木早智子</a>氏がリストに含まれていることが確認できます．</p>
 <p><a href="https://gyazo.com/ebeaa1828752b4c4e9a0f14c8521e24e"><img src="https://i.gyazo.com/ebeaa1828752b4c4e9a0f14c8521e24e.png" alt="Image from Gyazo"></a></p>
