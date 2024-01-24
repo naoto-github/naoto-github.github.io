@@ -87,17 +87,13 @@
 
 
 
-  <meta property="og:description" content="フラクタル図形フラクタル図形 とは，図形の一部が図形の全体と 自己相似 な関係を持つ図形のことです． 特定の処理を再帰的に繰り返して実行することで描くことができます． フラクタル図形は自然界でも観測が可能で，「シダの葉」や「雲の形」はフラクタル図形とされています． ここでは，Pythonの関数の再帰を利用して，コッホ曲線を描くことに挑戦します．
-
-Google Colaboratory下記のリンクをクリックして，Colabにアクセスしましょう．
-  Google Colaboratory  Colabにアクセスしたら，大学のGmailアカウント（@g.sugiyama-u.ac.jp）でログインしていることを確認してください． 次に，ノートブック（ファイル）を新規作成し，ノートブックの名前を chapter4.ipynb に変更しましょう．
-
+  <meta property="og:description" content="フラクタル図形 フラクタル図形 とは，図形の一部が図形の全体と 自己相似 な関係を持つ図形のことです． 特定の処理を再帰的に繰り返して実行することで描くことができます． フラクタル図形は自然界でも観測が可能で，「シダの葉」や「雲の形」はフラクタル図形とされています． ここでは，Pythonの関数の再帰を利用して，コッホ曲線を描くことに挑戦します．
+Google Colaboratory 下記のリンクをクリックして，Colabにアクセスしましょう．
+Google Colaboratory Colabにアクセスしたら，大学のGmailアカウント（@g.sugiyama-u.ac.jp）でログインしていることを確認してください． 次に，ノートブック（ファイル）を新規作成し，ノートブックの名前を chapter4.ipynb に変更しましょう．
 加えて，前回と同様に，ColabTurtleとインストールしておきます． このとき，多次元配列の処理が可能なライブラリである numpy も追加しておきます．
-!pip install ColabTurtle from ColabTurtle.Turtle import * import numpy as np フラクタル図形の描画フラクタル図形の一つであるコッホ曲線を描きます． コッホ曲線は与えられた線分を3等分し，分割した2点を頂点とする正三角形を作成する手続きを繰り返すことで得られます．
-
+!pip install ColabTurtle from ColabTurtle.Turtle import * import numpy as np フラクタル図形の描画 フラクタル図形の一つであるコッホ曲線を描きます． コッホ曲線は与えられた線分を3等分し，分割した2点を頂点とする正三角形を作成する手続きを繰り返すことで得られます．
 コッホ曲線を描く関数はdrawKochですが，この関数の中でkochを再帰的に呼び出しています（つまりkochの中で，kochを呼び出す）． drawKochの引数は，再帰の次元数（dim），線分の両端の座標（p1とp2）です． 再帰の次元数とは，再帰を繰り返す回数であり，この値が1になるまで繰り返します． 例えば，dim=2で呼び出すと，再帰的にdim=1が4回呼び出さて終了します（4つの直線に分割されるため）．
-
-def drawKoch(dim, p1, p2): points = [] initializeTurtle() speed(8) penup() goto(p1[0], p1[1]) right(90) koch(dim, p1, p2) def koch(dim, p1, p2): p = np." />
+def drawKoch(dim, p1, p2): points = [] initializeTurtle() speed(8) penup() goto(p1[0], p1[1]) right(90) koch(dim, p1, p2) def koch(dim, p1, p2): p = np.array(p2) - np.array(p1) #線分のベクトル d = np.linalg.norm(p, ord=2) / 3 #線分を3等分した長さ q1 = p1 #左の端点 goto(q1[0], q1[1]) if(dim == 1): pendown() forward(d) q2 = position() #1番目の分割点 if(dim &gt; 1): koch(dim-1, q1, q2) #再起処理 left(60) forward(d) q3 = position() #三角形の頂点 if(dim &gt; 1): koch(dim-1, q2, q3) #再起処理 right(120) forward(d) q4 = position() #2番目の分割点 if(dim &gt; 1): koch(dim-1, q3, q4) #再起処理 left(60) forward(d) q5 = position() #右の端点 if(dim &gt; 1): koch(dim-1, q4, q5) #再起処理 penup() 次元数$1$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます． この結果，次のコッホ曲線が描かれます．" />
 
 
 
@@ -112,17 +108,13 @@ def drawKoch(dim, p1, p2): points = [] initializeTurtle() speed(8) penup() goto(
 
 
 
-  <meta name="twitter:description" content="フラクタル図形フラクタル図形 とは，図形の一部が図形の全体と 自己相似 な関係を持つ図形のことです． 特定の処理を再帰的に繰り返して実行することで描くことができます． フラクタル図形は自然界でも観測が可能で，「シダの葉」や「雲の形」はフラクタル図形とされています． ここでは，Pythonの関数の再帰を利用して，コッホ曲線を描くことに挑戦します．
-
-Google Colaboratory下記のリンクをクリックして，Colabにアクセスしましょう．
-  Google Colaboratory  Colabにアクセスしたら，大学のGmailアカウント（@g.sugiyama-u.ac.jp）でログインしていることを確認してください． 次に，ノートブック（ファイル）を新規作成し，ノートブックの名前を chapter4.ipynb に変更しましょう．
-
+  <meta name="twitter:description" content="フラクタル図形 フラクタル図形 とは，図形の一部が図形の全体と 自己相似 な関係を持つ図形のことです． 特定の処理を再帰的に繰り返して実行することで描くことができます． フラクタル図形は自然界でも観測が可能で，「シダの葉」や「雲の形」はフラクタル図形とされています． ここでは，Pythonの関数の再帰を利用して，コッホ曲線を描くことに挑戦します．
+Google Colaboratory 下記のリンクをクリックして，Colabにアクセスしましょう．
+Google Colaboratory Colabにアクセスしたら，大学のGmailアカウント（@g.sugiyama-u.ac.jp）でログインしていることを確認してください． 次に，ノートブック（ファイル）を新規作成し，ノートブックの名前を chapter4.ipynb に変更しましょう．
 加えて，前回と同様に，ColabTurtleとインストールしておきます． このとき，多次元配列の処理が可能なライブラリである numpy も追加しておきます．
-!pip install ColabTurtle from ColabTurtle.Turtle import * import numpy as np フラクタル図形の描画フラクタル図形の一つであるコッホ曲線を描きます． コッホ曲線は与えられた線分を3等分し，分割した2点を頂点とする正三角形を作成する手続きを繰り返すことで得られます．
-
+!pip install ColabTurtle from ColabTurtle.Turtle import * import numpy as np フラクタル図形の描画 フラクタル図形の一つであるコッホ曲線を描きます． コッホ曲線は与えられた線分を3等分し，分割した2点を頂点とする正三角形を作成する手続きを繰り返すことで得られます．
 コッホ曲線を描く関数はdrawKochですが，この関数の中でkochを再帰的に呼び出しています（つまりkochの中で，kochを呼び出す）． drawKochの引数は，再帰の次元数（dim），線分の両端の座標（p1とp2）です． 再帰の次元数とは，再帰を繰り返す回数であり，この値が1になるまで繰り返します． 例えば，dim=2で呼び出すと，再帰的にdim=1が4回呼び出さて終了します（4つの直線に分割されるため）．
-
-def drawKoch(dim, p1, p2): points = [] initializeTurtle() speed(8) penup() goto(p1[0], p1[1]) right(90) koch(dim, p1, p2) def koch(dim, p1, p2): p = np." />
+def drawKoch(dim, p1, p2): points = [] initializeTurtle() speed(8) penup() goto(p1[0], p1[1]) right(90) koch(dim, p1, p2) def koch(dim, p1, p2): p = np.array(p2) - np.array(p1) #線分のベクトル d = np.linalg.norm(p, ord=2) / 3 #線分を3等分した長さ q1 = p1 #左の端点 goto(q1[0], q1[1]) if(dim == 1): pendown() forward(d) q2 = position() #1番目の分割点 if(dim &gt; 1): koch(dim-1, q1, q2) #再起処理 left(60) forward(d) q3 = position() #三角形の頂点 if(dim &gt; 1): koch(dim-1, q2, q3) #再起処理 right(120) forward(d) q4 = position() #2番目の分割点 if(dim &gt; 1): koch(dim-1, q3, q4) #再起処理 left(60) forward(d) q5 = position() #右の端点 if(dim &gt; 1): koch(dim-1, q4, q5) #再起処理 penup() 次元数$1$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます． この結果，次のコッホ曲線が描かれます．" />
 
 
 
@@ -214,10 +206,10 @@ def drawKoch(dim, p1, p2): points = [] initializeTurtle() speed(8) penup() goto(
 <p><a href="https://gyazo.com/32c1a3f9351cff789dddc1d286c1069c"><img src="https://i.gyazo.com/32c1a3f9351cff789dddc1d286c1069c.png" alt="Image from Gyazo"></a></p>
 <p>加えて，前回と同様に，ColabTurtleとインストールしておきます．
 このとき，多次元配列の処理が可能なライブラリである <strong>numpy</strong> も追加しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">!</span>pip install ColabTurtle
-<span style="color:#f92672">from</span> ColabTurtle.Turtle <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">!</span>pip install ColabTurtle
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> ColabTurtle.Turtle <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   フラクタル図形の描画
 </h1>
 
@@ -229,76 +221,76 @@ def drawKoch(dim, p1, p2): points = [] initializeTurtle() speed(8) penup() goto(
 再帰の次元数とは，再帰を繰り返す回数であり，この値が1になるまで繰り返します．
 例えば，<code>dim=2</code>で呼び出すと，再帰的に<code>dim=1</code>が4回呼び出さて終了します（4つの直線に分割されるため）．</p>
 <p><a href="https://gyazo.com/9ac4953db0bec1644daf6581a41e9c84"><img src="https://i.gyazo.com/9ac4953db0bec1644daf6581a41e9c84.png" alt="Image from Gyazo"></a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">drawKoch</span>(dim, p1, p2):
-
-  points <span style="color:#f92672">=</span> []
-
-  initializeTurtle()
-  speed(<span style="color:#ae81ff">8</span>)
-  penup()
-  goto(p1[<span style="color:#ae81ff">0</span>], p1[<span style="color:#ae81ff">1</span>])
-  right(<span style="color:#ae81ff">90</span>)
-  koch(dim, p1, p2)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">koch</span>(dim, p1, p2):
-
-  p <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(p2) <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>array(p1) <span style="color:#75715e">#線分のベクトル</span>
-  d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(p, ord<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span> <span style="color:#75715e">#線分を3等分した長さ</span>
-
-  q1 <span style="color:#f92672">=</span> p1 <span style="color:#75715e">#左の端点</span>
-  goto(q1[<span style="color:#ae81ff">0</span>], q1[<span style="color:#ae81ff">1</span>])
-
-  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>):
-    pendown()
-
-  forward(d)
-  q2 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#1番目の分割点</span>
-
-  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
-    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q1, q2) <span style="color:#75715e">#再起処理</span>
-
-  left(<span style="color:#ae81ff">60</span>)
-  forward(d)
-  q3 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#三角形の頂点</span>
-  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
-    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q2, q3) <span style="color:#75715e">#再起処理</span>
-
-  right(<span style="color:#ae81ff">120</span>)
-  forward(d)
-  q4 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#2番目の分割点</span>
-  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
-    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q3, q4) <span style="color:#75715e">#再起処理</span>
-
-  left(<span style="color:#ae81ff">60</span>)
-  forward(d)
-  q5 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#右の端点</span>
-  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
-    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q4, q5) <span style="color:#75715e">#再起処理</span>
-
-  penup()
-</code></pre></div><p>次元数$1$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">drawKoch</span>(dim, p1, p2):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  points <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  initializeTurtle()
+</span></span><span style="display:flex;"><span>  speed(<span style="color:#ae81ff">8</span>)
+</span></span><span style="display:flex;"><span>  penup()
+</span></span><span style="display:flex;"><span>  goto(p1[<span style="color:#ae81ff">0</span>], p1[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>  right(<span style="color:#ae81ff">90</span>)
+</span></span><span style="display:flex;"><span>  koch(dim, p1, p2)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">koch</span>(dim, p1, p2):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(p2) <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>array(p1) <span style="color:#75715e">#線分のベクトル</span>
+</span></span><span style="display:flex;"><span>  d <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(p, ord<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span> <span style="color:#75715e">#線分を3等分した長さ</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  q1 <span style="color:#f92672">=</span> p1 <span style="color:#75715e">#左の端点</span>
+</span></span><span style="display:flex;"><span>  goto(q1[<span style="color:#ae81ff">0</span>], q1[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>    pendown()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  forward(d)
+</span></span><span style="display:flex;"><span>  q2 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#1番目の分割点</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q1, q2) <span style="color:#75715e">#再起処理</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  left(<span style="color:#ae81ff">60</span>)
+</span></span><span style="display:flex;"><span>  forward(d)
+</span></span><span style="display:flex;"><span>  q3 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#三角形の頂点</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q2, q3) <span style="color:#75715e">#再起処理</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  right(<span style="color:#ae81ff">120</span>)
+</span></span><span style="display:flex;"><span>  forward(d)
+</span></span><span style="display:flex;"><span>  q4 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#2番目の分割点</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q3, q4) <span style="color:#75715e">#再起処理</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  left(<span style="color:#ae81ff">60</span>)
+</span></span><span style="display:flex;"><span>  forward(d)
+</span></span><span style="display:flex;"><span>  q5 <span style="color:#f92672">=</span> position() <span style="color:#75715e">#右の端点</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span>(dim <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>    koch(dim<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, q4, q5) <span style="color:#75715e">#再起処理</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  penup()
+</span></span></code></pre></div><p>次元数$1$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます．
 この結果，次のコッホ曲線が描かれます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
-p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
-drawKoch(<span style="color:#ae81ff">1</span>, p1, p2)
-</code></pre></div><p><a href="https://gyazo.com/b4f1f15ed8f0a4f538260b97048433d6"><img src="https://i.gyazo.com/b4f1f15ed8f0a4f538260b97048433d6.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
+</span></span><span style="display:flex;"><span>p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
+</span></span><span style="display:flex;"><span>drawKoch(<span style="color:#ae81ff">1</span>, p1, p2)
+</span></span></code></pre></div><p><a href="https://gyazo.com/b4f1f15ed8f0a4f538260b97048433d6"><img src="https://i.gyazo.com/b4f1f15ed8f0a4f538260b97048433d6.png" alt="Image from Gyazo"></a></p>
 <p>次元数$2$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます．
 この結果，次のコッホ曲線が描かれます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
-p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
-drawKoch(<span style="color:#ae81ff">2</span>, p1, p2)
-</code></pre></div><p><a href="https://gyazo.com/6dc5d52db8c701b380d3313d6d02bfd7"><img src="https://i.gyazo.com/6dc5d52db8c701b380d3313d6d02bfd7.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
+</span></span><span style="display:flex;"><span>p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
+</span></span><span style="display:flex;"><span>drawKoch(<span style="color:#ae81ff">2</span>, p1, p2)
+</span></span></code></pre></div><p><a href="https://gyazo.com/6dc5d52db8c701b380d3313d6d02bfd7"><img src="https://i.gyazo.com/6dc5d52db8c701b380d3313d6d02bfd7.png" alt="Image from Gyazo"></a></p>
 <p>次元数$3$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます．
 この結果，次のコッホ曲線が描かれます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
-p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
-drawKoch(<span style="color:#ae81ff">3</span>, p1, p2)
-</code></pre></div><p><a href="https://gyazo.com/3ba7a5594fbed249b17d7e30d1038a03"><img src="https://i.gyazo.com/3ba7a5594fbed249b17d7e30d1038a03.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
+</span></span><span style="display:flex;"><span>p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
+</span></span><span style="display:flex;"><span>drawKoch(<span style="color:#ae81ff">3</span>, p1, p2)
+</span></span></code></pre></div><p><a href="https://gyazo.com/3ba7a5594fbed249b17d7e30d1038a03"><img src="https://i.gyazo.com/3ba7a5594fbed249b17d7e30d1038a03.png" alt="Image from Gyazo"></a></p>
 <p>次元数$4$，線分$(0,400)$，$(800,400)$でコッホ曲線を描きます．
 この結果，次のコッホ曲線が描かれます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
-p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
-drawKoch(<span style="color:#ae81ff">4</span>, p1, p2)
-</code></pre></div><p><a href="https://gyazo.com/ed11313e32db17a40ff8e720345e0b9c"><img src="https://i.gyazo.com/ed11313e32db17a40ff8e720345e0b9c.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>p1 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">400</span>]
+</span></span><span style="display:flex;"><span>p2 <span style="color:#f92672">=</span> [<span style="color:#ae81ff">800</span>, <span style="color:#ae81ff">400</span>]
+</span></span><span style="display:flex;"><span>drawKoch(<span style="color:#ae81ff">4</span>, p1, p2)
+</span></span></code></pre></div><p><a href="https://gyazo.com/ed11313e32db17a40ff8e720345e0b9c"><img src="https://i.gyazo.com/ed11313e32db17a40ff8e720345e0b9c.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>

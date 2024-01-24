@@ -17,6 +17,84 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // マーカーのリスト
 let marker_list = [];
 
+// バウンディングボックスのリスト
+let box_list = []
+
+// ツールチップ
+function makeTooltip(properties){
+
+    crime_dict = {}
+    crime_dict["ひったくり"] = BigNumber(properties["ひったくり"]).dp(0);
+    crime_dict["車上ねらい"] = BigNumber(properties["車上ねらい"]).dp(0);
+    crime_dict["部品ねらい"] = BigNumber(properties["部品ねらい"]).dp(0);
+    crime_dict["自動販売機ねらい"] = BigNumber(properties["自動販売機ねらい"]).dp(0);
+    crime_dict["自動車盗"] = BigNumber(properties["自動車盗"]).dp(0);
+    crime_dict["オートバイ盗"] = BigNumber(properties["オートバイ盗"]).dp(0);
+    crime_dict["自転車盗"] = BigNumber(properties["自転車盗"]).dp(0);
+
+    height_dict = {}
+    height_dict["高さ（最大）"] = BigNumber(properties["高さ(最大)"]).dp(1);
+    height_dict["高さ（最小）"] = BigNumber(properties["高さ(最小)"]).dp(1);
+    height_dict["高さ（平均）"] = BigNumber(properties["高さ(平均)"]).dp(1);
+
+    count_dict = {}
+    count_dict["住宅（件数）"] = BigNumber(properties["住宅(件数)"]).dp(0);
+    count_dict["共同住宅（件数）"] = BigNumber(properties["共同住宅(件数)"]).dp(0);
+    count_dict["商業施設（件数）"] = BigNumber(properties["商業施設(件数)"]).dp(0);
+    count_dict["宿泊施設（件数）"] = BigNumber(properties["宿泊施設(件数)"]).dp(0);
+    count_dict["工場（件数）"] = BigNumber(properties["工場(件数)"]).dp(0);
+    count_dict["店舗等併用住宅（件数）"] = BigNumber(properties["店舗等併用住宅(件数)"]).dp(0);
+    count_dict["店舗等併用共同住宅（件数）"] = BigNumber(properties["店舗等併用共同住宅(件数)"]).dp(0);
+    count_dict["文教厚生施設（件数）"] = BigNumber(properties["文教厚生施設(件数)"]).dp(0);
+    count_dict["業務施設（件数）"] = BigNumber(properties["業務施設(件数)"]).dp(0);
+    count_dict["運輸倉庫施設（件数）"] = BigNumber(properties["運輸倉庫施設(件数)"]).dp(0);
+    
+    area_dict = {}
+    area_dict["住宅（面積）"] = BigNumber(properties["住宅(面積)"]).dp(0);
+    area_dict["共同住宅（面積）"] = BigNumber(properties["共同住宅(面積)"]).dp(0);
+    area_dict["商業施設（面積）"] = BigNumber(properties["商業施設(面積)"]).dp(0);
+    area_dict["宿泊施設（面積）"] = BigNumber(properties["宿泊施設(面積)"]).dp(0);
+    area_dict["工場（面積）"] = BigNumber(properties["工場(面積)"]).dp(0);
+    area_dict["店舗等併用住宅（面積）"] = BigNumber(properties["店舗等併用住宅(面積)"]).dp(0);
+    area_dict["店舗等併用共同住宅（面積）"] = BigNumber(properties["店舗等併用共同住宅(面積)"]).dp(0);
+    area_dict["文教厚生施設（面積）"] = BigNumber(properties["文教厚生施設(面積)"]).dp(0);
+    area_dict["業務施設（面積）"] = BigNumber(properties["業務施設(面積)"]).dp(0);
+    area_dict["運輸倉庫施設（面積）"] = BigNumber(properties["運輸倉庫施設(面積)"]).dp(0);
+
+    crime_table = "<table border='1'>"
+    for(let key in crime_dict){
+        crime_table += `<tr><th>${key}</th><td>${crime_dict[key]}</td></tr>`
+    }
+    crime_table += "</table>"
+
+    height_table = "<table border='1'>"
+    for(let key in height_dict){
+        height_table += `<tr><th>${key}</th><td>${height_dict[key]}</td></tr>`
+    }
+    height_table += "</table>"
+
+    count_table = "<table border='1'>"
+    for(let key in count_dict){
+        count_table += `<tr><th>${key}</th><td>${count_dict[key]}</td></tr>`
+    }
+    count_table += "</table>"
+
+    area_table = "<table border='1'>"
+    for(let key in area_dict){
+        area_table += `<tr><th>${key}</th><td>${area_dict[key]}</td></tr>`
+    }
+    area_table += "</table>"
+
+    let tooltip_html = `<h3>${properties["address"]}</h3><div class="tooltip">`
+    tooltip_html += crime_table
+    tooltip_html += count_table
+    tooltip_html += area_table
+    tooltip_html += height_table
+    tooltip_html += `</div>`
+
+    return tooltip_html;
+}
+
 // マーカーを追加
 L.geoJSON(dataset, {
     pointToLayer: function (feature, latlng) {
@@ -29,29 +107,18 @@ L.geoJSON(dataset, {
         let distance = center.distanceTo(marker.getLatLng());      
         if(distance <= marker_visible_radius){
             marker.addTo(map);
-            marker.setOpacity(1);
+            //marker.setOpacity(1);
         }
         else{
             marker.removeFrom(map);
-            marker.setOpacity(0)
+            //marker.setOpacity(0)
         }
 
         // ツールチップ
-        let tooltip_html = `
-                            <div>
-                            <h3>${feature["properties"]["address"]}</h3>
-                            <table>
-                            <tr><th>ひったくり</th><td>${feature["properties"]["ひったくり"]}</td></tr>
-                            <tr><th>車上ねらい</th><td>${feature["properties"]["車上ねらい"]}</td></tr>
-                            <tr><th>部品ねらい</th><td>${feature["properties"]["部品ねらい"]}</td></tr>
-                            <tr><th>自動販売機ねらい</th><td>${feature["properties"]["自動販売機ねらい"]}</td></tr>
-                            <tr><th>自動車盗</th><td>${feature["properties"]["自動車盗"]}</td></tr>
-                            <tr><th>オートバイ盗</th><td>${feature["properties"]["オートバイ盗"]}</td></tr>
-                            <tr><th>自転車盗</th><td>${feature["properties"]["自転車盗"]}</td></tr>
-                            </table>
-                            </div>
-                           `;
-        marker.bindTooltip(tooltip_html);
+        let tooltip_html = makeTooltip(feature["properties"]);
+        marker.bindTooltip(tooltip_html, {
+            offset: [150, 0]
+        });
 
         // ポップアップ
         path = `../html/${feature["properties"]["id"]}.html`
@@ -61,11 +128,11 @@ L.geoJSON(dataset, {
                           </iframe>
                           </div>
                          `;
+
         marker.bindPopup(popup_html, {
             maxWidth: 600,
             offset: [0, -30]
         });
-        
 
         // マーカーを中心に移動
         marker.on("click", function(){
@@ -75,22 +142,49 @@ L.geoJSON(dataset, {
             map.panBy([0, -300]);
         });
 
+        // マーカーを中心に移動
+        marker.on("mouseover", function(){
+            marker.box.addTo(map);
+        });
+
+       // マーカーを中心に移動
+       marker.on("mouseout", function(){
+            marker.box.removeFrom(map);
+       });        
+
         marker_list.push(marker);
+
+        let lat1 = Number(feature["properties"]["bbox_lat1"])
+        let lon1 = Number(feature["properties"]["bbox_lon1"])
+        let lat2 = Number(feature["properties"]["bbox_lat2"])
+        let lon2 = Number(feature["properties"]["bbox_lon2"])
+        bounds = [[lat1, lon1], [lat2, lon2]]
+
+        let box = L.rectangle(bounds, {
+            opacity: 0.2,
+        });
+        box_list.push(box);
+
+        marker.box = box;
     }
 });
 
-// 距離の応じて表示・非表示
+// 距離に応じて表示・非表示
 map.on("move", function(){
-    for(let marker of marker_list){
+
+    for(let i=0; i<marker_list.length; i++){
+        let marker = marker_list[i];
+        let box = box_list[i];
+
         let center = map.getCenter();
         let distance = center.distanceTo(marker.getLatLng());      
 
         if(distance <= marker_visible_radius){
-            marker.setOpacity(1);
+            //marker.setOpacity(1);
             marker.addTo(map)
         }
         else{
-            marker.setOpacity(0)
+            //marker.setOpacity(0)
             marker.removeFrom(map);
         }
     }
