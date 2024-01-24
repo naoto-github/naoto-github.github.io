@@ -33,53 +33,57 @@ function makeTooltip(properties){
     crime_dict["自転車盗"] = BigNumber(properties["自転車盗"]).dp(0);
 
     height_dict = {}
-    height_dict["高さ（最大）"] = BigNumber(properties["高さ(最大)"]).dp(1);
-    height_dict["高さ（最小）"] = BigNumber(properties["高さ(最小)"]).dp(1);
-    height_dict["高さ（平均）"] = BigNumber(properties["高さ(平均)"]).dp(1);
+    height_dict["最大"] = BigNumber(properties["高さ(最大)"]).dp(1);
+    height_dict["最小"] = BigNumber(properties["高さ(最小)"]).dp(1);
+    height_dict["平均"] = BigNumber(properties["高さ(平均)"]).dp(1);
 
     count_dict = {}
-    count_dict["住宅（件数）"] = BigNumber(properties["住宅(件数)"]).dp(0);
-    count_dict["共同住宅（件数）"] = BigNumber(properties["共同住宅(件数)"]).dp(0);
-    count_dict["商業施設（件数）"] = BigNumber(properties["商業施設(件数)"]).dp(0);
-    count_dict["宿泊施設（件数）"] = BigNumber(properties["宿泊施設(件数)"]).dp(0);
-    count_dict["工場（件数）"] = BigNumber(properties["工場(件数)"]).dp(0);
-    count_dict["店舗等併用住宅（件数）"] = BigNumber(properties["店舗等併用住宅(件数)"]).dp(0);
-    count_dict["店舗等併用共同住宅（件数）"] = BigNumber(properties["店舗等併用共同住宅(件数)"]).dp(0);
-    count_dict["文教厚生施設（件数）"] = BigNumber(properties["文教厚生施設(件数)"]).dp(0);
-    count_dict["業務施設（件数）"] = BigNumber(properties["業務施設(件数)"]).dp(0);
-    count_dict["運輸倉庫施設（件数）"] = BigNumber(properties["運輸倉庫施設(件数)"]).dp(0);
+    count_dict["住宅"] = BigNumber(properties["住宅(件数)"]).dp(0);
+    count_dict["共同住宅"] = BigNumber(properties["共同住宅(件数)"]).dp(0);
+    count_dict["商業施設"] = BigNumber(properties["商業施設(件数)"]).dp(0);
+    count_dict["宿泊施設"] = BigNumber(properties["宿泊施設(件数)"]).dp(0);
+    count_dict["工場"] = BigNumber(properties["工場(件数)"]).dp(0);
+    count_dict["店舗等併用住宅"] = BigNumber(properties["店舗等併用住宅(件数)"]).dp(0);
+    count_dict["店舗等併用共同住宅"] = BigNumber(properties["店舗等併用共同住宅(件数)"]).dp(0);
+    count_dict["文教厚生施設"] = BigNumber(properties["文教厚生施設(件数)"]).dp(0);
+    count_dict["業務施設"] = BigNumber(properties["業務施設(件数)"]).dp(0);
+    count_dict["運輸倉庫施設"] = BigNumber(properties["運輸倉庫施設(件数)"]).dp(0);
     
     area_dict = {}
-    area_dict["住宅（面積）"] = BigNumber(properties["住宅(面積)"]).dp(0);
-    area_dict["共同住宅（面積）"] = BigNumber(properties["共同住宅(面積)"]).dp(0);
-    area_dict["商業施設（面積）"] = BigNumber(properties["商業施設(面積)"]).dp(0);
-    area_dict["宿泊施設（面積）"] = BigNumber(properties["宿泊施設(面積)"]).dp(0);
-    area_dict["工場（面積）"] = BigNumber(properties["工場(面積)"]).dp(0);
-    area_dict["店舗等併用住宅（面積）"] = BigNumber(properties["店舗等併用住宅(面積)"]).dp(0);
-    area_dict["店舗等併用共同住宅（面積）"] = BigNumber(properties["店舗等併用共同住宅(面積)"]).dp(0);
-    area_dict["文教厚生施設（面積）"] = BigNumber(properties["文教厚生施設(面積)"]).dp(0);
-    area_dict["業務施設（面積）"] = BigNumber(properties["業務施設(面積)"]).dp(0);
-    area_dict["運輸倉庫施設（面積）"] = BigNumber(properties["運輸倉庫施設(面積)"]).dp(0);
+    area_dict["住宅"] = BigNumber(properties["住宅(面積)"]).dp(0);
+    area_dict["共同住宅"] = BigNumber(properties["共同住宅(面積)"]).dp(0);
+    area_dict["商業施設"] = BigNumber(properties["商業施設(面積)"]).dp(0);
+    area_dict["宿泊施設"] = BigNumber(properties["宿泊施設(面積)"]).dp(0);
+    area_dict["工場"] = BigNumber(properties["工場(面積)"]).dp(0);
+    area_dict["店舗等併用住宅"] = BigNumber(properties["店舗等併用住宅(面積)"]).dp(0);
+    area_dict["店舗等併用共同住宅"] = BigNumber(properties["店舗等併用共同住宅(面積)"]).dp(0);
+    area_dict["文教厚生施設"] = BigNumber(properties["文教厚生施設(面積)"]).dp(0);
+    area_dict["業務施設"] = BigNumber(properties["業務施設(面積)"]).dp(0);
+    area_dict["運輸倉庫施設"] = BigNumber(properties["運輸倉庫施設(面積)"]).dp(0);
 
     crime_table = "<table border='1'>"
+    crime_table += `<tr><th>犯罪種別</th><th>件数</th></tr>`
     for(let key in crime_dict){
         crime_table += `<tr><th>${key}</th><td>${crime_dict[key]}</td></tr>`
     }
     crime_table += "</table>"
 
     height_table = "<table border='1'>"
+    height_table += `<tr><th>高さ</th><th>値</th></tr>`
     for(let key in height_dict){
         height_table += `<tr><th>${key}</th><td>${height_dict[key]}</td></tr>`
     }
     height_table += "</table>"
 
     count_table = "<table border='1'>"
+    count_table += `<tr><th>用途</th><th>件数</th></tr>`
     for(let key in count_dict){
         count_table += `<tr><th>${key}</th><td>${count_dict[key]}</td></tr>`
     }
     count_table += "</table>"
 
     area_table = "<table border='1'>"
+    area_table += `<tr><th>用途</th><th>面積</th></tr>`
     for(let key in area_dict){
         area_table += `<tr><th>${key}</th><td>${area_dict[key]}</td></tr>`
     }
