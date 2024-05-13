@@ -87,11 +87,9 @@
 
 
 
-  <meta property="og:description" content="Q学習とは Q学習 は状態$s_x$と行動$a_x$の組み合わせに対する 価値$Q(s_x,a_x)$ を学習するためのアルゴリズムです． 下記は，状態$s_x$で行動$a_x$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s_y, a_y)$は，状態$s_x$から遷移した先の状態$s_y$において，行動$a_y$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
+  <meta property="og:description" content="Q学習とはQ学習 は状態$s_x$と行動$a_x$の組み合わせに対する 価値$Q(s_x,a_x)$ を学習するためのアルゴリズムです． 下記は，状態$s_x$で行動$a_x$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s_y, a_y)$は，状態$s_x$から遷移した先の状態$s_y$において，行動$a_y$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
 $$ Q&rsquo;(s_x,a_x) = (1 - \alpha)Q(s_x,a_x) &#43; \alpha(r &#43; \gamma \max_{a_y \in A(s_y)} Q(s_y, a_y)) $$
-パラメータ 意味 $s$ 状態 $a$ 行動 $Q(s,a)$ 状態$s$で行動$a$を選択する価値 $r$ 報酬 $A(s)$ 状態$s$で選択可能な行動の集合 $\alpha$ 学習率 $\gamma$ 割引率 ノートブックの作成 Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-15 とします． ノートブックの作成方法は第1回の資料を参照してください．
-下記のライブラリも導入しておきます．
-import gym import numpy as np import random import time from google." />
+   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-15 とします． ノートブックの作成方法は第1回の資料を参照してください．" />
 
 
 
@@ -106,11 +104,9 @@ import gym import numpy as np import random import time from google." />
 
 
 
-  <meta name="twitter:description" content="Q学習とは Q学習 は状態$s_x$と行動$a_x$の組み合わせに対する 価値$Q(s_x,a_x)$ を学習するためのアルゴリズムです． 下記は，状態$s_x$で行動$a_x$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s_y, a_y)$は，状態$s_x$から遷移した先の状態$s_y$において，行動$a_y$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
+  <meta name="twitter:description" content="Q学習とはQ学習 は状態$s_x$と行動$a_x$の組み合わせに対する 価値$Q(s_x,a_x)$ を学習するためのアルゴリズムです． 下記は，状態$s_x$で行動$a_x$を選択し，報酬$r$を獲得したときの更新式です． また，$Q(s_y, a_y)$は，状態$s_x$から遷移した先の状態$s_y$において，行動$a_y$を選択したときの価値を表しています． ここで，$\alpha$は学習率，$\gamma$は割引率と呼ばれるパラメータであり， $0 \leq \alpha \leq 1$，$0 \leq \gamma \leq 1$の範囲で設定します． 学習率は学習の収束に影響し，小さいとゆっくりと学習し，大きいと速く学習します（収束の安定性とトレードオフ）． また，割引率は将来得られるであろう報酬を割り引いて評価するために用います．
 $$ Q&rsquo;(s_x,a_x) = (1 - \alpha)Q(s_x,a_x) &#43; \alpha(r &#43; \gamma \max_{a_y \in A(s_y)} Q(s_y, a_y)) $$
-パラメータ 意味 $s$ 状態 $a$ 行動 $Q(s,a)$ 状態$s$で行動$a$を選択する価値 $r$ 報酬 $A(s)$ 状態$s$で選択可能な行動の集合 $\alpha$ 学習率 $\gamma$ 割引率 ノートブックの作成 Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-15 とします． ノートブックの作成方法は第1回の資料を参照してください．
-下記のライブラリも導入しておきます．
-import gym import numpy as np import random import time from google." />
+   パラメータ 意味     $s$ 状態   $a$ 行動   $Q(s,a)$ 状態$s$で行動$a$を選択する価値   $r$ 報酬   $A(s)$ 状態$s$で選択可能な行動の集合   $\alpha$ 学習率   $\gamma$ 割引率    ノートブックの作成Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-15 とします． ノートブックの作成方法は第1回の資料を参照してください．" />
 
 
 
@@ -238,147 +234,147 @@ $$</p>
 ノートブックのタイトルは <strong>AI-15</strong> とします．
 ノートブックの作成方法は<a href="https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/">第1回の資料</a>を参照してください．</p>
 <p>下記のライブラリも導入しておきます．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> gym
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> time
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> output
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> gym.envs.toy_text.frozen_lake <span style="color:#f92672">import</span> generate_random_map
-</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gym
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> random
+<span style="color:#f92672">import</span> time
+<span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> output
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<span style="color:#f92672">from</span> gym.envs.toy_text.frozen_lake <span style="color:#f92672">import</span> generate_random_map
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   フローズンレイク（FrozenLake）
 </h1>
 
 <p><a href="https://www.gymlibrary.dev/environments/toy_text/frozen_lake/">フローズンレイク（FrozenLake）</a>をQ学習を利用して解いてみましょう．</p>
 <h2 id="環境の初期化">環境の初期化</h2>
 <p>前回と同様に対象とする環境を作成します．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;FrozenLake-v1&#39;</span>, map_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;4x4&#34;</span>, is_slippery<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span></code></pre></div><p>また，実行結果の理解を簡単にするために，辞書<code>ACTION</code>，関数<code>toString()</code>も定義します．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>ACTION <span style="color:#f92672">=</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#34;LEFT&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;DOWN&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;RIGHT&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;UP&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">toString</span>(histories):
-</span></span><span style="display:flex;"><span>  moves <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> observation, action <span style="color:#f92672">in</span> histories:
-</span></span><span style="display:flex;"><span>    moves<span style="color:#f92672">.</span>append((observation, ACTION[action]))
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> moves
-</span></span></code></pre></div><h2 id="q学習">Q学習</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;FrozenLake-v1&#39;</span>, map_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;4x4&#34;</span>, is_slippery<span style="color:#f92672">=</span>False)
+</code></pre></div><p>また，実行結果の理解を簡単にするために，辞書<code>ACTION</code>，関数<code>toString()</code>も定義します．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ACTION <span style="color:#f92672">=</span> {
+  <span style="color:#ae81ff">0</span>: <span style="color:#e6db74">&#34;LEFT&#34;</span>,
+  <span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;DOWN&#34;</span>,
+  <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;RIGHT&#34;</span>,
+  <span style="color:#ae81ff">3</span>: <span style="color:#e6db74">&#34;UP&#34;</span>
+}
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">toString</span>(histories):
+  moves <span style="color:#f92672">=</span> []
+  <span style="color:#66d9ef">for</span> observation, action <span style="color:#f92672">in</span> histories:
+    moves<span style="color:#f92672">.</span>append((observation, ACTION[action]))
+  <span style="color:#66d9ef">return</span> moves
+</code></pre></div><h2 id="q学習">Q学習</h2>
 <h3 id="qテーブル">Qテーブル</h3>
 <p>価値$Q(s,a)$を記録するための辞書を作成します．
 $s$は$0,1,\cdots,15$の16パターン，
 $a$は$0,1,2,3$の4パターンが存在するため，
 $16\times4=64$パターンの$Q$を記録する必要があります．
 全ての$Q$は<code>0.01</code>で初期化しておきます．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>qtable <span style="color:#f92672">=</span> {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">16</span>):
-</span></span><span style="display:flex;"><span>  qtable[i] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(qtable)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  0: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  1: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  2: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  3: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  4: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  5: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  6: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  7: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  8: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  9: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  10: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  11: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  12: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  13: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  14: [0.01, 0.01, 0.01, 0.01], 
-</span></span><span style="display:flex;"><span>  15: [0.01, 0.01, 0.01, 0.01]
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>$Q$を設定するための関数<code>setQ()</code>と，
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">qtable <span style="color:#f92672">=</span> {}
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">16</span>):
+  qtable[i] <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">0.01</span>]
+
+<span style="color:#66d9ef">print</span>(qtable)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">{
+  0: [0.01, 0.01, 0.01, 0.01], 
+  1: [0.01, 0.01, 0.01, 0.01], 
+  2: [0.01, 0.01, 0.01, 0.01], 
+  3: [0.01, 0.01, 0.01, 0.01], 
+  4: [0.01, 0.01, 0.01, 0.01], 
+  5: [0.01, 0.01, 0.01, 0.01], 
+  6: [0.01, 0.01, 0.01, 0.01], 
+  7: [0.01, 0.01, 0.01, 0.01], 
+  8: [0.01, 0.01, 0.01, 0.01], 
+  9: [0.01, 0.01, 0.01, 0.01], 
+  10: [0.01, 0.01, 0.01, 0.01], 
+  11: [0.01, 0.01, 0.01, 0.01], 
+  12: [0.01, 0.01, 0.01, 0.01], 
+  13: [0.01, 0.01, 0.01, 0.01], 
+  14: [0.01, 0.01, 0.01, 0.01], 
+  15: [0.01, 0.01, 0.01, 0.01]
+}
+</code></pre></div><p>$Q$を設定するための関数<code>setQ()</code>と，
 $Q$を取得するための関数<code>getQ()</code>を定義しておきます．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setQ</span>(state, action, value):
-</span></span><span style="display:flex;"><span>  qtable[state][action] <span style="color:#f92672">=</span> value
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getQ</span>(state, action):
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> qtable[state][action]
-</span></span></code></pre></div><h3 id="q値の更新">Q値の更新</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setQ</span>(state, action, value):
+  qtable[state][action] <span style="color:#f92672">=</span> value
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getQ</span>(state, action):
+  <span style="color:#66d9ef">return</span> qtable[state][action]
+</code></pre></div><h3 id="q値の更新">Q値の更新</h3>
 <p>$Q$の更新式を表す<code>updateQ()</code>を定義します．
 割引率$\alpha$は<code>0.1</code>，割引率$\gamma$は<code>0.9</code>に設定します．
 <code>np.max()</code>で最大の$Q$を選択していることに注意してください．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span> <span style="color:#75715e"># 学習率</span>
-</span></span><span style="display:flex;"><span>gamma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span> <span style="color:#75715e"># 割引率</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateQ</span>(state, action, next_state, reward):
-</span></span><span style="display:flex;"><span>  max_value <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max([getQ(next_state, <span style="color:#ae81ff">0</span>), getQ(next_state, <span style="color:#ae81ff">1</span>), getQ(next_state, <span style="color:#ae81ff">2</span>), getQ(next_state, <span style="color:#ae81ff">3</span>)])
-</span></span><span style="display:flex;"><span>  value <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> getQ(state, action) <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (reward <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> max_value)
-</span></span><span style="display:flex;"><span>  setQ(state, action, value)
-</span></span></code></pre></div><h3 id="行動戦略">行動戦略</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span> <span style="color:#75715e"># 学習率</span>
+gamma <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span> <span style="color:#75715e"># 割引率</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">updateQ</span>(state, action, next_state, reward):
+  max_value <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>max([getQ(next_state, <span style="color:#ae81ff">0</span>), getQ(next_state, <span style="color:#ae81ff">1</span>), getQ(next_state, <span style="color:#ae81ff">2</span>), getQ(next_state, <span style="color:#ae81ff">3</span>)])
+  value <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> alpha) <span style="color:#f92672">*</span> getQ(state, action) <span style="color:#f92672">+</span> alpha <span style="color:#f92672">*</span> (reward <span style="color:#f92672">+</span> gamma <span style="color:#f92672">*</span> max_value)
+  setQ(state, action, value)
+</code></pre></div><h3 id="行動戦略">行動戦略</h3>
 <p>プレイヤーの行動は$\epsilon$-グリーディ戦略で決定します．
 $\epsilon$-グリーディ戦略では，確率$\epsilon$でランダムに行動を選択し，
 確率$1-\epsilon$で$Q$が最大となる行動を選択します．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">greedyAction</span>(state, epsilon):    
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> epsilon <span style="color:#f92672">&gt;</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand():
-</span></span><span style="display:flex;"><span>        action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
-</span></span><span style="display:flex;"><span>        action <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax([getQ(state, <span style="color:#ae81ff">0</span>), getQ(state, <span style="color:#ae81ff">1</span>), getQ(state, <span style="color:#ae81ff">2</span>), getQ(state, <span style="color:#ae81ff">3</span>)])
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> action
-</span></span></code></pre></div><h3 id="学習プロセス">学習プロセス</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">greedyAction</span>(state, epsilon):    
+
+    <span style="color:#66d9ef">if</span> epsilon <span style="color:#f92672">&gt;</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>rand():
+        action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
+    <span style="color:#66d9ef">else</span>:
+        action <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>argmax([getQ(state, <span style="color:#ae81ff">0</span>), getQ(state, <span style="color:#ae81ff">1</span>), getQ(state, <span style="color:#ae81ff">2</span>), getQ(state, <span style="color:#ae81ff">3</span>)])
+
+    <span style="color:#66d9ef">return</span> action
+</code></pre></div><h3 id="学習プロセス">学習プロセス</h3>
 <p>プレイヤーの行動を繰り返すことで$Q$を学習します．
 プレイヤーは終了判定が<code>True</code>になるまで，最大100回まで行動を繰り返します．
 このプレイヤーの行動を1000回繰り返します．
 <code>15(=G)</code>に到達したときに得られる報酬<code>1</code>が伝播し，価値<code>Q(s,a)</code>が設定されます．
 また，$\epsilon$は<code>0.2</code>に設定しています．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.2</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> episode <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000</span>):
-</span></span><span style="display:flex;"><span>  state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
-</span></span><span style="display:flex;"><span>    action <span style="color:#f92672">=</span> greedyAction(state, epsilon)
-</span></span><span style="display:flex;"><span>    next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-</span></span><span style="display:flex;"><span>    updateQ(state, action, next_state, reward)
-</span></span><span style="display:flex;"><span>    state <span style="color:#f92672">=</span> next_state
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> done:
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>
-</span></span></code></pre></div><p>学習した<code>Q</code>を利用してプレイヤーを行動させます．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.2</span>
+
+<span style="color:#66d9ef">for</span> episode <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1000</span>):
+  state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
+
+  <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+    action <span style="color:#f92672">=</span> greedyAction(state, epsilon)
+    next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+    updateQ(state, action, next_state, reward)
+    state <span style="color:#f92672">=</span> next_state
+
+    <span style="color:#66d9ef">if</span> done:
+      <span style="color:#66d9ef">break</span>
+</code></pre></div><p>学習した<code>Q</code>を利用してプレイヤーを行動させます．
 $\epsilon$を<code>0</code>に設定し，常に$Q$が最大の行動を選択します．
 この結果，DOWN，DOWN，RIGHT，DOWN，RIGHT，RIGHTの順に行動し，
 <strong>15(=G)</strong> に到達していることが確認できます．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Q値で移動</span>
-</span></span><span style="display:flex;"><span>epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>histories <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
-</span></span><span style="display:flex;"><span>  action <span style="color:#f92672">=</span> greedyAction(state, epsilon)
-</span></span><span style="display:flex;"><span>  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
-</span></span><span style="display:flex;"><span>  histories<span style="color:#f92672">.</span>append((state, action))
-</span></span><span style="display:flex;"><span>  state <span style="color:#f92672">=</span> next_state
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render(mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>)
-</span></span><span style="display:flex;"><span>  image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
-</span></span><span style="display:flex;"><span>  image<span style="color:#f92672">.</span>show()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> done:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;actions=</span><span style="color:#e6db74">{</span>toString(histories)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;next_state=</span><span style="color:#e6db74">{</span>next_state<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;reward=</span><span style="color:#e6db74">{</span>reward<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;done=</span><span style="color:#e6db74">{</span>done<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span></code></pre></div><p><a href="https://gyazo.com/939f232397aece24b066ef88e0791d9e"><img src="https://i.gyazo.com/939f232397aece24b066ef88e0791d9e.png" alt="Image from Gyazo"></a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>actions=[(0, &#39;DOWN&#39;), (4, &#39;DOWN&#39;), (8, &#39;RIGHT&#39;), (9, &#39;DOWN&#39;), (13, &#39;RIGHT&#39;), (14, &#39;RIGHT&#39;)]
-</span></span><span style="display:flex;"><span>next_state=15
-</span></span><span style="display:flex;"><span>reward=1.0
-</span></span><span style="display:flex;"><span>done=True
-</span></span></code></pre></div><!--
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Q値で移動</span>
+epsilon <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+
+state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
+
+histories <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+  action <span style="color:#f92672">=</span> greedyAction(state, epsilon)
+  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+  histories<span style="color:#f92672">.</span>append((state, action))
+  state <span style="color:#f92672">=</span> next_state
+
+  rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render(mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>)
+  image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
+  image<span style="color:#f92672">.</span>show()
+
+  <span style="color:#66d9ef">if</span> done:
+    <span style="color:#66d9ef">break</span>
+
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;actions={toString(histories)}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
+<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;done={done}&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/939f232397aece24b066ef88e0791d9e"><img src="https://i.gyazo.com/939f232397aece24b066ef88e0791d9e.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">actions=[(0, &#39;DOWN&#39;), (4, &#39;DOWN&#39;), (8, &#39;RIGHT&#39;), (9, &#39;DOWN&#39;), (13, &#39;RIGHT&#39;), (14, &#39;RIGHT&#39;)]
+next_state=15
+reward=1.0
+done=True
+</code></pre></div><!--
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   完成したノートブックの確認
 </h1>
@@ -391,21 +387,21 @@ $\epsilon$を<code>0</code>に設定し，常に$Q$が最大の行動を選択�
 </h1>
 
 <p><code>4x4</code>のサイズでマップを自由に作成し，Q学習でプレイヤーをゴールに到達させなさい．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># S, G, F, Hで表現</span>
-</span></span><span style="display:flex;"><span>desc <span style="color:#f92672">=</span> [
-</span></span><span style="display:flex;"><span>    [<span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;S&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>],
-</span></span><span style="display:flex;"><span>    [<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>]
-</span></span><span style="display:flex;"><span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#34;FrozenLake-v1&#34;</span>, desc<span style="color:#f92672">=</span>desc, is_slippery<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span>state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render(mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>)
-</span></span><span style="display:flex;"><span>image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
-</span></span><span style="display:flex;"><span>image<span style="color:#f92672">.</span>show()
-</span></span></code></pre></div><p><a href="https://gyazo.com/e136a0e4308e387583e45d7f6b6e108e"><img src="https://i.gyazo.com/e136a0e4308e387583e45d7f6b6e108e.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># S, G, F, Hで表現</span>
+desc <span style="color:#f92672">=</span> [
+    [<span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;S&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>],
+    [<span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>],
+    [<span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;H&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>],
+    [<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>]
+]
+
+env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#34;FrozenLake-v1&#34;</span>, desc<span style="color:#f92672">=</span>desc, is_slippery<span style="color:#f92672">=</span>False)
+state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
+
+rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render(mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>)
+image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
+image<span style="color:#f92672">.</span>show()
+</code></pre></div><p><a href="https://gyazo.com/e136a0e4308e387583e45d7f6b6e108e"><img src="https://i.gyazo.com/e136a0e4308e387583e45d7f6b6e108e.png" alt="Image from Gyazo"></a></p>
 <p>Google Colaboratoryで作成した <strong>AI-15.ipynb</strong> を保存し，
 <strong>ノートブック（.ipynb）</strong> をダウンロードして提出しなさい．
 提出の前に必ず下記の設定を行うこと．</p>
