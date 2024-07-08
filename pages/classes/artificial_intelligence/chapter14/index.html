@@ -284,6 +284,7 @@ plt<span style="color:#f92672">.</span>imshow(rgb_array[len(rgb_array)<span styl
 <li>プレイヤーの位置<code>next_state</code></li>
 <li>報酬<code>reward</code></li>
 <li>終了判定<code>done</code></li>
+<li>時間切れ<code>truncated</code>（4x4は100ステップ，8x8は200ステップ）</li>
 <li>成功確率<code>info</code>（<code>is_slippery=True</code>にすると減少）</li>
 </ul>
 <p>下に移動したため，プレイヤーの位置は<code>4</code>になっていることがわかります．
@@ -293,7 +294,7 @@ plt<span style="color:#f92672">.</span>imshow(rgb_array[len(rgb_array)<span styl
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
 action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># DOWN</span>
-next_state, reward, done, info, prob <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+next_state, reward, done, truncated, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
 
 rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render()
 plt<span style="color:#f92672">.</span>imshow(rgb_array[len(rgb_array)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
@@ -313,10 +314,10 @@ info={&#39;prob&#39;: 1.0}
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
 action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># DOWN</span>
-next_state, reward, done, info, prob <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+next_state, reward, done, truncated, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
 
 action <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># RIGHT</span>
-next_state, reward, done, info, prob <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+next_state, reward, done, truncated, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
 
 rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render()
 plt<span style="color:#f92672">.</span>imshow(rgb_array[len(rgb_array)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
@@ -358,7 +359,7 @@ state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</spa
 actions <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>] <span style="color:#75715e">#RIGHT, RIGHT, DOWN, DOWN, DOWN, RIGHT</span>
 histories <span style="color:#f92672">=</span> []
 <span style="color:#66d9ef">for</span> action <span style="color:#f92672">in</span> actions:
-  next_state, reward, done, info, prob <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+  next_state, reward, done, truncated, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
   histories<span style="color:#f92672">.</span>append((state, action))
   state <span style="color:#f92672">=</span> next_state
 
@@ -385,7 +386,7 @@ done=True
 histories <span style="color:#f92672">=</span> []
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
   action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
-  next_state, reward, done, info, prob <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+  next_state, reward, done, truncated, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
   histories<span style="color:#f92672">.</span>append((state, action))
   state <span style="color:#f92672">=</span> next_state
 
