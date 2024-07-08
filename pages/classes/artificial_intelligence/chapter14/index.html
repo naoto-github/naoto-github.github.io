@@ -90,7 +90,7 @@
   <meta property="og:description" content="GymとはGymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． ここでは，フローズンレイク（FrozenLake）などのゲームを題材に， 強化学習のアルゴリズムを実装することができます．
 ノートブックの作成Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-14 とします． ノートブックの作成方法は第1回の資料を参照してください．
 最初に下記のライブラリも導入します．
-import gym import numpy as np import random import time from google.colab import output from PIL import Image from gym.envs.toy_text.frozen_lake import generate_random_map フローズンレイク（FrozenLake）フローズンレイク（FrozenLake）は， 凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです． 湖の環境は下記の画像で表現されます． 左上のプレイヤーを動かして，穴が空いた湖を避けて，右下の宝箱があるゴールに移動することを目的とします．
+import gym import numpy as np import random import time import matplotlib.pyplot as plt from google.colab import output from gym.envs.toy_text.frozen_lake import generate_random_map フローズンレイク（FrozenLake）フローズンレイク（FrozenLake）は， 凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです． 湖の環境は下記の画像で表現されます． 左上のプレイヤーを動かして，穴が空いた湖を避けて，右下の宝箱があるゴールに移動することを目的とします．
 
 環境は下記のように16文字のテキストでも表現できます． ここで，Sはスタート地点，Gはゴール地点，Fは凍った湖，Hは穴が空いた湖です．
 SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤーの位置です． 事前にどこにHがあるかを知ることはできません． プレイヤーの位置は0〜15の数値で表され，Sは0，Gは15に対応します．
@@ -112,7 +112,7 @@ SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤー
   <meta name="twitter:description" content="GymとはGymは， 機械学習の一分野である 強化学習 を開発するためのツールキットです． ここでは，フローズンレイク（FrozenLake）などのゲームを題材に， 強化学習のアルゴリズムを実装することができます．
 ノートブックの作成Google Colaboratory を起動し，新規にノートブックを作成してください． ノートブックのタイトルは AI-14 とします． ノートブックの作成方法は第1回の資料を参照してください．
 最初に下記のライブラリも導入します．
-import gym import numpy as np import random import time from google.colab import output from PIL import Image from gym.envs.toy_text.frozen_lake import generate_random_map フローズンレイク（FrozenLake）フローズンレイク（FrozenLake）は， 凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです． 湖の環境は下記の画像で表現されます． 左上のプレイヤーを動かして，穴が空いた湖を避けて，右下の宝箱があるゴールに移動することを目的とします．
+import gym import numpy as np import random import time import matplotlib.pyplot as plt from google.colab import output from gym.envs.toy_text.frozen_lake import generate_random_map フローズンレイク（FrozenLake）フローズンレイク（FrozenLake）は， 凍った湖の上を，湖に落ちない様に，スタート地点からゴール地点まで進むゲームです． 湖の環境は下記の画像で表現されます． 左上のプレイヤーを動かして，穴が空いた湖を避けて，右下の宝箱があるゴールに移動することを目的とします．
 
 環境は下記のように16文字のテキストでも表現できます． ここで，Sはスタート地点，Gはゴール地点，Fは凍った湖，Hは穴が空いた湖です．
 SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤーの位置です． 事前にどこにHがあるかを知ることはできません． プレイヤーの位置は0〜15の数値で表され，Sは0，Gは15に対応します．
@@ -204,8 +204,8 @@ SFFF FHFH FFFH HFFG プレイヤーが観測できる情報は，プレイヤー
 <span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 <span style="color:#f92672">import</span> random
 <span style="color:#f92672">import</span> time
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
 <span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> output
-<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
 <span style="color:#f92672">from</span> gym.envs.toy_text.frozen_lake <span style="color:#f92672">import</span> generate_random_map
 </code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   フローズンレイク（FrozenLake）
@@ -258,7 +258,7 @@ HFFG
 ここでは滑らない（<code>false</code>）に設定します．
 このゲームの <strong>行動</strong> は4種類の離散値（0:左，1:下，2:右，3:上），
 また，<strong>状態空間</strong> は16種類の離散値（0〜15）であることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#39;FrozenLake-v1&#39;</span>, map_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;4x4&#34;</span>, is_slippery<span style="color:#f92672">=</span>False) <span style="color:#75715e"># 環境の初期化</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#34;FrozenLake-v1&#34;</span>, map_name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;4x4&#34;</span>, is_slippery<span style="color:#f92672">=</span>False, new_step_api<span style="color:#f92672">=</span>True, render_mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>) <span style="color:#75715e"># 環境の初期化</span>
 
 <span style="color:#66d9ef">print</span>(env<span style="color:#f92672">.</span>action_space) <span style="color:#75715e"># 行動空間</span>
 <span style="color:#66d9ef">print</span>(env<span style="color:#f92672">.</span>observation_space) <span style="color:#75715e"># 状態空間</span>
@@ -270,9 +270,8 @@ Discrete(16)
 ここで，<code>env.render()</code>はプレイヤーの環境を表す画像を生成しています．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset() <span style="color:#75715e"># 環境の初期化</span>
 
-rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render(mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>) <span style="color:#75715e"># 画像を生成</span>
-image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
-image<span style="color:#f92672">.</span>show()
+rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render() <span style="color:#75715e"># 画像を生成</span>
+plt<span style="color:#f92672">.</span>imshow(rgb_array[len(rgb_array)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
 
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;state={state}&#34;</span>)
 </code></pre></div><p><a href="https://gyazo.com/b1caacb51e0c6c8f822694322249e852"><img src="https://i.gyazo.com/b1caacb51e0c6c8f822694322249e852.png" alt="Image from Gyazo"></a></p>
@@ -294,11 +293,10 @@ image<span style="color:#f92672">.</span>show()
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
 action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># DOWN</span>
-next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+next_state, reward, done, info, prob <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
 
-rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render(mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>)
-image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
-image<span style="color:#f92672">.</span>show()
+rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render()
+plt<span style="color:#f92672">.</span>imshow(rgb_array[len(rgb_array)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
 
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
@@ -315,14 +313,13 @@ info={&#39;prob&#39;: 1.0}
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
 action <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># DOWN</span>
-next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+next_state, reward, done, info, prob <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
 
 action <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># RIGHT</span>
-next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+next_state, reward, done, info, prob <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
 
-rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render(mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>)
-image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
-image<span style="color:#f92672">.</span>show()
+rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render()
+plt<span style="color:#f92672">.</span>imshow(rgb_array[len(rgb_array)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
 
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;reward={reward}&#34;</span>)
@@ -361,13 +358,12 @@ state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</spa
 actions <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>] <span style="color:#75715e">#RIGHT, RIGHT, DOWN, DOWN, DOWN, RIGHT</span>
 histories <span style="color:#f92672">=</span> []
 <span style="color:#66d9ef">for</span> action <span style="color:#f92672">in</span> actions:
-  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+  next_state, reward, done, info, prob <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
   histories<span style="color:#f92672">.</span>append((state, action))
   state <span style="color:#f92672">=</span> next_state
 
-  rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render(mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>)
-  image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
-  image<span style="color:#f92672">.</span>show()
+  rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render()
+  plt<span style="color:#f92672">.</span>imshow(rgb_array[len(rgb_array)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
 
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;actions={toString(histories)}&#34;</span>)
 <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;next_state={next_state}&#34;</span>)
@@ -389,13 +385,12 @@ done=True
 histories <span style="color:#f92672">=</span> []
 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
   action <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>choice([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
-  next_state, reward, done, info <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
+  next_state, reward, done, info, prob <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>step(action)
   histories<span style="color:#f92672">.</span>append((state, action))
   state <span style="color:#f92672">=</span> next_state
 
-  rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render(mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>)
-  image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
-  image<span style="color:#f92672">.</span>show()
+  rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render()
+  plt<span style="color:#f92672">.</span>imshow(rgb_array[len(rgb_array)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
 
   <span style="color:#66d9ef">if</span> done:
     <span style="color:#66d9ef">break</span>
@@ -427,12 +422,11 @@ desc <span style="color:#f92672">=</span> [
     [<span style="color:#e6db74">&#34;G&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>, <span style="color:#e6db74">&#34;F&#34;</span>]
 ]
 
-env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#34;FrozenLake-v1&#34;</span>, desc<span style="color:#f92672">=</span>desc, is_slippery<span style="color:#f92672">=</span>False)
+env <span style="color:#f92672">=</span> gym<span style="color:#f92672">.</span>make(<span style="color:#e6db74">&#34;FrozenLake-v1&#34;</span>, desc<span style="color:#f92672">=</span>desc, is_slippery<span style="color:#f92672">=</span>False, , new_step_api<span style="color:#f92672">=</span>True, render_mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>)
 state <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>reset()
 
-rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render(mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;rgb_array&#34;</span>)
-image <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>fromarray(rgb_array)
-image<span style="color:#f92672">.</span>show()
+rgb_array <span style="color:#f92672">=</span> env<span style="color:#f92672">.</span>render()
+plt<span style="color:#f92672">.</span>imshow(rgb_array[len(rgb_array)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
 </code></pre></div><p><a href="https://gyazo.com/7547b1f026b0d5b08deaac5f0412f712"><img src="https://i.gyazo.com/7547b1f026b0d5b08deaac5f0412f712.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
