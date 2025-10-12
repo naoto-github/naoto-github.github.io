@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>こまくる VRマップ</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #map { height: 100vh; width: 100%; }
+    .popup { min-width: 220px; line-height: 1.4; }
+    .popup .stop { font-weight: 700; margin-bottom: 6px; display: block; }
+    .popup img { display:block; max-width:260px; width:100%; height:auto; border-radius:4px; margin-bottom:8px; }
+    .popup .vr-btn {
+      display:inline-block; padding:8px 10px; border:1px solid #1e88e5; background:#1e88e5; color:#fff;
+      border-radius:6px; font-size:14px; cursor:pointer;
+    }
+    /* VRオーバーレイ */
+    #vrOverlay { position:fixed; inset:0; background:rgba(0,0,0,.9); display:none; z-index:2000; }
+    #vrInner   { position:absolute; inset:0; }
+    #vrClose   {
+      position:absolute; top:12px; right:12px; z-index:2100;
+      border:none; border-radius:999px; width:40px; height:40px;
+      font-size:22px; background:rgba(255,255,255,.95); cursor:pointer;
+    }
+    #vrHint {
+      position:absolute; left:12px; bottom:12px; z-index:2100; color:#fff; font-size:13px; opacity:.85;
+    }
+    a-scene[embedded]{ height:100%; width:100%; }
+  </style>
+
+  <!-- troika-text（A-Frame用） -->
+  <script src="https://unpkg.com/aframe-troika-text@0.9.0/dist/aframe-troika-text.min.js"></script>
+
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- VR Overlay -->
+  <div id="vrOverlay" aria-hidden="true">
+    <button id="vrClose" title="閉じる">×</button>
+    <div id="vrHint">ドラッグで視点移動，ピンチで拡大縮小．右下のゴーグルでVRモードに切替できます．</div>
+    <div id="vrInner">
+      <a-scene id="scene" embedded vr-mode-ui="enabled: true"
+               renderer="antialias: true" device-orientation-permission-ui="enabled: true">
+        <!-- 画像プリロード用 -->
+        <a-assets id="assets"></a-assets>
+        <!-- 表示先 -->
+        <a-sky id="sky" rotation="0 -90 0"></a-sky>
+
+        <!-- ▼ ここに親リグIDを付与（追加差分） -->
+        <a-entity id="rig" position="0 1.6 0">
+          <a-camera><a-cursor></a-cursor></a-camera>
+        </a-entity>
+
+        <!-- 前方2mに表示／中央揃え／白文字 -->
+        <a-entity
+          id="titleText"
+          troika-text="value: ここはどこかな？; font: ./fonts/NotoSansJP-Regular.ttf; color: #FFFFFF; fontSize: 0.6; anchor: center; align: center;"
+          position="0 1.6 -2"
+        ></a-entity>
+
+        <!-- 読みやすくする半透明の背景（任意） -->
+        <a-plane
+          position="0 1.6 -2.01"
+          width="5"
+          height="0.6"
+          color="#000000"
+          opacity="0.35"
+          material="transparent: true"
+        ></a-plane>
+
+        <!-- ▼ 正解（後方180度側） -->
+        <a-entity
+          id="answerText"
+          troika-text="value: ; font: ./fonts/NotoSansJP-Regular.ttf; color: #00E676; fontSize: 0.6; anchor: center; align: center;"
+          position="0 1.6 2"
+          rotation="0 180 0"
+        ></a-entity>
+        <a-plane
+          id="answerBg"
+          position="0 1.6 2.01"
+          rotation="0 180 0"
+          width="5"
+          height="0.6"
+          color="#000000"
+          opacity="0.35"
+          material="transparent: true"
+        ></a-plane>
+      </a-scene>
+    </div>
+  </div>
+
+  <script>
+    const IMAGE_PATH = './images/';
+
+    // Leaflet初期化
+    const map = L.map('map', { zoomControl: false }).setView([35.18, 136.90], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+    L.control.scale({ metric: true, imperial: false }).addTo(map);
+
+    // VR制御
+    const overlay = document.getElementById('vrOverlay');
+    const btnClose = document.getElementById('vrClose');
+    const scene = document.getElementById('scene');
+    const assets = document.getElementById('assets');
+    const sky = document.getElementById('sky');
+    const answerText = document.getElementById('answerText');
+    const rig = document.getElementById('rig');                  // ▼ 追加
+    const cam = document.querySelector('a-camera');              // ▼ 追加
+
+    let currentAssetEl = null; // 後片付け用
+
+    // ▼ 追加：視点の向きをリセット（問題側＝前方を向く）
+    function resetView(){
+      if (!cam) return;
+      const lc = cam.components['look-controls'];
+      try {
+        if (lc && lc.yawObject && lc.pitchObject) {
+          lc.pitchObject.rotation.x = 0;
+          lc.yawObject.rotation.y = 0;
+        }
+      } catch(e) {}
+      if (rig) {
+        rig.setAttribute('rotation', '0 0 0');
+      }
+      // 念のため次フレームにリサイズ
+      if (scene && scene.resize) {
+        setTimeout(()=>scene.resize(), 50);
+      }
+    }
+
+    // ▼ 変更：第2引数で正解文字列を受け取り，開くたびに向きをリセット
+    function openVR(url, answerStr){
+      // 先にオーバーレイを可視化
+      overlay.style.display = 'block';
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      // 正解テキストを更新
+      if (answerText) {
+        answerText.setAttribute('troika-text', 'value', answerStr || '');
+      }
+
+      // 向きをリセット（初回表示で答え側を向かないように）
+      resetView();
+
+      // 画像を<a-assets>に追加してプリロード
+      currentAssetEl = document.createElement('img');
+      currentAssetEl.setAttribute('crossorigin', 'anonymous');
+      currentAssetEl.id = 'pano-' + Date.now();
+      currentAssetEl.src = url;
+
+      const applyTexture = () => {
+        sky.setAttribute('src', '#' + currentAssetEl.id);
+        // 念のためもう一度向きをリセット（貼り替え直後のフレームで）
+        requestAnimationFrame(resetView);
+      };
+
+      const ensureSceneLoaded = (fn) => {
+        if (scene.hasLoaded) fn(); else scene.addEventListener('loaded', fn, { once:true });
+      };
+
+      ensureSceneLoaded(() => {
+        assets.appendChild(currentAssetEl);
+        if (currentAssetEl.complete) {
+          applyTexture();
+        } else {
+          currentAssetEl.addEventListener('load', applyTexture, { once:true });
+          currentAssetEl.addEventListener('error', () => {
+            alert('VR画像の読み込みに失敗しました．パスやサーバ設定を確認してください．');
+          }, { once:true });
+        }
+      });
+    }
+
+    function closeVR(){
+      overlay.style.display = 'none';
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      sky.removeAttribute('src');
+      if (currentAssetEl && currentAssetEl.parentNode === assets) {
+        assets.removeChild(currentAssetEl);
+      }
+      currentAssetEl = null;
+      // 必要なら正解を毎回消す
+      // if (answerText) answerText.setAttribute('troika-text', 'value', '');
+    }
+
+    btnClose.addEventListener('click', closeVR);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeVR(); });
+
+    // ▼ 追加：ゴーグルでVRモードに入ったときも向きをリセット
+    scene.addEventListener('enter-vr', () => {
+      setTimeout(resetView, 100);
+    });
+
+    // データ読込
+    fetch('data/ar-stops.json')
+      .then(r => {
+        if (!r.ok) throw new Error('JSONの読み込みに失敗しました．');
+        return r.json();
+      })
+      .then(points => {
+        const bounds = [];
+        points.forEach(item => {
+          const lat = Number(item.lat), lon = Number(item.lon);
+          if (Number.isNaN(lat) || Number.isNaN(lon)) return;
+
+          const panoUrl = IMAGE_PATH + (item.image || '');
+          const popupHtml = `
+            <div class="popup">
+              <span class="stop">${item.stop || '停留所'}</span>
+              ${item.image ? `<img src="${panoUrl}" alt="${item.stop || '停留所'}の360画像（縮小表示）" />` : ''}
+              <button class="vr-btn" data-pano="${panoUrl}" data-answer="${item.stop || ''}">VRを表示</button>
+            </div>`;
+
+          const marker = L.marker([lat, lon]).addTo(map).bindPopup(popupHtml);
+          bounds.push([lat, lon]);
+
+          marker.on('popupopen', e => {
+            const root = e.popup.getElement();
+            const btn = root && root.querySelector('.vr-btn[data-pano]');
+            if (btn) {
+              btn.addEventListener('click', () => {
+                const url = btn.getAttribute('data-pano');
+                const answer = btn.getAttribute('data-answer') || '';
+                if (url) openVR(url, answer);
+              }, { once: true });
+            }
+          });
+        });
+        if (bounds.length > 0) map.fitBounds(bounds, { padding: [24, 24] });
+      })
+      .catch(err => {
+        console.error(err);
+        alert('データの読込でエラーが発生しました．ファイルの場所やサーバ設定を確認してください．');
+      });
+  </script>
+</body>
+</html>
