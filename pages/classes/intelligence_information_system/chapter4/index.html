@@ -87,10 +87,10 @@
 
 
 
-  <meta property="og:description" content="解析解と数値解 前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
+  <meta property="og:description" content="解析解と数値解前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
 回帰式のパラメータ（$a$と$b$のこと）を求める方法には２通りあり， 方程式を解くことによって得られる厳密な解を 解析解， 繰り返しの計算によって得られる近似的な解を 数値解 と呼びます． 特定の処理を繰り返すことが得意なコンピュータでは， 後者の 数値解 を求める方法が良く用いられます． ここでは，数値解を求めるための最もシンプルな方法である 最急降下法（Gradient Descent Method） について学びます．
-ノートブックの作成 Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter4 とします． 前回と同様に，numpy と matplotlib.pyplot を導入します．
-import numpy as np import matplotlib.pyplot as plt 最急降下法 最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
+ノートブックの作成Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter4 とします． 前回と同様に，numpy と matplotlib.pyplot を導入します．
+import numpy as np import matplotlib.pyplot as plt 最急降下法最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
 データ 対象とするデータは前回と同じ，気温 と アイスクリーム のデータを用います． いずれも，numpyのndarray型でリストを作成しておきます．
 x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気温 y = np." />
 
@@ -107,10 +107,10 @@ x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気温 y = np." />
 
 
 
-  <meta name="twitter:description" content="解析解と数値解 前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
+  <meta name="twitter:description" content="解析解と数値解前回は2変数の関係性を表す 回帰式 と， その回帰式の当てはまり具合を評価するための 最小二乗法 について学びました． 回帰式の形を決める傾き $a$ と切片 $b$ の最適値は， numpy の polyfit 関数を利用して求めましたが，どのように最適値を求めているのでしょうか． 今回はその秘密に迫ってみたいと思います．
 回帰式のパラメータ（$a$と$b$のこと）を求める方法には２通りあり， 方程式を解くことによって得られる厳密な解を 解析解， 繰り返しの計算によって得られる近似的な解を 数値解 と呼びます． 特定の処理を繰り返すことが得意なコンピュータでは， 後者の 数値解 を求める方法が良く用いられます． ここでは，数値解を求めるための最もシンプルな方法である 最急降下法（Gradient Descent Method） について学びます．
-ノートブックの作成 Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter4 とします． 前回と同様に，numpy と matplotlib.pyplot を導入します．
-import numpy as np import matplotlib.pyplot as plt 最急降下法 最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
+ノートブックの作成Colabにアクセスし，新規にノートブックを作成してください． ノートブックのタイトルは chapter4 とします． 前回と同様に，numpy と matplotlib.pyplot を導入します．
+import numpy as np import matplotlib.pyplot as plt 最急降下法最急降下法は，目的関数（2乗誤差）の傾き（勾配）を求め， 誤差が小さくなる方向へパラメータを更新するという手法です． 理解するためには 微分 が必要となりますが， 決して難しい計算ではないため，焦らず落ち着いて考えていきましょう．
 データ 対象とするデータは前回と同じ，気温 と アイスクリーム のデータを用います． いずれも，numpyのndarray型でリストを作成しておきます．
 x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気温 y = np." />
 
@@ -202,9 +202,9 @@ x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気温 y = np." />
 <p>Colabにアクセスし，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>chapter4</strong> とします．
 前回と同様に，<strong>numpy</strong> と <strong>matplotlib.pyplot</strong> を導入します．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   最急降下法
 </h1>
 
@@ -215,9 +215,9 @@ x = np.array([12, 20, 13, 24, 28, 30, 31, 24, 18, 33]) # 気温 y = np." />
 <h3 id="データ">データ</h3>
 <p>対象とするデータは前回と同じ，<strong>気温</strong> と <strong>アイスクリーム</strong> のデータを用います．
 いずれも，numpyのndarray型でリストを作成しておきます．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">33</span>]) <span style="color:#75715e"># 気温</span>
-</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">49</span>]) <span style="color:#75715e"># アイスクリームの売上</span>
-</span></span></code></pre></div><h3 id="回帰式">回帰式</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">12</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">13</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">30</span>, <span style="color:#ae81ff">31</span>, <span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">18</span>, <span style="color:#ae81ff">33</span>]) <span style="color:#75715e"># 気温</span>
+y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">21</span>, <span style="color:#ae81ff">35</span>, <span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">29</span>, <span style="color:#ae81ff">37</span>, <span style="color:#ae81ff">46</span>, <span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">27</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">49</span>]) <span style="color:#75715e"># アイスクリームの売上</span>
+</code></pre></div><h3 id="回帰式">回帰式</h3>
 <p>今回も，線形回帰（一次式）を考えますが，
 回帰式は下記のように，一般化した表現で表すことにします（$a$を$w_1$，$b$を$w_0$に置き換えた）．
 この$w_0$と$w_1$の最適値を求めることが目的です．</p>
@@ -238,32 +238,32 @@ $1 / 2$が係数となっていますが，これは後ほどの微分計算で�
 $w_1$を-5から5まで変化させたときの，目的関数の値は下記のグラフとなります．
 グラフは下に凸のお椀型の形状をしており，
 誤差が最小となる$w_1 \simeq 1.36$が最適値となることが分かります．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># w1の変化</span>
-</span></span><span style="display:flex;"><span>y_ <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 空のリスト</span>
-</span></span><span style="display:flex;"><span>w0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.52</span> <span style="color:#75715e"># w0を固定</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> w1 <span style="color:#f92672">in</span> x_:
-</span></span><span style="display:flex;"><span>    E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2乗誤差</span>
-</span></span><span style="display:flex;"><span>    y_<span style="color:#f92672">.</span>append(E) <span style="color:#75715e"># リストに要素を追加</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(x_, y_)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w1&#34;</span>) <span style="color:#75715e"># 水平軸のラベル</span>
-</span></span></code></pre></div><p><a href="https://gyazo.com/67a72d8cb7002155c4761f2aa95f0888"><img src="https://i.gyazo.com/67a72d8cb7002155c4761f2aa95f0888.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># w1の変化</span>
+y_ <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 空のリスト</span>
+w0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.52</span> <span style="color:#75715e"># w0を固定</span>
+
+<span style="color:#66d9ef">for</span> w1 <span style="color:#f92672">in</span> x_:
+    E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2乗誤差</span>
+    y_<span style="color:#f92672">.</span>append(E) <span style="color:#75715e"># リストに要素を追加</span>
+
+plt<span style="color:#f92672">.</span>plot(x_, y_)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w1&#34;</span>) <span style="color:#75715e"># 水平軸のラベル</span>
+</code></pre></div><p><a href="https://gyazo.com/67a72d8cb7002155c4761f2aa95f0888"><img src="https://i.gyazo.com/67a72d8cb7002155c4761f2aa95f0888.png" alt="Image from Gyazo"></a></p>
 <p>同様に，$w_1=1.36$に固定して考えます（1.36は前回求めた最適値）．
 $w_0$を-5から5まで変化させたときの，目的関数の値は下記のグラフとなります．
 グラフは下に凸のお椀型の形状をしており，
 誤差が最小となる$w_0 \simeq 2.52$が最適値となることが分かります．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># w0の変化</span>
-</span></span><span style="display:flex;"><span>y_ <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 空のリスト</span>
-</span></span><span style="display:flex;"><span>w1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.36</span> <span style="color:#75715e"># w1を固定</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> w0 <span style="color:#f92672">in</span> x_:
-</span></span><span style="display:flex;"><span>    E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2乗誤差</span>
-</span></span><span style="display:flex;"><span>    y_<span style="color:#f92672">.</span>append(E) <span style="color:#75715e"># リストに要素を追加</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(x_, y_)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w0&#34;</span>) <span style="color:#75715e"># 水平軸のラベル  </span>
-</span></span></code></pre></div><p><a href="https://gyazo.com/c98203e828305e9daa0ccb82c15e4ece"><img src="https://i.gyazo.com/c98203e828305e9daa0ccb82c15e4ece.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">x_ <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># w0の変化</span>
+y_ <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 空のリスト</span>
+w1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.36</span> <span style="color:#75715e"># w1を固定</span>
+
+<span style="color:#66d9ef">for</span> w0 <span style="color:#f92672">in</span> x_:
+    E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 2乗誤差</span>
+    y_<span style="color:#f92672">.</span>append(E) <span style="color:#75715e"># リストに要素を追加</span>
+
+plt<span style="color:#f92672">.</span>plot(x_, y_)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;w0&#34;</span>) <span style="color:#75715e"># 水平軸のラベル  </span>
+</code></pre></div><p><a href="https://gyazo.com/c98203e828305e9daa0ccb82c15e4ece"><img src="https://i.gyazo.com/c98203e828305e9daa0ccb82c15e4ece.png" alt="Image from Gyazo"></a></p>
 <h3 id="学習則">学習則</h3>
 <p>目的関数$E$は，$w_0$と$w_1$に対して，下に凸のお椀型の形状をしていることがわかりました．
 最急降下法では，初期値として$w_0$と$w_1$に適当な値を設定し，坂を下る方向に$w_0$と$w_1$を更新することで最適値を探します．
@@ -294,39 +294,39 @@ $w_0$を減少させることで，より誤差を小さくすることができ
 パラメータの更新を10万回繰り返した後に，$w_0$，$w_1$の値と，目的関数の値を出力しています．
 この結果，$w_0 \simeq 2.52$，$w_1 \simeq 1.36$となり，前回にpolyfit関数で求めた値とほぼ一致していることが分かります．</p>
 <p><strong>[In:]</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>w0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># w0の初期値</span>
-</span></span><span style="display:flex;"><span>w1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># w1の初期値</span>
-</span></span><span style="display:flex;"><span>alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0001</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100000</span>):
-</span></span><span style="display:flex;"><span>    g0 <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#75715e"># w0の偏微分</span>
-</span></span><span style="display:flex;"><span>    g1 <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum((y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">*</span> x) <span style="color:#75715e"># w1の偏微分</span>
-</span></span><span style="display:flex;"><span>    w0 <span style="color:#f92672">=</span> w0 <span style="color:#f92672">-</span> alpha <span style="color:#f92672">*</span> g0 <span style="color:#75715e"># w0の更新</span>
-</span></span><span style="display:flex;"><span>    w1 <span style="color:#f92672">=</span> w1 <span style="color:#f92672">-</span> alpha <span style="color:#f92672">*</span> g1 <span style="color:#75715e"># w1の更新</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 目的関数の計算</span>
-</span></span><span style="display:flex;"><span>print(w0)
-</span></span><span style="display:flex;"><span>print(w1)
-</span></span><span style="display:flex;"><span>print(E)
-</span></span></code></pre></div><p><strong>[Out:]</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#ae81ff">2.518733969947924</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1.3554170191576644</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">97.5964381152417</span>
-</span></span></code></pre></div><p>最後に導出した$w_0$と$w_1$を利用して回帰式をグラフで描画してみます．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python">w0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># w0の初期値</span>
+w1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span> <span style="color:#75715e"># w1の初期値</span>
+alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0001</span>
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100000</span>):
+    g0 <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum(y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#75715e"># w0の偏微分</span>
+    g1 <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sum((y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">*</span> x) <span style="color:#75715e"># w1の偏微分</span>
+    w0 <span style="color:#f92672">=</span> w0 <span style="color:#f92672">-</span> alpha <span style="color:#f92672">*</span> g0 <span style="color:#75715e"># w0の更新</span>
+    w1 <span style="color:#f92672">=</span> w1 <span style="color:#f92672">-</span> alpha <span style="color:#f92672">*</span> g1 <span style="color:#75715e"># w1の更新</span>
+
+E <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (y <span style="color:#f92672">-</span> w0 <span style="color:#f92672">-</span> w1 <span style="color:#f92672">*</span> x) <span style="color:#f92672">**</span> <span style="color:#ae81ff">2</span>) <span style="color:#75715e"># 目的関数の計算</span>
+<span style="color:#66d9ef">print</span>(w0)
+<span style="color:#66d9ef">print</span>(w1)
+<span style="color:#66d9ef">print</span>(E)
+</code></pre></div><p><strong>[Out:]</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#ae81ff">2.518733969947924</span>
+<span style="color:#ae81ff">1.3554170191576644</span>
+<span style="color:#ae81ff">97.5964381152417</span>
+</code></pre></div><p>最後に導出した$w_0$と$w_1$を利用して回帰式をグラフで描画してみます．
 前回と同様の回帰式が描けていることがわかります．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>fx <span style="color:#f92672">=</span> w0 <span style="color:#f92672">+</span> w1 <span style="color:#f92672">*</span> x
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>scatter(x, y)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(x, fx)
-</span></span></code></pre></div><p><a href="https://gyazo.com/7ffb579fc605f9a0a77b2e8ca93e8a39"><img src="https://i.gyazo.com/7ffb579fc605f9a0a77b2e8ca93e8a39.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fx <span style="color:#f92672">=</span> w0 <span style="color:#f92672">+</span> w1 <span style="color:#f92672">*</span> x
+plt<span style="color:#f92672">.</span>scatter(x, y)
+plt<span style="color:#f92672">.</span>plot(x, fx)
+</code></pre></div><p><a href="https://gyazo.com/7ffb579fc605f9a0a77b2e8ca93e8a39"><img src="https://i.gyazo.com/7ffb579fc605f9a0a77b2e8ca93e8a39.png" alt="Image from Gyazo"></a></p>
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
 <p>下記のデータの回帰式を最急降下法で求めてください．
 ただし，$\alpha=0.00001$，繰り返し回数を100万回とすること．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">75</span>, <span style="color:#ae81ff">88</span>, <span style="color:#ae81ff">90</span>, <span style="color:#ae81ff">92</span>, <span style="color:#ae81ff">94</span>, <span style="color:#ae81ff">99</span>])
-</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">89</span>, <span style="color:#ae81ff">86</span>, <span style="color:#ae81ff">77</span>, <span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">73</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">60</span>])
-</span></span></code></pre></div><p>課題を完成させたら，<strong>chapter4.ipynb</strong> を保存し，
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">55</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">75</span>, <span style="color:#ae81ff">88</span>, <span style="color:#ae81ff">90</span>, <span style="color:#ae81ff">92</span>, <span style="color:#ae81ff">94</span>, <span style="color:#ae81ff">99</span>])
+y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">89</span>, <span style="color:#ae81ff">86</span>, <span style="color:#ae81ff">77</span>, <span style="color:#ae81ff">80</span>, <span style="color:#ae81ff">68</span>, <span style="color:#ae81ff">73</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">62</span>, <span style="color:#ae81ff">58</span>, <span style="color:#ae81ff">60</span>])
+</code></pre></div><p>課題を完成させたら，<strong>chapter4.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
 このとき，必ず事前に下記の設定を行ってから提出してください．</p>
 <ul>

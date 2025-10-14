@@ -87,7 +87,7 @@
 
 
 
-  <meta property="og:description" content="物体画像(CIFAR-10) CIFAR-10データセットを利用した物体画像の認識に挑戦しましょう． 60000枚のカラー画像（RGB）を含むデータセットであり， 各画像は$32 \times 32$ピクセルで構成されています． また，各画像は，airplane，automobile，birdなど10のカテゴリに分類されており， 前回学習した多層パーセプトロンを利用して分類を実現します．
+  <meta property="og:description" content="物体画像(CIFAR-10)CIFAR-10データセットを利用した物体画像の認識に挑戦しましょう． 60000枚のカラー画像（RGB）を含むデータセットであり， 各画像は$32 \times 32$ピクセルで構成されています． また，各画像は，airplane，automobile，birdなど10のカテゴリに分類されており， 前回学習した多層パーセプトロンを利用して分類を実現します．
 ノートブックを作成し，ノートブックのタイトルをchapter5 に設定します． まずはPyTorch，Numpy，Matplotlibに加えて， データセットを提供するTorchvisionをインポートします． CIFAR-10も提供されるデータセットの一つです．
 !pip install torch !pip install torchvision import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib.pyplot as plt それでは，CIFAR10のデータセットを読み込みます． 初回のみはローカルへのダウンロードが発生します． 今回は学習用に用いられる50000枚のデータを利用します．
 dataset = torchvision.datasets.CIFAR10(root=&#34;./data&#34;, download=True) print(dataset) #出力 Extracting ./data/cifar-10-python.tar.gz to ./data Dataset CIFAR10 Number of datapoints: 50000 Root location: ./data Split: Train データセットには，正解のラベルを表す番号が含まれていますが， ラベルの名前（例，airplane）などは含まれていません． そこで，ラベルの名前を含むリストを作成しておきます． リストの要素番号とラベルの番号が一致していることに注意してください．" />
@@ -105,7 +105,7 @@ dataset = torchvision.datasets.CIFAR10(root=&#34;./data&#34;, download=True) pri
 
 
 
-  <meta name="twitter:description" content="物体画像(CIFAR-10) CIFAR-10データセットを利用した物体画像の認識に挑戦しましょう． 60000枚のカラー画像（RGB）を含むデータセットであり， 各画像は$32 \times 32$ピクセルで構成されています． また，各画像は，airplane，automobile，birdなど10のカテゴリに分類されており， 前回学習した多層パーセプトロンを利用して分類を実現します．
+  <meta name="twitter:description" content="物体画像(CIFAR-10)CIFAR-10データセットを利用した物体画像の認識に挑戦しましょう． 60000枚のカラー画像（RGB）を含むデータセットであり， 各画像は$32 \times 32$ピクセルで構成されています． また，各画像は，airplane，automobile，birdなど10のカテゴリに分類されており， 前回学習した多層パーセプトロンを利用して分類を実現します．
 ノートブックを作成し，ノートブックのタイトルをchapter5 に設定します． まずはPyTorch，Numpy，Matplotlibに加えて， データセットを提供するTorchvisionをインポートします． CIFAR-10も提供されるデータセットの一つです．
 !pip install torch !pip install torchvision import torch import torch.nn as nn import torch.optim as optim import torchvision import torchvision.transforms as transforms import numpy as np import matplotlib.pyplot as plt それでは，CIFAR10のデータセットを読み込みます． 初回のみはローカルへのダウンロードが発生します． 今回は学習用に用いられる50000枚のデータを利用します．
 dataset = torchvision.datasets.CIFAR10(root=&#34;./data&#34;, download=True) print(dataset) #出力 Extracting ./data/cifar-10-python.tar.gz to ./data Dataset CIFAR10 Number of datapoints: 50000 Root location: ./data Split: Train データセットには，正解のラベルを表す番号が含まれていますが， ラベルの名前（例，airplane）などは含まれていません． そこで，ラベルの名前を含むリストを作成しておきます． リストの要素番号とラベルの番号が一致していることに注意してください．" />
@@ -189,87 +189,87 @@ dataset = torchvision.datasets.CIFAR10(root=&#34;./data&#34;, download=True) pri
 まずはPyTorch，Numpy，Matplotlibに加えて，
 データセットを提供する<a href="https://pytorch.org/docs/stable/torchvision/index.html">Torchvision</a>をインポートします．
 CIFAR-10も提供されるデータセットの一つです．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>!pip install torch
-</span></span><span style="display:flex;"><span>!pip install torchvision
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.optim <span style="color:#66d9ef">as</span> optim
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torchvision
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torchvision.transforms <span style="color:#66d9ef">as</span> transforms
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span></code></pre></div><p>それでは，CIFAR10のデータセットを読み込みます．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install torch
+!pip install torchvision
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
+<span style="color:#f92672">import</span> torch.optim <span style="color:#f92672">as</span> optim
+<span style="color:#f92672">import</span> torchvision
+<span style="color:#f92672">import</span> torchvision.transforms <span style="color:#f92672">as</span> transforms
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+</code></pre></div><p>それでは，CIFAR10のデータセットを読み込みます．
 初回のみはローカルへのダウンロードが発生します．
 今回は学習用に用いられる50000枚のデータを利用します．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, download<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>print(dataset)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
-</span></span><span style="display:flex;"><span>Extracting <span style="color:#f92672">./</span>data<span style="color:#f92672">/</span>cifar<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span><span style="color:#f92672">-</span>python<span style="color:#f92672">.</span>tar<span style="color:#f92672">.</span>gz to <span style="color:#f92672">./</span>data
-</span></span><span style="display:flex;"><span>Dataset CIFAR10
-</span></span><span style="display:flex;"><span>    Number of datapoints: <span style="color:#ae81ff">50000</span>
-</span></span><span style="display:flex;"><span>    Root location: <span style="color:#f92672">./</span>data
-</span></span><span style="display:flex;"><span>    Split: Train
-</span></span></code></pre></div><p>データセットには，正解のラベルを表す番号が含まれていますが，
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, download<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">print</span>(dataset)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+Extracting <span style="color:#f92672">./</span>data<span style="color:#f92672">/</span>cifar<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span><span style="color:#f92672">-</span>python<span style="color:#f92672">.</span>tar<span style="color:#f92672">.</span>gz to <span style="color:#f92672">./</span>data
+Dataset CIFAR10
+    Number of datapoints: <span style="color:#ae81ff">50000</span>
+    Root location: <span style="color:#f92672">./</span>data
+    Split: Train
+</code></pre></div><p>データセットには，正解のラベルを表す番号が含まれていますが，
 ラベルの名前（例，airplane）などは含まれていません．
 そこで，ラベルの名前を含むリストを作成しておきます．
 <strong>リストの要素番号</strong>と<strong>ラベルの番号</strong>が一致していることに注意してください．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>label_names <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;airplane&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;automobile&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;bird&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;cat&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;deer&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;dog&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;frog&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;horse&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ship&#34;</span>,
-</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;truck&#34;</span>])
-</span></span></code></pre></div><p>データセットの最初のデータを取出します．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">label_names <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([
+    <span style="color:#e6db74">&#34;airplane&#34;</span>,
+    <span style="color:#e6db74">&#34;automobile&#34;</span>,
+    <span style="color:#e6db74">&#34;bird&#34;</span>,
+    <span style="color:#e6db74">&#34;cat&#34;</span>,
+    <span style="color:#e6db74">&#34;deer&#34;</span>,
+    <span style="color:#e6db74">&#34;dog&#34;</span>,
+    <span style="color:#e6db74">&#34;frog&#34;</span>,
+    <span style="color:#e6db74">&#34;horse&#34;</span>,
+    <span style="color:#e6db74">&#34;ship&#34;</span>,
+    <span style="color:#e6db74">&#34;truck&#34;</span>])
+</code></pre></div><p>データセットの最初のデータを取出します．
 各データは画像（image）とラベル（label）のタプルで構成されています．
 画像を<code>plt.imshow()</code>で表示してみましょう．
 また，ラベルは<code>6</code>であり，対応するラベル名前は<code>flog</code>であることがわかります．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(image)
-</span></span><span style="display:flex;"><span>print(type(image))
-</span></span><span style="display:flex;"><span>print(label)
-</span></span><span style="display:flex;"><span>print(label_names[label])
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">PIL</span><span style="color:#f92672">.</span>Image<span style="color:#f92672">.</span>Image<span style="color:#e6db74">&#39;&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span>
-</span></span><span style="display:flex;"><span>frog
-</span></span></code></pre></div><p><a href="https://gyazo.com/21413c3097a0728fcab718c478301227"><img src="https://i.gyazo.com/21413c3097a0728fcab718c478301227.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
+plt<span style="color:#f92672">.</span>imshow(image)
+<span style="color:#66d9ef">print</span>(type(image))
+<span style="color:#66d9ef">print</span>(label)
+<span style="color:#66d9ef">print</span>(label_names[label])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">PIL</span><span style="color:#f92672">.</span>Image<span style="color:#f92672">.</span>Image<span style="color:#e6db74">&#39;&gt;</span>
+<span style="color:#ae81ff">6</span>
+frog
+</code></pre></div><p><a href="https://gyazo.com/21413c3097a0728fcab718c478301227"><img src="https://i.gyazo.com/21413c3097a0728fcab718c478301227.png" alt="Image from Gyazo"></a></p>
 <p>上述で読み込んだ画像は <strong>PIL.Image.Image</strong> であり，
 そのままPyTorchでは用いることができません．
 そこで，<code>transform=transforms.ToTensor()</code>オプションを設定して，
 再度，データセットを読み込みます．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor())
-</span></span><span style="display:flex;"><span>print(dataset)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
-</span></span><span style="display:flex;"><span>Files already downloaded <span style="color:#f92672">and</span> verified
-</span></span><span style="display:flex;"><span>Dataset CIFAR10
-</span></span><span style="display:flex;"><span>    Number of datapoints: <span style="color:#ae81ff">50000</span>
-</span></span><span style="display:flex;"><span>    Root location: <span style="color:#f92672">./</span>data
-</span></span><span style="display:flex;"><span>    Split: Train
-</span></span><span style="display:flex;"><span>    StandardTransform
-</span></span><span style="display:flex;"><span>Transform: ToTensor()
-</span></span></code></pre></div><p>データセットの最初のデータを取出します．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dataset <span style="color:#f92672">=</span> torchvision<span style="color:#f92672">.</span>datasets<span style="color:#f92672">.</span>CIFAR10(root<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;./data&#34;</span>, transform<span style="color:#f92672">=</span>transforms<span style="color:#f92672">.</span>ToTensor())
+<span style="color:#66d9ef">print</span>(dataset)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+Files already downloaded <span style="color:#f92672">and</span> verified
+Dataset CIFAR10
+    Number of datapoints: <span style="color:#ae81ff">50000</span>
+    Root location: <span style="color:#f92672">./</span>data
+    Split: Train
+    StandardTransform
+Transform: ToTensor()
+</code></pre></div><p>データセットの最初のデータを取出します．
 画像は <strong>torch.Tensor</strong> であり，PyTorchで処理できることが分かります．
 また，$3 \times 32 \times 32$のテンソルで構成されており，
 それぞれ，RGBの画素値，$X$座標，$Y$座標を表しています．
 例えば，$X=10$，$Y=10$の赤色の画素値は<code>0.3137</code>であることが分かります．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
-</span></span><span style="display:flex;"><span>print(type(image))
-</span></span><span style="display:flex;"><span>print(image<span style="color:#f92672">.</span>size())
-</span></span><span style="display:flex;"><span>print(image[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">10</span>][<span style="color:#ae81ff">10</span>])
-</span></span><span style="display:flex;"><span>print(label)
-</span></span><span style="display:flex;"><span>print(label_names[label])
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">torch</span><span style="color:#f92672">.</span>Tensor<span style="color:#e6db74">&#39;&gt;</span>
-</span></span><span style="display:flex;"><span>torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">32</span>])
-</span></span><span style="display:flex;"><span>tensor(<span style="color:#ae81ff">0.3137</span>)
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span>
-</span></span><span style="display:flex;"><span>frog
-</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">image, label <span style="color:#f92672">=</span> dataset[<span style="color:#ae81ff">0</span>]
+<span style="color:#66d9ef">print</span>(type(image))
+<span style="color:#66d9ef">print</span>(image<span style="color:#f92672">.</span>size())
+<span style="color:#66d9ef">print</span>(image[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">10</span>][<span style="color:#ae81ff">10</span>])
+<span style="color:#66d9ef">print</span>(label)
+<span style="color:#66d9ef">print</span>(label_names[label])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">torch</span><span style="color:#f92672">.</span>Tensor<span style="color:#e6db74">&#39;&gt;</span>
+torch<span style="color:#f92672">.</span>Size([<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">32</span>])
+tensor(<span style="color:#ae81ff">0.3137</span>)
+<span style="color:#ae81ff">6</span>
+frog
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ミニバッチ学習
 </h1>
 
@@ -288,19 +288,19 @@ $N$個の学習データから，ランダムに$n (\leq N)$個のデータを�
 まずは，分類問題の難易度を下げるため，
 ラベルが0(airplane)，1(automobile)，2(bird)の3種類のみを抽出します．
 これにより，学習データの全データ数は$N=15000$となりました．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>my_dataset <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> dataset:
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
-</span></span><span style="display:flex;"><span>        my_dataset<span style="color:#f92672">.</span>append((image, label))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(len(my_dataset))
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">15000</span>
-</span></span></code></pre></div><p>この$N=15000$からミニバッチ用の小さなデータセットを
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">my_dataset <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> dataset:
+    <span style="color:#66d9ef">if</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">or</span> label <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>:
+        my_dataset<span style="color:#f92672">.</span>append((image, label))
+
+<span style="color:#66d9ef">print</span>(len(my_dataset))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+<span style="color:#ae81ff">15000</span>
+</code></pre></div><p>この$N=15000$からミニバッチ用の小さなデータセットを
 <code>torch.utils.data.DataLoader()</code>を利用して作成します．
 ここでは，バッチサイズ$n=64$としました．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(dataset<span style="color:#f92672">=</span>my_dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>)
-</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(dataset<span style="color:#f92672">=</span>my_dataset, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">64</span>)
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ネットワークの学習
 </h1>
 
@@ -314,105 +314,105 @@ Softmax関数は下記の式で表され，
 <p>$$
 f(y_i) = \frac{\exp(y_i)}{\sum_i \exp(y_j)}
 $$</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>network <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">600</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">600</span>, <span style="color:#ae81ff">600</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>ReLU(),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">600</span>, <span style="color:#ae81ff">3</span>),
-</span></span><span style="display:flex;"><span>    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(network)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
-</span></span><span style="display:flex;"><span>Sequential(
-</span></span><span style="display:flex;"><span>  (<span style="color:#ae81ff">0</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">3072</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>  (<span style="color:#ae81ff">1</span>): ReLU()
-</span></span><span style="display:flex;"><span>  (<span style="color:#ae81ff">2</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>  (<span style="color:#ae81ff">3</span>): ReLU()
-</span></span><span style="display:flex;"><span>  (<span style="color:#ae81ff">4</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, bias<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
-</span></span><span style="display:flex;"><span>  (<span style="color:#ae81ff">5</span>): Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>)
-</span></span></code></pre></div><p>ここで学習データに対する <strong>正解率（Accuracy）</strong> を算出してみます．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">network <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">600</span>),
+    nn<span style="color:#f92672">.</span>ReLU(),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">600</span>, <span style="color:#ae81ff">600</span>),
+    nn<span style="color:#f92672">.</span>ReLU(),
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">600</span>, <span style="color:#ae81ff">3</span>),
+    nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+)
+
+<span style="color:#66d9ef">print</span>(network)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+Sequential(
+  (<span style="color:#ae81ff">0</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">3072</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bias<span style="color:#f92672">=</span>True)
+  (<span style="color:#ae81ff">1</span>): ReLU()
+  (<span style="color:#ae81ff">2</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, bias<span style="color:#f92672">=</span>True)
+  (<span style="color:#ae81ff">3</span>): ReLU()
+  (<span style="color:#ae81ff">4</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">600</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, bias<span style="color:#f92672">=</span>True)
+  (<span style="color:#ae81ff">5</span>): Softmax(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+)
+</code></pre></div><p>ここで学習データに対する <strong>正解率（Accuracy）</strong> を算出してみます．
 当然，何も学習していないので，正解率は低く，0.321という結果でした．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
-</span></span><span style="display:flex;"><span>    image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span>    z <span style="color:#f92672">=</span> network(image)
-</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
-</span></span><span style="display:flex;"><span>    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(my_dataset)
-</span></span><span style="display:flex;"><span>print(acc)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0.321</span>
-</span></span></code></pre></div><p>損失関数と最適化関数を定義します．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
+    image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+    z <span style="color:#f92672">=</span> network(image)
+    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
+    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
+
+acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(my_dataset)
+<span style="color:#66d9ef">print</span>(acc)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+<span style="color:#ae81ff">0.321</span>
+</code></pre></div><p>損失関数と最適化関数を定義します．
 損失関数は <a href="https://pytorch.org/docs/master/generated/torch.nn.CrossEntropyLoss.html">ソフトマックス交差エントロピー</a>，最適化関数は <a href="https://pytorch.org/docs/stable/optim.html#torch.optim.Adam">Adam</a> を採用します．
 ソフトマックス交差エントロピーは，多値分類問題で利用される損失関数であり，
 <code>nn.CrossEntropyLoss()</code>で計算することができます．
 この関数には出力結果$z$と，正解のラベル$\hat{z}$を引数として与えますが，
 正解のラベルは <strong>One-Hot形式</strong> (例． ${\bf \hat{z}}=(1,0,0）$ )ではなく，
 <strong>ラベル形式</strong> (例．$\hat{z}=0$)となることに注意してください．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
-</span></span><span style="display:flex;"><span>optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>Adam(network<span style="color:#f92672">.</span>parameters())
-</span></span></code></pre></div><p>それでは，ミニバッチ学習を用いて重みとバイスを学習します．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>Adam(network<span style="color:#f92672">.</span>parameters())
+</code></pre></div><p>それでは，ミニバッチ学習を用いて重みとバイスを学習します．
 バッチサイズは$n=64$としたため，1回のエポック（epoch）で
 $15000 / 64 \simeq 234$回のミニバッチ学習が行わます．
 これを10エポック繰り返します．
 画像データ（image）を<code>view()</code>で1次元のテンソルに変換していることに注意してください．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>loss_history <span style="color:#f92672">=</span> []
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    loss_epoch <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i, (images, labels) <span style="color:#f92672">in</span> enumerate(loader):
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        images <span style="color:#f92672">=</span> images<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>zero_grad()
-</span></span><span style="display:flex;"><span>        z <span style="color:#f92672">=</span> network(images)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> criterion(z, labels)
-</span></span><span style="display:flex;"><span>        loss<span style="color:#f92672">.</span>backward()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        loss_epoch <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        optimizer<span style="color:#f92672">.</span>step()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>epoch<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>loss_epoch <span style="color:#f92672">/</span> i<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
-</span></span><span style="display:flex;"><span>    loss_history<span style="color:#f92672">.</span>append(loss_epoch <span style="color:#f92672">/</span> i)
-</span></span></code></pre></div><p>損失の推移を可視化します．
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss_history <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">for</span> epoch <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+
+    loss_epoch <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+
+    <span style="color:#66d9ef">for</span> i, (images, labels) <span style="color:#f92672">in</span> enumerate(loader):
+
+        images <span style="color:#f92672">=</span> images<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+
+        optimizer<span style="color:#f92672">.</span>zero_grad()
+        z <span style="color:#f92672">=</span> network(images)
+
+        loss <span style="color:#f92672">=</span> criterion(z, labels)
+        loss<span style="color:#f92672">.</span>backward()
+
+        loss_epoch <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+
+        optimizer<span style="color:#f92672">.</span>step()
+
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{epoch} {loss_epoch / i}&#34;</span>)
+    loss_history<span style="color:#f92672">.</span>append(loss_epoch <span style="color:#f92672">/</span> i)
+</code></pre></div><p>損失の推移を可視化します．
 エポックごとに損失が減少していることが確認できます．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1.2192253230983376</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0.9285253609856988</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0.8595439547147506</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3</span> <span style="color:#ae81ff">0.846264493261647</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span> <span style="color:#ae81ff">0.840729504568964</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span> <span style="color:#ae81ff">0.8289006696297572</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span> <span style="color:#ae81ff">0.8255122416039817</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">7</span> <span style="color:#ae81ff">0.8172445302335625</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8</span> <span style="color:#ae81ff">0.8131960273807884</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">9</span> <span style="color:#ae81ff">0.8121428805538732</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>plot(loss_history)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;epoch&#34;</span>)
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;loss&#34;</span>)
-</span></span></code></pre></div><p><a href="https://gyazo.com/68f20188e9f59491c8ccac72b0ec5e59"><img src="https://i.gyazo.com/68f20188e9f59491c8ccac72b0ec5e59.png" alt="Image from Gyazo"></a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+<span style="color:#ae81ff">0</span> <span style="color:#ae81ff">1.2192253230983376</span>
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">0.9285253609856988</span>
+<span style="color:#ae81ff">2</span> <span style="color:#ae81ff">0.8595439547147506</span>
+<span style="color:#ae81ff">3</span> <span style="color:#ae81ff">0.846264493261647</span>
+<span style="color:#ae81ff">4</span> <span style="color:#ae81ff">0.840729504568964</span>
+<span style="color:#ae81ff">5</span> <span style="color:#ae81ff">0.8289006696297572</span>
+<span style="color:#ae81ff">6</span> <span style="color:#ae81ff">0.8255122416039817</span>
+<span style="color:#ae81ff">7</span> <span style="color:#ae81ff">0.8172445302335625</span>
+<span style="color:#ae81ff">8</span> <span style="color:#ae81ff">0.8131960273807884</span>
+<span style="color:#ae81ff">9</span> <span style="color:#ae81ff">0.8121428805538732</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(loss_history)
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;epoch&#34;</span>)
+plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;loss&#34;</span>)
+</code></pre></div><p><a href="https://gyazo.com/68f20188e9f59491c8ccac72b0ec5e59"><img src="https://i.gyazo.com/68f20188e9f59491c8ccac72b0ec5e59.png" alt="Image from Gyazo"></a></p>
 <p>最後に正解率を再度計算してみましょう（あくまで学習用データに対する正解率であり，評価用のデータではないことに注意）．
 正解率は0.752となり，初期状態の0.321に比べ，かなり向上したことが確認できます．</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
-</span></span><span style="display:flex;"><span>    image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
-</span></span><span style="display:flex;"><span>    z <span style="color:#f92672">=</span> network(image)
-</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
-</span></span><span style="display:flex;"><span>    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(my_dataset)
-</span></span><span style="display:flex;"><span>print(acc)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#出力</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0.7523333333333333</span>
-</span></span></code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">counter <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">for</span> image, label <span style="color:#f92672">in</span> my_dataset:
+    image <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>view(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
+    z <span style="color:#f92672">=</span> network(image)
+    t <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>argmax(z)
+    counter <span style="color:#f92672">=</span> counter<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> label) <span style="color:#66d9ef">else</span> counter
+
+acc <span style="color:#f92672">=</span> counter <span style="color:#f92672">/</span> len(my_dataset)
+<span style="color:#66d9ef">print</span>(acc)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
+<span style="color:#ae81ff">0.7523333333333333</span>
+</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   課題
 </h1>
 
