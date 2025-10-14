@@ -154,7 +154,7 @@
       Mikke.log?.('ポーズ適用（setPose＋複数軸反転）：' + url);
     }catch(e){
       console.error('[POSE] setPose error', e);
-      Mikke.log?.('ポーズの読み込みに失敗しました．JSONの形式とパスを確認してください．');
+      //Mikke.log?.('ポーズの読み込みに失敗しました．JSONの形式とパスを確認してください．');
     }
   }
 })(window);

@@ -14,35 +14,48 @@
   <link rel="stylesheet" href="./app.css" />
 </head>
 <body>
+
   <div id="ui">
-    <button id="startBtn">AR開始</button>
-    
-    <label>アバター：
-      <select id="avatarSelect"></select>
-    </label>
+    <div class="ui-main">
+      <button id="startBtn" aria-label="AR開始">AR開始</button>
 
-    <!-- ポーズ選択 -->
-    <label style="margin-left:8px;">ポーズ：
-      <select id="poseSelect"></select>
-    </label>
+      <label>アバター：
+        <select id="avatarSelect" aria-label="アバター選択"></select>
+      </label>
 
-    <button id="toggleAvatarBtn" class="secondary" disabled>アバター非表示</button>
+      <label>ポーズ：
+        <select id="poseSelect" aria-label="ポーズ選択"></select>
+      </label>
 
-    <div id="debugToggle">
+      <button id="toggleAvatarBtn" class="secondary" disabled>アバター非表示</button>
+      
+    </div>
+
+    <div class="ui-tray">
+      <button id="moreBtn" class="secondary" aria-expanded="false" aria-controls="uiDetails">メニュー</button>
+    </div>
+  </div>
+
+  <!-- 折りたたみ（詳細設定） -->
+  <div id="uiDetails" role="region" aria-label="詳細設定">
+    <div class="row" id="debugRow">
       <input type="checkbox" id="debugCheck" />
       <label for="debugCheck">デバッグ表示</label>
     </div>
-
-    <span id="log">待機中…</span>
+    <div class="row"><span id="log">待機中…</span></div>
   </div>
 
   <div id="detectBanner">マーカー検出中</div>
   <video id="videoLayer" autoplay playsinline muted></video>
   <canvas id="threeLayer"></canvas>
 
+  <!-- 撮影（下部中央シャッターボタン） -->
+  <button id="captureBtn" aria-label="撮影する" title="撮影する"></button>
+
   <!-- スクリプのの読込 -->
   <script src="./js/ar.js"></script>
   <script src="./js/vrm.js"></script>
   <script src="./js/app.js"></script>
+  <script src="./js/capture.js"></script>
 </body>
 </html>

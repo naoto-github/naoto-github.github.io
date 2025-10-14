@@ -110,6 +110,35 @@
     Mikke.$('toggleAvatarBtn').textContent = Mikke.userHide ? 'アバター表示' : 'アバター非表示';
   });
 
+  // ===== 追加：モバイル向け UI 開閉 =====
+  const moreBtn    = Mikke.$('moreBtn');
+  const uiDetails  = document.getElementById('uiDetails');
+
+  function toggleDetails(force) {
+    const willOpen = (typeof force === 'boolean') ? force : !uiDetails.classList.contains('open');
+    uiDetails.classList.toggle('open', willOpen);
+    if (moreBtn) moreBtn.setAttribute('aria-expanded', String(willOpen));
+  }
+
+  if (moreBtn) {
+    moreBtn.addEventListener('click', () => toggleDetails());
+  }
+
+  // セレクト操作後は自動で閉じる（モバイル親指操作を想定）
+  ['avatarSelect','poseSelect'].forEach(id => {
+    const el = Mikke.$(id);
+    el?.addEventListener('change', () => {
+      // 小画面時のみ閉じる
+      if (window.matchMedia('(max-width: 599px)').matches) toggleDetails(false);
+    });
+  });
+
+  // 端末回転やアドレスバー変動に追随（安全領域と描画リサイズ）
+  window.addEventListener('resize', ()=>{
+    try { Mikke.AR.onResize?.(); } catch(_) {}
+    Mikke.renderer.setSize(window.innerWidth, window.innerHeight);
+  }, { passive:true });
+
   /* ===== 起動・ループ ===== */
   let started = false;
   Mikke.$('startBtn').addEventListener('click', async ()=>{
