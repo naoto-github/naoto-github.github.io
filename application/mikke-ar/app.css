@@ -170,3 +170,30 @@ label { display:flex; align-items:center; gap:6px; }
   bottom: auto;
   border-radius: 12px;
 }
+
+/* === Fix: モバイルでUI文字が縦に割れる問題を防止（上書き） === */
+
+/* ボタン／ラベル／セレクトの折り返しを禁止．CJKでも行内改行を抑止 */
+#ui button,
+#ui label,
+#ui select {
+  white-space: nowrap;       /* 強制的に1行表示 */
+  word-break: keep-all;      /* 句読点以外では改行しない */
+  text-overflow: ellipsis;   /* はみ出しは省略表示（必要に応じて） */
+  overflow: hidden;
+}
+
+/* ツール群は縮まず，横に並べる（必要ならスクロール） */
+#ui .ui-main {
+  flex-wrap: nowrap;         /* 折り返さない */
+}
+#ui .ui-main > * {
+  flex: 0 0 auto;            /* 縮小を禁止（wrapの元凶を遮断） */
+}
+
+/* セレクトの最大幅を端末幅に応じて制限（はみ出しにくく） */
+@media (max-width: 599px) {
+  #ui { overflow-x: visible; }     /* 親はそのまま */
+  #ui .ui-main { overflow-x: auto; } /* 内側で横スクロール */
+  #ui select { max-width: 44vw; }  /* ラベル付きでも潰れない目安値 */
+}
