@@ -1,8 +1,8 @@
-// capture.js
+// capture.js（潰れ補正版：非等方スケールを忠実反映）
 (function(){
   const $ = (id)=>document.getElementById(id);
 
-  // video の object-fit: cover を再現して描画（見た目サイズにフィット）
+  // video の object-fit: cover を再現して描画（出力キャンバスの見た目サイズに合わせる）
   function drawVideoCover(ctx, video, dstW, dstH){
     const vw = video.videoWidth  || dstW;
     const vh = video.videoHeight || dstH;
@@ -11,7 +11,7 @@
       return;
     }
     const vr = vw / vh;       // ソース比
-    const dr = dstW / dstH;   // 表示比
+    const dr = dstW / dstH;   // 出力比
     let sx, sy, sw, sh;
     if (vr > dr){
       // 横長 → 左右をトリミング
@@ -29,83 +29,78 @@
     ctx.drawImage(video, sx, sy, sw, sh, 0, 0, dstW, dstH);
   }
 
-  // 撮影直前に three.js の表示系を「見た目サイズ」に厳密同期
-  function syncThreeToClientSize(){
-    try{
-      const r = window.Mikke?.renderer;
-      const c = window.Mikke?.camera;
-      const webgl = $('threeLayer');
-      if (!r || !c || !webgl) return;
-
-      // 画面の「見た目サイズ」（CSSピクセル）
-      const clientW = webgl.clientWidth  || window.innerWidth;
-      const clientH = webgl.clientHeight || window.innerHeight;
-
-      // カメラのアスペクトを更新
-      const aspect = clientW / Math.max(1, clientH);
-      if (Math.abs(c.aspect - aspect) > 1e-6){
-        c.aspect = aspect;
-        c.updateProjectionMatrix();
+  // 撮影直前に 1フレームだけ描画（最新状態で保存）
+  function forceRenderIfPossible(){
+    try {
+      if (window.Mikke?.renderer && window.Mikke?.scene && window.Mikke?.camera){
+        window.Mikke.renderer.render(window.Mikke.scene, window.Mikke.camera);
       }
-
-      // ピクセル比＆レンダラサイズ（内部バッファは高解像度で確保）
-      const dpr = window.devicePixelRatio || 1;
-      r.setPixelRatio(dpr);
-      r.setSize(clientW, clientH, false);
-
-      // 1フレーム強制描画（最新姿勢で）
-      r.render(window.Mikke.scene, c);
-    }catch(_){}
+    } catch(_) {}
   }
 
   async function captureComposite(){
     const video = $('videoLayer');
-    const webgl = $('threeLayer');
+    const webgl = $('threeLayer'); // three.js の <canvas>
     if (!video || !webgl) return;
 
-    // three を見た目サイズに同期してから描画
-    syncThreeToClientSize();
+    // 1) 直前に強制レンダリング（姿勢やポーズを最新に）
+    forceRenderIfPossible();
 
-    // 見た目サイズで合成（＝ユーザが見ている比率のまま）
-    const clientW = webgl.clientWidth  || window.innerWidth;
-    const clientH = webgl.clientHeight || window.innerHeight;
+    // 2) 画面上の「見た目サイズ」（CSSピクセル）を正として合成
+    const rect = webgl.getBoundingClientRect(); // 実際にユーザが見ているサイズ
+    const outW = Math.max(1, Math.round(rect.width));
+    const outH = Math.max(1, Math.round(rect.height));
 
-    const off = document.createElement('canvas');
-    off.width = clientW;
-    off.height = clientH;
-    const ctx = off.getContext('2d');
+    const cvs = document.createElement('canvas');
+    cvs.width = outW; cvs.height = outH;
+    const ctx = cvs.getContext('2d');
 
-    // 背面：カメラ映像（coverでクロップ）
-    drawVideoCover(ctx, video, clientW, clientH);
+    // 背面：カメラ映像を cover で敷く（画面の見た目と同じ構図）
+    drawVideoCover(ctx, video, outW, outH);
 
-    // 前面：WebGLキャンバスを見た目サイズにリサンプルして重ねる
-    // ソースは内部解像度（webgl.width / height），ターゲットは clientW / clientH
+    // 3) 前面：WebGLキャンバスを「内部解像度→見た目サイズ」へ非等方スケールで合成
+    //    これにより画面上の伸縮（XとYで倍率が異なる場合）を忠実に再現できる
     try{
-      ctx.drawImage(webgl, 0, 0, webgl.width, webgl.height, 0, 0, clientW, clientH);
+      const srcW = webgl.width;   // 内部ピクセル（DPR考慮済み）
+      const srcH = webgl.height;
+      const scaleX = outW / Math.max(1, srcW);
+      const scaleY = outH / Math.max(1, srcH);
+
+      ctx.save();
+      // threeLayer が画面全体でない場合に備え，左上オフセットを反映したいときは translate を有効化
+      // const offsetX = Math.round(rect.left);
+      // const offsetY = Math.round(rect.top);
+      // ctx.translate(offsetX, offsetY);
+
+      // 非等方スケールを適用してから，内部解像度のまま描画
+      ctx.scale(scaleX, scaleY);
+      ctx.drawImage(webgl, 0, 0); // ソースは (0,0)-(srcW,srcH)
+      ctx.restore();
     }catch(e){
-      console.warn('WebGLキャンバス合成時にエラー．CORS設定を確認してください．', e);
-      alert('保存に失敗しました．VRMやテクスチャの配信元に Access-Control-Allow-Origin を設定してください．');
+      console.warn('WebGLキャンバス合成でエラー（CORSの可能性あり）．', e);
+      alert('保存に失敗しました．VRMやテクスチャの配信元に CORS 設定（Access-Control-Allow-Origin）を有効にしてください．');
       throw e;
     }
 
-    // PNG保存
-    const blob = await new Promise(res => off.toBlob(res, 'image/png', 0.92));
+    // 4) PNG保存
+    const blob = await new Promise(res => cvs.toBlob(res, 'image/png', 0.92));
     const url  = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    const ts = new Date();
-    const pad = (n)=>String(n).padStart(2,'0');
-    const fname = `mikke_${ts.getFullYear()}${pad(ts.getMonth()+1)}${pad(ts.getDate())}_${pad(ts.getHours())}${pad(ts.getMinutes())}${pad(ts.getSeconds())}.png`;
-    a.href = url; a.download = fname;
+    const t = new Date(); const z=(n)=>String(n).padStart(2,'0');
+    a.href = url;
+    a.download = `mikke_${t.getFullYear()}${z(t.getMonth()+1)}${z(t.getDate())}_${z(t.getHours())}${z(t.getMinutes())}${z(t.getSeconds())}.png`;
     document.body.appendChild(a);
-    a.click(); a.remove();
+    a.click();
+    a.remove();
     setTimeout(()=>URL.revokeObjectURL(url), 4000);
   }
 
+  // ボタンにバインド（既存HTML/CSSはそのまま）
   const capBtn = $('captureBtn');
   if (capBtn){
     capBtn.addEventListener('click', async ()=>{
       try{
-        capBtn.classList.add('shot');   // フラッシュ演出
+        capBtn.classList.add('shot');   // フラッシュ演出（CSS側）
         await captureComposite();
       } finally {
         setTimeout(()=>capBtn.classList.remove('shot'), 180);
