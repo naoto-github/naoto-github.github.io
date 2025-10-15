@@ -33,9 +33,15 @@
 
   /* ===== 表示制御フラグ ===== */
   Mikke.hasDetectedOnce = false;
-  Mikke.userHide = false;
+  Mikke.userHide = true;
   Mikke.visibleStreak = 0;
   Mikke.DETECT_FRAMES = 8;
+
+  // 初期状態のボタン表記と可視状態を強制
+  const initBtn = Mikke.$('toggleAvatarBtn');
+  if (initBtn) initBtn.textContent = 'アバター表示';
+  if (Mikke.VRM.currentVRM?.scene) Mikke.VRM.currentVRM.scene.visible = false;
+
 
   /* ===== UIロード／イベント ===== */
   const avatarSelect = Mikke.$('avatarSelect');
@@ -58,6 +64,7 @@
         avatarSelect.appendChild(opt);
       });
       if (avatars[0]?.url) await Mikke.VRM.loadVRM(avatars[0].url);
+      
     }catch(e){
       Mikke.log('vrm.json 読み込み失敗');
     }
@@ -86,10 +93,25 @@
     }
   }
 
+
   avatarSelect.addEventListener('change', async (e)=>{
     const idx = parseInt(e.target.value, 10);
-    if (avatars[idx]?.url) await Mikke.VRM.loadVRM(avatars[idx].url);
+    if (avatars[idx]?.url) {
+      await Mikke.VRM.loadVRM(avatars[idx].url);
+
+      // ★ 選択直後は「未表示」へ戻す
+      //Mikke.hasDetectedOnce = true;
+      //Mikke.userHide = false;
+
+      if(Mikke.userHide == false){
+        const btn = Mikke.$('toggleAvatarBtn');
+        if (btn) btn.textContent = 'アバター非表示';
+      }
+
+      if (Mikke.VRM.currentVRM?.scene) Mikke.VRM.currentVRM.scene.visible = false;
+    }
   });
+
 
   poseSelect.addEventListener('change', async (e)=>{
     const url = e.target.value;
@@ -104,11 +126,31 @@
     Mikke.Debug.plane.visible = on;
   });
 
+  // アバター表示／非表示トグル（「表示」時は検出済みと同じ扱いに）
   Mikke.$('toggleAvatarBtn').addEventListener('click', ()=>{
-    Mikke.userHide = !Mikke.userHide;
-    if (Mikke.VRM.currentVRM?.scene) Mikke.VRM.currentVRM.scene.visible = Mikke.hasDetectedOnce && !Mikke.userHide;
-    Mikke.$('toggleAvatarBtn').textContent = Mikke.userHide ? 'アバター表示' : 'アバター非表示';
+    const btn = Mikke.$('toggleAvatarBtn');
+    const vrmScene = Mikke.VRM.currentVRM?.scene;
+    if (!vrmScene) {
+      Mikke.log('アバター未読込のため操作できません．');
+      return;
+    }
+
+    if (Mikke.userHide || !Mikke.hasDetectedOnce || !vrmScene.visible) {
+      // いま非表示側 → 表示にする（検出済み扱いにして持続表示）
+      Mikke.userHide = false;
+      Mikke.hasDetectedOnce = true;        // ★ 検出済みフラグを立てて持続表示を許可
+      vrmScene.visible = true;
+      btn.textContent = 'アバター非表示';
+      Mikke.log('アバターを表示しました．');
+    } else {
+      // いま表示側 → 非表示にする
+      Mikke.userHide = true;
+      vrmScene.visible = false;
+      btn.textContent = 'アバター表示';
+      Mikke.log('アバターを非表示にしました．');
+    }
   });
+
 
   // ===== 追加：モバイル向け UI 開閉 =====
   const moreBtn    = Mikke.$('moreBtn');

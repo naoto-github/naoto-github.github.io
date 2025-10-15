@@ -52,7 +52,7 @@
           vrm.scene.visible = false;
 
           const btn = $('toggleAvatarBtn');
-          if (btn){ btn.disabled = false; btn.textContent = Mikke.userHide ? 'アバター表示' : 'アバター非表示'; }
+          if (btn){ btn.disabled = false; btn.textContent='アバター表示'; }
 
           if (Mikke.VRM.currentPoseUrl) applyPoseFromUrl(Mikke.VRM.currentPoseUrl);
 
@@ -93,7 +93,7 @@
   }
 
   // =========================================
-  // setPose で適用（rotation/position を薄く整形）
+  // setPose で適用（rotation/position を薄く整形）＋安全ガード（getBoneNodeを使わない）
   // =========================================
   async function applyPoseFromUrl(url){
     if (!Mikke.VRM.currentVRM || !url) return;
@@ -105,56 +105,83 @@
       // {pose:{...}}／{humanoid:{...}}／トップ直下のいずれでも受ける
       const src = (raw && typeof raw==='object')
         ? (raw.pose && typeof raw.pose==='object' ? raw.pose
-           : raw.humanoid && typeof raw.humanoid==='object' ? raw.humanoid
-           : raw)
+          : raw.humanoid && typeof raw.humanoid==='object' ? raw.humanoid
+          : raw)
         : {};
+
+      const humanoid = Mikke.VRM.currentVRM.humanoid;
+
+      // ★ このVRMが実際に持つボーン名だけを集合にする（getBoneNodeは呼ばない）
+      const validBones = new Set(Object.keys(humanoid?.humanBones || {}));
 
       const out = {};
       const axes  = Mikke.VRM.flipAxes;   // {pitch:boolean, yaw:boolean, roll:boolean}
       const scope = Mikke.VRM.flipScope;  // 'head'|'upper'|'all'
+
+      const isFiniteQuatArray = (arr)=>{
+        return Array.isArray(arr) && arr.length === 4 && arr.every(v => Number.isFinite(+v));
+      };
 
       Object.keys(src).forEach((bone)=>{
         const spec = src[bone];
         if (!spec || typeof spec !== 'object') return;
         if (bone === 'expression' || bone === 'proxy' || bone === 'morph') return;
 
+        // ★ VRMに存在しないボーンはここで除外（以後 getBoneNode を使わない）
+        if (!validBones.has(bone)) return;
+
         const dst = {};
 
         // rotation（配列 or オブジェクト）
         if (Array.isArray(spec.rotation) && spec.rotation.length === 4){
-          let q = new THREE.Quaternion(
-            +spec.rotation[0]||0, +spec.rotation[1]||0, +spec.rotation[2]||0,
-            (spec.rotation[3]!=null?+spec.rotation[3]:1)
-          ).normalize();
+          const r = [
+            +spec.rotation[0],
+            +spec.rotation[1],
+            +spec.rotation[2],
+            (spec.rotation[3]!=null ? +spec.rotation[3] : 1),
+          ];
+          if (!isFiniteQuatArray(r)) return;
+          let q = new THREE.Quaternion(r[0], r[1], r[2], r[3]).normalize();
           if (shouldFlip(bone, scope)) q = flipSelectedAxes(q, axes);
           dst.rotation = [q.x, q.y, q.z, q.w];
 
         } else if (spec.rotation && typeof spec.rotation === 'object'){
-          let q = new THREE.Quaternion(
-            +spec.rotation.x||0, +spec.rotation.y||0, +spec.rotation.z||0,
-            (spec.rotation.w!=null?+spec.rotation.w:1)
-          ).normalize();
+          const rx = +spec.rotation.x || 0, ry = +spec.rotation.y || 0, rz = +spec.rotation.z || 0;
+          const rw = (spec.rotation.w!=null ? +spec.rotation.w : 1);
+          if (!Number.isFinite(rx) || !Number.isFinite(ry) || !Number.isFinite(rz) || !Number.isFinite(rw)) return;
+          let q = new THREE.Quaternion(rx, ry, rz, rw).normalize();
           if (shouldFlip(bone, scope)) q = flipSelectedAxes(q, axes);
           dst.rotation = [q.x, q.y, q.z, q.w];
         }
 
-        // position（必要ならここでスケールや反転を追加）
+        // position（そのまま通す／数値でない場合は無視）
         if (Array.isArray(spec.position) && spec.position.length === 3){
-          dst.position = [ +spec.position[0]||0, +spec.position[1]||0, +spec.position[2]||0 ];
+          const p = [ +spec.position[0]||0, +spec.position[1]||0, +spec.position[2]||0 ];
+          if (p.every(v => Number.isFinite(v))) dst.position = p;
         } else if (spec.position && typeof spec.position === 'object'){
-          dst.position = [ +spec.position.x||0, +spec.position.y||0, +spec.position.z||0 ];
+          const p = [ +spec.position.x||0, +spec.position.y||0, +spec.position.z||0 ];
+          if (p.every(v => Number.isFinite(v))) dst.position = p;
         }
 
         if (dst.rotation || dst.position) out[bone] = dst;
       });
 
-      Mikke.VRM.currentVRM.humanoid?.setPose?.(out);
+      // ★ 何も残らなければ setPose を呼ばない（安全スキップ）
+      if (!Object.keys(out).length){
+        Mikke.log?.('このVRMに適用可能なボーンがありませんでした．');
+        return;
+      }
+
+      humanoid?.setPose?.(out);  // ← ここで内部が getBoneNode を呼ぶが，既に valid のみ
       Mikke.VRM.currentVRM.scene.updateMatrixWorld(true);
       Mikke.VRM.currentPoseUrl = url;
-      Mikke.log?.('ポーズ適用（setPose＋複数軸反転）：' + url);
+      Mikke.log?.('ポーズ適用（setPose＋ガード付き）：' + url);
     }catch(e){
       console.error('[POSE] setPose error', e);
-      //Mikke.log?.('ポーズの読み込みに失敗しました．JSONの形式とパスを確認してください．');
+      // 挙動は変えないためログのみに留める
     }
   }
+
+
+
 })(window);
