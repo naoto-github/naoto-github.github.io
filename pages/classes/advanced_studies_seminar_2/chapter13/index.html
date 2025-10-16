@@ -87,11 +87,11 @@
 
 
 
-  <meta property="og:description" content="主成分分析とは --主成分分析とは展開演習２の多変量解析と呼ばれる手法を取り上げます． その名が示すように複数の変数を対象に相関や共通性を見つけることが目的となります． 今回は，その中でも，複数の変数を合成して，次元（要素数）を圧縮する主成分分析に注目します． 主成分分析を完全に理解するには数学的な知識が必要となりますが，ここではR言語を利用して直観的に理解することを目指します． このような分析手法は，理解 も重要ですが，使える ことが最も重要です． 対象のデータとして，算数と理科の成績のデータ（CSV形式）を使用するので，事前にダウンロードしておきましょう．
- ファイルをダウンロードしたら，read.csv関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう．
-score &lt;- read.csv(&#34;score2.csv&#34;) スクリプトの作成 --スクリプトの作成コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter13としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-合成変数 --合成変数主成分分析では，分散を最大化するような合成変数を求めることが目的となります． 合成変数f(X)は，算数の得点をx_1， 理科の得点をx_2とすると， 下記の式で与えられます．
-f(X) = w_1 \times x_1 &#43; w_2 \times x_2それぞれの得点に，重みw_1，w_2を掛けただけの簡単な式です． それでは，この重みの意味を考えていましょう． まずは，w_1=1，w_2=0の場合はどうでしょうか．
+  <meta property="og:description" content="主成分分析とは 展開演習２の多変量解析と呼ばれる手法を取り上げます． その名が示すように複数の変数を対象に相関や共通性を見つけることが目的となります． 今回は，その中でも，複数の変数を合成して，次元（要素数）を圧縮する主成分分析に注目します． 主成分分析を完全に理解するには数学的な知識が必要となりますが，ここではR言語を利用して直観的に理解することを目指します． このような分析手法は，理解 も重要ですが，使える ことが最も重要です． 対象のデータとして，算数と理科の成績のデータ（CSV形式）を使用するので，事前にダウンロードしておきましょう．
+ファイルをダウンロードしたら，read.csv関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう．
+score &lt;- read.csv(&#34;score2.csv&#34;) スクリプトの作成 コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter13としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+合成変数 主成分分析では，分散を最大化するような合成変数を求めることが目的となります． 合成変数は，算数の得点を， 理科の得点をとすると， 下記の式で与えられます．
+それぞれの得点に，重みを掛けただけの簡単な式です． それでは，この重みの意味を考えていましょう． まずは，の場合はどうでしょうか．
 x &lt;- as.matrix(score[,2:3]) w1 &lt;- matrix(c(1,0),nrow=2,ncol=1) &gt; x %*% w1 [,1] [1,] 68 [2,] 78 [3,] 59 [4,] 65 [5,] 74 [6,] 29 [7,] 40 [8,] 71 [9,] 33 [10,] 53 [11,] 46 [12,] 27 [13,] 57 [14,] 48 [15,] 90 結果は算数の得点となります． これは理科の得点という情報を削って，新しい合成変数を生成したと考えることができます． これは，下記のように，本来は２次元のデータを，算数という１次元の軸に射影したとみなせます．" />
 
 
@@ -107,11 +107,11 @@ x &lt;- as.matrix(score[,2:3]) w1 &lt;- matrix(c(1,0),nrow=2,ncol=1) &gt; x %*% 
 
 
 
-  <meta name="twitter:description" content="主成分分析とは --主成分分析とは展開演習２の多変量解析と呼ばれる手法を取り上げます． その名が示すように複数の変数を対象に相関や共通性を見つけることが目的となります． 今回は，その中でも，複数の変数を合成して，次元（要素数）を圧縮する主成分分析に注目します． 主成分分析を完全に理解するには数学的な知識が必要となりますが，ここではR言語を利用して直観的に理解することを目指します． このような分析手法は，理解 も重要ですが，使える ことが最も重要です． 対象のデータとして，算数と理科の成績のデータ（CSV形式）を使用するので，事前にダウンロードしておきましょう．
- ファイルをダウンロードしたら，read.csv関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう．
-score &lt;- read.csv(&#34;score2.csv&#34;) スクリプトの作成 --スクリプトの作成コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter13としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
-合成変数 --合成変数主成分分析では，分散を最大化するような合成変数を求めることが目的となります． 合成変数f(X)は，算数の得点をx_1， 理科の得点をx_2とすると， 下記の式で与えられます．
-f(X) = w_1 \times x_1 &#43; w_2 \times x_2それぞれの得点に，重みw_1，w_2を掛けただけの簡単な式です． それでは，この重みの意味を考えていましょう． まずは，w_1=1，w_2=0の場合はどうでしょうか．
+  <meta name="twitter:description" content="主成分分析とは 展開演習２の多変量解析と呼ばれる手法を取り上げます． その名が示すように複数の変数を対象に相関や共通性を見つけることが目的となります． 今回は，その中でも，複数の変数を合成して，次元（要素数）を圧縮する主成分分析に注目します． 主成分分析を完全に理解するには数学的な知識が必要となりますが，ここではR言語を利用して直観的に理解することを目指します． このような分析手法は，理解 も重要ですが，使える ことが最も重要です． 対象のデータとして，算数と理科の成績のデータ（CSV形式）を使用するので，事前にダウンロードしておきましょう．
+ファイルをダウンロードしたら，read.csv関数を利用して， 変数scoreにデータフレームとして読み込んでおきましょう．
+score &lt;- read.csv(&#34;score2.csv&#34;) スクリプトの作成 コードを入力し保存するためのスクリプトを作成しましょう． [ファイル]-[新しいスクリプト]をクリックし，Rエディタを表示します． 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します． このとき，ファイル名はchapter13としてください． また，ファイルの保存場所と作業ディレクトリをデスクトップに変更しておきます．
+合成変数 主成分分析では，分散を最大化するような合成変数を求めることが目的となります． 合成変数は，算数の得点を， 理科の得点をとすると， 下記の式で与えられます．
+それぞれの得点に，重みを掛けただけの簡単な式です． それでは，この重みの意味を考えていましょう． まずは，の場合はどうでしょうか．
 x &lt;- as.matrix(score[,2:3]) w1 &lt;- matrix(c(1,0),nrow=2,ncol=1) &gt; x %*% w1 [,1] [1,] 68 [2,] 78 [3,] 59 [4,] 65 [5,] 74 [6,] 29 [7,] 40 [8,] 71 [9,] 33 [10,] 53 [11,] 46 [12,] 27 [13,] 57 [14,] 48 [15,] 90 結果は算数の得点となります． これは理科の得点という情報を削って，新しい合成変数を生成したと考えることができます． これは，下記のように，本来は２次元のデータを，算数という１次元の軸に射影したとみなせます．" />
 
 
@@ -195,8 +195,8 @@ x &lt;- as.matrix(score[,2:3]) w1 &lt;- matrix(c(1,0),nrow=2,ncol=1) &gt; x %*% 
 
 <p>ファイルをダウンロードしたら，<strong>read.csv</strong>関数を利用して，
 変数scoreにデータフレームとして読み込んでおきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">score <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">read.csv</span>(<span style="color:#e6db74">&#34;score2.csv&#34;</span>)
-</code></pre></div><!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スクリプトの作成 -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>score <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">read.csv</span>(<span style="color:#e6db74">&#34;score2.csv&#34;</span>)
+</span></span></code></pre></div><!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">スクリプトの作成 -->
 <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   スクリプトの作成
 </h1>
@@ -223,49 +223,49 @@ x &lt;- as.matrix(score[,2:3]) w1 &lt;- matrix(c(1,0),nrow=2,ncol=1) &gt; x %*% 
 <p>それぞれの得点に，重み<script type="math/tex">w_1，w_2</script>を掛けただけの簡単な式です．
 それでは，この重みの意味を考えていましょう．
 まずは，<script type="math/tex">w_1=1，w_2=0</script>の場合はどうでしょうか．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">as.matrix</span>(score[,<span style="color:#ae81ff">2</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>])
-w1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">matrix</span>(<span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>),nrow<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,ncol<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-<span style="color:#f92672">&gt;</span> x <span style="color:#f92672">%*%</span> w1
-	  [,<span style="color:#ae81ff">1</span>]
- [1,]   <span style="color:#ae81ff">68</span>
- [2,]   <span style="color:#ae81ff">78</span>
- [3,]   <span style="color:#ae81ff">59</span>
- [4,]   <span style="color:#ae81ff">65</span>
- [5,]   <span style="color:#ae81ff">74</span>
- [6,]   <span style="color:#ae81ff">29</span>
- [7,]   <span style="color:#ae81ff">40</span>
- [8,]   <span style="color:#ae81ff">71</span>
- [9,]   <span style="color:#ae81ff">33</span>
-[10,]   <span style="color:#ae81ff">53</span>
-[11,]   <span style="color:#ae81ff">46</span>
-[12,]   <span style="color:#ae81ff">27</span>
-[13,]   <span style="color:#ae81ff">57</span>
-[14,]   <span style="color:#ae81ff">48</span>
-[15,]   <span style="color:#ae81ff">90</span>
-</code></pre></div><p>結果は算数の得点となります．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>x <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">as.matrix</span>(score[,<span style="color:#ae81ff">2</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>])
+</span></span><span style="display:flex;"><span>w1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">matrix</span>(<span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>),nrow<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,ncol<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> x <span style="color:#f92672">%*%</span> w1
+</span></span><span style="display:flex;"><span>	  [,<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span> [1,]   <span style="color:#ae81ff">68</span>
+</span></span><span style="display:flex;"><span> [2,]   <span style="color:#ae81ff">78</span>
+</span></span><span style="display:flex;"><span> [3,]   <span style="color:#ae81ff">59</span>
+</span></span><span style="display:flex;"><span> [4,]   <span style="color:#ae81ff">65</span>
+</span></span><span style="display:flex;"><span> [5,]   <span style="color:#ae81ff">74</span>
+</span></span><span style="display:flex;"><span> [6,]   <span style="color:#ae81ff">29</span>
+</span></span><span style="display:flex;"><span> [7,]   <span style="color:#ae81ff">40</span>
+</span></span><span style="display:flex;"><span> [8,]   <span style="color:#ae81ff">71</span>
+</span></span><span style="display:flex;"><span> [9,]   <span style="color:#ae81ff">33</span>
+</span></span><span style="display:flex;"><span>[10,]   <span style="color:#ae81ff">53</span>
+</span></span><span style="display:flex;"><span>[11,]   <span style="color:#ae81ff">46</span>
+</span></span><span style="display:flex;"><span>[12,]   <span style="color:#ae81ff">27</span>
+</span></span><span style="display:flex;"><span>[13,]   <span style="color:#ae81ff">57</span>
+</span></span><span style="display:flex;"><span>[14,]   <span style="color:#ae81ff">48</span>
+</span></span><span style="display:flex;"><span>[15,]   <span style="color:#ae81ff">90</span>
+</span></span></code></pre></div><p>結果は算数の得点となります．
 これは<strong>理科の得点</strong>という情報を削って，新しい合成変数を生成したと考えることができます．
 これは，下記のように，本来は２次元のデータを，算数という１次元の軸に射影したとみなせます．</p>
 <p><a href="https://gyazo.com/bc38f40884db9d8e4264cc10a746b7b0"><img src="https://i.gyazo.com/bc38f40884db9d8e4264cc10a746b7b0.jpg" alt="https://gyazo.com/bc38f40884db9d8e4264cc10a746b7b0"></a></p>
 <p>次に，<script type="math/tex">w_1=0.5，w_2=0.5</script>の場合はどうでしょうか．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">w2 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">matrix</span>(<span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">0.5</span>,<span style="color:#ae81ff">0.5</span>),nrow<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,ncol<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-<span style="color:#f92672">&gt;</span> x <span style="color:#f92672">%*%</span> w2
-	  [,<span style="color:#ae81ff">1</span>]
- [1,] <span style="color:#ae81ff">70.0</span>
- [2,] <span style="color:#ae81ff">80.0</span>
- [3,] <span style="color:#ae81ff">72.0</span>
- [4,] <span style="color:#ae81ff">65.0</span>
- [5,] <span style="color:#ae81ff">78.5</span>
- [6,] <span style="color:#ae81ff">48.0</span>
- [7,] <span style="color:#ae81ff">52.5</span>
- [8,] <span style="color:#ae81ff">76.5</span>
- [9,] <span style="color:#ae81ff">49.0</span>
-[10,] <span style="color:#ae81ff">64.0</span>
-[11,] <span style="color:#ae81ff">61.5</span>
-[12,] <span style="color:#ae81ff">50.5</span>
-[13,] <span style="color:#ae81ff">64.5</span>
-[14,] <span style="color:#ae81ff">60.5</span>
-[15,] <span style="color:#ae81ff">95.0</span>
-</code></pre></div><p>結果は算数と理科の平均値<script type="math/tex">(x_1 + x_2)/2</script>を示します．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>w2 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">matrix</span>(<span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">0.5</span>,<span style="color:#ae81ff">0.5</span>),nrow<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,ncol<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> x <span style="color:#f92672">%*%</span> w2
+</span></span><span style="display:flex;"><span>	  [,<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span> [1,] <span style="color:#ae81ff">70.0</span>
+</span></span><span style="display:flex;"><span> [2,] <span style="color:#ae81ff">80.0</span>
+</span></span><span style="display:flex;"><span> [3,] <span style="color:#ae81ff">72.0</span>
+</span></span><span style="display:flex;"><span> [4,] <span style="color:#ae81ff">65.0</span>
+</span></span><span style="display:flex;"><span> [5,] <span style="color:#ae81ff">78.5</span>
+</span></span><span style="display:flex;"><span> [6,] <span style="color:#ae81ff">48.0</span>
+</span></span><span style="display:flex;"><span> [7,] <span style="color:#ae81ff">52.5</span>
+</span></span><span style="display:flex;"><span> [8,] <span style="color:#ae81ff">76.5</span>
+</span></span><span style="display:flex;"><span> [9,] <span style="color:#ae81ff">49.0</span>
+</span></span><span style="display:flex;"><span>[10,] <span style="color:#ae81ff">64.0</span>
+</span></span><span style="display:flex;"><span>[11,] <span style="color:#ae81ff">61.5</span>
+</span></span><span style="display:flex;"><span>[12,] <span style="color:#ae81ff">50.5</span>
+</span></span><span style="display:flex;"><span>[13,] <span style="color:#ae81ff">64.5</span>
+</span></span><span style="display:flex;"><span>[14,] <span style="color:#ae81ff">60.5</span>
+</span></span><span style="display:flex;"><span>[15,] <span style="color:#ae81ff">95.0</span>
+</span></span></code></pre></div><p>結果は算数と理科の平均値<script type="math/tex">(x_1 + x_2)/2</script>を示します．
 一方で，この値は，ベクトル<script type="math/tex">\vec{x}=(x_1,x_2)</script>と，
 ベクトル<script type="math/tex">\vec{w_2} = (0.5,0.5)</script>の内積と考えることができます．
 つまり，下図のように，ベクトル<script type="math/tex">\vec{x}</script>を，
@@ -280,42 +280,42 @@ w1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">matrix</
 合成変数は，対象のデータ間の差異を明確にすることが狙いのため，
 <strong>分散</strong>が大きくなるようにベクトル<script type="math/tex">\vec{w}</script>を定めます．
 ここで，上記の合成変数の分散を求めます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">var</span>(x <span style="color:#f92672">%*%</span> w1)
-		 [,<span style="color:#ae81ff">1</span>]
-[1,] <span style="color:#ae81ff">353.6952</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">var</span>(x <span style="color:#f92672">%*%</span> w2)
-		[,<span style="color:#ae81ff">1</span>]
-[1,] <span style="color:#ae81ff">174.881</span>
-</code></pre></div><p>すると，ベクトル<script type="math/tex">\vec{w_1}</script>との内積の方が
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">var</span>(x <span style="color:#f92672">%*%</span> w1)
+</span></span><span style="display:flex;"><span>		 [,<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>[1,] <span style="color:#ae81ff">353.6952</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">var</span>(x <span style="color:#f92672">%*%</span> w2)
+</span></span><span style="display:flex;"><span>		[,<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>[1,] <span style="color:#ae81ff">174.881</span>
+</span></span></code></pre></div><p>すると，ベクトル<script type="math/tex">\vec{w_1}</script>との内積の方が
 ベクトル<script type="math/tex">\vec{w_2}</script>との内積より大きく，
 合成変数として適した回転であることがわかります．
 しかし，<script type="math/tex">\vec{w}</script>の値を大きくとれば，
 それに合わせて，分散が大きくなるため<script type="math/tex">\vec{w}</script>はどんな値でも良いというわけではありません．
 そこで，<script type="math/tex">||w|| = 1</script>という条件を加えます．
 例えば，軸を30度回転するのであれば，<script type="math/tex">w = (cos(30),sin(30)) = (0.86,0.5)</script>と設定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">w3 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">matrix</span>(<span style="color:#a6e22e">c</span>(<span style="color:#a6e22e">cos</span>(<span style="color:#66d9ef">pi</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">6</span>),<span style="color:#a6e22e">sin</span>(<span style="color:#66d9ef">pi</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">6</span>)),nrow<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,ncol<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)  
-<span style="color:#f92672">&gt;</span> x <span style="color:#f92672">%*%</span> w3
-		   [,<span style="color:#ae81ff">1</span>]
- [1,]  <span style="color:#ae81ff">94.88973</span>
- [2,] <span style="color:#ae81ff">108.54998</span>
- [3,]  <span style="color:#ae81ff">93.59550</span>
- [4,]  <span style="color:#ae81ff">88.79165</span>
- [5,] <span style="color:#ae81ff">105.58588</span>
- [6,]  <span style="color:#ae81ff">58.61474</span>
- [7,]  <span style="color:#ae81ff">67.14102</span>
- [8,] <span style="color:#ae81ff">102.48780</span>
- [9,]  <span style="color:#ae81ff">61.07884</span>
-[10,]  <span style="color:#ae81ff">83.39935</span>
-[11,]  <span style="color:#ae81ff">78.33717</span>
-[12,]  <span style="color:#ae81ff">60.38269</span>
-[13,]  <span style="color:#ae81ff">85.36345</span>
-[14,]  <span style="color:#ae81ff">78.06922</span>
-[15,] <span style="color:#ae81ff">127.94229</span>
-[15,] <span style="color:#ae81ff">131.60254</span>
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">var</span>(x <span style="color:#f92672">%*%</span> w3)
-		 [,<span style="color:#ae81ff">1</span>]
-[1,] <span style="color:#ae81ff">398.4386</span>
-</code></pre></div><p><a href="https://gyazo.com/d3418231ab9604fb281e00d2d82c1c1d"><img src="https://i.gyazo.com/d3418231ab9604fb281e00d2d82c1c1d.jpg" alt="https://gyazo.com/d3418231ab9604fb281e00d2d82c1c1d"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>w3 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">matrix</span>(<span style="color:#a6e22e">c</span>(<span style="color:#a6e22e">cos</span>(<span style="color:#66d9ef">pi</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">6</span>),<span style="color:#a6e22e">sin</span>(<span style="color:#66d9ef">pi</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">6</span>)),nrow<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>,ncol<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> x <span style="color:#f92672">%*%</span> w3
+</span></span><span style="display:flex;"><span>		   [,<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span> [1,]  <span style="color:#ae81ff">94.88973</span>
+</span></span><span style="display:flex;"><span> [2,] <span style="color:#ae81ff">108.54998</span>
+</span></span><span style="display:flex;"><span> [3,]  <span style="color:#ae81ff">93.59550</span>
+</span></span><span style="display:flex;"><span> [4,]  <span style="color:#ae81ff">88.79165</span>
+</span></span><span style="display:flex;"><span> [5,] <span style="color:#ae81ff">105.58588</span>
+</span></span><span style="display:flex;"><span> [6,]  <span style="color:#ae81ff">58.61474</span>
+</span></span><span style="display:flex;"><span> [7,]  <span style="color:#ae81ff">67.14102</span>
+</span></span><span style="display:flex;"><span> [8,] <span style="color:#ae81ff">102.48780</span>
+</span></span><span style="display:flex;"><span> [9,]  <span style="color:#ae81ff">61.07884</span>
+</span></span><span style="display:flex;"><span>[10,]  <span style="color:#ae81ff">83.39935</span>
+</span></span><span style="display:flex;"><span>[11,]  <span style="color:#ae81ff">78.33717</span>
+</span></span><span style="display:flex;"><span>[12,]  <span style="color:#ae81ff">60.38269</span>
+</span></span><span style="display:flex;"><span>[13,]  <span style="color:#ae81ff">85.36345</span>
+</span></span><span style="display:flex;"><span>[14,]  <span style="color:#ae81ff">78.06922</span>
+</span></span><span style="display:flex;"><span>[15,] <span style="color:#ae81ff">127.94229</span>
+</span></span><span style="display:flex;"><span>[15,] <span style="color:#ae81ff">131.60254</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">var</span>(x <span style="color:#f92672">%*%</span> w3)
+</span></span><span style="display:flex;"><span>		 [,<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>[1,] <span style="color:#ae81ff">398.4386</span>
+</span></span></code></pre></div><p><a href="https://gyazo.com/d3418231ab9604fb281e00d2d82c1c1d"><img src="https://i.gyazo.com/d3418231ab9604fb281e00d2d82c1c1d.jpg" alt="https://gyazo.com/d3418231ab9604fb281e00d2d82c1c1d"></a></p>
 <p>ベクトル<script type="math/tex">\vec{w_3}</script>との内積の分散は約398となり，
 他と比べて最も適した回転であることが分かります．
 主成分分析は，上記のように軸を回転させて，最も分散が大きくなるベクトル（<strong>主成分</strong>）を探します．
@@ -327,16 +327,16 @@ w1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">matrix</
 
 <p>それでは主成分分析を，<strong>prcomp</strong> 関数を利用して行なってみましょう．
 この関数を利用すると，対象のデータを標準化（中心を座標(0,0)に移動）することに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> result<span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">prcomp</span>(x)
-<span style="color:#f92672">&gt;</span> result
-Standard deviations<span style="color:#f92672">:</span>
-[1] <span style="color:#ae81ff">20.135140</span>  <span style="color:#ae81ff">6.234691</span>
-
-Rotation<span style="color:#f92672">:</span>
-			PC1        PC2
-算数 <span style="color:#ae81ff">-0.9267567</span>  <span style="color:#ae81ff">0.3756621</span>
-理科 <span style="color:#ae81ff">-0.3756621</span> <span style="color:#ae81ff">-0.9267567</span>
-</code></pre></div><p>結果を確認すると，<script type="math/tex">\vec{w}=(-0.93,-0.38)</script>が
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> result<span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">prcomp</span>(x)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> result
+</span></span><span style="display:flex;"><span>Standard deviations<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">20.135140</span>  <span style="color:#ae81ff">6.234691</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Rotation<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>			PC1        PC2
+</span></span><span style="display:flex;"><span>算数 <span style="color:#ae81ff">-0.9267567</span>  <span style="color:#ae81ff">0.3756621</span>
+</span></span><span style="display:flex;"><span>理科 <span style="color:#ae81ff">-0.3756621</span> <span style="color:#ae81ff">-0.9267567</span>
+</span></span></code></pre></div><p>結果を確認すると，<script type="math/tex">\vec{w}=(-0.93,-0.38)</script>が
 最も分散の大きいベクトルとして導出されました．
 これは，おおよそ<strong>200度</strong>の回転を表しています．
 これを<strong>第一主成分</strong>と呼びます．
@@ -345,16 +345,16 @@ Rotation<span style="color:#f92672">:</span>
 これは，おおよそ<strong>290度</strong>の回転を表しています．
 下記のようにベクトル同士の内積は<strong>0</strong>になることから，
 先程のベクトルとは直交する関係にあることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> result<span style="color:#f92672">$</span>rotation[,<span style="color:#ae81ff">1</span>]
-	  算数       理科
-<span style="color:#ae81ff">-0.9267567</span> <span style="color:#ae81ff">-0.3756621</span>
-<span style="color:#f92672">&gt;</span> result<span style="color:#f92672">$</span>rotation[,<span style="color:#ae81ff">2</span>]
-	  算数       理科
- <span style="color:#ae81ff">0.3756621</span> <span style="color:#ae81ff">-0.9267567</span>
-<span style="color:#f92672">&gt;</span> result<span style="color:#f92672">$</span>rotation[,<span style="color:#ae81ff">1</span>] <span style="color:#f92672">%*%</span> result<span style="color:#f92672">$</span>rotation[,<span style="color:#ae81ff">2</span>]
-	 [,<span style="color:#ae81ff">1</span>]
-[1,]    <span style="color:#ae81ff">0</span>
-</code></pre></div><p>このように，第一主成分と直交するベクトルを<strong>第二主成分</strong>と呼びます．
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> result<span style="color:#f92672">$</span>rotation[,<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>	  算数       理科
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">-0.9267567</span> <span style="color:#ae81ff">-0.3756621</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> result<span style="color:#f92672">$</span>rotation[,<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>	  算数       理科
+</span></span><span style="display:flex;"><span> <span style="color:#ae81ff">0.3756621</span> <span style="color:#ae81ff">-0.9267567</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> result<span style="color:#f92672">$</span>rotation[,<span style="color:#ae81ff">1</span>] <span style="color:#f92672">%*%</span> result<span style="color:#f92672">$</span>rotation[,<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>	 [,<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>[1,]    <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>このように，第一主成分と直交するベクトルを<strong>第二主成分</strong>と呼びます．
 このとき，分散の値は<script type="math/tex">6.23^2=39</script>です．
 <strong>第一主成分</strong> と <strong>第二主成分</strong> の関係は下図のようになります．</p>
 <p><a href="https://gyazo.com/7a13c762a7b589febea7edb660145c4b"><img src="https://i.gyazo.com/7a13c762a7b589febea7edb660145c4b.jpg" alt="https://gyazo.com/7a13c762a7b589febea7edb660145c4b"></a></p>
@@ -362,27 +362,27 @@ Rotation<span style="color:#f92672">:</span>
 <strong>第一主成分</strong> と <strong>第二主成分</strong>を導出できれば十分なケースが多いです．</p>
 <p>それでは，<strong>第一主成分</strong> と <strong>第二主成分</strong> の主成分得点をプロットしてみましょう．
 横軸が第一主成分，縦軸が第二主成分を表します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#f92672">&gt;</span> result<span style="color:#f92672">$</span>x
-			 PC1         PC2
-[1,]  <span style="color:#ae81ff">-9.8171320</span>  <span style="color:#ae81ff">8.07970897</span>
-[2,] <span style="color:#ae81ff">-22.8413200</span>  <span style="color:#ae81ff">2.56876297</span>
-[3,]  <span style="color:#ae81ff">-6.3599290</span> <span style="color:#ae81ff">-7.34908707</span>
-[4,]  <span style="color:#ae81ff">-4.4072272</span> <span style="color:#ae81ff">13.44001958</span>
-[5,] <span style="color:#ae81ff">-19.5099553</span>  <span style="color:#ae81ff">0.13935786</span>
-[6,]  <span style="color:#ae81ff">28.2046899</span> <span style="color:#ae81ff">-1.93732950</span>
-[7,]  <span style="color:#ae81ff">18.7616904</span>  <span style="color:#ae81ff">4.04846703</span>
-[8,] <span style="color:#ae81ff">-16.3540231</span> <span style="color:#ae81ff">-0.06087174</span>
-[9,]  <span style="color:#ae81ff">25.2489873</span>  <span style="color:#ae81ff">1.41883232</span>
-[10,]   <span style="color:#ae81ff">2.9572322</span> <span style="color:#ae81ff">-0.33549266</span>
-[11,]   <span style="color:#ae81ff">8.6932049</span> <span style="color:#ae81ff">-4.81864078</span>
-[12,]  <span style="color:#ae81ff">27.4285686</span> <span style="color:#ae81ff">-9.17595062</span>
-[13,]   <span style="color:#ae81ff">0.3771917</span>  <span style="color:#ae81ff">3.94742585</span>
-[14,]   <span style="color:#ae81ff">8.3423399</span> <span style="color:#ae81ff">-0.36028977</span>
-[15,] <span style="color:#ae81ff">-40.7243183</span> <span style="color:#ae81ff">-9.60491244</span>
-
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plot</span>(result<span style="color:#f92672">$</span>x)
-<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">text</span>(result<span style="color:#f92672">$</span>x[,<span style="color:#ae81ff">1</span>],result<span style="color:#f92672">$</span>x[,<span style="color:#ae81ff">2</span>],labels<span style="color:#f92672">=</span><span style="color:#a6e22e">paste</span>(<span style="color:#e6db74">&#34;(&#34;</span>,x[,<span style="color:#ae81ff">1</span>],<span style="color:#e6db74">&#34;,&#34;</span>,x[,<span style="color:#ae81ff">2</span>],<span style="color:#e6db74">&#34;)&#34;</span>))
-</code></pre></div><p><a href="https://gyazo.com/9ee0bd4d2c193286f60fa0db9cbf71fd"><img src="https://i.gyazo.com/9ee0bd4d2c193286f60fa0db9cbf71fd.jpg" alt="https://gyazo.com/9ee0bd4d2c193286f60fa0db9cbf71fd"></a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> result<span style="color:#f92672">$</span>x
+</span></span><span style="display:flex;"><span>			 PC1         PC2
+</span></span><span style="display:flex;"><span>[1,]  <span style="color:#ae81ff">-9.8171320</span>  <span style="color:#ae81ff">8.07970897</span>
+</span></span><span style="display:flex;"><span>[2,] <span style="color:#ae81ff">-22.8413200</span>  <span style="color:#ae81ff">2.56876297</span>
+</span></span><span style="display:flex;"><span>[3,]  <span style="color:#ae81ff">-6.3599290</span> <span style="color:#ae81ff">-7.34908707</span>
+</span></span><span style="display:flex;"><span>[4,]  <span style="color:#ae81ff">-4.4072272</span> <span style="color:#ae81ff">13.44001958</span>
+</span></span><span style="display:flex;"><span>[5,] <span style="color:#ae81ff">-19.5099553</span>  <span style="color:#ae81ff">0.13935786</span>
+</span></span><span style="display:flex;"><span>[6,]  <span style="color:#ae81ff">28.2046899</span> <span style="color:#ae81ff">-1.93732950</span>
+</span></span><span style="display:flex;"><span>[7,]  <span style="color:#ae81ff">18.7616904</span>  <span style="color:#ae81ff">4.04846703</span>
+</span></span><span style="display:flex;"><span>[8,] <span style="color:#ae81ff">-16.3540231</span> <span style="color:#ae81ff">-0.06087174</span>
+</span></span><span style="display:flex;"><span>[9,]  <span style="color:#ae81ff">25.2489873</span>  <span style="color:#ae81ff">1.41883232</span>
+</span></span><span style="display:flex;"><span>[10,]   <span style="color:#ae81ff">2.9572322</span> <span style="color:#ae81ff">-0.33549266</span>
+</span></span><span style="display:flex;"><span>[11,]   <span style="color:#ae81ff">8.6932049</span> <span style="color:#ae81ff">-4.81864078</span>
+</span></span><span style="display:flex;"><span>[12,]  <span style="color:#ae81ff">27.4285686</span> <span style="color:#ae81ff">-9.17595062</span>
+</span></span><span style="display:flex;"><span>[13,]   <span style="color:#ae81ff">0.3771917</span>  <span style="color:#ae81ff">3.94742585</span>
+</span></span><span style="display:flex;"><span>[14,]   <span style="color:#ae81ff">8.3423399</span> <span style="color:#ae81ff">-0.36028977</span>
+</span></span><span style="display:flex;"><span>[15,] <span style="color:#ae81ff">-40.7243183</span> <span style="color:#ae81ff">-9.60491244</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plot</span>(result<span style="color:#f92672">$</span>x)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">text</span>(result<span style="color:#f92672">$</span>x[,<span style="color:#ae81ff">1</span>],result<span style="color:#f92672">$</span>x[,<span style="color:#ae81ff">2</span>],labels<span style="color:#f92672">=</span><span style="color:#a6e22e">paste</span>(<span style="color:#e6db74">&#34;(&#34;</span>,x[,<span style="color:#ae81ff">1</span>],<span style="color:#e6db74">&#34;,&#34;</span>,x[,<span style="color:#ae81ff">2</span>],<span style="color:#e6db74">&#34;)&#34;</span>))
+</span></span></code></pre></div><p><a href="https://gyazo.com/9ee0bd4d2c193286f60fa0db9cbf71fd"><img src="https://i.gyazo.com/9ee0bd4d2c193286f60fa0db9cbf71fd.jpg" alt="https://gyazo.com/9ee0bd4d2c193286f60fa0db9cbf71fd"></a></p>
 <p>この結果から，<strong>第一主成分</strong> と <strong>第二主成分</strong> の意味を考えてみましょう．
 <strong>第一主成分</strong> は，算数と理科の合計が高い人が左，低い人が右に配置されていることから，<strong>２科目の総合度</strong> を表していると考えられます．
 一方で，<strong>第二主成分</strong> は，算数に比べ理科が得意な人が下，算数と理科にあまり差がない人が上に配置されていることから，<strong>科目の特化度</strong> を表していると考えられます．
