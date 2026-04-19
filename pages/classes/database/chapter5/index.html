@@ -1,769 +1,291 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    情報無損失分解と関数従属性 | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>情報無損失分解と関数従属性 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="情報無損失分解と関数従属性"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/database/chapter5/"><meta property="og:image" content="https://i.gyazo.com/37bf58d128ef29435f2d3e46a3478e25.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
 
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="情報無損失分解と関数従属性" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/database/chapter5/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/37bf58d128ef29435f2d3e46a3478e25.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="本日のリレーション今回は下記の【履修リスト】を対象に解説します． 【履修リスト】は，学籍番号，科目名，成績，教室で構成されています． また，下線は主キーを表しています．
-   学籍番号 科目名 成績 教室     A001 情報処理演習 A 001   A001 プログラミング A 003   A002 情報処理演習 A 001   A002 プログラミング B 003   B003 データベース A 002   B003 プログラミング C 003    【履修リスト】
-更新時異常リレーションの設計に問題があると， タプルの挿入・削除・更新を行う際に， 更新時異常（Update Anomaly）が発生することがあります． 【履修リスト】を例に，どのような問題が発生するか考えてみましょう．
-タプル挿入時異常 カリキュラムが変更され 新規の科目「画像処理論」に関する情報を【履修リスト】に追加することを考えてみます． まだ履修する学生や成績は確定していないため，下記のタプルを追加することになります． このタプルは，主キーである学籍番号が空値であり，主キー制約に牴触してしまうため，追加することができません． これが，タプル挿入時異常 です．
-   学籍番号 科目名 成績 教室      画像処理論  001    タプル削除時異常 学籍番号B003の学生が退学した場合を考えてみます． この場合，下記の2つのタプルをリレーションから削除することになります． 削除は問題なく実行可能ですが，これを削除してしまうと， データベースの履修者が【履修リスト】に存在しなくなってしまい， $(データベース,002)$という情報も失われてしまいます． これが，タプル削除時異常 です．" />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="情報無損失分解と関数従属性" />
-
-
-
-  <meta name="twitter:description" content="本日のリレーション今回は下記の【履修リスト】を対象に解説します． 【履修リスト】は，学籍番号，科目名，成績，教室で構成されています． また，下線は主キーを表しています．
-   学籍番号 科目名 成績 教室     A001 情報処理演習 A 001   A001 プログラミング A 003   A002 情報処理演習 A 001   A002 プログラミング B 003   B003 データベース A 002   B003 プログラミング C 003    【履修リスト】
-更新時異常リレーションの設計に問題があると， タプルの挿入・削除・更新を行う際に， 更新時異常（Update Anomaly）が発生することがあります． 【履修リスト】を例に，どのような問題が発生するか考えてみましょう．
-タプル挿入時異常 カリキュラムが変更され 新規の科目「画像処理論」に関する情報を【履修リスト】に追加することを考えてみます． まだ履修する学生や成績は確定していないため，下記のタプルを追加することになります． このタプルは，主キーである学籍番号が空値であり，主キー制約に牴触してしまうため，追加することができません． これが，タプル挿入時異常 です．
-   学籍番号 科目名 成績 教室      画像処理論  001    タプル削除時異常 学籍番号B003の学生が退学した場合を考えてみます． この場合，下記の2つのタプルをリレーションから削除することになります． 削除は問題なく実行可能ですが，これを削除してしまうと， データベースの履修者が【履修リスト】に存在しなくなってしまい， $(データベース,002)$という情報も失われてしまいます． これが，タプル削除時異常 です．" />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/37bf58d128ef29435f2d3e46a3478e25.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">情報無損失分解と関数従属性</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p><a href="https://gyazo.com/37bf58d128ef29435f2d3e46a3478e25"><img src="https://i.gyazo.com/37bf58d128ef29435f2d3e46a3478e25.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   本日のリレーション
-</h1>
 
-<p>今回は下記の【履修リスト】を対象に解説します．
+
+今回は下記の【履修リスト】を対象に解説します．
 【履修リスト】は，学籍番号，科目名，成績，教室で構成されています．
-また，下線は主キーを表しています．</p>
-<table>
-<thead>
-<tr>
-<th><u>学籍番号</u></th>
-<th><u>科目名</u></th>
-<th>成績</th>
-<th>教室</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A001</td>
-<td>情報処理演習</td>
-<td>A</td>
-<td>001</td>
-</tr>
-<tr>
-<td>A001</td>
-<td>プログラミング</td>
-<td>A</td>
-<td>003</td>
-</tr>
-<tr>
-<td>A002</td>
-<td>情報処理演習</td>
-<td>A</td>
-<td>001</td>
-</tr>
-<tr>
-<td>A002</td>
-<td>プログラミング</td>
-<td>B</td>
-<td>003</td>
-</tr>
-<tr>
-<td>B003</td>
-<td>データベース</td>
-<td>A</td>
-<td>002</td>
-</tr>
-<tr>
-<td>B003</td>
-<td>プログラミング</td>
-<td>C</td>
-<td>003</td>
-</tr>
-</tbody>
-</table>
-<p><strong>【履修リスト】</strong></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  更新時異常
-</h1>
+また，下線は主キーを表しています．
 
-<p>リレーションの設計に問題があると，
+  
+      
+          学籍番号
+          科目名
+          成績
+          教室
+      
+  
+  
+      
+          A001
+          情報処理演習
+          A
+          001
+      
+      
+          A001
+          プログラミング
+          A
+          003
+      
+      
+          A002
+          情報処理演習
+          A
+          001
+      
+      
+          A002
+          プログラミング
+          B
+          003
+      
+      
+          B003
+          データベース
+          A
+          002
+      
+      
+          B003
+          プログラミング
+          C
+          003
+      
+  
+
+【履修リスト】
+
+  更新時異常
+
+
+リレーションの設計に問題があると，
 タプルの挿入・削除・更新を行う際に，
 更新時異常（Update Anomaly）が発生することがあります．
-【履修リスト】を例に，どのような問題が発生するか考えてみましょう．</p>
-<h3 id="タプル挿入時異常">タプル挿入時異常</h3>
-<p>カリキュラムが変更され
+【履修リスト】を例に，どのような問題が発生するか考えてみましょう．
+タプル挿入時異常
+カリキュラムが変更され
 新規の科目「画像処理論」に関する情報を【履修リスト】に追加することを考えてみます．
 まだ履修する学生や成績は確定していないため，下記のタプルを追加することになります．
 このタプルは，主キーである学籍番号が空値であり，主キー制約に牴触してしまうため，追加することができません．
-これが，<strong>タプル挿入時異常</strong> です．</p>
-<table>
-<thead>
-<tr>
-<th><u>学籍番号</u></th>
-<th><u>科目名</u></th>
-<th>成績</th>
-<th>教室</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td>画像処理論</td>
-<td></td>
-<td>001</td>
-</tr>
-</tbody>
-</table>
-<h3 id="タプル削除時異常">タプル削除時異常</h3>
-<p>学籍番号B003の学生が退学した場合を考えてみます．
+これが，タプル挿入時異常 です．
+
+  
+      
+          学籍番号
+          科目名
+          成績
+          教室
+      
+  
+  
+      
+          
+          画像処理論
+          
+          001
+      
+  
+
+タプル削除時異常
+学籍番号B003の学生が退学した場合を考えてみます．
 この場合，下記の2つのタプルをリレーションから削除することになります．
 削除は問題なく実行可能ですが，これを削除してしまうと，
 データベースの履修者が【履修リスト】に存在しなくなってしまい，
 $(データベース,002)$という情報も失われてしまいます．
-これが，<strong>タプル削除時異常</strong> です．</p>
-<table>
-<thead>
-<tr>
-<th><u>学籍番号</u></th>
-<th><u>科目名</u></th>
-<th>成績</th>
-<th>教室</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>B003</td>
-<td>データベース</td>
-<td>A</td>
-<td>002</td>
-</tr>
-<tr>
-<td>B003</td>
-<td>プログラミング</td>
-<td>C</td>
-<td>003</td>
-</tr>
-</tbody>
-</table>
-<h3 id="タプル修正時異常">タプル修正時異常</h3>
-<p>情報処理演習の教室が，001から004に変更になったことを考えてみます．
+これが，タプル削除時異常 です．"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="情報無損失分解と関数従属性"><meta name=twitter:description content="
+
+  本日のリレーション
+
+
+今回は下記の【履修リスト】を対象に解説します．
+【履修リスト】は，学籍番号，科目名，成績，教室で構成されています．
+また，下線は主キーを表しています．
+
+  
+      
+          学籍番号
+          科目名
+          成績
+          教室
+      
+  
+  
+      
+          A001
+          情報処理演習
+          A
+          001
+      
+      
+          A001
+          プログラミング
+          A
+          003
+      
+      
+          A002
+          情報処理演習
+          A
+          001
+      
+      
+          A002
+          プログラミング
+          B
+          003
+      
+      
+          B003
+          データベース
+          A
+          002
+      
+      
+          B003
+          プログラミング
+          C
+          003
+      
+  
+
+【履修リスト】
+
+  更新時異常
+
+
+リレーションの設計に問題があると，
+タプルの挿入・削除・更新を行う際に，
+更新時異常（Update Anomaly）が発生することがあります．
+【履修リスト】を例に，どのような問題が発生するか考えてみましょう．
+タプル挿入時異常
+カリキュラムが変更され
+新規の科目「画像処理論」に関する情報を【履修リスト】に追加することを考えてみます．
+まだ履修する学生や成績は確定していないため，下記のタプルを追加することになります．
+このタプルは，主キーである学籍番号が空値であり，主キー制約に牴触してしまうため，追加することができません．
+これが，タプル挿入時異常 です．
+
+  
+      
+          学籍番号
+          科目名
+          成績
+          教室
+      
+  
+  
+      
+          
+          画像処理論
+          
+          001
+      
+  
+
+タプル削除時異常
+学籍番号B003の学生が退学した場合を考えてみます．
+この場合，下記の2つのタプルをリレーションから削除することになります．
+削除は問題なく実行可能ですが，これを削除してしまうと，
+データベースの履修者が【履修リスト】に存在しなくなってしまい，
+$(データベース,002)$という情報も失われてしまいます．
+これが，タプル削除時異常 です．"><meta name=twitter:image content="https://i.gyazo.com/37bf58d128ef29435f2d3e46a3478e25.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>情報無損失分解と関数従属性</h1><div class=post-line></div><p><a href=https://gyazo.com/37bf58d128ef29435f2d3e46a3478e25><img src=https://i.gyazo.com/37bf58d128ef29435f2d3e46a3478e25.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>本日のリレーション</h1><p>今回は下記の【履修リスト】を対象に解説します．
+【履修リスト】は，学籍番号，科目名，成績，教室で構成されています．
+また，下線は主キーを表しています．</p><table><thead><tr><th><u>学籍番号</u></th><th><u>科目名</u></th><th>成績</th><th>教室</th></tr></thead><tbody><tr><td>A001</td><td>情報処理演習</td><td>A</td><td>001</td></tr><tr><td>A001</td><td>プログラミング</td><td>A</td><td>003</td></tr><tr><td>A002</td><td>情報処理演習</td><td>A</td><td>001</td></tr><tr><td>A002</td><td>プログラミング</td><td>B</td><td>003</td></tr><tr><td>B003</td><td>データベース</td><td>A</td><td>002</td></tr><tr><td>B003</td><td>プログラミング</td><td>C</td><td>003</td></tr></tbody></table><p><strong>【履修リスト】</strong></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>更新時異常</h1><p>リレーションの設計に問題があると，
+タプルの挿入・削除・更新を行う際に，
+更新時異常（Update Anomaly）が発生することがあります．
+【履修リスト】を例に，どのような問題が発生するか考えてみましょう．</p><h3 id=タプル挿入時異常>タプル挿入時異常</h3><p>カリキュラムが変更され
+新規の科目「画像処理論」に関する情報を【履修リスト】に追加することを考えてみます．
+まだ履修する学生や成績は確定していないため，下記のタプルを追加することになります．
+このタプルは，主キーである学籍番号が空値であり，主キー制約に牴触してしまうため，追加することができません．
+これが，<strong>タプル挿入時異常</strong> です．</p><table><thead><tr><th><u>学籍番号</u></th><th><u>科目名</u></th><th>成績</th><th>教室</th></tr></thead><tbody><tr><td></td><td>画像処理論</td><td></td><td>001</td></tr></tbody></table><h3 id=タプル削除時異常>タプル削除時異常</h3><p>学籍番号B003の学生が退学した場合を考えてみます．
+この場合，下記の2つのタプルをリレーションから削除することになります．
+削除は問題なく実行可能ですが，これを削除してしまうと，
+データベースの履修者が【履修リスト】に存在しなくなってしまい，
+$(データベース,002)$という情報も失われてしまいます．
+これが，<strong>タプル削除時異常</strong> です．</p><table><thead><tr><th><u>学籍番号</u></th><th><u>科目名</u></th><th>成績</th><th>教室</th></tr></thead><tbody><tr><td>B003</td><td>データベース</td><td>A</td><td>002</td></tr><tr><td>B003</td><td>プログラミング</td><td>C</td><td>003</td></tr></tbody></table><h3 id=タプル修正時異常>タプル修正時異常</h3><p>情報処理演習の教室が，001から004に変更になったことを考えてみます．
 この場合，一つの事象の変更であるにも関わらず，
 情報処理演習を履修している学生が二人いるため，
 2つのタプルを修正しなくてはなりません．
-これが，<strong>タプル修正時異常</strong> です．</p>
-<table>
-<thead>
-<tr>
-<th><u>学籍番号</u></th>
-<th><u>科目名</u></th>
-<th>成績</th>
-<th>教室</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A001</td>
-<td>情報処理演習</td>
-<td>A</td>
-<td><b>004</b></td>
-</tr>
-<tr>
-<td>A002</td>
-<td>情報処理演習</td>
-<td>A</td>
-<td><b>004</b></td>
-</tr>
-</tbody>
-</table>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  リレーションの分解
-</h1>
-
-<p>リレーションを分解することで，更新時異常を解消することが出来る場合があります．
+これが，<strong>タプル修正時異常</strong> です．</p><table><thead><tr><th><u>学籍番号</u></th><th><u>科目名</u></th><th>成績</th><th>教室</th></tr></thead><tbody><tr><td>A001</td><td>情報処理演習</td><td>A</td><td><b>004</b></td></tr><tr><td>A002</td><td>情報処理演習</td><td>A</td><td><b>004</b></td></tr></tbody></table><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>リレーションの分解</h1><p>リレーションを分解することで，更新時異常を解消することが出来る場合があります．
 そこで，リレーション $R(A, B, C)$を下記の2つの射影に分解することを考えます．
-ここで，$A$，$B$，$C$は，リレーション$R$の属性の部分集合を表しており，属性の重複はないことを前提とします．</p>
-<!-- ただし，$A \cup B \cup C$はリレーション$R$の属性集合であり，$A,B,C$の要素に重複はないことを前提とします． -->
-<p>$$
+ここで，$A$，$B$，$C$は，リレーション$R$の属性の部分集合を表しており，属性の重複はないことを前提とします．</p><p>$$
 R(A, B)
-$$</p>
-<p>$$
+$$</p><p>$$
 R(A, C)
-$$</p>
-<p>例えば，【履修リスト】を，【成績リスト】(<u>学籍番号</u>,<u>科目名</u>,成績)と
+$$</p><p>例えば，【履修リスト】を，【成績リスト】(<u>学籍番号</u>,<u>科目名</u>,成績)と
 【科目リスト】(<u>科目名</u>,教室)に分解してみます．
-この場合，$A=\{科目名\}$，$B=\{学籍番号，成績\}$，$C=\{教室\}$に該当しています．</p>
-<table>
-<thead>
-<tr>
-<th><u>学籍番号</u></th>
-<th><u>科目名</u></th>
-<th>成績</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A001</td>
-<td>情報処理演習</td>
-<td>A</td>
-</tr>
-<tr>
-<td>A001</td>
-<td>プログラミング</td>
-<td>A</td>
-</tr>
-<tr>
-<td>A002</td>
-<td>情報処理演習</td>
-<td>A</td>
-</tr>
-<tr>
-<td>A002</td>
-<td>プログラミング</td>
-<td>B</td>
-</tr>
-<tr>
-<td>B003</td>
-<td>データベース</td>
-<td>A</td>
-</tr>
-<tr>
-<td>B003</td>
-<td>プログラミング</td>
-<td>C</td>
-</tr>
-</tbody>
-</table>
-<p><strong>【成績リスト】</strong></p>
-<table>
-<thead>
-<tr>
-<th><u>科目名</u></th>
-<th>教室</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>情報処理演習</td>
-<td>001</td>
-</tr>
-<tr>
-<td>プログラミング</td>
-<td>003</td>
-</tr>
-<tr>
-<td>データベース</td>
-<td>002</td>
-</tr>
-</tbody>
-</table>
-<p><strong>【科目リスト】</strong></p>
-<p>このように分解することで，上述したタプル挿入時異常，タプル削除時異常，
-タプル修正時異常を回避することができます．</p>
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#006600">
-    例題1
-  </h3>
-
-  <p>
-    
-	リレーションを分解したことで，
-	タプル挿入時異常，タプル削除時異常，タプル修正時異常が解消されていることを示せ．
-
-  </p>
-  
-</div>
-
-<h3 id="情報無損失分解">情報無損失分解</h3>
-<p>先ほどの例では，うまくリレーションを分解できましたが，どんな分解でも良いというわけではありません．
-例えば，$R(A, B, C)$を下記のように分解することを考えます．</p>
-<p>$$
+この場合，$A=\{科目名\}$，$B=\{学籍番号，成績\}$，$C=\{教室\}$に該当しています．</p><table><thead><tr><th><u>学籍番号</u></th><th><u>科目名</u></th><th>成績</th></tr></thead><tbody><tr><td>A001</td><td>情報処理演習</td><td>A</td></tr><tr><td>A001</td><td>プログラミング</td><td>A</td></tr><tr><td>A002</td><td>情報処理演習</td><td>A</td></tr><tr><td>A002</td><td>プログラミング</td><td>B</td></tr><tr><td>B003</td><td>データベース</td><td>A</td></tr><tr><td>B003</td><td>プログラミング</td><td>C</td></tr></tbody></table><p><strong>【成績リスト】</strong></p><table><thead><tr><th><u>科目名</u></th><th>教室</th></tr></thead><tbody><tr><td>情報処理演習</td><td>001</td></tr><tr><td>プログラミング</td><td>003</td></tr><tr><td>データベース</td><td>002</td></tr></tbody></table><p><strong>【科目リスト】</strong></p><p>このように分解することで，上述したタプル挿入時異常，タプル削除時異常，
+タプル修正時異常を回避することができます．</p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:#060>例題1</h3><p>リレーションを分解したことで，
+タプル挿入時異常，タプル削除時異常，タプル修正時異常が解消されていることを示せ．</p></div><h3 id=情報無損失分解>情報無損失分解</h3><p>先ほどの例では，うまくリレーションを分解できましたが，どんな分解でも良いというわけではありません．
+例えば，$R(A, B, C)$を下記のように分解することを考えます．</p><p>$$
 R(A, B)
-$$</p>
-<p>$$
+$$</p><p>$$
 R( C )
-$$</p>
-<p>先ほどと同じように，$A=\{科目名\}$，$B=\{学籍番号，成績\}$，$C=\{教室\}$とすると，
-属性が教室だけのリレーションとなってしまい，「どの科目がどの教室なのか」という情報が失われてしまいます．</p>
-<table>
-<thead>
-<tr>
-<th><u>教室</u></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>001</td>
-</tr>
-<tr>
-<td>003</td>
-</tr>
-<tr>
-<td>002</td>
-</tr>
-</tbody>
-</table>
-<p><strong>【教室リスト】</strong></p>
-<p>上記のような情報損失が発生しないような分解を
+$$</p><p>先ほどと同じように，$A=\{科目名\}$，$B=\{学籍番号，成績\}$，$C=\{教室\}$とすると，
+属性が教室だけのリレーションとなってしまい，「どの科目がどの教室なのか」という情報が失われてしまいます．</p><table><thead><tr><th><u>教室</u></th></tr></thead><tbody><tr><td>001</td></tr><tr><td>003</td></tr><tr><td>002</td></tr></tbody></table><p><strong>【教室リスト】</strong></p><p>上記のような情報損失が発生しないような分解を
 <strong>情報無損失分解(Information Lossless Decomposition)</strong> と呼びます．
-情報無損失分解であるためには，下記の条件を満たす必要があります．</p>
-
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#FF0000">
-    情報無損失分解
-  </h3>
-
-  <p>
-    
-	リレーション$R$を，$R_1$と$R_2$に分解したとする．
-	このとき，$R_1$と$R_2$の自然結合が，元のリレーション$R$に一致すれば情報無損失分解である．
-
-	$$
-	R = R_1 * R_2
-	$$
-
-  </p>
-  
-</div>
-
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#006600">
-    例題2
-  </h3>
-
-  <p>
-    
-	【成績リスト】(<u>学籍番号</u>,<u>科目名</u>,成績)と
-	【科目リスト】(<u>科目名</u>,教室)への分解が情報無損失分解であることを示せ．
-
-  </p>
-  
-</div>
-
-<h3 id="関数従属性">関数従属性</h3>
-<p>情報無損失分解が可能かどうかを調べる方法があります．
+情報無損失分解であるためには，下記の条件を満たす必要があります．</p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:red>情報無損失分解</h3><p>リレーション$R$を，$R_1$と$R_2$に分解したとする．
+このとき，$R_1$と$R_2$の自然結合が，元のリレーション$R$に一致すれば情報無損失分解である．
+$$
+R = R_1 * R_2
+$$</p></div><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:#060>例題2</h3><p>【成績リスト】(<u>学籍番号</u>,<u>科目名</u>,成績)と
+【科目リスト】(<u>科目名</u>,教室)への分解が情報無損失分解であることを示せ．</p></div><h3 id=関数従属性>関数従属性</h3><p>情報無損失分解が可能かどうかを調べる方法があります．
 これが <strong>関数従属性</strong> という考え方であり，
 情報無損失分解の十分条件となっています（必ずしも満たす必要はないが，満たしていれば情報無損失分解が可能）．
-関数従属性は次回に解説する「第2正規形」「第3正規形」の条件にもなっている重要な概念です．</p>
-
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#FF0000">
-    関数従属性
-  </h3>
-
-  <p>
-    
-	リレーション$R(A, B, C)$が下記の条件を満たすとき，関数従属性$A \rightarrow B$ が成立する．
-
-	$$
-	(\forall t_1,t_2 \in R )(t_1[A]=t_2[A] \rightarrow t_1[B]=t_2[B])
-	$$
-
-  </p>
-  
-</div>
-
-<p>関数従属性$A \rightarrow B$は，2つのタプルの属性$A$の値が同じであれば，属性$B$の値も同じであることを意味しています．
-この関係は関数$f(A)=B$のように記述することが可能であることから，関数従属性と呼ばれます（$A$に応じて$B$が一意に定まる）．</p>
-<p>では，この関数従属性は，情報無損失分解とどのように関係するのでしょうか．</p>
-
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#FF0000">
-    関数従属性と情報無損失分解
-  </h3>
-
-  <p>
-    
-	リレーション$R(A, B, C)$において，関数従属性$A \rightarrow B$ が成立するとき，
-	下記の分解は情報無損失分解である．
-
+関数従属性は次回に解説する「第2正規形」「第3正規形」の条件にもなっている重要な概念です．</p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:red>関数従属性</h3><p>リレーション$R(A, B, C)$が下記の条件を満たすとき，関数従属性$A \rightarrow B$ が成立する．
+$$
+(\forall t_1,t_2 \in R )(t_1[A]=t_2[A] \rightarrow t_1[B]=t_2[B])
+$$</p></div><p>関数従属性$A \rightarrow B$は，2つのタプルの属性$A$の値が同じであれば，属性$B$の値も同じであることを意味しています．
+この関係は関数$f(A)=B$のように記述することが可能であることから，関数従属性と呼ばれます（$A$に応じて$B$が一意に定まる）．</p><p>では，この関数従属性は，情報無損失分解とどのように関係するのでしょうか．</p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:red>関数従属性と情報無損失分解</h3><p>リレーション$R(A, B, C)$において，関数従属性$A \rightarrow B$ が成立するとき，
+下記の分解は情報無損失分解である．
 $$
 R(A, B)
 $$
-
 $$
 R(A, C)
-$$
-
-  </p>
-  
-</div>
-
-<p>つまり，リレーションに関数従属性が存在すれば，その組み合わせで情報無損失分解が可能ということです．
+$$</p></div><p>つまり，リレーションに関数従属性が存在すれば，その組み合わせで情報無損失分解が可能ということです．
 【履修リスト】に存在する関数従属性を探してみましょう．
 例えば，$科目名 \rightarrow 教室$は成立するでしょうか．
 情報処理演習は001，プログラミングは003，データベースは002に一意に決まっています．
 よって，$科目名 \rightarrow 教室$が成立することがわかります．
 すなわち，【成績リスト】(<u>学籍番号</u>,<u>科目名</u>,成績)と
-【科目リスト】(<u>科目名</u>,教室)への分解は <strong>情報無損失分解</strong> であると言えます．</p>
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#006600">
-    例題3
-  </h3>
-
-  <p>
-    
-	【履修リスト】の <b>成績</b> を被決定子（矢印の右側）とする関数従属性を示せ．
-
-  </p>
-  
-</div>
-
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  アームストロングの公理
-</h1>
-
-<p>関数従属性は「アームストロングの公理」で示される特性を持ちます．
+【科目リスト】(<u>科目名</u>,教室)への分解は <strong>情報無損失分解</strong> であると言えます．</p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:#060>例題3</h3><p>【履修リスト】の <b>成績</b> を被決定子（矢印の右側）とする関数従属性を示せ．</p></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>アームストロングの公理</h1><p>関数従属性は「アームストロングの公理」で示される特性を持ちます．
 アームストロングの公理は <strong>反射律</strong>，<strong>増加律</strong>，<strong>推移律</strong>があります．
 ここで，次の【科目リスト（定員を追加）】を例に考えてみます．
-このリレーションにおいて，$科目名 \rightarrow 教室$，$教室 \rightarrow 定員$が成立していることがわかります．</p>
-<table>
-<thead>
-<tr>
-<th><u>科目名</u></th>
-<th>教室</th>
-<th>定員</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>情報処理演習</td>
-<td>001</td>
-<td>30</td>
-</tr>
-<tr>
-<td>プログラミング</td>
-<td>002</td>
-<td>40</td>
-</tr>
-<tr>
-<td>データベース</td>
-<td>001</td>
-<td>30</td>
-</tr>
-</tbody>
-</table>
-<p><strong>【科目リスト（定員を追加）】</strong></p>
-
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#FF0000">
-    増加律
-  </h3>
-
-  <p>
-    
-リレーション$R(A, B, C)$において，$A \rightarrow B$であるならば，
-
+このリレーションにおいて，$科目名 \rightarrow 教室$，$教室 \rightarrow 定員$が成立していることがわかります．</p><table><thead><tr><th><u>科目名</u></th><th>教室</th><th>定員</th></tr></thead><tbody><tr><td>情報処理演習</td><td>001</td><td>30</td></tr><tr><td>プログラミング</td><td>002</td><td>40</td></tr><tr><td>データベース</td><td>001</td><td>30</td></tr></tbody></table><p><strong>【科目リスト（定員を追加）】</strong></p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:red>増加律</h3><p>リレーション$R(A, B, C)$において，$A \rightarrow B$であるならば，
 $$
 (A, C) \rightarrow (B, C)
-$$
-
-
-  </p>
-  
-</div>
-
-<p><strong>増加律</strong>により，次の関数従属が成立します．
+$$</p></div><p><strong>増加律</strong>により，次の関数従属が成立します．
 $科目名 \rightarrow 教室$が成立しているので，
-決定子と被決定子の両方に <strong>定員</strong> を加えても関数従属は成立しています．</p>
-<p>$$
+決定子と被決定子の両方に <strong>定員</strong> を加えても関数従属は成立しています．</p><p>$$
 (科目名,定員) \rightarrow (教室,定員)
-$$</p>
-
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#FF0000">
-    推移律
-  </h3>
-
-  <p>
-    
-リレーション$R(A, B, C)$において，$A \rightarrow B$，かつ，$B \rightarrow C$であるならば，
-
+$$</p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:red>推移律</h3><p>リレーション$R(A, B, C)$において，$A \rightarrow B$，かつ，$B \rightarrow C$であるならば，
 $$
 A \rightarrow C
-$$
-
-
-  </p>
-  
-</div>
-
-<p><strong>推移律</strong>により，次の関数従属が成立します．
+$$</p></div><p><strong>推移律</strong>により，次の関数従属が成立します．
 $科目名 \rightarrow 教室$，かつ，$教室 \rightarrow 定員$が成立しているため，
-推移的な関数従属が成立することになります．</p>
-<p>$$
+推移的な関数従属が成立することになります．</p><p>$$
 科目名\rightarrow 定員
-$$</p>
-
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#FF0000">
-    反射律
-  </h3>
-
-  <p>
-    
-リレーション$R(A, B)$において，$B$が$A$の部分集合であるならば，
-
+$$</p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:red>反射律</h3><p>リレーション$R(A, B)$において，$B$が$A$の部分集合であるならば，
 $$
 A \rightarrow B
-$$
-
-
-  </p>
-  
-</div>
-
-<p><strong>反射律</strong>により，次の関数従属が成立します．
-被決定子の$教室$は，決定子である$(科目名，教室)$の部分集合であるため関数従属が成立します．</p>
-<p>$$
+$$</p></div><p><strong>反射律</strong>により，次の関数従属が成立します．
+被決定子の$教室$は，決定子である$(科目名，教室)$の部分集合であるため関数従属が成立します．</p><p>$$
 (科目名,教室) \rightarrow 教室
-$$</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  情報処理技術者試験・過去問
-</h1>
-
-<p>下記リンクは
-<a href="https://www.itpassportsiken.com/">ITパスポート試験ドットコム</a>，
-<a href="https://www.fe-siken.com/">基本情報技術者試験ドットコム</a>，
-<a href="https://www.ap-siken.com/">応用情報技術者試験ドットコム</a>，
-<a href="https://www.db-siken.com/">データベーススペシャリストドットコム</a>に掲載されている問題です．</p>
-<ul>
-<li><a href="https://www.fe-siken.com/kakomon/18_aki/q60.html">基本情報技術者 平成18年秋期 午前 問60</a></li>
-<li><a href="https://www.fe-siken.com/kakomon/28_aki/q27.html">基本情報技術者 平成28年秋期 午前 問27</a></li>
-<li><a href="https://www.ap-siken.com/kakomon/24_aki/q26.html">応用情報技術者 平成24年秋期 午前 問26</a></li>
-<li><a href="https://www.db-siken.com/kakomon/25_haru/am2_2.html">データベーススペシャリスト 平成25年 午前Ⅱ 問2</a></li>
-</ul>
-<!-- - [データベーススペシャリスト 平成28年 午前Ⅱ 問3](https://www.db-siken.com/kakomon/28_haru/am2_3.html) -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+$$</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>情報処理技術者試験・過去問</h1><p>下記リンクは
+<a href=https://www.itpassportsiken.com/>ITパスポート試験ドットコム</a>，
+<a href=https://www.fe-siken.com/>基本情報技術者試験ドットコム</a>，
+<a href=https://www.ap-siken.com/>応用情報技術者試験ドットコム</a>，
+<a href=https://www.db-siken.com/>データベーススペシャリストドットコム</a>に掲載されている問題です．</p><ul><li><a href=https://www.fe-siken.com/kakomon/18_aki/q60.html>基本情報技術者 平成18年秋期 午前 問60</a></li><li><a href=https://www.fe-siken.com/kakomon/28_aki/q27.html>基本情報技術者 平成28年秋期 午前 問27</a></li><li><a href=https://www.ap-siken.com/kakomon/24_aki/q26.html>応用情報技術者 平成24年秋期 午前 問26</a></li><li><a href=https://www.db-siken.com/kakomon/25_haru/am2_2.html>データベーススペシャリスト 平成25年 午前Ⅱ 問2</a></li></ul><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

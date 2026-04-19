@@ -1,472 +1,252 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    多層パーセプトロン | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>多層パーセプトロン | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="多層パーセプトロン"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/advanced_studies_seminar_1/chapter4/"><meta property="og:image" content="https://i.gyazo.com/1fa4f606ac0994c067c08d32926b21f7.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content='
 
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="多層パーセプトロン" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/advanced_studies_seminar_1/chapter4/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/1fa4f606ac0994c067c08d32926b21f7.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="多層パーセプトロン前回，単純パーセプトロンは分類問題に適用できることを確認しました． しかし，線形分離不可能問題（非線形な決定境界） を解くことが出来ないことが知られています． まずは，線形分離不可能問題（非線形な決定境界）について考えましょう．
-ノートブックを作成し，ノートブックのタイトルをchapter4 に設定します． 前回と同様にPyTorchをインストールし，PyTorch，Numpy，Matplotlibをインポートします．
-!pip install torch !pip install torchvision import torch import torch.nn as nn import torch.optim as optim import numpy as np import matplotlib.pyplot as plt import itertools サンプル$x=(x_1, x_2)$を2つのカテゴリに分類します． 下記が今回の学習データであり， 決定境界を 直線 で引くことができないことが分かります． このような分類問題は単純パーセプトロンでは解くことが出来ません．
-x1 = torch.tensor([0.28, 0.35, 0.36, 0.37, 0.62, 0.66, 0.78, 0.81, 0.89, 0.94], dtype=torch.float) x2 = torch.tensor([0.34, 0.21, 0.65, 0.87, 0.73, 0.23, 0.87, 0.34, 0.76, 0.91], dtype=torch.float) x = torch." />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="多層パーセプトロン" />
-
-
-
-  <meta name="twitter:description" content="多層パーセプトロン前回，単純パーセプトロンは分類問題に適用できることを確認しました． しかし，線形分離不可能問題（非線形な決定境界） を解くことが出来ないことが知られています． まずは，線形分離不可能問題（非線形な決定境界）について考えましょう．
-ノートブックを作成し，ノートブックのタイトルをchapter4 に設定します． 前回と同様にPyTorchをインストールし，PyTorch，Numpy，Matplotlibをインポートします．
-!pip install torch !pip install torchvision import torch import torch.nn as nn import torch.optim as optim import numpy as np import matplotlib.pyplot as plt import itertools サンプル$x=(x_1, x_2)$を2つのカテゴリに分類します． 下記が今回の学習データであり， 決定境界を 直線 で引くことができないことが分かります． このような分類問題は単純パーセプトロンでは解くことが出来ません．
-x1 = torch.tensor([0.28, 0.35, 0.36, 0.37, 0.62, 0.66, 0.78, 0.81, 0.89, 0.94], dtype=torch.float) x2 = torch.tensor([0.34, 0.21, 0.65, 0.87, 0.73, 0.23, 0.87, 0.34, 0.76, 0.91], dtype=torch.float) x = torch." />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/1fa4f606ac0994c067c08d32926b21f7.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">多層パーセプトロン</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p><a href="https://gyazo.com/1fa4f606ac0994c067c08d32926b21f7"><img src="https://i.gyazo.com/1fa4f606ac0994c067c08d32926b21f7.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   多層パーセプトロン
-</h1>
 
-<p>前回，単純パーセプトロンは分類問題に適用できることを確認しました．
-しかし，<strong>線形分離不可能問題（非線形な決定境界）</strong> を解くことが出来ないことが知られています．
-まずは，線形分離不可能問題（非線形な決定境界）について考えましょう．</p>
-<p>ノートブックを作成し，ノートブックのタイトルを<strong>chapter4</strong> に設定します．
-前回と同様にPyTorchをインストールし，PyTorch，Numpy，Matplotlibをインポートします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">!pip install torch
+
+前回，単純パーセプトロンは分類問題に適用できることを確認しました．
+しかし，線形分離不可能問題（非線形な決定境界） を解くことが出来ないことが知られています．
+まずは，線形分離不可能問題（非線形な決定境界）について考えましょう．
+ノートブックを作成し，ノートブックのタイトルをchapter4 に設定します．
+前回と同様にPyTorchをインストールし，PyTorch，Numpy，Matplotlibをインポートします．
+!pip install torch
 !pip install torchvision
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
-<span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
-<span style="color:#f92672">import</span> torch.optim <span style="color:#f92672">as</span> optim
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">import</span> itertools
-</code></pre></div><p>サンプル$x=(x_1, x_2)$を2つのカテゴリに分類します．
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import numpy as np
+import matplotlib.pyplot as plt
+import itertools
+サンプル$x=(x_1, x_2)$を2つのカテゴリに分類します．
+下記が今回の学習データであり，
+決定境界を 直線 で引くことができないことが分かります．
+このような分類問題は単純パーセプトロンでは解くことが出来ません．
+x1 = torch.tensor([0.28, 0.35, 0.36, 0.37, 0.62, 0.66, 0.78, 0.81, 0.89, 0.94], dtype=torch.float)
+x2 = torch.tensor([0.34, 0.21, 0.65, 0.87, 0.73, 0.23, 0.87, 0.34, 0.76, 0.91], dtype=torch.float)
+x = torch.stack([x1, x2], 1)
+label = torch.tensor([0, 0, 0, 1, 0, 0, 1, 1, 1, 1], dtype=torch.float)
+plt.scatter(x1, x2, c=label)
+plt.xlabel("x1")
+plt.ylabel("x2")
+
+そこで，複数の層で構成した
+多層パーセプトロン（ニューラルネットワーク） が考えられました．
+多層パーセプトロンは少なくとも3つの層から構成され，
+それぞれ 入力層，中間層，出力層 と呼ばれます．
+また，各層には1つ以上のニューロンが配置されます．
+異なる層のニューロン同士が結合され，
+あるニューロンの出力を，結合されたニューロンの入力として伝搬させるという特徴があります．'><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="多層パーセプトロン"><meta name=twitter:description content='
+
+  多層パーセプトロン
+
+
+前回，単純パーセプトロンは分類問題に適用できることを確認しました．
+しかし，線形分離不可能問題（非線形な決定境界） を解くことが出来ないことが知られています．
+まずは，線形分離不可能問題（非線形な決定境界）について考えましょう．
+ノートブックを作成し，ノートブックのタイトルをchapter4 に設定します．
+前回と同様にPyTorchをインストールし，PyTorch，Numpy，Matplotlibをインポートします．
+!pip install torch
+!pip install torchvision
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import numpy as np
+import matplotlib.pyplot as plt
+import itertools
+サンプル$x=(x_1, x_2)$を2つのカテゴリに分類します．
+下記が今回の学習データであり，
+決定境界を 直線 で引くことができないことが分かります．
+このような分類問題は単純パーセプトロンでは解くことが出来ません．
+x1 = torch.tensor([0.28, 0.35, 0.36, 0.37, 0.62, 0.66, 0.78, 0.81, 0.89, 0.94], dtype=torch.float)
+x2 = torch.tensor([0.34, 0.21, 0.65, 0.87, 0.73, 0.23, 0.87, 0.34, 0.76, 0.91], dtype=torch.float)
+x = torch.stack([x1, x2], 1)
+label = torch.tensor([0, 0, 0, 1, 0, 0, 1, 1, 1, 1], dtype=torch.float)
+plt.scatter(x1, x2, c=label)
+plt.xlabel("x1")
+plt.ylabel("x2")
+
+そこで，複数の層で構成した
+多層パーセプトロン（ニューラルネットワーク） が考えられました．
+多層パーセプトロンは少なくとも3つの層から構成され，
+それぞれ 入力層，中間層，出力層 と呼ばれます．
+また，各層には1つ以上のニューロンが配置されます．
+異なる層のニューロン同士が結合され，
+あるニューロンの出力を，結合されたニューロンの入力として伝搬させるという特徴があります．'><meta name=twitter:image content="https://i.gyazo.com/1fa4f606ac0994c067c08d32926b21f7.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>多層パーセプトロン</h1><div class=post-line></div><p><a href=https://gyazo.com/1fa4f606ac0994c067c08d32926b21f7><img src=https://i.gyazo.com/1fa4f606ac0994c067c08d32926b21f7.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>多層パーセプトロン</h1><p>前回，単純パーセプトロンは分類問題に適用できることを確認しました．
+しかし，<strong>線形分離不可能問題（非線形な決定境界）</strong> を解くことが出来ないことが知られています．
+まずは，線形分離不可能問題（非線形な決定境界）について考えましょう．</p><p>ノートブックを作成し，ノートブックのタイトルを<strong>chapter4</strong> に設定します．
+前回と同様にPyTorchをインストールし，PyTorch，Numpy，Matplotlibをインポートします．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-text data-lang=text><span style=display:flex><span>!pip install torch
+</span></span><span style=display:flex><span>!pip install torchvision
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> torch
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> torch.nn <span style=color:#66d9ef>as</span> nn
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> torch.optim <span style=color:#66d9ef>as</span> optim
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> itertools
+</span></span></code></pre></div><p>サンプル$x=(x_1, x_2)$を2つのカテゴリに分類します．
 下記が今回の学習データであり，
 決定境界を <strong>直線</strong> で引くことができないことが分かります．
-このような分類問題は単純パーセプトロンでは解くことが出来ません．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x1 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0.28</span>, <span style="color:#ae81ff">0.35</span>, <span style="color:#ae81ff">0.36</span>, <span style="color:#ae81ff">0.37</span>, <span style="color:#ae81ff">0.62</span>, <span style="color:#ae81ff">0.66</span>, <span style="color:#ae81ff">0.78</span>, <span style="color:#ae81ff">0.81</span>, <span style="color:#ae81ff">0.89</span>, <span style="color:#ae81ff">0.94</span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float)
-x2 <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0.34</span>, <span style="color:#ae81ff">0.21</span>, <span style="color:#ae81ff">0.65</span>, <span style="color:#ae81ff">0.87</span>, <span style="color:#ae81ff">0.73</span>, <span style="color:#ae81ff">0.23</span>, <span style="color:#ae81ff">0.87</span>, <span style="color:#ae81ff">0.34</span>, <span style="color:#ae81ff">0.76</span>, <span style="color:#ae81ff">0.91</span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float)
-x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>stack([x1, x2], <span style="color:#ae81ff">1</span>)
-label <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float)
-plt<span style="color:#f92672">.</span>scatter(x1, x2, c<span style="color:#f92672">=</span>label)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;x1&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;x2&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/f48efa56873389b8ab6549c2a083f59b"><img src="https://i.gyazo.com/f48efa56873389b8ab6549c2a083f59b.png" alt="Image from Gyazo"></a></p>
-<p>そこで，複数の層で構成した
+このような分類問題は単純パーセプトロンでは解くことが出来ません．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>x1 <span style=color:#f92672>=</span> torch<span style=color:#f92672>.</span>tensor([<span style=color:#ae81ff>0.28</span>, <span style=color:#ae81ff>0.35</span>, <span style=color:#ae81ff>0.36</span>, <span style=color:#ae81ff>0.37</span>, <span style=color:#ae81ff>0.62</span>, <span style=color:#ae81ff>0.66</span>, <span style=color:#ae81ff>0.78</span>, <span style=color:#ae81ff>0.81</span>, <span style=color:#ae81ff>0.89</span>, <span style=color:#ae81ff>0.94</span>], dtype<span style=color:#f92672>=</span>torch<span style=color:#f92672>.</span>float)
+</span></span><span style=display:flex><span>x2 <span style=color:#f92672>=</span> torch<span style=color:#f92672>.</span>tensor([<span style=color:#ae81ff>0.34</span>, <span style=color:#ae81ff>0.21</span>, <span style=color:#ae81ff>0.65</span>, <span style=color:#ae81ff>0.87</span>, <span style=color:#ae81ff>0.73</span>, <span style=color:#ae81ff>0.23</span>, <span style=color:#ae81ff>0.87</span>, <span style=color:#ae81ff>0.34</span>, <span style=color:#ae81ff>0.76</span>, <span style=color:#ae81ff>0.91</span>], dtype<span style=color:#f92672>=</span>torch<span style=color:#f92672>.</span>float)
+</span></span><span style=display:flex><span>x <span style=color:#f92672>=</span> torch<span style=color:#f92672>.</span>stack([x1, x2], <span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>label <span style=color:#f92672>=</span> torch<span style=color:#f92672>.</span>tensor([<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>], dtype<span style=color:#f92672>=</span>torch<span style=color:#f92672>.</span>float)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>scatter(x1, x2, c<span style=color:#f92672>=</span>label)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>xlabel(<span style=color:#e6db74>&#34;x1&#34;</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#34;x2&#34;</span>)
+</span></span></code></pre></div><p><a href=https://gyazo.com/f48efa56873389b8ab6549c2a083f59b><img src=https://i.gyazo.com/f48efa56873389b8ab6549c2a083f59b.png alt="Image from Gyazo"></a></p><p>そこで，複数の層で構成した
 <strong>多層パーセプトロン（ニューラルネットワーク）</strong> が考えられました．
 多層パーセプトロンは少なくとも3つの層から構成され，
 それぞれ <strong>入力層</strong>，<strong>中間層</strong>，<strong>出力層</strong> と呼ばれます．
 また，各層には1つ以上のニューロンが配置されます．
 異なる層のニューロン同士が結合され，
-あるニューロンの出力を，結合されたニューロンの入力として伝搬させるという特徴があります．</p>
-<p>下図は2入力・1出力の多層パーセプトロンです．
+あるニューロンの出力を，結合されたニューロンの入力として伝搬させるという特徴があります．</p><p>下図は2入力・1出力の多層パーセプトロンです．
 入力層は$m=2$，中間層は$n=4$，出力層は$o=1$のニューロンが配置されています．
 入力層から出力層に向けて情報を伝播することを <strong>順伝播</strong> ，
-逆に，出力層から入力層に向けて情報が伝播することを <strong>逆伝播</strong> と呼びます．</p>
-<p><a href="https://gyazo.com/f4aac63375e9d73418afb88fb3eea93f"><img src="https://i.gyazo.com/f4aac63375e9d73418afb88fb3eea93f.png" alt="Image from Gyazo"></a></p>
-<p>ここで，入力層と中間層に注目します．
+逆に，出力層から入力層に向けて情報が伝播することを <strong>逆伝播</strong> と呼びます．</p><p><a href=https://gyazo.com/f4aac63375e9d73418afb88fb3eea93f><img src=https://i.gyazo.com/f4aac63375e9d73418afb88fb3eea93f.png alt="Image from Gyazo"></a></p><p>ここで，入力層と中間層に注目します．
 入力層と中間層のニューロンの全ての組み合わせに対して，
 重み${\bf w}$が存在することになります（バイアスは考慮していないことに注意してください）．
 このため，重み${\bf w}$は
-$m \times n = 2 \times 4 = 8$ の要素で構成される <strong>行列</strong> として表現されます．</p>
-<p>$$
+$m \times n = 2 \times 4 = 8$ の要素で構成される <strong>行列</strong> として表現されます．</p><p>$$
 {\bf w}=
 \left(
 \begin{array}{ccc}
-w_{11} &amp; w_{12} &amp; w_{13} &amp; w_{14}\\\<br>
-w_{21} &amp; w_{22} &amp; w_{23} &amp; w_{24}
+w_{11} & w_{12} & w_{13} & w_{14}\\\
+w_{21} & w_{22} & w_{23} & w_{24}
 \end{array}
 \right)
-$$</p>
-<p>また，入力${\bf x}=(x_1, x_2)$であるため，中間層の中間出力${\bf y}$は下記のようになります．</p>
-<p>$$
+$$</p><p>また，入力${\bf x}=(x_1, x_2)$であるため，中間層の中間出力${\bf y}$は下記のようになります．</p><p>$$
 {\bf y} = {\bf x} \cdot {\bf w}
 = (x_1, x_2) \cdot
 \left(
 \begin{array}{ccc}
-w_{11} &amp; w_{12} &amp; w_{13} &amp; w_{14}\\\<br>
-w_{21} &amp; w_{22} &amp; w_{23} &amp; w_{24}
+w_{11} & w_{12} & w_{13} & w_{14}\\\
+w_{21} & w_{22} & w_{23} & w_{24}
 \end{array}
-\right) \\\<br>
+\right) \\\
 = (w_{11} x_1 + w_{21} x_2, w_{12} x_1 + w_{22} x_2, w_{13} x_1 + w_{23} x_2, w_{14} x_1 + w_{24} x_2)
-$$</p>
-<p>この中間出力${\bf y}$に活性化関数$f$を適用し，中間層の最終的な出力とします
+$$</p><p>この中間出力${\bf y}$に活性化関数$f$を適用し，中間層の最終的な出力とします
 (活性化関数には単純パーセプトロンと同様にシグモイド関数やReLU関数が用いられます)．
-上記と同様の操作を出力層においても適用し，出力層の出力$z$を得ます．</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  多層パーセプトロンの学習
-</h1>
-
-<p>多層パーセプトロンの学習には，<strong>バックプロパゲーション（誤差逆伝播法）</strong> と呼ばれる方法を用います．
+上記と同様の操作を出力層においても適用し，出力層の出力$z$を得ます．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>多層パーセプトロンの学習</h1><p>多層パーセプトロンの学習には，<strong>バックプロパゲーション（誤差逆伝播法）</strong> と呼ばれる方法を用います．
 この方法では，単純パーセプトロンの学習方法として紹介した
 <strong>勾配降下法</strong> をベースとした <strong>最適化アルゴリズム</strong> を利用して，
 誤差を出力から入力に向けて逆伝播させて，誤差を最小化するような重みやバイアスを導出します
-(誤差には単純パーセプトロンと同様に平均2乗誤差や交差エントロピーが用いられます)．</p>
-<p>代表的な最適化アルゴリズムは下記です．</p>
-<ul>
-<li>勾配降下法(Gradient Descent: GD)</li>
-<li>確率的勾配降下法(Stochastic Gradient Descent: SGD)</li>
-<li>Momentum</li>
-<li>Adam</li>
-</ul>
-<p>これら最適化アルゴリズムの詳細は割愛しますが，
-近年はKingma氏らが2014年に提案した<a href="https://arxiv.org/abs/1412.6980">Adam</a>が
+(誤差には単純パーセプトロンと同様に平均2乗誤差や交差エントロピーが用いられます)．</p><p>代表的な最適化アルゴリズムは下記です．</p><ul><li>勾配降下法(Gradient Descent: GD)</li><li>確率的勾配降下法(Stochastic Gradient Descent: SGD)</li><li>Momentum</li><li>Adam</li></ul><p>これら最適化アルゴリズムの詳細は割愛しますが，
+近年はKingma氏らが2014年に提案した<a href=https://arxiv.org/abs/1412.6980>Adam</a>が
 高い性能を示すことで知られています．
-omiita氏の<a href="https://qiita.com/omiita/items/1735c1d048fe5f611f80">【2020決定版】スーパーわかりやすい最適化アルゴリズム</a>
-の記事も参考にすると良いです．</p>
-<h2 id="パーセプトロンの定義">パーセプトロンの定義</h2>
-<p>3層で構成される多層パーセプトロンを定義します．
+omiita氏の<a href=https://qiita.com/omiita/items/1735c1d048fe5f611f80>【2020決定版】スーパーわかりやすい最適化アルゴリズム</a>
+の記事も参考にすると良いです．</p><h2 id=パーセプトロンの定義>パーセプトロンの定義</h2><p>3層で構成される多層パーセプトロンを定義します．
 入力層は$2$，中間層は$4$，出力層は$1$のニューロンが配置されています．
-また，中間層と出力層の活性化関数は <strong>シグモイド関数</strong> を用いています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 多層パーセプトロン</span>
-network <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
-    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>),
-    nn<span style="color:#f92672">.</span>Sigmoid(),
-    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>),
-    nn<span style="color:#f92672">.</span>Sigmoid()
-)
-
-<span style="color:#66d9ef">print</span>(network)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-Sequential(
-  (<span style="color:#ae81ff">0</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>, bias<span style="color:#f92672">=</span>True)
-  (<span style="color:#ae81ff">1</span>): Sigmoid()
-  (<span style="color:#ae81ff">2</span>): Linear(in_features<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>, out_features<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, bias<span style="color:#f92672">=</span>True)
-  (<span style="color:#ae81ff">3</span>): Sigmoid()
-)
-</code></pre></div><p>定義した多層パーセプトロンに学習データ${\bf x}$を入力として与えてみます．
-重みやバイアスはランダムに初期化されており，学習前に正しく分類することは出来ません（当たり前ですが）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">z <span style="color:#f92672">=</span> network(x)
-<span style="color:#66d9ef">print</span>(z)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-tensor([[<span style="color:#ae81ff">0.3961</span>],
-        [<span style="color:#ae81ff">0.3961</span>],
-        [<span style="color:#ae81ff">0.3973</span>],
-        [<span style="color:#ae81ff">0.3978</span>],
-        [<span style="color:#ae81ff">0.3988</span>],
-        [<span style="color:#ae81ff">0.3980</span>],
-        [<span style="color:#ae81ff">0.3996</span>],
-        [<span style="color:#ae81ff">0.3990</span>],
-        [<span style="color:#ae81ff">0.4000</span>],
-        [<span style="color:#ae81ff">0.4003</span>]], grad_fn<span style="color:#f92672">=&lt;</span>SigmoidBackward<span style="color:#f92672">&gt;</span>)
-</code></pre></div><h2 id="損失関数">損失関数</h2>
-<p>前回説明したように損失関数には <strong>平均2乗誤差</strong> や <strong>交差エントロピー</strong> が用いられます．
+また，中間層と出力層の活性化関数は <strong>シグモイド関数</strong> を用いています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 多層パーセプトロン</span>
+</span></span><span style=display:flex><span>network <span style=color:#f92672>=</span> nn<span style=color:#f92672>.</span>Sequential(
+</span></span><span style=display:flex><span>    nn<span style=color:#f92672>.</span>Linear(<span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>4</span>),
+</span></span><span style=display:flex><span>    nn<span style=color:#f92672>.</span>Sigmoid(),
+</span></span><span style=display:flex><span>    nn<span style=color:#f92672>.</span>Linear(<span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>1</span>),
+</span></span><span style=display:flex><span>    nn<span style=color:#f92672>.</span>Sigmoid()
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>print(network)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#出力</span>
+</span></span><span style=display:flex><span>Sequential(
+</span></span><span style=display:flex><span>  (<span style=color:#ae81ff>0</span>): Linear(in_features<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>, out_features<span style=color:#f92672>=</span><span style=color:#ae81ff>4</span>, bias<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>  (<span style=color:#ae81ff>1</span>): Sigmoid()
+</span></span><span style=display:flex><span>  (<span style=color:#ae81ff>2</span>): Linear(in_features<span style=color:#f92672>=</span><span style=color:#ae81ff>4</span>, out_features<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>, bias<span style=color:#f92672>=</span><span style=color:#66d9ef>True</span>)
+</span></span><span style=display:flex><span>  (<span style=color:#ae81ff>3</span>): Sigmoid()
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></div><p>定義した多層パーセプトロンに学習データ${\bf x}$を入力として与えてみます．
+重みやバイアスはランダムに初期化されており，学習前に正しく分類することは出来ません（当たり前ですが）．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>z <span style=color:#f92672>=</span> network(x)
+</span></span><span style=display:flex><span>print(z)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#出力</span>
+</span></span><span style=display:flex><span>tensor([[<span style=color:#ae81ff>0.3961</span>],
+</span></span><span style=display:flex><span>        [<span style=color:#ae81ff>0.3961</span>],
+</span></span><span style=display:flex><span>        [<span style=color:#ae81ff>0.3973</span>],
+</span></span><span style=display:flex><span>        [<span style=color:#ae81ff>0.3978</span>],
+</span></span><span style=display:flex><span>        [<span style=color:#ae81ff>0.3988</span>],
+</span></span><span style=display:flex><span>        [<span style=color:#ae81ff>0.3980</span>],
+</span></span><span style=display:flex><span>        [<span style=color:#ae81ff>0.3996</span>],
+</span></span><span style=display:flex><span>        [<span style=color:#ae81ff>0.3990</span>],
+</span></span><span style=display:flex><span>        [<span style=color:#ae81ff>0.4000</span>],
+</span></span><span style=display:flex><span>        [<span style=color:#ae81ff>0.4003</span>]], grad_fn<span style=color:#f92672>=&lt;</span>SigmoidBackward<span style=color:#f92672>&gt;</span>)
+</span></span></code></pre></div><h2 id=損失関数>損失関数</h2><p>前回説明したように損失関数には <strong>平均2乗誤差</strong> や <strong>交差エントロピー</strong> が用いられます．
 今回は2クラス分類に適しているとされる <strong>バイナリ交差エントロピー（Binary Cross Entoropy: BCE）</strong> を採用してみます．
 この損失関数はベルヌーイ分布を仮定したときの出力$z$の対数尤度を表し，下記の式で与えられます．
-ここで，$z$は出力，$\hat{z}$は正しい出力です．</p>
-<p>$$
+ここで，$z$は出力，$\hat{z}$は正しい出力です．</p><p>$$
 BCE = -\frac{1}{n} \sum_i ( \hat{z_i} \cdot \log(z_i) + (1-\hat{z_i}) \cdot log(1 - z_i))
-$$</p>
-<p><code>nn.BCELoss()</code>でバイナリ交差エントロピーの計算グラフを作成します．
+$$</p><p><code>nn.BCELoss()</code>でバイナリ交差エントロピーの計算グラフを作成します．
 先程，得られた出力$z$と正しい出力$\hat{z}$（ここでは<code>label</code>）を与えると，
-損失は0.7121と計算されました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 損失関数</span>
-criterion <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BCELoss()
-label <span style="color:#f92672">=</span> label<span style="color:#f92672">.</span>view(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">1</span>) <span style="color:#75715e"># 10行1列に変換</span>
-loss <span style="color:#f92672">=</span> criterion(z, label)
-<span style="color:#66d9ef">print</span>(loss)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-tensor(<span style="color:#ae81ff">0.7121</span>, grad_fn<span style="color:#f92672">=&lt;</span>BinaryCrossEntropyBackward<span style="color:#f92672">&gt;</span>)
-</code></pre></div><h2 id="最適化関数">最適化関数</h2>
-<p>最適化関数として評価の高い <strong>Adam</strong> を採用します．
-<code>optim.Adam()</code>に定義した多層パーセプトロンのパラメータを引数に与えて初期化します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 最適化関数</span>
-optimizer <span style="color:#f92672">=</span> optim<span style="color:#f92672">.</span>Adam(network<span style="color:#f92672">.</span>parameters())
-<span style="color:#66d9ef">print</span>(optimizer)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-Adam (
-Parameter Group <span style="color:#ae81ff">0</span>
-    amsgrad: False
-    betas: (<span style="color:#ae81ff">0.9</span>, <span style="color:#ae81ff">0.999</span>)
-    eps: <span style="color:#ae81ff">1e-08</span>
-    lr: <span style="color:#ae81ff">0.001</span>
-    weight_decay: <span style="color:#ae81ff">0</span>
-)
-</code></pre></div><h2 id="多層パーセプトロンの学習">多層パーセプトロンの学習</h2>
-<p>それではバックプロパゲーションで多層パーセプトロンを学習します．
+損失は0.7121と計算されました．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 損失関数</span>
+</span></span><span style=display:flex><span>criterion <span style=color:#f92672>=</span> nn<span style=color:#f92672>.</span>BCELoss()
+</span></span><span style=display:flex><span>label <span style=color:#f92672>=</span> label<span style=color:#f92672>.</span>view(<span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>1</span>) <span style=color:#75715e># 10行1列に変換</span>
+</span></span><span style=display:flex><span>loss <span style=color:#f92672>=</span> criterion(z, label)
+</span></span><span style=display:flex><span>print(loss)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#出力</span>
+</span></span><span style=display:flex><span>tensor(<span style=color:#ae81ff>0.7121</span>, grad_fn<span style=color:#f92672>=&lt;</span>BinaryCrossEntropyBackward<span style=color:#f92672>&gt;</span>)
+</span></span></code></pre></div><h2 id=最適化関数>最適化関数</h2><p>最適化関数として評価の高い <strong>Adam</strong> を採用します．
+<code>optim.Adam()</code>に定義した多層パーセプトロンのパラメータを引数に与えて初期化します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 最適化関数</span>
+</span></span><span style=display:flex><span>optimizer <span style=color:#f92672>=</span> optim<span style=color:#f92672>.</span>Adam(network<span style=color:#f92672>.</span>parameters())
+</span></span><span style=display:flex><span>print(optimizer)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#出力</span>
+</span></span><span style=display:flex><span>Adam (
+</span></span><span style=display:flex><span>Parameter Group <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    amsgrad: <span style=color:#66d9ef>False</span>
+</span></span><span style=display:flex><span>    betas: (<span style=color:#ae81ff>0.9</span>, <span style=color:#ae81ff>0.999</span>)
+</span></span><span style=display:flex><span>    eps: <span style=color:#ae81ff>1e-08</span>
+</span></span><span style=display:flex><span>    lr: <span style=color:#ae81ff>0.001</span>
+</span></span><span style=display:flex><span>    weight_decay: <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></div><h2 id=多層パーセプトロンの学習>多層パーセプトロンの学習</h2><p>それではバックプロパゲーションで多層パーセプトロンを学習します．
 ここでは，20000回繰り返して重みとバイアスの更新を行います．
 <code>optimizer.zero_grad()</code>は計算済みの勾配をクリアするメソッドです．
-また，<code>optimizer.step()</code>はパラメータ（重みやバイアス）を更新するメソッドです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">loss_history <span style="color:#f92672">=</span> []
-
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">20000</span>):
-
-    optimizer<span style="color:#f92672">.</span>zero_grad()
-    z <span style="color:#f92672">=</span> network(x)
-
-    loss <span style="color:#f92672">=</span> criterion(z, label)
-    loss<span style="color:#f92672">.</span>backward()
-
-    loss_history<span style="color:#f92672">.</span>append(loss<span style="color:#f92672">.</span>data)
-
-    optimizer<span style="color:#f92672">.</span>step()
-</code></pre></div><p>更新の過程における損失（バイナリ交差エントロピー）の推移を確認してみましょう．
-20000ステップには$BCE \simeq 0$に収束していることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(loss_history)
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;steps&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;loss&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/5dab235771d6360fb56568c56f8d7ad0"><img src="https://i.gyazo.com/5dab235771d6360fb56568c56f8d7ad0.png" alt="Image from Gyazo"></a></p>
-<p>学習した多層パーセプトロンが正しく分類できているか確認しましょう．
+また，<code>optimizer.step()</code>はパラメータ（重みやバイアス）を更新するメソッドです．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>loss_history <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>20000</span>):
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    optimizer<span style=color:#f92672>.</span>zero_grad()
+</span></span><span style=display:flex><span>    z <span style=color:#f92672>=</span> network(x)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    loss <span style=color:#f92672>=</span> criterion(z, label)
+</span></span><span style=display:flex><span>    loss<span style=color:#f92672>.</span>backward()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    loss_history<span style=color:#f92672>.</span>append(loss<span style=color:#f92672>.</span>data)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    optimizer<span style=color:#f92672>.</span>step()
+</span></span></code></pre></div><p>更新の過程における損失（バイナリ交差エントロピー）の推移を確認してみましょう．
+20000ステップには$BCE \simeq 0$に収束していることが確認できます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>plt<span style=color:#f92672>.</span>plot(loss_history)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>xlabel(<span style=color:#e6db74>&#34;steps&#34;</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#34;loss&#34;</span>)
+</span></span></code></pre></div><p><a href=https://gyazo.com/5dab235771d6360fb56568c56f8d7ad0><img src=https://i.gyazo.com/5dab235771d6360fb56568c56f8d7ad0.png alt="Image from Gyazo"></a></p><p>学習した多層パーセプトロンが正しく分類できているか確認しましょう．
 学習データと同じ出力が得られていることが確認できます．
-多層パーセプトロンが線形分離不可能問題に適用できることが分かりました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">z <span style="color:#f92672">=</span> network(x)
-z <span style="color:#f92672">=</span> z<span style="color:#f92672">.</span>transpose(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>]
-z <span style="color:#f92672">=</span> z<span style="color:#f92672">.</span>detach()<span style="color:#f92672">.</span>numpy()
-<span style="color:#66d9ef">print</span>(np<span style="color:#f92672">.</span>round(z))
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#出力</span>
-[<span style="color:#ae81ff">0.</span> <span style="color:#ae81ff">0.</span> <span style="color:#ae81ff">0.</span> <span style="color:#ae81ff">1.</span> <span style="color:#ae81ff">0.</span> <span style="color:#ae81ff">0.</span> <span style="color:#ae81ff">1.</span> <span style="color:#ae81ff">1.</span> <span style="color:#ae81ff">1.</span> <span style="color:#ae81ff">1.</span>]
-</code></pre></div><p>最後に決定境界を確認します．
+多層パーセプトロンが線形分離不可能問題に適用できることが分かりました．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>z <span style=color:#f92672>=</span> network(x)
+</span></span><span style=display:flex><span>z <span style=color:#f92672>=</span> z<span style=color:#f92672>.</span>transpose(<span style=color:#ae81ff>0</span>,<span style=color:#ae81ff>1</span>)[<span style=color:#ae81ff>0</span>]
+</span></span><span style=display:flex><span>z <span style=color:#f92672>=</span> z<span style=color:#f92672>.</span>detach()<span style=color:#f92672>.</span>numpy()
+</span></span><span style=display:flex><span>print(np<span style=color:#f92672>.</span>round(z))
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e>#出力</span>
+</span></span><span style=display:flex><span>[<span style=color:#ae81ff>0.</span> <span style=color:#ae81ff>0.</span> <span style=color:#ae81ff>0.</span> <span style=color:#ae81ff>1.</span> <span style=color:#ae81ff>0.</span> <span style=color:#ae81ff>0.</span> <span style=color:#ae81ff>1.</span> <span style=color:#ae81ff>1.</span> <span style=color:#ae81ff>1.</span> <span style=color:#ae81ff>1.</span>]
+</span></span></code></pre></div><p>最後に決定境界を確認します．
 $0&lt;x1&lt;1$，$0&lt;x2&lt;1$の範囲で多層パーセプトロンの出力を計算し，
 その値に応じてラベルを設定します．
-下図のように非線形の決定境界が得られていることが確認できます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> itertools
-
-boundary <span style="color:#f92672">=</span> []
-
-<span style="color:#66d9ef">for</span> x1_, x2_ <span style="color:#f92672">in</span> itertools<span style="color:#f92672">.</span>product(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.01</span>), np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.01</span>)):
-    x <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([x1_, x2_], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float)
-    z <span style="color:#f92672">=</span> network(x)
-    t <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> z<span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>
-    boundary<span style="color:#f92672">.</span>append([x1_, x2_, t])            
-
-boundary <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(boundary)<span style="color:#f92672">.</span>T
-
-plt<span style="color:#f92672">.</span>scatter(boundary[<span style="color:#ae81ff">0</span>], boundary[<span style="color:#ae81ff">1</span>], c<span style="color:#f92672">=</span>boundary[<span style="color:#ae81ff">2</span>])
-</code></pre></div><p><a href="https://gyazo.com/95123d153a917f1bcb0b2ade01d13583"><img src="https://i.gyazo.com/95123d153a917f1bcb0b2ade01d13583.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
-
-<p>Google Colaboratoryで作成した <strong>chapter4.ipynb</strong> を保存し，
+下図のように非線形の決定境界が得られていることが確認できます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> itertools
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>boundary <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> x1_, x2_ <span style=color:#f92672>in</span> itertools<span style=color:#f92672>.</span>product(np<span style=color:#f92672>.</span>arange(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0.01</span>), np<span style=color:#f92672>.</span>arange(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0.01</span>)):
+</span></span><span style=display:flex><span>    x <span style=color:#f92672>=</span> torch<span style=color:#f92672>.</span>tensor([x1_, x2_], dtype<span style=color:#f92672>=</span>torch<span style=color:#f92672>.</span>float)
+</span></span><span style=display:flex><span>    z <span style=color:#f92672>=</span> network(x)
+</span></span><span style=display:flex><span>    t <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span> <span style=color:#66d9ef>if</span> z<span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>0.5</span> <span style=color:#66d9ef>else</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    boundary<span style=color:#f92672>.</span>append([x1_, x2_, t])            
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>boundary <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array(boundary)<span style=color:#f92672>.</span>T
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>scatter(boundary[<span style=color:#ae81ff>0</span>], boundary[<span style=color:#ae81ff>1</span>], c<span style=color:#f92672>=</span>boundary[<span style=color:#ae81ff>2</span>])
+</span></span></code></pre></div><p><a href=https://gyazo.com/95123d153a917f1bcb0b2ade01d13583><img src=https://i.gyazo.com/95123d153a917f1bcb0b2ade01d13583.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>Google Colaboratoryで作成した <strong>chapter4.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
-提出の前に必ず下記の設定を行ってください．</p>
-<ul>
-<li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li>
-<li>ノートブックの変更内容を保存して固定</li>
-<li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+提出の前に必ず下記の設定を行ってください．</p><ul><li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li><li>ノートブックの変更内容を保存して固定</li><li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li></ul><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

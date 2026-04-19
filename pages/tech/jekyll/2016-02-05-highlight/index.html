@@ -1,259 +1,51 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    Jekyllにおけるシンタックスハイライト | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Jekyllにおけるシンタックスハイライト | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
-
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="Jekyllにおけるシンタックスハイライト" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/tech/jekyll/2016-02-05-highlight/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="Jekyllが得意とするシンタックスハイライトですが，設定でつまずいたのでメモしておきます． シンタックスハイライトにはrougeやpygmentsが利用されるようですが，ここではrougeを適用してみたいと思います． まずは，下記のコマンドでrougeをインストールします．
-gem install rouge 次に，&quot;_config.yml&quot;でシンタックスハイライトにrougeを指定しておきます．
-highlighter: rouge ここまでは，何てことないのですが，ここからつまずきました． シンタックスハイライトのスタイルは&rdquo;_syntax-highlighting.scss&quot;で設定されているようです． 色などを変更したい場合は，このファイルを修正すれば良いはずですが，何故か変更が適用されません．
-マークダウンでハイライトするときは，ソースコードを``で囲みます． 変換後のhtmlを確認すると，該当箇所は下記のように，クラス属性にhighlighter-rougeが設定されています．
-&lt;code class=&#34;highlighter-rouge&#34;&gt;&lt;/code&gt; 再度，&quot;_syntax-highlighting.scss&quot;を確認すると，クラス属性はhighlightとして設定されています． そこで，ファイル内のクラス属性をhighlighter-rougeに置換することで，シンタックスハイライトが適用されました． 試行錯誤の末，シンタックスハイライトの適用までこぎつけましたが，この辺り十分に理解できていないかもしれません．" />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="Jekyllにおけるシンタックスハイライト" />
-
-
-
-  <meta name="twitter:description" content="Jekyllが得意とするシンタックスハイライトですが，設定でつまずいたのでメモしておきます． シンタックスハイライトにはrougeやpygmentsが利用されるようですが，ここではrougeを適用してみたいと思います． まずは，下記のコマンドでrougeをインストールします．
-gem install rouge 次に，&quot;_config.yml&quot;でシンタックスハイライトにrougeを指定しておきます．
-highlighter: rouge ここまでは，何てことないのですが，ここからつまずきました． シンタックスハイライトのスタイルは&rdquo;_syntax-highlighting.scss&quot;で設定されているようです． 色などを変更したい場合は，このファイルを修正すれば良いはずですが，何故か変更が適用されません．
-マークダウンでハイライトするときは，ソースコードを``で囲みます． 変換後のhtmlを確認すると，該当箇所は下記のように，クラス属性にhighlighter-rougeが設定されています．
-&lt;code class=&#34;highlighter-rouge&#34;&gt;&lt;/code&gt; 再度，&quot;_syntax-highlighting.scss&quot;を確認すると，クラス属性はhighlightとして設定されています． そこで，ファイル内のクラス属性をhighlighter-rougeに置換することで，シンタックスハイライトが適用されました． 試行錯誤の末，シンタックスハイライトの適用までこぎつけましたが，この辺り十分に理解できていないかもしれません．" />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">Jekyllにおけるシンタックスハイライト</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p>Jekyllが得意とするシンタックスハイライトですが，設定でつまずいたのでメモしておきます．
-シンタックスハイライトには<a href="https://github.com/jneen/rouge"><strong>rouge</strong></a>や<a href="http://pygments.org/"><strong>pygments</strong></a>が利用されるようですが，ここでは<a href="https://github.com/jneen/rouge"><strong>rouge</strong></a>を適用してみたいと思います．
-まずは，下記のコマンドで<a href="https://github.com/jneen/rouge"><strong>rouge</strong></a>をインストールします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">gem install rouge
-</code></pre></div><p>次に，&quot;_config.yml&quot;でシンタックスハイライトに<a href="https://github.com/jneen/rouge"><strong>rouge</strong></a>を指定しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">highlighter</span>: rouge
-</code></pre></div><p>ここまでは，何てことないのですが，ここからつまずきました．
-シンタックスハイライトのスタイルは&rdquo;_syntax-highlighting.scss&quot;で設定されているようです．
-色などを変更したい場合は，このファイルを修正すれば良いはずですが，何故か変更が適用されません．</p>
-<p>マークダウンでハイライトするときは，ソースコードを``で囲みます．
-変換後のhtmlを確認すると，該当箇所は下記のように，クラス属性にhighlighter-rougeが設定されています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">code</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;highlighter-rouge&#34;</span>&gt;&lt;/<span style="color:#f92672">code</span>&gt;
-</code></pre></div><p>再度，&quot;_syntax-highlighting.scss&quot;を確認すると，クラス属性はhighlightとして設定されています．
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="Jekyllにおけるシンタックスハイライト"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/tech/jekyll/2016-02-05-highlight/"><meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content='Jekyllが得意とするシンタックスハイライトですが，設定でつまずいたのでメモしておきます．
+シンタックスハイライトにはrougeやpygmentsが利用されるようですが，ここではrougeを適用してみたいと思います．
+まずは，下記のコマンドでrougeをインストールします．
+gem install rouge
+次に，"_config.yml"でシンタックスハイライトにrougeを指定しておきます．
+highlighter: rouge
+ここまでは，何てことないのですが，ここからつまずきました．
+シンタックスハイライトのスタイルは"_syntax-highlighting.scss"で設定されているようです．
+色などを変更したい場合は，このファイルを修正すれば良いはずですが，何故か変更が適用されません．
+マークダウンでハイライトするときは，ソースコードを``で囲みます．
+変換後のhtmlを確認すると，該当箇所は下記のように，クラス属性にhighlighter-rougeが設定されています．
+<code class="highlighter-rouge"></code>
+再度，"_syntax-highlighting.scss"を確認すると，クラス属性はhighlightとして設定されています．
 そこで，ファイル内のクラス属性をhighlighter-rougeに置換することで，シンタックスハイライトが適用されました．
-試行錯誤の末，シンタックスハイライトの適用までこぎつけましたが，この辺り十分に理解できていないかもしれません．</p>
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-    
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+試行錯誤の末，シンタックスハイライトの適用までこぎつけましたが，この辺り十分に理解できていないかもしれません．'><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="Jekyllにおけるシンタックスハイライト"><meta name=twitter:description content='Jekyllが得意とするシンタックスハイライトですが，設定でつまずいたのでメモしておきます．
+シンタックスハイライトにはrougeやpygmentsが利用されるようですが，ここではrougeを適用してみたいと思います．
+まずは，下記のコマンドでrougeをインストールします．
+gem install rouge
+次に，"_config.yml"でシンタックスハイライトにrougeを指定しておきます．
+highlighter: rouge
+ここまでは，何てことないのですが，ここからつまずきました．
+シンタックスハイライトのスタイルは"_syntax-highlighting.scss"で設定されているようです．
+色などを変更したい場合は，このファイルを修正すれば良いはずですが，何故か変更が適用されません．
+マークダウンでハイライトするときは，ソースコードを``で囲みます．
+変換後のhtmlを確認すると，該当箇所は下記のように，クラス属性にhighlighter-rougeが設定されています．
+<code class="highlighter-rouge"></code>
+再度，"_syntax-highlighting.scss"を確認すると，クラス属性はhighlightとして設定されています．
+そこで，ファイル内のクラス属性をhighlighter-rougeに置換することで，シンタックスハイライトが適用されました．
+試行錯誤の末，シンタックスハイライトの適用までこぎつけましたが，この辺り十分に理解できていないかもしれません．'><meta name=twitter:image content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>Jekyllにおけるシンタックスハイライト</h1><div class=post-line></div><p>Jekyllが得意とするシンタックスハイライトですが，設定でつまずいたのでメモしておきます．
+シンタックスハイライトには<a href=https://github.com/jneen/rouge><strong>rouge</strong></a>や<a href=http://pygments.org/><strong>pygments</strong></a>が利用されるようですが，ここでは<a href=https://github.com/jneen/rouge><strong>rouge</strong></a>を適用してみたいと思います．
+まずは，下記のコマンドで<a href=https://github.com/jneen/rouge><strong>rouge</strong></a>をインストールします．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>gem install rouge
+</span></span></code></pre></div><p>次に，"_config.yml"でシンタックスハイライトに<a href=https://github.com/jneen/rouge><strong>rouge</strong></a>を指定しておきます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yml data-lang=yml><span style=display:flex><span><span style=color:#f92672>highlighter</span>: <span style=color:#ae81ff>rouge</span>
+</span></span></code></pre></div><p>ここまでは，何てことないのですが，ここからつまずきました．
+シンタックスハイライトのスタイルは"_syntax-highlighting.scss"で設定されているようです．
+色などを変更したい場合は，このファイルを修正すれば良いはずですが，何故か変更が適用されません．</p><p>マークダウンでハイライトするときは，ソースコードを``で囲みます．
+変換後のhtmlを確認すると，該当箇所は下記のように，クラス属性にhighlighter-rougeが設定されています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>code</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;highlighter-rouge&#34;</span>&gt;&lt;/<span style=color:#f92672>code</span>&gt;
+</span></span></code></pre></div><p>再度，"_syntax-highlighting.scss"を確認すると，クラス属性はhighlightとして設定されています．
+そこで，ファイル内のクラス属性をhighlighter-rougeに置換することで，シンタックスハイライトが適用されました．
+試行錯誤の末，シンタックスハイライトの適用までこぎつけましたが，この辺り十分に理解できていないかもしれません．</p><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

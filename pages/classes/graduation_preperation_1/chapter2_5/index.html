@@ -1,466 +1,254 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    Monacaアプリの開発⑤ Chart.jsの利用 | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Monacaアプリの開発⑤ Chart.jsの利用 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="Monacaアプリの開発⑤ Chart.jsの利用"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter2_5/"><meta property="og:image" content="https://i.gyazo.com/c040eb79e3b3c16c7d0d9e191ddcf46b.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content='
 
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="Monacaアプリの開発⑤ Chart.jsの利用" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter2_5/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/c040eb79e3b3c16c7d0d9e191ddcf46b.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="Chart.jsChart.jsは，グラフ（チャート）を表示するためのオープンソースのJavaScriptライブラリです． 任意のデータを用いて，線グラフ（Line Chat）や棒グラフ（Bar Chart）など，8種類のグラフを生成することができます． レスポンシブ・デザインにも対応しており，ディスプレイのサイズに合わせて自動的にグラフのサイズも調整される仕組みとなっています． Monacaで利用するには，JS/CSSコンポーネントをクリックして，chart.jsのライブラリをプロジェクトに追加します． ただし，chart.jsのバージョンは，3.xではなく，2.9.4を選択するようにしてください． このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．
- components/chart.js/dist/Chart.js  また，適切なグラフの色を自動的に設定するために，chartjs-plugin-colorschemeプラグインもプロジェクトに追加します． このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．
- components/chartjs-plugin-colorschemes/dist/chartjs-plugin-colorschemes.js  
-プロジェクトの作成新規にプロジェクトを作成します． テンプレートは前回と同じ Onsen UI V2 Vue Minimum を選択しましょう．
-
-プロジェクト名に「Monacaでアプリ開発⑤」，説明に「Chart.jsの利用」を設定しましょう．
-
-テンプレートの確認クラウドIDEを起動し，テンプレートの/src/App.vueを確認します．
-HTML v-ons-toolbarの次にあるdiv要素とp要素を削除しておきます．
-&lt;template&gt; &lt;v-ons-page&gt; &lt;v-ons-toolbar&gt; &lt;div class=&#34;center&#34;&gt;{{ title }}&lt;/div&gt; &lt;div class=&#34;right&#34;&gt; &lt;v-ons-toolbar-button&gt; &lt;v-ons-icon icon=&#34;ion-navicon, material: md-menu&#34;&gt;&lt;/v-ons-icon&gt; &lt;/v-ons-toolbar-button&gt; &lt;/div&gt; &lt;/v-ons-toolbar&gt; &lt;!-- 削除 --&gt; &lt;/v-ons-page&gt; &lt;/template&gt; &lt;script&gt; /* JavaScriptのコード */ &lt;/script&gt; JavaScript titleを グラフアプリ に設定します． methodsオプションの内容を削除しておきます．" />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="Monacaアプリの開発⑤ Chart.jsの利用" />
-
-
-
-  <meta name="twitter:description" content="Chart.jsChart.jsは，グラフ（チャート）を表示するためのオープンソースのJavaScriptライブラリです． 任意のデータを用いて，線グラフ（Line Chat）や棒グラフ（Bar Chart）など，8種類のグラフを生成することができます． レスポンシブ・デザインにも対応しており，ディスプレイのサイズに合わせて自動的にグラフのサイズも調整される仕組みとなっています． Monacaで利用するには，JS/CSSコンポーネントをクリックして，chart.jsのライブラリをプロジェクトに追加します． ただし，chart.jsのバージョンは，3.xではなく，2.9.4を選択するようにしてください． このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．
- components/chart.js/dist/Chart.js  また，適切なグラフの色を自動的に設定するために，chartjs-plugin-colorschemeプラグインもプロジェクトに追加します． このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．
- components/chartjs-plugin-colorschemes/dist/chartjs-plugin-colorschemes.js  
-プロジェクトの作成新規にプロジェクトを作成します． テンプレートは前回と同じ Onsen UI V2 Vue Minimum を選択しましょう．
-
-プロジェクト名に「Monacaでアプリ開発⑤」，説明に「Chart.jsの利用」を設定しましょう．
-
-テンプレートの確認クラウドIDEを起動し，テンプレートの/src/App.vueを確認します．
-HTML v-ons-toolbarの次にあるdiv要素とp要素を削除しておきます．
-&lt;template&gt; &lt;v-ons-page&gt; &lt;v-ons-toolbar&gt; &lt;div class=&#34;center&#34;&gt;{{ title }}&lt;/div&gt; &lt;div class=&#34;right&#34;&gt; &lt;v-ons-toolbar-button&gt; &lt;v-ons-icon icon=&#34;ion-navicon, material: md-menu&#34;&gt;&lt;/v-ons-icon&gt; &lt;/v-ons-toolbar-button&gt; &lt;/div&gt; &lt;/v-ons-toolbar&gt; &lt;!-- 削除 --&gt; &lt;/v-ons-page&gt; &lt;/template&gt; &lt;script&gt; /* JavaScriptのコード */ &lt;/script&gt; JavaScript titleを グラフアプリ に設定します． methodsオプションの内容を削除しておきます．" />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/c040eb79e3b3c16c7d0d9e191ddcf46b.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">Monacaアプリの開発⑤ Chart.jsの利用</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p><a href="https://gyazo.com/c040eb79e3b3c16c7d0d9e191ddcf46b"><img src="https://i.gyazo.com/c040eb79e3b3c16c7d0d9e191ddcf46b.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   Chart.js
-</h1>
 
-<p><a href="https://www.chartjs.org/">Chart.js</a>は，グラフ（チャート）を表示するためのオープンソースのJavaScriptライブラリです．
+
+Chart.jsは，グラフ（チャート）を表示するためのオープンソースのJavaScriptライブラリです．
+任意のデータを用いて，線グラフ（Line Chat）や棒グラフ（Bar Chart）など，8種類のグラフを生成することができます．
+レスポンシブ・デザインにも対応しており，ディスプレイのサイズに合わせて自動的にグラフのサイズも調整される仕組みとなっています．
+Monacaで利用するには，JS/CSSコンポーネントをクリックして，chart.jsのライブラリをプロジェクトに追加します．
+ただし，chart.jsのバージョンは，3.xではなく，2.9.4を選択するようにしてください．
+このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．
+
+components/chart.js/dist/Chart.js
+
+また，適切なグラフの色を自動的に設定するために，chartjs-plugin-colorschemeプラグインもプロジェクトに追加します．
+このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．
+
+components/chartjs-plugin-colorschemes/dist/chartjs-plugin-colorschemes.js
+
+
+
+  プロジェクトの作成
+
+
+新規にプロジェクトを作成します．
+テンプレートは前回と同じ Onsen UI V2 Vue Minimum を選択しましょう．
+
+プロジェクト名に「Monacaでアプリ開発⑤」，説明に「Chart.jsの利用」を設定しましょう．
+
+
+  テンプレートの確認
+
+
+クラウドIDEを起動し，テンプレートの/src/App.vueを確認します．
+HTML
+v-ons-toolbarの次にあるdiv要素とp要素を削除しておきます．
+<template>
+    <v-ons-page>
+      <v-ons-toolbar>
+        <div class="center">{{ title }}</div>
+        <div class="right">
+          <v-ons-toolbar-button>
+            <v-ons-icon icon="ion-navicon, material: md-menu"></v-ons-icon>
+          </v-ons-toolbar-button>
+        </div>
+      </v-ons-toolbar>
+
+      <!-- 削除 -->
+
+    </v-ons-page>
+</template>
+<script>
+ /* JavaScriptのコード */
+</script>
+JavaScript
+titleを グラフアプリ に設定します．
+methodsオプションの内容を削除しておきます．'><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="Monacaアプリの開発⑤ Chart.jsの利用"><meta name=twitter:description content='
+
+  Chart.js
+
+
+Chart.jsは，グラフ（チャート）を表示するためのオープンソースのJavaScriptライブラリです．
+任意のデータを用いて，線グラフ（Line Chat）や棒グラフ（Bar Chart）など，8種類のグラフを生成することができます．
+レスポンシブ・デザインにも対応しており，ディスプレイのサイズに合わせて自動的にグラフのサイズも調整される仕組みとなっています．
+Monacaで利用するには，JS/CSSコンポーネントをクリックして，chart.jsのライブラリをプロジェクトに追加します．
+ただし，chart.jsのバージョンは，3.xではなく，2.9.4を選択するようにしてください．
+このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．
+
+components/chart.js/dist/Chart.js
+
+また，適切なグラフの色を自動的に設定するために，chartjs-plugin-colorschemeプラグインもプロジェクトに追加します．
+このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．
+
+components/chartjs-plugin-colorschemes/dist/chartjs-plugin-colorschemes.js
+
+
+
+  プロジェクトの作成
+
+
+新規にプロジェクトを作成します．
+テンプレートは前回と同じ Onsen UI V2 Vue Minimum を選択しましょう．
+
+プロジェクト名に「Monacaでアプリ開発⑤」，説明に「Chart.jsの利用」を設定しましょう．
+
+
+  テンプレートの確認
+
+
+クラウドIDEを起動し，テンプレートの/src/App.vueを確認します．
+HTML
+v-ons-toolbarの次にあるdiv要素とp要素を削除しておきます．
+<template>
+    <v-ons-page>
+      <v-ons-toolbar>
+        <div class="center">{{ title }}</div>
+        <div class="right">
+          <v-ons-toolbar-button>
+            <v-ons-icon icon="ion-navicon, material: md-menu"></v-ons-icon>
+          </v-ons-toolbar-button>
+        </div>
+      </v-ons-toolbar>
+
+      <!-- 削除 -->
+
+    </v-ons-page>
+</template>
+<script>
+ /* JavaScriptのコード */
+</script>
+JavaScript
+titleを グラフアプリ に設定します．
+methodsオプションの内容を削除しておきます．'><meta name=twitter:image content="https://i.gyazo.com/c040eb79e3b3c16c7d0d9e191ddcf46b.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>Monacaアプリの開発⑤ Chart.jsの利用</h1><div class=post-line></div><p><a href=https://gyazo.com/c040eb79e3b3c16c7d0d9e191ddcf46b><img src=https://i.gyazo.com/c040eb79e3b3c16c7d0d9e191ddcf46b.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Chart.js</h1><p><a href=https://www.chartjs.org/>Chart.js</a>は，グラフ（チャート）を表示するためのオープンソースのJavaScriptライブラリです．
 任意のデータを用いて，線グラフ（Line Chat）や棒グラフ（Bar Chart）など，8種類のグラフを生成することができます．
 レスポンシブ・デザインにも対応しており，ディスプレイのサイズに合わせて自動的にグラフのサイズも調整される仕組みとなっています．
 Monacaで利用するには，<strong>JS/CSSコンポーネント</strong>をクリックして，chart.jsのライブラリをプロジェクトに追加します．
 ただし，chart.jsのバージョンは，<strong>3.x</strong>ではなく，<strong>2.9.4</strong>を選択するようにしてください．
-このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．</p>
-<ul>
-<li><a href="https://www.chartjs.org/">components/chart.js/dist/Chart.js</a></li>
-</ul>
-<p>また，適切なグラフの色を自動的に設定するために，<strong>chartjs-plugin-colorschemeプラグイン</strong>もプロジェクトに追加します．
-このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．</p>
-<ul>
-<li><a href="https://nagix.github.io/chartjs-plugin-colorschemes">components/chartjs-plugin-colorschemes/dist/chartjs-plugin-colorschemes.js</a></li>
-</ul>
-<p><a href="https://gyazo.com/3bafa6ecabe6f2da21c5ba878d39ea5f"><img src="https://i.gyazo.com/3bafa6ecabe6f2da21c5ba878d39ea5f.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  プロジェクトの作成
-</h1>
-
-<p>新規にプロジェクトを作成します．
-テンプレートは前回と同じ <strong>Onsen UI V2 Vue Minimum</strong> を選択しましょう．</p>
-<p><a href="https://gyazo.com/de634636bcce6df2f0ed9a438f6015c2"><img src="https://i.gyazo.com/de634636bcce6df2f0ed9a438f6015c2.png" alt="Image from Gyazo"></a></p>
-<p>プロジェクト名に「Monacaでアプリ開発⑤」，説明に「Chart.jsの利用」を設定しましょう．</p>
-<p><a href="https://gyazo.com/53a35ded4ea9705ac868e627c1d6f10c"><img src="https://i.gyazo.com/53a35ded4ea9705ac868e627c1d6f10c.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  テンプレートの確認
-</h1>
-
-<p>クラウドIDEを起動し，テンプレートの<code>/src/App.vue</code>を確認します．</p>
-<h2 id="html">HTML</h2>
-<p><code>v-ons-toolbar</code>の次にある<code>div</code>要素と<code>p</code>要素を削除しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">template</span>&gt;
-    &lt;<span style="color:#f92672">v-ons-page</span>&gt;
-      &lt;<span style="color:#f92672">v-ons-toolbar</span>&gt;
-        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;center&#34;</span>&gt;{{ title }}&lt;/<span style="color:#f92672">div</span>&gt;
-        &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;right&#34;</span>&gt;
-          &lt;<span style="color:#f92672">v-ons-toolbar-button</span>&gt;
-            &lt;<span style="color:#f92672">v-ons-icon</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ion-navicon, material: md-menu&#34;</span>&gt;&lt;/<span style="color:#f92672">v-ons-icon</span>&gt;
-          &lt;/<span style="color:#f92672">v-ons-toolbar-button</span>&gt;
-        &lt;/<span style="color:#f92672">div</span>&gt;
-      &lt;/<span style="color:#f92672">v-ons-toolbar</span>&gt;
-
-      <span style="color:#75715e">&lt;!-- 削除 --&gt;</span>
-
-    &lt;/<span style="color:#f92672">v-ons-page</span>&gt;
-&lt;/<span style="color:#f92672">template</span>&gt;
-&lt;<span style="color:#f92672">script</span>&gt;
- <span style="color:#75715e">/* JavaScriptのコード */</span>
-&lt;/<span style="color:#f92672">script</span>&gt;
-</code></pre></div><h2 id="javascript">JavaScript</h2>
-<p><code>title</code>を <strong>グラフアプリ</strong> に設定します．
-<code>methods</code>オプションの内容を削除しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
-  <span style="color:#a6e22e">data</span>() {
-    <span style="color:#66d9ef">return</span> {
-      <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;グラフアプリ&#39;</span>
-    };
-  },
-  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
-    <span style="color:#75715e">// 削除
-</span><span style="color:#75715e"></span>  }
-};
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  グラフアプリの開発
-</h1>
-
-<p>Chart.jsを利用したグラフアプリを開発します．
-日進市の<a href="https://www.city.nisshin.lg.jp/opendata/index.html">オープンデータ</a>を利用して，
-日進市の <strong>市全体</strong>，<strong>赤池町</strong>，<strong>浅田町</strong>の人口データを棒グラフとして表示します．</p>
-<h2 id="グラフの表示">グラフの表示</h2>
-<h3 id="html-1">HTML</h3>
-<p>グラフを表示する <code>canvas</code>要素を作成します．
-グラフの高さは400pxに設定しておきます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-HTML" data-lang="HTML">&lt;<span style="color:#f92672">h1</span>&gt;人口の推移&lt;/<span style="color:#f92672">h1</span>&gt;
-&lt;<span style="color:#f92672">canvas</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;myChart&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;400&#34;</span>&gt;&lt;/<span style="color:#f92672">canvas</span>&gt;
-</code></pre></div><h3 id="javascript-1">JavaScript</h3>
-<p>まずはグラフのサンプルデータとして，ラベルに<code>[&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]</code>，データに<code>[10, 20, 30]</code>を設定します．
+このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．</p><ul><li><a href=https://www.chartjs.org/>components/chart.js/dist/Chart.js</a></li></ul><p>また，適切なグラフの色を自動的に設定するために，<strong>chartjs-plugin-colorschemeプラグイン</strong>もプロジェクトに追加します．
+このとき，次のファイルを選択してインストールします（CDNで設定しても構いません）．</p><ul><li><a href=https://nagix.github.io/chartjs-plugin-colorschemes>components/chartjs-plugin-colorschemes/dist/chartjs-plugin-colorschemes.js</a></li></ul><p><a href=https://gyazo.com/3bafa6ecabe6f2da21c5ba878d39ea5f><img src=https://i.gyazo.com/3bafa6ecabe6f2da21c5ba878d39ea5f.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>プロジェクトの作成</h1><p>新規にプロジェクトを作成します．
+テンプレートは前回と同じ <strong>Onsen UI V2 Vue Minimum</strong> を選択しましょう．</p><p><a href=https://gyazo.com/de634636bcce6df2f0ed9a438f6015c2><img src=https://i.gyazo.com/de634636bcce6df2f0ed9a438f6015c2.png alt="Image from Gyazo"></a></p><p>プロジェクト名に「Monacaでアプリ開発⑤」，説明に「Chart.jsの利用」を設定しましょう．</p><p><a href=https://gyazo.com/53a35ded4ea9705ac868e627c1d6f10c><img src=https://i.gyazo.com/53a35ded4ea9705ac868e627c1d6f10c.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>テンプレートの確認</h1><p>クラウドIDEを起動し，テンプレートの<code>/src/App.vue</code>を確認します．</p><h2 id=html>HTML</h2><p><code>v-ons-toolbar</code>の次にある<code>div</code>要素と<code>p</code>要素を削除しておきます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>v-ons-page</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>v-ons-toolbar</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;center&#34;</span>&gt;{{ title }}&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;right&#34;</span>&gt;
+</span></span><span style=display:flex><span>          &lt;<span style=color:#f92672>v-ons-toolbar-button</span>&gt;
+</span></span><span style=display:flex><span>            &lt;<span style=color:#f92672>v-ons-icon</span> <span style=color:#a6e22e>icon</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;ion-navicon, material: md-menu&#34;</span>&gt;&lt;/<span style=color:#f92672>v-ons-icon</span>&gt;
+</span></span><span style=display:flex><span>          &lt;/<span style=color:#f92672>v-ons-toolbar-button</span>&gt;
+</span></span><span style=display:flex><span>        &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>      &lt;/<span style=color:#f92672>v-ons-toolbar</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#75715e>&lt;!-- 削除 --&gt;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>v-ons-page</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>script</span>&gt;
+</span></span><span style=display:flex><span> <span style=color:#75715e>/* JavaScriptのコード */</span>
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span></code></pre></div><h2 id=javascript>JavaScript</h2><p><code>title</code>を <strong>グラフアプリ</strong> に設定します．
+<code>methods</code>オプションの内容を削除しておきます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span>{
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>data</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;グラフアプリ&#39;</span>
+</span></span><span style=display:flex><span>    };
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 削除
+</span></span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>グラフアプリの開発</h1><p>Chart.jsを利用したグラフアプリを開発します．
+日進市の<a href=https://www.city.nisshin.lg.jp/opendata/index.html>オープンデータ</a>を利用して，
+日進市の <strong>市全体</strong>，<strong>赤池町</strong>，<strong>浅田町</strong>の人口データを棒グラフとして表示します．</p><h2 id=グラフの表示>グラフの表示</h2><h3 id=html-1>HTML</h3><p>グラフを表示する <code>canvas</code>要素を作成します．
+グラフの高さは400pxに設定しておきます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-HTML data-lang=HTML><span style=display:flex><span>&lt;<span style=color:#f92672>h1</span>&gt;人口の推移&lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>canvas</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;myChart&#34;</span> <span style=color:#a6e22e>height</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;400&#34;</span>&gt;&lt;/<span style=color:#f92672>canvas</span>&gt;
+</span></span></code></pre></div><h3 id=javascript-1>JavaScript</h3><p>まずはグラフのサンプルデータとして，ラベルに<code>["A", "B", "C"]</code>，データに<code>[10, 20, 30]</code>を設定します．
 また，<code>mounted</code>オプションで，グラフを表示するための<code>canvas</code>オブジェクトと，グラフそのものを表す<code>chart</code>オブジェクトを生成します．
-グラフのタイプは <strong>棒グラフ</strong> とします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
-	<span style="color:#a6e22e">data</span>() {
-		<span style="color:#66d9ef">return</span> {
-			<span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;グラフアプリ&#39;</span>,
-			<span style="color:#a6e22e">ctx</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>, <span style="color:#75715e">// canvasオブジェクト
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">myChart</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>, <span style="color:#75715e">// chartオブジェクト
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">label_data</span><span style="color:#f92672">:</span> [<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>], <span style="color:#75715e">// グラフのラベル
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">graph_data</span><span style="color:#f92672">:</span> [<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">20</span>, <span style="color:#ae81ff">30</span>], <span style="color:#75715e">// グラフのデータ
-</span><span style="color:#75715e"></span>		};
-    },
-	<span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
-    },
-    <span style="color:#a6e22e">mounted</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(){
-		<span style="color:#75715e">// canvasオブジェクトの作成
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;myChart&#39;</span>).<span style="color:#a6e22e">getContext</span>(<span style="color:#e6db74">&#39;2d&#39;</span>);
-
-		<span style="color:#75715e">// chartオブジェクトの作成
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Chart</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ctx</span>, {
-			<span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;bar&#39;</span>, <span style="color:#75715e">// 棒グラフ
-</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-				<span style="color:#a6e22e">labels</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">label_data</span>, <span style="color:#75715e">// グラフのラベル
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">datasets</span><span style="color:#f92672">:</span> [{
-					<span style="color:#a6e22e">label</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;sample&#34;</span>, <span style="color:#75715e">// データ系列のラベル
-</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">graph_data</span> <span style="color:#75715e">// グラフのデータ
-</span><span style="color:#75715e"></span>				}]
-			}
-		});
-    },
-};
-</code></pre></div><h3 id="実行結果">実行結果</h3>
-<p><a href="https://gyazo.com/92bfb269d286c753b5f663f0919dc477"><img src="https://i.gyazo.com/92bfb269d286c753b5f663f0919dc477.jpg" alt="Image from Gyazo" width="400"/></a></p>
-<h2 id="外部jsファイルのインポート">外部JSファイルのインポート</h2>
-<p><a href="https://www.city.nisshin.lg.jp/opendata/index.html">日進市オープンデータポータルサイト</a>で公開されている人口のオープンデータを取り込みます．
+グラフのタイプは <strong>棒グラフ</strong> とします．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span>{
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>data</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;グラフアプリ&#39;</span>,
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>ctx</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>null</span>, <span style=color:#75715e>// canvasオブジェクト
+</span></span></span><span style=display:flex><span>			<span style=color:#a6e22e>myChart</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>null</span>, <span style=color:#75715e>// chartオブジェクト
+</span></span></span><span style=display:flex><span>			<span style=color:#a6e22e>label_data</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#34;A&#34;</span>, <span style=color:#e6db74>&#34;B&#34;</span>, <span style=color:#e6db74>&#34;C&#34;</span>], <span style=color:#75715e>// グラフのラベル
+</span></span></span><span style=display:flex><span>			<span style=color:#a6e22e>graph_data</span><span style=color:#f92672>:</span> [<span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>20</span>, <span style=color:#ae81ff>30</span>], <span style=color:#75715e>// グラフのデータ
+</span></span></span><span style=display:flex><span>		};
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>mounted</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>function</span>(){
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// canvasオブジェクトの作成
+</span></span></span><span style=display:flex><span>		<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>ctx</span> <span style=color:#f92672>=</span> document.<span style=color:#a6e22e>getElementById</span>(<span style=color:#e6db74>&#39;myChart&#39;</span>).<span style=color:#a6e22e>getContext</span>(<span style=color:#e6db74>&#39;2d&#39;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// chartオブジェクトの作成
+</span></span></span><span style=display:flex><span>		<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>myChart</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Chart</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>ctx</span>, {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>type</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;bar&#39;</span>, <span style=color:#75715e>// 棒グラフ
+</span></span></span><span style=display:flex><span>			<span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>				<span style=color:#a6e22e>labels</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>label_data</span>, <span style=color:#75715e>// グラフのラベル
+</span></span></span><span style=display:flex><span>				<span style=color:#a6e22e>datasets</span><span style=color:#f92672>:</span> [{
+</span></span><span style=display:flex><span>					<span style=color:#a6e22e>label</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;sample&#34;</span>, <span style=color:#75715e>// データ系列のラベル
+</span></span></span><span style=display:flex><span>					<span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>graph_data</span> <span style=color:#75715e>// グラフのデータ
+</span></span></span><span style=display:flex><span>				}]
+</span></span><span style=display:flex><span>			}
+</span></span><span style=display:flex><span>		});
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>};
+</span></span></code></pre></div><h3 id=実行結果>実行結果</h3><p><a href=https://gyazo.com/92bfb269d286c753b5f663f0919dc477><img src=https://i.gyazo.com/92bfb269d286c753b5f663f0919dc477.jpg alt="Image from Gyazo" width=400></a></p><h2 id=外部jsファイルのインポート>外部JSファイルのインポート</h2><p><a href=https://www.city.nisshin.lg.jp/opendata/index.html>日進市オープンデータポータルサイト</a>で公開されている人口のオープンデータを取り込みます．
 JSON形式でダウンロードしたデータを，独自に加工したファイルが次の <strong>jinkou.js</strong> です．
-このファイルを，<code>/src/js/</code>に配置してください．</p>
-<ul>
-<li><a href="https://mukai-lab.info/classes/graduation_preperation_1/jinkou.js"><i class="fas fa-cloud-download-alt"></i>jinkou.js</a></li>
-</ul>
-<p><a href="https://gyazo.com/17a477d7c6efb7c82833f499a943f00f"><img src="https://i.gyazo.com/17a477d7c6efb7c82833f499a943f00f.png" alt="Image from Gyazo"></a></p>
-<p>上記のファイルを，Vueで利用するには，次のように<code>import</code>を宣言します．
-JSON形式のデータには，<code>jinkou.jinkou_list</code>でアクセスします．</p>
-<h3 id="javascript-2">JavaScript</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">jinkou</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./js/jinkou&#34;</span>
-</code></pre></div><p>正しくデータが取り込まれているか，次のコードを<code>mounted</code>プロパティに記述してみましょう．
-アラート・ダイアログで「人口:63981」が表示されます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$ons</span>.<span style="color:#a6e22e">notification</span>.<span style="color:#a6e22e">alert</span>(<span style="color:#e6db74">&#34;人口: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>[<span style="color:#e6db74">&#34;市全体&#34;</span>][<span style="color:#e6db74">&#34;1999&#34;</span>]);
-</code></pre></div><h3 id="実行結果-1">実行結果</h3>
-<p><a href="https://gyazo.com/7ef7052b6beab1e7937ee0c0cce186e2"><img src="https://i.gyazo.com/7ef7052b6beab1e7937ee0c0cce186e2.jpg" alt="Image from Gyazo" width="400"/></a></p>
-<h2 id="データの取り込み">データの取り込み</h2>
-<p>上記の人口のデータをグラフで表示しましょう．
+このファイルを，<code>/src/js/</code>に配置してください．</p><ul><li><a href=https://mukai-lab.info/classes/graduation_preperation_1/jinkou.js><i class="fas fa-cloud-download-alt"></i>jinkou.js</a></li></ul><p><a href=https://gyazo.com/17a477d7c6efb7c82833f499a943f00f><img src=https://i.gyazo.com/17a477d7c6efb7c82833f499a943f00f.png alt="Image from Gyazo"></a></p><p>上記のファイルを，Vueで利用するには，次のように<code>import</code>を宣言します．
+JSON形式のデータには，<code>jinkou.jinkou_list</code>でアクセスします．</p><h3 id=javascript-2>JavaScript</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>jinkou</span> <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#34;./js/jinkou&#34;</span>
+</span></span></code></pre></div><p>正しくデータが取り込まれているか，次のコードを<code>mounted</code>プロパティに記述してみましょう．
+アラート・ダイアログで「人口:63981」が表示されます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-JavaScript data-lang=JavaScript><span style=display:flex><span><span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>$ons</span>.<span style=color:#a6e22e>notification</span>.<span style=color:#a6e22e>alert</span>(<span style=color:#e6db74>&#34;人口: &#34;</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>jinkou</span>.<span style=color:#a6e22e>jinkou_list</span>[<span style=color:#e6db74>&#34;市全体&#34;</span>][<span style=color:#e6db74>&#34;1999&#34;</span>]);
+</span></span></code></pre></div><h3 id=実行結果-1>実行結果</h3><p><a href=https://gyazo.com/7ef7052b6beab1e7937ee0c0cce186e2><img src=https://i.gyazo.com/7ef7052b6beab1e7937ee0c0cce186e2.jpg alt="Image from Gyazo" width=400></a></p><h2 id=データの取り込み>データの取り込み</h2><p>上記の人口のデータをグラフで表示しましょう．
 最初に，市全体，赤池長，浅田町のデータを選択するためのセレクトボックスを作成します．
 <code>city_list</code>がセレクトボックスの全ての選択肢，<code>selected_city</code>が選択されている選択肢を表します．
 初期状態では，市全体を表示することにします．
-また，<code>Object.keys()</code>は連想配列のキー，<code>Object.values()</code>は連想配列のバリューを取得するメソッドです．</p>
-<h3 id="html-2">HTML</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">v-ons-select</span> <span style="color:#a6e22e">v-model</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;selected_city&#34;</span>&gt;
-	&lt;<span style="color:#f92672">option</span> <span style="color:#a6e22e">v-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;city in city_list&#34;</span>&gt;
-		{{ city }}
-    &lt;/<span style="color:#f92672">option</span>&gt;
-&lt;/<span style="color:#f92672">v-ons-select</span>&gt;
-</code></pre></div><h3 id="javascript-3">JavaScript</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span>() {
-	<span style="color:#66d9ef">return</span> {
-		<span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;グラフアプリ&#39;</span>,
-		<span style="color:#a6e22e">ctx</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
-		<span style="color:#a6e22e">myChart</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
-		<span style="color:#a6e22e">city_list</span><span style="color:#f92672">:</span> Object.<span style="color:#a6e22e">keys</span>(<span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>), <span style="color:#75715e">// 市全体，赤池長，浅田町
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">selected_city</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;市全体&#34;</span>, <span style="color:#75715e">// 選択されたデータ
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">label_data</span><span style="color:#f92672">:</span> Object.<span style="color:#a6e22e">keys</span>(<span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>[<span style="color:#e6db74">&#34;市全体&#34;</span>]), <span style="color:#75715e">// 1999, 2000, ..., 2021
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">graph_data</span><span style="color:#f92672">:</span> Object.<span style="color:#a6e22e">values</span>(<span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>[<span style="color:#e6db74">&#34;市全体&#34;</span>]) <span style="color:#75715e">// 63981, 65553, ..., 91652
-</span><span style="color:#75715e"></span>    };
-},
-<span style="color:#a6e22e">mounted</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(){
-	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ctx</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#39;myChart&#39;</span>).<span style="color:#a6e22e">getContext</span>(<span style="color:#e6db74">&#39;2d&#39;</span>);
-	<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Chart</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">ctx</span>, {
-		<span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;bar&#39;</span>,
-        <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-			<span style="color:#a6e22e">labels</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">label_data</span>,
-			<span style="color:#a6e22e">datasets</span><span style="color:#f92672">:</span> [{
-				<span style="color:#a6e22e">label</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">selected_city</span>, <span style="color:#75715e">// 選択されたデータ
-</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">graph_data</span>
-            }]
-        }
-    });
-},  
-</code></pre></div><h3 id="実行結果-2">実行結果</h3>
-<p><a href="https://gyazo.com/72faa233be0d6c6d4b8503c3666dc692"><img src="https://i.gyazo.com/72faa233be0d6c6d4b8503c3666dc692.jpg" alt="Image from Gyazo" width="400"/></a></p>
-<h2 id="イベント処理">イベント処理</h2>
-<p>最後にセレクトボックスの状態に応じてグラフを切り替えます．
+また，<code>Object.keys()</code>は連想配列のキー，<code>Object.values()</code>は連想配列のバリューを取得するメソッドです．</p><h3 id=html-2>HTML</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span>&lt;<span style=color:#f92672>v-ons-select</span> <span style=color:#a6e22e>v-model</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;selected_city&#34;</span>&gt;
+</span></span><span style=display:flex><span>	&lt;<span style=color:#f92672>option</span> <span style=color:#a6e22e>v-for</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;city in city_list&#34;</span>&gt;
+</span></span><span style=display:flex><span>		{{ city }}
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>option</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>v-ons-select</span>&gt;
+</span></span></code></pre></div><h3 id=javascript-3>JavaScript</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>data</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;グラフアプリ&#39;</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>ctx</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>null</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>myChart</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>null</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>city_list</span><span style=color:#f92672>:</span> Object.<span style=color:#a6e22e>keys</span>(<span style=color:#a6e22e>jinkou</span>.<span style=color:#a6e22e>jinkou_list</span>), <span style=color:#75715e>// 市全体，赤池長，浅田町
+</span></span></span><span style=display:flex><span>		<span style=color:#a6e22e>selected_city</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;市全体&#34;</span>, <span style=color:#75715e>// 選択されたデータ
+</span></span></span><span style=display:flex><span>		<span style=color:#a6e22e>label_data</span><span style=color:#f92672>:</span> Object.<span style=color:#a6e22e>keys</span>(<span style=color:#a6e22e>jinkou</span>.<span style=color:#a6e22e>jinkou_list</span>[<span style=color:#e6db74>&#34;市全体&#34;</span>]), <span style=color:#75715e>// 1999, 2000, ..., 2021
+</span></span></span><span style=display:flex><span>		<span style=color:#a6e22e>graph_data</span><span style=color:#f92672>:</span> Object.<span style=color:#a6e22e>values</span>(<span style=color:#a6e22e>jinkou</span>.<span style=color:#a6e22e>jinkou_list</span>[<span style=color:#e6db74>&#34;市全体&#34;</span>]) <span style=color:#75715e>// 63981, 65553, ..., 91652
+</span></span></span><span style=display:flex><span>    };
+</span></span><span style=display:flex><span>},
+</span></span><span style=display:flex><span><span style=color:#a6e22e>mounted</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>function</span>(){
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>ctx</span> <span style=color:#f92672>=</span> document.<span style=color:#a6e22e>getElementById</span>(<span style=color:#e6db74>&#39;myChart&#39;</span>).<span style=color:#a6e22e>getContext</span>(<span style=color:#e6db74>&#39;2d&#39;</span>);
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>myChart</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Chart</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>ctx</span>, {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>type</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;bar&#39;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>labels</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>label_data</span>,
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>datasets</span><span style=color:#f92672>:</span> [{
+</span></span><span style=display:flex><span>				<span style=color:#a6e22e>label</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>selected_city</span>, <span style=color:#75715e>// 選択されたデータ
+</span></span></span><span style=display:flex><span>                <span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>graph_data</span>
+</span></span><span style=display:flex><span>            }]
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    });
+</span></span><span style=display:flex><span>},  
+</span></span></code></pre></div><h3 id=実行結果-2>実行結果</h3><p><a href=https://gyazo.com/72faa233be0d6c6d4b8503c3666dc692><img src=https://i.gyazo.com/72faa233be0d6c6d4b8503c3666dc692.jpg alt="Image from Gyazo" width=400></a></p><h2 id=イベント処理>イベント処理</h2><p>最後にセレクトボックスの状態に応じてグラフを切り替えます．
 Vueで宣言された変数を監視し，値の更新を検知する<code>watch</code>プロパティを利用します．
-ここでは，<code>this.selected_city</code>を監視し，更新された値に応じて，グラフを再構築してから描画します．</p>
-<h3 id="javascript-4">JavaScript</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">watch</span><span style="color:#f92672">:</span>{
-    <span style="color:#a6e22e">selected_city</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(){
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">label_data</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">keys</span>(<span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>[<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">selected_city</span>]),
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">graph_data</span> <span style="color:#f92672">=</span> Object.<span style="color:#a6e22e">values</span>(<span style="color:#a6e22e">jinkou</span>.<span style="color:#a6e22e">jinkou_list</span>[<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">selected_city</span>])
-
-    <span style="color:#75715e">/* データの更新 */</span>
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span>.<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">labels</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">label_data</span>;
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span>.<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">datasets</span>.<span style="color:#a6e22e">label</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">selected_city</span>;
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span>.<span style="color:#a6e22e">data</span>.<span style="color:#a6e22e">datasets</span>.<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">dataset</span>) =&gt; {
-        <span style="color:#a6e22e">dataset</span>.<span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">graph_data</span>;
-    });
-
-    <span style="color:#75715e">/* グラフを描画 */</span>
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">myChart</span>.<span style="color:#a6e22e">update</span>();
-    }
-}
-</code></pre></div><h3 id="実行結果-3">実行結果</h3>
-<p>2011年に，赤池町の一部が天白区に編入，また，浅田町の一部が浅田平子となったため，人口が減少している．</p>
-<p><a href="https://gyazo.com/dc4d0ce93ee85ec3de7ce82a57878a21"><img src="https://i.gyazo.com/dc4d0ce93ee85ec3de7ce82a57878a21.jpg" alt="Image from Gyazo" width="400"/></a></p>
-<p><a href="https://gyazo.com/a8b5480d0dbffdc73633c933feb8e2f2"><img src="https://i.gyazo.com/a8b5480d0dbffdc73633c933feb8e2f2.jpg" alt="Image from Gyazo" width="400"/></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
-
-<p>アプリが完成したら，次の課題に挑戦してみよう！</p>
-<ul>
-<li>線グラフ（line）に変更する</li>
-<li>グラフの色（backgroundColor）を変更する</li>
-<li>他の<a href="https://www.city.nisshin.lg.jp/opendata/index.html">日進市のオープンデータ</a>を利用する</li>
-</ul>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  プロジェクトのソースコード
-</h1>
-
-<ul>
-<li><a href="https://github.com/naoto-github/graduation_preperation_5">GitHubレポジトリ</a></li>
-<li><a href="https://monaca.mobi/ja/directimport?pid=61f532d4e788854b1109e3d7">Monacaの公開URL</a></li>
-</ul>
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+ここでは，<code>this.selected_city</code>を監視し，更新された値に応じて，グラフを再構築してから描画します．</p><h3 id=javascript-4>JavaScript</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>watch</span><span style=color:#f92672>:</span>{
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>selected_city</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>function</span>(){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>label_data</span> <span style=color:#f92672>=</span> Object.<span style=color:#a6e22e>keys</span>(<span style=color:#a6e22e>jinkou</span>.<span style=color:#a6e22e>jinkou_list</span>[<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>selected_city</span>]),
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>graph_data</span> <span style=color:#f92672>=</span> Object.<span style=color:#a6e22e>values</span>(<span style=color:#a6e22e>jinkou</span>.<span style=color:#a6e22e>jinkou_list</span>[<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>selected_city</span>])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/* データの更新 */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>myChart</span>.<span style=color:#a6e22e>data</span>.<span style=color:#a6e22e>labels</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>label_data</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>myChart</span>.<span style=color:#a6e22e>data</span>.<span style=color:#a6e22e>datasets</span>.<span style=color:#a6e22e>label</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>selected_city</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>myChart</span>.<span style=color:#a6e22e>data</span>.<span style=color:#a6e22e>datasets</span>.<span style=color:#a6e22e>forEach</span>((<span style=color:#a6e22e>dataset</span>) =&gt; {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>dataset</span>.<span style=color:#a6e22e>data</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>graph_data</span>;
+</span></span><span style=display:flex><span>    });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>/* グラフを描画 */</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>myChart</span>.<span style=color:#a6e22e>update</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=実行結果-3>実行結果</h3><p>2011年に，赤池町の一部が天白区に編入，また，浅田町の一部が浅田平子となったため，人口が減少している．</p><p><a href=https://gyazo.com/dc4d0ce93ee85ec3de7ce82a57878a21><img src=https://i.gyazo.com/dc4d0ce93ee85ec3de7ce82a57878a21.jpg alt="Image from Gyazo" width=400></a></p><p><a href=https://gyazo.com/a8b5480d0dbffdc73633c933feb8e2f2><img src=https://i.gyazo.com/a8b5480d0dbffdc73633c933feb8e2f2.jpg alt="Image from Gyazo" width=400></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>アプリが完成したら，次の課題に挑戦してみよう！</p><ul><li>線グラフ（line）に変更する</li><li>グラフの色（backgroundColor）を変更する</li><li>他の<a href=https://www.city.nisshin.lg.jp/opendata/index.html>日進市のオープンデータ</a>を利用する</li></ul><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>プロジェクトのソースコード</h1><ul><li><a href=https://github.com/naoto-github/graduation_preperation_5>GitHubレポジトリ</a></li><li><a href="https://monaca.mobi/ja/directimport?pid=61f532d4e788854b1109e3d7">Monacaの公開URL</a></li></ul><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

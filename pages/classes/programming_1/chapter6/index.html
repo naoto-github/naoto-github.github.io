@@ -1,397 +1,206 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    イベント処理 | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>イベント処理 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="イベント処理"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/programming_1/chapter6/"><meta property="og:image" content="https://i.gyazo.com/73fb9ab1092cec0c9901e51b0d0abb61.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
 
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="イベント処理" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/programming_1/chapter6/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/73fb9ab1092cec0c9901e51b0d0abb61.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="スケッチの作成Processingを起動して，新規にスケッチを保存しましょう． メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます． ファイル名に「Project6」を入力し，[保存]をクリックしましょう． 保存先に「Project6」という名前のフォルダが作成されていることを確認してください．
-
-マウスイベントProcessingではマウスイベントを検出するために下記表の関数が用意されています． これらの関数内に，実行したい内容を記述することで，マウスイベントに対応した処理が可能になります． また，これらのイベントの結果を反映させるには，draw()関数の記述が必要なことに注意してください．
-   関数名 イベント     mouseMoved() マウスボタンを押さずに動かしたとき   mouseDragged() マウスボタンを押しながら動かしたとき   mousePressed() マウスボタンを押したとき   mouseReleased() マウスボタンを離したとき    ここでは，mouseMoved()関数を利用して，マウスの軌跡を描画してみましょう． ウィンドウ内のマウスの位置は変数 mouseX と mouseY で取得可能です． マウスの動きを検知したら，半径3の塗りつぶし円を描きます． 下記を参考にコードを入力したら，Runボタンをクリックしてください． マウスの動きに合わせて，軌跡が描かれることを確認してください．
- 
-次に，MousePressed()関数を利用して，マウスボタンを押したとき（クリックしたとき）に， 赤色の正方形を描画してみましょう． 下記を参考にコードを入力したら，Runボタンをクリックしてください． マウスの位置に合わせて，正方形が描かれることを確認してください．
- 
-今度は，mousePressed()関数とmouseDragged()関数を組み合わせてみましょう． マウスボタンを押した位置を中心座標として，マウスをドラッグして移動した距離を半径とした円を描きます． まず，変数xとyを宣言し，mousePressed()関数でマウスボタンを押した位置を記録します． 次に，ouseDragged()関数で，座標(x,y)からの距離をdist()関数で求め円を描きます （dist(x1, y1, x2, y2)関数は，座標(x1,y1)と座標（x2,y2）の距離を求めます）． 下記を参考にコードを入力したら，Runボタンをクリックしてください． マウスのドラッグ操作に合わせて，円が描かれることを確認してください．
- 
-キーボードイベントキーボードイベントを検出するために下記表の関数が用意されています． これらの関数内に，実行したい内容を記述することで，キーボードイベントに対応した処理が可能になります． また，これらのイベントの結果を反映させるには，draw()関数の記述が必要なことに注意してください．" />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="イベント処理" />
-
-
-
-  <meta name="twitter:description" content="スケッチの作成Processingを起動して，新規にスケッチを保存しましょう． メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます． ファイル名に「Project6」を入力し，[保存]をクリックしましょう． 保存先に「Project6」という名前のフォルダが作成されていることを確認してください．
-
-マウスイベントProcessingではマウスイベントを検出するために下記表の関数が用意されています． これらの関数内に，実行したい内容を記述することで，マウスイベントに対応した処理が可能になります． また，これらのイベントの結果を反映させるには，draw()関数の記述が必要なことに注意してください．
-   関数名 イベント     mouseMoved() マウスボタンを押さずに動かしたとき   mouseDragged() マウスボタンを押しながら動かしたとき   mousePressed() マウスボタンを押したとき   mouseReleased() マウスボタンを離したとき    ここでは，mouseMoved()関数を利用して，マウスの軌跡を描画してみましょう． ウィンドウ内のマウスの位置は変数 mouseX と mouseY で取得可能です． マウスの動きを検知したら，半径3の塗りつぶし円を描きます． 下記を参考にコードを入力したら，Runボタンをクリックしてください． マウスの動きに合わせて，軌跡が描かれることを確認してください．
- 
-次に，MousePressed()関数を利用して，マウスボタンを押したとき（クリックしたとき）に， 赤色の正方形を描画してみましょう． 下記を参考にコードを入力したら，Runボタンをクリックしてください． マウスの位置に合わせて，正方形が描かれることを確認してください．
- 
-今度は，mousePressed()関数とmouseDragged()関数を組み合わせてみましょう． マウスボタンを押した位置を中心座標として，マウスをドラッグして移動した距離を半径とした円を描きます． まず，変数xとyを宣言し，mousePressed()関数でマウスボタンを押した位置を記録します． 次に，ouseDragged()関数で，座標(x,y)からの距離をdist()関数で求め円を描きます （dist(x1, y1, x2, y2)関数は，座標(x1,y1)と座標（x2,y2）の距離を求めます）． 下記を参考にコードを入力したら，Runボタンをクリックしてください． マウスのドラッグ操作に合わせて，円が描かれることを確認してください．
- 
-キーボードイベントキーボードイベントを検出するために下記表の関数が用意されています． これらの関数内に，実行したい内容を記述することで，キーボードイベントに対応した処理が可能になります． また，これらのイベントの結果を反映させるには，draw()関数の記述が必要なことに注意してください．" />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/73fb9ab1092cec0c9901e51b0d0abb61.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">イベント処理</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p><a href="https://gyazo.com/73fb9ab1092cec0c9901e51b0d0abb61"><img src="https://i.gyazo.com/73fb9ab1092cec0c9901e51b0d0abb61.png" alt="https://gyazo.com/73fb9ab1092cec0c9901e51b0d0abb61"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   スケッチの作成
-</h1>
 
-<p>Processingを起動して，新規にスケッチを保存しましょう．
+
+Processingを起動して，新規にスケッチを保存しましょう．
 メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます．
 ファイル名に「Project6」を入力し，[保存]をクリックしましょう．
-保存先に「Project6」という名前のフォルダが作成されていることを確認してください．</p>
-<p><a href="https://gyazo.com/7b8735dd49cea9d6b2ba349d28cb6c1a"><img src="https://i.gyazo.com/7b8735dd49cea9d6b2ba349d28cb6c1a.png" alt="https://gyazo.com/7b8735dd49cea9d6b2ba349d28cb6c1a"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  マウスイベント
-</h1>
+保存先に「Project6」という名前のフォルダが作成されていることを確認してください．
 
-<p>Processingではマウスイベントを検出するために下記表の関数が用意されています．
+
+  マウスイベント
+
+
+Processingではマウスイベントを検出するために下記表の関数が用意されています．
 これらの関数内に，実行したい内容を記述することで，マウスイベントに対応した処理が可能になります．
-また，これらのイベントの結果を反映させるには，<code>draw()</code>関数の記述が必要なことに注意してください．</p>
-<table>
-<thead>
-<tr>
-<th>関数名</th>
-<th>イベント</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>mouseMoved()</td>
-<td>マウスボタンを押さずに動かしたとき</td>
-</tr>
-<tr>
-<td>mouseDragged()</td>
-<td>マウスボタンを押しながら動かしたとき</td>
-</tr>
-<tr>
-<td>mousePressed()</td>
-<td>マウスボタンを押したとき</td>
-</tr>
-<tr>
-<td>mouseReleased()</td>
-<td>マウスボタンを離したとき</td>
-</tr>
-</tbody>
-</table>
-<p>ここでは，<code>mouseMoved()</code>関数を利用して，マウスの軌跡を描画してみましょう．
+また，これらのイベントの結果を反映させるには，draw()関数の記述が必要なことに注意してください．
+
+  
+      
+          関数名
+          イベント
+      
+  
+  
+      
+          mouseMoved()
+          マウスボタンを押さずに動かしたとき
+      
+      
+          mouseDragged()
+          マウスボタンを押しながら動かしたとき
+      
+      
+          mousePressed()
+          マウスボタンを押したとき
+      
+      
+          mouseReleased()
+          マウスボタンを離したとき
+      
+  
+
+ここでは，mouseMoved()関数を利用して，マウスの軌跡を描画してみましょう．
+ウィンドウ内のマウスの位置は変数 mouseX と mouseY で取得可能です．
+マウスの動きを検知したら，半径3の塗りつぶし円を描きます．
+下記を参考にコードを入力したら，Runボタンをクリックしてください．
+マウスの動きに合わせて，軌跡が描かれることを確認してください．
+
+
+
+次に，MousePressed()関数を利用して，マウスボタンを押したとき（クリックしたとき）に，
+赤色の正方形を描画してみましょう．
+下記を参考にコードを入力したら，Runボタンをクリックしてください．
+マウスの位置に合わせて，正方形が描かれることを確認してください．
+
+
+
+今度は，mousePressed()関数とmouseDragged()関数を組み合わせてみましょう．
+マウスボタンを押した位置を中心座標として，マウスをドラッグして移動した距離を半径とした円を描きます．
+まず，変数xとyを宣言し，mousePressed()関数でマウスボタンを押した位置を記録します．
+次に，ouseDragged()関数で，座標(x,y)からの距離をdist()関数で求め円を描きます
+（dist(x1, y1, x2, y2)関数は，座標(x1,y1)と座標（x2,y2）の距離を求めます）．
+下記を参考にコードを入力したら，Runボタンをクリックしてください．
+マウスのドラッグ操作に合わせて，円が描かれることを確認してください．
+
+
+
+
+  キーボードイベント
+
+
+キーボードイベントを検出するために下記表の関数が用意されています．
+これらの関数内に，実行したい内容を記述することで，キーボードイベントに対応した処理が可能になります．
+また，これらのイベントの結果を反映させるには，draw()関数の記述が必要なことに注意してください．"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="イベント処理"><meta name=twitter:description content="
+
+  スケッチの作成
+
+
+Processingを起動して，新規にスケッチを保存しましょう．
+メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます．
+ファイル名に「Project6」を入力し，[保存]をクリックしましょう．
+保存先に「Project6」という名前のフォルダが作成されていることを確認してください．
+
+
+  マウスイベント
+
+
+Processingではマウスイベントを検出するために下記表の関数が用意されています．
+これらの関数内に，実行したい内容を記述することで，マウスイベントに対応した処理が可能になります．
+また，これらのイベントの結果を反映させるには，draw()関数の記述が必要なことに注意してください．
+
+  
+      
+          関数名
+          イベント
+      
+  
+  
+      
+          mouseMoved()
+          マウスボタンを押さずに動かしたとき
+      
+      
+          mouseDragged()
+          マウスボタンを押しながら動かしたとき
+      
+      
+          mousePressed()
+          マウスボタンを押したとき
+      
+      
+          mouseReleased()
+          マウスボタンを離したとき
+      
+  
+
+ここでは，mouseMoved()関数を利用して，マウスの軌跡を描画してみましょう．
+ウィンドウ内のマウスの位置は変数 mouseX と mouseY で取得可能です．
+マウスの動きを検知したら，半径3の塗りつぶし円を描きます．
+下記を参考にコードを入力したら，Runボタンをクリックしてください．
+マウスの動きに合わせて，軌跡が描かれることを確認してください．
+
+
+
+次に，MousePressed()関数を利用して，マウスボタンを押したとき（クリックしたとき）に，
+赤色の正方形を描画してみましょう．
+下記を参考にコードを入力したら，Runボタンをクリックしてください．
+マウスの位置に合わせて，正方形が描かれることを確認してください．
+
+
+
+今度は，mousePressed()関数とmouseDragged()関数を組み合わせてみましょう．
+マウスボタンを押した位置を中心座標として，マウスをドラッグして移動した距離を半径とした円を描きます．
+まず，変数xとyを宣言し，mousePressed()関数でマウスボタンを押した位置を記録します．
+次に，ouseDragged()関数で，座標(x,y)からの距離をdist()関数で求め円を描きます
+（dist(x1, y1, x2, y2)関数は，座標(x1,y1)と座標（x2,y2）の距離を求めます）．
+下記を参考にコードを入力したら，Runボタンをクリックしてください．
+マウスのドラッグ操作に合わせて，円が描かれることを確認してください．
+
+
+
+
+  キーボードイベント
+
+
+キーボードイベントを検出するために下記表の関数が用意されています．
+これらの関数内に，実行したい内容を記述することで，キーボードイベントに対応した処理が可能になります．
+また，これらのイベントの結果を反映させるには，draw()関数の記述が必要なことに注意してください．"><meta name=twitter:image content="https://i.gyazo.com/73fb9ab1092cec0c9901e51b0d0abb61.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>イベント処理</h1><div class=post-line></div><p><a href=https://gyazo.com/73fb9ab1092cec0c9901e51b0d0abb61><img src=https://i.gyazo.com/73fb9ab1092cec0c9901e51b0d0abb61.png alt=https://gyazo.com/73fb9ab1092cec0c9901e51b0d0abb61></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>スケッチの作成</h1><p>Processingを起動して，新規にスケッチを保存しましょう．
+メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます．
+ファイル名に「Project6」を入力し，[保存]をクリックしましょう．
+保存先に「Project6」という名前のフォルダが作成されていることを確認してください．</p><p><a href=https://gyazo.com/7b8735dd49cea9d6b2ba349d28cb6c1a><img src=https://i.gyazo.com/7b8735dd49cea9d6b2ba349d28cb6c1a.png alt=https://gyazo.com/7b8735dd49cea9d6b2ba349d28cb6c1a></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>マウスイベント</h1><p>Processingではマウスイベントを検出するために下記表の関数が用意されています．
+これらの関数内に，実行したい内容を記述することで，マウスイベントに対応した処理が可能になります．
+また，これらのイベントの結果を反映させるには，<code>draw()</code>関数の記述が必要なことに注意してください．</p><table><thead><tr><th>関数名</th><th>イベント</th></tr></thead><tbody><tr><td>mouseMoved()</td><td>マウスボタンを押さずに動かしたとき</td></tr><tr><td>mouseDragged()</td><td>マウスボタンを押しながら動かしたとき</td></tr><tr><td>mousePressed()</td><td>マウスボタンを押したとき</td></tr><tr><td>mouseReleased()</td><td>マウスボタンを離したとき</td></tr></tbody></table><p>ここでは，<code>mouseMoved()</code>関数を利用して，マウスの軌跡を描画してみましょう．
 ウィンドウ内のマウスの位置は変数 <strong>mouseX</strong> と <strong>mouseY</strong> で取得可能です．
 マウスの動きを検知したら，半径3の塗りつぶし円を描きます．
 下記を参考にコードを入力したら，Runボタンをクリックしてください．
-マウスの動きに合わせて，軌跡が描かれることを確認してください．</p>
-<script type="application/javascript" src="https://gist.github.com/naoto-github/2c36d458b1538e61eef3e42fd97c2445.js"></script>
-
-<p><a href="https://gyazo.com/230c11c58e0952c30ab00f49eab98b96"><img src="https://i.gyazo.com/230c11c58e0952c30ab00f49eab98b96.gif" alt="https://gyazo.com/230c11c58e0952c30ab00f49eab98b96"></a></p>
-<p>次に，<code>MousePressed()</code>関数を利用して，マウスボタンを押したとき（クリックしたとき）に，
+マウスの動きに合わせて，軌跡が描かれることを確認してください．</p><script src=https://gist.github.com/naoto-github/2c36d458b1538e61eef3e42fd97c2445.js></script><p><a href=https://gyazo.com/230c11c58e0952c30ab00f49eab98b96><img src=https://i.gyazo.com/230c11c58e0952c30ab00f49eab98b96.gif alt=https://gyazo.com/230c11c58e0952c30ab00f49eab98b96></a></p><p>次に，<code>MousePressed()</code>関数を利用して，マウスボタンを押したとき（クリックしたとき）に，
 赤色の正方形を描画してみましょう．
 下記を参考にコードを入力したら，Runボタンをクリックしてください．
-マウスの位置に合わせて，正方形が描かれることを確認してください．</p>
-<script type="application/javascript" src="https://gist.github.com/naoto-github/bc634cd362cdb0184a1542fa3583c724.js"></script>
-
-<p><a href="https://gyazo.com/aefda2437db3db9d642172639e0345b9"><img src="https://i.gyazo.com/aefda2437db3db9d642172639e0345b9.gif" alt="https://gyazo.com/aefda2437db3db9d642172639e0345b9"></a></p>
-<p>今度は，<code>mousePressed()</code>関数と<code>mouseDragged()</code>関数を組み合わせてみましょう．
+マウスの位置に合わせて，正方形が描かれることを確認してください．</p><script src=https://gist.github.com/naoto-github/bc634cd362cdb0184a1542fa3583c724.js></script><p><a href=https://gyazo.com/aefda2437db3db9d642172639e0345b9><img src=https://i.gyazo.com/aefda2437db3db9d642172639e0345b9.gif alt=https://gyazo.com/aefda2437db3db9d642172639e0345b9></a></p><p>今度は，<code>mousePressed()</code>関数と<code>mouseDragged()</code>関数を組み合わせてみましょう．
 マウスボタンを押した位置を中心座標として，マウスをドラッグして移動した距離を半径とした円を描きます．
 まず，変数xとyを宣言し，<code>mousePressed()</code>関数でマウスボタンを押した位置を記録します．
 次に，<code>ouseDragged()</code>関数で，座標(x,y)からの距離を<code>dist()</code>関数で求め円を描きます
 （<code>dist(x1, y1, x2, y2)</code>関数は，座標(x1,y1)と座標（x2,y2）の距離を求めます）．
 下記を参考にコードを入力したら，Runボタンをクリックしてください．
-マウスのドラッグ操作に合わせて，円が描かれることを確認してください．</p>
-<script type="application/javascript" src="https://gist.github.com/naoto-github/82932f08287adafcacee228ccefad2ec.js"></script>
-
-<p><a href="https://gyazo.com/818cca00127b5de7b1a4c6325ffd727c"><img src="https://i.gyazo.com/818cca00127b5de7b1a4c6325ffd727c.gif" alt="https://gyazo.com/818cca00127b5de7b1a4c6325ffd727c"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  キーボードイベント
-</h1>
-
-<p>キーボードイベントを検出するために下記表の関数が用意されています．
+マウスのドラッグ操作に合わせて，円が描かれることを確認してください．</p><script src=https://gist.github.com/naoto-github/82932f08287adafcacee228ccefad2ec.js></script><p><a href=https://gyazo.com/818cca00127b5de7b1a4c6325ffd727c><img src=https://i.gyazo.com/818cca00127b5de7b1a4c6325ffd727c.gif alt=https://gyazo.com/818cca00127b5de7b1a4c6325ffd727c></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>キーボードイベント</h1><p>キーボードイベントを検出するために下記表の関数が用意されています．
 これらの関数内に，実行したい内容を記述することで，キーボードイベントに対応した処理が可能になります．
-また，これらのイベントの結果を反映させるには，<code>draw()</code>関数の記述が必要なことに注意してください．</p>
-<table>
-<thead>
-<tr>
-<th>関数名</th>
-<th>イベント</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>keyPressed()</td>
-<td>キーを押したとき</td>
-</tr>
-<tr>
-<td>keyReleased()</td>
-<td>キーを離したとき</td>
-</tr>
-</tbody>
-</table>
-<p>ここでは，<code>keyPressed()</code>関数を利用して，キー「c」を押したら，
+また，これらのイベントの結果を反映させるには，<code>draw()</code>関数の記述が必要なことに注意してください．</p><table><thead><tr><th>関数名</th><th>イベント</th></tr></thead><tbody><tr><td>keyPressed()</td><td>キーを押したとき</td></tr><tr><td>keyReleased()</td><td>キーを離したとき</td></tr></tbody></table><p>ここでは，<code>keyPressed()</code>関数を利用して，キー「c」を押したら，
 画面をクリア（背景色で塗りつぶす）してみましょう．
 押されたキーは変数 <strong>key</strong> を参照することで調べることができます．
-if文を利用して，keyが「c」と一致するかどうかを判定しています（cは「'（シングルクォーテーションで括ることに注意）」）．
+if文を利用して，keyが「c」と一致するかどうかを判定しています（cは「&rsquo;（シングルクォーテーションで括ることに注意）」）．
 下記を参考にコードを入力したら，Runボタンをクリックしてください．
-「c」を押すと，画面がクリアされることを確認してください．</p>
-<script type="application/javascript" src="https://gist.github.com/naoto-github/e3134eb25893d98f1a37f0b6f9fd79ca.js"></script>
-
-<p><a href="https://gyazo.com/bbabfcc8f991ec1123c6d5ce3974cf46"><img src="https://i.gyazo.com/bbabfcc8f991ec1123c6d5ce3974cf46.gif" alt="https://gyazo.com/bbabfcc8f991ec1123c6d5ce3974cf46"></a></p>
-<p>次に，キー「e」を押したら円，また，キー「r」を押したら四角形を描いてみましょう．
+「c」を押すと，画面がクリアされることを確認してください．</p><script src=https://gist.github.com/naoto-github/e3134eb25893d98f1a37f0b6f9fd79ca.js></script><p><a href=https://gyazo.com/bbabfcc8f991ec1123c6d5ce3974cf46><img src=https://i.gyazo.com/bbabfcc8f991ec1123c6d5ce3974cf46.gif alt=https://gyazo.com/bbabfcc8f991ec1123c6d5ce3974cf46></a></p><p>次に，キー「e」を押したら円，また，キー「r」を押したら四角形を描いてみましょう．
 どちらの図形を描くかを判断するために変数 <strong>type</strong> を宣言します．
 押されたキーに応じてtypeには「0」または「1」を代入します．
-typeが「0」のときは<code>ellipse()</code>関数で円，typeが「1」のときは<code>rect()</code>関数で四角形を描きます．</p>
-<script type="application/javascript" src="https://gist.github.com/naoto-github/c19ec9745144dd5c95ab7ccf40b51ceb.js"></script>
-
-<p><a href="https://gyazo.com/00f68d4167a859ad86ff3ccd0154e957"><img src="https://i.gyazo.com/00f68d4167a859ad86ff3ccd0154e957.gif" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
-
-<p>ウィンドウの上部に赤色，緑色，青色のボタン（四角形）を配置し，クリックしたボタンの色で塗りつぶした円と四角形を描けるようにしなさい．
-ボタンの配置は，次のように<code>draw()</code>関数に記述すること．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">draw</span><span style="color:#f92672">(){</span>
-
-  fill<span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">#</span>ff0000<span style="color:#f92672">);</span> <span style="color:#75715e">// 赤色のボタン
-</span><span style="color:#75715e"></span>  rect<span style="color:#f92672">(</span>0<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> 50<span style="color:#f92672">,</span> 50<span style="color:#f92672">);</span>
-
-  fill<span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">#</span>00ff00<span style="color:#f92672">);</span> <span style="color:#75715e">// 緑色のボタン
-</span><span style="color:#75715e"></span>  rect<span style="color:#f92672">(</span>50<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> 50<span style="color:#f92672">,</span> 50<span style="color:#f92672">);</span>
-
-  fill<span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">#</span>0000ff<span style="color:#f92672">);</span> <span style="color:#75715e">// 青色のボタン
-</span><span style="color:#75715e"></span>  rect<span style="color:#f92672">(</span>100<span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> 50<span style="color:#f92672">,</span> 50<span style="color:#f92672">);</span>
-
-  fill<span style="color:#f92672">(</span><span style="color:#960050;background-color:#1e0010">#</span>ff0000<span style="color:#f92672">);</span> <span style="color:#75715e">// 標準の塗りつぶしの色
-</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
-</code></pre></div><p>課題が完成したら，作成したスケッチを <strong>ZIPアーカイブ</strong> 形式で保存します．
+typeが「0」のときは<code>ellipse()</code>関数で円，typeが「1」のときは<code>rect()</code>関数で四角形を描きます．</p><script src=https://gist.github.com/naoto-github/c19ec9745144dd5c95ab7ccf40b51ceb.js></script><p><a href=https://gyazo.com/00f68d4167a859ad86ff3ccd0154e957><img src=https://i.gyazo.com/00f68d4167a859ad86ff3ccd0154e957.gif alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>ウィンドウの上部に赤色，緑色，青色のボタン（四角形）を配置し，クリックしたボタンの色で塗りつぶした円と四角形を描けるようにしなさい．
+ボタンの配置は，次のように<code>draw()</code>関数に記述すること．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>draw</span>(){
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  fill(<span style=color:#960050;background-color:#1e0010>#</span>ff0000); <span style=color:#75715e>// 赤色のボタン</span>
+</span></span><span style=display:flex><span>  rect(0, 0, 50, 50);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  fill(<span style=color:#960050;background-color:#1e0010>#</span>00ff00); <span style=color:#75715e>// 緑色のボタン</span>
+</span></span><span style=display:flex><span>  rect(50, 0, 50, 50);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  fill(<span style=color:#960050;background-color:#1e0010>#</span>0000ff); <span style=color:#75715e>// 青色のボタン</span>
+</span></span><span style=display:flex><span>  rect(100, 0, 50, 50);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  fill(<span style=color:#960050;background-color:#1e0010>#</span>ff0000); <span style=color:#75715e>// 標準の塗りつぶしの色</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>課題が完成したら，作成したスケッチを <strong>ZIPアーカイブ</strong> 形式で保存します．
 ZIPアーカイブを作成するには，メニューから[ツール]-[スケッチをアーカイブ]をクリックして，「スケッチを名前を付けてアーカイブする」を開きます．
 保存するファイル名を確認した上で，[保存]をクリックします．
-保存先に「Project6-日付a.zip」というファイルが作成されていることを確認してください．</p>
-<p><a href="https://gyazo.com/6c08383d6399cfb1281dbaf1783f05de"><img src="https://i.gyazo.com/6c08383d6399cfb1281dbaf1783f05de.gif" alt="Image from Gyazo"></a></p>
-<!--
-「r」を押してから円を描くと赤色，「g」を押してから円を描くと緑色，「b」を押してから円を描くと青色，に塗りつぶされるように修正してください．
--->
-<!--
-[![https://gyazo.com/d6514a020887e8d611ad6a7e8195ea7a](https://i.gyazo.com/d6514a020887e8d611ad6a7e8195ea7a.gif)](https://gyazo.com/d6514a020887e8d611ad6a7e8195ea7a)
--->
-
-
-
-
-
-
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+保存先に「Project6-日付a.zip」というファイルが作成されていることを確認してください．</p><p><a href=https://gyazo.com/6c08383d6399cfb1281dbaf1783f05de><img src=https://i.gyazo.com/6c08383d6399cfb1281dbaf1783f05de.gif alt="Image from Gyazo"></a></p><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

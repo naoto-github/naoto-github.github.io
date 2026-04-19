@@ -1,594 +1,317 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    Vue.js③・コンポーネント | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Vue.js③・コンポーネント | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="Vue.js③・コンポーネント"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter10/"><meta property="og:image" content="https://i.gyazo.com/73bcf387fc116f6c1a9c6cbecb1cdd93.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content='
 
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="Vue.js③・コンポーネント" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter10/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/73bcf387fc116f6c1a9c6cbecb1cdd93.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="コンポーネントとはコンポーネント はHTMLを構成する部品のことです． Vue.jsでは，Vue.component()を使ってコンポーネントを定義します． コンポーネントには，複数のHTML要素をまとめたtemplateオプション，データバインディングのためのdataオプション，関数を定義するためのmethodsオプションなどを記述します． コンポーネントとして定義することで，コンポーネントの再利用が可能となり，プログラムの設計が簡単になります． また，propsオプションを利用することで，コンポーネントに任意のデータを渡すことが可能です． 今回は日進市の観光地を紹介するアプリを開発します． 観光地の情報や画像を表示するHTML要素をコンポーネントとして実装します．
-CodePenの準備CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter10」に設定しましょう．
-
-前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
-
-また，Vue.jsの基本構造も記述しておきます． Vueクラスのインスタンスには，el，data，methodsを指定します． Webアプリのタイトルと説明文も記載しておきましょう．
-&lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt; {{ title }} &lt;/h1&gt; &lt;p&gt; {{ description }} &lt;/p&gt; &lt;div&gt; // JavaScript let app = new Vue({ el: &#34;#app&#34;, data: { title: &#34;日進市観光アプリ&#34;, description: &#34;日進市の観光地を紹介するアプリです．&#34;, }, methods: { }, }) 
-コンポーネントの作成日進市の観光情報を表示するためのHTML要素を コンポーネント として定義します． コンポーネントを定義するには，Vue.component()を利用します． コンポーネントには名前を付けることが可能で，ここではpanel-componentに設定しています． コンポーネントには，templateオプションを記述します． templateオプションでは，テンプレート文字列を利用して，コンポーネントで表示するHTMLを記述します． ここでは，マスタッシュ記法を利用して，dataプロパティで定義したnameを表示しています． この他にも，dataオプション，methodsオプションなどを定義することができます． dataオプションで定義する変数は，returnを使って関数として定義する必要があることに注意してください（インスタンス間で変数の競合を避けるため）．" />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="Vue.js③・コンポーネント" />
-
-
-
-  <meta name="twitter:description" content="コンポーネントとはコンポーネント はHTMLを構成する部品のことです． Vue.jsでは，Vue.component()を使ってコンポーネントを定義します． コンポーネントには，複数のHTML要素をまとめたtemplateオプション，データバインディングのためのdataオプション，関数を定義するためのmethodsオプションなどを記述します． コンポーネントとして定義することで，コンポーネントの再利用が可能となり，プログラムの設計が簡単になります． また，propsオプションを利用することで，コンポーネントに任意のデータを渡すことが可能です． 今回は日進市の観光地を紹介するアプリを開発します． 観光地の情報や画像を表示するHTML要素をコンポーネントとして実装します．
-CodePenの準備CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter10」に設定しましょう．
-
-前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
-
-また，Vue.jsの基本構造も記述しておきます． Vueクラスのインスタンスには，el，data，methodsを指定します． Webアプリのタイトルと説明文も記載しておきましょう．
-&lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt; {{ title }} &lt;/h1&gt; &lt;p&gt; {{ description }} &lt;/p&gt; &lt;div&gt; // JavaScript let app = new Vue({ el: &#34;#app&#34;, data: { title: &#34;日進市観光アプリ&#34;, description: &#34;日進市の観光地を紹介するアプリです．&#34;, }, methods: { }, }) 
-コンポーネントの作成日進市の観光情報を表示するためのHTML要素を コンポーネント として定義します． コンポーネントを定義するには，Vue.component()を利用します． コンポーネントには名前を付けることが可能で，ここではpanel-componentに設定しています． コンポーネントには，templateオプションを記述します． templateオプションでは，テンプレート文字列を利用して，コンポーネントで表示するHTMLを記述します． ここでは，マスタッシュ記法を利用して，dataプロパティで定義したnameを表示しています． この他にも，dataオプション，methodsオプションなどを定義することができます． dataオプションで定義する変数は，returnを使って関数として定義する必要があることに注意してください（インスタンス間で変数の競合を避けるため）．" />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/73bcf387fc116f6c1a9c6cbecb1cdd93.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">Vue.js③・コンポーネント</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p><a href="https://gyazo.com/73bcf387fc116f6c1a9c6cbecb1cdd93"><img src="https://i.gyazo.com/73bcf387fc116f6c1a9c6cbecb1cdd93.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   コンポーネントとは
-</h1>
 
-<p><strong>コンポーネント</strong> はHTMLを構成する部品のことです．
+
+コンポーネント はHTMLを構成する部品のことです．
+Vue.jsでは，Vue.component()を使ってコンポーネントを定義します．
+コンポーネントには，複数のHTML要素をまとめたtemplateオプション，データバインディングのためのdataオプション，関数を定義するためのmethodsオプションなどを記述します．
+コンポーネントとして定義することで，コンポーネントの再利用が可能となり，プログラムの設計が簡単になります．
+また，propsオプションを利用することで，コンポーネントに任意のデータを渡すことが可能です．
+今回は日進市の観光地を紹介するアプリを開発します．
+観光地の情報や画像を表示するHTML要素をコンポーネントとして実装します．
+
+  CodePenの準備
+
+
+CodePenにアクセスして，Penを作成し，タイトルを設定しましょう．
+Penのタイトルは「Chapter10」に設定しましょう．
+
+前回と同様にVue.jsのライブラリをペンに追加してください．
+Vue.jsのバージョンは2.6.11を採用します．
+
+また，Vue.jsの基本構造も記述しておきます．
+Vueクラスのインスタンスには，el，data，methodsを指定します．
+Webアプリのタイトルと説明文も記載しておきましょう．
+<!-- HTML -->
+<div id="app">
+  <h1> {{ title }} </h1>
+  <p> {{ description }} </p>
+<div>
+// JavaScript
+let app = new Vue({
+  el: "#app",
+  data: {
+    title: "日進市観光アプリ",
+    description: "日進市の観光地を紹介するアプリです．",
+  },
+  methods: {
+  },
+})
+'><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="Vue.js③・コンポーネント"><meta name=twitter:description content='
+
+  コンポーネントとは
+
+
+コンポーネント はHTMLを構成する部品のことです．
+Vue.jsでは，Vue.component()を使ってコンポーネントを定義します．
+コンポーネントには，複数のHTML要素をまとめたtemplateオプション，データバインディングのためのdataオプション，関数を定義するためのmethodsオプションなどを記述します．
+コンポーネントとして定義することで，コンポーネントの再利用が可能となり，プログラムの設計が簡単になります．
+また，propsオプションを利用することで，コンポーネントに任意のデータを渡すことが可能です．
+今回は日進市の観光地を紹介するアプリを開発します．
+観光地の情報や画像を表示するHTML要素をコンポーネントとして実装します．
+
+  CodePenの準備
+
+
+CodePenにアクセスして，Penを作成し，タイトルを設定しましょう．
+Penのタイトルは「Chapter10」に設定しましょう．
+
+前回と同様にVue.jsのライブラリをペンに追加してください．
+Vue.jsのバージョンは2.6.11を採用します．
+
+また，Vue.jsの基本構造も記述しておきます．
+Vueクラスのインスタンスには，el，data，methodsを指定します．
+Webアプリのタイトルと説明文も記載しておきましょう．
+<!-- HTML -->
+<div id="app">
+  <h1> {{ title }} </h1>
+  <p> {{ description }} </p>
+<div>
+// JavaScript
+let app = new Vue({
+  el: "#app",
+  data: {
+    title: "日進市観光アプリ",
+    description: "日進市の観光地を紹介するアプリです．",
+  },
+  methods: {
+  },
+})
+'><meta name=twitter:image content="https://i.gyazo.com/73bcf387fc116f6c1a9c6cbecb1cdd93.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>Vue.js③・コンポーネント</h1><div class=post-line></div><p><a href=https://gyazo.com/73bcf387fc116f6c1a9c6cbecb1cdd93><img src=https://i.gyazo.com/73bcf387fc116f6c1a9c6cbecb1cdd93.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>コンポーネントとは</h1><p><strong>コンポーネント</strong> はHTMLを構成する部品のことです．
 Vue.jsでは，<code>Vue.component()</code>を使ってコンポーネントを定義します．
 コンポーネントには，複数のHTML要素をまとめた<code>template</code>オプション，データバインディングのための<code>data</code>オプション，関数を定義するための<code>methods</code>オプションなどを記述します．
 コンポーネントとして定義することで，コンポーネントの再利用が可能となり，プログラムの設計が簡単になります．
 また，<code>props</code>オプションを利用することで，コンポーネントに任意のデータを渡すことが可能です．
 今回は日進市の観光地を紹介するアプリを開発します．
-観光地の情報や画像を表示するHTML要素をコンポーネントとして実装します．</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  CodePenの準備
-</h1>
-
-<p><a href="https://codepen.io/">CodePen</a>にアクセスして，Penを作成し，タイトルを設定しましょう．
-Penのタイトルは「Chapter10」に設定しましょう．</p>
-<p><a href="https://gyazo.com/5fd4851129ac5a6e736c9530f5175fc1"><img src="https://i.gyazo.com/5fd4851129ac5a6e736c9530f5175fc1.png" alt="Image from Gyazo"></a></p>
-<p>前回と同様にVue.jsのライブラリをペンに追加してください．
-Vue.jsのバージョンは2.6.11を採用します．</p>
-<p><a href="https://gyazo.com/4c110f8aea709c2d73759fc193a9a7a3"><img src="https://i.gyazo.com/4c110f8aea709c2d73759fc193a9a7a3.png" alt="Image from Gyazo"></a></p>
-<p>また，Vue.jsの基本構造も記述しておきます．
+観光地の情報や画像を表示するHTML要素をコンポーネントとして実装します．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>CodePenの準備</h1><p><a href=https://codepen.io/>CodePen</a>にアクセスして，Penを作成し，タイトルを設定しましょう．
+Penのタイトルは「Chapter10」に設定しましょう．</p><p><a href=https://gyazo.com/5fd4851129ac5a6e736c9530f5175fc1><img src=https://i.gyazo.com/5fd4851129ac5a6e736c9530f5175fc1.png alt="Image from Gyazo"></a></p><p>前回と同様にVue.jsのライブラリをペンに追加してください．
+Vue.jsのバージョンは2.6.11を採用します．</p><p><a href=https://gyazo.com/4c110f8aea709c2d73759fc193a9a7a3><img src=https://i.gyazo.com/4c110f8aea709c2d73759fc193a9a7a3.png alt="Image from Gyazo"></a></p><p>また，Vue.jsの基本構造も記述しておきます．
 Vueクラスのインスタンスには，<code>el</code>，<code>data</code>，<code>methods</code>を指定します．
-Webアプリのタイトルと説明文も記載しておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
-&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
-&lt;<span style="color:#f92672">div</span>&gt;
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
-  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#app&#34;</span>,
-  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市観光アプリ&#34;</span>,
-    <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市の観光地を紹介するアプリです．&#34;</span>,
-  },
-  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
-  },
-})
-</code></pre></div><p><a href="https://gyazo.com/f92f2f1f6e75712a49c617e81a426e99"><img src="https://i.gyazo.com/f92f2f1f6e75712a49c617e81a426e99.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  コンポーネントの作成
-</h1>
-
-<p>日進市の観光情報を表示するためのHTML要素を <strong>コンポーネント</strong> として定義します．
+Webアプリのタイトルと説明文も記載しておきましょう．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!-- HTML --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;app&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>h1</span>&gt; {{ title }} &lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>p</span>&gt; {{ description }} &lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#75715e>// JavaScript
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>app</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Vue</span>({
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>el</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;#app&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;日進市観光アプリ&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>description</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;日進市の観光地を紹介するアプリです．&#34;</span>,
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>})
+</span></span></code></pre></div><p><a href=https://gyazo.com/f92f2f1f6e75712a49c617e81a426e99><img src=https://i.gyazo.com/f92f2f1f6e75712a49c617e81a426e99.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>コンポーネントの作成</h1><p>日進市の観光情報を表示するためのHTML要素を <strong>コンポーネント</strong> として定義します．
 コンポーネントを定義するには，<code>Vue.component()</code>を利用します．
 コンポーネントには名前を付けることが可能で，ここでは<code>panel-component</code>に設定しています．
 コンポーネントには，<code>template</code>オプションを記述します．
 <code>template</code>オプションでは，テンプレート文字列を利用して，コンポーネントで表示するHTMLを記述します．
 ここでは，マスタッシュ記法を利用して，<code>data</code>プロパティで定義した<code>name</code>を表示しています．
 この他にも，<code>data</code>オプション，<code>methods</code>オプションなどを定義することができます．
-<code>data</code>オプションで定義する変数は，<code>return</code>を使って関数として定義する必要があることに注意してください（インスタンス間で変数の競合を避けるため）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
-</span><span style="color:#75715e">// templateオプションはテンプレート文字列（``）を使って定義
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">Vue</span>.<span style="color:#a6e22e">component</span>(<span style="color:#e6db74">&#34;panel-component&#34;</span>, {
-  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">`
-</span><span style="color:#e6db74">    &lt;div class=&#34;panel&#34;&gt;　
-</span><span style="color:#e6db74">      &lt;h3&gt;{{ name }}&lt;/h3&gt;
-</span><span style="color:#e6db74">    &lt;/div&gt;
-</span><span style="color:#e6db74">  `</span>,
-  <span style="color:#a6e22e">data</span>(){
-    <span style="color:#66d9ef">return</span> {
-      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市立図書館&#34;</span>,
-    }
-  },
-})
-</code></pre></div><p>上記の<code>template</code>プロパティで記述した<code>div</code>タグを装飾するためのpanelクラスのCSSを記述します．
-幅（width），背景色（background），パディング（padding），マージン（margin），角丸（border-radius），中央寄せ（text-align）を設定しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#75715e">/* CSS */</span>
-.<span style="color:#a6e22e">panel</span>{
-  <span style="color:#66d9ef">width</span>: <span style="color:#ae81ff">300</span><span style="color:#66d9ef">px</span>;
-  <span style="color:#66d9ef">background</span>: <span style="color:#ae81ff">#DDFFDD</span>;
-  <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
-  <span style="color:#66d9ef">margin</span>: <span style="color:#ae81ff">10</span><span style="color:#66d9ef">px</span>;
-  <span style="color:#66d9ef">border-radius</span>: <span style="color:#ae81ff">20</span><span style="color:#66d9ef">px</span>;
-  <span style="color:#66d9ef">text-align</span>: <span style="color:#66d9ef">center</span>;
-}
-</code></pre></div><p>HTMLで上記で定義したコンポーネントを作成します．
+<code>data</code>オプションで定義する変数は，<code>return</code>を使って関数として定義する必要があることに注意してください（インスタンス間で変数の競合を避けるため）．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#75715e>// JavaScript
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// templateオプションはテンプレート文字列（``）を使って定義
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>Vue</span>.<span style=color:#a6e22e>component</span>(<span style=color:#e6db74>&#34;panel-component&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>template</span><span style=color:#f92672>:</span> <span style=color:#e6db74>`
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &lt;div class=&#34;panel&#34;&gt;　
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      &lt;h3&gt;{{ name }}&lt;/h3&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &lt;/div&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  `</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>data</span>(){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;日進市立図書館&#34;</span>,
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>})
+</span></span></code></pre></div><p>上記の<code>template</code>プロパティで記述した<code>div</code>タグを装飾するためのpanelクラスのCSSを記述します．
+幅（width），背景色（background），パディング（padding），マージン（margin），角丸（border-radius），中央寄せ（text-align）を設定しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-css data-lang=css><span style=display:flex><span><span style=color:#75715e>/* CSS */</span>
+</span></span><span style=display:flex><span>.<span style=color:#a6e22e>panel</span>{
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>width</span>: <span style=color:#ae81ff>300</span><span style=color:#66d9ef>px</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>background</span>: <span style=color:#ae81ff>#DDFFDD</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>padding</span>: <span style=color:#ae81ff>10</span><span style=color:#66d9ef>px</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>margin</span>: <span style=color:#ae81ff>10</span><span style=color:#66d9ef>px</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>border-radius</span>: <span style=color:#ae81ff>20</span><span style=color:#66d9ef>px</span>;
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>text-align</span>: <span style=color:#66d9ef>center</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>HTMLで上記で定義したコンポーネントを作成します．
 コンポーネントの名前である<code>panel-component</code>を要素名として記述するだけです．
-<code>template</code>プロパティで記述したHTML要素が表示されていることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
-&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
-
-  <span style="color:#75715e">&lt;!-- コンポーネントの作成 --&gt;</span>
-  &lt;<span style="color:#f92672">panel-component</span>&gt;&lt;/<span style="color:#f92672">panel-component</span>&gt;
-
-&lt;/<span style="color:#f92672">div</span>&gt;
-</code></pre></div><p><a href="https://gyazo.com/c1ff2f15a1711024725589ad2f592d0e"><img src="https://i.gyazo.com/c1ff2f15a1711024725589ad2f592d0e.png" alt="Image from Gyazo"></a></p>
-<p>観光地の名前を表す<code>name</code>だけでは寂しいので，観光地の写真<code>image</code>と，観光地の説明文<code>description</code>を追加します．
-観光地の写真は，<a href="https://openphoto.app/c/nisshin">日進市オープンデータミュージアム・画像データサイト</a>で提供されている画像を利用しました．
-画像を表示するためのimgタグでは，<code>v-bind</code>ディレクティブを利用して<code>src</code>属性を設定しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">Vue</span>.<span style="color:#a6e22e">component</span>(<span style="color:#e6db74">&#34;panel-component&#34;</span>, {
-  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">`
-</span><span style="color:#e6db74">    &lt;div class=&#34;panel&#34;&gt;　
-</span><span style="color:#e6db74">      &lt;h3&gt;{{ name }}&lt;/h3&gt;
-</span><span style="color:#e6db74">      &lt;p&gt;
-</span><span style="color:#e6db74">        &lt;img v-bind:src=&#34;image&#34; height=&#34;200px&#34;&gt;
-</span><span style="color:#e6db74">      &lt;/p&gt;
-</span><span style="color:#e6db74">      &lt;p&gt;{{ description }}&lt;/p&gt;
-</span><span style="color:#e6db74">    &lt;/div&gt;
-</span><span style="color:#e6db74">  `</span>,
-  <span style="color:#a6e22e">data</span>(){
-    <span style="color:#66d9ef">return</span>{
-      <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市立図書館&#34;</span>,
-      <span style="color:#a6e22e">image</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://assets.codepen.io/4660782/nissin-tosyokan.jpg&#34;</span>,
-      <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;2008年に岡田新一設計事務所の設計による現行館が開館した．&#34;</span>
-    }
-  },
-})
-</code></pre></div><p><a href="https://gyazo.com/b02847b475e0a4f36d5a7f09c967ab2d"><img src="https://i.gyazo.com/b02847b475e0a4f36d5a7f09c967ab2d.png" alt="Image from Gyazo"></a></p>
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
-  
-  <h3 style="color:#006600">
-    キーポイント
-  </h3>
-
-  <p>
-    
-<ul>
-<li>コンポーネントは<b>Vue.component()</b>で定義</li>
-<li>templateプロパティで記述したHTML要素が表示される</li>
-</ul>
-
-  </p>
-  
-</div>
-
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  propを利用したデータの引き渡し
-</h1>
-
-<p>コンポーネントとして定義することで，簡単に複数のコンポーネントを並べて表示することができます．
+<code>template</code>プロパティで記述したHTML要素が表示されていることがわかります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!-- HTML --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;app&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>h1</span>&gt; {{ title }} &lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>p</span>&gt; {{ description }} &lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e>&lt;!-- コンポーネントの作成 --&gt;</span>
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>panel-component</span>&gt;&lt;/<span style=color:#f92672>panel-component</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><p><a href=https://gyazo.com/c1ff2f15a1711024725589ad2f592d0e><img src=https://i.gyazo.com/c1ff2f15a1711024725589ad2f592d0e.png alt="Image from Gyazo"></a></p><p>観光地の名前を表す<code>name</code>だけでは寂しいので，観光地の写真<code>image</code>と，観光地の説明文<code>description</code>を追加します．
+観光地の写真は，<a href=https://openphoto.app/c/nisshin>日進市オープンデータミュージアム・画像データサイト</a>で提供されている画像を利用しました．
+画像を表示するためのimgタグでは，<code>v-bind</code>ディレクティブを利用して<code>src</code>属性を設定しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#75715e>// JavaScript
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>Vue</span>.<span style=color:#a6e22e>component</span>(<span style=color:#e6db74>&#34;panel-component&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>template</span><span style=color:#f92672>:</span> <span style=color:#e6db74>`
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &lt;div class=&#34;panel&#34;&gt;　
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      &lt;h3&gt;{{ name }}&lt;/h3&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      &lt;p&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &lt;img v-bind:src=&#34;image&#34; height=&#34;200px&#34;&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      &lt;/p&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      &lt;p&gt;{{ description }}&lt;/p&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &lt;/div&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  `</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>data</span>(){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span>{
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;日進市立図書館&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>image</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;https://assets.codepen.io/4660782/nissin-tosyokan.jpg&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>description</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;2008年に岡田新一設計事務所の設計による現行館が開館した．&#34;</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>})
+</span></span></code></pre></div><p><a href=https://gyazo.com/b02847b475e0a4f36d5a7f09c967ab2d><img src=https://i.gyazo.com/b02847b475e0a4f36d5a7f09c967ab2d.png alt="Image from Gyazo"></a></p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px;background:#dfd;color:#000"><h3 style=color:#060>キーポイント</h3><p><ul><li>コンポーネントは<b>Vue.component()</b>で定義</li><li>templateプロパティで記述したHTML要素が表示される</li></ul></p></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>propを利用したデータの引き渡し</h1><p>コンポーネントとして定義することで，簡単に複数のコンポーネントを並べて表示することができます．
 しかし，上記の方法では，<code>name</code>，<code>image</code>，<code>description</code>がコンポーネント内で定義されているため，全く同じ内容のコンポーネントが複数表示されるだけです．
-下記の例では，日進市立図書館のコンポーネントが2回表示されています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
-&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
-
-  <span style="color:#75715e">&lt;!-- 複数のコンポーネントを作成 --&gt;</span>
-  &lt;<span style="color:#f92672">panel-component</span>&gt;&lt;/<span style="color:#f92672">panel-component</span>&gt;
-  &lt;<span style="color:#f92672">panel-component</span>&gt;&lt;/<span style="color:#f92672">panel-component</span>&gt;
-
-&lt;/<span style="color:#f92672">div</span>&gt;
-</code></pre></div><p><a href="https://gyazo.com/27bf3ec0ccae70ef90f9db9891c2565c"><img src="https://i.gyazo.com/27bf3ec0ccae70ef90f9db9891c2565c.png" alt="Image from Gyazo"></a></p>
-<p>コンポーネントごとに異なる情報を保持させるには<code>props</code>オプションを利用します．
+下記の例では，日進市立図書館のコンポーネントが2回表示されています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!-- HTML --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;app&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>h1</span>&gt; {{ title }} &lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>p</span>&gt; {{ description }} &lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e>&lt;!-- 複数のコンポーネントを作成 --&gt;</span>
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>panel-component</span>&gt;&lt;/<span style=color:#f92672>panel-component</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>panel-component</span>&gt;&lt;/<span style=color:#f92672>panel-component</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><p><a href=https://gyazo.com/27bf3ec0ccae70ef90f9db9891c2565c><img src=https://i.gyazo.com/27bf3ec0ccae70ef90f9db9891c2565c.png alt="Image from Gyazo"></a></p><p>コンポーネントごとに異なる情報を保持させるには<code>props</code>オプションを利用します．
 <code>props</code>で定義された変数は，<code>panel-component</code>タグの属性として，コンポーネントに渡すことができます．
 このとき，<code>{変数名: 型}</code>のように，変数の型を合わせて記述することが奨励されています．
-今回はいずれも文字列<code>String</code>として，変数のデータを受け取ります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">Vue</span>.<span style="color:#a6e22e">component</span>(<span style="color:#e6db74">&#34;panel-component&#34;</span>, {
-  <span style="color:#a6e22e">template</span><span style="color:#f92672">:</span> <span style="color:#e6db74">`
-</span><span style="color:#e6db74">    &lt;div class=&#34;panel&#34;&gt;　
-</span><span style="color:#e6db74">      &lt;h3&gt;{{ name }}&lt;/h3&gt;
-</span><span style="color:#e6db74">      &lt;p&gt;
-</span><span style="color:#e6db74">        &lt;img v-bind:src=&#34;image&#34; height=&#34;200px&#34;&gt;
-</span><span style="color:#e6db74">      &lt;/p&gt;
-</span><span style="color:#e6db74">      &lt;p&gt;{{ description }}&lt;/p&gt;
-</span><span style="color:#e6db74">    &lt;/div&gt;
-</span><span style="color:#e6db74">  `</span>,
-  <span style="color:#75715e">// propsで変数を受け取る
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">props</span><span style="color:#f92672">:</span> {
-    <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> String,
-    <span style="color:#a6e22e">image</span><span style="color:#f92672">:</span> String,
-    <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span> String,
-  }
-})
-</code></pre></div><p>HTMLでは，上記の<code>props</code>で定義した3つの変数を，属性として設定します．
-このように，コンポーネントは共通の枠組みで，異なる情報を表示させることができます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
-&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
-
-  <span style="color:#75715e">&lt;!-- 異なる情報を保持するコンポーネントを作成 --&gt;</span>
-  &lt;<span style="color:#f92672">panel-component</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;日進市立図書館&#34;</span> <span style="color:#a6e22e">image</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://assets.codepen.io/4660782/nissin-tosyokan.jpg&#34;</span> <span style="color:#a6e22e">description</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2008年に岡田新一設計事務所の設計による現行館が開館した．&#34;</span>&gt;&lt;/<span style="color:#f92672">panel-component</span>&gt;
-  &lt;<span style="color:#f92672">panel-component</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;五色園&#34;</span> <span style="color:#a6e22e">image</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://assets.codepen.io/4660782/goshikien.jpg&#34;</span> <span style="color:#a6e22e">description</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;日本で唯一の宗教公園．浄土真宗系単立寺院の大安寺がある．&#34;</span>&gt;&lt;/<span style="color:#f92672">panel-component</span>&gt;
-&lt;/<span style="color:#f92672">div</span>&gt;
-</code></pre></div><p><a href="https://gyazo.com/94001aa6dee5ff57899fb003fcf1b41e"><img src="https://i.gyazo.com/94001aa6dee5ff57899fb003fcf1b41e.png" alt="Image from Gyazo"></a></p>
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
-  
-  <h3 style="color:#006600">
-    キーポイント
-  </h3>
-
-  <p>
-    
-<ul>
-<li>コンポーネントで受け取りたい変数は<b>props</b>オプションで宣言</li>
-<li>HTMLタグの属性としてコンポーネントに変数のデータを渡す</li>
-</ul>
-
-  </p>
-  
-</div>
-
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  繰り返しを利用したコンポーネントの作成
-</h1>
-
-<p>配列の要素を繰り返して取り出すことが可能な<code>v-for</code>ディレクティブを利用して，
-複数のコンポーネントを定義してみましょう．</p>
-<p>まずは，<code>Vue</code>クラスの<code>data</code>プロパティに<code>panels</code>を定義し，3箇所の観光情報（日進市立図書館，五色園，岩崎城）を配列として代入します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">panels</span> <span style="color:#f92672">=</span> [
-  {
-    <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市立図書館&#34;</span>,
-    <span style="color:#e6db74">&#34;image&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://assets.codepen.io/4660782/nissin-tosyokan.jpg&#34;</span>,
-    <span style="color:#e6db74">&#34;description&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;2008年に岡田新一設計事務所の設計による現行館が開館した．&#34;</span>
-  },
-  {
-    <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;五色園&#34;</span>,
-    <span style="color:#e6db74">&#34;image&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://assets.codepen.io/4660782/goshikien.jpg&#34;</span>,
-    <span style="color:#e6db74">&#34;description&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日本で唯一の宗教公園．浄土真宗系単立寺院の大安寺がある．&#34;</span>
-  },
-  {
-    <span style="color:#e6db74">&#34;name&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;岩崎城&#34;</span>,
-    <span style="color:#e6db74">&#34;image&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;https://assets.codepen.io/4660782/iwasaki.jpg&#34;</span>,
-    <span style="color:#e6db74">&#34;description&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;岩崎城は日進市の戦国時代の様子を今に伝える貴重な城址．&#34;</span>
-  }
-]
-
-<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
-  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#app&#34;</span>,
-  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市観光アプリ&#34;</span>,
-    <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市の観光地を紹介するアプリです．&#34;</span>,
-    <span style="color:#a6e22e">panels</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">panels</span>,
-  },
-  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
-  },
-}
-</code></pre></div><p>HTMLでは，<code>v-for</code>ディレクティブを利用して，配列<code>panels</code>から要素<code>panel</code>を取り出し，
+今回はいずれも文字列<code>String</code>として，変数のデータを受け取ります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#75715e>// JavaScript
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>Vue</span>.<span style=color:#a6e22e>component</span>(<span style=color:#e6db74>&#34;panel-component&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>template</span><span style=color:#f92672>:</span> <span style=color:#e6db74>`
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &lt;div class=&#34;panel&#34;&gt;　
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      &lt;h3&gt;{{ name }}&lt;/h3&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      &lt;p&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>        &lt;img v-bind:src=&#34;image&#34; height=&#34;200px&#34;&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      &lt;/p&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>      &lt;p&gt;{{ description }}&lt;/p&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>    &lt;/div&gt;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>  `</span>,
+</span></span><span style=display:flex><span>  <span style=color:#75715e>// propsで変数を受け取る
+</span></span></span><span style=display:flex><span>  <span style=color:#a6e22e>props</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> String,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>image</span><span style=color:#f92672>:</span> String,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>description</span><span style=color:#f92672>:</span> String,
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>})
+</span></span></code></pre></div><p>HTMLでは，上記の<code>props</code>で定義した3つの変数を，属性として設定します．
+このように，コンポーネントは共通の枠組みで，異なる情報を表示させることができます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!-- HTML --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;app&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>h1</span>&gt; {{ title }} &lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>p</span>&gt; {{ description }} &lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e>&lt;!-- 異なる情報を保持するコンポーネントを作成 --&gt;</span>
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>panel-component</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;日進市立図書館&#34;</span> <span style=color:#a6e22e>image</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://assets.codepen.io/4660782/nissin-tosyokan.jpg&#34;</span> <span style=color:#a6e22e>description</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;2008年に岡田新一設計事務所の設計による現行館が開館した．&#34;</span>&gt;&lt;/<span style=color:#f92672>panel-component</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>panel-component</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;五色園&#34;</span> <span style=color:#a6e22e>image</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://assets.codepen.io/4660782/goshikien.jpg&#34;</span> <span style=color:#a6e22e>description</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;日本で唯一の宗教公園．浄土真宗系単立寺院の大安寺がある．&#34;</span>&gt;&lt;/<span style=color:#f92672>panel-component</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><p><a href=https://gyazo.com/94001aa6dee5ff57899fb003fcf1b41e><img src=https://i.gyazo.com/94001aa6dee5ff57899fb003fcf1b41e.png alt="Image from Gyazo"></a></p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px;background:#dfd;color:#000"><h3 style=color:#060>キーポイント</h3><p><ul><li>コンポーネントで受け取りたい変数は<b>props</b>オプションで宣言</li><li>HTMLタグの属性としてコンポーネントに変数のデータを渡す</li></ul></p></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>繰り返しを利用したコンポーネントの作成</h1><p>配列の要素を繰り返して取り出すことが可能な<code>v-for</code>ディレクティブを利用して，
+複数のコンポーネントを定義してみましょう．</p><p>まずは，<code>Vue</code>クラスの<code>data</code>プロパティに<code>panels</code>を定義し，3箇所の観光情報（日進市立図書館，五色園，岩崎城）を配列として代入します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#75715e>// JavaScript
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>panels</span> <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;name&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;日進市立図書館&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;image&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;https://assets.codepen.io/4660782/nissin-tosyokan.jpg&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;description&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;2008年に岡田新一設計事務所の設計による現行館が開館した．&#34;</span>
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;name&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;五色園&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;image&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;https://assets.codepen.io/4660782/goshikien.jpg&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;description&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;日本で唯一の宗教公園．浄土真宗系単立寺院の大安寺がある．&#34;</span>
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;name&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;岩崎城&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;image&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;https://assets.codepen.io/4660782/iwasaki.jpg&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;description&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;岩崎城は日進市の戦国時代の様子を今に伝える貴重な城址．&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>app</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Vue</span>({
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>el</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;#app&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;日進市観光アプリ&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>description</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;日進市の観光地を紹介するアプリです．&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>panels</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>panels</span>,
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>HTMLでは，<code>v-for</code>ディレクティブを利用して，配列<code>panels</code>から要素<code>panel</code>を取り出し，
 コンポーネントに，<code>panel.name</code>，<code>panel.image</code>，<code>panel.description</code>を属性として渡しています．
 ここで<code>display:flex</code>は，子要素を横並びで表示するためのCSSです．
-この結果，3箇所の観光情報（日進市立図書館，五色園，岩崎城）が横並びで表示されます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
-&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
-
-  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display:flex&#34;</span>&gt;
-    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">v-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(panel, index) in panels&#34;</span>&gt;
-      &lt;<span style="color:#f92672">panel-component</span> <span style="color:#a6e22e">v-bind:name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panel.name&#34;</span> <span style="color:#a6e22e">v-bind:image</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panel.image&#34;</span> <span style="color:#a6e22e">v-bind:description</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panel.description&#34;</span>&gt;&lt;/<span style="color:#f92672">panel-component</span>&gt;
-    &lt;/<span style="color:#f92672">div</span>&gt;
-  &lt;/<span style="color:#f92672">div</span>&gt;
-&lt;/<span style="color:#f92672">div</span>&gt;
-</code></pre></div><p><a href="https://gyazo.com/c518aa549c567a5b1cfb48cc2f28bf1d"><img src="https://i.gyazo.com/c518aa549c567a5b1cfb48cc2f28bf1d.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  フォントアイコンを利用したページャー
-</h1>
-
-<p><strong>ページャー</strong> とはウェブページのページを切り替える機能のことを指します．
+この結果，3箇所の観光情報（日進市立図書館，五色園，岩崎城）が横並びで表示されます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!-- HTML --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;app&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>h1</span>&gt; {{ title }} &lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>p</span>&gt; {{ description }} &lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;display:flex&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>v-for</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;(panel, index) in panels&#34;</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>panel-component</span> <span style=color:#a6e22e>v-bind:name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;panel.name&#34;</span> <span style=color:#a6e22e>v-bind:image</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;panel.image&#34;</span> <span style=color:#a6e22e>v-bind:description</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;panel.description&#34;</span>&gt;&lt;/<span style=color:#f92672>panel-component</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><p><a href=https://gyazo.com/c518aa549c567a5b1cfb48cc2f28bf1d><img src=https://i.gyazo.com/c518aa549c567a5b1cfb48cc2f28bf1d.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>フォントアイコンを利用したページャー</h1><p><strong>ページャー</strong> とはウェブページのページを切り替える機能のことを指します．
 ここでは，全ての観光情報を表示するのではなく，1ページに1箇所の観光情報を表示させることにします．
-また，ボタンをクリックすることで，ページが切り替わるように実装します．</p>
-<p>ページャーのアイコンには，ウェブフォントを利用することにします．
-ここでは，<a href="https://fontawesome.com/">Font Awesome</a>というサービスを利用します．
-Pen SettingのCSSで，Font AwesomeのスタイルシートをCDNを追加しておきます．</p>
-<p><a href="https://gyazo.com/d593ab6bc7b459881f913dfc1d6b4d9c"><img src="https://i.gyazo.com/d593ab6bc7b459881f913dfc1d6b4d9c.png" alt="Image from Gyazo"></a></p>
-<p>表示するページを制限するために，<code>v-ifディレクティブ</code>を利用して，
-panelsの要素番号が<code>number</code>と<code>number+1</code>であるときだけ表示させています．</p>
-<p>また，ページャーの役割を担う2種類のボタンを設置しています．
-ボタンには，<a href="https://fontawesome.com/">Font Awesome</a>を利用して，矢印形のフォントアイコン（<code>fa-arrow-left</code>と<code>fa-arrow-right</code>）を表示しています．
-また，<code>v-on</code>ディレクティブを利用して，ボタンのクリック時に<code>prevPanel()</code>と<code>nextPanel()</code>が呼び出されるように設定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
-&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt; {{ title }} &lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">p</span>&gt; {{ description }} &lt;/<span style="color:#f92672">p</span>&gt;
-
-  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">style</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;display:flex&#34;</span>&gt;
-    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">v-for</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(panel, index) in panels&#34;</span>&gt;
-	  <span style="color:#75715e">&lt;!-- v-ifディレクティブを利用して表示する観光情報を制限 --&gt;</span>
-      &lt;<span style="color:#f92672">panel-component</span> <span style="color:#a6e22e">v-if</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(index == number)&#34;</span> <span style="color:#a6e22e">v-bind:name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panel.name&#34;</span> <span style="color:#a6e22e">v-bind:image</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panel.image&#34;</span> <span style="color:#a6e22e">v-bind:description</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panel.description&#34;</span>&gt;&lt;/<span style="color:#f92672">panel-component</span>&gt;
-    &lt;/<span style="color:#f92672">div</span>&gt;
-  &lt;/<span style="color:#f92672">div</span>&gt;
-
-  &lt;<span style="color:#f92672">div</span>&gt;
-	<span style="color:#75715e">&lt;!-- フォントアイコンを利用したページャー --&gt;</span>
-    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">v-on:click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;prevPanel()&#34;</span>&gt;&lt;<span style="color:#f92672">i</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;fas fa-arrow-left&#34;</span>&gt;&lt;/<span style="color:#f92672">i</span>&gt;&lt;/<span style="color:#f92672">button</span>&gt;
-    {{ number+1 }}
-    &lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">v-on:click</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;nextPanel()&#34;</span>&gt;&lt;<span style="color:#f92672">i</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;fas fa-arrow-right&#34;</span>&gt;&lt;/<span style="color:#f92672">i</span>&gt;&lt;/<span style="color:#f92672">button</span>&gt;
-  &lt;/<span style="color:#f92672">div</span>&gt;
-&lt;/<span style="color:#f92672">div</span>&gt;
-</code></pre></div><p>JavaScriptでは，<code>data</code>オプションで<code>number</code>を宣言します．
-また，<code>methods</code>オプションで，<code>nextPanel()</code>と<code>prevPanel()</code>を定義します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">app</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
-  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;#app&#34;</span>,
-  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市観光アプリ&#34;</span>,
-    <span style="color:#a6e22e">description</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;日進市の観光地を紹介するアプリです．&#34;</span>,
-    <span style="color:#a6e22e">panels</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">panels</span>,
-    <span style="color:#a6e22e">number</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>, <span style="color:#75715e">// 表示するpanelsの要素番号
-</span><span style="color:#75715e"></span>  },
-  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
-    <span style="color:#a6e22e">nextPanel</span>(){
-	  <span style="color:#75715e">// 番号を1だけ増やす
-</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">number</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">number</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-    },
-    <span style="color:#a6e22e">prevPanel</span>(){
-	  <span style="color:#75715e">// 番号を1だけ減らす
-</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">number</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">number</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
-    }
-  },
-})
-</code></pre></div><p><a href="https://gyazo.com/2f91829352d0bc27df2a1bad9878c2fd"><img src="https://i.gyazo.com/2f91829352d0bc27df2a1bad9878c2fd.gif" alt="Image from Gyazo"></a></p>
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
-  
-  <h3 style="color:#006600">
-    キーポイント
-  </h3>
-
-  <p>
-    
-<ul>
-<li>フォントアイコンは<b>Font Awesome</b>が便利</li>
-</ul>
-
-  </p>
-  
-</div>
-
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  アプリの確認
-</h1>
-
-<p class="codepen" data-height="700" data-theme-id="dark" data-default-tab="result" data-slug-hash="abqdKdE" data-user="nmukai" data-token="e37feedb73b1c94605b31deaaf5a57ba" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-  <span>See the Pen <a href="https://codepen.io/nmukai/pen/abqdKdE/e37feedb73b1c94605b31deaaf5a57ba">
-  Chapter10 課題</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
-  on <a href="https://codepen.io">CodePen</a>.</span>
-</p>
-<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
-
-<p>観光地のURLの情報を追加し，クリックしたら対応するページに遷移するリンクを設置してください．</p>
-<p><a href="https://gyazo.com/504543ec77cbd05ddc65685ac747c604"><img src="https://i.gyazo.com/504543ec77cbd05ddc65685ac747c604.png" alt="Image from Gyazo"></a></p>
-<p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
-提出方法は初回の<a href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/">Webアプリの開発</a>を参考にしてください．</p>
-
-
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+また，ボタンをクリックすることで，ページが切り替わるように実装します．</p><p>ページャーのアイコンには，ウェブフォントを利用することにします．
+ここでは，<a href=https://fontawesome.com/>Font Awesome</a>というサービスを利用します．
+Pen SettingのCSSで，Font AwesomeのスタイルシートをCDNを追加しておきます．</p><p><a href=https://gyazo.com/d593ab6bc7b459881f913dfc1d6b4d9c><img src=https://i.gyazo.com/d593ab6bc7b459881f913dfc1d6b4d9c.png alt="Image from Gyazo"></a></p><p>表示するページを制限するために，<code>v-ifディレクティブ</code>を利用して，
+panelsの要素番号が<code>number</code>と<code>number+1</code>であるときだけ表示させています．</p><p>また，ページャーの役割を担う2種類のボタンを設置しています．
+ボタンには，<a href=https://fontawesome.com/>Font Awesome</a>を利用して，矢印形のフォントアイコン（<code>fa-arrow-left</code>と<code>fa-arrow-right</code>）を表示しています．
+また，<code>v-on</code>ディレクティブを利用して，ボタンのクリック時に<code>prevPanel()</code>と<code>nextPanel()</code>が呼び出されるように設定します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!-- HTML --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;app&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>h1</span>&gt; {{ title }} &lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>p</span>&gt; {{ description }} &lt;/<span style=color:#f92672>p</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>style</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;display:flex&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>v-for</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;(panel, index) in panels&#34;</span>&gt;
+</span></span><span style=display:flex><span>	  <span style=color:#75715e>&lt;!-- v-ifディレクティブを利用して表示する観光情報を制限 --&gt;</span>
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>panel-component</span> <span style=color:#a6e22e>v-if</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;(index == number)&#34;</span> <span style=color:#a6e22e>v-bind:name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;panel.name&#34;</span> <span style=color:#a6e22e>v-bind:image</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;panel.image&#34;</span> <span style=color:#a6e22e>v-bind:description</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;panel.description&#34;</span>&gt;&lt;/<span style=color:#f92672>panel-component</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>	<span style=color:#75715e>&lt;!-- フォントアイコンを利用したページャー --&gt;</span>
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>v-on:click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;prevPanel()&#34;</span>&gt;&lt;<span style=color:#f92672>i</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;fas fa-arrow-left&#34;</span>&gt;&lt;/<span style=color:#f92672>i</span>&gt;&lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>    {{ number+1 }}
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>button</span> <span style=color:#a6e22e>v-on:click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;nextPanel()&#34;</span>&gt;&lt;<span style=color:#f92672>i</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;fas fa-arrow-right&#34;</span>&gt;&lt;/<span style=color:#f92672>i</span>&gt;&lt;/<span style=color:#f92672>button</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><p>JavaScriptでは，<code>data</code>オプションで<code>number</code>を宣言します．
+また，<code>methods</code>オプションで，<code>nextPanel()</code>と<code>prevPanel()</code>を定義します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#75715e>// JavaScript
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>app</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Vue</span>({
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>el</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;#app&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;日進市観光アプリ&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>description</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;日進市の観光地を紹介するアプリです．&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>panels</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>panels</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>number</span><span style=color:#f92672>:</span> <span style=color:#ae81ff>0</span>, <span style=color:#75715e>// 表示するpanelsの要素番号
+</span></span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>nextPanel</span>(){
+</span></span><span style=display:flex><span>	  <span style=color:#75715e>// 番号を1だけ増やす
+</span></span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>number</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>number</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>prevPanel</span>(){
+</span></span><span style=display:flex><span>	  <span style=color:#75715e>// 番号を1だけ減らす
+</span></span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>number</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>number</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>})
+</span></span></code></pre></div><p><a href=https://gyazo.com/2f91829352d0bc27df2a1bad9878c2fd><img src=https://i.gyazo.com/2f91829352d0bc27df2a1bad9878c2fd.gif alt="Image from Gyazo"></a></p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px;background:#dfd;color:#000"><h3 style=color:#060>キーポイント</h3><p><ul><li>フォントアイコンは<b>Font Awesome</b>が便利</li></ul></p></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>アプリの確認</h1><p class=codepen data-height=700 data-theme-id=dark data-default-tab=result data-slug-hash=abqdKdE data-user=nmukai data-token=e37feedb73b1c94605b31deaaf5a57ba style="height:300px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:2px solid;margin:1em 0;padding:1em"><span>See the Pen <a href=https://codepen.io/nmukai/pen/abqdKdE/e37feedb73b1c94605b31deaaf5a57ba>Chapter10 課題</a> by Naoto Mukai (<a href=https://codepen.io/nmukai>@nmukai</a>)
+on <a href=https://codepen.io>CodePen</a>.</span></p><script async src=https://cpwebassets.codepen.io/assets/embed/ei.js></script><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>観光地のURLの情報を追加し，クリックしたら対応するページに遷移するリンクを設置してください．</p><p><a href=https://gyazo.com/504543ec77cbd05ddc65685ac747c604><img src=https://i.gyazo.com/504543ec77cbd05ddc65685ac747c604.png alt="Image from Gyazo"></a></p><p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
+提出方法は初回の<a href=https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/>Webアプリの開発</a>を参考にしてください．</p><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

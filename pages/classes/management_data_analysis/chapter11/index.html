@@ -1,512 +1,296 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    回帰分析①・単回帰 | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>回帰分析①・単回帰 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
-
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="回帰分析①・単回帰" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter11/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="回帰分析回帰 とは，連続値の変数$y$を，変数$x$を用いたモデル（関数）で表現することを意味します． このとき，変数$x$を 説明変数 ，変数$y$を 目的変数（被説明変数） と呼び， 説明変数と目的関数の関係性を明らかにすることが回帰分析の目的となります． 回帰分析には 単回帰分析 と 重回帰分析 の2種類があります． 単回帰分析は説明変数$x$が1つの変数で表される場合です． 一方，重回帰分析は説明変数$x$が複数の変数で構成される場合です． 今回は単回帰分析に着目します．
-$$ y = f(x) $$
-説明変数と目的変数のデータに基づいて， 適切な回帰モデルを導出することで，事象の傾向を把握し，未来を予測することが可能となります． 例えば，変数$x$を身長，変数$y$を体重とした回帰分析を考えます． 次の表はe-Statで公開されている1歳から8歳までの男性の身長と体重の平均です．
-   年齢 身長$x$ 体重$y$     1 79.7 10.4   2 88.6 12.6   3 96.0 14.2   4 101.2 15.4   5 110.0 18.2   6 115.6 20.4   7 122.0 24.2   8 127." />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="回帰分析①・単回帰" />
-
-
-
-  <meta name="twitter:description" content="回帰分析回帰 とは，連続値の変数$y$を，変数$x$を用いたモデル（関数）で表現することを意味します． このとき，変数$x$を 説明変数 ，変数$y$を 目的変数（被説明変数） と呼び， 説明変数と目的関数の関係性を明らかにすることが回帰分析の目的となります． 回帰分析には 単回帰分析 と 重回帰分析 の2種類があります． 単回帰分析は説明変数$x$が1つの変数で表される場合です． 一方，重回帰分析は説明変数$x$が複数の変数で構成される場合です． 今回は単回帰分析に着目します．
-$$ y = f(x) $$
-説明変数と目的変数のデータに基づいて， 適切な回帰モデルを導出することで，事象の傾向を把握し，未来を予測することが可能となります． 例えば，変数$x$を身長，変数$y$を体重とした回帰分析を考えます． 次の表はe-Statで公開されている1歳から8歳までの男性の身長と体重の平均です．
-   年齢 身長$x$ 体重$y$     1 79.7 10.4   2 88.6 12.6   3 96.0 14.2   4 101.2 15.4   5 110.0 18.2   6 115.6 20.4   7 122.0 24.2   8 127." />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">回帰分析①・単回帰</h1>
-<div class="post-line"></div>
-    
-    
-
-    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="回帰分析①・単回帰"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter11/"><meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
   回帰分析
-</h1>
 
-<p><strong>回帰</strong> とは，連続値の変数$y$を，変数$x$を用いたモデル（関数）で表現することを意味します．
+
+回帰 とは，連続値の変数$y$を，変数$x$を用いたモデル（関数）で表現することを意味します．
+このとき，変数$x$を 説明変数 ，変数$y$を 目的変数（被説明変数） と呼び，
+説明変数と目的関数の関係性を明らかにすることが回帰分析の目的となります．
+回帰分析には 単回帰分析 と 重回帰分析 の2種類があります．
+単回帰分析は説明変数$x$が1つの変数で表される場合です．
+一方，重回帰分析は説明変数$x$が複数の変数で構成される場合です．
+今回は単回帰分析に着目します．
+$$
+y = f(x)
+$$
+説明変数と目的変数のデータに基づいて，
+適切な回帰モデルを導出することで，事象の傾向を把握し，未来を予測することが可能となります．
+例えば，変数$x$を身長，変数$y$を体重とした回帰分析を考えます．
+次の表はe-Statで公開されている1歳から8歳までの男性の身長と体重の平均です．
+
+  
+      
+          年齢
+          身長$x$
+          体重$y$
+      
+  
+  
+      
+          1
+          79.7
+          10.4
+      
+      
+          2
+          88.6
+          12.6
+      
+      
+          3
+          96.0
+          14.2
+      
+      
+          4
+          101.2
+          15.4
+      
+      
+          5
+          110.0
+          18.2
+      
+      
+          6
+          115.6
+          20.4
+      
+      
+          7
+          122.0
+          24.2
+      
+      
+          8
+          127.8
+          26.6
+      
+  
+
+上記のデータを基に導出した1次式の回帰モデルは次の式で表されます．
+この1次式で表される直線は，身長と体重の関係を適切に表現できているように思われます．
+$$
+y = 0.33 \times x - 17.44
+$$"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="回帰分析①・単回帰"><meta name=twitter:description content="
+  回帰分析
+
+
+回帰 とは，連続値の変数$y$を，変数$x$を用いたモデル（関数）で表現することを意味します．
+このとき，変数$x$を 説明変数 ，変数$y$を 目的変数（被説明変数） と呼び，
+説明変数と目的関数の関係性を明らかにすることが回帰分析の目的となります．
+回帰分析には 単回帰分析 と 重回帰分析 の2種類があります．
+単回帰分析は説明変数$x$が1つの変数で表される場合です．
+一方，重回帰分析は説明変数$x$が複数の変数で構成される場合です．
+今回は単回帰分析に着目します．
+$$
+y = f(x)
+$$
+説明変数と目的変数のデータに基づいて，
+適切な回帰モデルを導出することで，事象の傾向を把握し，未来を予測することが可能となります．
+例えば，変数$x$を身長，変数$y$を体重とした回帰分析を考えます．
+次の表はe-Statで公開されている1歳から8歳までの男性の身長と体重の平均です．
+
+  
+      
+          年齢
+          身長$x$
+          体重$y$
+      
+  
+  
+      
+          1
+          79.7
+          10.4
+      
+      
+          2
+          88.6
+          12.6
+      
+      
+          3
+          96.0
+          14.2
+      
+      
+          4
+          101.2
+          15.4
+      
+      
+          5
+          110.0
+          18.2
+      
+      
+          6
+          115.6
+          20.4
+      
+      
+          7
+          122.0
+          24.2
+      
+      
+          8
+          127.8
+          26.6
+      
+  
+
+上記のデータを基に導出した1次式の回帰モデルは次の式で表されます．
+この1次式で表される直線は，身長と体重の関係を適切に表現できているように思われます．
+$$
+y = 0.33 \times x - 17.44
+$$"><meta name=twitter:image content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>回帰分析①・単回帰</h1><div class=post-line></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>回帰分析</h1><p><strong>回帰</strong> とは，連続値の変数$y$を，変数$x$を用いたモデル（関数）で表現することを意味します．
 このとき，変数$x$を <strong>説明変数</strong> ，変数$y$を <strong>目的変数（被説明変数）</strong> と呼び，
 説明変数と目的関数の関係性を明らかにすることが回帰分析の目的となります．
 回帰分析には <strong>単回帰分析</strong> と <strong>重回帰分析</strong> の2種類があります．
 単回帰分析は説明変数$x$が1つの変数で表される場合です．
 一方，重回帰分析は説明変数$x$が複数の変数で構成される場合です．
-今回は単回帰分析に着目します．</p>
-<p>$$
+今回は単回帰分析に着目します．</p><p>$$
 y = f(x)
-$$</p>
-<p>説明変数と目的変数のデータに基づいて，
+$$</p><p>説明変数と目的変数のデータに基づいて，
 適切な回帰モデルを導出することで，事象の傾向を把握し，未来を予測することが可能となります．
 例えば，変数$x$を身長，変数$y$を体重とした回帰分析を考えます．
-次の表は<a href="https://www.e-stat.go.jp/">e-Stat</a>で公開されている1歳から8歳までの男性の身長と体重の平均です．</p>
-<table>
-<thead>
-<tr>
-<th>年齢</th>
-<th>身長$x$</th>
-<th>体重$y$</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>79.7</td>
-<td>10.4</td>
-</tr>
-<tr>
-<td>2</td>
-<td>88.6</td>
-<td>12.6</td>
-</tr>
-<tr>
-<td>3</td>
-<td>96.0</td>
-<td>14.2</td>
-</tr>
-<tr>
-<td>4</td>
-<td>101.2</td>
-<td>15.4</td>
-</tr>
-<tr>
-<td>5</td>
-<td>110.0</td>
-<td>18.2</td>
-</tr>
-<tr>
-<td>6</td>
-<td>115.6</td>
-<td>20.4</td>
-</tr>
-<tr>
-<td>7</td>
-<td>122.0</td>
-<td>24.2</td>
-</tr>
-<tr>
-<td>8</td>
-<td>127.8</td>
-<td>26.6</td>
-</tr>
-</tbody>
-</table>
-<p>上記のデータを基に導出した1次式の回帰モデルは次の式で表されます．
-この1次式で表される直線は，身長と体重の関係を適切に表現できているように思われます．</p>
-<p>$$
+次の表は<a href=https://www.e-stat.go.jp/>e-Stat</a>で公開されている1歳から8歳までの男性の身長と体重の平均です．</p><table><thead><tr><th>年齢</th><th>身長$x$</th><th>体重$y$</th></tr></thead><tbody><tr><td>1</td><td>79.7</td><td>10.4</td></tr><tr><td>2</td><td>88.6</td><td>12.6</td></tr><tr><td>3</td><td>96.0</td><td>14.2</td></tr><tr><td>4</td><td>101.2</td><td>15.4</td></tr><tr><td>5</td><td>110.0</td><td>18.2</td></tr><tr><td>6</td><td>115.6</td><td>20.4</td></tr><tr><td>7</td><td>122.0</td><td>24.2</td></tr><tr><td>8</td><td>127.8</td><td>26.6</td></tr></tbody></table><p>上記のデータを基に導出した1次式の回帰モデルは次の式で表されます．
+この1次式で表される直線は，身長と体重の関係を適切に表現できているように思われます．</p><p>$$
 y = 0.33 \times x - 17.44
-$$</p>
-<p><a href="https://gyazo.com/de7e063c9ced56fc095a264632919803"><img src="https://i.gyazo.com/de7e063c9ced56fc095a264632919803.png" alt="Image from Gyazo"></a></p>
-<p>では，上記の回帰モデルを導出するにはどうすれば良いでしょうか．
+$$</p><p><a href=https://gyazo.com/de7e063c9ced56fc095a264632919803><img src=https://i.gyazo.com/de7e063c9ced56fc095a264632919803.png alt="Image from Gyazo"></a></p><p>では，上記の回帰モデルを導出するにはどうすれば良いでしょうか．
 ここでは， <strong>最小二乗法</strong> を採用してみましょう．
 最小二乗法では，観測された変数$y$と，回帰モデルで算出された値$f(x)$との残差（誤差）の2乗を最小化することで，
 回帰モデルの適切な係数を導出する手法です．
 1次式の回帰モデルを次のように定義します．
-ここで，$w_0$と$w_1$が回帰モデルの係数であり，$w_1$が傾き，$w_0$が切片を表します．</p>
-<p>$$
+ここで，$w_0$と$w_1$が回帰モデルの係数であり，$w_1$が傾き，$w_0$が切片を表します．</p><p>$$
 f(x) = w_1 \times x + w_0
-$$</p>
-<p>このとき，残差の2乗は <strong>残差平方和$E$</strong> と呼ばれ，次の式で計算できます．
-この残差平方和を最小化するような$w_0$と$w_1$を求めれば良いということになります．</p>
-<p>$$
+$$</p><p>このとき，残差の2乗は <strong>残差平方和$E$</strong> と呼ばれ，次の式で計算できます．
+この残差平方和を最小化するような$w_0$と$w_1$を求めれば良いということになります．</p><p>$$
 E = \sum_{i=0}^{n-1}(y_i - f(x_i))^2 = \sum_{i=0}^{n-1}(y_i - (w_1 \cdot x_i + w_0))^2
-$$</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  データセット
-</h1>
-
-<p>ここでは，次のCSV形式のデータセットを利用します．
+$$</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>データセット</h1><p>ここでは，次のCSV形式のデータセットを利用します．
 下記のURLからファイルをダウンロードしてください．
-気温$x$とアイスクリームの売上$y$のデータです．</p>
-<p><a href="https://mukai-lab.info/classes/management_data_analysis/dataset10.csv"><i class="fas fa-cloud-download-alt"></i> dataset10.csv</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">気温,売上
-24,1706
-23,1195
-29,3741
-14,146
-4,698
-9,459
-24,1671
-5,616
-4,588
-15,353
-（省略）
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Excelで単回帰分析
-</h1>
-
-<p>Excelのソルバーを利用して，アイスクリームの売上$y$と気温$x$の関係を回帰分析しましょう．
+気温$x$とアイスクリームの売上$y$のデータです．</p><p><a href=https://mukai-lab.info/classes/management_data_analysis/dataset10.csv><i class="fas fa-cloud-download-alt"></i> dataset10.csv</a></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>気温,売上
+</span></span><span style=display:flex><span>24,1706
+</span></span><span style=display:flex><span>23,1195
+</span></span><span style=display:flex><span>29,3741
+</span></span><span style=display:flex><span>14,146
+</span></span><span style=display:flex><span>4,698
+</span></span><span style=display:flex><span>9,459
+</span></span><span style=display:flex><span>24,1671
+</span></span><span style=display:flex><span>5,616
+</span></span><span style=display:flex><span>4,588
+</span></span><span style=display:flex><span>15,353
+</span></span><span style=display:flex><span>（省略）
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Excelで単回帰分析</h1><p>Excelのソルバーを利用して，アイスクリームの売上$y$と気温$x$の関係を回帰分析しましょう．
 ダウンロードしたファイルをExcelで開いてください．
-回帰モデルは次の1次式を採用します．</p>
-<p>$$
+回帰モデルは次の1次式を採用します．</p><p>$$
 f(x) = w_1 \times x + w_0
-$$</p>
-<h2 id="変数">変数</h2>
-<p>$G3$と$G4$に変数$w_0$と$w_1$を入力します．
-初期状態では，$w_0=1$と$w_1=2$に設定しましょう．</p>
-<p><a href="https://gyazo.com/e43c836a2cf342d1697ebc28f14b1bf0"><img src="https://i.gyazo.com/e43c836a2cf342d1697ebc28f14b1bf0.png" alt="Image from Gyazo"></a></p>
-<h2 id="回帰モデル">回帰モデル</h2>
-<p>C列に回帰モデル$f(x)$を計算しましょう．
+$$</p><h2 id=変数>変数</h2><p>$G3$と$G4$に変数$w_0$と$w_1$を入力します．
+初期状態では，$w_0=1$と$w_1=2$に設定しましょう．</p><p><a href=https://gyazo.com/e43c836a2cf342d1697ebc28f14b1bf0><img src=https://i.gyazo.com/e43c836a2cf342d1697ebc28f14b1bf0.png alt="Image from Gyazo"></a></p><h2 id=回帰モデル>回帰モデル</h2><p>C列に回帰モデル$f(x)$を計算しましょう．
 例えば$C2$には次の式を入力します．
-このとき，$G2$と$G3$は絶対参照にします．</p>
-<p>$$
+このとき，$G2$と$G3$は絶対参照にします．</p><p>$$
 =$G$2+$G$3*A2
-$$</p>
-<h2 id="残差の2乗">残差の2乗</h2>
-<p>D列に残差の2乗$(y-f(x))^2$を計算しましょう．
-例えば，$D2$には次の式を入力します．</p>
-<p>$$
+$$</p><h2 id=残差の2乗>残差の2乗</h2><p>D列に残差の2乗$(y-f(x))^2$を計算しましょう．
+例えば，$D2$には次の式を入力します．</p><p>$$
 =(B2-C2)^2
-$$</p>
-<p><a href="https://gyazo.com/d719eba9380d99313cbc55b028e66e7f"><img src="https://i.gyazo.com/d719eba9380d99313cbc55b028e66e7f.png" alt="Image from Gyazo"></a></p>
-<h2 id="目的関数">目的関数</h2>
-<p>$G5$に目的関数となる残差平方和を計算します．
+$$</p><p><a href=https://gyazo.com/d719eba9380d99313cbc55b028e66e7f><img src=https://i.gyazo.com/d719eba9380d99313cbc55b028e66e7f.png alt="Image from Gyazo"></a></p><h2 id=目的関数>目的関数</h2><p>$G5$に目的関数となる残差平方和を計算します．
 この値を最小化することが目的となります．
-初期状態の残差平方和は43,615,578です．</p>
-<p>$$
+初期状態の残差平方和は43,615,578です．</p><p>$$
 =SUM(D2:D31)
-$$</p>
-<p><a href="https://gyazo.com/0bf788ab51695c3203f7441cd5caa5fa"><img src="https://i.gyazo.com/0bf788ab51695c3203f7441cd5caa5fa.png" alt="Image from Gyazo"></a></p>
-<h2 id="ソルバー">ソルバー</h2>
-<p>データ・タブからソルバーを選択します．
+$$</p><p><a href=https://gyazo.com/0bf788ab51695c3203f7441cd5caa5fa><img src=https://i.gyazo.com/0bf788ab51695c3203f7441cd5caa5fa.png alt="Image from Gyazo"></a></p><h2 id=ソルバー>ソルバー</h2><p>データ・タブからソルバーを選択します．
 ソルバーのパラメータに，目的セル（目的関数），変数セル（変数）を設定します．
-解決方法はGRG非線形を選択します．</p>
-<p><a href="https://gyazo.com/1791d839fa3d18e61c1470b5caee5ce6"><img src="https://i.gyazo.com/1791d839fa3d18e61c1470b5caee5ce6.png" alt="Image from Gyazo"></a></p>
-<p>最後に解決ボタンをクリックすると，次の結果が導出されます．
-$w_0=-229.2$，$w_1=75.8$となり，残差平方和は12,799,069です．</p>
-<p><a href="https://gyazo.com/424b861db9ee3a8ca813b5c64fcd71e6"><img src="https://i.gyazo.com/424b861db9ee3a8ca813b5c64fcd71e6.png" alt="Image from Gyazo"></a></p>
-<h2 id="グラフの作成">グラフの作成</h2>
-<p>売上と回帰モデル$f(x)$を折れ線グラフにしましょう．
+解決方法はGRG非線形を選択します．</p><p><a href=https://gyazo.com/1791d839fa3d18e61c1470b5caee5ce6><img src=https://i.gyazo.com/1791d839fa3d18e61c1470b5caee5ce6.png alt="Image from Gyazo"></a></p><p>最後に解決ボタンをクリックすると，次の結果が導出されます．
+$w_0=-229.2$，$w_1=75.8$となり，残差平方和は12,799,069です．</p><p><a href=https://gyazo.com/424b861db9ee3a8ca813b5c64fcd71e6><img src=https://i.gyazo.com/424b861db9ee3a8ca813b5c64fcd71e6.png alt="Image from Gyazo"></a></p><h2 id=グラフの作成>グラフの作成</h2><p>売上と回帰モデル$f(x)$を折れ線グラフにしましょう．
 このとき，$f(x)$の方はマーカーではなく線で表示することにします．
 算出された回帰モデルは，おおまかに全体の傾向を近似していることがわかります．
-後述のPythonでは，直線を表す1次式ではなく，2次式，3次式を用いることで，より誤差の小さな回帰モデルを導出します．</p>
-<p><a href="https://gyazo.com/ebf0f4f0309f77b5ab86909636786bb7"><img src="https://i.gyazo.com/ebf0f4f0309f77b5ab86909636786bb7.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Pythonで単回帰分析
-</h1>
-
-<p>Pythonを利用して，アイスクリームの売上$y$と気温$x$の関係を回帰分析しましょう．
+後述のPythonでは，直線を表す1次式ではなく，2次式，3次式を用いることで，より誤差の小さな回帰モデルを導出します．</p><p><a href=https://gyazo.com/ebf0f4f0309f77b5ab86909636786bb7><img src=https://i.gyazo.com/ebf0f4f0309f77b5ab86909636786bb7.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Pythonで単回帰分析</h1><p>Pythonを利用して，アイスクリームの売上$y$と気温$x$の関係を回帰分析しましょう．
 Jupyter Labを起動して，<strong>Python 3</strong>のノートブックを開きます．
 ノートブックの名前は <strong>chapter11.ipynb</strong> とします．
-<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>, <code>SciPy</code>などのライブラリをインポートしておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">import</span> japanize_matplotlib
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize
-</code></pre></div><h2 id="データセットの読込">データセットの読込</h2>
-<p><code>read_csv</code>関数でデータセットを読み込みます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;dataset10.csv&#34;</span>)
-display(df)
-</code></pre></div><p><a href="https://gyazo.com/b4c8a603dc86facfeabf22b85e4ce6e3"><img src="https://i.gyazo.com/b4c8a603dc86facfeabf22b85e4ce6e3.png" alt="Image from Gyazo"></a></p>
-<p>データを散布図で確認してみましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>plot<span style="color:#f92672">.</span>scatter(x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;気温&#34;</span>, y<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;売上&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/b77a66a27de87f8eac0ea6b0791393ea"><img src="https://i.gyazo.com/b77a66a27de87f8eac0ea6b0791393ea.png" alt="Image from Gyazo"></a></p>
-<h2 id="回帰モデル1次式">回帰モデル（1次式）</h2>
-<p>1次式の回帰モデルを利用します．</p>
-<p>$$
+<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>, <code>SciPy</code>などのライブラリをインポートしておきましょう．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> japanize_matplotlib
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> scipy.optimize <span style=color:#f92672>import</span> minimize
+</span></span></code></pre></div><h2 id=データセットの読込>データセットの読込</h2><p><code>read_csv</code>関数でデータセットを読み込みます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(<span style=color:#e6db74>&#34;dataset10.csv&#34;</span>)
+</span></span><span style=display:flex><span>display(df)
+</span></span></code></pre></div><p><a href=https://gyazo.com/b4c8a603dc86facfeabf22b85e4ce6e3><img src=https://i.gyazo.com/b4c8a603dc86facfeabf22b85e4ce6e3.png alt="Image from Gyazo"></a></p><p>データを散布図で確認してみましょう．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df<span style=color:#f92672>.</span>plot<span style=color:#f92672>.</span>scatter(x<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;気温&#34;</span>, y<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;売上&#34;</span>)
+</span></span></code></pre></div><p><a href=https://gyazo.com/b77a66a27de87f8eac0ea6b0791393ea><img src=https://i.gyazo.com/b77a66a27de87f8eac0ea6b0791393ea.png alt="Image from Gyazo"></a></p><h2 id=回帰モデル1次式>回帰モデル（1次式）</h2><p>1次式の回帰モデルを利用します．</p><p>$$
 f(x) = w_1 \times x + w_0
-$$</p>
-<p>回帰式$f(x)$を次のように定義します．
-引数の$w$は回帰式の係数を表しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 回帰式（1次式）</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(w, x):
-    y <span style="color:#f92672">=</span> w[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span>  w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x
-    <span style="color:#66d9ef">return</span> y
-</code></pre></div><p>$w_0=1$，$w_1=2$として，$f(x)$を計算してみます．
-例えば，$x=24$のとき，$f(x)=49$になります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
-fx(w, df[<span style="color:#e6db74">&#34;気温&#34;</span>])
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">0     49
-1     47
-2     59
-3     29
-4      9
-...省略...
-</code></pre></div><p>残差平方和$E$を次のように定義します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 残差平方和（RSS： Residual Sum of Squares）</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rss</span>(w, x, y):
-    r <span style="color:#f92672">=</span> (y <span style="color:#f92672">-</span> fx(w, x))<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
-    <span style="color:#66d9ef">return</span> r<span style="color:#f92672">.</span>sum()
-</code></pre></div><p>$w_0=1$，$w_1=2$として，残差平方和$E$を計算すると，$E=43615578$になります．
-この値はExcelで計算した値と一致しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
-rss(w, df[<span style="color:#e6db74">&#34;気温&#34;</span>], df[<span style="color:#e6db74">&#34;売上&#34;</span>])
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">43615578
-</code></pre></div><p><code>minimize</code>関数を利用して，残差平方和$E$を最小化するような$w$を求めます．
-この結果，$w_0=-229.2$，$w_1=75.8$となり，Excelの算出結果と一致しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>])
-result <span style="color:#f92672">=</span> minimize(rss, w, args<span style="color:#f92672">=</span>(df[<span style="color:#e6db74">&#34;気温&#34;</span>], df[<span style="color:#e6db74">&#34;売上&#34;</span>]), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Powell&#34;</span>)
-<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[-229.17387211   75.79448188]
-</code></pre></div><p>回帰モデル$f(x)$を折れ線グラフで可視化します．
-全体の傾向を直線で表していることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">30</span>)
-plt<span style="color:#f92672">.</span>plot(x, fx(result<span style="color:#f92672">.</span>x, x), c<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;red&#34;</span>)
-plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#34;気温&#34;</span>], df[<span style="color:#e6db74">&#34;売上&#34;</span>])
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;気温&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;売上&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/7ae424702dc930f7314db3ed120a6d8a"><img src="https://i.gyazo.com/7ae424702dc930f7314db3ed120a6d8a.png" alt="Image from Gyazo"></a></p>
-<h2 id="回帰モデル2次式">回帰モデル（2次式）</h2>
-<p>2次式の回帰モデルを利用します．</p>
-<p>$$
+$$</p><p>回帰式$f(x)$を次のように定義します．
+引数の$w$は回帰式の係数を表しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 回帰式（1次式）</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>fx</span>(w, x):
+</span></span><span style=display:flex><span>    y <span style=color:#f92672>=</span> w[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>+</span>  w[<span style=color:#ae81ff>1</span>] <span style=color:#f92672>*</span> x
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> y
+</span></span></code></pre></div><p>$w_0=1$，$w_1=2$として，$f(x)$を計算してみます．
+例えば，$x=24$のとき，$f(x)=49$になります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>w <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>])
+</span></span><span style=display:flex><span>fx(w, df[<span style=color:#e6db74>&#34;気温&#34;</span>])
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>0     49
+</span></span><span style=display:flex><span>1     47
+</span></span><span style=display:flex><span>2     59
+</span></span><span style=display:flex><span>3     29
+</span></span><span style=display:flex><span>4      9
+</span></span><span style=display:flex><span>...省略...
+</span></span></code></pre></div><p>残差平方和$E$を次のように定義します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 残差平方和（RSS： Residual Sum of Squares）</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>rss</span>(w, x, y):
+</span></span><span style=display:flex><span>    r <span style=color:#f92672>=</span> (y <span style=color:#f92672>-</span> fx(w, x))<span style=color:#f92672>**</span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> r<span style=color:#f92672>.</span>sum()
+</span></span></code></pre></div><p>$w_0=1$，$w_1=2$として，残差平方和$E$を計算すると，$E=43615578$になります．
+この値はExcelで計算した値と一致しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>w <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>])
+</span></span><span style=display:flex><span>rss(w, df[<span style=color:#e6db74>&#34;気温&#34;</span>], df[<span style=color:#e6db74>&#34;売上&#34;</span>])
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>43615578
+</span></span></code></pre></div><p><code>minimize</code>関数を利用して，残差平方和$E$を最小化するような$w$を求めます．
+この結果，$w_0=-229.2$，$w_1=75.8$となり，Excelの算出結果と一致しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>w <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>])
+</span></span><span style=display:flex><span>result <span style=color:#f92672>=</span> minimize(rss, w, args<span style=color:#f92672>=</span>(df[<span style=color:#e6db74>&#34;気温&#34;</span>], df[<span style=color:#e6db74>&#34;売上&#34;</span>]), method<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Powell&#34;</span>)
+</span></span><span style=display:flex><span>print(result<span style=color:#f92672>.</span>x)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>[-229.17387211   75.79448188]
+</span></span></code></pre></div><p>回帰モデル$f(x)$を折れ線グラフで可視化します．
+全体の傾向を直線で表していることが分かります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>x <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>arange(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>30</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>plot(x, fx(result<span style=color:#f92672>.</span>x, x), c<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;red&#34;</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>scatter(df[<span style=color:#e6db74>&#34;気温&#34;</span>], df[<span style=color:#e6db74>&#34;売上&#34;</span>])
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>xlabel(<span style=color:#e6db74>&#34;気温&#34;</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#34;売上&#34;</span>)
+</span></span></code></pre></div><p><a href=https://gyazo.com/7ae424702dc930f7314db3ed120a6d8a><img src=https://i.gyazo.com/7ae424702dc930f7314db3ed120a6d8a.png alt="Image from Gyazo"></a></p><h2 id=回帰モデル2次式>回帰モデル（2次式）</h2><p>2次式の回帰モデルを利用します．</p><p>$$
 f(x) = w_2 \times x^2 + w_1 \times x + w_0
-$$</p>
-<p>回帰式$f(x)$を次のように定義します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 回帰式（2次式）</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(w, x):
-    y <span style="color:#f92672">=</span> w[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span>  w[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> w[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> x<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span> 
-    <span style="color:#66d9ef">return</span> y
-</code></pre></div><p>$w_0=1$，$w_1=2$，$w_2=3$として，$f(x)$を計算してみます．
-例えば，$x=24$のとき，$f(x)=1777$になります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
-fx(w, df[<span style="color:#e6db74">&#34;気温&#34;</span>])
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">0     1777
-1     1634
-2     2582
-3      617
-4       57
-...省略...
-</code></pre></div><p><code>minimize</code>関数を利用して，残差平方和$E$を最小化するような$w$を求めます．
-この結果，$w_0=1334.5$，$w_1=-216.5$，$w_2=9.8$となりました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
-result <span style="color:#f92672">=</span> minimize(rss, w, args<span style="color:#f92672">=</span>(df[<span style="color:#e6db74">&#34;気温&#34;</span>], df[<span style="color:#e6db74">&#34;売上&#34;</span>]), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Powell&#34;</span>)
-<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[1334.514003   -216.53725371    9.8457794 ]
-</code></pre></div><p>回帰モデル$f(x)$を折れ線グラフで可視化します．
+$$</p><p>回帰式$f(x)$を次のように定義します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 回帰式（2次式）</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>fx</span>(w, x):
+</span></span><span style=display:flex><span>    y <span style=color:#f92672>=</span> w[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>+</span>  w[<span style=color:#ae81ff>1</span>] <span style=color:#f92672>*</span> x <span style=color:#f92672>+</span> w[<span style=color:#ae81ff>2</span>] <span style=color:#f92672>*</span> x<span style=color:#f92672>**</span><span style=color:#ae81ff>2</span> 
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> y
+</span></span></code></pre></div><p>$w_0=1$，$w_1=2$，$w_2=3$として，$f(x)$を計算してみます．
+例えば，$x=24$のとき，$f(x)=1777$になります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>w <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>])
+</span></span><span style=display:flex><span>fx(w, df[<span style=color:#e6db74>&#34;気温&#34;</span>])
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>0     1777
+</span></span><span style=display:flex><span>1     1634
+</span></span><span style=display:flex><span>2     2582
+</span></span><span style=display:flex><span>3      617
+</span></span><span style=display:flex><span>4       57
+</span></span><span style=display:flex><span>...省略...
+</span></span></code></pre></div><p><code>minimize</code>関数を利用して，残差平方和$E$を最小化するような$w$を求めます．
+この結果，$w_0=1334.5$，$w_1=-216.5$，$w_2=9.8$となりました．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>w <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>])
+</span></span><span style=display:flex><span>result <span style=color:#f92672>=</span> minimize(rss, w, args<span style=color:#f92672>=</span>(df[<span style=color:#e6db74>&#34;気温&#34;</span>], df[<span style=color:#e6db74>&#34;売上&#34;</span>]), method<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Powell&#34;</span>)
+</span></span><span style=display:flex><span>print(result<span style=color:#f92672>.</span>x)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>[1334.514003   -216.53725371    9.8457794 ]
+</span></span></code></pre></div><p>回帰モデル$f(x)$を折れ線グラフで可視化します．
 1次式よりも2次式の方が表現力が向上するため，
-より全体の傾向を表した曲線が得られていることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">30</span>)
-plt<span style="color:#f92672">.</span>plot(x, fx(result<span style="color:#f92672">.</span>x, x), c<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;red&#34;</span>)
-plt<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#34;気温&#34;</span>], df[<span style="color:#e6db74">&#34;売上&#34;</span>])
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;気温&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;売上&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/bf91e36d5dd6b9e13637a9b1c6f12704"><img src="https://i.gyazo.com/bf91e36d5dd6b9e13637a9b1c6f12704.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
-
-<p>3次式の回帰モデルを利用して回帰分析しなさい．</p>
-<p>$$
+より全体の傾向を表した曲線が得られていることが分かります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>x <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>arange(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>30</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>plot(x, fx(result<span style=color:#f92672>.</span>x, x), c<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;red&#34;</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>scatter(df[<span style=color:#e6db74>&#34;気温&#34;</span>], df[<span style=color:#e6db74>&#34;売上&#34;</span>])
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>xlabel(<span style=color:#e6db74>&#34;気温&#34;</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#34;売上&#34;</span>)
+</span></span></code></pre></div><p><a href=https://gyazo.com/bf91e36d5dd6b9e13637a9b1c6f12704><img src=https://i.gyazo.com/bf91e36d5dd6b9e13637a9b1c6f12704.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>3次式の回帰モデルを利用して回帰分析しなさい．</p><p>$$
 f(x) = w_3 \times x^3 + w_2 \times x^2 + w_1 \times x + w_0
-$$</p>
-<p><a href="https://gyazo.com/f984344c6b360ebb847389925a9d6077"><img src="https://i.gyazo.com/f984344c6b360ebb847389925a9d6077.png" alt="Image from Gyazo"></a></p>
-<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+$$</p><p><a href=https://gyazo.com/f984344c6b360ebb847389925a9d6077><img src=https://i.gyazo.com/f984344c6b360ebb847389925a9d6077.png alt="Image from Gyazo"></a></p><p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
 ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
-ノートブックのファイル名は <strong>chapter11.ipynb</strong> としてください．</p>
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+ノートブックのファイル名は <strong>chapter11.ipynb</strong> としてください．</p><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

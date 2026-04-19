@@ -1,380 +1,161 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    ファイル入出力 | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>ファイル入出力 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
-
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="ファイル入出力" />
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="ファイル入出力"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/applied_programming/chapter6/"><meta property="og:image" content="https://i.gyazo.com/e3649524c7926db63267e4b9a60fb113.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
 
 
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/applied_programming/chapter6/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/e3649524c7926db63267e4b9a60fb113.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="プロジェクトの準備 --プロジェクトの準備Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
-
-続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
-
-ストリーム --ストリームプログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます． ファイルに何かしらの操作を行う場合は，ストリームという仕組みを利用します． ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています． ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです． ここでは，10人の身長と体重が保存されたファイルからデータを読み込んでみましょう． データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください． このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます． ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．
- ファイルの読み込み --ファイルの読み込みmeasure.csvから文字列データを読み込むには下記のように記述します． ファイルの読み込みにはFileReaderクラスとBufferedReaderクラスを利用しますが， ここではファイルに取り付ける蛇口がFileReader， 蛇口から流れてくるホースの役割がBufferedReaderクラスと考えてください． line=br.readLine()でファイルから1行ずつ読み込み，System.out.println(line)でコンソール出力しています． ファイルの終端に到達すると，readLine()はnullという値を返すため， while文でlineがnullになるまで，ファイルからの読み込みを繰り返しています．
- 実は上記のコードだけではエラーが残ったままです． このエラーを取り除くには例外処理が必要です． 例外とはプログラムの実行中に発生する想定外の事態を意味しており， 例えば「対象のファイルが存在しない」「空っぽ（null）の変数を利用しようとした」などの状態が該当します． ファイル読込に利用するFileReaderとBufferedReaderはこの例外処理が必要なクラスです． 例外処理は下記のように，例外の発生の可能性のある命令をtry{}で囲み，例外発生時の命令をcatch(例外の種類){}に記述します．
-try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する命令 } 下記のコードを参考に例外処理を施してmeasure.csvから文字列データを読み込んでみましょう． ここで，e.printStackTrace();は例外の原因を突き止めるために，例外に関する情報を遡って表示する命令です． また，IOExceptionは入出力に関する例外を意味しています． プログラムの実行後に，コンソールの出力結果を確認してください．
- CSV形式の処理 --CSV形式の処理前述したようにCSV形式のファイルは「,（カンマ）」で区切られています． カンマで区切られた文字列（トークン）を取り出すにはStringTokenizerというクラスを利用します． 下記のコードを参考にトークン毎に取り出して，コンソールに出力してみましょう． ここで，new StringTokenizer(line, &quot;,&quot;)は， 変数lineに代入されている文字列を「,（カンマ）」で分割して取得することを表しています． また，身長と体重は整数のため，Integer." />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="ファイル入出力" />
-
-
-
-  <meta name="twitter:description" content="プロジェクトの準備 --プロジェクトの準備Eclipseで新規にプロジェクトを作成しましょう． メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます． ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
-
-続いてソースファイルを作成しましょう． メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます． ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう． パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
-
-ストリーム --ストリームプログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます． ファイルに何かしらの操作を行う場合は，ストリームという仕組みを利用します． ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています． ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです． ここでは，10人の身長と体重が保存されたファイルからデータを読み込んでみましょう． データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください． このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます． ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．
- ファイルの読み込み --ファイルの読み込みmeasure.csvから文字列データを読み込むには下記のように記述します． ファイルの読み込みにはFileReaderクラスとBufferedReaderクラスを利用しますが， ここではファイルに取り付ける蛇口がFileReader， 蛇口から流れてくるホースの役割がBufferedReaderクラスと考えてください． line=br.readLine()でファイルから1行ずつ読み込み，System.out.println(line)でコンソール出力しています． ファイルの終端に到達すると，readLine()はnullという値を返すため， while文でlineがnullになるまで，ファイルからの読み込みを繰り返しています．
- 実は上記のコードだけではエラーが残ったままです． このエラーを取り除くには例外処理が必要です． 例外とはプログラムの実行中に発生する想定外の事態を意味しており， 例えば「対象のファイルが存在しない」「空っぽ（null）の変数を利用しようとした」などの状態が該当します． ファイル読込に利用するFileReaderとBufferedReaderはこの例外処理が必要なクラスです． 例外処理は下記のように，例外の発生の可能性のある命令をtry{}で囲み，例外発生時の命令をcatch(例外の種類){}に記述します．
-try{ 実行する命令 }catch(例外の種類){ 例外発生時に実行する命令 } 下記のコードを参考に例外処理を施してmeasure.csvから文字列データを読み込んでみましょう． ここで，e.printStackTrace();は例外の原因を突き止めるために，例外に関する情報を遡って表示する命令です． また，IOExceptionは入出力に関する例外を意味しています． プログラムの実行後に，コンソールの出力結果を確認してください．
- CSV形式の処理 --CSV形式の処理前述したようにCSV形式のファイルは「,（カンマ）」で区切られています． カンマで区切られた文字列（トークン）を取り出すにはStringTokenizerというクラスを利用します． 下記のコードを参考にトークン毎に取り出して，コンソールに出力してみましょう． ここで，new StringTokenizer(line, &quot;,&quot;)は， 変数lineに代入されている文字列を「,（カンマ）」で分割して取得することを表しています． また，身長と体重は整数のため，Integer." />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/e3649524c7926db63267e4b9a60fb113.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">ファイル入出力</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p><a href="https://gyazo.com/e3649524c7926db63267e4b9a60fb113"><img src="https://i.gyazo.com/e3649524c7926db63267e4b9a60fb113.png" alt="https://gyazo.com/e3649524c7926db63267e4b9a60fb113"></a></p>
-<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">プロジェクトの準備 -->
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   プロジェクトの準備
-</h1>
 
-<p>Eclipseで新規にプロジェクトを作成しましょう．
+
+Eclipseで新規にプロジェクトを作成しましょう．
 メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます．
 ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう．
-パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．</p>
-<p><a href="https://gyazo.com/8b3ed6e20885121941e7c8e17cb06a81"><img src="https://i.gyazo.com/8b3ed6e20885121941e7c8e17cb06a81.png" alt="https://gyazo.com/8b3ed6e20885121941e7c8e17cb06a81"></a></p>
-<p>続いてソースファイルを作成しましょう．
+パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+
+続いてソースファイルを作成しましょう．
 メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます．
 ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう．
-パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．</p>
-<p><a href="https://gyazo.com/a164f3c6c1da7bc9b5047e2c0b9a431a"><img src="https://i.gyazo.com/a164f3c6c1da7bc9b5047e2c0b9a431a.png" alt="https://gyazo.com/a164f3c6c1da7bc9b5047e2c0b9a431a"></a></p>
-<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">ストリーム -->
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  ストリーム
-</h1>
+パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
 
-<p>プログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます．
+
+
+  ストリーム
+
+
+プログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます．
+ファイルに何かしらの操作を行う場合は，ストリームという仕組みを利用します．
+ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています．
+ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです．
+ここでは，10人の身長と体重が保存されたファイルからデータを読み込んでみましょう．
+データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください．
+このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます．
+ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．
+
+
+
+
+  ファイルの読み込み
+
+
+measure.csvから文字列データを読み込むには下記のように記述します．
+ファイルの読み込みにはFileReaderクラスとBufferedReaderクラスを利用しますが，
+ここではファイルに取り付ける蛇口がFileReader，
+蛇口から流れてくるホースの役割がBufferedReaderクラスと考えてください．
+line=br.readLine()でファイルから1行ずつ読み込み，System.out.println(line)でコンソール出力しています．
+ファイルの終端に到達すると，readLine()はnullという値を返すため，
+while文でlineがnullになるまで，ファイルからの読み込みを繰り返しています．
+
+
+実は上記のコードだけではエラーが残ったままです．
+このエラーを取り除くには例外処理が必要です．
+例外とはプログラムの実行中に発生する想定外の事態を意味しており，
+例えば「対象のファイルが存在しない」「空っぽ（null）の変数を利用しようとした」などの状態が該当します．
+ファイル読込に利用するFileReaderとBufferedReaderはこの例外処理が必要なクラスです．
+例外処理は下記のように，例外の発生の可能性のある命令をtry{}で囲み，例外発生時の命令をcatch(例外の種類){}に記述します．"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="ファイル入出力"><meta name=twitter:description content="
+
+
+  プロジェクトの準備
+
+
+Eclipseで新規にプロジェクトを作成しましょう．
+メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます．
+ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう．
+パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．
+
+続いてソースファイルを作成しましょう．
+メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます．
+ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう．
+パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．
+
+
+
+  ストリーム
+
+
+プログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます．
+ファイルに何かしらの操作を行う場合は，ストリームという仕組みを利用します．
+ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています．
+ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです．
+ここでは，10人の身長と体重が保存されたファイルからデータを読み込んでみましょう．
+データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください．
+このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます．
+ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．
+
+
+
+
+  ファイルの読み込み
+
+
+measure.csvから文字列データを読み込むには下記のように記述します．
+ファイルの読み込みにはFileReaderクラスとBufferedReaderクラスを利用しますが，
+ここではファイルに取り付ける蛇口がFileReader，
+蛇口から流れてくるホースの役割がBufferedReaderクラスと考えてください．
+line=br.readLine()でファイルから1行ずつ読み込み，System.out.println(line)でコンソール出力しています．
+ファイルの終端に到達すると，readLine()はnullという値を返すため，
+while文でlineがnullになるまで，ファイルからの読み込みを繰り返しています．
+
+
+実は上記のコードだけではエラーが残ったままです．
+このエラーを取り除くには例外処理が必要です．
+例外とはプログラムの実行中に発生する想定外の事態を意味しており，
+例えば「対象のファイルが存在しない」「空っぽ（null）の変数を利用しようとした」などの状態が該当します．
+ファイル読込に利用するFileReaderとBufferedReaderはこの例外処理が必要なクラスです．
+例外処理は下記のように，例外の発生の可能性のある命令をtry{}で囲み，例外発生時の命令をcatch(例外の種類){}に記述します．"><meta name=twitter:image content="https://i.gyazo.com/e3649524c7926db63267e4b9a60fb113.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>ファイル入出力</h1><div class=post-line></div><p><a href=https://gyazo.com/e3649524c7926db63267e4b9a60fb113><img src=https://i.gyazo.com/e3649524c7926db63267e4b9a60fb113.png alt=https://gyazo.com/e3649524c7926db63267e4b9a60fb113></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>プロジェクトの準備</h1><p>Eclipseで新規にプロジェクトを作成しましょう．
+メニューから[ファイル]-[新規]-[Javaプロジェクト]をクリックして，「新規Javaプロジェクトの作成」を開きます．
+ここでは，プロジェクト名に”Project6”を入力して，[完了]をクリックしましょう．
+パッケージ・エクスプローラに作成したプロジェクトが表示されていることを確認してください．</p><p><a href=https://gyazo.com/8b3ed6e20885121941e7c8e17cb06a81><img src=https://i.gyazo.com/8b3ed6e20885121941e7c8e17cb06a81.png alt=https://gyazo.com/8b3ed6e20885121941e7c8e17cb06a81></a></p><p>続いてソースファイルを作成しましょう．
+メニューから[ファイル]-[新規]-[クラス]をクリックして，「新規Javaクラス」を開きます．
+ここでは，名前に”MyClass”を入力し，public static void main(String[] args)(V)にチェックを入れ，[完了]をクリックしましょう．
+パッケージ・エクスプローラに作成したソースファイルが表示されていることを確認してください．</p><p><a href=https://gyazo.com/a164f3c6c1da7bc9b5047e2c0b9a431a><img src=https://i.gyazo.com/a164f3c6c1da7bc9b5047e2c0b9a431a.png alt=https://gyazo.com/a164f3c6c1da7bc9b5047e2c0b9a431a></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>ストリーム</h1><p>プログラムからファイルに保存されているデータを「読み込む」ことや「書き込む」ことができます．
 ファイルに何かしらの操作を行う場合は，<strong>ストリーム</strong>という仕組みを利用します．
 ストリームとは，「データの流れ」を意味しており，水道管の中を水が流れる様子に似ています．
 ファイルに蛇口を取り付けて，その蛇口を捻ると，ファイルに保存されているデータが少しずつ流れてくるイメージです．
-ここでは，10人の身長と体重が保存された<a href="/classes/applied_programming/measure.csv">ファイル</a>からデータを読み込んでみましょう．
+ここでは，10人の身長と体重が保存された<a href=/classes/applied_programming/measure.csv>ファイル</a>からデータを読み込んでみましょう．
 データは氏名，身長[cm]，体重[kg]で構成され，それぞれ「,（カンマ）」で区切られていることに注意してください．
 このようにカンマで区切られたファイルをCSV（Comma-Separated Values）形式と呼びます．
-ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．</p>
-<script type="application/javascript" src="https://gist.github.com/naoto-github/aeebc1a9011f4f07e007.js"></script>
-
-<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">ファイルの読み込み -->
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  ファイルの読み込み
-</h1>
-
-<p><strong>measure.csv</strong>から文字列データを読み込むには下記のように記述します．
+ファイルをダウンロードしたら，Eclipseのプロジェクトの中にコピーしておいてください．</p><script src=https://gist.github.com/naoto-github/aeebc1a9011f4f07e007.js></script><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>ファイルの読み込み</h1><p><strong>measure.csv</strong>から文字列データを読み込むには下記のように記述します．
 ファイルの読み込みには<strong>FileReader</strong>クラスと<strong>BufferedReader</strong>クラスを利用しますが，
 ここではファイルに取り付ける蛇口が<strong>FileReader</strong>，
 蛇口から流れてくるホースの役割が<strong>BufferedReader</strong>クラスと考えてください．
 <code>line=br.readLine()</code>でファイルから1行ずつ読み込み，<code>System.out.println(line)</code>でコンソール出力しています．
 ファイルの終端に到達すると，<code>readLine()</code>は<strong>null</strong>という値を返すため，
-while文でlineが<strong>null</strong>になるまで，ファイルからの読み込みを繰り返しています．</p>
-<script type="application/javascript" src="https://gist.github.com/naoto-github/b9b8b615cfb89b1564c2.js"></script>
-
-<p>実は上記のコードだけではエラーが残ったままです．
+while文でlineが<strong>null</strong>になるまで，ファイルからの読み込みを繰り返しています．</p><script src=https://gist.github.com/naoto-github/b9b8b615cfb89b1564c2.js></script><p>実は上記のコードだけではエラーが残ったままです．
 このエラーを取り除くには<strong>例外処理</strong>が必要です．
 <strong>例外</strong>とはプログラムの実行中に発生する想定外の事態を意味しており，
 例えば「対象のファイルが存在しない」「空っぽ（null）の変数を利用しようとした」などの状態が該当します．
 ファイル読込に利用する<strong>FileReader</strong>と<strong>BufferedReader</strong>はこの例外処理が必要なクラスです．
-例外処理は下記のように，例外の発生の可能性のある命令を<code>try{}</code>で囲み，例外発生時の命令を<code>catch(例外の種類){}</code>に記述します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">try</span><span style="color:#f92672">{</span>
-	実行する命令
-<span style="color:#f92672">}</span><span style="color:#66d9ef">catch</span><span style="color:#f92672">(</span>例外の種類<span style="color:#f92672">){</span>
-	例外発生時に実行する命令
-<span style="color:#f92672">}</span>
-</code></pre></div><p>下記のコードを参考に例外処理を施して<strong>measure.csv</strong>から文字列データを読み込んでみましょう．
+例外処理は下記のように，例外の発生の可能性のある命令を<code>try{}</code>で囲み，例外発生時の命令を<code>catch(例外の種類){}</code>に記述します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#66d9ef>try</span>{
+</span></span><span style=display:flex><span>	実行する命令
+</span></span><span style=display:flex><span>}<span style=color:#66d9ef>catch</span>(例外の種類){
+</span></span><span style=display:flex><span>	例外発生時に実行する命令
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>下記のコードを参考に例外処理を施して<strong>measure.csv</strong>から文字列データを読み込んでみましょう．
 ここで，<code>e.printStackTrace();</code>は例外の原因を突き止めるために，例外に関する情報を遡って表示する命令です．
 また，<code>IOException</code>は入出力に関する例外を意味しています．
-プログラムの実行後に，コンソールの出力結果を確認してください．</p>
-<script type="application/javascript" src="https://gist.github.com/naoto-github/7c696252d8f6a1a8d2c9.js"></script>
-
-<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">CSV形式の処理 -->
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  CSV形式の処理
-</h1>
-
-<p>前述したようにCSV形式のファイルは「,（カンマ）」で区切られています．
+プログラムの実行後に，コンソールの出力結果を確認してください．</p><script src=https://gist.github.com/naoto-github/7c696252d8f6a1a8d2c9.js></script><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>CSV形式の処理</h1><p>前述したようにCSV形式のファイルは「,（カンマ）」で区切られています．
 カンマで区切られた文字列（トークン）を取り出すには<strong>StringTokenizer</strong>というクラスを利用します．
 下記のコードを参考にトークン毎に取り出して，コンソールに出力してみましょう．
-ここで，<code>new StringTokenizer(line, &quot;,&quot;)</code>は，
+ここで，<code>new StringTokenizer(line, ",")</code>は，
 変数lineに代入されている文字列を「,（カンマ）」で分割して取得することを表しています．
 また，身長と体重は整数のため，<code>Integer.parseInt(st.nextToken())</code>を用いて，
 String型からint型に変換しています．
-プログラムの実行後に，コンソールの出力結果を確認してください．</p>
-<script type="application/javascript" src="https://gist.github.com/naoto-github/5d813f7cbb04d34b6989.js"></script>
-
-<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">ファイルの書き込み -->
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  ファイルの書き込み
-</h1>
-
-<p>読み込んだ身長と体重を基にBMI指数を計算して，<strong>bmi.csv</strong>に書き込んでみましょう．
+プログラムの実行後に，コンソールの出力結果を確認してください．</p><script src=https://gist.github.com/naoto-github/5d813f7cbb04d34b6989.js></script><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>ファイルの書き込み</h1><p>読み込んだ身長と体重を基にBMI指数を計算して，<strong>bmi.csv</strong>に書き込んでみましょう．
 BMI指数は$$BMI=体重[kg]/身長[m]^2$$で求めることができます．
 下記のコードを参考に，<strong>bmi.csv</strong>に文字列データを書き込んでみましょう．
 ファイルの書き込みには<strong>FileWriter</strong>クラスと<strong>BufferedWriter</strong>クラスを利用します．
-<code>br.write(name + &quot;,&quot; + bmi + &quot;\n&quot;)</code>で名前と求めたBMI指数をCSV形式で書き込んでいます．
+<code>br.write(name + "," + bmi + "\n")</code>で名前と求めたBMI指数をCSV形式で書き込んでいます．
 ここで，<code>(double)height</code>はint型の変数heightをdouble型に変換することを意味しています．
 プログラムの実行後に，コンソールの出力結果と，
-作成された<strong>bmi.csv</strong>にBMI指数が記録されていることを確認してください．</p>
-<script type="application/javascript" src="https://gist.github.com/naoto-github/ecf0559a101ad48753c2.js"></script>
-
-<!-- # <img style="margin-right:5px;margin-bottom:7px" src="/favicon/favicon-25x25.png">課題 -->
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
-
-<p>下記の表を参考に，BMI指数から「低体重」「普通体重」「肥満」のいずれかを判定し，<strong>bmi.csv</strong>に書き込んでください．
+作成された<strong>bmi.csv</strong>にBMI指数が記録されていることを確認してください．</p><script src=https://gist.github.com/naoto-github/ecf0559a101ad48753c2.js></script><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>下記の表を参考に，BMI指数から「低体重」「普通体重」「肥満」のいずれかを判定し，<strong>bmi.csv</strong>に書き込んでください．
 ファイルにはカンマ区切りで，<strong>名前</strong>，<strong>BMI指数</strong>，<strong>判定</strong>の順番に出力してください．
-課題が完成したら，作成したプロジェクトを<strong>実行可能JARファイル</strong>の形式でファイルに保存（エクスポート）してください．</p>
-<table>
-<thead>
-<tr>
-<th>BMI指数</th>
-<th>判定</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>18.5未満</td>
-<td>低体重</td>
-</tr>
-<tr>
-<td>18.5以上，25未満</td>
-<td>普通体重</td>
-</tr>
-<tr>
-<td>25以上</td>
-<td>肥満</td>
-</tr>
-</tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+課題が完成したら，作成したプロジェクトを<strong>実行可能JARファイル</strong>の形式でファイルに保存（エクスポート）してください．</p><table><thead><tr><th>BMI指数</th><th>判定</th></tr></thead><tbody><tr><td>18.5未満</td><td>低体重</td></tr><tr><td>18.5以上，25未満</td><td>普通体重</td></tr><tr><td>25以上</td><td>肥満</td></tr></tbody></table><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

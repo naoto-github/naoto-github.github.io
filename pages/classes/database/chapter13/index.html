@@ -1,188 +1,99 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    NoSQL(2)・ドキュメント指向データベース | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>NoSQL(2)・ドキュメント指向データベース | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="NoSQL(2)・ドキュメント指向データベース"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/database/chapter13/"><meta property="og:image" content="https://i.gyazo.com/8636c0bc76e061d89dc1b3bc5c70f1d0.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content='
 
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="NoSQL(2)・ドキュメント指向データベース" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/database/chapter13/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/8636c0bc76e061d89dc1b3bc5c70f1d0.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="ドキュメント指向データベースドキュメント指向データベース(Document-Oriented Database) は， ドキュメント形式のデータをそのまま格納することができるデータベースです． ここで，ドキュメント形式とは，JSON形式 や XML形式 のことを指しています． Key-Valueストア型データベースに比べて， 階層構造など柔軟なデータ構造に対応が可能です． また，Javaに代表されるオブジェクト指向のプログラミング言語では， データをオブジェクトという単位で管理することが多く， このオブジェクトをJSONに変換して， データベースに格納することができるというメリットがあります．
-JSON JSON(JavaScript Object Notation) はJavaScriptのオブジェクト表現を基にしたデータ形式です． 基本的にはキー（Key）とバリュー(Value)の組み合わせでデータを列挙します． 下記の例では，キーは name，バリューは 岩村優 です． キーとバリューのいずれも，ダブルクオーテーションで括る必要があることに注意してください． また，バリューには，文字列，数値，オブジェクト，配列などを指定することができます．
-{ &#34;name&#34;: &#34;岩村優&#34;, &#34;age&#34;: 21, &#34;faculty&#34;: &#34;工学部&#34;, &#34;hobby&#34;: [&#34;テニス&#34;,&#34;読書&#34;] } XML XML(Extensibile Markup Language)は， ウェブページを記述するHTMLと同様の マークアップ言語 の一つです． 要素(Element)と属性(Attribute)によって構成され， 階層的に記述することが可能なデータ形式です． 下記の例では，student や name が要素であり， age は属性を表しています． 要素は，開始タグ（&lt;要素名&gt;）で始まり，終了タグ（&lt;/要素名&gt;）で終わる必要があります．
-&lt;student&gt; &lt;name age=&#34;21&#34;&gt;岩村優&lt;/name&gt; &lt;faculty&gt;工学部&lt;/faculty&gt; &lt;hobbies&gt; &lt;hobby&gt;テニス&lt;/hobby&gt; &lt;hobby&gt;読書&lt;/hobby&gt;	&lt;/hobbies&gt; &lt;/student&gt; 代表的なドキュメント指向データベースには下記があります． ここでは，JSON形式のドキュメントを格納可能な MongoDB に着目します．
- MongoDB CouchDB BaseX  MongoDBMongoDBのインストール Windowsの場合 Windows版は，公式サイトからダウンロードしましょう． ここで，ダウンロードするパッケージは，Community Serverです （企業用の Enterprise Server を選択しないように注意）． また，パッケージは ZIP を選択してください．" />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="NoSQL(2)・ドキュメント指向データベース" />
-
-
-
-  <meta name="twitter:description" content="ドキュメント指向データベースドキュメント指向データベース(Document-Oriented Database) は， ドキュメント形式のデータをそのまま格納することができるデータベースです． ここで，ドキュメント形式とは，JSON形式 や XML形式 のことを指しています． Key-Valueストア型データベースに比べて， 階層構造など柔軟なデータ構造に対応が可能です． また，Javaに代表されるオブジェクト指向のプログラミング言語では， データをオブジェクトという単位で管理することが多く， このオブジェクトをJSONに変換して， データベースに格納することができるというメリットがあります．
-JSON JSON(JavaScript Object Notation) はJavaScriptのオブジェクト表現を基にしたデータ形式です． 基本的にはキー（Key）とバリュー(Value)の組み合わせでデータを列挙します． 下記の例では，キーは name，バリューは 岩村優 です． キーとバリューのいずれも，ダブルクオーテーションで括る必要があることに注意してください． また，バリューには，文字列，数値，オブジェクト，配列などを指定することができます．
-{ &#34;name&#34;: &#34;岩村優&#34;, &#34;age&#34;: 21, &#34;faculty&#34;: &#34;工学部&#34;, &#34;hobby&#34;: [&#34;テニス&#34;,&#34;読書&#34;] } XML XML(Extensibile Markup Language)は， ウェブページを記述するHTMLと同様の マークアップ言語 の一つです． 要素(Element)と属性(Attribute)によって構成され， 階層的に記述することが可能なデータ形式です． 下記の例では，student や name が要素であり， age は属性を表しています． 要素は，開始タグ（&lt;要素名&gt;）で始まり，終了タグ（&lt;/要素名&gt;）で終わる必要があります．
-&lt;student&gt; &lt;name age=&#34;21&#34;&gt;岩村優&lt;/name&gt; &lt;faculty&gt;工学部&lt;/faculty&gt; &lt;hobbies&gt; &lt;hobby&gt;テニス&lt;/hobby&gt; &lt;hobby&gt;読書&lt;/hobby&gt;	&lt;/hobbies&gt; &lt;/student&gt; 代表的なドキュメント指向データベースには下記があります． ここでは，JSON形式のドキュメントを格納可能な MongoDB に着目します．
- MongoDB CouchDB BaseX  MongoDBMongoDBのインストール Windowsの場合 Windows版は，公式サイトからダウンロードしましょう． ここで，ダウンロードするパッケージは，Community Serverです （企業用の Enterprise Server を選択しないように注意）． また，パッケージは ZIP を選択してください．" />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/8636c0bc76e061d89dc1b3bc5c70f1d0.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">NoSQL(2)・ドキュメント指向データベース</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p><a href="https://gyazo.com/8636c0bc76e061d89dc1b3bc5c70f1d0"><img src="https://i.gyazo.com/8636c0bc76e061d89dc1b3bc5c70f1d0.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   ドキュメント指向データベース
-</h1>
 
-<p><strong>ドキュメント指向データベース(Document-Oriented Database)</strong> は，
+
+ドキュメント指向データベース(Document-Oriented Database) は，
+ドキュメント形式のデータをそのまま格納することができるデータベースです．
+ここで，ドキュメント形式とは，JSON形式 や
+XML形式 のことを指しています．
+Key-Valueストア型データベースに比べて，
+階層構造など柔軟なデータ構造に対応が可能です．
+また，Javaに代表されるオブジェクト指向のプログラミング言語では，
+データをオブジェクトという単位で管理することが多く，
+このオブジェクトをJSONに変換して，
+データベースに格納することができるというメリットがあります．
+JSON
+JSON(JavaScript Object Notation) はJavaScriptのオブジェクト表現を基にしたデータ形式です．
+基本的にはキー（Key）とバリュー(Value)の組み合わせでデータを列挙します．
+下記の例では，キーは name，バリューは 岩村優 です．
+キーとバリューのいずれも，ダブルクオーテーションで括る必要があることに注意してください．
+また，バリューには，文字列，数値，オブジェクト，配列などを指定することができます．
+{
+	"name": "岩村優",
+	"age": 21,
+	"faculty": "工学部",
+	"hobby": ["テニス","読書"]
+}
+XML
+XML(Extensibile Markup Language)は，
+ウェブページを記述するHTMLと同様の マークアップ言語 の一つです．
+要素(Element)と属性(Attribute)によって構成され，
+階層的に記述することが可能なデータ形式です．
+下記の例では，student や name が要素であり，
+age は属性を表しています．
+要素は，開始タグ（<要素名>）で始まり，終了タグ（</要素名>）で終わる必要があります．
+<student>
+	<name age="21">岩村優</name>
+	<faculty>工学部</faculty>
+	<hobbies>
+		<hobby>テニス</hobby>
+		<hobby>読書</hobby>		
+	</hobbies>
+</student>
+代表的なドキュメント指向データベースには下記があります．
+ここでは，JSON形式のドキュメントを格納可能な MongoDB に着目します．'><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="NoSQL(2)・ドキュメント指向データベース"><meta name=twitter:description content='
+
+  ドキュメント指向データベース
+
+
+ドキュメント指向データベース(Document-Oriented Database) は，
+ドキュメント形式のデータをそのまま格納することができるデータベースです．
+ここで，ドキュメント形式とは，JSON形式 や
+XML形式 のことを指しています．
+Key-Valueストア型データベースに比べて，
+階層構造など柔軟なデータ構造に対応が可能です．
+また，Javaに代表されるオブジェクト指向のプログラミング言語では，
+データをオブジェクトという単位で管理することが多く，
+このオブジェクトをJSONに変換して，
+データベースに格納することができるというメリットがあります．
+JSON
+JSON(JavaScript Object Notation) はJavaScriptのオブジェクト表現を基にしたデータ形式です．
+基本的にはキー（Key）とバリュー(Value)の組み合わせでデータを列挙します．
+下記の例では，キーは name，バリューは 岩村優 です．
+キーとバリューのいずれも，ダブルクオーテーションで括る必要があることに注意してください．
+また，バリューには，文字列，数値，オブジェクト，配列などを指定することができます．
+{
+	"name": "岩村優",
+	"age": 21,
+	"faculty": "工学部",
+	"hobby": ["テニス","読書"]
+}
+XML
+XML(Extensibile Markup Language)は，
+ウェブページを記述するHTMLと同様の マークアップ言語 の一つです．
+要素(Element)と属性(Attribute)によって構成され，
+階層的に記述することが可能なデータ形式です．
+下記の例では，student や name が要素であり，
+age は属性を表しています．
+要素は，開始タグ（<要素名>）で始まり，終了タグ（</要素名>）で終わる必要があります．
+<student>
+	<name age="21">岩村優</name>
+	<faculty>工学部</faculty>
+	<hobbies>
+		<hobby>テニス</hobby>
+		<hobby>読書</hobby>		
+	</hobbies>
+</student>
+代表的なドキュメント指向データベースには下記があります．
+ここでは，JSON形式のドキュメントを格納可能な MongoDB に着目します．'><meta name=twitter:image content="https://i.gyazo.com/8636c0bc76e061d89dc1b3bc5c70f1d0.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>NoSQL(2)・ドキュメント指向データベース</h1><div class=post-line></div><p><a href=https://gyazo.com/8636c0bc76e061d89dc1b3bc5c70f1d0><img src=https://i.gyazo.com/8636c0bc76e061d89dc1b3bc5c70f1d0.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>ドキュメント指向データベース</h1><p><strong>ドキュメント指向データベース(Document-Oriented Database)</strong> は，
 ドキュメント形式のデータをそのまま格納することができるデータベースです．
 ここで，ドキュメント形式とは，<strong>JSON形式</strong> や
 <strong>XML形式</strong> のことを指しています．
@@ -191,232 +102,89 @@ Key-Valueストア型データベースに比べて，
 また，Javaに代表されるオブジェクト指向のプログラミング言語では，
 データをオブジェクトという単位で管理することが多く，
 このオブジェクトをJSONに変換して，
-データベースに格納することができるというメリットがあります．</p>
-<h2 id="json">JSON</h2>
-<p><strong>JSON(JavaScript Object Notation)</strong> はJavaScriptのオブジェクト表現を基にしたデータ形式です．
+データベースに格納することができるというメリットがあります．</p><h2 id=json>JSON</h2><p><strong>JSON(JavaScript Object Notation)</strong> はJavaScriptのオブジェクト表現を基にしたデータ形式です．
 基本的にはキー（Key）とバリュー(Value)の組み合わせでデータを列挙します．
 下記の例では，キーは <strong>name</strong>，バリューは <strong>岩村優</strong> です．
 キーとバリューのいずれも，ダブルクオーテーションで括る必要があることに注意してください．
-また，バリューには，文字列，数値，オブジェクト，配列などを指定することができます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-	<span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;岩村優&#34;</span>,
-	<span style="color:#f92672">&#34;age&#34;</span>: <span style="color:#ae81ff">21</span>,
-	<span style="color:#f92672">&#34;faculty&#34;</span>: <span style="color:#e6db74">&#34;工学部&#34;</span>,
-	<span style="color:#f92672">&#34;hobby&#34;</span>: [<span style="color:#e6db74">&#34;テニス&#34;</span>,<span style="color:#e6db74">&#34;読書&#34;</span>]
-}
-</code></pre></div><h2 id="xml">XML</h2>
-<p><strong>XML(Extensibile Markup Language</strong>)は，
+また，バリューには，文字列，数値，オブジェクト，配列などを指定することができます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>	<span style=color:#f92672>&#34;name&#34;</span>: <span style=color:#e6db74>&#34;岩村優&#34;</span>,
+</span></span><span style=display:flex><span>	<span style=color:#f92672>&#34;age&#34;</span>: <span style=color:#ae81ff>21</span>,
+</span></span><span style=display:flex><span>	<span style=color:#f92672>&#34;faculty&#34;</span>: <span style=color:#e6db74>&#34;工学部&#34;</span>,
+</span></span><span style=display:flex><span>	<span style=color:#f92672>&#34;hobby&#34;</span>: [<span style=color:#e6db74>&#34;テニス&#34;</span>,<span style=color:#e6db74>&#34;読書&#34;</span>]
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=xml>XML</h2><p><strong>XML(Extensibile Markup Language</strong>)は，
 ウェブページを記述するHTMLと同様の <strong>マークアップ言語</strong> の一つです．
 要素(Element)と属性(Attribute)によって構成され，
 階層的に記述することが可能なデータ形式です．
 下記の例では，<strong>student</strong> や <strong>name</strong> が要素であり，
 <strong>age</strong> は属性を表しています．
-要素は，開始タグ（&lt;要素名&gt;）で始まり，終了タグ（&lt;/要素名&gt;）で終わる必要があります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#f92672">&lt;student&gt;</span>
-	<span style="color:#f92672">&lt;name</span> <span style="color:#a6e22e">age=</span><span style="color:#e6db74">&#34;21&#34;</span><span style="color:#f92672">&gt;</span>岩村優<span style="color:#f92672">&lt;/name&gt;</span>
-	<span style="color:#f92672">&lt;faculty&gt;</span>工学部<span style="color:#f92672">&lt;/faculty&gt;</span>
-	<span style="color:#f92672">&lt;hobbies&gt;</span>
-		<span style="color:#f92672">&lt;hobby&gt;</span>テニス<span style="color:#f92672">&lt;/hobby&gt;</span>
-		<span style="color:#f92672">&lt;hobby&gt;</span>読書<span style="color:#f92672">&lt;/hobby&gt;</span>		
-	<span style="color:#f92672">&lt;/hobbies&gt;</span>
-<span style="color:#f92672">&lt;/student&gt;</span>
-</code></pre></div><p>代表的なドキュメント指向データベースには下記があります．
-ここでは，JSON形式のドキュメントを格納可能な <strong>MongoDB</strong> に着目します．</p>
-<ul>
-<li><a href="https://www.mongodb.com/">MongoDB</a></li>
-<li><a href="https://couchdb.apache.org/">CouchDB</a></li>
-<li><a href="http://basex.org/">BaseX</a></li>
-</ul>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  MongoDB
-</h1>
-
-<h2 id="mongodbのインストール">MongoDBのインストール</h2>
-<h3 id="windowsの場合">Windowsの場合</h3>
-<p>Windows版は，公式サイトからダウンロードしましょう．
+要素は，開始タグ（&lt;要素名>）で始まり，終了タグ（&lt;/要素名>）で終わる必要があります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-xml data-lang=xml><span style=display:flex><span><span style=color:#f92672>&lt;student&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#f92672>&lt;name</span> <span style=color:#a6e22e>age=</span><span style=color:#e6db74>&#34;21&#34;</span><span style=color:#f92672>&gt;</span>岩村優<span style=color:#f92672>&lt;/name&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#f92672>&lt;faculty&gt;</span>工学部<span style=color:#f92672>&lt;/faculty&gt;</span>
+</span></span><span style=display:flex><span>	<span style=color:#f92672>&lt;hobbies&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#f92672>&lt;hobby&gt;</span>テニス<span style=color:#f92672>&lt;/hobby&gt;</span>
+</span></span><span style=display:flex><span>		<span style=color:#f92672>&lt;hobby&gt;</span>読書<span style=color:#f92672>&lt;/hobby&gt;</span>		
+</span></span><span style=display:flex><span>	<span style=color:#f92672>&lt;/hobbies&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>&lt;/student&gt;</span>
+</span></span></code></pre></div><p>代表的なドキュメント指向データベースには下記があります．
+ここでは，JSON形式のドキュメントを格納可能な <strong>MongoDB</strong> に着目します．</p><ul><li><a href=https://www.mongodb.com/>MongoDB</a></li><li><a href=https://couchdb.apache.org/>CouchDB</a></li><li><a href=http://basex.org/>BaseX</a></li></ul><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>MongoDB</h1><h2 id=mongodbのインストール>MongoDBのインストール</h2><h3 id=windowsの場合>Windowsの場合</h3><p>Windows版は，公式サイトからダウンロードしましょう．
 ここで，ダウンロードするパッケージは，<strong>Community Server</strong>です
 （企業用の <strong>Enterprise Server</strong> を選択しないように注意）．
-また，パッケージは <strong>ZIP</strong> を選択してください．</p>
-<p><a href="https://www.mongodb.com/download-center/community"><i class="fas fa-cloud-download-alt"></i>Windows版 MongoDBのダウンロード</a></p>
-<p><a href="https://gyazo.com/1af6c3ea5d47b5e04fc4f0f39f464b1d"><img src="https://i.gyazo.com/1af6c3ea5d47b5e04fc4f0f39f464b1d.png" alt="Image from Gyazo"></a></p>
-<h3 id="macosの場合">MacOSの場合</h3>
-<p>MacOSでは，HomeBrewを利用してインストールするのが簡単です．
+また，パッケージは <strong>ZIP</strong> を選択してください．</p><p><a href=https://www.mongodb.com/download-center/community><i class="fas fa-cloud-download-alt"></i>Windows版 MongoDBのダウンロード</a></p><p><a href=https://gyazo.com/1af6c3ea5d47b5e04fc4f0f39f464b1d><img src=https://i.gyazo.com/1af6c3ea5d47b5e04fc4f0f39f464b1d.png alt="Image from Gyazo"></a></p><h3 id=macosの場合>MacOSの場合</h3><p>MacOSでは，HomeBrewを利用してインストールするのが簡単です．
 <code>brew tap</code>でレポジトリを追加してから，最新バージョンの4.2をインストールします（2019年11月時点）．
-Homebrewのインストールに関しては，他のサイトを参考にしてください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% brew tap mongodb/brew
-% brew install mongodb-community@4.2
-</code></pre></div><h2 id="mongodbの起動">MongoDBの起動</h2>
-<h3 id="windowsの場合-1">Windowsの場合</h3>
-<p>最初にMongoDBがデータを保存するフォルダを作成します．
-Windowsの場合は<code>c:\data\db</code>というフォルダを作成します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% mkdir c:\data\db
-</code></pre></div><p>サーバは <strong>mongod</strong>，クライアントは <strong>mongo</strong>です（<strong>mongosh</strong>に変更された）．
-コマンドプロンプトやPowerShellで下記のコマンドを実行します（Shiftキーを押しながら右クリックで起動できる）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% mongod
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% mongo
-</code></pre></div><h3 id="macosの場合-1">MacOSの場合</h3>
-<p>最初にMongoDBがデータを保存するフォルダを作成します．
-MacOSの場合はホームディレクトリに<code>~/data/db</code>というディレクトリ（フォルダ）を作成します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% mkdir ~/data/db
-</code></pre></div><p>サーバは <strong>mongod</strong>，クライアントは <strong>mongo</strong>です．
-データの保存先を指定するため，<code>--dbpath</code>で先程作成したディレクトリを指定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% mongod --dbpath data/db
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">% mongo
-</code></pre></div><h2 id="mongodbのコマンド">MongoDBのコマンド</h2>
-<h3 id="データベースの作成">データベースの作成</h3>
-<p>データベースを作成するには <code>use</code> を利用します．
-ここでは，<strong>mydb</strong>という名前のデータベースを作成します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; use mydb
-</code></pre></div><p>現在使用しているデータベースを確認するには <code>db</code> と入力します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; db
-</code></pre></div><p><a href="https://gyazo.com/e341e32b3faaed11971fe8c5cd19b4b2"><img src="https://i.gyazo.com/e341e32b3faaed11971fe8c5cd19b4b2.png" alt="Image from Gyazo"></a></p>
-<h3 id="コレクションの作成">コレクションの作成</h3>
-<p>リレーショナルデータベースのテーブルに相当する<strong>コレクション</strong> を作成します．
-ここでは，<strong>students</strong>という名前のコレクションを作成します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; db.createCollection(&#34;students&#34;)
-</code></pre></div><p>データベースに存在するコレクションの一覧を表示するには<code>show collections</code>と入力します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; show collections
-</code></pre></div><p><a href="https://gyazo.com/facf6ef6a199f806ce47ea8923d737ab"><img src="https://i.gyazo.com/facf6ef6a199f806ce47ea8923d737ab.png" alt="Image from Gyazo"></a></p>
-<h3 id="ドキュメントの登録">ドキュメントの登録</h3>
-<p>コレクションにドキュメントを登録するには<code>insert</code>を利用します．
+Homebrewのインストールに関しては，他のサイトを参考にしてください．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>% brew tap mongodb/brew
+</span></span><span style=display:flex><span>% brew install mongodb-community@4.2
+</span></span></code></pre></div><h2 id=mongodbの起動>MongoDBの起動</h2><h3 id=windowsの場合-1>Windowsの場合</h3><p>最初にMongoDBがデータを保存するフォルダを作成します．
+Windowsの場合は<code>c:\data\db</code>というフォルダを作成します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>% mkdir c:\data\db
+</span></span></code></pre></div><p>サーバは <strong>mongod</strong>，クライアントは <strong>mongo</strong>です（<strong>mongosh</strong>に変更された）．
+コマンドプロンプトやPowerShellで下記のコマンドを実行します（Shiftキーを押しながら右クリックで起動できる）．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>% mongod
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>% mongo
+</span></span></code></pre></div><h3 id=macosの場合-1>MacOSの場合</h3><p>最初にMongoDBがデータを保存するフォルダを作成します．
+MacOSの場合はホームディレクトリに<code>~/data/db</code>というディレクトリ（フォルダ）を作成します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>% mkdir ~/data/db
+</span></span></code></pre></div><p>サーバは <strong>mongod</strong>，クライアントは <strong>mongo</strong>です．
+データの保存先を指定するため，<code>--dbpath</code>で先程作成したディレクトリを指定します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>% mongod --dbpath data/db
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>% mongo
+</span></span></code></pre></div><h2 id=mongodbのコマンド>MongoDBのコマンド</h2><h3 id=データベースの作成>データベースの作成</h3><p>データベースを作成するには <code>use</code> を利用します．
+ここでは，<strong>mydb</strong>という名前のデータベースを作成します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>&gt; use mydb
+</span></span></code></pre></div><p>現在使用しているデータベースを確認するには <code>db</code> と入力します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>&gt; db
+</span></span></code></pre></div><p><a href=https://gyazo.com/e341e32b3faaed11971fe8c5cd19b4b2><img src=https://i.gyazo.com/e341e32b3faaed11971fe8c5cd19b4b2.png alt="Image from Gyazo"></a></p><h3 id=コレクションの作成>コレクションの作成</h3><p>リレーショナルデータベースのテーブルに相当する<strong>コレクション</strong> を作成します．
+ここでは，<strong>students</strong>という名前のコレクションを作成します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>&gt; db.createCollection(&#34;students&#34;)
+</span></span></code></pre></div><p>データベースに存在するコレクションの一覧を表示するには<code>show collections</code>と入力します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>&gt; show collections
+</span></span></code></pre></div><p><a href=https://gyazo.com/facf6ef6a199f806ce47ea8923d737ab><img src=https://i.gyazo.com/facf6ef6a199f806ce47ea8923d737ab.png alt="Image from Gyazo"></a></p><h3 id=ドキュメントの登録>ドキュメントの登録</h3><p>コレクションにドキュメントを登録するには<code>insert</code>を利用します．
 登録するドキュメントはJSON形式であり，事前にスキーマを定義する必要はありません．
-このため，下記のように異なるキーを持つデータを登録することが可能です．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&gt; db.students.insert({
-	&#34;name&#34;: &#34;岩村優&#34;,
-	&#34;age&#34;: 21,
-	&#34;faculty&#34;: &#34;工学部&#34;,
-	&#34;hobby&#34;: [&#34;テニス&#34;,&#34;読書&#34;]
-})
-
-&gt; db.students.insert({
-	&#34;name&#34;: &#34;仙波あすか&#34;,
-	&#34;faculty&#34;: &#34;国際関係学部&#34;,
-	&#34;grade&#34;: 1
-})
-</code></pre></div><p><a href="https://gyazo.com/32bd5d91bbbacd0d2d30558959d9ece4"><img src="https://i.gyazo.com/32bd5d91bbbacd0d2d30558959d9ece4.png" alt="Image from Gyazo"></a></p>
-<h3 id="ドキュメントの取得">ドキュメントの取得</h3>
-<p>コレクションに登録されているドキュメントの一覧を表示するには<code>find</code>を利用します．
+このため，下記のように異なるキーを持つデータを登録することが可能です．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>&gt; db.students.insert({
+</span></span><span style=display:flex><span>	&#34;name&#34;: &#34;岩村優&#34;,
+</span></span><span style=display:flex><span>	&#34;age&#34;: 21,
+</span></span><span style=display:flex><span>	&#34;faculty&#34;: &#34;工学部&#34;,
+</span></span><span style=display:flex><span>	&#34;hobby&#34;: [&#34;テニス&#34;,&#34;読書&#34;]
+</span></span><span style=display:flex><span>})
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&gt; db.students.insert({
+</span></span><span style=display:flex><span>	&#34;name&#34;: &#34;仙波あすか&#34;,
+</span></span><span style=display:flex><span>	&#34;faculty&#34;: &#34;国際関係学部&#34;,
+</span></span><span style=display:flex><span>	&#34;grade&#34;: 1
+</span></span><span style=display:flex><span>})
+</span></span></code></pre></div><p><a href=https://gyazo.com/32bd5d91bbbacd0d2d30558959d9ece4><img src=https://i.gyazo.com/32bd5d91bbbacd0d2d30558959d9ece4.png alt="Image from Gyazo"></a></p><h3 id=ドキュメントの取得>ドキュメントの取得</h3><p>コレクションに登録されているドキュメントの一覧を表示するには<code>find</code>を利用します．
 登録されたドキュメントには <strong>_id</strong> というキーが追加されていることがわかります．
-これは，リレーショナルデータベースにおける主キーに相当します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">db.students.find()
-</code></pre></div><p><a href="https://gyazo.com/57072a62e034d7f325936981e8e7ac80"><img src="https://i.gyazo.com/57072a62e034d7f325936981e8e7ac80.png" alt="Image from Gyazo"></a></p>
-<p>条件を指定して特定のドキュメントを抽出するには，
+これは，リレーショナルデータベースにおける主キーに相当します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>db.students.find()
+</span></span></code></pre></div><p><a href=https://gyazo.com/57072a62e034d7f325936981e8e7ac80><img src=https://i.gyazo.com/57072a62e034d7f325936981e8e7ac80.png alt="Image from Gyazo"></a></p><p>条件を指定して特定のドキュメントを抽出するには，
 <code>find</code>の引数として条件を表すJSON形式のドキュメントを与えます．
-下記の例では<strong>name</strong>が<strong>岩村優</strong>という条件を指定しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">db.students.find({&#34;name&#34;: &#34;岩村優&#34;})
-</code></pre></div><p><a href="https://gyazo.com/aa681052c715a0694fdbe0e15d46622d"><img src="https://i.gyazo.com/aa681052c715a0694fdbe0e15d46622d.png" alt="Image from Gyazo"></a></p>
-<p>特定のキーのみを取得するには，抽出条件の後に，
-取得したいキーをJSON形式で列挙します（バリューは1に設定する）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">db.students.find({&#34;name&#34;: &#34;岩村優&#34;},{&#34;name&#34;: 1, &#34;hobby&#34;: 1})
-</code></pre></div><p><a href="https://gyazo.com/52237867a954dc0ec31c93c3b406ef85"><img src="https://i.gyazo.com/52237867a954dc0ec31c93c3b406ef85.png" alt="Image from Gyazo"></a></p>
-<h3 id="ドキュメントの削除">ドキュメントの削除</h3>
-<p>ドキュメントを削除するには<code>remove</code>を利用します．
-条件の指定は<code>find</code>と同じです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">db.students.remove({&#34;name&#34;: &#34;岩村優&#34;})
-</code></pre></div><p><a href="https://gyazo.com/cd7d5fad070b0685dbf6be1f26089c74"><img src="https://i.gyazo.com/cd7d5fad070b0685dbf6be1f26089c74.png" alt="Image from Gyazo"></a></p>
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px">
-  
-  <h3 style="color:#006600">
-    例題
-  </h3>
-
-  <p>
-    
-
-下記の愛知県内の動植物園のCSV形式のデータをJSON形式に変換し，MongoDBに登録しなさい．
+下記の例では<strong>name</strong>が<strong>岩村優</strong>という条件を指定しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>db.students.find({&#34;name&#34;: &#34;岩村優&#34;})
+</span></span></code></pre></div><p><a href=https://gyazo.com/aa681052c715a0694fdbe0e15d46622d><img src=https://i.gyazo.com/aa681052c715a0694fdbe0e15d46622d.png alt="Image from Gyazo"></a></p><p>特定のキーのみを取得するには，抽出条件の後に，
+取得したいキーをJSON形式で列挙します（バリューは1に設定する）．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>db.students.find({&#34;name&#34;: &#34;岩村優&#34;},{&#34;name&#34;: 1, &#34;hobby&#34;: 1})
+</span></span></code></pre></div><p><a href=https://gyazo.com/52237867a954dc0ec31c93c3b406ef85><img src=https://i.gyazo.com/52237867a954dc0ec31c93c3b406ef85.png alt="Image from Gyazo"></a></p><h3 id=ドキュメントの削除>ドキュメントの削除</h3><p>ドキュメントを削除するには<code>remove</code>を利用します．
+条件の指定は<code>find</code>と同じです．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>db.students.remove({&#34;name&#34;: &#34;岩村優&#34;})
+</span></span></code></pre></div><p><a href=https://gyazo.com/cd7d5fad070b0685dbf6be1f26089c74><img src=https://i.gyazo.com/cd7d5fad070b0685dbf6be1f26089c74.png alt="Image from Gyazo"></a></p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:#060>例題</h3><p>下記の愛知県内の動植物園のCSV形式のデータをJSON形式に変換し，MongoDBに登録しなさい．
 データベース名は<b>aichi</b> ，コレクション名は<b>gardens</b>とすること．
-また，<code>find</code>で取得した出力結果を確認しなさい．
-
-
-  </p>
-  
-</div>
-
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">名古屋市東山動植物園,名古屋市千種区,136.977,35.153
-ランの館,名古屋市中区,136.908,35.161
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  情報処理技術者試験・過去問
-</h1>
-
-<p>下記リンクは
-<a href="https://www.itpassportsiken.com/">ITパスポート試験ドットコム</a>，
-<a href="https://www.fe-siken.com/">基本情報技術者試験ドットコム</a>，
-<a href="https://www.ap-siken.com/">応用情報技術者試験ドットコム</a>，
-<a href="https://www.db-siken.com/">データベーススペシャリストドットコム</a>に掲載されている問題です．</p>
-<ul>
-<li><a href="https://www.ap-siken.com/kakomon/31_haru/q7.html">応用情報技術者 平成31年春期 午前問7</a></li>
-<li><a href="https://www.ap-siken.com/kakomon/03_haru/q28.html">応用情報技術者 令和3年春期 午前問28</a></li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+また，<code>find</code>で取得した出力結果を確認しなさい．</p></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-text data-lang=text><span style=display:flex><span>名古屋市東山動植物園,名古屋市千種区,136.977,35.153
+</span></span><span style=display:flex><span>ランの館,名古屋市中区,136.908,35.161
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>情報処理技術者試験・過去問</h1><p>下記リンクは
+<a href=https://www.itpassportsiken.com/>ITパスポート試験ドットコム</a>，
+<a href=https://www.fe-siken.com/>基本情報技術者試験ドットコム</a>，
+<a href=https://www.ap-siken.com/>応用情報技術者試験ドットコム</a>，
+<a href=https://www.db-siken.com/>データベーススペシャリストドットコム</a>に掲載されている問題です．</p><ul><li><a href=https://www.ap-siken.com/kakomon/31_haru/q7.html>応用情報技術者 平成31年春期 午前問7</a></li><li><a href=https://www.ap-siken.com/kakomon/03_haru/q28.html>応用情報技術者 令和3年春期 午前問28</a></li></ul><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

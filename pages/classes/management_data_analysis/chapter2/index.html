@@ -1,187 +1,143 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    Pythonを利用した統計処理①・相関係数 | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Pythonを利用した統計処理①・相関係数 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
-
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="Pythonを利用した統計処理①・相関係数" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter2/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="相関係数相関係数とは2つの変数XとYのの関係性を表す指標です． 例として，X=気温とY=アイスクリームの売上数を考えてみましょう． 気温が高い夏にアイスクリームの売上数は増加し， 逆に気温が低い冬にアイスクリームの売上数は減少すると考えられます． このような関係を 正の相関 と呼びます． 同様に，X=気温とY=おでんの売上数を考えてみましょう． 気温が高い夏におでんの売上数は減少し， 逆に気温が低い冬におでんの売上数は増加すると考えられます． このような関係を 負の相関 と呼びます． この関係性を定量的に表す方法が 相関係数 です．
-相関係数の公式を確認しておきましょう． $X=\{x_1, x2, \cdots, x_n\}$，$Y=\{y_1,y_2,\cdots,y_n\}$とします． このとき，$X$と$Y$の相関係数は次の式で求められます．
-$$ XとYの相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2} \cdot \sqrt{\sum (y_i - \bar{y})^2}} $$
-算出された相関係数は-1から1の範囲となり，1に近いほど強い正の相関，-1に近いほど強い負の相関となります． また，相関係数が-0.2から0.2の範囲のときは，相関なしとみなすことが一般的です．
-   相関係数 相関の強さ     0.7～1.0 強い正の相関   0.4～0.7 正の相関   0.2～0.4 弱い正の相関   -0.2～0.2 相関なし   -0.4～-0.2 弱い負の相関   -0." />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="Pythonを利用した統計処理①・相関係数" />
-
-
-
-  <meta name="twitter:description" content="相関係数相関係数とは2つの変数XとYのの関係性を表す指標です． 例として，X=気温とY=アイスクリームの売上数を考えてみましょう． 気温が高い夏にアイスクリームの売上数は増加し， 逆に気温が低い冬にアイスクリームの売上数は減少すると考えられます． このような関係を 正の相関 と呼びます． 同様に，X=気温とY=おでんの売上数を考えてみましょう． 気温が高い夏におでんの売上数は減少し， 逆に気温が低い冬におでんの売上数は増加すると考えられます． このような関係を 負の相関 と呼びます． この関係性を定量的に表す方法が 相関係数 です．
-相関係数の公式を確認しておきましょう． $X=\{x_1, x2, \cdots, x_n\}$，$Y=\{y_1,y_2,\cdots,y_n\}$とします． このとき，$X$と$Y$の相関係数は次の式で求められます．
-$$ XとYの相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2} \cdot \sqrt{\sum (y_i - \bar{y})^2}} $$
-算出された相関係数は-1から1の範囲となり，1に近いほど強い正の相関，-1に近いほど強い負の相関となります． また，相関係数が-0.2から0.2の範囲のときは，相関なしとみなすことが一般的です．
-   相関係数 相関の強さ     0.7～1.0 強い正の相関   0.4～0.7 正の相関   0.2～0.4 弱い正の相関   -0.2～0.2 相関なし   -0.4～-0.2 弱い負の相関   -0." />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">Pythonを利用した統計処理①・相関係数</h1>
-<div class="post-line"></div>
-    
-    
-
-    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="Pythonを利用した統計処理①・相関係数"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter2/"><meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
   相関係数
-</h1>
 
-<p>相関係数とは2つの変数<code>X</code>と<code>Y</code>のの関係性を表す指標です．
+
+相関係数とは2つの変数XとYのの関係性を表す指標です．
+例として，X=気温とY=アイスクリームの売上数を考えてみましょう．
+気温が高い夏にアイスクリームの売上数は増加し，
+逆に気温が低い冬にアイスクリームの売上数は減少すると考えられます．
+このような関係を 正の相関 と呼びます．
+同様に，X=気温とY=おでんの売上数を考えてみましょう．
+気温が高い夏におでんの売上数は減少し，
+逆に気温が低い冬におでんの売上数は増加すると考えられます．
+このような関係を 負の相関 と呼びます．
+この関係性を定量的に表す方法が 相関係数 です．
+相関係数の公式を確認しておきましょう．
+$X=\{x_1, x2, \cdots, x_n\}$，$Y=\{y_1,y_2,\cdots,y_n\}$とします．
+このとき，$X$と$Y$の相関係数は次の式で求められます．
+$$
+XとYの相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2} \cdot \sqrt{\sum (y_i - \bar{y})^2}}
+$$
+算出された相関係数は-1から1の範囲となり，1に近いほど強い正の相関，-1に近いほど強い負の相関となります．
+また，相関係数が-0.2から0.2の範囲のときは，相関なしとみなすことが一般的です．
+
+  
+      
+          相関係数
+          相関の強さ
+      
+  
+  
+      
+          0.7～1.0
+          強い正の相関
+      
+      
+          0.4～0.7
+          正の相関
+      
+      
+          0.2～0.4
+          弱い正の相関
+      
+      
+          -0.2～0.2
+          相関なし
+      
+      
+          -0.4～-0.2
+          弱い負の相関
+      
+      
+          -0.7～-0.4
+          負の相関
+      
+      
+          -1.0～-0.7
+          強い負の相関
+      
+  
+
+
+  データセット
+
+
+ここでは，次のCSV形式のデータセットを利用します．
+下記のURLからファイルをダウンロードしてください．
+生徒20人の5科目のテストの点数に関するデータです．"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="Pythonを利用した統計処理①・相関係数"><meta name=twitter:description content="
+  相関係数
+
+
+相関係数とは2つの変数XとYのの関係性を表す指標です．
+例として，X=気温とY=アイスクリームの売上数を考えてみましょう．
+気温が高い夏にアイスクリームの売上数は増加し，
+逆に気温が低い冬にアイスクリームの売上数は減少すると考えられます．
+このような関係を 正の相関 と呼びます．
+同様に，X=気温とY=おでんの売上数を考えてみましょう．
+気温が高い夏におでんの売上数は減少し，
+逆に気温が低い冬におでんの売上数は増加すると考えられます．
+このような関係を 負の相関 と呼びます．
+この関係性を定量的に表す方法が 相関係数 です．
+相関係数の公式を確認しておきましょう．
+$X=\{x_1, x2, \cdots, x_n\}$，$Y=\{y_1,y_2,\cdots,y_n\}$とします．
+このとき，$X$と$Y$の相関係数は次の式で求められます．
+$$
+XとYの相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2} \cdot \sqrt{\sum (y_i - \bar{y})^2}}
+$$
+算出された相関係数は-1から1の範囲となり，1に近いほど強い正の相関，-1に近いほど強い負の相関となります．
+また，相関係数が-0.2から0.2の範囲のときは，相関なしとみなすことが一般的です．
+
+  
+      
+          相関係数
+          相関の強さ
+      
+  
+  
+      
+          0.7～1.0
+          強い正の相関
+      
+      
+          0.4～0.7
+          正の相関
+      
+      
+          0.2～0.4
+          弱い正の相関
+      
+      
+          -0.2～0.2
+          相関なし
+      
+      
+          -0.4～-0.2
+          弱い負の相関
+      
+      
+          -0.7～-0.4
+          負の相関
+      
+      
+          -1.0～-0.7
+          強い負の相関
+      
+  
+
+
+  データセット
+
+
+ここでは，次のCSV形式のデータセットを利用します．
+下記のURLからファイルをダウンロードしてください．
+生徒20人の5科目のテストの点数に関するデータです．"><meta name=twitter:image content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>Pythonを利用した統計処理①・相関係数</h1><div class=post-line></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>相関係数</h1><p>相関係数とは2つの変数<code>X</code>と<code>Y</code>のの関係性を表す指標です．
 例として，<code>X=気温</code>と<code>Y=アイスクリームの売上数</code>を考えてみましょう．
 気温が高い夏にアイスクリームの売上数は増加し，
 逆に気温が低い冬にアイスクリームの売上数は減少すると考えられます．
@@ -190,218 +146,61 @@ $$ XとYの相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x
 気温が高い夏におでんの売上数は減少し，
 逆に気温が低い冬におでんの売上数は増加すると考えられます．
 このような関係を <strong>負の相関</strong> と呼びます．
-この関係性を定量的に表す方法が <strong>相関係数</strong> です．</p>
-<p>相関係数の公式を確認しておきましょう．
+この関係性を定量的に表す方法が <strong>相関係数</strong> です．</p><p>相関係数の公式を確認しておきましょう．
 $X=\{x_1, x2, \cdots, x_n\}$，$Y=\{y_1,y_2,\cdots,y_n\}$とします．
-このとき，$X$と$Y$の相関係数は次の式で求められます．</p>
-<p>$$
+このとき，$X$と$Y$の相関係数は次の式で求められます．</p><p>$$
 XとYの相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2} \cdot \sqrt{\sum (y_i - \bar{y})^2}}
-$$</p>
-<p>算出された相関係数は-1から1の範囲となり，1に近いほど<strong>強い正の相関</strong>，-1に近いほど<strong>強い負の相関</strong>となります．
-また，相関係数が-0.2から0.2の範囲のときは，<strong>相関なし</strong>とみなすことが一般的です．</p>
-<table>
-<thead>
-<tr>
-<th>相関係数</th>
-<th>相関の強さ</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0.7～1.0</td>
-<td>強い正の相関</td>
-</tr>
-<tr>
-<td>0.4～0.7</td>
-<td>正の相関</td>
-</tr>
-<tr>
-<td>0.2～0.4</td>
-<td>弱い正の相関</td>
-</tr>
-<tr>
-<td>-0.2～0.2</td>
-<td>相関なし</td>
-</tr>
-<tr>
-<td>-0.4～-0.2</td>
-<td>弱い負の相関</td>
-</tr>
-<tr>
-<td>-0.7～-0.4</td>
-<td>負の相関</td>
-</tr>
-<tr>
-<td>-1.0～-0.7</td>
-<td>強い負の相関</td>
-</tr>
-</tbody>
-</table>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  データセット
-</h1>
-
-<p>ここでは，次のCSV形式のデータセットを利用します．
+$$</p><p>算出された相関係数は-1から1の範囲となり，1に近いほど<strong>強い正の相関</strong>，-1に近いほど<strong>強い負の相関</strong>となります．
+また，相関係数が-0.2から0.2の範囲のときは，<strong>相関なし</strong>とみなすことが一般的です．</p><table><thead><tr><th>相関係数</th><th>相関の強さ</th></tr></thead><tbody><tr><td>0.7～1.0</td><td>強い正の相関</td></tr><tr><td>0.4～0.7</td><td>正の相関</td></tr><tr><td>0.2～0.4</td><td>弱い正の相関</td></tr><tr><td>-0.2～0.2</td><td>相関なし</td></tr><tr><td>-0.4～-0.2</td><td>弱い負の相関</td></tr><tr><td>-0.7～-0.4</td><td>負の相関</td></tr><tr><td>-1.0～-0.7</td><td>強い負の相関</td></tr></tbody></table><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>データセット</h1><p>ここでは，次のCSV形式のデータセットを利用します．
 下記のURLからファイルをダウンロードしてください．
-生徒20人の5科目のテストの点数に関するデータです．</p>
-<p><a href="https://mukai-lab.info/classes/management_data_analysis/dataset1.csv"><i class="fas fa-cloud-download-alt"></i> dataset1.csv</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">名前,国語,数学,理科,英語,社会
-木村 雅人,84,40,65,86,66
-樋口 聡,61,35,74,70,67
-松本 賢二,64,92,94,42,70
-戸田 達也,78,90,100,53,79
-川村 淳,65,78,82,37,75
-~ 省略 ~
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Excelで相関係数
-</h1>
-
-<p>Excelを利用して相関係数を算出しましょう．
-ダウンロードしたファイルをExcelで開いてください．</p>
-<h2 id="散布図の作成">散布図の作成</h2>
-<p>最初にデータを散布図で確認しましょう．
-ここでは，「数学と理科」と「数学と英語」の散布図を作成します．</p>
-<p>「数学と理科」の散布図を作成するには，
+生徒20人の5科目のテストの点数に関するデータです．</p><p><a href=https://mukai-lab.info/classes/management_data_analysis/dataset1.csv><i class="fas fa-cloud-download-alt"></i> dataset1.csv</a></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-text data-lang=text><span style=display:flex><span>名前,国語,数学,理科,英語,社会
+</span></span><span style=display:flex><span>木村 雅人,84,40,65,86,66
+</span></span><span style=display:flex><span>樋口 聡,61,35,74,70,67
+</span></span><span style=display:flex><span>松本 賢二,64,92,94,42,70
+</span></span><span style=display:flex><span>戸田 達也,78,90,100,53,79
+</span></span><span style=display:flex><span>川村 淳,65,78,82,37,75
+</span></span><span style=display:flex><span>~ 省略 ~
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Excelで相関係数</h1><p>Excelを利用して相関係数を算出しましょう．
+ダウンロードしたファイルをExcelで開いてください．</p><h2 id=散布図の作成>散布図の作成</h2><p>最初にデータを散布図で確認しましょう．
+ここでは，「数学と理科」と「数学と英語」の散布図を作成します．</p><p>「数学と理科」の散布図を作成するには，
 セル<code>C2:C21</code>と<code>D2:D21</code>を選択し，メニューの <strong>散布図</strong> を選択します．
 散布図を確認すると，全体的に <strong>右上がり</strong> の傾向が確認できます．
 これは「数学が得意な人は理科も得意」であることを意味しています．
-つまり $X=数学$，$Y=理科$としたとき，$X$と$Y$には <strong>正の相関</strong> があると考えられます．</p>
-<p><a href="https://gyazo.com/f3372ea56b0dbce6598c6285e5ea7e5c"><img src="https://i.gyazo.com/f3372ea56b0dbce6598c6285e5ea7e5c.png" alt="Image from Gyazo"></a></p>
-<p>「数学と英語」の散布図を作成するには，
+つまり $X=数学$，$Y=理科$としたとき，$X$と$Y$には <strong>正の相関</strong> があると考えられます．</p><p><a href=https://gyazo.com/f3372ea56b0dbce6598c6285e5ea7e5c><img src=https://i.gyazo.com/f3372ea56b0dbce6598c6285e5ea7e5c.png alt="Image from Gyazo"></a></p><p>「数学と英語」の散布図を作成するには，
 セル<code>C2:C21</code>と<code>E2:E21</code>を選択し，メニューの <strong>散布図</strong> を選択します．
 散布図を確認すると，全体的に <strong>右下がり</strong> の傾向が確認できます．
 これは「数学が得意な人は英語が苦手」であることを意味しています．
-つまり $X=数学$，$Y=英語$としたとき，$X$と$Y$には <strong>負の相関</strong> があると考えられます．</p>
-<p><a href="https://gyazo.com/44749201c96edf6b8c351702e2000403"><img src="https://i.gyazo.com/44749201c96edf6b8c351702e2000403.png" alt="Image from Gyazo"></a></p>
-<h2 id="相関係数の算出">相関係数の算出</h2>
-<p>Excelで相関係数を算出するには<code>correl関数</code>を利用します．
-セル<code>B23</code>に「数学と理科」の相関係数を求めましょう．</p>
-<p>$$
+つまり $X=数学$，$Y=英語$としたとき，$X$と$Y$には <strong>負の相関</strong> があると考えられます．</p><p><a href=https://gyazo.com/44749201c96edf6b8c351702e2000403><img src=https://i.gyazo.com/44749201c96edf6b8c351702e2000403.png alt="Image from Gyazo"></a></p><h2 id=相関係数の算出>相関係数の算出</h2><p>Excelで相関係数を算出するには<code>correl関数</code>を利用します．
+セル<code>B23</code>に「数学と理科」の相関係数を求めましょう．</p><p>$$
 =CORREL(C2:C21,D2:D21)
-$$</p>
-<p>同様にセル<code>B24</code>に「数学と英語」の相関係数を求めましょう．</p>
-<p>$$
+$$</p><p>同様にセル<code>B24</code>に「数学と英語」の相関係数を求めましょう．</p><p>$$
 =CORREL(C2:C21,E2:E21)
-$$</p>
-<p><a href="https://gyazo.com/6940b1c449f7287409cab7bdaec9f525"><img src="https://i.gyazo.com/6940b1c449f7287409cab7bdaec9f525.png" alt="Image from Gyazo"></a></p>
-<p>この結果，「数学と理科」の相関係数は約0.78，「数学と英語」の相関係数は約-0.62となりました．
-よって，「数学と理科」には「強い正の相関」，「数学と英語」には「負の相関」があることが確認できました．</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Pythonで相関係数
-</h1>
-
-<p>Pythonを利用して相関係数を算出しましょう．
+$$</p><p><a href=https://gyazo.com/6940b1c449f7287409cab7bdaec9f525><img src=https://i.gyazo.com/6940b1c449f7287409cab7bdaec9f525.png alt="Image from Gyazo"></a></p><p>この結果，「数学と理科」の相関係数は約0.78，「数学と英語」の相関係数は約-0.62となりました．
+よって，「数学と理科」には「強い正の相関」，「数学と英語」には「負の相関」があることが確認できました．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Pythonで相関係数</h1><p>Pythonを利用して相関係数を算出しましょう．
 Jupyter Labを起動して，<strong>Python 3</strong> のノートブックを開きます．
-ノートブックの名前は <strong>chapter2.ipynb</strong> とします．</p>
-<h2 id="データセットの読込">データセットの読込</h2>
-<p>PythonでCSV形式のファイルを読み込むには <a href="https://pandas.pydata.org/">pandas</a>というライブラリ（追加機能）を利用します．
+ノートブックの名前は <strong>chapter2.ipynb</strong> とします．</p><h2 id=データセットの読込>データセットの読込</h2><p>PythonでCSV形式のファイルを読み込むには <a href=https://pandas.pydata.org/>pandas</a>というライブラリ（追加機能）を利用します．
 最初に次のコードでpandasの利用を宣言します．
-この宣言で，pandasの機能を <code>pd</code> という別名で利用することが可能になります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd <span style="color:#75715e"># pandasのインポート</span>
-</code></pre></div><p>CSV形式のファイルを読み込むには<code>read_csv</code>関数を利用します．
+この宣言で，pandasの機能を <code>pd</code> という別名で利用することが可能になります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd <span style=color:#75715e># pandasのインポート</span>
+</span></span></code></pre></div><p>CSV形式のファイルを読み込むには<code>read_csv</code>関数を利用します．
 読み込まれたデータは <strong>データフレーム</strong> という形式で表され，変数<code>df</code>に代入されています．
-また，データフレームを出力するには<code>display</code>関数を利用します（<code>print</code>関数でも出力可能）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;dataset1.csv&#34;</span>)
-display(df)
-</code></pre></div><p><a href="https://gyazo.com/0fe1ad64f0fcc86b29bc15f35b46b4ab"><img src="https://i.gyazo.com/0fe1ad64f0fcc86b29bc15f35b46b4ab.png" alt="Image from Gyazo"></a></p>
-<p>ここで，データフレームの使い方を確認します．</p>
-<h3 id="列方向にデータ抽出">列方向にデータ抽出</h3>
-<p>列方向にデータを抽出するには<code>df[列名]</code>と記述します．
-複数の列を取得する場合は，<code>df[[列名1,列名2]]</code>と記述します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[<span style="color:#e6db74">&#34;数学&#34;</span>]
-</code></pre></div><p><a href="https://gyazo.com/d8e2bcd961f8050919de774ddfa0caab"><img src="https://i.gyazo.com/d8e2bcd961f8050919de774ddfa0caab.png" alt="Image from Gyazo"></a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[[<span style="color:#e6db74">&#34;数学&#34;</span>,<span style="color:#e6db74">&#34;理科&#34;</span>]]
-</code></pre></div><p><a href="https://gyazo.com/662211fe11c03749cb3735adfe9b3194"><img src="https://i.gyazo.com/662211fe11c03749cb3735adfe9b3194.png" alt="Image from Gyazo"></a></p>
-<h3 id="行方向にデータ抽出">行方向にデータ抽出</h3>
-<p>行方向にデータを抽出するには<code>df[先頭の行番号:最後の行番号]</code>と記述します．
-このとき，最後の行番号のデータは含まれないことに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[<span style="color:#ae81ff">3</span>:<span style="color:#ae81ff">7</span>]
-</code></pre></div><p><a href="https://gyazo.com/9580f9f6bd2118d5c62e3ac9f4eb27db"><img src="https://i.gyazo.com/9580f9f6bd2118d5c62e3ac9f4eb27db.png" alt="Image from Gyazo"></a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[<span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">11</span>]
-</code></pre></div><p><a href="https://gyazo.com/81c1b28b0f556fd3b1277f5176fda04e"><img src="https://i.gyazo.com/81c1b28b0f556fd3b1277f5176fda04e.png" alt="Image from Gyazo"></a></p>
-<h3 id="相関係数の算出-1">相関係数の算出</h3>
-<p>データフレームで相関係数を算出するには <code>corr</code>関数を利用します．
+また，データフレームを出力するには<code>display</code>関数を利用します（<code>print</code>関数でも出力可能）．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(<span style=color:#e6db74>&#34;dataset1.csv&#34;</span>)
+</span></span><span style=display:flex><span>display(df)
+</span></span></code></pre></div><p><a href=https://gyazo.com/0fe1ad64f0fcc86b29bc15f35b46b4ab><img src=https://i.gyazo.com/0fe1ad64f0fcc86b29bc15f35b46b4ab.png alt="Image from Gyazo"></a></p><p>ここで，データフレームの使い方を確認します．</p><h3 id=列方向にデータ抽出>列方向にデータ抽出</h3><p>列方向にデータを抽出するには<code>df[列名]</code>と記述します．
+複数の列を取得する場合は，<code>df[[列名1,列名2]]</code>と記述します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df[<span style=color:#e6db74>&#34;数学&#34;</span>]
+</span></span></code></pre></div><p><a href=https://gyazo.com/d8e2bcd961f8050919de774ddfa0caab><img src=https://i.gyazo.com/d8e2bcd961f8050919de774ddfa0caab.png alt="Image from Gyazo"></a></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df[[<span style=color:#e6db74>&#34;数学&#34;</span>,<span style=color:#e6db74>&#34;理科&#34;</span>]]
+</span></span></code></pre></div><p><a href=https://gyazo.com/662211fe11c03749cb3735adfe9b3194><img src=https://i.gyazo.com/662211fe11c03749cb3735adfe9b3194.png alt="Image from Gyazo"></a></p><h3 id=行方向にデータ抽出>行方向にデータ抽出</h3><p>行方向にデータを抽出するには<code>df[先頭の行番号:最後の行番号]</code>と記述します．
+このとき，最後の行番号のデータは含まれないことに注意してください．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df[<span style=color:#ae81ff>3</span>:<span style=color:#ae81ff>7</span>]
+</span></span></code></pre></div><p><a href=https://gyazo.com/9580f9f6bd2118d5c62e3ac9f4eb27db><img src=https://i.gyazo.com/9580f9f6bd2118d5c62e3ac9f4eb27db.png alt="Image from Gyazo"></a></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df[<span style=color:#ae81ff>10</span>:<span style=color:#ae81ff>11</span>]
+</span></span></code></pre></div><p><a href=https://gyazo.com/81c1b28b0f556fd3b1277f5176fda04e><img src=https://i.gyazo.com/81c1b28b0f556fd3b1277f5176fda04e.png alt="Image from Gyazo"></a></p><h3 id=相関係数の算出-1>相関係数の算出</h3><p>データフレームで相関係数を算出するには <code>corr</code>関数を利用します．
 「数学と理科」と「数学と英語」の相関係数を算出します．
-Exceで算出した結果と同じように，「数学と理科」の相関係数は約0.78，「数学と英語」の相関係数は約-0.62となりました．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[[<span style="color:#e6db74">&#34;数学&#34;</span>,<span style="color:#e6db74">&#34;理科&#34;</span>]]<span style="color:#f92672">.</span>corr()
-</code></pre></div><p><a href="https://gyazo.com/21777e6d9f155f72a50329c065ecf0f2"><img src="https://i.gyazo.com/21777e6d9f155f72a50329c065ecf0f2.png" alt="Image from Gyazo"></a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df[[<span style="color:#e6db74">&#34;数学&#34;</span>,<span style="color:#e6db74">&#34;英語&#34;</span>]]<span style="color:#f92672">.</span>corr()
-</code></pre></div><p><a href="https://gyazo.com/2bf2767b2ec315203ab88f0e679fc5d2"><img src="https://i.gyazo.com/2bf2767b2ec315203ab88f0e679fc5d2.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
-
-<p>次の相関係数を調べなさい．
-また，<strong>マークダウン・セル</strong> を利用して，それぞれの相関の強さを記述してください．</p>
-<ul>
-<li>数学と国語の相関係数</li>
-<li>英語と理科の相関係数</li>
-<li>国語と英語の相関係数</li>
-</ul>
-<p><a href="https://gyazo.com/d5b920cee325a90746e69e5370b6181d"><img src="https://i.gyazo.com/d5b920cee325a90746e69e5370b6181d.png" alt="Image from Gyazo"></a></p>
-<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+Exceで算出した結果と同じように，「数学と理科」の相関係数は約0.78，「数学と英語」の相関係数は約-0.62となりました．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df[[<span style=color:#e6db74>&#34;数学&#34;</span>,<span style=color:#e6db74>&#34;理科&#34;</span>]]<span style=color:#f92672>.</span>corr()
+</span></span></code></pre></div><p><a href=https://gyazo.com/21777e6d9f155f72a50329c065ecf0f2><img src=https://i.gyazo.com/21777e6d9f155f72a50329c065ecf0f2.png alt="Image from Gyazo"></a></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df[[<span style=color:#e6db74>&#34;数学&#34;</span>,<span style=color:#e6db74>&#34;英語&#34;</span>]]<span style=color:#f92672>.</span>corr()
+</span></span></code></pre></div><p><a href=https://gyazo.com/2bf2767b2ec315203ab88f0e679fc5d2><img src=https://i.gyazo.com/2bf2767b2ec315203ab88f0e679fc5d2.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>次の相関係数を調べなさい．
+また，<strong>マークダウン・セル</strong> を利用して，それぞれの相関の強さを記述してください．</p><ul><li>数学と国語の相関係数</li><li>英語と理科の相関係数</li><li>国語と英語の相関係数</li></ul><p><a href=https://gyazo.com/d5b920cee325a90746e69e5370b6181d><img src=https://i.gyazo.com/d5b920cee325a90746e69e5370b6181d.png alt="Image from Gyazo"></a></p><p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
 ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
-ノートブックのファイル名は <strong>chapter2.ipynb</strong> としてください．</p>
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+ノートブックのファイル名は <strong>chapter2.ipynb</strong> としてください．</p><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

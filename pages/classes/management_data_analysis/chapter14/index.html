@@ -1,535 +1,199 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    主成分分析 | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>主成分分析 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
-
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="主成分分析" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter14/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="主成分分析主成分分析(Principal Component Analysis: PCA) は，複数の変数を合成して，少数の変数を生成することで，次元圧縮・削減することを目的とします． 合成された変数は 主成分 と呼ばれ，寄与率(全体に占める分散の割合) が大きい順に，第1主成分，第2主成分と呼ばれます．
-変数$X = (x_1, x_2, \cdots, x_n)$を合成した主成分を考えます． ここで，変数の重みを表す主成分負荷量（Loadings）を$W=(w_1, w_2, \cdots, w_n)$と表すことにします． ただし，主成分負荷量を表すベクトル$W$の長さは$|W|=1$とします． このとき，主成分の軸上の値となる主成分得点（Score）は，$X$と$W$の内積で表されます．
-$$ W \cdot X = w_1 \cdot x_1 &#43; w_2 \cdot x_2 &#43; \cdots &#43; w_n \cdot x_n $$
-$$ |W| = \sqrt{w_1^2 &#43; w_2^2 &#43; \cdots &#43; w_n^2} = 1 $$
-また，$X$と$W$の内積は，ベクトルの成す角$\theta$を用いて，次のように表現することもできます． つまり，主成分得点は，ベクトル$W$を延長した軸に対して，ベクトル$X$を射影したときの長さと一致します．
-$$ W \cdot X = |W| \cdot |X| \cdot \cos{\theta} = |X| \cdot \cos{\theta} $$" />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="主成分分析" />
-
-
-
-  <meta name="twitter:description" content="主成分分析主成分分析(Principal Component Analysis: PCA) は，複数の変数を合成して，少数の変数を生成することで，次元圧縮・削減することを目的とします． 合成された変数は 主成分 と呼ばれ，寄与率(全体に占める分散の割合) が大きい順に，第1主成分，第2主成分と呼ばれます．
-変数$X = (x_1, x_2, \cdots, x_n)$を合成した主成分を考えます． ここで，変数の重みを表す主成分負荷量（Loadings）を$W=(w_1, w_2, \cdots, w_n)$と表すことにします． ただし，主成分負荷量を表すベクトル$W$の長さは$|W|=1$とします． このとき，主成分の軸上の値となる主成分得点（Score）は，$X$と$W$の内積で表されます．
-$$ W \cdot X = w_1 \cdot x_1 &#43; w_2 \cdot x_2 &#43; \cdots &#43; w_n \cdot x_n $$
-$$ |W| = \sqrt{w_1^2 &#43; w_2^2 &#43; \cdots &#43; w_n^2} = 1 $$
-また，$X$と$W$の内積は，ベクトルの成す角$\theta$を用いて，次のように表現することもできます． つまり，主成分得点は，ベクトル$W$を延長した軸に対して，ベクトル$X$を射影したときの長さと一致します．
-$$ W \cdot X = |W| \cdot |X| \cdot \cos{\theta} = |X| \cdot \cos{\theta} $$" />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">主成分分析</h1>
-<div class="post-line"></div>
-    
-    
-
-    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="主成分分析"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter14/"><meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
   主成分分析
-</h1>
 
-<p><strong>主成分分析(Principal Component Analysis: PCA)</strong> は，複数の変数を合成して，少数の変数を生成することで，次元圧縮・削減することを目的とします．
-合成された変数は <strong>主成分</strong> と呼ばれ，<strong>寄与率(全体に占める分散の割合)</strong> が大きい順に，第1主成分，第2主成分と呼ばれます．</p>
-<p>変数$X = (x_1, x_2, \cdots, x_n)$を合成した主成分を考えます．
+
+主成分分析(Principal Component Analysis: PCA) は，複数の変数を合成して，少数の変数を生成することで，次元圧縮・削減することを目的とします．
+合成された変数は 主成分 と呼ばれ，寄与率(全体に占める分散の割合) が大きい順に，第1主成分，第2主成分と呼ばれます．
+変数$X = (x_1, x_2, \cdots, x_n)$を合成した主成分を考えます．
 ここで，変数の重みを表す主成分負荷量（Loadings）を$W=(w_1, w_2, \cdots, w_n)$と表すことにします．
 ただし，主成分負荷量を表すベクトル$W$の長さは$|W|=1$とします．
-このとき，主成分の軸上の値となる主成分得点（Score）は，$X$と$W$の内積で表されます．</p>
-<p>$$
+このとき，主成分の軸上の値となる主成分得点（Score）は，$X$と$W$の内積で表されます．
+$$
 W \cdot X = w_1 \cdot x_1 + w_2 \cdot x_2 + \cdots + w_n \cdot x_n
-$$</p>
-<p>$$
+$$
+$$
 |W| = \sqrt{w_1^2 + w_2^2 + \cdots + w_n^2} = 1
-$$</p>
-<p>また，$X$と$W$の内積は，ベクトルの成す角$\theta$を用いて，次のように表現することもできます．
-つまり，主成分得点は，ベクトル$W$を延長した軸に対して，ベクトル$X$を射影したときの長さと一致します．</p>
-<p>$$
+$$
+また，$X$と$W$の内積は，ベクトルの成す角$\theta$を用いて，次のように表現することもできます．
+つまり，主成分得点は，ベクトル$W$を延長した軸に対して，ベクトル$X$を射影したときの長さと一致します．
+$$
 W \cdot X = |W| \cdot |X| \cdot \cos{\theta} = |X| \cdot \cos{\theta}
-$$</p>
-<p><a href="https://gyazo.com/d56f2de6b268c189207aa99da415d58d"><img src="https://i.gyazo.com/d56f2de6b268c189207aa99da415d58d.png" alt="Image from Gyazo"></a></p>
-<p>例えば，変数$x_1$を身長，変数$x_2$を体重とした主成分分析を考えます．
-次の表は<a href="https://www.e-stat.go.jp/">e-Stat</a>で公開されている5歳から14歳までの男性の身長，座高，体重の平均です．</p>
-<table>
-<thead>
-<tr>
-<th>年齢</th>
-<th>身長$x_1$</th>
-<th>体重$x_2$</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>5</td>
-<td>110.7</td>
-<td>19.0</td>
-</tr>
-<tr>
-<td>6</td>
-<td>116.7</td>
-<td>21.5</td>
-</tr>
-<tr>
-<td>7</td>
-<td>122.6</td>
-<td>24.1</td>
-</tr>
-<tr>
-<td>8</td>
-<td>128.3</td>
-<td>27.2</td>
-</tr>
-<tr>
-<td>9</td>
-<td>133.6</td>
-<td>30.6</td>
-</tr>
-<tr>
-<td>10</td>
-<td>138.9</td>
-<td>34.2</td>
-</tr>
-<tr>
-<td>11</td>
-<td>145.1</td>
-<td>38.4</td>
-</tr>
-<tr>
-<td>12</td>
-<td>152.5</td>
-<td>44.2</td>
-</tr>
-<tr>
-<td>13</td>
-<td>159.7</td>
-<td>49.1</td>
-</tr>
-<tr>
-<td>14</td>
-<td>165.2</td>
-<td>54.3</td>
-</tr>
-</tbody>
-</table>
-<p>このとき，主成分得点は次の式で表されます．</p>
-<p>$$
+$$"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="主成分分析"><meta name=twitter:description content="
+  主成分分析
+
+
+主成分分析(Principal Component Analysis: PCA) は，複数の変数を合成して，少数の変数を生成することで，次元圧縮・削減することを目的とします．
+合成された変数は 主成分 と呼ばれ，寄与率(全体に占める分散の割合) が大きい順に，第1主成分，第2主成分と呼ばれます．
+変数$X = (x_1, x_2, \cdots, x_n)$を合成した主成分を考えます．
+ここで，変数の重みを表す主成分負荷量（Loadings）を$W=(w_1, w_2, \cdots, w_n)$と表すことにします．
+ただし，主成分負荷量を表すベクトル$W$の長さは$|W|=1$とします．
+このとき，主成分の軸上の値となる主成分得点（Score）は，$X$と$W$の内積で表されます．
+$$
+W \cdot X = w_1 \cdot x_1 + w_2 \cdot x_2 + \cdots + w_n \cdot x_n
+$$
+$$
+|W| = \sqrt{w_1^2 + w_2^2 + \cdots + w_n^2} = 1
+$$
+また，$X$と$W$の内積は，ベクトルの成す角$\theta$を用いて，次のように表現することもできます．
+つまり，主成分得点は，ベクトル$W$を延長した軸に対して，ベクトル$X$を射影したときの長さと一致します．
+$$
+W \cdot X = |W| \cdot |X| \cdot \cos{\theta} = |X| \cdot \cos{\theta}
+$$"><meta name=twitter:image content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>主成分分析</h1><div class=post-line></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>主成分分析</h1><p><strong>主成分分析(Principal Component Analysis: PCA)</strong> は，複数の変数を合成して，少数の変数を生成することで，次元圧縮・削減することを目的とします．
+合成された変数は <strong>主成分</strong> と呼ばれ，<strong>寄与率(全体に占める分散の割合)</strong> が大きい順に，第1主成分，第2主成分と呼ばれます．</p><p>変数$X = (x_1, x_2, \cdots, x_n)$を合成した主成分を考えます．
+ここで，変数の重みを表す主成分負荷量（Loadings）を$W=(w_1, w_2, \cdots, w_n)$と表すことにします．
+ただし，主成分負荷量を表すベクトル$W$の長さは$|W|=1$とします．
+このとき，主成分の軸上の値となる主成分得点（Score）は，$X$と$W$の内積で表されます．</p><p>$$
+W \cdot X = w_1 \cdot x_1 + w_2 \cdot x_2 + \cdots + w_n \cdot x_n
+$$</p><p>$$
+|W| = \sqrt{w_1^2 + w_2^2 + \cdots + w_n^2} = 1
+$$</p><p>また，$X$と$W$の内積は，ベクトルの成す角$\theta$を用いて，次のように表現することもできます．
+つまり，主成分得点は，ベクトル$W$を延長した軸に対して，ベクトル$X$を射影したときの長さと一致します．</p><p>$$
+W \cdot X = |W| \cdot |X| \cdot \cos{\theta} = |X| \cdot \cos{\theta}
+$$</p><p><a href=https://gyazo.com/d56f2de6b268c189207aa99da415d58d><img src=https://i.gyazo.com/d56f2de6b268c189207aa99da415d58d.png alt="Image from Gyazo"></a></p><p>例えば，変数$x_1$を身長，変数$x_2$を体重とした主成分分析を考えます．
+次の表は<a href=https://www.e-stat.go.jp/>e-Stat</a>で公開されている5歳から14歳までの男性の身長，座高，体重の平均です．</p><table><thead><tr><th>年齢</th><th>身長$x_1$</th><th>体重$x_2$</th></tr></thead><tbody><tr><td>5</td><td>110.7</td><td>19.0</td></tr><tr><td>6</td><td>116.7</td><td>21.5</td></tr><tr><td>7</td><td>122.6</td><td>24.1</td></tr><tr><td>8</td><td>128.3</td><td>27.2</td></tr><tr><td>9</td><td>133.6</td><td>30.6</td></tr><tr><td>10</td><td>138.9</td><td>34.2</td></tr><tr><td>11</td><td>145.1</td><td>38.4</td></tr><tr><td>12</td><td>152.5</td><td>44.2</td></tr><tr><td>13</td><td>159.7</td><td>49.1</td></tr><tr><td>14</td><td>165.2</td><td>54.3</td></tr></tbody></table><p>このとき，主成分得点は次の式で表されます．</p><p>$$
 W \cdot X = w_1 \cdot x_1 + w_2 \cdot x_2
-$$</p>
-<p>$$
+$$</p><p>$$
 |W| = \sqrt{w_1^2 + w_2^2} = 1
-$$</p>
-<p>最初に$W=(1, 0)$を考えます．
+$$</p><p>最初に$W=(1, 0)$を考えます．
 このとき，$W \cdot X = x_1$となり，主成分得点は身長$x_1$を表すことになります．
 これは，次の図に示すように，X軸への射影と一致します．
-また，主成分得点の分散は335.3です．</p>
-<p><a href="https://gyazo.com/885ea3fa3fd209348344fdb59d5bee17"><img src="https://i.gyazo.com/885ea3fa3fd209348344fdb59d5bee17.png" alt="Image from Gyazo"></a></p>
-<p>次に$W=(0, 1)$を考えます．
+また，主成分得点の分散は335.3です．</p><p><a href=https://gyazo.com/885ea3fa3fd209348344fdb59d5bee17><img src=https://i.gyazo.com/885ea3fa3fd209348344fdb59d5bee17.png alt="Image from Gyazo"></a></p><p>次に$W=(0, 1)$を考えます．
 このとき，$W \cdot X = x_2$となり，主成分得点は体重$x_2$を表すことになります．
 これは，次の図に示すように，Y軸への射影と一致します．
-また，主成分得点の分散は144.4です．</p>
-<p><a href="https://gyazo.com/cab88d1ede8efcaa17f6abf38746fa79"><img src="https://i.gyazo.com/cab88d1ede8efcaa17f6abf38746fa79.png" alt="Image from Gyazo"></a></p>
-<p>次に$W=(1/\sqrt{2}, 1/\sqrt{2})$を考えます．
+また，主成分得点の分散は144.4です．</p><p><a href=https://gyazo.com/cab88d1ede8efcaa17f6abf38746fa79><img src=https://i.gyazo.com/cab88d1ede8efcaa17f6abf38746fa79.png alt="Image from Gyazo"></a></p><p>次に$W=(1/\sqrt{2}, 1/\sqrt{2})$を考えます．
 このとき，$W \cdot X = \frac{x_1 + x_2}{\sqrt{2}}$となり，主成分得点は身長$x_1$と体重$x_2$を合成した値となります．
 これは，次の図に示すように，ベクトル$W$を延長した軸への射影と一致します．
-また，主成分得点の分散は458.7です．</p>
-<p><a href="https://gyazo.com/a10483904737d50bbb80276a3b814d2e"><img src="https://i.gyazo.com/a10483904737d50bbb80276a3b814d2e.png" alt="Image from Gyazo"></a></p>
-<p>上記の3パターンの分散を比較すると，$W=(1/\sqrt{2}, 1/\sqrt{2})$の分散が最も大きく，
+また，主成分得点の分散は458.7です．</p><p><a href=https://gyazo.com/a10483904737d50bbb80276a3b814d2e><img src=https://i.gyazo.com/a10483904737d50bbb80276a3b814d2e.png alt="Image from Gyazo"></a></p><p>上記の3パターンの分散を比較すると，$W=(1/\sqrt{2}, 1/\sqrt{2})$の分散が最も大きく，
 サンプル間の特徴が明確となるため，主成分として適していることになります．
 $|W|=1$であることから，ベクトル$W$は原点$(0,0)$を中心とした半径$1$の円を表すことになり，
-この円周上で最も分散が大きくなる$W$を探すことが，主成分分析の目的となります．</p>
-<p><a href="https://gyazo.com/92da574d3c5d1a1256e0e7b739858304"><img src="https://i.gyazo.com/92da574d3c5d1a1256e0e7b739858304.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  データセット
-</h1>
-
-<p>ここでは，次のCSV形式のデータセットを利用します．
+この円周上で最も分散が大きくなる$W$を探すことが，主成分分析の目的となります．</p><p><a href=https://gyazo.com/92da574d3c5d1a1256e0e7b739858304><img src=https://i.gyazo.com/92da574d3c5d1a1256e0e7b739858304.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>データセット</h1><p>ここでは，次のCSV形式のデータセットを利用します．
 下記のURLからファイルをダウンロードしてください．
 ある野球チームに所属する19人の打撃に関するデータであり，
-年齢，試合数，安打などの14項目で構成されています（名前はアルファベットで表記）．</p>
-<p><a href="https://mukai-lab.info/classes/management_data_analysis/dataset13.csv"><i class="fas fa-cloud-download-alt"></i> dataset13.csv</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">名前,年齢,試合数,安打,2塁打,3塁打,本塁打,打点,四球,三振,打率,出塁率,盗塁,犠打,犠飛
-A,40,81,55,8,1,5,22,28,28,0.248,0.336,3,0,3
-B,34,47,3,1,0,0,0,6,7,0.136,0.321,0,0,0
-C,21,73,29,5,1,6,14,6,34,0.206,0.238,0,1,0
-D,34,52,10,1,0,0,7,4,7,0.175,0.234,0,0,2
-E,23,37,13,3,0,0,4,2,11,0.183,0.2,0,2,2
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Excelで主成分分析
-</h1>
-
-<p>Excelを利用して主成分分析を試してみましょう．
+年齢，試合数，安打などの14項目で構成されています（名前はアルファベットで表記）．</p><p><a href=https://mukai-lab.info/classes/management_data_analysis/dataset13.csv><i class="fas fa-cloud-download-alt"></i> dataset13.csv</a></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>名前,年齢,試合数,安打,2塁打,3塁打,本塁打,打点,四球,三振,打率,出塁率,盗塁,犠打,犠飛
+</span></span><span style=display:flex><span>A,40,81,55,8,1,5,22,28,28,0.248,0.336,3,0,3
+</span></span><span style=display:flex><span>B,34,47,3,1,0,0,0,6,7,0.136,0.321,0,0,0
+</span></span><span style=display:flex><span>C,21,73,29,5,1,6,14,6,34,0.206,0.238,0,1,0
+</span></span><span style=display:flex><span>D,34,52,10,1,0,0,7,4,7,0.175,0.234,0,0,2
+</span></span><span style=display:flex><span>E,23,37,13,3,0,0,4,2,11,0.183,0.2,0,2,2
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Excelで主成分分析</h1><p>Excelを利用して主成分分析を試してみましょう．
 ダウンロードしたファイルをExcelで開いてください．
-ここでは，年齢や試合数など14項目の変数（$x_1,x_2,\cdots,x_{14}$）から，第1主成分を求めます．</p>
-<h2 id="標準化">標準化</h2>
-<p>行$22$に平均，行$23$に標準偏差を求めます．
+ここでは，年齢や試合数など14項目の変数（$x_1,x_2,\cdots,x_{14}$）から，第1主成分を求めます．</p><h2 id=標準化>標準化</h2><p>行$22$に平均，行$23$に標準偏差を求めます．
 平均は<code>average</code>関数，標準偏差は<code>stdev</code>関数を利用します．
-例えば，$B21$は<code>=AVERAGE(B2:B20)</code>，$B22$は<code>=STDEV(B2:B20)</code>と入力します．</p>
-<p><a href="https://gyazo.com/3767f1b10584eeaf48f24f2e884a1e97"><img src="https://i.gyazo.com/3767f1b10584eeaf48f24f2e884a1e97.png" alt="Image from Gyazo"></a></p>
-<p>新しいシートを作成し，<code>standarize</code>関数を利用して，標準化したデータを入力します．
+例えば，$B21$は<code>=AVERAGE(B2:B20)</code>，$B22$は<code>=STDEV(B2:B20)</code>と入力します．</p><p><a href=https://gyazo.com/3767f1b10584eeaf48f24f2e884a1e97><img src=https://i.gyazo.com/3767f1b10584eeaf48f24f2e884a1e97.png alt="Image from Gyazo"></a></p><p>新しいシートを作成し，<code>standarize</code>関数を利用して，標準化したデータを入力します．
 標準化とは，平均を0，標準偏差を1に変換する操作を意味し，先に算出した平均と標準偏差を用います．
-例えば，$B2$は<code>=STANDARDIZE(Sheet1!B2,Sheet1!B$21,Sheet1!B$22)</code>と入力します．</p>
-<p><a href="https://gyazo.com/19e52466b21800827496c9972865f623"><img src="https://i.gyazo.com/19e52466b21800827496c9972865f623.png" alt="Image from Gyazo"></a></p>
-<h2 id="主成分負荷量と主成分得点">主成分負荷量と主成分得点</h2>
-<p>行$22$に主成分負荷量$W$を入力します．
+例えば，$B2$は<code>=STANDARDIZE(Sheet1!B2,Sheet1!B$21,Sheet1!B$22)</code>と入力します．</p><p><a href=https://gyazo.com/19e52466b21800827496c9972865f623><img src=https://i.gyazo.com/19e52466b21800827496c9972865f623.png alt="Image from Gyazo"></a></p><h2 id=主成分負荷量と主成分得点>主成分負荷量と主成分得点</h2><p>行$22$に主成分負荷量$W$を入力します．
 初期値は，$w_1=1$とし，$w_2,\cdots,w_{14}$は$0$に設定します．
-このとき，$|W|=1$となります．</p>
-<p><a href="https://gyazo.com/96e9da646b2b965b5fbefb810b074b34"><img src="https://i.gyazo.com/96e9da646b2b965b5fbefb810b074b34.png" alt="Image from Gyazo"></a></p>
-<p>列$Q$に主成分得点$W \cdot X$を入力します．
+このとき，$|W|=1$となります．</p><p><a href=https://gyazo.com/96e9da646b2b965b5fbefb810b074b34><img src=https://i.gyazo.com/96e9da646b2b965b5fbefb810b074b34.png alt="Image from Gyazo"></a></p><p>列$Q$に主成分得点$W \cdot X$を入力します．
 内積は<code>sumproduct</code>関数を用いると簡単に計算できます．
-例えば，$Q2$は<code>=SUMPRODUCT($B$22:$O$22,B2:O2)</code>と入力します．</p>
-<p><a href="https://gyazo.com/433f78206624a4cbbdfc31e33fe66547"><img src="https://i.gyazo.com/433f78206624a4cbbdfc31e33fe66547.png" alt="Image from Gyazo"></a></p>
-<h2 id="目的関数と制約条件">目的関数と制約条件</h2>
-<p>$B24$に目的関数，$B25$に成約条件を入力します．
+例えば，$Q2$は<code>=SUMPRODUCT($B$22:$O$22,B2:O2)</code>と入力します．</p><p><a href=https://gyazo.com/433f78206624a4cbbdfc31e33fe66547><img src=https://i.gyazo.com/433f78206624a4cbbdfc31e33fe66547.png alt="Image from Gyazo"></a></p><h2 id=目的関数と制約条件>目的関数と制約条件</h2><p>$B24$に目的関数，$B25$に成約条件を入力します．
 目的関数は主成分得点$W \cdot X$の分散であり，<code>=VAR(Q2:Q20)</code>で算出します．
-成約条件は$|W|=1$であり，<code>=SQRT(SUMPRODUCT(B22:O22,B22:O22))</code>で算出します．</p>
-<p><a href="https://gyazo.com/d03dcfef41acdc557ddf8c1126667c4e"><img src="https://i.gyazo.com/d03dcfef41acdc557ddf8c1126667c4e.png" alt="Image from Gyazo"></a></p>
-<h2 id="ソルバー">ソルバー</h2>
-<p>データ・タブからソルバーを選択します．
+成約条件は$|W|=1$であり，<code>=SQRT(SUMPRODUCT(B22:O22,B22:O22))</code>で算出します．</p><p><a href=https://gyazo.com/d03dcfef41acdc557ddf8c1126667c4e><img src=https://i.gyazo.com/d03dcfef41acdc557ddf8c1126667c4e.png alt="Image from Gyazo"></a></p><h2 id=ソルバー>ソルバー</h2><p>データ・タブからソルバーを選択します．
 ソルバーのパラメータに，目的セル（目的関数），変数セル（変数）を設定します．
-解決方法はGRG非線形を選択市，解決ボタンをクリックします．</p>
-<p><a href="https://gyazo.com/605a0cf7b5eb46bdef5ceba13252e8e4"><img src="https://i.gyazo.com/605a0cf7b5eb46bdef5ceba13252e8e4.png" alt="Image from Gyazo"></a></p>
-<p>この結果，主成分負荷量$W$と，主成分得点$W \cdot X$は次のようになりました．</p>
-<p><a href="https://gyazo.com/6e96cb26fa6f7813c421f1d3fa982b81"><img src="https://i.gyazo.com/6e96cb26fa6f7813c421f1d3fa982b81.png" alt="Image from Gyazo"></a></p>
-<p><a href="https://gyazo.com/92987fced846b8353ea89081cc397d43"><img src="https://i.gyazo.com/92987fced846b8353ea89081cc397d43.png" alt="Image from Gyazo"></a></p>
-<h2 id="グラフの作成">グラフの作成</h2>
-<p>主成分得点を棒グラフで表してみます．
+解決方法はGRG非線形を選択市，解決ボタンをクリックします．</p><p><a href=https://gyazo.com/605a0cf7b5eb46bdef5ceba13252e8e4><img src=https://i.gyazo.com/605a0cf7b5eb46bdef5ceba13252e8e4.png alt="Image from Gyazo"></a></p><p>この結果，主成分負荷量$W$と，主成分得点$W \cdot X$は次のようになりました．</p><p><a href=https://gyazo.com/6e96cb26fa6f7813c421f1d3fa982b81><img src=https://i.gyazo.com/6e96cb26fa6f7813c421f1d3fa982b81.png alt="Image from Gyazo"></a></p><p><a href=https://gyazo.com/92987fced846b8353ea89081cc397d43><img src=https://i.gyazo.com/92987fced846b8353ea89081cc397d43.png alt="Image from Gyazo"></a></p><h2 id=グラフの作成>グラフの作成</h2><p>主成分得点を棒グラフで表してみます．
 選手Hが6.39で最も大きな得点となりました．
 次いで選手Oが4.82で2番目に大きな得点です．
 主成分負荷量は，安打，打点，三振が約0.33，試合数，2塁打が約0.32と大きな値を示しています．
 一方，犠打，年齢は約0であり，第1主成分に寄与していません．
-このことから，第1主成分は，打席に立つ機会が多い <strong>中心選手</strong> を表していると考えられます．</p>
-<p><a href="https://gyazo.com/7b8fb26d7d950dc6c14400ea0a5f22eb"><img src="https://i.gyazo.com/7b8fb26d7d950dc6c14400ea0a5f22eb.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Pythonで主成分分析
-</h1>
-
-<p>Pythonを利用して，主成分分析を試してみましょう．
+このことから，第1主成分は，打席に立つ機会が多い <strong>中心選手</strong> を表していると考えられます．</p><p><a href=https://gyazo.com/7b8fb26d7d950dc6c14400ea0a5f22eb><img src=https://i.gyazo.com/7b8fb26d7d950dc6c14400ea0a5f22eb.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Pythonで主成分分析</h1><p>Pythonを利用して，主成分分析を試してみましょう．
 ここでは，年齢や試合数など14項目の変数（$x_1,x_2,\cdots,x_{14}$）から，
-第1主成分と第2主成分を求めます．</p>
-<p>Jupyter Labを起動して，<strong>Python 3</strong>のノートブックを開きます．
-ノートブックの名前は <strong>chapter14.ipynb</strong> とします．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">import</span> japanize_matplotlib
-<span style="color:#f92672">from</span> sklearn.preprocessing <span style="color:#f92672">import</span> StandardScaler
-<span style="color:#f92672">from</span> sklearn.decomposition <span style="color:#f92672">import</span> PCA
-</code></pre></div><h2 id="データセットの読込">データセットの読込</h2>
-<p><code>read_csv</code>関数でデータセットを読み込みます．
-また，対象とする14項目の変数（$x_1,x_2,\cdots,x_{14}$）を抽出します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;../dataset/dataset13.csv&#34;</span>)
-target_columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;試合数&#34;</span>, <span style="color:#e6db74">&#34;年齢&#34;</span>, <span style="color:#e6db74">&#34;安打&#34;</span>, <span style="color:#e6db74">&#34;2塁打&#34;</span>, <span style="color:#e6db74">&#34;3塁打&#34;</span>, <span style="color:#e6db74">&#34;本塁打&#34;</span>, <span style="color:#e6db74">&#34;打点&#34;</span>, <span style="color:#e6db74">&#34;四球&#34;</span>, <span style="color:#e6db74">&#34;三振&#34;</span>, <span style="color:#e6db74">&#34;打率&#34;</span>, <span style="color:#e6db74">&#34;出塁率&#34;</span>, <span style="color:#e6db74">&#34;盗塁&#34;</span>, <span style="color:#e6db74">&#34;犠打&#34;</span>, <span style="color:#e6db74">&#34;犠飛&#34;</span>]
-target_df <span style="color:#f92672">=</span> df[target_columns]
-display(target_df)
-</code></pre></div><p><a href="https://gyazo.com/6804def36d8b513c53ef30b423464c3d"><img src="https://i.gyazo.com/6804def36d8b513c53ef30b423464c3d.png" alt="Image from Gyazo"></a></p>
-<h2 id="標準化-1">標準化</h2>
-<p><code>StandardScaler</code>を利用して，平均$0$，標準偏差$1$に標準化します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 標準化</span>
-scaler <span style="color:#f92672">=</span> StandardScaler()
-data <span style="color:#f92672">=</span> scaler<span style="color:#f92672">.</span>fit_transform(target_df) 
-
-<span style="color:#75715e"># 標準化したデータでデータフレームを再構築</span>
-target_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data) 
-target_df<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> target_columns
-display(target_df)
-</code></pre></div><p><a href="https://gyazo.com/00d9e01ae22e3060cac5188207039b9c"><img src="https://i.gyazo.com/00d9e01ae22e3060cac5188207039b9c.png" alt="Image from Gyazo"></a></p>
-<h2 id="主成分分析">主成分分析</h2>
-<p><code>PCA</code>を利用して，主成分分析を実行します．
-<code>n_components=2</code>を指定して，第2主成分まで算出します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 主成分分析</span>
-pca <span style="color:#f92672">=</span> PCA(n_components<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
-pca<span style="color:#f92672">.</span>fit(target_df)
-</code></pre></div><p>主成分負荷量$W$を散布図で可視化します．
+第1主成分と第2主成分を求めます．</p><p>Jupyter Labを起動して，<strong>Python 3</strong>のノートブックを開きます．
+ノートブックの名前は <strong>chapter14.ipynb</strong> とします．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> japanize_matplotlib
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> sklearn.preprocessing <span style=color:#f92672>import</span> StandardScaler
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> sklearn.decomposition <span style=color:#f92672>import</span> PCA
+</span></span></code></pre></div><h2 id=データセットの読込>データセットの読込</h2><p><code>read_csv</code>関数でデータセットを読み込みます．
+また，対象とする14項目の変数（$x_1,x_2,\cdots,x_{14}$）を抽出します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(<span style=color:#e6db74>&#34;../dataset/dataset13.csv&#34;</span>)
+</span></span><span style=display:flex><span>target_columns <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;試合数&#34;</span>, <span style=color:#e6db74>&#34;年齢&#34;</span>, <span style=color:#e6db74>&#34;安打&#34;</span>, <span style=color:#e6db74>&#34;2塁打&#34;</span>, <span style=color:#e6db74>&#34;3塁打&#34;</span>, <span style=color:#e6db74>&#34;本塁打&#34;</span>, <span style=color:#e6db74>&#34;打点&#34;</span>, <span style=color:#e6db74>&#34;四球&#34;</span>, <span style=color:#e6db74>&#34;三振&#34;</span>, <span style=color:#e6db74>&#34;打率&#34;</span>, <span style=color:#e6db74>&#34;出塁率&#34;</span>, <span style=color:#e6db74>&#34;盗塁&#34;</span>, <span style=color:#e6db74>&#34;犠打&#34;</span>, <span style=color:#e6db74>&#34;犠飛&#34;</span>]
+</span></span><span style=display:flex><span>target_df <span style=color:#f92672>=</span> df[target_columns]
+</span></span><span style=display:flex><span>display(target_df)
+</span></span></code></pre></div><p><a href=https://gyazo.com/6804def36d8b513c53ef30b423464c3d><img src=https://i.gyazo.com/6804def36d8b513c53ef30b423464c3d.png alt="Image from Gyazo"></a></p><h2 id=標準化-1>標準化</h2><p><code>StandardScaler</code>を利用して，平均$0$，標準偏差$1$に標準化します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 標準化</span>
+</span></span><span style=display:flex><span>scaler <span style=color:#f92672>=</span> StandardScaler()
+</span></span><span style=display:flex><span>data <span style=color:#f92672>=</span> scaler<span style=color:#f92672>.</span>fit_transform(target_df) 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 標準化したデータでデータフレームを再構築</span>
+</span></span><span style=display:flex><span>target_df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>DataFrame(data) 
+</span></span><span style=display:flex><span>target_df<span style=color:#f92672>.</span>columns <span style=color:#f92672>=</span> target_columns
+</span></span><span style=display:flex><span>display(target_df)
+</span></span></code></pre></div><p><a href=https://gyazo.com/00d9e01ae22e3060cac5188207039b9c><img src=https://i.gyazo.com/00d9e01ae22e3060cac5188207039b9c.png alt="Image from Gyazo"></a></p><h2 id=主成分分析>主成分分析</h2><p><code>PCA</code>を利用して，主成分分析を実行します．
+<code>n_components=2</code>を指定して，第2主成分まで算出します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 主成分分析</span>
+</span></span><span style=display:flex><span>pca <span style=color:#f92672>=</span> PCA(n_components<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>)
+</span></span><span style=display:flex><span>pca<span style=color:#f92672>.</span>fit(target_df)
+</span></span></code></pre></div><p>主成分負荷量$W$を散布図で可視化します．
 横軸は第1主成分，縦軸は第2主成分の主成分負荷量を表しています．
 第1主成分に関しては，Excelの算出結果と同様に，安打，打点，三振が大きな値を示しています．
 また，犠打・年齢は約0となっている点も同じです．
 このことから，第1主成分は，打席に立つ機会が多い <strong>中心選手</strong> を表していると考えられます．
 一方で，第2主成分に関しては，本塁打，四球，打点が大きな値を示しています．
 また，犠飛，三塁打，年齢，盗塁，犠打が低い値を示しています．
-このことから，第2主成分は，<strong>長打力</strong> を表していると考えられます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">comp1 <span style="color:#f92672">=</span> pca<span style="color:#f92672">.</span>components_[<span style="color:#ae81ff">0</span>] <span style="color:#75715e"># 第1主成分</span>
-comp2 <span style="color:#f92672">=</span> pca<span style="color:#f92672">.</span>components_[<span style="color:#ae81ff">1</span>] <span style="color:#75715e"># 第2主成分</span>
-
-plt<span style="color:#f92672">.</span>scatter(comp1, comp2, label<span style="color:#f92672">=</span>target_columns)
-
-<span style="color:#66d9ef">for</span> x, y, column <span style="color:#f92672">in</span> zip(comp1, comp2, target_columns):
-    plt<span style="color:#f92672">.</span>text(x, y, column)
-
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;第1主成分&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;第2主成分&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/4c19b3e3e3fca25642724709d0d9472e"><img src="https://i.gyazo.com/4c19b3e3e3fca25642724709d0d9472e.png" alt="Image from Gyazo"></a></p>
-<p>主成分得点$W \cdot X$を散布図で可視化します．
+このことから，第2主成分は，<strong>長打力</strong> を表していると考えられます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>comp1 <span style=color:#f92672>=</span> pca<span style=color:#f92672>.</span>components_[<span style=color:#ae81ff>0</span>] <span style=color:#75715e># 第1主成分</span>
+</span></span><span style=display:flex><span>comp2 <span style=color:#f92672>=</span> pca<span style=color:#f92672>.</span>components_[<span style=color:#ae81ff>1</span>] <span style=color:#75715e># 第2主成分</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>scatter(comp1, comp2, label<span style=color:#f92672>=</span>target_columns)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> x, y, column <span style=color:#f92672>in</span> zip(comp1, comp2, target_columns):
+</span></span><span style=display:flex><span>    plt<span style=color:#f92672>.</span>text(x, y, column)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>xlabel(<span style=color:#e6db74>&#34;第1主成分&#34;</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#34;第2主成分&#34;</span>)
+</span></span></code></pre></div><p><a href=https://gyazo.com/4c19b3e3e3fca25642724709d0d9472e><img src=https://i.gyazo.com/4c19b3e3e3fca25642724709d0d9472e.png alt="Image from Gyazo"></a></p><p>主成分得点$W \cdot X$を散布図で可視化します．
 第1主成分は，選手H，O，Rの得点が高く，チームの中心選手であることがわかります．
-また，第2主成分は，選手Hは得点が高いことから長打力のある選手，選手Oは得点が低いことから機動力のある選手であることがわかります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 主成分得点（第1主成分）</span>
-score_x <span style="color:#f92672">=</span> list((target_df <span style="color:#f92672">*</span> pca<span style="color:#f92672">.</span>components_[<span style="color:#ae81ff">0</span>])<span style="color:#f92672">.</span>sum(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-
-<span style="color:#75715e"># 主成分得点（第2主成分）</span>
-score_y <span style="color:#f92672">=</span> list((target_df <span style="color:#f92672">*</span> pca<span style="color:#f92672">.</span>components_[<span style="color:#ae81ff">1</span>])<span style="color:#f92672">.</span>sum(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
-
-plt<span style="color:#f92672">.</span>scatter(score_x, score_y)
-
-<span style="color:#66d9ef">for</span> x, y, name <span style="color:#f92672">in</span> zip(score_x, score_y, df[<span style="color:#e6db74">&#34;名前&#34;</span>]):
-    plt<span style="color:#f92672">.</span>text(x, y, name)
-
-plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#34;第1主成分（中心選手⇔サポート選手）&#34;</span>)
-plt<span style="color:#f92672">.</span>ylabel(<span style="color:#e6db74">&#34;第2主成分（長打力⇔機動力）&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/ff5846ad18b69c9421e06f900980ec66"><img src="https://i.gyazo.com/ff5846ad18b69c9421e06f900980ec66.png" alt="Image from Gyazo"></a></p>
-<h2 id="寄与率">寄与率</h2>
-<p>第1主成分と第2主成分の寄与率を確認します．
+また，第2主成分は，選手Hは得点が高いことから長打力のある選手，選手Oは得点が低いことから機動力のある選手であることがわかります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 主成分得点（第1主成分）</span>
+</span></span><span style=display:flex><span>score_x <span style=color:#f92672>=</span> list((target_df <span style=color:#f92672>*</span> pca<span style=color:#f92672>.</span>components_[<span style=color:#ae81ff>0</span>])<span style=color:#f92672>.</span>sum(axis<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 主成分得点（第2主成分）</span>
+</span></span><span style=display:flex><span>score_y <span style=color:#f92672>=</span> list((target_df <span style=color:#f92672>*</span> pca<span style=color:#f92672>.</span>components_[<span style=color:#ae81ff>1</span>])<span style=color:#f92672>.</span>sum(axis<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>scatter(score_x, score_y)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> x, y, name <span style=color:#f92672>in</span> zip(score_x, score_y, df[<span style=color:#e6db74>&#34;名前&#34;</span>]):
+</span></span><span style=display:flex><span>    plt<span style=color:#f92672>.</span>text(x, y, name)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>xlabel(<span style=color:#e6db74>&#34;第1主成分（中心選手⇔サポート選手）&#34;</span>)
+</span></span><span style=display:flex><span>plt<span style=color:#f92672>.</span>ylabel(<span style=color:#e6db74>&#34;第2主成分（長打力⇔機動力）&#34;</span>)
+</span></span></code></pre></div><p><a href=https://gyazo.com/ff5846ad18b69c9421e06f900980ec66><img src=https://i.gyazo.com/ff5846ad18b69c9421e06f900980ec66.png alt="Image from Gyazo"></a></p><h2 id=寄与率>寄与率</h2><p>第1主成分と第2主成分の寄与率を確認します．
 第1主成分の寄与率は58.3%であり，全体の約6割の情報を占めていることがわかります．
 また，第2主成分の寄与率は11.5%であり，約1割を占めていることがわかります．
-合わせて約7割となっており，大部分の情報は第1主成分と第2主成分で表現できていると言えそうです．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 寄与率</span>
-pca<span style="color:#f92672">.</span>explained_variance_ratio_
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">array([0.58329665, 0.11521758])
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
-
-<p>ワインのデータを主成分分析して，第1主成分と第2主成分を求めなさい．
-各データはアルコール度数，りんご酸など13の特徴量で構成されている．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_wine
-
-data <span style="color:#f92672">=</span> load_wine()
-
-wine_columns <span style="color:#f92672">=</span> [
-    <span style="color:#e6db74">&#34;アルコール度数&#34;</span>,
-    <span style="color:#e6db74">&#34;リンゴ酸&#34;</span>,
-    <span style="color:#e6db74">&#34;灰分&#34;</span>,
-    <span style="color:#e6db74">&#34;灰分のアルカリ度&#34;</span>,
-    <span style="color:#e6db74">&#34;マグネシウム&#34;</span>,
-    <span style="color:#e6db74">&#34;全フェノール含量&#34;</span>,
-    <span style="color:#e6db74">&#34;フラボノイド&#34;</span>,
-    <span style="color:#e6db74">&#34;非フラボノイドフェノール&#34;</span>,
-    <span style="color:#e6db74">&#34;プロアントシアニン&#34;</span>,
-    <span style="color:#e6db74">&#34;色の濃さ&#34;</span>,
-    <span style="color:#e6db74">&#34;色相&#34;</span>,
-    <span style="color:#e6db74">&#34;希釈ワイン溶液のOD280／OD315&#34;</span>,
-    <span style="color:#e6db74">&#34;プロリン&#34;</span>
-]
-
-wine_df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(data<span style="color:#f92672">.</span>data)
-wine_df<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> wine_columns
-display(wine_df)
-</code></pre></div><p><a href="https://gyazo.com/f726d991894885fdac07aad091d859fd"><img src="https://i.gyazo.com/f726d991894885fdac07aad091d859fd.png" alt="Image from Gyazo"></a></p>
-<p><a href="https://gyazo.com/b48238df2f8ff8d8d57841d15bc64f10"><img src="https://i.gyazo.com/b48238df2f8ff8d8d57841d15bc64f10.png" alt="Image from Gyazo" width="400"/></a></p>
-<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+合わせて約7割となっており，大部分の情報は第1主成分と第2主成分で表現できていると言えそうです．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 寄与率</span>
+</span></span><span style=display:flex><span>pca<span style=color:#f92672>.</span>explained_variance_ratio_
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>array([0.58329665, 0.11521758])
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>ワインのデータを主成分分析して，第1主成分と第2主成分を求めなさい．
+各データはアルコール度数，りんご酸など13の特徴量で構成されている．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> sklearn.datasets <span style=color:#f92672>import</span> load_wine
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>data <span style=color:#f92672>=</span> load_wine()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>wine_columns <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;アルコール度数&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;リンゴ酸&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;灰分&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;灰分のアルカリ度&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;マグネシウム&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;全フェノール含量&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;フラボノイド&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;非フラボノイドフェノール&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;プロアントシアニン&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;色の濃さ&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;色相&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;希釈ワイン溶液のOD280／OD315&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;プロリン&#34;</span>
+</span></span><span style=display:flex><span>]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>wine_df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>DataFrame(data<span style=color:#f92672>.</span>data)
+</span></span><span style=display:flex><span>wine_df<span style=color:#f92672>.</span>columns <span style=color:#f92672>=</span> wine_columns
+</span></span><span style=display:flex><span>display(wine_df)
+</span></span></code></pre></div><p><a href=https://gyazo.com/f726d991894885fdac07aad091d859fd><img src=https://i.gyazo.com/f726d991894885fdac07aad091d859fd.png alt="Image from Gyazo"></a></p><p><a href=https://gyazo.com/b48238df2f8ff8d8d57841d15bc64f10><img src=https://i.gyazo.com/b48238df2f8ff8d8d57841d15bc64f10.png alt="Image from Gyazo" width=400></a></p><p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
 ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
-ノートブックのファイル名は <strong>chapter14.ipynb</strong> としてください．</p>
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+ノートブックのファイル名は <strong>chapter14.ipynb</strong> としてください．</p><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

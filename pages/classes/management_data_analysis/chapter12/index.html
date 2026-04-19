@@ -1,557 +1,364 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    回帰分析②・重回帰 | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>回帰分析②・重回帰 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
-
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="回帰分析②・重回帰" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter12/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="重回帰分析と決定係数説明変数が複数の変数$x_1, x_2, \cdots, x_m$で構成される 重回帰分析 に着目します． 重回帰分析の回帰モデルは次の式で表されます． ここで，$W = \left\{ w_0, w_1, \cdots, w_m \right\}$は回帰モデルの係数です． また，$x_0=1$とみなすことで，説明変数は$X = \left\{ 1, x_1, \cdots, x_m \right\}$のように表すことができます． この結果，回帰係数は$W$と$X$の内積で表されます．
-$$ f(X) = W \cdot X = \sum_{i=0}^{m}w_ix_i = w_0 \cdot 1 &#43; w_1 \cdot x_1 &#43; \cdots &#43; w_m \cdot x_m $$
-例えば，変数$x_1$を身長，変数$x_2$を座高，変数$y$を体重とした回帰分析を考えます． 次の表はe-Statで公開されている5歳から14歳までの男性の身長，座高，体重の平均です（分かりやすさのため，ここでは多重共線性を考慮しない）．
-   年齢 身長$x_1$ 座高$x_2$ 体重$y$     5 110.7 61.9 19.0   6 116.7 64." />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="回帰分析②・重回帰" />
-
-
-
-  <meta name="twitter:description" content="重回帰分析と決定係数説明変数が複数の変数$x_1, x_2, \cdots, x_m$で構成される 重回帰分析 に着目します． 重回帰分析の回帰モデルは次の式で表されます． ここで，$W = \left\{ w_0, w_1, \cdots, w_m \right\}$は回帰モデルの係数です． また，$x_0=1$とみなすことで，説明変数は$X = \left\{ 1, x_1, \cdots, x_m \right\}$のように表すことができます． この結果，回帰係数は$W$と$X$の内積で表されます．
-$$ f(X) = W \cdot X = \sum_{i=0}^{m}w_ix_i = w_0 \cdot 1 &#43; w_1 \cdot x_1 &#43; \cdots &#43; w_m \cdot x_m $$
-例えば，変数$x_1$を身長，変数$x_2$を座高，変数$y$を体重とした回帰分析を考えます． 次の表はe-Statで公開されている5歳から14歳までの男性の身長，座高，体重の平均です（分かりやすさのため，ここでは多重共線性を考慮しない）．
-   年齢 身長$x_1$ 座高$x_2$ 体重$y$     5 110.7 61.9 19.0   6 116.7 64." />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">回帰分析②・重回帰</h1>
-<div class="post-line"></div>
-    
-    
-
-    <h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="回帰分析②・重回帰"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter12/"><meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
   重回帰分析と決定係数
-</h1>
 
-<p>説明変数が複数の変数$x_1,  x_2, \cdots, x_m$で構成される <strong>重回帰分析</strong> に着目します．
+
+説明変数が複数の変数$x_1,  x_2, \cdots, x_m$で構成される 重回帰分析 に着目します．
 重回帰分析の回帰モデルは次の式で表されます．
 ここで，$W = \left\{ w_0, w_1, \cdots, w_m \right\}$は回帰モデルの係数です．
 また，$x_0=1$とみなすことで，説明変数は$X = \left\{ 1, x_1, \cdots, x_m \right\}$のように表すことができます．
-この結果，回帰係数は$W$と$X$の内積で表されます．</p>
-<p>$$
+この結果，回帰係数は$W$と$X$の内積で表されます．
+$$
 f(X) = W \cdot X = \sum_{i=0}^{m}w_ix_i = w_0 \cdot 1 + w_1 \cdot x_1 + \cdots + w_m \cdot x_m
-$$</p>
-<p>例えば，変数$x_1$を身長，変数$x_2$を座高，変数$y$を体重とした回帰分析を考えます．
-次の表は<a href="https://www.e-stat.go.jp/">e-Stat</a>で公開されている5歳から14歳までの男性の身長，座高，体重の平均です（分かりやすさのため，ここでは<a href="https://ja.wikipedia.org/wiki/%E5%A4%9A%E9%87%8D%E5%85%B1%E7%B7%9A%E6%80%A7">多重共線性</a>を考慮しない）．</p>
-<table>
-<thead>
-<tr>
-<th>年齢</th>
-<th>身長$x_1$</th>
-<th>座高$x_2$</th>
-<th>体重$y$</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>5</td>
-<td>110.7</td>
-<td>61.9</td>
-<td>19.0</td>
-</tr>
-<tr>
-<td>6</td>
-<td>116.7</td>
-<td>64.9</td>
-<td>21.5</td>
-</tr>
-<tr>
-<td>7</td>
-<td>122.6</td>
-<td>67.7</td>
-<td>24.1</td>
-</tr>
-<tr>
-<td>8</td>
-<td>128.3</td>
-<td>70.3</td>
-<td>27.2</td>
-</tr>
-<tr>
-<td>9</td>
-<td>133.6</td>
-<td>72.7</td>
-<td>30.6</td>
-</tr>
-<tr>
-<td>10</td>
-<td>138.9</td>
-<td>75.0</td>
-<td>34.2</td>
-</tr>
-<tr>
-<td>11</td>
-<td>145.1</td>
-<td>77.6</td>
-<td>38.4</td>
-</tr>
-<tr>
-<td>12</td>
-<td>152.5</td>
-<td>81.3</td>
-<td>44.2</td>
-</tr>
-<tr>
-<td>13</td>
-<td>159.7</td>
-<td>84.9</td>
-<td>49.1</td>
-</tr>
-<tr>
-<td>14</td>
-<td>165.2</td>
-<td>88.1</td>
-<td>54.3</td>
-</tr>
-</tbody>
-</table>
-<p>上記のデータを基に導出した回帰モデルは次の式で表されます．
-$w_0=-75.47$，$w_1=-0.30$，$w_2=2.03$に対応します．</p>
-<p>$$
+$$
+例えば，変数$x_1$を身長，変数$x_2$を座高，変数$y$を体重とした回帰分析を考えます．
+次の表はe-Statで公開されている5歳から14歳までの男性の身長，座高，体重の平均です（分かりやすさのため，ここでは多重共線性を考慮しない）．
+
+  
+      
+          年齢
+          身長$x_1$
+          座高$x_2$
+          体重$y$
+      
+  
+  
+      
+          5
+          110.7
+          61.9
+          19.0
+      
+      
+          6
+          116.7
+          64.9
+          21.5
+      
+      
+          7
+          122.6
+          67.7
+          24.1
+      
+      
+          8
+          128.3
+          70.3
+          27.2
+      
+      
+          9
+          133.6
+          72.7
+          30.6
+      
+      
+          10
+          138.9
+          75.0
+          34.2
+      
+      
+          11
+          145.1
+          77.6
+          38.4
+      
+      
+          12
+          152.5
+          81.3
+          44.2
+      
+      
+          13
+          159.7
+          84.9
+          49.1
+      
+      
+          14
+          165.2
+          88.1
+          54.3
+      
+  
+
+上記のデータを基に導出した回帰モデルは次の式で表されます．
+$w_0=-75.47$，$w_1=-0.30$，$w_2=2.03$に対応します．"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="回帰分析②・重回帰"><meta name=twitter:description content="
+  重回帰分析と決定係数
+
+
+説明変数が複数の変数$x_1,  x_2, \cdots, x_m$で構成される 重回帰分析 に着目します．
+重回帰分析の回帰モデルは次の式で表されます．
+ここで，$W = \left\{ w_0, w_1, \cdots, w_m \right\}$は回帰モデルの係数です．
+また，$x_0=1$とみなすことで，説明変数は$X = \left\{ 1, x_1, \cdots, x_m \right\}$のように表すことができます．
+この結果，回帰係数は$W$と$X$の内積で表されます．
+$$
+f(X) = W \cdot X = \sum_{i=0}^{m}w_ix_i = w_0 \cdot 1 + w_1 \cdot x_1 + \cdots + w_m \cdot x_m
+$$
+例えば，変数$x_1$を身長，変数$x_2$を座高，変数$y$を体重とした回帰分析を考えます．
+次の表はe-Statで公開されている5歳から14歳までの男性の身長，座高，体重の平均です（分かりやすさのため，ここでは多重共線性を考慮しない）．
+
+  
+      
+          年齢
+          身長$x_1$
+          座高$x_2$
+          体重$y$
+      
+  
+  
+      
+          5
+          110.7
+          61.9
+          19.0
+      
+      
+          6
+          116.7
+          64.9
+          21.5
+      
+      
+          7
+          122.6
+          67.7
+          24.1
+      
+      
+          8
+          128.3
+          70.3
+          27.2
+      
+      
+          9
+          133.6
+          72.7
+          30.6
+      
+      
+          10
+          138.9
+          75.0
+          34.2
+      
+      
+          11
+          145.1
+          77.6
+          38.4
+      
+      
+          12
+          152.5
+          81.3
+          44.2
+      
+      
+          13
+          159.7
+          84.9
+          49.1
+      
+      
+          14
+          165.2
+          88.1
+          54.3
+      
+  
+
+上記のデータを基に導出した回帰モデルは次の式で表されます．
+$w_0=-75.47$，$w_1=-0.30$，$w_2=2.03$に対応します．"><meta name=twitter:image content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>回帰分析②・重回帰</h1><div class=post-line></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>重回帰分析と決定係数</h1><p>説明変数が複数の変数$x_1, x_2, \cdots, x_m$で構成される <strong>重回帰分析</strong> に着目します．
+重回帰分析の回帰モデルは次の式で表されます．
+ここで，$W = \left\{ w_0, w_1, \cdots, w_m \right\}$は回帰モデルの係数です．
+また，$x_0=1$とみなすことで，説明変数は$X = \left\{ 1, x_1, \cdots, x_m \right\}$のように表すことができます．
+この結果，回帰係数は$W$と$X$の内積で表されます．</p><p>$$
+f(X) = W \cdot X = \sum_{i=0}^{m}w_ix_i = w_0 \cdot 1 + w_1 \cdot x_1 + \cdots + w_m \cdot x_m
+$$</p><p>例えば，変数$x_1$を身長，変数$x_2$を座高，変数$y$を体重とした回帰分析を考えます．
+次の表は<a href=https://www.e-stat.go.jp/>e-Stat</a>で公開されている5歳から14歳までの男性の身長，座高，体重の平均です（分かりやすさのため，ここでは<a href=https://ja.wikipedia.org/wiki/%E5%A4%9A%E9%87%8D%E5%85%B1%E7%B7%9A%E6%80%A7>多重共線性</a>を考慮しない）．</p><table><thead><tr><th>年齢</th><th>身長$x_1$</th><th>座高$x_2$</th><th>体重$y$</th></tr></thead><tbody><tr><td>5</td><td>110.7</td><td>61.9</td><td>19.0</td></tr><tr><td>6</td><td>116.7</td><td>64.9</td><td>21.5</td></tr><tr><td>7</td><td>122.6</td><td>67.7</td><td>24.1</td></tr><tr><td>8</td><td>128.3</td><td>70.3</td><td>27.2</td></tr><tr><td>9</td><td>133.6</td><td>72.7</td><td>30.6</td></tr><tr><td>10</td><td>138.9</td><td>75.0</td><td>34.2</td></tr><tr><td>11</td><td>145.1</td><td>77.6</td><td>38.4</td></tr><tr><td>12</td><td>152.5</td><td>81.3</td><td>44.2</td></tr><tr><td>13</td><td>159.7</td><td>84.9</td><td>49.1</td></tr><tr><td>14</td><td>165.2</td><td>88.1</td><td>54.3</td></tr></tbody></table><p>上記のデータを基に導出した回帰モデルは次の式で表されます．
+$w_0=-75.47$，$w_1=-0.30$，$w_2=2.03$に対応します．</p><p>$$
 y = -75.47 + -0.30 \times x_1 + 2.03 \times x_2
-$$</p>
-<p>この回帰モデルをグラフで表すと，次の平面で表されます．
-この平面は，身長・座高と体重との関係を適切に表現できているように思われます．</p>
-<p><a href="https://gyazo.com/198c7cb3d1efbcc861a8c0b1242b9bb4"><img src="https://i.gyazo.com/198c7cb3d1efbcc861a8c0b1242b9bb4.gif" alt="Image from Gyazo"></a></p>
-<p>回帰モデルの適切な係数を導出するには，単回帰と同様に最小二乗法を利用します．
-観測された変数$y$と，回帰モデルで算出された値$f(x)$との残差平方和を最小化します．</p>
-<p>ここでは，算出された回帰モデルの当てはまりの良さを表す <strong>決定係数</strong> $R^2$ について確認しましょう．
+$$</p><p>この回帰モデルをグラフで表すと，次の平面で表されます．
+この平面は，身長・座高と体重との関係を適切に表現できているように思われます．</p><p><a href=https://gyazo.com/198c7cb3d1efbcc861a8c0b1242b9bb4><img src=https://i.gyazo.com/198c7cb3d1efbcc861a8c0b1242b9bb4.gif alt="Image from Gyazo"></a></p><p>回帰モデルの適切な係数を導出するには，単回帰と同様に最小二乗法を利用します．
+観測された変数$y$と，回帰モデルで算出された値$f(x)$との残差平方和を最小化します．</p><p>ここでは，算出された回帰モデルの当てはまりの良さを表す <strong>決定係数</strong> $R^2$ について確認しましょう．
 決定係数$R^2$は次の式で算出することができます．
 分子は残差平方和，分母は偏差平方和（$\bar{y}$は$y$の平均値）を表し，$R^2$が1に近ければ相対的に残差が小さいことを示します．
 下図に示すように，決定係数は$f(x)=\bar{y}$で表される回帰直線の誤差（偏差）と，
 $f(x)=w_0+w_1x$で表される回帰直線の誤差（残差）の割合を表す指標と言えます．
-最小二乗法は残差平方和を最小化する手法であるため，式中の分子を0に近付ける操作に等しくなります．</p>
-<p>$$
-R^2 =  1 - \frac{残差平方和}{偏差平方和} = 1 - \sum_{i=0}^{n-1}\frac{(y_i - f(x_i))^2}{(y_i - \bar{y})^2}
-$$</p>
-<p><a href="https://gyazo.com/d361ade5d8142ac97b3d04f40b7ff06e"><img src="https://i.gyazo.com/d361ade5d8142ac97b3d04f40b7ff06e.png" alt="Image from Gyazo"></a></p>
-<p>しかし，重回帰分析においては，説明変数が増えるほど，決定係数$R^2$が大きくなる傾向があります．
-このため，標本の大きさを$n$，説明変数の数を$m$とするとき，次に示す <strong>自由度調整済みの決定係数</strong> が用いられます．</p>
-<p>$$
+最小二乗法は残差平方和を最小化する手法であるため，式中の分子を0に近付ける操作に等しくなります．</p><p>$$
+R^2 = 1 - \frac{残差平方和}{偏差平方和} = 1 - \sum_{i=0}^{n-1}\frac{(y_i - f(x_i))^2}{(y_i - \bar{y})^2}
+$$</p><p><a href=https://gyazo.com/d361ade5d8142ac97b3d04f40b7ff06e><img src=https://i.gyazo.com/d361ade5d8142ac97b3d04f40b7ff06e.png alt="Image from Gyazo"></a></p><p>しかし，重回帰分析においては，説明変数が増えるほど，決定係数$R^2$が大きくなる傾向があります．
+このため，標本の大きさを$n$，説明変数の数を$m$とするとき，次に示す <strong>自由度調整済みの決定係数</strong> が用いられます．</p><p>$$
 R^2 = 1 - \sum_{i=0}^{n-1}\frac{(y_i - f(x_i))^2 / (n - m - 1)}{(y_i - \bar{y})^2 / (n-1)}
-$$</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  データセット
-</h1>
-
-<p>ここでは，次のCSV形式のデータセットを利用します．
+$$</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>データセット</h1><p>ここでは，次のCSV形式のデータセットを利用します．
 下記のURLからファイルをダウンロードしてください．
-運動能力のデータセットであり，体重（Weight[kg]），胴囲（Waist[cm]），心拍（Pulse），懸垂回数（Chins），腹筋回数（Situps）で構成されます．</p>
-<p><a href="https://mukai-lab.info/classes/management_data_analysis/dataset11.csv"><i class="fas fa-cloud-download-alt"></i> dataset11.csv</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">Weight,Waist,Pulse,Chins,Situps
-87,91,50,5,162
-86,94,52,2,110
-88,97,58,12,101
-73,89,62,12,105
-86,89,46,13,155
-83,91,56,4,101
-96,97,56,8,101
-76,86,60,6,125
-80,79,74,15,200
-70,84,56,17,251
-77,86,50,17,120
-75,84,52,13,210
-70,86,64,14,215
-112,117,50,1,50
-88,91,46,6,70
-92,94,62,12,210
-80,94,54,4,60
-71,81,52,11,230
-71,84,54,15,225
-63,84,68,2,110
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Excelで重回帰分析
-</h1>
-
-<p>Excelの分析ツールを利用して重回帰分析を試してみましょう．
+運動能力のデータセットであり，体重（Weight[kg]），胴囲（Waist[cm]），心拍（Pulse），懸垂回数（Chins），腹筋回数（Situps）で構成されます．</p><p><a href=https://mukai-lab.info/classes/management_data_analysis/dataset11.csv><i class="fas fa-cloud-download-alt"></i> dataset11.csv</a></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>Weight,Waist,Pulse,Chins,Situps
+</span></span><span style=display:flex><span>87,91,50,5,162
+</span></span><span style=display:flex><span>86,94,52,2,110
+</span></span><span style=display:flex><span>88,97,58,12,101
+</span></span><span style=display:flex><span>73,89,62,12,105
+</span></span><span style=display:flex><span>86,89,46,13,155
+</span></span><span style=display:flex><span>83,91,56,4,101
+</span></span><span style=display:flex><span>96,97,56,8,101
+</span></span><span style=display:flex><span>76,86,60,6,125
+</span></span><span style=display:flex><span>80,79,74,15,200
+</span></span><span style=display:flex><span>70,84,56,17,251
+</span></span><span style=display:flex><span>77,86,50,17,120
+</span></span><span style=display:flex><span>75,84,52,13,210
+</span></span><span style=display:flex><span>70,86,64,14,215
+</span></span><span style=display:flex><span>112,117,50,1,50
+</span></span><span style=display:flex><span>88,91,46,6,70
+</span></span><span style=display:flex><span>92,94,62,12,210
+</span></span><span style=display:flex><span>80,94,54,4,60
+</span></span><span style=display:flex><span>71,81,52,11,230
+</span></span><span style=display:flex><span>71,84,54,15,225
+</span></span><span style=display:flex><span>63,84,68,2,110
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Excelで重回帰分析</h1><p>Excelの分析ツールを利用して重回帰分析を試してみましょう．
 ダウンロードしたファイルをExcelで開いてください．
 説明変数として，体重$x_1$，胴囲$x_2$，心拍$x_3$，目的変数（被説明変数）として懸垂回数$y$を用います．
-回帰モデルは次の式を採用します．</p>
-<p>$$
+回帰モデルは次の式を採用します．</p><p>$$
 f(x) = w_0 \times 1 + w_1 \times x_1 + w_2 \times x_2 + w_3 \times x_3
-$$</p>
-<h2 id="分析ツール">分析ツール</h2>
-<p>分析ツールから「回帰分析」を選びましょう．</p>
-<p><a href="https://gyazo.com/eff24d41d6059fc4f1a93a53c7bf324d"><img src="https://i.gyazo.com/eff24d41d6059fc4f1a93a53c7bf324d.png" alt="Image from Gyazo"></a></p>
-<p>「入力Y範囲」に$D1:D21$，「入力X範囲」に$A1:C21$を入力します．
-このとき，「先頭行をラベルとして使用」にチェックを入れます．</p>
-<p><a href="https://gyazo.com/060a5e9634381174c2e29736267c30bc"><img src="https://i.gyazo.com/060a5e9634381174c2e29736267c30bc.png" alt="Image from Gyazo"></a></p>
-<p>次のような結果が算出されます．
+$$</p><h2 id=分析ツール>分析ツール</h2><p>分析ツールから「回帰分析」を選びましょう．</p><p><a href=https://gyazo.com/eff24d41d6059fc4f1a93a53c7bf324d><img src=https://i.gyazo.com/eff24d41d6059fc4f1a93a53c7bf324d.png alt="Image from Gyazo"></a></p><p>「入力Y範囲」に$D1:D21$，「入力X範囲」に$A1:C21$を入力します．
+このとき，「先頭行をラベルとして使用」にチェックを入れます．</p><p><a href=https://gyazo.com/060a5e9634381174c2e29736267c30bc><img src=https://i.gyazo.com/060a5e9634381174c2e29736267c30bc.png alt="Image from Gyazo"></a></p><p>次のような結果が算出されます．
 回帰モデルの係数は$w_0=45.65$，$w_1=0.15$，$w_2=-0.53$，$w_3=-0.01$となったことがわかります．
 また，決定係数$R^2$は0.32，自由度調整済み決定係数$R^2$は0.19となりました．
 一般に$R^2 \geq 0.5$のときに当てはまりが良いとみなすため，
-この回帰モデルの精度は高くないと言えます．</p>
-<p><a href="https://gyazo.com/d55650604f729e8c6426b315b92d54a7"><img src="https://i.gyazo.com/d55650604f729e8c6426b315b92d54a7.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  Pythonで重回帰分析
-</h1>
-
-<p>Pythonを利用して重回帰分析を試してみましょう．
+この回帰モデルの精度は高くないと言えます．</p><p><a href=https://gyazo.com/d55650604f729e8c6426b315b92d54a7><img src=https://i.gyazo.com/d55650604f729e8c6426b315b92d54a7.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Pythonで重回帰分析</h1><p>Pythonを利用して重回帰分析を試してみましょう．
 Jupyter Labを起動して，<strong>Python 3</strong>のノートブックを開きます．
 ノートブックの名前は <strong>chapter12.ipynb</strong> とします．
-<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>, <code>SciPy</code>などのライブラリをインポートしておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">from</span> mpl_toolkits.mplot3d <span style="color:#f92672">import</span> Axes3D
-<span style="color:#f92672">import</span> japanize_matplotlib
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">from</span> scipy.optimize <span style="color:#f92672">import</span> minimize
-</code></pre></div><h2 id="データセットの読込">データセットの読込</h2>
-<p><code>read_csv</code>関数でデータセットを読み込みます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;dataset11.csv&#34;</span>)
-display(df)
-</code></pre></div><p><a href="https://gyazo.com/f078b0734ceefb91134c20c84047cdd9"><img src="https://i.gyazo.com/f078b0734ceefb91134c20c84047cdd9.png" alt="Image from Gyazo"></a></p>
-<h2 id="回帰モデル重回帰">回帰モデル（重回帰）</h2>
-<p>重回帰のモデルを利用します．</p>
-<p>$$
+<code>pandas</code>，<code>matplotlib</code>，<code>numpy</code>, <code>SciPy</code>などのライブラリをインポートしておきましょう．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> pandas <span style=color:#66d9ef>as</span> pd
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> mpl_toolkits.mplot3d <span style=color:#f92672>import</span> Axes3D
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> japanize_matplotlib
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> scipy.optimize <span style=color:#f92672>import</span> minimize
+</span></span></code></pre></div><h2 id=データセットの読込>データセットの読込</h2><p><code>read_csv</code>関数でデータセットを読み込みます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>df <span style=color:#f92672>=</span> pd<span style=color:#f92672>.</span>read_csv(<span style=color:#e6db74>&#34;dataset11.csv&#34;</span>)
+</span></span><span style=display:flex><span>display(df)
+</span></span></code></pre></div><p><a href=https://gyazo.com/f078b0734ceefb91134c20c84047cdd9><img src=https://i.gyazo.com/f078b0734ceefb91134c20c84047cdd9.png alt="Image from Gyazo"></a></p><h2 id=回帰モデル重回帰>回帰モデル（重回帰）</h2><p>重回帰のモデルを利用します．</p><p>$$
 f(X) = w_0 \cdot 1 + w_1 \cdot x_1 + w_2 \cdot x_2 + w_3 \cdot x_3
-$$</p>
-<p>回帰式$f(x)$を次のように定義します．
-引数の$w$は回帰式の係数を表しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 回帰モデル</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fx</span>(w, x):
-    y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(w <span style="color:#f92672">*</span> x, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>) <span style="color:#75715e"># 行方向に加算</span>
-    <span style="color:#66d9ef">return</span> y
-</code></pre></div><p>データフレームから体重$x_1$，胴囲$x_2$，心拍$x_3$を抽出し，$x_0=1$を追加した配列を生成します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># x0=1の列を追加</span>
-x <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;Weight&#34;</span>, <span style="color:#e6db74">&#34;Waist&#34;</span>, <span style="color:#e6db74">&#34;Pulse&#34;</span>]]<span style="color:#f92672">.</span>to_numpy()
-x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>insert(x, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-<span style="color:#66d9ef">print</span>(x)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[[  1  87  91  50]
- [  1  86  94  52]
- [  1  88  97  58]
- [  1  73  89  62]
- [  1  86  89  46]
- [  1  83  91  56]
- [  1  96  97  56]
- [  1  76  86  60]
- [  1  80  79  74]
- [  1  70  84  56]
- [  1  77  86  50]
- [  1  75  84  52]
- [  1  70  86  64]
- [  1 112 117  50]
- [  1  88  91  46]
- [  1  92  94  62]
- [  1  80  94  54]
- [  1  71  81  52]
- [  1  71  84  54]
- [  1  63  84  68]]
-</code></pre></div><p>$w_0=1$，$w_2=2$，$w_2=3$，$w_3=4$として，$f(x)$を計算してみます．
-例えば，$x_1=87$，$x_2=91$，$x_3=50$のとき，$f(x)=648$になります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>])
-fx(w, x)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">array([648, 663, 700, 662, 624, 664, 708, 651, 694, 617, 613, 611, 655,
-       776, 634, 715, 659, 594, 611, 651])
-</code></pre></div><p>残差平方和$E$を次のように定義します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 残差平方和（RSS： Residual Sum of Squares）</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rss</span>(w, x, y):
-    r <span style="color:#f92672">=</span> (y <span style="color:#f92672">-</span> fx(w, x))<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
-    <span style="color:#66d9ef">return</span> r<span style="color:#f92672">.</span>sum()
-</code></pre></div><p>$w_0=1$，$w_2=2$，$w_2=3$，$w_3=4$として，残差平方和$E$を計算すると，$E=8440451$になります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>])
-rss(w, x, df[<span style="color:#e6db74">&#34;Chins&#34;</span>])
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">8440451
-</code></pre></div><p><code>minimize</code>関数を利用して，残差平方和$E$を最小化するような$w$を求めます．
-この結果，$w_0=45.65$，$w_1=0.15$，$w_2=-0.53$，$w_3=-0.01$となり，Excelの算出結果と一致しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>])
-result <span style="color:#f92672">=</span> minimize(rss, w, args<span style="color:#f92672">=</span>(x, df[<span style="color:#e6db74">&#34;Chins&#34;</span>]), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Powell&#34;</span>)
-<span style="color:#66d9ef">print</span>(result<span style="color:#f92672">.</span>x)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[ 4.56500030e+01  1.48856400e-01 -5.30882565e-01 -9.99515930e-03]
-</code></pre></div><p>回帰モデル$f(x)$を3次元グラフで可視化します．
+$$</p><p>回帰式$f(x)$を次のように定義します．
+引数の$w$は回帰式の係数を表しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 回帰モデル</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>fx</span>(w, x):
+</span></span><span style=display:flex><span>    y <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>sum(w <span style=color:#f92672>*</span> x, axis<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>) <span style=color:#75715e># 行方向に加算</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> y
+</span></span></code></pre></div><p>データフレームから体重$x_1$，胴囲$x_2$，心拍$x_3$を抽出し，$x_0=1$を追加した配列を生成します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># x0=1の列を追加</span>
+</span></span><span style=display:flex><span>x <span style=color:#f92672>=</span> df[[<span style=color:#e6db74>&#34;Weight&#34;</span>, <span style=color:#e6db74>&#34;Waist&#34;</span>, <span style=color:#e6db74>&#34;Pulse&#34;</span>]]<span style=color:#f92672>.</span>to_numpy()
+</span></span><span style=display:flex><span>x <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>insert(x, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, axis<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>print(x)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>[[  1  87  91  50]
+</span></span><span style=display:flex><span> [  1  86  94  52]
+</span></span><span style=display:flex><span> [  1  88  97  58]
+</span></span><span style=display:flex><span> [  1  73  89  62]
+</span></span><span style=display:flex><span> [  1  86  89  46]
+</span></span><span style=display:flex><span> [  1  83  91  56]
+</span></span><span style=display:flex><span> [  1  96  97  56]
+</span></span><span style=display:flex><span> [  1  76  86  60]
+</span></span><span style=display:flex><span> [  1  80  79  74]
+</span></span><span style=display:flex><span> [  1  70  84  56]
+</span></span><span style=display:flex><span> [  1  77  86  50]
+</span></span><span style=display:flex><span> [  1  75  84  52]
+</span></span><span style=display:flex><span> [  1  70  86  64]
+</span></span><span style=display:flex><span> [  1 112 117  50]
+</span></span><span style=display:flex><span> [  1  88  91  46]
+</span></span><span style=display:flex><span> [  1  92  94  62]
+</span></span><span style=display:flex><span> [  1  80  94  54]
+</span></span><span style=display:flex><span> [  1  71  81  52]
+</span></span><span style=display:flex><span> [  1  71  84  54]
+</span></span><span style=display:flex><span> [  1  63  84  68]]
+</span></span></code></pre></div><p>$w_0=1$，$w_2=2$，$w_2=3$，$w_3=4$として，$f(x)$を計算してみます．
+例えば，$x_1=87$，$x_2=91$，$x_3=50$のとき，$f(x)=648$になります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>w <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>])
+</span></span><span style=display:flex><span>fx(w, x)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>array([648, 663, 700, 662, 624, 664, 708, 651, 694, 617, 613, 611, 655,
+</span></span><span style=display:flex><span>       776, 634, 715, 659, 594, 611, 651])
+</span></span></code></pre></div><p>残差平方和$E$を次のように定義します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># 残差平方和（RSS： Residual Sum of Squares）</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>def</span> <span style=color:#a6e22e>rss</span>(w, x, y):
+</span></span><span style=display:flex><span>    r <span style=color:#f92672>=</span> (y <span style=color:#f92672>-</span> fx(w, x))<span style=color:#f92672>**</span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> r<span style=color:#f92672>.</span>sum()
+</span></span></code></pre></div><p>$w_0=1$，$w_2=2$，$w_2=3$，$w_3=4$として，残差平方和$E$を計算すると，$E=8440451$になります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>w <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>])
+</span></span><span style=display:flex><span>rss(w, x, df[<span style=color:#e6db74>&#34;Chins&#34;</span>])
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>8440451
+</span></span></code></pre></div><p><code>minimize</code>関数を利用して，残差平方和$E$を最小化するような$w$を求めます．
+この結果，$w_0=45.65$，$w_1=0.15$，$w_2=-0.53$，$w_3=-0.01$となり，Excelの算出結果と一致しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>w <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>])
+</span></span><span style=display:flex><span>result <span style=color:#f92672>=</span> minimize(rss, w, args<span style=color:#f92672>=</span>(x, df[<span style=color:#e6db74>&#34;Chins&#34;</span>]), method<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Powell&#34;</span>)
+</span></span><span style=display:flex><span>print(result<span style=color:#f92672>.</span>x)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>[ 4.56500030e+01  1.48856400e-01 -5.30882565e-01 -9.99515930e-03]
+</span></span></code></pre></div><p>回帰モデル$f(x)$を3次元グラフで可視化します．
 X軸は体重（Weight），Y軸は胴囲（Waist），Z軸は$f(x)$を表します．
 心拍（Pulse）の係数$w_3$は非常に小さな値であり，回帰に寄与していないことから，
 可視化対象のデータから除いていることに注意してください．
-全体の傾向を平面で表していることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># X=Weight Y=Waist Z=Chinsで3次元グラフ（Pulseは用いない）</span>
-fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
-ax <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(projection<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;3d&#39;</span>)
-ax<span style="color:#f92672">.</span>scatter(df[<span style="color:#e6db74">&#34;Weight&#34;</span>], df[<span style="color:#e6db74">&#34;Waist&#34;</span>], df[<span style="color:#e6db74">&#34;Chins&#34;</span>])
-
-x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">60</span>, <span style="color:#ae81ff">120</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># Weight</span>
-y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">60</span>, <span style="color:#ae81ff">120</span>, <span style="color:#ae81ff">0.1</span>) <span style="color:#75715e"># Waist</span>
-X, Y <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>meshgrid(x, y)
-
-Z <span style="color:#f92672">=</span> []
-<span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> y:
-    column <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> x:
-        array <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, i, j, <span style="color:#ae81ff">0</span>])
-        z <span style="color:#f92672">=</span> fx(result<span style="color:#f92672">.</span>x, [array])
-        column<span style="color:#f92672">.</span>append(z[<span style="color:#ae81ff">0</span>])
-    Z<span style="color:#f92672">.</span>append(column)
-
-Z <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(Z) <span style="color:#75715e"># 回帰モデル f(x)</span>
-    
-ax<span style="color:#f92672">.</span>plot_surface(X, Y, Z, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.3</span>)
-ax<span style="color:#f92672">.</span>view_init(<span style="color:#f92672">-</span><span style="color:#ae81ff">140</span>, <span style="color:#ae81ff">60</span>) <span style="color:#75715e"># カメラの仰角と方位角</span>
-ax<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#34;Weight&#34;</span>)
-ax<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#34;Waist&#34;</span>)
-ax<span style="color:#f92672">.</span>set_zlabel(<span style="color:#e6db74">&#34;Chins&#34;</span>)
-</code></pre></div><p><a href="https://gyazo.com/d10cc1e64861f801b671b0deeedc991f"><img src="https://i.gyazo.com/d10cc1e64861f801b671b0deeedc991f.gif" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  補足
-</h1>
-
-<p>Pythonの<a href="https://scikit-learn.org/stable/">scikit-learn</a>を利用すると簡単に重回帰分析を実行できます．
-算出された係数と決定係数がExcelの結果と一致していることが分かります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.linear_model <span style="color:#f92672">import</span> LinearRegression
-lr <span style="color:#f92672">=</span> LinearRegression()
-X <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;Weight&#34;</span>, <span style="color:#e6db74">&#34;Waist&#34;</span>, <span style="color:#e6db74">&#34;Pulse&#34;</span>]]<span style="color:#f92672">.</span>values
-Y <span style="color:#f92672">=</span> df[[<span style="color:#e6db74">&#34;Chins&#34;</span>]]<span style="color:#f92672">.</span>values
-lr<span style="color:#f92672">.</span>fit(X, Y)
-<span style="color:#66d9ef">print</span>(lr<span style="color:#f92672">.</span>coef_) <span style="color:#75715e"># 係数 w1 w2 w3</span>
-<span style="color:#66d9ef">print</span>(lr<span style="color:#f92672">.</span>intercept_) <span style="color:#75715e"># 係数 w0</span>
-<span style="color:#66d9ef">print</span>(lr<span style="color:#f92672">.</span>score(X, Y)) <span style="color:#75715e"># 決定係数 R^2</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">[[ 0.14885614 -0.53088187 -0.00999596]]
-[45.64993515]
-0.3195658543022284
-</code></pre></div><p>自由度調整済み決定係数は次のように計算します．
-この結果もExcelの結果と一致しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">yss_list <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 実測値と平均値の差の2乗</span>
-rss_list <span style="color:#f92672">=</span> [] <span style="color:#75715e"># 残差の2乗</span>
-
-Z <span style="color:#f92672">=</span> lr<span style="color:#f92672">.</span>predict(X)
-<span style="color:#66d9ef">for</span> y, z <span style="color:#f92672">in</span> zip(Y, Z):
-    yss <span style="color:#f92672">=</span> (y <span style="color:#f92672">-</span> np<span style="color:#f92672">.</span>mean(Y))<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
-    rss <span style="color:#f92672">=</span> (y <span style="color:#f92672">-</span> z)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>
-    yss_list<span style="color:#f92672">.</span>append(yss)
-    rss_list<span style="color:#f92672">.</span>append(rss)
-
-<span style="color:#75715e"># 決定係数</span>
-<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> (np<span style="color:#f92672">.</span>sum(rss_list) <span style="color:#f92672">/</span> np<span style="color:#f92672">.</span>sum(yss_list)))
-
-<span style="color:#75715e"># 自由度調整済み決定係数</span>
-N <span style="color:#f92672">=</span> len(df)
-k <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
-<span style="color:#66d9ef">print</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> ((np<span style="color:#f92672">.</span>sum(rss_list) <span style="color:#f92672">/</span> (N <span style="color:#f92672">-</span> k <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">/</span> (np<span style="color:#f92672">.</span>sum(yss_list) <span style="color:#f92672">/</span> (N <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>))))
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#ae81ff">0.3195658543022284</span>
-<span style="color:#ae81ff">0.19198445198389635</span>
-</code></pre></div><h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
-
-<p>説明変数として，体重$x_1$，胴囲$x_2$，心拍$x_3$，目的変数（被説明変数）として腹筋回数$y$として重回帰分析しなさい．</p>
-<p><a href="https://gyazo.com/5eb3de1cbd001ce6fdd565e25f9e295a"><img src="https://i.gyazo.com/5eb3de1cbd001ce6fdd565e25f9e295a.gif" alt="Image from Gyazo"></a></p>
-<p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
+全体の傾向を平面で表していることが分かります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#75715e># X=Weight Y=Waist Z=Chinsで3次元グラフ（Pulseは用いない）</span>
+</span></span><span style=display:flex><span>fig <span style=color:#f92672>=</span> plt<span style=color:#f92672>.</span>figure()
+</span></span><span style=display:flex><span>ax <span style=color:#f92672>=</span> fig<span style=color:#f92672>.</span>add_subplot(projection<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;3d&#39;</span>)
+</span></span><span style=display:flex><span>ax<span style=color:#f92672>.</span>scatter(df[<span style=color:#e6db74>&#34;Weight&#34;</span>], df[<span style=color:#e6db74>&#34;Waist&#34;</span>], df[<span style=color:#e6db74>&#34;Chins&#34;</span>])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>x <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>arange(<span style=color:#ae81ff>60</span>, <span style=color:#ae81ff>120</span>, <span style=color:#ae81ff>0.1</span>) <span style=color:#75715e># Weight</span>
+</span></span><span style=display:flex><span>y <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>arange(<span style=color:#ae81ff>60</span>, <span style=color:#ae81ff>120</span>, <span style=color:#ae81ff>0.1</span>) <span style=color:#75715e># Waist</span>
+</span></span><span style=display:flex><span>X, Y <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>meshgrid(x, y)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Z <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> j <span style=color:#f92672>in</span> y:
+</span></span><span style=display:flex><span>    column <span style=color:#f92672>=</span> []
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> x:
+</span></span><span style=display:flex><span>        array <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>, i, j, <span style=color:#ae81ff>0</span>])
+</span></span><span style=display:flex><span>        z <span style=color:#f92672>=</span> fx(result<span style=color:#f92672>.</span>x, [array])
+</span></span><span style=display:flex><span>        column<span style=color:#f92672>.</span>append(z[<span style=color:#ae81ff>0</span>])
+</span></span><span style=display:flex><span>    Z<span style=color:#f92672>.</span>append(column)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Z <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array(Z) <span style=color:#75715e># 回帰モデル f(x)</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>ax<span style=color:#f92672>.</span>plot_surface(X, Y, Z, alpha<span style=color:#f92672>=</span><span style=color:#ae81ff>0.3</span>)
+</span></span><span style=display:flex><span>ax<span style=color:#f92672>.</span>view_init(<span style=color:#f92672>-</span><span style=color:#ae81ff>140</span>, <span style=color:#ae81ff>60</span>) <span style=color:#75715e># カメラの仰角と方位角</span>
+</span></span><span style=display:flex><span>ax<span style=color:#f92672>.</span>set_xlabel(<span style=color:#e6db74>&#34;Weight&#34;</span>)
+</span></span><span style=display:flex><span>ax<span style=color:#f92672>.</span>set_ylabel(<span style=color:#e6db74>&#34;Waist&#34;</span>)
+</span></span><span style=display:flex><span>ax<span style=color:#f92672>.</span>set_zlabel(<span style=color:#e6db74>&#34;Chins&#34;</span>)
+</span></span></code></pre></div><p><a href=https://gyazo.com/d10cc1e64861f801b671b0deeedc991f><img src=https://i.gyazo.com/d10cc1e64861f801b671b0deeedc991f.gif alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>補足</h1><p>Pythonの<a href=https://scikit-learn.org/stable/>scikit-learn</a>を利用すると簡単に重回帰分析を実行できます．
+算出された係数と決定係数がExcelの結果と一致していることが分かります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>from</span> sklearn.linear_model <span style=color:#f92672>import</span> LinearRegression
+</span></span><span style=display:flex><span>lr <span style=color:#f92672>=</span> LinearRegression()
+</span></span><span style=display:flex><span>X <span style=color:#f92672>=</span> df[[<span style=color:#e6db74>&#34;Weight&#34;</span>, <span style=color:#e6db74>&#34;Waist&#34;</span>, <span style=color:#e6db74>&#34;Pulse&#34;</span>]]<span style=color:#f92672>.</span>values
+</span></span><span style=display:flex><span>Y <span style=color:#f92672>=</span> df[[<span style=color:#e6db74>&#34;Chins&#34;</span>]]<span style=color:#f92672>.</span>values
+</span></span><span style=display:flex><span>lr<span style=color:#f92672>.</span>fit(X, Y)
+</span></span><span style=display:flex><span>print(lr<span style=color:#f92672>.</span>coef_) <span style=color:#75715e># 係数 w1 w2 w3</span>
+</span></span><span style=display:flex><span>print(lr<span style=color:#f92672>.</span>intercept_) <span style=color:#75715e># 係数 w0</span>
+</span></span><span style=display:flex><span>print(lr<span style=color:#f92672>.</span>score(X, Y)) <span style=color:#75715e># 決定係数 R^2</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>[[ 0.14885614 -0.53088187 -0.00999596]]
+</span></span><span style=display:flex><span>[45.64993515]
+</span></span><span style=display:flex><span>0.3195658543022284
+</span></span></code></pre></div><p>自由度調整済み決定係数は次のように計算します．
+この結果もExcelの結果と一致しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>yss_list <span style=color:#f92672>=</span> [] <span style=color:#75715e># 実測値と平均値の差の2乗</span>
+</span></span><span style=display:flex><span>rss_list <span style=color:#f92672>=</span> [] <span style=color:#75715e># 残差の2乗</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Z <span style=color:#f92672>=</span> lr<span style=color:#f92672>.</span>predict(X)
+</span></span><span style=display:flex><span><span style=color:#66d9ef>for</span> y, z <span style=color:#f92672>in</span> zip(Y, Z):
+</span></span><span style=display:flex><span>    yss <span style=color:#f92672>=</span> (y <span style=color:#f92672>-</span> np<span style=color:#f92672>.</span>mean(Y))<span style=color:#f92672>**</span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>    rss <span style=color:#f92672>=</span> (y <span style=color:#f92672>-</span> z)<span style=color:#f92672>**</span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>    yss_list<span style=color:#f92672>.</span>append(yss)
+</span></span><span style=display:flex><span>    rss_list<span style=color:#f92672>.</span>append(rss)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 決定係数</span>
+</span></span><span style=display:flex><span>print(<span style=color:#ae81ff>1</span> <span style=color:#f92672>-</span> (np<span style=color:#f92672>.</span>sum(rss_list) <span style=color:#f92672>/</span> np<span style=color:#f92672>.</span>sum(yss_list)))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 自由度調整済み決定係数</span>
+</span></span><span style=display:flex><span>N <span style=color:#f92672>=</span> len(df)
+</span></span><span style=display:flex><span>k <span style=color:#f92672>=</span> <span style=color:#ae81ff>3</span>
+</span></span><span style=display:flex><span>print(<span style=color:#ae81ff>1</span> <span style=color:#f92672>-</span> ((np<span style=color:#f92672>.</span>sum(rss_list) <span style=color:#f92672>/</span> (N <span style=color:#f92672>-</span> k <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>)) <span style=color:#f92672>/</span> (np<span style=color:#f92672>.</span>sum(yss_list) <span style=color:#f92672>/</span> (N <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>))))
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#ae81ff>0.3195658543022284</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0.19198445198389635</span>
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>説明変数として，体重$x_1$，胴囲$x_2$，心拍$x_3$，目的変数（被説明変数）として腹筋回数$y$として重回帰分析しなさい．</p><p><a href=https://gyazo.com/5eb3de1cbd001ce6fdd565e25f9e295a><img src=https://i.gyazo.com/5eb3de1cbd001ce6fdd565e25f9e295a.gif alt="Image from Gyazo"></a></p><p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
 ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
-ノートブックのファイル名は <strong>chapter12.ipynb</strong> としてください．</p>
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+ノートブックのファイル名は <strong>chapter12.ipynb</strong> としてください．</p><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

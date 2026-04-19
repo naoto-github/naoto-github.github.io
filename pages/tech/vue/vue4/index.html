@@ -1,404 +1,247 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    Vue.jsを利用した地図アプリ（後編） | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Vue.jsを利用した地図アプリ（後編） | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="Vue.jsを利用した地図アプリ（後編）"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/tech/vue/vue4/"><meta property="og:image" content="https://i.gyazo.com/cf717dd1f1e48506a06d8bc044c115d7.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content='
 
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="Vue.jsを利用した地図アプリ（後編）" />
+  親子コンポーネントのイベント処理
 
 
+地図アプリに配置した上下左右のボタンのイベント処理を実装します．
+このアプリは3つのコンポーネントで構成されています．
+親コンポーネントは main.vue ，子コンポーネントは vmap.vue と vcontroller.vue です．
+親子コンポーネント間でメソッドを呼び出したり，データを受け渡すには幾つか方法がありますが，
+子から親 ，親から子 ではその方法が異なります．
+今回の地図アプリでは下記の流れでイベント処理を行います．
 
-  <meta property="og:type" content="article" />
+vcontroller.vue（子） のボタンをクリックすると，main.vue（親） のmoveメソッドを呼び出す（子から親）．
+main.vue（親） のmoveメソッドが呼び出されると，vmap.vue（子） のmoveメソッドを呼び出す（親から子）．
 
 
 
-  <meta property="og:url" content="https://mukai-lab.info/pages/tech/vue/vue4/" />
+  子から親のメソッドを実行
 
 
-
-  <meta property="og:image" content="https://i.gyazo.com/cf717dd1f1e48506a06d8bc044c115d7.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="親子コンポーネントのイベント処理地図アプリに配置した上下左右のボタンのイベント処理を実装します． このアプリは3つのコンポーネントで構成されています． 親コンポーネントは main.vue ，子コンポーネントは vmap.vue と vcontroller.vue です． 親子コンポーネント間でメソッドを呼び出したり，データを受け渡すには幾つか方法がありますが， 子から親 ，親から子 ではその方法が異なります． 今回の地図アプリでは下記の流れでイベント処理を行います．
- vcontroller.vue（子） のボタンをクリックすると，main.vue（親） のmoveメソッドを呼び出す（子から親）． main.vue（親） のmoveメソッドが呼び出されると，vmap.vue（子） のmoveメソッドを呼び出す（親から子）．  
-子から親のメソッドを実行子コンポーネントから親コンポーネントのメソッドを呼び出すには$emitを利用します．
-main.vue（親） 親コンポーネントで moveメソッドを定義します． このmoveメソッドはアラートを表示するだけです． このメソッドを v-onディレクティブを利用して，vcontorllerタグの属性として指定します． このとき，move-eventという属性名になっていることに注意してください．
-&lt;template&gt; &lt;div&gt; &lt;h1&gt;Vue.jsで地図アプリ&lt;/h1&gt; &lt;vmap&gt;&lt;/vmap&gt; &lt;vcontroller v-on:move-event=&#34;move&#34;&gt;&lt;/vcontroller&gt; &lt;/div&gt; &lt;/template&gt; &lt;script&gt; import vmap from &#34;./vmap&#34; import vcontroller from &#34;./vcontroller&#34; export default{ components:{ vmap, vcontroller }, methods:{ move(direction){ // アラートを表示  alert(direction); } } } &lt;/script&gt; vcontroller.vue（子） 子コンポーネントでも moveメソッドを定義しています． このmoveメソッドは，$emitを利用してmove-eventとして登録されている親コンポーネントの moveメソッドを呼び出します． また，moveメソッドは，v-onディレクティブを利用して，ボタンのクリックがトリガーとなっています． このとき，メソッドの引数としてleft, up, right, downのいずれかの文字列が渡されることに注意してください．" />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="Vue.jsを利用した地図アプリ（後編）" />
-
-
-
-  <meta name="twitter:description" content="親子コンポーネントのイベント処理地図アプリに配置した上下左右のボタンのイベント処理を実装します． このアプリは3つのコンポーネントで構成されています． 親コンポーネントは main.vue ，子コンポーネントは vmap.vue と vcontroller.vue です． 親子コンポーネント間でメソッドを呼び出したり，データを受け渡すには幾つか方法がありますが， 子から親 ，親から子 ではその方法が異なります． 今回の地図アプリでは下記の流れでイベント処理を行います．
- vcontroller.vue（子） のボタンをクリックすると，main.vue（親） のmoveメソッドを呼び出す（子から親）． main.vue（親） のmoveメソッドが呼び出されると，vmap.vue（子） のmoveメソッドを呼び出す（親から子）．  
-子から親のメソッドを実行子コンポーネントから親コンポーネントのメソッドを呼び出すには$emitを利用します．
-main.vue（親） 親コンポーネントで moveメソッドを定義します． このmoveメソッドはアラートを表示するだけです． このメソッドを v-onディレクティブを利用して，vcontorllerタグの属性として指定します． このとき，move-eventという属性名になっていることに注意してください．
-&lt;template&gt; &lt;div&gt; &lt;h1&gt;Vue.jsで地図アプリ&lt;/h1&gt; &lt;vmap&gt;&lt;/vmap&gt; &lt;vcontroller v-on:move-event=&#34;move&#34;&gt;&lt;/vcontroller&gt; &lt;/div&gt; &lt;/template&gt; &lt;script&gt; import vmap from &#34;./vmap&#34; import vcontroller from &#34;./vcontroller&#34; export default{ components:{ vmap, vcontroller }, methods:{ move(direction){ // アラートを表示  alert(direction); } } } &lt;/script&gt; vcontroller.vue（子） 子コンポーネントでも moveメソッドを定義しています． このmoveメソッドは，$emitを利用してmove-eventとして登録されている親コンポーネントの moveメソッドを呼び出します． また，moveメソッドは，v-onディレクティブを利用して，ボタンのクリックがトリガーとなっています． このとき，メソッドの引数としてleft, up, right, downのいずれかの文字列が渡されることに注意してください．" />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/cf717dd1f1e48506a06d8bc044c115d7.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
+子コンポーネントから親コンポーネントのメソッドを呼び出すには$emitを利用します．
+main.vue（親）
+親コンポーネントで moveメソッドを定義します．
+このmoveメソッドはアラートを表示するだけです．
+このメソッドを v-onディレクティブを利用して，vcontorllerタグの属性として指定します．
+このとき，move-eventという属性名になっていることに注意してください．
+<template>
+  <div>
+    <h1>Vue.jsで地図アプリ</h1>
+    <vmap></vmap>
+    <vcontroller v-on:move-event="move"></vcontroller>
+  </div>
+</template>
 
 <script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
+import vmap from "./vmap"
+import vcontroller from "./vcontroller"
+export default{
+  components:{
+    vmap,
+    vcontroller
+  },
+  methods:{
+    move(direction){
+      // アラートを表示
+      alert(direction);
+    }
+  }
+}
 </script>
+vcontroller.vue（子）
+子コンポーネントでも moveメソッドを定義しています．
+このmoveメソッドは，$emitを利用してmove-eventとして登録されている親コンポーネントの moveメソッドを呼び出します．
+また，moveメソッドは，v-onディレクティブを利用して，ボタンのクリックがトリガーとなっています．
+このとき，メソッドの引数としてleft, up, right, downのいずれかの文字列が渡されることに注意してください．'><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="Vue.jsを利用した地図アプリ（後編）"><meta name=twitter:description content='
 
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">Vue.jsを利用した地図アプリ（後編）</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p><a href="https://gyazo.com/cf717dd1f1e48506a06d8bc044c115d7"><img src="https://i.gyazo.com/cf717dd1f1e48506a06d8bc044c115d7.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   親子コンポーネントのイベント処理
-</h1>
 
-<p>地図アプリに配置した上下左右のボタンのイベント処理を実装します．
+
+地図アプリに配置した上下左右のボタンのイベント処理を実装します．
+このアプリは3つのコンポーネントで構成されています．
+親コンポーネントは main.vue ，子コンポーネントは vmap.vue と vcontroller.vue です．
+親子コンポーネント間でメソッドを呼び出したり，データを受け渡すには幾つか方法がありますが，
+子から親 ，親から子 ではその方法が異なります．
+今回の地図アプリでは下記の流れでイベント処理を行います．
+
+vcontroller.vue（子） のボタンをクリックすると，main.vue（親） のmoveメソッドを呼び出す（子から親）．
+main.vue（親） のmoveメソッドが呼び出されると，vmap.vue（子） のmoveメソッドを呼び出す（親から子）．
+
+
+
+  子から親のメソッドを実行
+
+
+子コンポーネントから親コンポーネントのメソッドを呼び出すには$emitを利用します．
+main.vue（親）
+親コンポーネントで moveメソッドを定義します．
+このmoveメソッドはアラートを表示するだけです．
+このメソッドを v-onディレクティブを利用して，vcontorllerタグの属性として指定します．
+このとき，move-eventという属性名になっていることに注意してください．
+<template>
+  <div>
+    <h1>Vue.jsで地図アプリ</h1>
+    <vmap></vmap>
+    <vcontroller v-on:move-event="move"></vcontroller>
+  </div>
+</template>
+
+<script>
+import vmap from "./vmap"
+import vcontroller from "./vcontroller"
+export default{
+  components:{
+    vmap,
+    vcontroller
+  },
+  methods:{
+    move(direction){
+      // アラートを表示
+      alert(direction);
+    }
+  }
+}
+</script>
+vcontroller.vue（子）
+子コンポーネントでも moveメソッドを定義しています．
+このmoveメソッドは，$emitを利用してmove-eventとして登録されている親コンポーネントの moveメソッドを呼び出します．
+また，moveメソッドは，v-onディレクティブを利用して，ボタンのクリックがトリガーとなっています．
+このとき，メソッドの引数としてleft, up, right, downのいずれかの文字列が渡されることに注意してください．'><meta name=twitter:image content="https://i.gyazo.com/cf717dd1f1e48506a06d8bc044c115d7.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>Vue.jsを利用した地図アプリ（後編）</h1><div class=post-line></div><p><a href=https://gyazo.com/cf717dd1f1e48506a06d8bc044c115d7><img src=https://i.gyazo.com/cf717dd1f1e48506a06d8bc044c115d7.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>親子コンポーネントのイベント処理</h1><p>地図アプリに配置した上下左右のボタンのイベント処理を実装します．
 このアプリは3つのコンポーネントで構成されています．
 親コンポーネントは <strong>main.vue</strong> ，子コンポーネントは <strong>vmap.vue</strong> と <strong>vcontroller.vue</strong> です．
 親子コンポーネント間でメソッドを呼び出したり，データを受け渡すには幾つか方法がありますが，
 <strong>子から親</strong> ，<strong>親から子</strong> ではその方法が異なります．
-今回の地図アプリでは下記の流れでイベント処理を行います．</p>
-<ol>
-<li><strong>vcontroller.vue（子）</strong> のボタンをクリックすると，<strong>main.vue（親）</strong> の<code>move</code>メソッドを呼び出す（子から親）．</li>
-<li><strong>main.vue（親）</strong> の<code>move</code>メソッドが呼び出されると，<strong>vmap.vue（子）</strong> の<code>move</code>メソッドを呼び出す（親から子）．</li>
-</ol>
-<p><a href="https://gyazo.com/69318b7a5ef0156689e2ddfde4824496"><img src="https://i.gyazo.com/69318b7a5ef0156689e2ddfde4824496.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  子から親のメソッドを実行
-</h1>
-
-<p>子コンポーネントから親コンポーネントのメソッドを呼び出すには<a href="https://jp.vuejs.org/v2/api/index.html#vm-emit">$emit</a>を利用します．</p>
-<h2 id="mainvue親">main.vue（親）</h2>
-<p>親コンポーネントで <code>move</code>メソッドを定義します．
+今回の地図アプリでは下記の流れでイベント処理を行います．</p><ol><li><strong>vcontroller.vue（子）</strong> のボタンをクリックすると，<strong>main.vue（親）</strong> の<code>move</code>メソッドを呼び出す（子から親）．</li><li><strong>main.vue（親）</strong> の<code>move</code>メソッドが呼び出されると，<strong>vmap.vue（子）</strong> の<code>move</code>メソッドを呼び出す（親から子）．</li></ol><p><a href=https://gyazo.com/69318b7a5ef0156689e2ddfde4824496><img src=https://i.gyazo.com/69318b7a5ef0156689e2ddfde4824496.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>子から親のメソッドを実行</h1><p>子コンポーネントから親コンポーネントのメソッドを呼び出すには<a href=https://jp.vuejs.org/v2/api/index.html#vm-emit>$emit</a>を利用します．</p><h2 id=mainvue親>main.vue（親）</h2><p>親コンポーネントで <code>move</code>メソッドを定義します．
 この<code>move</code>メソッドはアラートを表示するだけです．
 このメソッドを <code>v-on</code>ディレクティブを利用して，<code>vcontorller</code>タグの属性として指定します．
-このとき，<code>move-event</code>という属性名になっていることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">template</span>&gt;
-  &lt;<span style="color:#f92672">div</span>&gt;
-    &lt;<span style="color:#f92672">h1</span>&gt;<span style="color:#a6e22e">Vue</span>.<span style="color:#a6e22e">jsで地図アプリ</span>&lt;/<span style="color:#f92672">h1</span>&gt;
-    &lt;<span style="color:#f92672">vmap</span>&gt;&lt;/<span style="color:#f92672">vmap</span>&gt;
-    &lt;<span style="color:#f92672">vcontroller</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-on:move-event</span><span style="color:#e6db74">=&#34;move&#34;</span>&gt;&lt;/<span style="color:#f92672">vcontroller</span>&gt;
-  &lt;/<span style="color:#f92672">div</span>&gt;
-&lt;/<span style="color:#f92672">template</span>&gt;
-
-&lt;<span style="color:#f92672">script</span>&gt;
-<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">vmap</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./vmap&#34;</span>
-<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">vcontroller</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./vcontroller&#34;</span>
-<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
-  <span style="color:#a6e22e">components</span><span style="color:#f92672">:</span>{
-    <span style="color:#a6e22e">vmap</span>,
-    <span style="color:#a6e22e">vcontroller</span>
-  },
-  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
-    <span style="color:#a6e22e">move</span>(<span style="color:#a6e22e">direction</span>){
-      <span style="color:#75715e">// アラートを表示
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">alert</span>(<span style="color:#a6e22e">direction</span>);
-    }
-  }
-}
-&lt;/<span style="color:#f92672">script</span>&gt;
-</code></pre></div><h2 id="vcontrollervue子">vcontroller.vue（子）</h2>
-<p>子コンポーネントでも <code>move</code>メソッドを定義しています．
+このとき，<code>move-event</code>という属性名になっていることに注意してください．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-vue data-lang=vue><span style=display:flex><span>&lt;<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>h1</span>&gt;<span style=color:#a6e22e>Vue</span>.<span style=color:#a6e22e>jsで地図アプリ</span>&lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>vmap</span>&gt;&lt;/<span style=color:#f92672>vmap</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>vcontroller</span> <span style=color:#a6e22e>v</span><span style=color:#f92672>-on:move-event</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;move&#34;</span>&gt;&lt;/<span style=color:#f92672>vcontroller</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>script</span>&gt;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>vmap</span> <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#34;./vmap&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>vcontroller</span> <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#34;./vcontroller&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span>{
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>components</span><span style=color:#f92672>:</span>{
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>vmap</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>vcontroller</span>
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span>{
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>move</span>(<span style=color:#a6e22e>direction</span>){
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// アラートを表示
+</span></span></span><span style=display:flex><span>      <span style=color:#a6e22e>alert</span>(<span style=color:#a6e22e>direction</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span></code></pre></div><h2 id=vcontrollervue子>vcontroller.vue（子）</h2><p>子コンポーネントでも <code>move</code>メソッドを定義しています．
 この<code>move</code>メソッドは，<code>$emit</code>を利用して<code>move-event</code>として登録されている親コンポーネントの <code>move</code>メソッドを呼び出します．
 また，<code>move</code>メソッドは，<code>v-on</code>ディレクティブを利用して，ボタンのクリックがトリガーとなっています．
-このとき，メソッドの引数としてleft, up, right, downのいずれかの文字列が渡されることに注意してください．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">
-&lt;<span style="color:#f92672">template</span>&gt;
-  &lt;<span style="color:#f92672">div</span>&gt;
-    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mycontroller&#34;</span>&gt;
-      &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mypad&#34;</span>&gt;
-        &lt;<span style="color:#f92672">v-fa</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pad&#34;</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-on:click</span><span style="color:#e6db74">=&#34;move(&#39;left&#39;)&#34;</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;long-arrow-alt-left&#34;</span> /&gt;
-        &lt;<span style="color:#f92672">v-fa</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pad&#34;</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-on:click</span><span style="color:#e6db74">=&#34;move(&#39;up&#39;)&#34;</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;long-arrow-alt-up&#34;</span> /&gt;
-        &lt;<span style="color:#f92672">v-fa</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pad&#34;</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-on:click</span><span style="color:#e6db74">=&#34;move(&#39;right&#39;)&#34;</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;long-arrow-alt-right&#34;</span> /&gt;
-        &lt;<span style="color:#f92672">v-fa</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;pad&#34;</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-on:click</span><span style="color:#e6db74">=&#34;move(&#39;down&#39;)&#34;</span> <span style="color:#a6e22e">icon</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;long-arrow-alt-down&#34;</span> /&gt;
-      &lt;/<span style="color:#f92672">div</span>&gt;
-    &lt;/<span style="color:#f92672">div</span>&gt;
-  &lt;/<span style="color:#f92672">div</span>&gt;
-&lt;/<span style="color:#f92672">template</span>&gt;
-
-&lt;<span style="color:#f92672">script</span>&gt;
-<span style="color:#75715e">// ・・・省略・・・
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
-  <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;vcontroller&#34;</span>,
-  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
-    <span style="color:#a6e22e">move</span>(<span style="color:#a6e22e">direction</span>){
-      <span style="color:#75715e">// 親コンポーネントであるmain.vueのmoveメソッドを呼び出す      
-</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$emit</span>(<span style="color:#e6db74">&#34;move-event&#34;</span>, <span style="color:#a6e22e">direction</span>)
-    }
-  }
-}
-&lt;/<span style="color:#f92672">script</span>&gt;
-</code></pre></div><p>ボタンをクリックすると，対応した文字列がアラートに表示されます．</p>
-<p><a href="https://gyazo.com/cad8c841eab6d01c3efd6d0643308fbc"><img src="https://i.gyazo.com/cad8c841eab6d01c3efd6d0643308fbc.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  親から子のメソッドを実行
-</h1>
-
-<p>親コンポーネントから子コンポーネントのメソッドを呼び出すには<a href="https://jp.vuejs.org/v2/api/index.html#vm-refs">$refs</a>を利用します．</p>
-<h2 id="vmapvue子">vmap.vue（子）</h2>
-<p>子コンポーネントで <code>move</code> メソッドを定義します．
-このメソッドでは，引数の文字列に応じて，Leefletの地図オブジェクトの中心を東西南北の方向に少しだけ移動させます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">script</span>&gt;
-<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">L</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#39;leaflet&#39;</span>
-<span style="color:#66d9ef">import</span> <span style="color:#e6db74">&#34;leaflet/dist/leaflet.css&#34;</span>;
-<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
-  <span style="color:#a6e22e">name</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;vmap&#34;</span>,
-  <span style="color:#a6e22e">mounted</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(){
-    <span style="color:#75715e">// ・・・省略・・・
-</span><span style="color:#75715e"></span>  },
-  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(){
-    <span style="color:#75715e">// ・・・省略・・・
-</span><span style="color:#75715e"></span>  },
-  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
-    <span style="color:#a6e22e">move</span>(<span style="color:#a6e22e">direction</span>){
-      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">offset</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.005</span>
-      <span style="color:#66d9ef">switch</span>(<span style="color:#a6e22e">direction</span>){
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;left&#34;</span><span style="color:#f92672">:</span>
-        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span> <span style="color:#f92672">=</span> [<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>[<span style="color:#ae81ff">0</span>], <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">offset</span>]
-        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">panTo</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>)
-        <span style="color:#66d9ef">break</span>;
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;up&#34;</span><span style="color:#f92672">:</span>
-        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span> <span style="color:#f92672">=</span> [<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">offset</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>[<span style="color:#ae81ff">1</span>]]
-        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">panTo</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>)
-        <span style="color:#66d9ef">break</span>;
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;right&#34;</span><span style="color:#f92672">:</span>
-        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span> <span style="color:#f92672">=</span> [<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>[<span style="color:#ae81ff">0</span>], <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">offset</span>]
-        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">panTo</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>)
-        <span style="color:#66d9ef">break</span>;
-        <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;down&#34;</span><span style="color:#f92672">:</span>
-        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span> <span style="color:#f92672">=</span> [<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">-</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">offset</span>, <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>[<span style="color:#ae81ff">1</span>]]
-        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">panTo</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">latlng</span>)
-        <span style="color:#66d9ef">break</span>;
-      }
-    }
-  }
-}
-&lt;/<span style="color:#f92672">script</span>&gt;
-</code></pre></div><h2 id="mainvue親-1">main.vue（親）</h2>
-<p>親コンポーネントでは，子コンポーネントの<code>vmap</code>タグに<code>refs</code>属性を指定します．
+このとき，メソッドの引数としてleft, up, right, downのいずれかの文字列が渡されることに注意してください．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-vue data-lang=vue><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;mycontroller&#34;</span>&gt;
+</span></span><span style=display:flex><span>      &lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;mypad&#34;</span>&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>v-fa</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;pad&#34;</span> <span style=color:#a6e22e>v</span><span style=color:#f92672>-on:click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;move(&#39;left&#39;)&#34;</span> <span style=color:#a6e22e>icon</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;long-arrow-alt-left&#34;</span> /&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>v-fa</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;pad&#34;</span> <span style=color:#a6e22e>v</span><span style=color:#f92672>-on:click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;move(&#39;up&#39;)&#34;</span> <span style=color:#a6e22e>icon</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;long-arrow-alt-up&#34;</span> /&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>v-fa</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;pad&#34;</span> <span style=color:#a6e22e>v</span><span style=color:#f92672>-on:click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;move(&#39;right&#39;)&#34;</span> <span style=color:#a6e22e>icon</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;long-arrow-alt-right&#34;</span> /&gt;
+</span></span><span style=display:flex><span>        &lt;<span style=color:#f92672>v-fa</span> <span style=color:#a6e22e>class</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;pad&#34;</span> <span style=color:#a6e22e>v</span><span style=color:#f92672>-on:click</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;move(&#39;down&#39;)&#34;</span> <span style=color:#a6e22e>icon</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;long-arrow-alt-down&#34;</span> /&gt;
+</span></span><span style=display:flex><span>      &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>script</span>&gt;
+</span></span><span style=display:flex><span><span style=color:#75715e>// ・・・省略・・・
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span>{
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;vcontroller&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span>{
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>move</span>(<span style=color:#a6e22e>direction</span>){
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// 親コンポーネントであるmain.vueのmoveメソッドを呼び出す      
+</span></span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>$emit</span>(<span style=color:#e6db74>&#34;move-event&#34;</span>, <span style=color:#a6e22e>direction</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span></code></pre></div><p>ボタンをクリックすると，対応した文字列がアラートに表示されます．</p><p><a href=https://gyazo.com/cad8c841eab6d01c3efd6d0643308fbc><img src=https://i.gyazo.com/cad8c841eab6d01c3efd6d0643308fbc.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>親から子のメソッドを実行</h1><p>親コンポーネントから子コンポーネントのメソッドを呼び出すには<a href=https://jp.vuejs.org/v2/api/index.html#vm-refs>$refs</a>を利用します．</p><h2 id=vmapvue子>vmap.vue（子）</h2><p>子コンポーネントで <code>move</code> メソッドを定義します．
+このメソッドでは，引数の文字列に応じて，Leefletの地図オブジェクトの中心を東西南北の方向に少しだけ移動させます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-vue data-lang=vue><span style=display:flex><span>&lt;<span style=color:#f92672>script</span>&gt;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>L</span> <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#39;leaflet&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#e6db74>&#34;leaflet/dist/leaflet.css&#34;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span>{
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;vmap&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>mounted</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>function</span>(){
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// ・・・省略・・・
+</span></span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> <span style=color:#66d9ef>function</span>(){
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// ・・・省略・・・
+</span></span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span>{
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>move</span>(<span style=color:#a6e22e>direction</span>){
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>offset</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0.005</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>switch</span>(<span style=color:#a6e22e>direction</span>){
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;left&#34;</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span> <span style=color:#f92672>=</span> [<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>[<span style=color:#ae81ff>0</span>], <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>[<span style=color:#ae81ff>1</span>] <span style=color:#f92672>-</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>offset</span>]
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>map</span>.<span style=color:#a6e22e>panTo</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;up&#34;</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span> <span style=color:#f92672>=</span> [<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>+</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>offset</span>, <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>[<span style=color:#ae81ff>1</span>]]
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>map</span>.<span style=color:#a6e22e>panTo</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;right&#34;</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span> <span style=color:#f92672>=</span> [<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>[<span style=color:#ae81ff>0</span>], <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>[<span style=color:#ae81ff>1</span>] <span style=color:#f92672>+</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>offset</span>]
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>map</span>.<span style=color:#a6e22e>panTo</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;down&#34;</span><span style=color:#f92672>:</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span> <span style=color:#f92672>=</span> [<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>-</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>offset</span>, <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>[<span style=color:#ae81ff>1</span>]]
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>map</span>.<span style=color:#a6e22e>panTo</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>latlng</span>)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span>      }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span></code></pre></div><h2 id=mainvue親-1>main.vue（親）</h2><p>親コンポーネントでは，子コンポーネントの<code>vmap</code>タグに<code>refs</code>属性を指定します．
 <code>refs</code>属性を指定することで，子コンポーネントのDOM要素を直接操作することができます．
 <code>move</code> メソッドでは，<code>this.$refs.cmap</code> で子コンポーネントを参照し，
-子コンポーネントの <code>move</code> メソッドを呼び出しています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-vue" data-lang="vue">&lt;<span style="color:#f92672">template</span>&gt;
-  &lt;<span style="color:#f92672">div</span>&gt;
-    &lt;<span style="color:#f92672">h1</span>&gt;<span style="color:#a6e22e">Vue</span>.<span style="color:#a6e22e">jsで地図アプリ</span>&lt;/<span style="color:#f92672">h1</span>&gt;
-    &lt;<span style="color:#f92672">vmap</span> <span style="color:#a6e22e">ref</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cmap&#34;</span>&gt;&lt;/<span style="color:#f92672">vmap</span>&gt;
-    &lt;<span style="color:#f92672">vcontroller</span> <span style="color:#a6e22e">v</span><span style="color:#f92672">-on:move-event</span><span style="color:#e6db74">=&#34;move&#34;</span>&gt;&lt;/<span style="color:#f92672">vcontroller</span>&gt;
-  &lt;/<span style="color:#f92672">div</span>&gt;
-&lt;/<span style="color:#f92672">template</span>&gt;
-
-&lt;<span style="color:#f92672">script</span>&gt;
-<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">vmap</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./vmap&#34;</span>
-<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">vcontroller</span> <span style="color:#a6e22e">from</span> <span style="color:#e6db74">&#34;./vcontroller&#34;</span>
-<span style="color:#66d9ef">export</span> <span style="color:#66d9ef">default</span>{
-  <span style="color:#a6e22e">components</span><span style="color:#f92672">:</span>{
-    <span style="color:#a6e22e">vmap</span>,
-    <span style="color:#a6e22e">vcontroller</span>
-  },
-  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span>{
-    <span style="color:#a6e22e">move</span>(<span style="color:#a6e22e">direction</span>){
-      <span style="color:#75715e">// 子コンポーネントであるvmap.vueのmoveメソッドを呼び出す
-</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">$refs</span>.<span style="color:#a6e22e">cmap</span>.<span style="color:#a6e22e">move</span>(<span style="color:#a6e22e">direction</span>);
-    }
-  }
-}
-&lt;/<span style="color:#f92672">script</span>&gt;
-</code></pre></div><p>下記のようにボタンをクリックすると，地図が東西南北に移動すれば完成です．</p>
-<p><a href="https://gyazo.com/9b82a55ca85ab65950ac9463f632b80b"><img src="https://i.gyazo.com/9b82a55ca85ab65950ac9463f632b80b.gif" alt="Image from Gyazo"></a></p>
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-    
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+子コンポーネントの <code>move</code> メソッドを呼び出しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-vue data-lang=vue><span style=display:flex><span>&lt;<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>h1</span>&gt;<span style=color:#a6e22e>Vue</span>.<span style=color:#a6e22e>jsで地図アプリ</span>&lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>vmap</span> <span style=color:#a6e22e>ref</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;cmap&#34;</span>&gt;&lt;/<span style=color:#f92672>vmap</span>&gt;
+</span></span><span style=display:flex><span>    &lt;<span style=color:#f92672>vcontroller</span> <span style=color:#a6e22e>v</span><span style=color:#f92672>-on:move-event</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;move&#34;</span>&gt;&lt;/<span style=color:#f92672>vcontroller</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>div</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>template</span>&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>script</span>&gt;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>vmap</span> <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#34;./vmap&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>import</span> <span style=color:#a6e22e>vcontroller</span> <span style=color:#a6e22e>from</span> <span style=color:#e6db74>&#34;./vcontroller&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>export</span> <span style=color:#66d9ef>default</span>{
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>components</span><span style=color:#f92672>:</span>{
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>vmap</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>vcontroller</span>
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span>{
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>move</span>(<span style=color:#a6e22e>direction</span>){
+</span></span><span style=display:flex><span>      <span style=color:#75715e>// 子コンポーネントであるvmap.vueのmoveメソッドを呼び出す
+</span></span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>$refs</span>.<span style=color:#a6e22e>cmap</span>.<span style=color:#a6e22e>move</span>(<span style=color:#a6e22e>direction</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>script</span>&gt;
+</span></span></code></pre></div><p>下記のようにボタンをクリックすると，地図が東西南北に移動すれば完成です．</p><p><a href=https://gyazo.com/9b82a55ca85ab65950ac9463f632b80b><img src=https://i.gyazo.com/9b82a55ca85ab65950ac9463f632b80b.gif alt="Image from Gyazo"></a></p><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

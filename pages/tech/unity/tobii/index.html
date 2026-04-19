@@ -1,374 +1,143 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    Tobii Eye Trackerで視線検出 | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Tobii Eye Trackerで視線検出 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="Tobii Eye Trackerで視線検出"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/tech/unity/tobii/"><meta property="og:image" content="https://i.gyazo.com/ab4ae4d65ae17f2840396860ce77fe08.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
 
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="Tobii Eye Trackerで視線検出" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/tech/unity/tobii/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/ab4ae4d65ae17f2840396860ce77fe08.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="Tobii Eye Trackerトビー・テクノロジーが開発する Tobii Pro X2や Tbii Eye Tracker 4Cなどの視線入力装置を ゲームエンジンのUnityで利用するための実装方法を解説します． これらの視線入力装置は，既に，FFXV など143のPCゲームで利用可能であり（2019年7月現在）， ゲームをより楽しむためのサポート手段として用いられています． 視線入力装置を利用したゲーム映像はTobii Gamesで公開されているので視聴してみると良いでしょう．
-Unityでの開発にはTobii Unity SDK for Desktopを利用します． この開発キットは，あくまで個人利用向けであり，分析を目的として利用する場合は，別途ライセンスの購入が必要なことに注意してください（向は分析用のライセンスも所持しています）． また，システム要件として下記が挙げられています．
- バージョン 5 または 4.5 以上のUnity ウィンドウズ10，8.1，7 Core Softwareのインストール  それでは，Tobii Unity SDK for Desktopをダウンロードしてください． 2019年7月現在のバージョンは 4.04 です．
-プロジェクトの作成まずは，Unityでプロジェクトを新規作成します． テンプレートは 2D ，プロジェクト名は TobiiSample に設定します（もちろん 3D でも利用可能です）．
-
-次に，ダウンロードした，Tobii Unity SDK for Desktopをプロジェクトに導入しましょう． [Assets] → [Import Package] → [Custom Package] をクリックし，ダウンロードしたファイルを選択します．
-背景とオブジェクトの設定 背景を設定しましょう． ここでは，Main Camera の Background を白（#FFFFFF）にします（別にどんな色でも構いませんが）．" />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="Tobii Eye Trackerで視線検出" />
-
-
-
-  <meta name="twitter:description" content="Tobii Eye Trackerトビー・テクノロジーが開発する Tobii Pro X2や Tbii Eye Tracker 4Cなどの視線入力装置を ゲームエンジンのUnityで利用するための実装方法を解説します． これらの視線入力装置は，既に，FFXV など143のPCゲームで利用可能であり（2019年7月現在）， ゲームをより楽しむためのサポート手段として用いられています． 視線入力装置を利用したゲーム映像はTobii Gamesで公開されているので視聴してみると良いでしょう．
-Unityでの開発にはTobii Unity SDK for Desktopを利用します． この開発キットは，あくまで個人利用向けであり，分析を目的として利用する場合は，別途ライセンスの購入が必要なことに注意してください（向は分析用のライセンスも所持しています）． また，システム要件として下記が挙げられています．
- バージョン 5 または 4.5 以上のUnity ウィンドウズ10，8.1，7 Core Softwareのインストール  それでは，Tobii Unity SDK for Desktopをダウンロードしてください． 2019年7月現在のバージョンは 4.04 です．
-プロジェクトの作成まずは，Unityでプロジェクトを新規作成します． テンプレートは 2D ，プロジェクト名は TobiiSample に設定します（もちろん 3D でも利用可能です）．
-
-次に，ダウンロードした，Tobii Unity SDK for Desktopをプロジェクトに導入しましょう． [Assets] → [Import Package] → [Custom Package] をクリックし，ダウンロードしたファイルを選択します．
-背景とオブジェクトの設定 背景を設定しましょう． ここでは，Main Camera の Background を白（#FFFFFF）にします（別にどんな色でも構いませんが）．" />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/ab4ae4d65ae17f2840396860ce77fe08.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">Tobii Eye Trackerで視線検出</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p><a href="https://gyazo.com/ab4ae4d65ae17f2840396860ce77fe08"><img src="https://i.gyazo.com/ab4ae4d65ae17f2840396860ce77fe08.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   Tobii Eye Tracker
-</h1>
 
-<p><a href="https://www.tobiipro.com/ja/">トビー・テクノロジー</a>が開発する
-<a href="https://www.tobiipro.com/ja/product-listing/tobii-pro-x2/">Tobii Pro X2</a>や
-<a href="https://gaming.tobii.com/product/tobii-eye-tracker-4c/">Tbii Eye Tracker 4C</a>などの視線入力装置を
-ゲームエンジンの<a href="https://unity.com/ja">Unity</a>で利用するための実装方法を解説します．
+
+トビー・テクノロジーが開発する
+Tobii Pro X2や
+Tbii Eye Tracker 4Cなどの視線入力装置を
+ゲームエンジンのUnityで利用するための実装方法を解説します．
+これらの視線入力装置は，既に，FFXV など143のPCゲームで利用可能であり（2019年7月現在），
+ゲームをより楽しむためのサポート手段として用いられています．
+視線入力装置を利用したゲーム映像はTobii Gamesで公開されているので視聴してみると良いでしょう．
+Unityでの開発にはTobii Unity SDK for Desktopを利用します．
+この開発キットは，あくまで個人利用向けであり，分析を目的として利用する場合は，別途ライセンスの購入が必要なことに注意してください（向は分析用のライセンスも所持しています）．
+また，システム要件として下記が挙げられています．
+
+バージョン 5 または 4.5 以上のUnity
+ウィンドウズ10，8.1，7
+Core Softwareのインストール
+
+それでは，Tobii Unity SDK for Desktopをダウンロードしてください．
+2019年7月現在のバージョンは 4.04 です．
+
+  プロジェクトの作成
+
+
+まずは，Unityでプロジェクトを新規作成します．
+テンプレートは 2D ，プロジェクト名は TobiiSample に設定します（もちろん 3D でも利用可能です）．
+
+次に，ダウンロードした，Tobii Unity SDK for Desktopをプロジェクトに導入しましょう．
+[Assets] → [Import Package] → [Custom Package] をクリックし，ダウンロードしたファイルを選択します．"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="Tobii Eye Trackerで視線検出"><meta name=twitter:description content="
+
+  Tobii Eye Tracker
+
+
+トビー・テクノロジーが開発する
+Tobii Pro X2や
+Tbii Eye Tracker 4Cなどの視線入力装置を
+ゲームエンジンのUnityで利用するための実装方法を解説します．
+これらの視線入力装置は，既に，FFXV など143のPCゲームで利用可能であり（2019年7月現在），
+ゲームをより楽しむためのサポート手段として用いられています．
+視線入力装置を利用したゲーム映像はTobii Gamesで公開されているので視聴してみると良いでしょう．
+Unityでの開発にはTobii Unity SDK for Desktopを利用します．
+この開発キットは，あくまで個人利用向けであり，分析を目的として利用する場合は，別途ライセンスの購入が必要なことに注意してください（向は分析用のライセンスも所持しています）．
+また，システム要件として下記が挙げられています．
+
+バージョン 5 または 4.5 以上のUnity
+ウィンドウズ10，8.1，7
+Core Softwareのインストール
+
+それでは，Tobii Unity SDK for Desktopをダウンロードしてください．
+2019年7月現在のバージョンは 4.04 です．
+
+  プロジェクトの作成
+
+
+まずは，Unityでプロジェクトを新規作成します．
+テンプレートは 2D ，プロジェクト名は TobiiSample に設定します（もちろん 3D でも利用可能です）．
+
+次に，ダウンロードした，Tobii Unity SDK for Desktopをプロジェクトに導入しましょう．
+[Assets] → [Import Package] → [Custom Package] をクリックし，ダウンロードしたファイルを選択します．"><meta name=twitter:image content="https://i.gyazo.com/ab4ae4d65ae17f2840396860ce77fe08.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>Tobii Eye Trackerで視線検出</h1><div class=post-line></div><p><a href=https://gyazo.com/ab4ae4d65ae17f2840396860ce77fe08><img src=https://i.gyazo.com/ab4ae4d65ae17f2840396860ce77fe08.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Tobii Eye Tracker</h1><p><a href=https://www.tobiipro.com/ja/>トビー・テクノロジー</a>が開発する
+<a href=https://www.tobiipro.com/ja/product-listing/tobii-pro-x2/>Tobii Pro X2</a>や
+<a href=https://gaming.tobii.com/product/tobii-eye-tracker-4c/>Tbii Eye Tracker 4C</a>などの視線入力装置を
+ゲームエンジンの<a href=https://unity.com/ja>Unity</a>で利用するための実装方法を解説します．
 これらの視線入力装置は，既に，<strong>FFXV</strong> など143のPCゲームで利用可能であり（2019年7月現在），
 ゲームをより楽しむためのサポート手段として用いられています．
-視線入力装置を利用したゲーム映像は<a href="https://gaming.tobii.com/games/">Tobii Games</a>で公開されているので視聴してみると良いでしょう．</p>
-<p>Unityでの開発には<a href="https://developer.tobii.com/pc-gaming/downloads/">Tobii Unity SDK for Desktop</a>を利用します．
+視線入力装置を利用したゲーム映像は<a href=https://gaming.tobii.com/games/>Tobii Games</a>で公開されているので視聴してみると良いでしょう．</p><p>Unityでの開発には<a href=https://developer.tobii.com/pc-gaming/downloads/>Tobii Unity SDK for Desktop</a>を利用します．
 この開発キットは，あくまで個人利用向けであり，分析を目的として利用する場合は，別途ライセンスの購入が必要なことに注意してください（向は分析用のライセンスも所持しています）．
-また，システム要件として下記が挙げられています．</p>
-<ul>
-<li>バージョン 5 または 4.5 以上のUnity</li>
-<li>ウィンドウズ10，8.1，7</li>
-<li><a href="https://gaming.tobii.com/getstarted/">Core Software</a>のインストール</li>
-</ul>
-<p>それでは，<a href="https://developer.tobii.com/pc-gaming/downloads/">Tobii Unity SDK for Desktop</a>をダウンロードしてください．
-2019年7月現在のバージョンは <strong>4.04</strong> です．</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  プロジェクトの作成
-</h1>
-
-<p>まずは，Unityでプロジェクトを新規作成します．
-テンプレートは <strong>2D</strong> ，プロジェクト名は <strong>TobiiSample</strong> に設定します（もちろん <strong>3D</strong> でも利用可能です）．</p>
-<p><a href="https://gyazo.com/a1b4a8fd4ed743bdc79f7cd76d0e5f8d"><img src="https://i.gyazo.com/a1b4a8fd4ed743bdc79f7cd76d0e5f8d.png" alt="Image from Gyazo"></a></p>
-<p>次に，ダウンロードした，Tobii Unity SDK for Desktopをプロジェクトに導入しましょう．
-<strong>[Assets] → [Import Package] → [Custom Package]</strong> をクリックし，ダウンロードしたファイルを選択します．</p>
-<h3 id="背景とオブジェクトの設定">背景とオブジェクトの設定</h3>
-<p>背景を設定しましょう．
-ここでは，<strong>Main Camera</strong> の <strong>Background</strong> を白（#FFFFFF）にします（別にどんな色でも構いませんが）．</p>
-<p><a href="https://gyazo.com/b49e7e029b38f5fd95184bea8df3d906"><img src="https://i.gyazo.com/b49e7e029b38f5fd95184bea8df3d906.png" alt="Image from Gyazo"></a></p>
-<p>また，注視対象となるオブジェクトを配置します．
+また，システム要件として下記が挙げられています．</p><ul><li>バージョン 5 または 4.5 以上のUnity</li><li>ウィンドウズ10，8.1，7</li><li><a href=https://gaming.tobii.com/getstarted/>Core Software</a>のインストール</li></ul><p>それでは，<a href=https://developer.tobii.com/pc-gaming/downloads/>Tobii Unity SDK for Desktop</a>をダウンロードしてください．
+2019年7月現在のバージョンは <strong>4.04</strong> です．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>プロジェクトの作成</h1><p>まずは，Unityでプロジェクトを新規作成します．
+テンプレートは <strong>2D</strong> ，プロジェクト名は <strong>TobiiSample</strong> に設定します（もちろん <strong>3D</strong> でも利用可能です）．</p><p><a href=https://gyazo.com/a1b4a8fd4ed743bdc79f7cd76d0e5f8d><img src=https://i.gyazo.com/a1b4a8fd4ed743bdc79f7cd76d0e5f8d.png alt="Image from Gyazo"></a></p><p>次に，ダウンロードした，Tobii Unity SDK for Desktopをプロジェクトに導入しましょう．
+<strong>[Assets] → [Import Package] → [Custom Package]</strong> をクリックし，ダウンロードしたファイルを選択します．</p><h3 id=背景とオブジェクトの設定>背景とオブジェクトの設定</h3><p>背景を設定しましょう．
+ここでは，<strong>Main Camera</strong> の <strong>Background</strong> を白（#FFFFFF）にします（別にどんな色でも構いませんが）．</p><p><a href=https://gyazo.com/b49e7e029b38f5fd95184bea8df3d906><img src=https://i.gyazo.com/b49e7e029b38f5fd95184bea8df3d906.png alt="Image from Gyazo"></a></p><p>また，注視対象となるオブジェクトを配置します．
 ここでは，<strong>Cube</strong> と <strong>Sphere</strong> を用います．
 <strong>Cube</strong> の位置は <strong>(-5, 0, 0)</strong> ，スケールは <strong>(2, 2, 2)</strong> に設定します．
-同様に <strong>Sphere</strong> の位置は <strong>(5, 0, 0)</strong>，スケールは <strong>(2, 2, 2)</strong> に設定します．</p>
-<p><a href="https://gyazo.com/f7be9f31ccad305ca4532ad347bdf5c0"><img src="https://i.gyazo.com/f7be9f31ccad305ca4532ad347bdf5c0.png" alt="Image from Gyazo"></a></p>
-<p><a href="https://gyazo.com/b36b1bead09dd4f4cf09614e6cd2c9c8"><img src="https://i.gyazo.com/b36b1bead09dd4f4cf09614e6cd2c9c8.png" alt="Image from Gyazo"></a></p>
-<p>これで，ゲーム画面には，白い背景に，黒い正方形（Cube）と円（Sphere）が描画されるはずです．
-この正方形と円に対する注視を検出することにします．</p>
-<p><a href="https://gyazo.com/4d0594c41c33992f6a769028ae4c42a1"><img src="https://i.gyazo.com/4d0594c41c33992f6a769028ae4c42a1.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  注視の検出
-</h1>
-
-<p>それでは，作成した <strong>Cube</strong> と <strong>Sphere</strong> に対する注視を検出してみましょう．
+同様に <strong>Sphere</strong> の位置は <strong>(5, 0, 0)</strong>，スケールは <strong>(2, 2, 2)</strong> に設定します．</p><p><a href=https://gyazo.com/f7be9f31ccad305ca4532ad347bdf5c0><img src=https://i.gyazo.com/f7be9f31ccad305ca4532ad347bdf5c0.png alt="Image from Gyazo"></a></p><p><a href=https://gyazo.com/b36b1bead09dd4f4cf09614e6cd2c9c8><img src=https://i.gyazo.com/b36b1bead09dd4f4cf09614e6cd2c9c8.png alt="Image from Gyazo"></a></p><p>これで，ゲーム画面には，白い背景に，黒い正方形（Cube）と円（Sphere）が描画されるはずです．
+この正方形と円に対する注視を検出することにします．</p><p><a href=https://gyazo.com/4d0594c41c33992f6a769028ae4c42a1><img src=https://i.gyazo.com/4d0594c41c33992f6a769028ae4c42a1.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>注視の検出</h1><p>それでは，作成した <strong>Cube</strong> と <strong>Sphere</strong> に対する注視を検出してみましょう．
 まずは，オブジェクトを選択し， <strong>Add Component</strong> をクリックします．
 ここで， <strong>Gaze Aware</strong> となっているコンポーネントを選択します．
-これで，<strong>Cube</strong> と <strong>Sphere</strong> は注視を検出する対象となります．</p>
-<p><a href="https://gyazo.com/00d9c0456b6ff6bee8f5ae5228f831b1"><img src="https://i.gyazo.com/00d9c0456b6ff6bee8f5ae5228f831b1.png" alt="Image from Gyazo"></a></p>
-<p>また，先程と同様に，オブジェクトを選択し， <strong>Add Component</strong> をクリックします．
+これで，<strong>Cube</strong> と <strong>Sphere</strong> は注視を検出する対象となります．</p><p><a href=https://gyazo.com/00d9c0456b6ff6bee8f5ae5228f831b1><img src=https://i.gyazo.com/00d9c0456b6ff6bee8f5ae5228f831b1.png alt="Image from Gyazo"></a></p><p>また，先程と同様に，オブジェクトを選択し， <strong>Add Component</strong> をクリックします．
 今度は，<strong>New Script</strong> をクリックします．
-作成するスクリプト名は <strong>GazeTarget</strong> とします．</p>
-<p><a href="https://gyazo.com/dc709b2999f07746a94996e1a23a4ef2"><img src="https://i.gyazo.com/dc709b2999f07746a94996e1a23a4ef2.png" alt="Image from Gyazo"></a></p>
-<p>それでは，スクリプトを編集しましょう．
+作成するスクリプト名は <strong>GazeTarget</strong> とします．</p><p><a href=https://gyazo.com/dc709b2999f07746a94996e1a23a4ef2><img src=https://i.gyazo.com/dc709b2999f07746a94996e1a23a4ef2.png alt="Image from Gyazo"></a></p><p>それでは，スクリプトを編集しましょう．
 まずは， <strong>Tobii.Gaming</strong> ライブラリを先頭に追加します．
 ここでは，<strong>Cube</strong> と <strong>Sphere</strong> に対する注視状態（注視している or 注視してない）を取得することにします．
 この注視状態は <strong>GazeAware</strong> クラスの， <strong>HasGzeFocus</strong> フィールドに保持されます．
-注視しているときは <strong>True</strong> ，注視していないときは <strong>False</strong> となります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">using</span> System.Collections;
-<span style="color:#66d9ef">using</span> System.Collections.Generic;
-<span style="color:#66d9ef">using</span> UnityEngine;
-<span style="color:#66d9ef">using</span> Tobii.Gaming; <span style="color:#75715e">//ライブラリの追加
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GazeTarget</span> : MonoBehaviour
-{
-    <span style="color:#75715e">//注視情報
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">private</span> GazeAware gazeAware;
-
-    <span style="color:#66d9ef">void</span> Start()
-    {
-      <span style="color:#75715e">//注視情報の取得
-</span><span style="color:#75715e"></span>      gazeAware = GetComponent&lt;GazeAware&gt;();
-    }
-
-    <span style="color:#66d9ef">void</span> Update()
-    {
-      <span style="color:#75715e">//オブジェクトを注視していたらTrue
-</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">bool</span> flg = gazeAware.HasGazeFocus;
-      Debug.Log(flg);
-    }
-}
-</code></pre></div><p>実行すると，コンソールに注視状態のログが表示されます．
+注視しているときは <strong>True</strong> ，注視していないときは <strong>False</strong> となります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>using</span> System.Collections;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System.Collections.Generic;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> UnityEngine;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> Tobii.Gaming; <span style=color:#75715e>//ライブラリの追加</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>GazeTarget</span> : MonoBehaviour
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//注視情報</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> GazeAware gazeAware;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span> Start()
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//注視情報の取得</span>
+</span></span><span style=display:flex><span>      gazeAware = GetComponent&lt;GazeAware&gt;();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span> Update()
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>      <span style=color:#75715e>//オブジェクトを注視していたらTrue</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>bool</span> flg = gazeAware.HasGazeFocus;
+</span></span><span style=display:flex><span>      Debug.Log(flg);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>実行すると，コンソールに注視状態のログが表示されます．
 <strong>Cube</strong> と <strong>Sphere</strong> を注視していない状態では，Falseのカウント（図中は3936）が増加し，
-注視すると，Trueのカウント（図中は732）が増加することが確認できます．</p>
-<p><a href="https://gyazo.com/99a0641e1951067d7c67e116945d4a18"><img src="https://i.gyazo.com/99a0641e1951067d7c67e116945d4a18.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  注視対象の可視化
-</h1>
-
-<p>最後に，<strong>Cube</strong> と <strong>Sphere</strong> の注視状態を，色で可視化してみましょう．
+注視すると，Trueのカウント（図中は732）が増加することが確認できます．</p><p><a href=https://gyazo.com/99a0641e1951067d7c67e116945d4a18><img src=https://i.gyazo.com/99a0641e1951067d7c67e116945d4a18.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>注視対象の可視化</h1><p>最後に，<strong>Cube</strong> と <strong>Sphere</strong> の注視状態を，色で可視化してみましょう．
 ここでは，注視していたら <strong>赤</strong> ，注視していなければ <strong>青</strong> にマテリアル・カラーを変更することにします．
-まずは， <strong>指向性ライト（DirectionalLight）</strong> を追加します．</p>
-<p><a href="https://gyazo.com/c49a2b6afd540013bfcc584ba6c5ba49"><img src="https://i.gyazo.com/c49a2b6afd540013bfcc584ba6c5ba49.png" alt="Image from Gyazo"></a></p>
-<p>これは，遠くの光源からの方向性のある光を表現しており，光が当たることでオブジェクトは発色します．
-次に，条件文を利用して，フラグはTrueのときに赤，フラグがFalseのときに青を設定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">void</span> Update()
-{
-  <span style="color:#75715e">//オブジェクトを注視していたらTrue
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">bool</span> flg = gazeAware.HasGazeFocus;
-
-  <span style="color:#66d9ef">if</span>(flg)
-  {
-    <span style="color:#75715e">//注視していたら赤色に
-</span><span style="color:#75715e"></span>    gameObject.GetComponent&lt;Renderer&gt;().material.color = Color.red;
-  }
-  <span style="color:#66d9ef">else</span>{
-    <span style="color:#75715e">//注視していなければ青色に
-</span><span style="color:#75715e"></span>    gameObject.GetComponent&lt;Renderer&gt;().material.color = Color.blue;
-  }
-
-}
-</code></pre></div><p>実行すると，下記のように注視したオブジェクトが赤く発色するようになります．
-このように，注視しているオブジェクトの取得はとても簡単に実装できます．</p>
-<p><a href="https://gyazo.com/027403e8583de95210deb03e411cf7eb"><img src="https://i.gyazo.com/027403e8583de95210deb03e411cf7eb.gif" alt="Image from Gyazo"></a></p>
-
-
-
-
-
-
-
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-    
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+まずは， <strong>指向性ライト（DirectionalLight）</strong> を追加します．</p><p><a href=https://gyazo.com/c49a2b6afd540013bfcc584ba6c5ba49><img src=https://i.gyazo.com/c49a2b6afd540013bfcc584ba6c5ba49.png alt="Image from Gyazo"></a></p><p>これは，遠くの光源からの方向性のある光を表現しており，光が当たることでオブジェクトは発色します．
+次に，条件文を利用して，フラグはTrueのときに赤，フラグがFalseのときに青を設定します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>void</span> Update()
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#75715e>//オブジェクトを注視していたらTrue</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>bool</span> flg = gazeAware.HasGazeFocus;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span>(flg)
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//注視していたら赤色に</span>
+</span></span><span style=display:flex><span>    gameObject.GetComponent&lt;Renderer&gt;().material.color = Color.red;
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>else</span>{
+</span></span><span style=display:flex><span>    <span style=color:#75715e>//注視していなければ青色に</span>
+</span></span><span style=display:flex><span>    gameObject.GetComponent&lt;Renderer&gt;().material.color = Color.blue;
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>実行すると，下記のように注視したオブジェクトが赤く発色するようになります．
+このように，注視しているオブジェクトの取得はとても簡単に実装できます．</p><p><a href=https://gyazo.com/027403e8583de95210deb03e411cf7eb><img src=https://i.gyazo.com/027403e8583de95210deb03e411cf7eb.gif alt="Image from Gyazo"></a></p><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>

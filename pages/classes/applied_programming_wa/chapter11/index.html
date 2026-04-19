@@ -1,608 +1,308 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>
-    p5.js①・図形描画とイベント処理 | mLAB
-  </title>
-
-  
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700">
-  <link rel="stylesheet" href="/css/custom.css">
-  <link rel="stylesheet" href="/css/syntax.css">
-  
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-
-  
-  <link href="" rel="alternate" type="application/rss+xml" title="mLAB" />
-
-  
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel="stylesheet">
-
-  
-  <script src="https://kit.fontawesome.com/0c97f11cd6.js" crossorigin="anonymous"></script>
-
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css" />
-
-  
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script>  
-  
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  <script type="text/x-mathjax-config">
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>p5.js①・図形描画とイベント処理 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
     MathJax.Hub.Config({
 	     tex2jax: {
 	        inlineMath: [['$','$']]
         }
     });
-  </script>
+  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="p5.js①・図形描画とイベント処理"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter11/"><meta property="og:image" content="https://i.gyazo.com/f6123de49eb21556635ea59c82a06c5b.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content='
 
-  
-  
-
-  
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  
-  
-  
-
-  <meta property="og:title" content="p5.js①・図形描画とイベント処理" />
-
-
-
-  <meta property="og:type" content="article" />
-
-
-
-  <meta property="og:url" content="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter11/" />
-
-
-
-  <meta property="og:image" content="https://i.gyazo.com/f6123de49eb21556635ea59c82a06c5b.png" />
-
-
-
-  <meta property="og:site_name" content="mLAB" />
-
-
-
-  <meta property="og:description" content="p5.jsとはp5.jsは，芸術家やデザイナーのためのオープンソースのJavaScriptライブラリです． ウェブページに，キャンバスを設置し，図形やアニメーションを描画することができます． Processingと同等の機能を備えていることから，Processing経験者には学習コストが低く，プログラミングの初学者にも適したライブラリです． ここでは，vue-p5を利用することで，Vue.jsとp5.jsを共存させながら，「３目並べ」のWebアプリを開発することを目指します．
-CodePenの準備CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter11」に設定しましょう．
-
-前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
-
-次に，Vue.jsとp5.jsを共存させるためのvue-p5を導入します． 検索してもCDNがリストアップされないので，https://unpkg.com/vue-p5を直接入力します．
-
-vue-p5vue-p5を利用することで，Vueクラスのメソッドとしてシンプルにp5.jsを記述することができます． HTMLは次のように記述します． vue-p5タグで，p5.jsの実装に必要な関数setup()とdraw()を宣言します． 次回利用するマウスの移動を検出するmouseMoved()なども，必要があれば追加で宣言します．
-&lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt;{{ title }}&lt;/h1&gt; &lt;vue-p5 @setup=&#34;setup&#34; @draw=&#34;draw&#34;&gt; &lt;/vue-p5&gt; &lt;/div&gt; JavaScriptでは，Vueクラスを定義します． このとき，methodsオプションに，上記で宣言したsetup()とdraw()を記述します． これらの関数の引数であるsketchを利用して，p5.jsの関数を呼び出します． 例えば，キャンバスの大きさを設定する関数はsketch.createCanvas(width, height)，また，キャンバスの背景色を設定する関数はsketch.background(color)のように記述します． キャンバスの原点(0,0)は左上であり，右方向にX軸，下方向にY軸が伸びています．
-// JavaScript new Vue({ el: &#39;#app&#39;, data: { title: &#34;３目並べ&#34;, }, methods: { setup(sketch){ sketch.createCanvas(500, 500); // キャンバスの大きさ  sketch.background(&#34;black&#34;); // キャンバスの背景色  }, draw(sketch){ } } });" />
-
-
-
-  
-  
-<meta name="twitter:card" content="summary" />
-
-<meta name="twitter:site" content="@nmukai1978" />
-
-
-  <meta name="twitter:title" content="p5.js①・図形描画とイベント処理" />
-
-
-
-  <meta name="twitter:description" content="p5.jsとはp5.jsは，芸術家やデザイナーのためのオープンソースのJavaScriptライブラリです． ウェブページに，キャンバスを設置し，図形やアニメーションを描画することができます． Processingと同等の機能を備えていることから，Processing経験者には学習コストが低く，プログラミングの初学者にも適したライブラリです． ここでは，vue-p5を利用することで，Vue.jsとp5.jsを共存させながら，「３目並べ」のWebアプリを開発することを目指します．
-CodePenの準備CodePenにアクセスして，Penを作成し，タイトルを設定しましょう． Penのタイトルは「Chapter11」に設定しましょう．
-
-前回と同様にVue.jsのライブラリをペンに追加してください． Vue.jsのバージョンは2.6.11を採用します．
-
-次に，Vue.jsとp5.jsを共存させるためのvue-p5を導入します． 検索してもCDNがリストアップされないので，https://unpkg.com/vue-p5を直接入力します．
-
-vue-p5vue-p5を利用することで，Vueクラスのメソッドとしてシンプルにp5.jsを記述することができます． HTMLは次のように記述します． vue-p5タグで，p5.jsの実装に必要な関数setup()とdraw()を宣言します． 次回利用するマウスの移動を検出するmouseMoved()なども，必要があれば追加で宣言します．
-&lt;!-- HTML --&gt; &lt;div id=&#34;app&#34;&gt; &lt;h1&gt;{{ title }}&lt;/h1&gt; &lt;vue-p5 @setup=&#34;setup&#34; @draw=&#34;draw&#34;&gt; &lt;/vue-p5&gt; &lt;/div&gt; JavaScriptでは，Vueクラスを定義します． このとき，methodsオプションに，上記で宣言したsetup()とdraw()を記述します． これらの関数の引数であるsketchを利用して，p5.jsの関数を呼び出します． 例えば，キャンバスの大きさを設定する関数はsketch.createCanvas(width, height)，また，キャンバスの背景色を設定する関数はsketch.background(color)のように記述します． キャンバスの原点(0,0)は左上であり，右方向にX軸，下方向にY軸が伸びています．
-// JavaScript new Vue({ el: &#39;#app&#39;, data: { title: &#34;３目並べ&#34;, }, methods: { setup(sketch){ sketch.createCanvas(500, 500); // キャンバスの大きさ  sketch.background(&#34;black&#34;); // キャンバスの背景色  }, draw(sketch){ } } });" />
-
-
-
-  <meta name="twitter:image" content="https://i.gyazo.com/f6123de49eb21556635ea59c82a06c5b.png" />
-
-
-  
-</head>
-
-    <body>
-        <nav class="nav">
-  <div class="nav-container">
-    
-    <a href="/">
-    <h2 class="nav-title">
-      <img src="https://mukai-lab.info/favicon/favicon-48x48.png" align="top"/>
-      <span>mLAB</span>
-      
-
-<ul id="menu">
-  
-  
-  <li>
-    <a href="/">Top</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/classes/">Classes</a>
-  </li>
-  
-  
-  
-  <li>
-    <a href="/posts/">Comics</a>
-  </li>
-  
-  
-</ul>
-
-<script>
-  $(function(){
-    $("#menu").slicknav({
-      label: "メニュー"
-    });
-  });
-</script>
-
-
-
-    </h2>
-    </a>
-  </div>
-</nav>
-
-        
-
-<main>
-  <div class="post">
-    
-    <h1 class="post-title">p5.js①・図形描画とイベント処理</h1>
-<div class="post-line"></div>
-    
-    
-
-    <p><a href="https://gyazo.com/f6123de49eb21556635ea59c82a06c5b"><img src="https://i.gyazo.com/f6123de49eb21556635ea59c82a06c5b.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
   p5.jsとは
-</h1>
 
-<p><a href="https://p5js.org/">p5.js</a>は，芸術家やデザイナーのためのオープンソースのJavaScriptライブラリです．
+
+p5.jsは，芸術家やデザイナーのためのオープンソースのJavaScriptライブラリです．
 ウェブページに，キャンバスを設置し，図形やアニメーションを描画することができます．
-<a href="https://processing.org/">Processing</a>と同等の機能を備えていることから，Processing経験者には学習コストが低く，プログラミングの初学者にも適したライブラリです．
-ここでは，<a href="https://github.com/Kinrany/vue-p5">vue-p5</a>を利用することで，Vue.jsとp5.jsを共存させながら，「３目並べ」のWebアプリを開発することを目指します．</p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+Processingと同等の機能を備えていることから，Processing経験者には学習コストが低く，プログラミングの初学者にも適したライブラリです．
+ここでは，vue-p5を利用することで，Vue.jsとp5.jsを共存させながら，「３目並べ」のWebアプリを開発することを目指します．
+
   CodePenの準備
-</h1>
 
-<p><a href="https://codepen.io/">CodePen</a>にアクセスして，Penを作成し，タイトルを設定しましょう．
-Penのタイトルは「Chapter11」に設定しましょう．</p>
-<p><a href="https://gyazo.com/8c83ec1c99fca7654f2ad7b7dbb262e5"><img src="https://i.gyazo.com/8c83ec1c99fca7654f2ad7b7dbb262e5.png" alt="Image from Gyazo"></a></p>
-<p>前回と同様にVue.jsのライブラリをペンに追加してください．
-Vue.jsのバージョンは2.6.11を採用します．</p>
-<p><a href="https://gyazo.com/4c110f8aea709c2d73759fc193a9a7a3"><img src="https://i.gyazo.com/4c110f8aea709c2d73759fc193a9a7a3.png" alt="Image from Gyazo"></a></p>
-<p>次に，Vue.jsとp5.jsを共存させるための<a href="https://github.com/Kinrany/vue-p5">vue-p5</a>を導入します．
-検索してもCDNがリストアップされないので，<code>https://unpkg.com/vue-p5</code>を直接入力します．</p>
-<p><a href="https://gyazo.com/8ab30f8dc68a390d752ee37a3a930dfd"><img src="https://i.gyazo.com/8ab30f8dc68a390d752ee37a3a930dfd.png" alt="Image from Gyazo"></a></p>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
+
+CodePenにアクセスして，Penを作成し，タイトルを設定しましょう．
+Penのタイトルは「Chapter11」に設定しましょう．
+
+前回と同様にVue.jsのライブラリをペンに追加してください．
+Vue.jsのバージョンは2.6.11を採用します．
+
+次に，Vue.jsとp5.jsを共存させるためのvue-p5を導入します．
+検索してもCDNがリストアップされないので，https://unpkg.com/vue-p5を直接入力します．
+
+
   vue-p5
-</h1>
 
-<p><a href="https://github.com/Kinrany/vue-p5">vue-p5</a>を利用することで，Vueクラスのメソッドとしてシンプルにp5.jsを記述することができます．
+
+vue-p5を利用することで，Vueクラスのメソッドとしてシンプルにp5.jsを記述することができます．
+HTMLは次のように記述します．
+vue-p5タグで，p5.jsの実装に必要な関数setup()とdraw()を宣言します．
+次回利用するマウスの移動を検出するmouseMoved()なども，必要があれば追加で宣言します．
+<!-- HTML -->
+<div id="app">
+  <h1>{{ title }}</h1>
+  <vue-p5
+    @setup="setup"
+    @draw="draw">
+  </vue-p5>
+</div>
+JavaScriptでは，Vueクラスを定義します．
+このとき，methodsオプションに，上記で宣言したsetup()とdraw()を記述します．
+これらの関数の引数であるsketchを利用して，p5.jsの関数を呼び出します．
+例えば，キャンバスの大きさを設定する関数はsketch.createCanvas(width, height)，また，キャンバスの背景色を設定する関数はsketch.background(color)のように記述します．
+キャンバスの原点(0,0)は左上であり，右方向にX軸，下方向にY軸が伸びています．'><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="p5.js①・図形描画とイベント処理"><meta name=twitter:description content='
+
+  p5.jsとは
+
+
+p5.jsは，芸術家やデザイナーのためのオープンソースのJavaScriptライブラリです．
+ウェブページに，キャンバスを設置し，図形やアニメーションを描画することができます．
+Processingと同等の機能を備えていることから，Processing経験者には学習コストが低く，プログラミングの初学者にも適したライブラリです．
+ここでは，vue-p5を利用することで，Vue.jsとp5.jsを共存させながら，「３目並べ」のWebアプリを開発することを目指します．
+
+  CodePenの準備
+
+
+CodePenにアクセスして，Penを作成し，タイトルを設定しましょう．
+Penのタイトルは「Chapter11」に設定しましょう．
+
+前回と同様にVue.jsのライブラリをペンに追加してください．
+Vue.jsのバージョンは2.6.11を採用します．
+
+次に，Vue.jsとp5.jsを共存させるためのvue-p5を導入します．
+検索してもCDNがリストアップされないので，https://unpkg.com/vue-p5を直接入力します．
+
+
+  vue-p5
+
+
+vue-p5を利用することで，Vueクラスのメソッドとしてシンプルにp5.jsを記述することができます．
+HTMLは次のように記述します．
+vue-p5タグで，p5.jsの実装に必要な関数setup()とdraw()を宣言します．
+次回利用するマウスの移動を検出するmouseMoved()なども，必要があれば追加で宣言します．
+<!-- HTML -->
+<div id="app">
+  <h1>{{ title }}</h1>
+  <vue-p5
+    @setup="setup"
+    @draw="draw">
+  </vue-p5>
+</div>
+JavaScriptでは，Vueクラスを定義します．
+このとき，methodsオプションに，上記で宣言したsetup()とdraw()を記述します．
+これらの関数の引数であるsketchを利用して，p5.jsの関数を呼び出します．
+例えば，キャンバスの大きさを設定する関数はsketch.createCanvas(width, height)，また，キャンバスの背景色を設定する関数はsketch.background(color)のように記述します．
+キャンバスの原点(0,0)は左上であり，右方向にX軸，下方向にY軸が伸びています．'><meta name=twitter:image content="https://i.gyazo.com/f6123de49eb21556635ea59c82a06c5b.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
+<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>p5.js①・図形描画とイベント処理</h1><div class=post-line></div><p><a href=https://gyazo.com/f6123de49eb21556635ea59c82a06c5b><img src=https://i.gyazo.com/f6123de49eb21556635ea59c82a06c5b.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>p5.jsとは</h1><p><a href=https://p5js.org/>p5.js</a>は，芸術家やデザイナーのためのオープンソースのJavaScriptライブラリです．
+ウェブページに，キャンバスを設置し，図形やアニメーションを描画することができます．
+<a href=https://processing.org/>Processing</a>と同等の機能を備えていることから，Processing経験者には学習コストが低く，プログラミングの初学者にも適したライブラリです．
+ここでは，<a href=https://github.com/Kinrany/vue-p5>vue-p5</a>を利用することで，Vue.jsとp5.jsを共存させながら，「３目並べ」のWebアプリを開発することを目指します．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>CodePenの準備</h1><p><a href=https://codepen.io/>CodePen</a>にアクセスして，Penを作成し，タイトルを設定しましょう．
+Penのタイトルは「Chapter11」に設定しましょう．</p><p><a href=https://gyazo.com/8c83ec1c99fca7654f2ad7b7dbb262e5><img src=https://i.gyazo.com/8c83ec1c99fca7654f2ad7b7dbb262e5.png alt="Image from Gyazo"></a></p><p>前回と同様にVue.jsのライブラリをペンに追加してください．
+Vue.jsのバージョンは2.6.11を採用します．</p><p><a href=https://gyazo.com/4c110f8aea709c2d73759fc193a9a7a3><img src=https://i.gyazo.com/4c110f8aea709c2d73759fc193a9a7a3.png alt="Image from Gyazo"></a></p><p>次に，Vue.jsとp5.jsを共存させるための<a href=https://github.com/Kinrany/vue-p5>vue-p5</a>を導入します．
+検索してもCDNがリストアップされないので，<code>https://unpkg.com/vue-p5</code>を直接入力します．</p><p><a href=https://gyazo.com/8ab30f8dc68a390d752ee37a3a930dfd><img src=https://i.gyazo.com/8ab30f8dc68a390d752ee37a3a930dfd.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>vue-p5</h1><p><a href=https://github.com/Kinrany/vue-p5>vue-p5</a>を利用することで，Vueクラスのメソッドとしてシンプルにp5.jsを記述することができます．
 HTMLは次のように記述します．
 <code>vue-p5</code>タグで，p5.jsの実装に必要な関数<code>setup()</code>と<code>draw()</code>を宣言します．
-次回利用するマウスの移動を検出する<code>mouseMoved()</code>なども，必要があれば追加で宣言します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
-&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt;{{ title }}&lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">vue-p5</span>
-    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">setup</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;setup&#34;</span>
-    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">draw</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;draw&#34;</span>&gt;
-  &lt;/<span style="color:#f92672">vue-p5</span>&gt;
-&lt;/<span style="color:#f92672">div</span>&gt;
-</code></pre></div><p>JavaScriptでは，Vueクラスを定義します．
+次回利用するマウスの移動を検出する<code>mouseMoved()</code>なども，必要があれば追加で宣言します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!-- HTML --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;app&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>h1</span>&gt;{{ title }}&lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>vue-p5</span>
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>setup</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;setup&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>draw</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;draw&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>vue-p5</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><p>JavaScriptでは，Vueクラスを定義します．
 このとき，<code>methods</code>オプションに，上記で宣言した<code>setup()</code>と<code>draw()</code>を記述します．
 これらの関数の引数である<code>sketch</code>を利用して，p5.jsの関数を呼び出します．
 例えば，キャンバスの大きさを設定する関数は<code>sketch.createCanvas(width, height)</code>，また，キャンバスの背景色を設定する関数は<code>sketch.background(color)</code>のように記述します．
-キャンバスの原点<code>(0,0)</code>は左上であり，右方向にX軸，下方向にY軸が伸びています．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// JavaScript
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Vue</span>({
-  <span style="color:#a6e22e">el</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;#app&#39;</span>,
-  <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-    <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;３目並べ&#34;</span>,
-  },
-  <span style="color:#a6e22e">methods</span><span style="color:#f92672">:</span> {
-    <span style="color:#a6e22e">setup</span>(<span style="color:#a6e22e">sketch</span>){
-      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">createCanvas</span>(<span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">500</span>); <span style="color:#75715e">// キャンバスの大きさ
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>); <span style="color:#75715e">// キャンバスの背景色
-</span><span style="color:#75715e"></span>    },
-    <span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-    }
-  }
-});
-</code></pre></div><p><a href="https://gyazo.com/d872b7d7e10765bdfb843fa5b070c810"><img src="https://i.gyazo.com/d872b7d7e10765bdfb843fa5b070c810.png" alt="Image from Gyazo"></a></p>
-<p><code>p5.js</code>における関数の実行順序に関して確認しておきましょう．
+キャンバスの原点<code>(0,0)</code>は左上であり，右方向にX軸，下方向にY軸が伸びています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#75715e>// JavaScript
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>Vue</span>({
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>el</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#39;#app&#39;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;３目並べ&#34;</span>,
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>methods</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>setup</span>(<span style=color:#a6e22e>sketch</span>){
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>createCanvas</span>(<span style=color:#ae81ff>500</span>, <span style=color:#ae81ff>500</span>); <span style=color:#75715e>// キャンバスの大きさ
+</span></span></span><span style=display:flex><span>      <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>background</span>(<span style=color:#e6db74>&#34;black&#34;</span>); <span style=color:#75715e>// キャンバスの背景色
+</span></span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>draw</span>(<span style=color:#a6e22e>sketch</span>){
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>});
+</span></span></code></pre></div><p><a href=https://gyazo.com/d872b7d7e10765bdfb843fa5b070c810><img src=https://i.gyazo.com/d872b7d7e10765bdfb843fa5b070c810.png alt="Image from Gyazo"></a></p><p><code>p5.js</code>における関数の実行順序に関して確認しておきましょう．
 最初に<code>setup()</code>が1度だけ実行されます．
 setup()には，キャンバスの大きさや背景色など，プログラム全体に関する設定を記述します．
 その後で，<code>draw()</code>が一定間隔で繰り返し実行されます．
 <code>draw()</code>には，図形・文字・画像など，キャンバスに表示する要素を記述します．
 繰り返しごとに，位置を少し変えることで，パラパラ漫画と同じ仕組みでアニメーションを表現できます．
 ファイルの読込など，プログラムの実行前に完了すべき操作は<code>preload()</code>に記述します．
-イベント検出は，それぞれに関数が用意されており，例えばマウスの移動を検出するには<code>mouseMoved()</code>を定義します．</p>
-<p><a href="https://gyazo.com/507dc108f31cd001b78469593eabaf98"><img src="https://i.gyazo.com/507dc108f31cd001b78469593eabaf98.png" alt="Image from Gyazo"></a></p>
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
-  
-  <h3 style="color:#006600">
-    キーポイント
-  </h3>
-
-  <p>
-    
-<ul>
-<li>vue-p5タグでp5.jsの関数を登録</li>
-<li>methodsオプションで関数を実装</li>
-<li>setup()は1回だけ実行</li>
-<li>draw()は繰り返し実行</li>
-</ul>
-
-  </p>
-  
-</div>
-
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  図形描画
-</h1>
-
-<p>３目並べの盤を四角形で表現します．
+イベント検出は，それぞれに関数が用意されており，例えばマウスの移動を検出するには<code>mouseMoved()</code>を定義します．</p><p><a href=https://gyazo.com/507dc108f31cd001b78469593eabaf98><img src=https://i.gyazo.com/507dc108f31cd001b78469593eabaf98.png alt="Image from Gyazo"></a></p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px;background:#dfd;color:#000"><h3 style=color:#060>キーポイント</h3><p><ul><li>vue-p5タグでp5.jsの関数を登録</li><li>methodsオプションで関数を実装</li><li>setup()は1回だけ実行</li><li>draw()は繰り返し実行</li></ul></p></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>図形描画</h1><p>３目並べの盤を四角形で表現します．
 盤の大きさは，幅と高さが同じ450とします．
 四角形を描く関数は<code>rect(x, y, width, height)</code>です．
 引数の<code>x</code>，<code>y</code>は四角形の左上の座標，<code>width</code>は幅，<code>height</code>は高さです．
-また，<code>fill(color)</code>は，図形の塗りつぶしの色を設定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">450</span>, <span style="color:#ae81ff">450</span>);
-}
-</code></pre></div><p><a href="https://gyazo.com/1774e96da617cdf725ad9003d3c752c8"><img src="https://i.gyazo.com/1774e96da617cdf725ad9003d3c752c8.png" alt="Image from Gyazo"></a></p>
-<p>３目並べのマス目を直線で表現します．
+また，<code>fill(color)</code>は，図形の塗りつぶしの色を設定します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>draw</span>(<span style=color:#a6e22e>sketch</span>){
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>fill</span>(<span style=color:#e6db74>&#34;green&#34;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>rect</span>(<span style=color:#ae81ff>25</span>, <span style=color:#ae81ff>25</span>, <span style=color:#ae81ff>450</span>, <span style=color:#ae81ff>450</span>);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><a href=https://gyazo.com/1774e96da617cdf725ad9003d3c752c8><img src=https://i.gyazo.com/1774e96da617cdf725ad9003d3c752c8.png alt="Image from Gyazo"></a></p><p>３目並べのマス目を直線で表現します．
 直線を描く関数は<code>line(x1, y1, x2, y2)</code>です．
 引数の<code>(x1, y1)</code>から，<code>(x2, y2)</code>の間に直線が描かれます．
-また，<code>strokeWeight(weight)</code>は直線の幅を設定します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">450</span>, <span style="color:#ae81ff">450</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">stroke</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">strokeWeight</span>(<span style="color:#ae81ff">5</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">line</span>(<span style="color:#ae81ff">175</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">175</span>, <span style="color:#ae81ff">500</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">line</span>(<span style="color:#ae81ff">325</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">325</span>, <span style="color:#ae81ff">500</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">line</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">175</span>, <span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">175</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">line</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">325</span>, <span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">325</span>);
-}
-</code></pre></div><p><a href="https://gyazo.com/c18cc2e079ec5834dedb6cc8aabbc0fa"><img src="https://i.gyazo.com/c18cc2e079ec5834dedb6cc8aabbc0fa.png" alt="Image from Gyazo"></a></p>
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
-  
-  <h3 style="color:#006600">
-    キーポイント
-  </h3>
-
-  <p>
-    
-<ul>
-<li>直線はline()</li>
-<li>四角形はrect()</li>
-<li>線の色はstroke()</li>
-<li>線の太さはstrokeWeight()</li>
-<li>塗りつぶしの色はfill()</li>
-</ul>
-
-  </p>
-  
-</div>
-
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  盤の状態の表現
-</h1>
-
-<p>盤上のマス目をクリックすると，黒（先手）または白（後手）の石を置きます．
+また，<code>strokeWeight(weight)</code>は直線の幅を設定します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>draw</span>(<span style=color:#a6e22e>sketch</span>){
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>fill</span>(<span style=color:#e6db74>&#34;green&#34;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>rect</span>(<span style=color:#ae81ff>25</span>, <span style=color:#ae81ff>25</span>, <span style=color:#ae81ff>450</span>, <span style=color:#ae81ff>450</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>stroke</span>(<span style=color:#e6db74>&#34;black&#34;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>strokeWeight</span>(<span style=color:#ae81ff>5</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>line</span>(<span style=color:#ae81ff>175</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>175</span>, <span style=color:#ae81ff>500</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>line</span>(<span style=color:#ae81ff>325</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>325</span>, <span style=color:#ae81ff>500</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>line</span>(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>175</span>, <span style=color:#ae81ff>500</span>, <span style=color:#ae81ff>175</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>line</span>(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>325</span>, <span style=color:#ae81ff>500</span>, <span style=color:#ae81ff>325</span>);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><a href=https://gyazo.com/c18cc2e079ec5834dedb6cc8aabbc0fa><img src=https://i.gyazo.com/c18cc2e079ec5834dedb6cc8aabbc0fa.png alt="Image from Gyazo"></a></p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px;background:#dfd;color:#000"><h3 style=color:#060>キーポイント</h3><p><ul><li>直線はline()</li><li>四角形はrect()</li><li>線の色はstroke()</li><li>線の太さはstrokeWeight()</li><li>塗りつぶしの色はfill()</li></ul></p></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>盤の状態の表現</h1><p>盤上のマス目をクリックすると，黒（先手）または白（後手）の石を置きます．
 石を置く位置はマス目の中心とするため，先に中心の座標を計算しておきます．
-<code>data</code>オプションで，<code>center_list</code>という名前で配列を定義します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;３目並べ&#34;</span>,
-  <span style="color:#a6e22e">center_list</span><span style="color:#f92672">:</span> [],
-}
-</code></pre></div><p>マス目の中心座標は一度だけ求めれば良いため，<code>setup()</code>で次のように算出します．
+<code>data</code>オプションで，<code>center_list</code>という名前で配列を定義します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;３目並べ&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>center_list</span><span style=color:#f92672>:</span> [],
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>マス目の中心座標は一度だけ求めれば良いため，<code>setup()</code>で次のように算出します．
 ここで，<code>i</code>は行番号，<code>j</code>は列番号を表しています．
-<code>center_list</code>の配列の要素として，座標<code>[center_x,center_y]</code>を配列として追加しています（配列の入れ子構造になっていることに注意）．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">setup</span>(<span style="color:#a6e22e">sketch</span>){
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">createCanvas</span>(<span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">500</span>); <span style="color:#75715e">// キャンバスの大きさ
-</span><span style="color:#75715e"></span>  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">background</span>(<span style="color:#e6db74">&#34;black&#34;</span>); <span style="color:#75715e">// キャンバスの背景色
-</span><span style="color:#75715e"></span>
-  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
-    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">j</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">j</span><span style="color:#f92672">&lt;</span><span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">j</span><span style="color:#f92672">++</span>){
-      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">center_x</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">150</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">j</span>;
-      <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">center_y</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">150</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">i</span>;
-      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">center_list</span>.<span style="color:#a6e22e">push</span>([<span style="color:#a6e22e">center_x</span>, <span style="color:#a6e22e">center_y</span>]);
-
-	  <span style="color:#75715e">// コンソールに出力
-</span><span style="color:#75715e"></span>	  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">center_x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">,</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">center_y</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
-    }
-  }
-}
-</code></pre></div><p>算出したマス目の中心座標は次のようになります．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-txt" data-lang="txt">&#34;100,100&#34;
-&#34;250,100&#34;
-&#34;400,100&#34;
-&#34;100,250&#34;
-&#34;250,250&#34;
-&#34;400,250&#34;
-&#34;100,400&#34;
-&#34;250,400&#34;
-&#34;400,400&#34;
-</code></pre></div><p>次にマス目の状態を表すために，
+<code>center_list</code>の配列の要素として，座標<code>[center_x,center_y]</code>を配列として追加しています（配列の入れ子構造になっていることに注意）．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>setup</span>(<span style=color:#a6e22e>sketch</span>){
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>createCanvas</span>(<span style=color:#ae81ff>500</span>, <span style=color:#ae81ff>500</span>); <span style=color:#75715e>// キャンバスの大きさ
+</span></span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>background</span>(<span style=color:#e6db74>&#34;black&#34;</span>); <span style=color:#75715e>// キャンバスの背景色
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>i</span><span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>&lt;</span><span style=color:#ae81ff>3</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span>){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>j</span><span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>j</span><span style=color:#f92672>&lt;</span><span style=color:#ae81ff>3</span>; <span style=color:#a6e22e>j</span><span style=color:#f92672>++</span>){
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>center_x</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>100</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>150</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>j</span>;
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>center_y</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>100</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>150</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>i</span>;
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>center_list</span>.<span style=color:#a6e22e>push</span>([<span style=color:#a6e22e>center_x</span>, <span style=color:#a6e22e>center_y</span>]);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	  <span style=color:#75715e>// コンソールに出力
+</span></span></span><span style=display:flex><span>	  <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>`</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>center_x</span><span style=color:#e6db74>}</span><span style=color:#e6db74>,</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>center_y</span><span style=color:#e6db74>}</span><span style=color:#e6db74>`</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>算出したマス目の中心座標は次のようになります．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>&#34;100,100&#34;
+</span></span><span style=display:flex><span>&#34;250,100&#34;
+</span></span><span style=display:flex><span>&#34;400,100&#34;
+</span></span><span style=display:flex><span>&#34;100,250&#34;
+</span></span><span style=display:flex><span>&#34;250,250&#34;
+</span></span><span style=display:flex><span>&#34;400,250&#34;
+</span></span><span style=display:flex><span>&#34;100,400&#34;
+</span></span><span style=display:flex><span>&#34;250,400&#34;
+</span></span><span style=display:flex><span>&#34;400,400&#34;
+</span></span></code></pre></div><p>次にマス目の状態を表すために，
 <code>data</code>オプションで<code>state_list</code>という名前の配列を定義します．
 各要素はマス目の状態を表しており，
-<code>0</code>は石が置かれていない状態，<code>1</code>は黒の石が置かれた状態，<code>2</code>は白の石が置かれた状態を表します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;３目並べ&#34;</span>,
-  <span style="color:#a6e22e">center_list</span><span style="color:#f92672">:</span> [],
-  <span style="color:#a6e22e">state_list</span><span style="color:#f92672">:</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
-}
-</code></pre></div><p>上記で定義した<code>state_list</code>を利用して，盤上に石を円として描きます．
+<code>0</code>は石が置かれていない状態，<code>1</code>は黒の石が置かれた状態，<code>2</code>は白の石が置かれた状態を表します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;３目並べ&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>center_list</span><span style=color:#f92672>:</span> [],
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>state_list</span><span style=color:#f92672>:</span> [<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>],
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>上記で定義した<code>state_list</code>を利用して，盤上に石を円として描きます．
 円を描く関数は<code>circle(x, y, diameter)</code>です．
 引数の<code>x</code>，<code>y</code>は円の中心の座標，<code>diameter</code>は直径です．
-状態が1のときは黒色，状態が2のときは白色で円を描きます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">draw</span>(<span style="color:#a6e22e">sketch</span>){
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;green&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">rect</span>(<span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">450</span>, <span style="color:#ae81ff">450</span>);
-
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">stroke</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">strokeWeight</span>(<span style="color:#ae81ff">5</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">line</span>(<span style="color:#ae81ff">175</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">175</span>, <span style="color:#ae81ff">500</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">line</span>(<span style="color:#ae81ff">325</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">325</span>, <span style="color:#ae81ff">500</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">line</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">175</span>, <span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">175</span>);
-  <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">line</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">325</span>, <span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">325</span>);
-
-  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state_list</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
-    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">center_list</span>[<span style="color:#a6e22e">i</span>][<span style="color:#ae81ff">0</span>];
-    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">y</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">center_list</span>[<span style="color:#a6e22e">i</span>][<span style="color:#ae81ff">1</span>];
-
-	<span style="color:#75715e">// 黒の石（円）を描く
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state_list</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>){
-      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;black&#34;</span>);
-      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">noStroke</span>(); <span style="color:#75715e">// 線は描かない
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span>, <span style="color:#ae81ff">140</span>);
-    }
-	<span style="color:#75715e">// 白の石（円）を描く
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state_list</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>){
-      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">fill</span>(<span style="color:#e6db74">&#34;white&#34;</span>);
-      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">noStroke</span>(); <span style="color:#75715e">// 線は描かない
-</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">circle</span>(<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span>, <span style="color:#ae81ff">140</span>);
-    }
-  }
-},
-</code></pre></div><p><code>state_list</code>を任意に変更して，盤面に石が配置されることを確認しましょう．
-確認が終わったら，全ての状態を<code>0</code>に戻しておきましょう．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">state_list</span><span style="color:#f92672">:</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>]
-</code></pre></div><p><a href="https://gyazo.com/bb57a91653c8be54db5b40f2cc29a2c9"><img src="https://i.gyazo.com/bb57a91653c8be54db5b40f2cc29a2c9.png" alt="Image from Gyazo"></a></p>
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
-  
-  <h3 style="color:#006600">
-    キーポイント
-  </h3>
-
-  <p>
-    
-<ul>
-<li>円はcircle()</li>
-</ul>
-
-  </p>
-  
-</div>
-
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  イベントの処理
-</h1>
-
-<p>マウスをクリックした位置に応じて石を配置します．
+状態が1のときは黒色，状態が2のときは白色で円を描きます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>draw</span>(<span style=color:#a6e22e>sketch</span>){
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>fill</span>(<span style=color:#e6db74>&#34;green&#34;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>rect</span>(<span style=color:#ae81ff>25</span>, <span style=color:#ae81ff>25</span>, <span style=color:#ae81ff>450</span>, <span style=color:#ae81ff>450</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>stroke</span>(<span style=color:#e6db74>&#34;black&#34;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>strokeWeight</span>(<span style=color:#ae81ff>5</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>line</span>(<span style=color:#ae81ff>175</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>175</span>, <span style=color:#ae81ff>500</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>line</span>(<span style=color:#ae81ff>325</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>325</span>, <span style=color:#ae81ff>500</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>line</span>(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>175</span>, <span style=color:#ae81ff>500</span>, <span style=color:#ae81ff>175</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>line</span>(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>325</span>, <span style=color:#ae81ff>500</span>, <span style=color:#ae81ff>325</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>i</span><span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>&lt;</span><span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>state_list</span>.<span style=color:#a6e22e>length</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span>){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>x</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>center_list</span>[<span style=color:#a6e22e>i</span>][<span style=color:#ae81ff>0</span>];
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>y</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>center_list</span>[<span style=color:#a6e22e>i</span>][<span style=color:#ae81ff>1</span>];
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// 黒の石（円）を描く
+</span></span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>state_list</span>[<span style=color:#a6e22e>i</span>] <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>){
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>fill</span>(<span style=color:#e6db74>&#34;black&#34;</span>);
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>noStroke</span>(); <span style=color:#75715e>// 線は描かない
+</span></span></span><span style=display:flex><span>      <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>circle</span>(<span style=color:#a6e22e>x</span>, <span style=color:#a6e22e>y</span>, <span style=color:#ae81ff>140</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// 白の石（円）を描く
+</span></span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>state_list</span>[<span style=color:#a6e22e>i</span>] <span style=color:#f92672>==</span> <span style=color:#ae81ff>2</span>){
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>fill</span>(<span style=color:#e6db74>&#34;white&#34;</span>);
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>noStroke</span>(); <span style=color:#75715e>// 線は描かない
+</span></span></span><span style=display:flex><span>      <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>circle</span>(<span style=color:#a6e22e>x</span>, <span style=color:#a6e22e>y</span>, <span style=color:#ae81ff>140</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>},
+</span></span></code></pre></div><p><code>state_list</code>を任意に変更して，盤面に石が配置されることを確認しましょう．
+確認が終わったら，全ての状態を<code>0</code>に戻しておきましょう．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>state_list</span><span style=color:#f92672>:</span> [<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>0</span>]
+</span></span></code></pre></div><p><a href=https://gyazo.com/bb57a91653c8be54db5b40f2cc29a2c9><img src=https://i.gyazo.com/bb57a91653c8be54db5b40f2cc29a2c9.png alt="Image from Gyazo"></a></p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px;background:#dfd;color:#000"><h3 style=color:#060>キーポイント</h3><p><ul><li>円はcircle()</li></ul></p></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>イベントの処理</h1><p>マウスをクリックした位置に応じて石を配置します．
 マウスのボタンが押されたことを検知するには<code>mousePressed()</code>を利用します．
-HTMLの<code>vue-p5</code>タグで，<code>mousePressed()</code>を利用することを宣言します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- HTML --&gt;</span>
-&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;app&#34;</span>&gt;
-  &lt;<span style="color:#f92672">h1</span>&gt;{{ title }}&lt;/<span style="color:#f92672">h1</span>&gt;
-  &lt;<span style="color:#f92672">vue-p5</span>
-    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">setup</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;setup&#34;</span>
-    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">draw</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;draw&#34;</span>
-    <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">mousePressed</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mousePressed&#34;</span>&gt;
-  &lt;/<span style="color:#f92672">vue-p5</span>&gt;
-&lt;/<span style="color:#f92672">div</span>&gt;
-</code></pre></div><p><code>methods</code>オプションで，<code>mousePressed()</code>を定義します．
+HTMLの<code>vue-p5</code>タグで，<code>mousePressed()</code>を利用することを宣言します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-html data-lang=html><span style=display:flex><span><span style=color:#75715e>&lt;!-- HTML --&gt;</span>
+</span></span><span style=display:flex><span>&lt;<span style=color:#f92672>div</span> <span style=color:#a6e22e>id</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;app&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>h1</span>&gt;{{ title }}&lt;/<span style=color:#f92672>h1</span>&gt;
+</span></span><span style=display:flex><span>  &lt;<span style=color:#f92672>vue-p5</span>
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>setup</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;setup&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>draw</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;draw&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#960050;background-color:#1e0010>@</span><span style=color:#a6e22e>mousePressed</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;mousePressed&#34;</span>&gt;
+</span></span><span style=display:flex><span>  &lt;/<span style=color:#f92672>vue-p5</span>&gt;
+</span></span><span style=display:flex><span>&lt;/<span style=color:#f92672>div</span>&gt;
+</span></span></code></pre></div><p><code>methods</code>オプションで，<code>mousePressed()</code>を定義します．
 このとき，引数には<code>sketch</code>を設定します．
 先に算出していた「マス目の中心座標」と「マウスがクリックされた座標」の距離（マンハッタン距離を採用）を計算します．
 マウスがクリックされた座標は<code>mouseX</code>と<code>mouseY</code>で参照できます．
 距離が最短となるマス目の状態を<code>1</code>に設定します．
-ここで，<code>...</code>は配列を展開して引数として利用するための演算子です.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">mousePressed</span>(<span style="color:#a6e22e">sketch</span>){
-
-  <span style="color:#75715e">// マス目の中心座標までの距離を算出
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">distance_list</span> <span style="color:#f92672">=</span> [];
-  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">center_list</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
-    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">center_list</span>[<span style="color:#a6e22e">i</span>][<span style="color:#ae81ff">0</span>];
-    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">y</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">center_list</span>[<span style="color:#a6e22e">i</span>][<span style="color:#ae81ff">1</span>];
-    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">distance</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">abs</span>(<span style="color:#a6e22e">x</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">mouseX</span>) <span style="color:#f92672">+</span> Math.<span style="color:#a6e22e">abs</span>(<span style="color:#a6e22e">y</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">mouseY</span>);
-    <span style="color:#a6e22e">distance_list</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">distance</span>);
-  }
-
-  <span style="color:#75715e">// 距離が最短となるマス目の番号
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">min_index</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">distance_list</span>.<span style="color:#a6e22e">indexOf</span>(Math.<span style="color:#a6e22e">min</span>(...<span style="color:#a6e22e">distance_list</span>));
-
-  <span style="color:#75715e">// 状態の変更
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state_list</span>[<span style="color:#a6e22e">min_index</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
-    <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state_list</span>[<span style="color:#a6e22e">min_index</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-  }
-
-}
-</code></pre></div><p>実行すると，マウスをクリックした位置に黒い石が置かれることが確認できます．</p>
-<p><a href="https://gyazo.com/34af837cb8cefa5d5ff9a4117078952a"><img src="https://i.gyazo.com/34af837cb8cefa5d5ff9a4117078952a.gif" alt="Image from Gyazo"></a></p>
-<p>先手は黒の石，後手は白の石を置くように修正しましょう．
-<code>data</code>オプションに，打ち手の順番を表す<code>turn</code>を宣言し，&ldquo;black&quot;を代入します．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
-  <span style="color:#a6e22e">title</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;３目並べ&#34;</span>,
-  <span style="color:#a6e22e">center_list</span><span style="color:#f92672">:</span> [],
-  <span style="color:#a6e22e">state_list</span><span style="color:#f92672">:</span> [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
-  <span style="color:#a6e22e">turn</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;black&#34;</span>,
-}
-</code></pre></div><p>上記の<code>turn</code>が<code>black</code>のときは状態を1に変更し，<code>turn</code>が<code>white</code>のときは状態を2に変更します．
-これで，先手は黒色で円が描かれ，後手は白色で円が描かれます．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">mousePressed</span>(<span style="color:#a6e22e">sketch</span>){
-
-  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">distance_list</span> <span style="color:#f92672">=</span> [];
-  <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">center_list</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>){
-    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">center_list</span>[<span style="color:#a6e22e">i</span>][<span style="color:#ae81ff">0</span>];
-    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">y</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">center_list</span>[<span style="color:#a6e22e">i</span>][<span style="color:#ae81ff">1</span>];
-    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">distance</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">abs</span>(<span style="color:#a6e22e">x</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">mouseX</span>) <span style="color:#f92672">+</span> Math.<span style="color:#a6e22e">abs</span>(<span style="color:#a6e22e">y</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">sketch</span>.<span style="color:#a6e22e">mouseY</span>);
-    <span style="color:#a6e22e">distance_list</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">distance</span>);
-  }
-
-  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">min_index</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">distance_list</span>.<span style="color:#a6e22e">indexOf</span>(Math.<span style="color:#a6e22e">min</span>(...<span style="color:#a6e22e">distance_list</span>));
-
-  <span style="color:#75715e">// 状態の変更
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state_list</span>[<span style="color:#a6e22e">min_index</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
-    <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">turn</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;black&#34;</span>){
-      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state_list</span>[<span style="color:#a6e22e">min_index</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">turn</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;white&#34;</span>; <span style="color:#75715e">// 順番を白に変更
-</span><span style="color:#75715e"></span>    }
-    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">turn</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;white&#34;</span>){
-      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">state_list</span>[<span style="color:#a6e22e">min_index</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-      <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">turn</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;black&#34;</span>; <span style="color:#75715e">// 順番を黒に変更
-</span><span style="color:#75715e"></span>    }
-  }
-
-}
-</code></pre></div><p><a href="https://gyazo.com/c938fe1b9c9cb871fa0938355aec4c24"><img src="https://i.gyazo.com/c938fe1b9c9cb871fa0938355aec4c24.gif" alt="Image from Gyazo"></a></p>
-<div style="border:3px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; margin-bottom:20px; background:#ddffdd; color:black">
-  
-  <h3 style="color:#006600">
-    キーポイント
-  </h3>
-
-  <p>
-    
-<ul>
-<li>マウスのボタンが押されたことを検出するにはmousePressed()</li>
-<li>マウスの位置はmouseXとmouseY</li>
-</ul>
-
-  </p>
-  
-</div>
-
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  アプリの確認
-</h1>
-
-<p class="codepen" data-height="700" data-theme-id="dark" data-default-tab="result" data-slug-hash="XWZNJqG" data-user="nmukai" data-token="f7e6d351317299f96b7ed264d8150ff2" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-  <span>See the Pen <a href="https://codepen.io/nmukai/pen/XWZNJqG/f7e6d351317299f96b7ed264d8150ff2">
-  chapter11</a> by Naoto Mukai (<a href="https://codepen.io/nmukai">@nmukai</a>)
-  on <a href="https://codepen.io">CodePen</a>.</span>
-</p>
-<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
-<h1 style="padding-left:40px; line-height: 30px; background: url(http://mukai-lab.info/logo/logo.png) no-repeat">
-  課題
-</h1>
-
-<p>次の図を参考に，勝利したときは円の色を金色に変更してください．</p>
-<p><a href="https://gyazo.com/a95f4924ca7486fa63b29b1ee2a6c694"><img src="https://i.gyazo.com/a95f4924ca7486fa63b29b1ee2a6c694.gif" alt="Image from Gyazo"></a></p>
-<p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
-提出方法は初回の<a href="https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/">Webアプリの開発</a>を参考にしてください．</p>
-
-
-
-
-
-    
-
-    
-    
-
-    <div class="pagination">
-      <a href="/"><span>Top</span></a>
-      <a href='javascript:history.back()' style="margin-left: 30px"><span>Back</span></a>
-    </div>
-    
-  </div>
-
-  
-  <div>
-
-  <div style="margin-top:20px; border-top: solid 10px #007B50; border-bottom: solid 10px #007B50;">
-    <p>
-      愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-      専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-      この公式サイトでは，授業で使用している教材を公開すると共に，
-      ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-      サイトに関するご意見やご質問は<a href="https://www.facebook.com/nmukai1978">Facebook</a>または<a href="https://twitter.com/nmukai1978">Twitter</a>でお問い合わせください．
-    </p>
-  </div>  
-
-</div>
-
-  
-  
-  
-
-    
-  
-
-  
-  
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-77390013-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
-
-</main>
-
-
-        <footer>
-  <div>
-    <span>&copy; 2016 Naoto Mukai All Rights Reserved.</span> 
-  </div>
-</footer>
-
-
-    </body>
-</html>
+ここで，<code>...</code>は配列を展開して引数として利用するための演算子です.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>mousePressed</span>(<span style=color:#a6e22e>sketch</span>){
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e>// マス目の中心座標までの距離を算出
+</span></span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>distance_list</span> <span style=color:#f92672>=</span> [];
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>i</span><span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>&lt;</span><span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>center_list</span>.<span style=color:#a6e22e>length</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span>){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>x</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>center_list</span>[<span style=color:#a6e22e>i</span>][<span style=color:#ae81ff>0</span>];
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>y</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>center_list</span>[<span style=color:#a6e22e>i</span>][<span style=color:#ae81ff>1</span>];
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>distance</span> <span style=color:#f92672>=</span> Math.<span style=color:#a6e22e>abs</span>(<span style=color:#a6e22e>x</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>mouseX</span>) <span style=color:#f92672>+</span> Math.<span style=color:#a6e22e>abs</span>(<span style=color:#a6e22e>y</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>mouseY</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>distance_list</span>.<span style=color:#a6e22e>push</span>(<span style=color:#a6e22e>distance</span>);
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e>// 距離が最短となるマス目の番号
+</span></span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>min_index</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>distance_list</span>.<span style=color:#a6e22e>indexOf</span>(Math.<span style=color:#a6e22e>min</span>(...<span style=color:#a6e22e>distance_list</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e>// 状態の変更
+</span></span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>state_list</span>[<span style=color:#a6e22e>min_index</span>] <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>state_list</span>[<span style=color:#a6e22e>min_index</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>実行すると，マウスをクリックした位置に黒い石が置かれることが確認できます．</p><p><a href=https://gyazo.com/34af837cb8cefa5d5ff9a4117078952a><img src=https://i.gyazo.com/34af837cb8cefa5d5ff9a4117078952a.gif alt="Image from Gyazo"></a></p><p>先手は黒の石，後手は白の石を置くように修正しましょう．
+<code>data</code>オプションに，打ち手の順番を表す<code>turn</code>を宣言し，&ldquo;black"を代入します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>data</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;３目並べ&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>center_list</span><span style=color:#f92672>:</span> [],
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>state_list</span><span style=color:#f92672>:</span> [<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>],
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>turn</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;black&#34;</span>,
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>上記の<code>turn</code>が<code>black</code>のときは状態を1に変更し，<code>turn</code>が<code>white</code>のときは状態を2に変更します．
+これで，先手は黒色で円が描かれ，後手は白色で円が描かれます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>mousePressed</span>(<span style=color:#a6e22e>sketch</span>){
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>distance_list</span> <span style=color:#f92672>=</span> [];
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span>(<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>i</span><span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>&lt;</span><span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>center_list</span>.<span style=color:#a6e22e>length</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span>){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>x</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>center_list</span>[<span style=color:#a6e22e>i</span>][<span style=color:#ae81ff>0</span>];
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>y</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>center_list</span>[<span style=color:#a6e22e>i</span>][<span style=color:#ae81ff>1</span>];
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>distance</span> <span style=color:#f92672>=</span> Math.<span style=color:#a6e22e>abs</span>(<span style=color:#a6e22e>x</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>mouseX</span>) <span style=color:#f92672>+</span> Math.<span style=color:#a6e22e>abs</span>(<span style=color:#a6e22e>y</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>sketch</span>.<span style=color:#a6e22e>mouseY</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>distance_list</span>.<span style=color:#a6e22e>push</span>(<span style=color:#a6e22e>distance</span>);
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>min_index</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>distance_list</span>.<span style=color:#a6e22e>indexOf</span>(Math.<span style=color:#a6e22e>min</span>(...<span style=color:#a6e22e>distance_list</span>));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e>// 状態の変更
+</span></span></span><span style=display:flex><span>  <span style=color:#66d9ef>if</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>state_list</span>[<span style=color:#a6e22e>min_index</span>] <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>turn</span> <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;black&#34;</span>){
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>state_list</span>[<span style=color:#a6e22e>min_index</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>turn</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;white&#34;</span>; <span style=color:#75715e>// 順番を白に変更
+</span></span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span>(<span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>turn</span> <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;white&#34;</span>){
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>state_list</span>[<span style=color:#a6e22e>min_index</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span>;
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>this</span>.<span style=color:#a6e22e>turn</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;black&#34;</span>; <span style=color:#75715e>// 順番を黒に変更
+</span></span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><a href=https://gyazo.com/c938fe1b9c9cb871fa0938355aec4c24><img src=https://i.gyazo.com/c938fe1b9c9cb871fa0938355aec4c24.gif alt="Image from Gyazo"></a></p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px;background:#dfd;color:#000"><h3 style=color:#060>キーポイント</h3><p><ul><li>マウスのボタンが押されたことを検出するにはmousePressed()</li><li>マウスの位置はmouseXとmouseY</li></ul></p></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>アプリの確認</h1><p class=codepen data-height=700 data-theme-id=dark data-default-tab=result data-slug-hash=XWZNJqG data-user=nmukai data-token=f7e6d351317299f96b7ed264d8150ff2 style="height:300px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:2px solid;margin:1em 0;padding:1em"><span>See the Pen <a href=https://codepen.io/nmukai/pen/XWZNJqG/f7e6d351317299f96b7ed264d8150ff2>chapter11</a> by Naoto Mukai (<a href=https://codepen.io/nmukai>@nmukai</a>)
+on <a href=https://codepen.io>CodePen</a>.</span></p><script async src=https://cpwebassets.codepen.io/assets/embed/ei.js></script><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>次の図を参考に，勝利したときは円の色を金色に変更してください．</p><p><a href=https://gyazo.com/a95f4924ca7486fa63b29b1ee2a6c694><img src=https://i.gyazo.com/a95f4924ca7486fa63b29b1ee2a6c694.gif alt="Image from Gyazo"></a></p><p>課題を完成させたら，Penの <strong>ZIPファイル</strong> と <strong>リンク</strong> を提出してください．
+提出方法は初回の<a href=https://mukai-lab.info/pages/classes/applied_programming_wa/chapter1/>Webアプリの開発</a>を参考にしてください．</p><div class=pagination><a href=/><span>Top</span></a>
+<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
+専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
+この公式サイトでは，授業で使用している教材を公開すると共に，
+ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
+サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>
