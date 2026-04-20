@@ -1,79 +1,14 @@
-<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>回帰③・基底関数 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
-    MathJax.Hub.Config({
-	     tex2jax: {
-	        inlineMath: [['$','$']]
-        }
-    });
-  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="回帰③・基底関数"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/intelligence_information_system/chapter5/"><meta property="og:image" content="https://i.gyazo.com/19cd29f356cd3c56dfea9c16685c2a09.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
-
-  基底関数
-
-
-これまでは回帰式として線形関数（一次式）を採用してきました．
-$$f(x) = w_0 + w_1 x $$
-しかし，下記のようなデータを対象とする場合は，直線ではなく曲線を用いた方が，傾向を正しく表現できそうです．
-このデータは，愛知県衛生研究所が公開しているインフルエンザの発症数です．
-変数$x$は 経過週 ，変数$y$は インフルエンザの報告数（定点当たり） を表しています．
-x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) #週
-y = np.array([0.26,0.25,0.19,0.34,0.89,1.78,2.51,4.81,10.97,18.02,19.28,32.42,62.12,62.18,62.60,49.18,32.57,25.93,21.17,14.68]) #報告数
-
-このような場合は，基底関数 を利用します．
-線形関数の$x$を，任意の$\phi(x)$という基底関数に置き換えるという方法です．
-基底関数には，どんな関数を用いても良いのですが，よく用いられるのは，
-多項式基底 や ガウス基底 と呼ばれる関数です．
-今回は，これら 基底関数 を利用した回帰について学びます．
-
-  ノートブックの作成
-
-
-Colabにアクセスし，新規にノートブックを作成してください．
-ノートブックのタイトルは chapter5 とします．
-ここでは，numpy と matplotlib.pyplotに加え，
-最適化処理のためのScipyをインポートします．
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.optimize import minimize
-
-  多項式基底
-
-
-多項式基底は下記の式で表されます．
-ここで，$i$は組み合わせる基底関数の番号を表します．"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="回帰③・基底関数"><meta name=twitter:description content="
-
-  基底関数
-
-
-これまでは回帰式として線形関数（一次式）を採用してきました．
-$$f(x) = w_0 + w_1 x $$
-しかし，下記のようなデータを対象とする場合は，直線ではなく曲線を用いた方が，傾向を正しく表現できそうです．
-このデータは，愛知県衛生研究所が公開しているインフルエンザの発症数です．
-変数$x$は 経過週 ，変数$y$は インフルエンザの報告数（定点当たり） を表しています．
-x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]) #週
-y = np.array([0.26,0.25,0.19,0.34,0.89,1.78,2.51,4.81,10.97,18.02,19.28,32.42,62.12,62.18,62.60,49.18,32.57,25.93,21.17,14.68]) #報告数
-
-このような場合は，基底関数 を利用します．
-線形関数の$x$を，任意の$\phi(x)$という基底関数に置き換えるという方法です．
-基底関数には，どんな関数を用いても良いのですが，よく用いられるのは，
-多項式基底 や ガウス基底 と呼ばれる関数です．
-今回は，これら 基底関数 を利用した回帰について学びます．
-
-  ノートブックの作成
-
-
-Colabにアクセスし，新規にノートブックを作成してください．
-ノートブックのタイトルは chapter5 とします．
-ここでは，numpy と matplotlib.pyplotに加え，
-最適化処理のためのScipyをインポートします．
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.optimize import minimize
-
-  多項式基底
-
-
-多項式基底は下記の式で表されます．
-ここで，$i$は組み合わせる基底関数の番号を表します．"><meta name=twitter:image content="https://i.gyazo.com/19cd29f356cd3c56dfea9c16685c2a09.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
-<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>回帰③・基底関数</h1><div class=post-line></div><p><a href=https://gyazo.com/19cd29f356cd3c56dfea9c16685c2a09><img src=https://i.gyazo.com/19cd29f356cd3c56dfea9c16685c2a09.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>基底関数</h1><p>これまでは回帰式として線形関数（一次式）を採用してきました．</p><p>$$f(x) = w_0 + w_1 x $$</p><p>しかし，下記のようなデータを対象とする場合は，直線ではなく曲線を用いた方が，傾向を正しく表現できそうです．
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>回帰③・基底関数 | えむラボ</title><meta name=description content="椙山女学園大学 文化情報学部 向研究室のブログです．女子大教員の不思議な日常を４コマ漫画でお伝えします．"><link rel=stylesheet href=/css/main.css><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Kiwi+Maru:wght@700&family=M+PLUS+1p:wght@700;800&display=swap" rel=stylesheet><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></head><body><header class=site-header><div class=site-header-inner><div class=site-brand><a href=/ class=site-title>えむラボ</a>
+<span class=site-subtitle>椙山女学園大学 向研究室</span></div><nav class=site-nav><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav><label class=hamburger for=nav-toggle><span></span><span></span><span></span>
+</label><input type=checkbox id=nav-toggle class=nav-toggle></div><nav class=site-nav-mobile><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav></header><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>回帰③・基底関数</h1><time class=content-date>2019年6月4日</time><div class=content-body><p><a href=https://gyazo.com/19cd29f356cd3c56dfea9c16685c2a09><img src=https://i.gyazo.com/19cd29f356cd3c56dfea9c16685c2a09.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>基底関数</h1><p>これまでは回帰式として線形関数（一次式）を採用してきました．</p><p>$$f(x) = w_0 + w_1 x $$</p><p>しかし，下記のようなデータを対象とする場合は，直線ではなく曲線を用いた方が，傾向を正しく表現できそうです．
 このデータは，<a href=http://www.pref.aichi.jp/eiseiken/>愛知県衛生研究所</a>が公開しているインフルエンザの発症数です．
 変数$x$は <strong>経過週</strong> ，変数$y$は <strong>インフルエンザの報告数（定点当たり）</strong> を表しています．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>x <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>6</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>8</span>, <span style=color:#ae81ff>9</span>, <span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>11</span>, <span style=color:#ae81ff>12</span>, <span style=color:#ae81ff>13</span>, <span style=color:#ae81ff>14</span>, <span style=color:#ae81ff>15</span>, <span style=color:#ae81ff>16</span>, <span style=color:#ae81ff>17</span>, <span style=color:#ae81ff>18</span>, <span style=color:#ae81ff>19</span>, <span style=color:#ae81ff>20</span>]) <span style=color:#75715e>#週</span>
 </span></span><span style=display:flex><span>y <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>0.26</span>,<span style=color:#ae81ff>0.25</span>,<span style=color:#ae81ff>0.19</span>,<span style=color:#ae81ff>0.34</span>,<span style=color:#ae81ff>0.89</span>,<span style=color:#ae81ff>1.78</span>,<span style=color:#ae81ff>2.51</span>,<span style=color:#ae81ff>4.81</span>,<span style=color:#ae81ff>10.97</span>,<span style=color:#ae81ff>18.02</span>,<span style=color:#ae81ff>19.28</span>,<span style=color:#ae81ff>32.42</span>,<span style=color:#ae81ff>62.12</span>,<span style=color:#ae81ff>62.18</span>,<span style=color:#ae81ff>62.60</span>,<span style=color:#ae81ff>49.18</span>,<span style=color:#ae81ff>32.57</span>,<span style=color:#ae81ff>25.93</span>,<span style=color:#ae81ff>21.17</span>,<span style=color:#ae81ff>14.68</span>]) <span style=color:#75715e>#報告数</span>
@@ -144,9 +79,5 @@ $\mu=0$，$s=3$のグラフを描いてみます．
 </span></span><span style=display:flex><span>y <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>array([<span style=color:#ae81ff>8000</span>,<span style=color:#ae81ff>10500</span>,<span style=color:#ae81ff>10600</span>,<span style=color:#ae81ff>11000</span>,<span style=color:#ae81ff>12600</span>,<span style=color:#ae81ff>14000</span>,<span style=color:#ae81ff>12100</span>,<span style=color:#ae81ff>10800</span>,<span style=color:#ae81ff>9000</span>,<span style=color:#ae81ff>7680</span>,<span style=color:#ae81ff>8480</span>,<span style=color:#ae81ff>9040</span>,<span style=color:#ae81ff>10300</span>,<span style=color:#ae81ff>11100</span>,<span style=color:#ae81ff>11500</span>,<span style=color:#ae81ff>16900</span>,<span style=color:#ae81ff>18500</span>,<span style=color:#ae81ff>18200</span>,<span style=color:#ae81ff>26200</span>,<span style=color:#ae81ff>27500</span>,<span style=color:#ae81ff>41800</span>,<span style=color:#ae81ff>64800</span>,<span style=color:#ae81ff>49600</span>,<span style=color:#ae81ff>47200</span>,<span style=color:#ae81ff>50800</span>,<span style=color:#ae81ff>56100</span>,<span style=color:#ae81ff>74000</span>,<span style=color:#ae81ff>86800</span>,<span style=color:#ae81ff>82300</span>,<span style=color:#ae81ff>83300</span>,<span style=color:#ae81ff>66800</span>,<span style=color:#ae81ff>75500</span>,<span style=color:#ae81ff>71700</span>,<span style=color:#ae81ff>79500</span>,<span style=color:#ae81ff>84900</span>,<span style=color:#ae81ff>117000</span>,<span style=color:#ae81ff>111000</span>,<span style=color:#ae81ff>94400</span>,<span style=color:#ae81ff>93500</span>,<span style=color:#ae81ff>87900</span>,<span style=color:#ae81ff>82000</span>,<span style=color:#ae81ff>88900</span>,<span style=color:#ae81ff>86200</span>,<span style=color:#ae81ff>87900</span>,<span style=color:#ae81ff>86800</span>,<span style=color:#ae81ff>75400</span>,<span style=color:#ae81ff>87000</span>,<span style=color:#ae81ff>90800</span>])
 </span></span></code></pre></div><p>課題を完成させたら，<strong>chapter5.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
-このとき，必ず事前に下記の設定を行ってから提出してください．</p><ul><li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li><li>ノートブックの変更内容を保存して固定</li><li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li></ul><div class=pagination><a href=/><span>Top</span></a>
-<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-この公式サイトでは，授業で使用している教材を公開すると共に，
-ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>
+このとき，必ず事前に下記の設定を行ってから提出してください．</p><ul><li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li><li>ノートブックの変更内容を保存して固定</li><li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li></ul></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
+<a href=/ class=btn>🏠 トップ</a></nav></div></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>

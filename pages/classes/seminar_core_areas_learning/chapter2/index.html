@@ -1,121 +1,14 @@
-<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Excelを利用した統計処理・2項分布 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
-    MathJax.Hub.Config({
-	     tex2jax: {
-	        inlineMath: [['$','$']]
-        }
-    });
-  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="Excelを利用した統計処理・2項分布"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/seminar_core_areas_learning/chapter2/"><meta property="og:image" content="https://i.gyazo.com/4e374f77eaa29dd31ef5c85dd431b006.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
-
-  授業の準備
-
-
-今回、分析対象とするデータは、「コインを10回投げる」という試行の結果です。
-コイン投げの試行の結果は2通り（表・裏）であり、表を 1 、裏を 0 と表現します。
-また、表が出る確率は 50% 、同様に裏が出る確率は 50% と仮定します。
-下記のデータは「コインを10回投げる」という試行を100回繰り返したときの結果です（21回目以降の試行は省略）。
-上記のデータを含むファイルcoin.csvをダウンロードしましょう。
-ファイルをダウンロードしたら、前回と同様にExcelでcoin.csvを読み込んでください。
-
-
-  2項分布
-
-
-まずは、各試行でコインが表になった回数を数えてみましょう。
-表は1で与えられるので、各試行の値の総和が表になった回数を表します。
-また、表が出る回数は0から10の範囲に収まります。
-
-セルL2:L101に、sum関数で表が出た回数を求める
-
-
-1回目の試行は5回、2回目の試行は7回となりました。
-では「コインが表になった回数」はどのような分布になっているか確認するために
-分析ツール を利用して ヒストグラム（頻度分布） を求めましょう。
-最初に、下図のようにN列に0から10までのデータ区間を入力します。
-
-次に、データタブに切り替え、データ分析をクリックします。
-一覧からヒストグラムを選択し、OKをクリックすると、ダイアログが表示されます。
-ダイアログに下記の設定をしてから、ヒストグラムを求めて下さい。
-
-入力範囲にL2:L101を設定する
-データ区間にN2:N12を設定する
-出力オプションで新規ワークシートにチェックを入れる
-
-
-新規に作成されたシートには、0から10の範囲で表が出た回数のヒストグラムがまとめられます。
-中央の5回が最頻値となっており、中央から離れるほど頻度が小さくなることが分かります（0回と10回は一度も出現していません）。
-ここで、頻度を基に各データ区間の発生確率を求めましょう。
-C列に頻度を100で割った値を入力します。
-
-さらに、求めた確率で棒グラフを描きます。
-C列をマウスで選択し、挿入タブの棒グラフをクリックします。
-すると、下図のように、横軸が「表が出た回数」、縦軸が「確率」である棒グラフが描けます（タイトル、軸ラベル、軸の書式設定を図に合わせて修正してください）。
-
-このグラフは2項分布と呼ばれる確率分布に近似することが可能です。
-このデータは100回の繰り返しの結果ですが、試行回数が増えるほどに2項分布の理想の形状に近付きます。
-
-  2項分布の公式
-
-
-では2項分布の理想的な形状を考えましょう。
-2項分布は上記のコインのように結果が2通りの試行を対象とします（ベルヌーイ試行 と呼びます）。
-また、試行の結果が生じる確率を生起確率と呼びます。
-よって、2項分布は「1回の生起確率がpのベルヌーイ試行を、n回行って、k回起こる確率」を表すことになります。"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="Excelを利用した統計処理・2項分布"><meta name=twitter:description content="
-
-  授業の準備
-
-
-今回、分析対象とするデータは、「コインを10回投げる」という試行の結果です。
-コイン投げの試行の結果は2通り（表・裏）であり、表を 1 、裏を 0 と表現します。
-また、表が出る確率は 50% 、同様に裏が出る確率は 50% と仮定します。
-下記のデータは「コインを10回投げる」という試行を100回繰り返したときの結果です（21回目以降の試行は省略）。
-上記のデータを含むファイルcoin.csvをダウンロードしましょう。
-ファイルをダウンロードしたら、前回と同様にExcelでcoin.csvを読み込んでください。
-
-
-  2項分布
-
-
-まずは、各試行でコインが表になった回数を数えてみましょう。
-表は1で与えられるので、各試行の値の総和が表になった回数を表します。
-また、表が出る回数は0から10の範囲に収まります。
-
-セルL2:L101に、sum関数で表が出た回数を求める
-
-
-1回目の試行は5回、2回目の試行は7回となりました。
-では「コインが表になった回数」はどのような分布になっているか確認するために
-分析ツール を利用して ヒストグラム（頻度分布） を求めましょう。
-最初に、下図のようにN列に0から10までのデータ区間を入力します。
-
-次に、データタブに切り替え、データ分析をクリックします。
-一覧からヒストグラムを選択し、OKをクリックすると、ダイアログが表示されます。
-ダイアログに下記の設定をしてから、ヒストグラムを求めて下さい。
-
-入力範囲にL2:L101を設定する
-データ区間にN2:N12を設定する
-出力オプションで新規ワークシートにチェックを入れる
-
-
-新規に作成されたシートには、0から10の範囲で表が出た回数のヒストグラムがまとめられます。
-中央の5回が最頻値となっており、中央から離れるほど頻度が小さくなることが分かります（0回と10回は一度も出現していません）。
-ここで、頻度を基に各データ区間の発生確率を求めましょう。
-C列に頻度を100で割った値を入力します。
-
-さらに、求めた確率で棒グラフを描きます。
-C列をマウスで選択し、挿入タブの棒グラフをクリックします。
-すると、下図のように、横軸が「表が出た回数」、縦軸が「確率」である棒グラフが描けます（タイトル、軸ラベル、軸の書式設定を図に合わせて修正してください）。
-
-このグラフは2項分布と呼ばれる確率分布に近似することが可能です。
-このデータは100回の繰り返しの結果ですが、試行回数が増えるほどに2項分布の理想の形状に近付きます。
-
-  2項分布の公式
-
-
-では2項分布の理想的な形状を考えましょう。
-2項分布は上記のコインのように結果が2通りの試行を対象とします（ベルヌーイ試行 と呼びます）。
-また、試行の結果が生じる確率を生起確率と呼びます。
-よって、2項分布は「1回の生起確率がpのベルヌーイ試行を、n回行って、k回起こる確率」を表すことになります。"><meta name=twitter:image content="https://i.gyazo.com/4e374f77eaa29dd31ef5c85dd431b006.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
-<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>Excelを利用した統計処理・2項分布</h1><div class=post-line></div><p><a href=https://gyazo.com/4e374f77eaa29dd31ef5c85dd431b006><img src=https://i.gyazo.com/4e374f77eaa29dd31ef5c85dd431b006.png alt=https://gyazo.com/4e374f77eaa29dd31ef5c85dd431b006></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>授業の準備</h1><p>今回、分析対象とするデータは、「コインを10回投げる」という試行の結果です。
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Excelを利用した統計処理・2項分布 | えむラボ</title><meta name=description content="椙山女学園大学 文化情報学部 向研究室のブログです．女子大教員の不思議な日常を４コマ漫画でお伝えします．"><link rel=stylesheet href=/css/main.css><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Kiwi+Maru:wght@700&family=M+PLUS+1p:wght@700;800&display=swap" rel=stylesheet><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></head><body><header class=site-header><div class=site-header-inner><div class=site-brand><a href=/ class=site-title>えむラボ</a>
+<span class=site-subtitle>椙山女学園大学 向研究室</span></div><nav class=site-nav><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav><label class=hamburger for=nav-toggle><span></span><span></span><span></span>
+</label><input type=checkbox id=nav-toggle class=nav-toggle></div><nav class=site-nav-mobile><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav></header><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>Excelを利用した統計処理・2項分布</h1><time class=content-date>0001年1月1日</time><div class=content-body><p><a href=https://gyazo.com/4e374f77eaa29dd31ef5c85dd431b006><img src=https://i.gyazo.com/4e374f77eaa29dd31ef5c85dd431b006.png alt=https://gyazo.com/4e374f77eaa29dd31ef5c85dd431b006></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>授業の準備</h1><p>今回、分析対象とするデータは、「コインを10回投げる」という試行の結果です。
 コイン投げの試行の結果は2通り（表・裏）であり、表を <strong>1</strong> 、裏を <strong>0</strong> と表現します。
 また、表が出る確率は <strong>50%</strong> 、同様に裏が出る確率は <strong>50%</strong> と仮定します。
 下記のデータは「コインを10回投げる」という試行を100回繰り返したときの結果です（21回目以降の試行は省略）。</p><p>上記のデータを含むファイル<a href=/classes/seminar_core_areas_learning/coin.csv>coin.csv</a>をダウンロードしましょう。
@@ -151,9 +44,5 @@ C列をマウスで選択し、<strong>挿入</strong>タブの棒グラフを�
 このグラフが理想的な2項分布の形状です。
 中央の5回の確率が最も高く、中央から離れるほど確率は下がります。
 また、5回を中心に左右対称となっていることも読み取れます。</p><p><a href=https://gyazo.com/b778510cb60d33ca371cc23a5730ef63><img src=https://i.gyazo.com/b778510cb60d33ca371cc23a5730ef63.png alt=https://gyazo.com/b778510cb60d33ca371cc23a5730ef63></a></p><p><a href=https://gyazo.com/97987ffe44b64a2392239ad92fb50024><img src=https://i.gyazo.com/97987ffe44b64a2392239ad92fb50024.png alt=https://gyazo.com/97987ffe44b64a2392239ad92fb50024></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>「サイコロを10回投げる」という試行を繰り返したとき、<strong>出た目が2以下</strong>となる回数の確率分布を求めなさい（サイコロの目は全て均等な確率で出現すると仮定する）。
-また、求めた確率分布を利用して下記の設問に答えなさい。</p><ul><li><strong>2以下の目</strong>が6回出る確率</li><li><strong>2以下の目</strong>が3回以下となる確率</li></ul><p><a href=https://gyazo.com/94262359cb48470d1b2a1e950dcab19a><img src=https://i.gyazo.com/94262359cb48470d1b2a1e950dcab19a.png alt=https://gyazo.com/94262359cb48470d1b2a1e950dcab19a></a></p><div class=pagination><a href=/><span>Top</span></a>
-<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-この公式サイトでは，授業で使用している教材を公開すると共に，
-ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>
+また、求めた確率分布を利用して下記の設問に答えなさい。</p><ul><li><strong>2以下の目</strong>が6回出る確率</li><li><strong>2以下の目</strong>が3回以下となる確率</li></ul><p><a href=https://gyazo.com/94262359cb48470d1b2a1e950dcab19a><img src=https://i.gyazo.com/94262359cb48470d1b2a1e950dcab19a.png alt=https://gyazo.com/94262359cb48470d1b2a1e950dcab19a></a></p></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
+<a href=/ class=btn>🏠 トップ</a></nav></div></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>

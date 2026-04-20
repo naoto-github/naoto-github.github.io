@@ -1,129 +1,14 @@
-<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>アニメーションの表示 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
-    MathJax.Hub.Config({
-	     tex2jax: {
-	        inlineMath: [['$','$']]
-        }
-    });
-  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="アニメーションの表示"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/programming_1/chapter5/"><meta property="og:image" content="https://i.gyazo.com/01cd25d187d03257cc85be5a3150916f.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
-
-  スケッチの作成
-
-
-Processingを起動して，新規にスケッチを保存しましょう．
-メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます．
-ファイル名に「Project5」を入力し，[保存]をクリックしましょう．
-保存先に「Project5」という名前のフォルダが作成されていることを確認してください．
-
-
-  setupとdraw
-
-
-アニメーションを制御するにはsetup()関数とdraw関数()が必要になります．
-setup()関数には，変数の初期化など，プログラムを実行したときに 1回だけ 実行する処理を記述します．
-一方，draw()関数は，プログラムの実行中に 繰り返し 実行され，アニメーションなど何かを変化させるための処理を記述します．
-また，setup()関数とdraw()関数の外部で宣言された変数は両方の関数内で利用できます（ グローバル変数 と呼びます）．
-setup()関数とdraw関数()は下記のように記述します（ void は「この関数は返値をもたない」という意味です）．
-void setup(){
-	1回だけ実行する処理;
-}
-
-void draw(){
-	繰り返し実行する処理;
-}
-ここでは，ウィンドウの中央に半径10の円を描いてみましょう．
-変数の初期化はsetup()関数，円の描画はdraw()関数に記述していることに注意してください．
-下記を参考にコードを入力したら，Runボタンをクリックしてください．
-ウィンドウの中央に円が描かれていることを確認してください．
-
-
-
-直線運動
-円が右方向に直線的に動くアニメーションを設定してみましょう．
-右方向へのアニメーションは，draw()関数において，変数xの値を増加させることで表現できます．
-下記を参考にコードを入力したら，Runボタンをクリックしてください．
-複数の円が右方向に描画されることを確認してください．
-
-
-
-しかし，上記のコードでは円が複数描画されてしまい，アニメーションしているように見えません．
-そこで，draw()関数の最初で，背景を灰色（#cccccc）で塗りつぶすことで，常に円が1つだけ描画されるように変更します．
-下記を参考にコードを入力したら，Runボタンをクリックしてください．
-1つの円が右方向に移動することを確認してください．
-
-
-
-円がウィンドウの端に到達したら，跳ね返って逆方向に進むように修正しましょう．
-まずは，右端に到達したら，左方向に進むようにします．
-円の速度を表す変数speedを宣言し，if文を利用してxの値が右端に到達したらspeedの正負を反転します．
-下記を参考にコードを入力したら，Runボタンをクリックしてください．
-円が右端に到達すると跳ね返ることを確認してください．
-
-
-
-同様に，左端に到達したら，右方向に進むようにします．
-if文を利用してxの値が左端に到達したらspeedの正負を反転します．
-下記を参考にコードを入力したら，Runボタンをクリックしてください．
-円が左端に到達すると跳ね返ることを確認してください．"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="アニメーションの表示"><meta name=twitter:description content="
-
-  スケッチの作成
-
-
-Processingを起動して，新規にスケッチを保存しましょう．
-メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます．
-ファイル名に「Project5」を入力し，[保存]をクリックしましょう．
-保存先に「Project5」という名前のフォルダが作成されていることを確認してください．
-
-
-  setupとdraw
-
-
-アニメーションを制御するにはsetup()関数とdraw関数()が必要になります．
-setup()関数には，変数の初期化など，プログラムを実行したときに 1回だけ 実行する処理を記述します．
-一方，draw()関数は，プログラムの実行中に 繰り返し 実行され，アニメーションなど何かを変化させるための処理を記述します．
-また，setup()関数とdraw()関数の外部で宣言された変数は両方の関数内で利用できます（ グローバル変数 と呼びます）．
-setup()関数とdraw関数()は下記のように記述します（ void は「この関数は返値をもたない」という意味です）．
-void setup(){
-	1回だけ実行する処理;
-}
-
-void draw(){
-	繰り返し実行する処理;
-}
-ここでは，ウィンドウの中央に半径10の円を描いてみましょう．
-変数の初期化はsetup()関数，円の描画はdraw()関数に記述していることに注意してください．
-下記を参考にコードを入力したら，Runボタンをクリックしてください．
-ウィンドウの中央に円が描かれていることを確認してください．
-
-
-
-直線運動
-円が右方向に直線的に動くアニメーションを設定してみましょう．
-右方向へのアニメーションは，draw()関数において，変数xの値を増加させることで表現できます．
-下記を参考にコードを入力したら，Runボタンをクリックしてください．
-複数の円が右方向に描画されることを確認してください．
-
-
-
-しかし，上記のコードでは円が複数描画されてしまい，アニメーションしているように見えません．
-そこで，draw()関数の最初で，背景を灰色（#cccccc）で塗りつぶすことで，常に円が1つだけ描画されるように変更します．
-下記を参考にコードを入力したら，Runボタンをクリックしてください．
-1つの円が右方向に移動することを確認してください．
-
-
-
-円がウィンドウの端に到達したら，跳ね返って逆方向に進むように修正しましょう．
-まずは，右端に到達したら，左方向に進むようにします．
-円の速度を表す変数speedを宣言し，if文を利用してxの値が右端に到達したらspeedの正負を反転します．
-下記を参考にコードを入力したら，Runボタンをクリックしてください．
-円が右端に到達すると跳ね返ることを確認してください．
-
-
-
-同様に，左端に到達したら，右方向に進むようにします．
-if文を利用してxの値が左端に到達したらspeedの正負を反転します．
-下記を参考にコードを入力したら，Runボタンをクリックしてください．
-円が左端に到達すると跳ね返ることを確認してください．"><meta name=twitter:image content="https://i.gyazo.com/01cd25d187d03257cc85be5a3150916f.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
-<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>アニメーションの表示</h1><div class=post-line></div><p><a href=https://gyazo.com/01cd25d187d03257cc85be5a3150916f><img src=https://i.gyazo.com/01cd25d187d03257cc85be5a3150916f.png alt=https://gyazo.com/01cd25d187d03257cc85be5a3150916f></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>スケッチの作成</h1><p>Processingを起動して，新規にスケッチを保存しましょう．
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>アニメーションの表示 | えむラボ</title><meta name=description content="椙山女学園大学 文化情報学部 向研究室のブログです．女子大教員の不思議な日常を４コマ漫画でお伝えします．"><link rel=stylesheet href=/css/main.css><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Kiwi+Maru:wght@700&family=M+PLUS+1p:wght@700;800&display=swap" rel=stylesheet><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></head><body><header class=site-header><div class=site-header-inner><div class=site-brand><a href=/ class=site-title>えむラボ</a>
+<span class=site-subtitle>椙山女学園大学 向研究室</span></div><nav class=site-nav><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav><label class=hamburger for=nav-toggle><span></span><span></span><span></span>
+</label><input type=checkbox id=nav-toggle class=nav-toggle></div><nav class=site-nav-mobile><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav></header><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>アニメーションの表示</h1><time class=content-date>0001年1月1日</time><div class=content-body><p><a href=https://gyazo.com/01cd25d187d03257cc85be5a3150916f><img src=https://i.gyazo.com/01cd25d187d03257cc85be5a3150916f.png alt=https://gyazo.com/01cd25d187d03257cc85be5a3150916f></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>スケッチの作成</h1><p>Processingを起動して，新規にスケッチを保存しましょう．
 メニューから[ファイル]-[名前を付けて保存]をクリックして，「スケッチフォルダを名前を付けて保存」を開きます．
 ファイル名に「Project5」を入力し，[保存]をクリックしましょう．
 保存先に「Project5」という名前のフォルダが作成されていることを確認してください．</p><p><a href=https://gyazo.com/0164542679637926cc8339ce165b4a5e><img src=https://i.gyazo.com/0164542679637926cc8339ce165b4a5e.png alt=https://gyazo.com/0164542679637926cc8339ce165b4a5e></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>setupとdraw</h1><p>アニメーションを制御するには<code>setup()</code>関数と<code>draw関数()</code>が必要になります．
@@ -168,9 +53,5 @@ if文を利用してxの値が左端に到達したらspeedの正負を反転し
 課題が完成したら，作成したスケッチを <strong>ZIPアーカイブ</strong> 形式で保存します．
 ZIPアーカイブを作成するには，メニューから[ツール]-[スケッチをアーカイブ]をクリックして，「スケッチを名前を付けてアーカイブする」を開きます．
 保存するファイル名を確認した上で，[保存]をクリックします．
-保存先に「Project5-日付a.zip」というファイルが作成されていることを確認してください．</p><p><a href=https://gyazo.com/b7fa07ed4129a2e188a87cc1c7a1e62f><img src=https://i.gyazo.com/b7fa07ed4129a2e188a87cc1c7a1e62f.gif alt="Image from Gyazo"></a></p><div class=pagination><a href=/><span>Top</span></a>
-<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-この公式サイトでは，授業で使用している教材を公開すると共に，
-ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>
+保存先に「Project5-日付a.zip」というファイルが作成されていることを確認してください．</p><p><a href=https://gyazo.com/b7fa07ed4129a2e188a87cc1c7a1e62f><img src=https://i.gyazo.com/b7fa07ed4129a2e188a87cc1c7a1e62f.gif alt="Image from Gyazo"></a></p></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
+<a href=/ class=btn>🏠 トップ</a></nav></div></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>

@@ -1,111 +1,14 @@
-<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Monacaアプリの開発④ Leafletの利用 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
-    MathJax.Hub.Config({
-	     tex2jax: {
-	        inlineMath: [['$','$']]
-        }
-    });
-  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="Monacaアプリの開発④ Leafletの利用"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/graduation_preperation_1/chapter2_4/"><meta property="og:image" content="https://i.gyazo.com/88c07063266ce169f6532d3e90c9b3be.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content='
-
-  Leaflet
-
-
-Leafletは，ウェブ地図を表示するためのオープンソースのJavaScriptライブラリです．
-OpenStreetMapやMapboxのタイル地図を表示させることができます．
-Monacaで利用するには，JS/CSSコンポーネントをクリックして，Leafletのライブラリをプロジェクトに追加します．
-このとき，次の2つのファイルを選択してインストールします（CDNで設定しても構いません）．
-
-JavaScript: components/Leaflet/dist/leaflet.js
-CSS: components/Leaflet/dist/leaflet.css
-
-
-
-  プロジェクトの作成
-
-
-新規にプロジェクトを作成します．
-テンプレートは前回と同じ Onsen UI V2 Vue Minimum を選択しましょう．
-
-プロジェクト名に「Monacaでアプリ開発④」，説明に「Leafletの利用」を設定しましょう．
-
-
-  テンプレートの確認
-
-
-クラウドIDEを起動し，テンプレートの/src/App.vueを確認します．
-HTML
-v-ons-toolbarの次にあるdiv要素とp要素を削除しておきます．
-<template>
-    <v-ons-page>
-      <v-ons-toolbar>
-        <div class="center">{{ title }}</div>
-        <div class="right">
-          <v-ons-toolbar-button>
-            <v-ons-icon icon="ion-navicon, material: md-menu"></v-ons-icon>
-          </v-ons-toolbar-button>
-        </div>
-      </v-ons-toolbar>
-
-      <!-- 削除 -->
-
-    </v-ons-page>
-</template>
-<script>
- /* JavaScriptのコード */
-</script>
-JavaScript
-titleを 地図アプリ に設定します．
-methodsオプションの内容を削除しておきます．'><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="Monacaアプリの開発④ Leafletの利用"><meta name=twitter:description content='
-
-  Leaflet
-
-
-Leafletは，ウェブ地図を表示するためのオープンソースのJavaScriptライブラリです．
-OpenStreetMapやMapboxのタイル地図を表示させることができます．
-Monacaで利用するには，JS/CSSコンポーネントをクリックして，Leafletのライブラリをプロジェクトに追加します．
-このとき，次の2つのファイルを選択してインストールします（CDNで設定しても構いません）．
-
-JavaScript: components/Leaflet/dist/leaflet.js
-CSS: components/Leaflet/dist/leaflet.css
-
-
-
-  プロジェクトの作成
-
-
-新規にプロジェクトを作成します．
-テンプレートは前回と同じ Onsen UI V2 Vue Minimum を選択しましょう．
-
-プロジェクト名に「Monacaでアプリ開発④」，説明に「Leafletの利用」を設定しましょう．
-
-
-  テンプレートの確認
-
-
-クラウドIDEを起動し，テンプレートの/src/App.vueを確認します．
-HTML
-v-ons-toolbarの次にあるdiv要素とp要素を削除しておきます．
-<template>
-    <v-ons-page>
-      <v-ons-toolbar>
-        <div class="center">{{ title }}</div>
-        <div class="right">
-          <v-ons-toolbar-button>
-            <v-ons-icon icon="ion-navicon, material: md-menu"></v-ons-icon>
-          </v-ons-toolbar-button>
-        </div>
-      </v-ons-toolbar>
-
-      <!-- 削除 -->
-
-    </v-ons-page>
-</template>
-<script>
- /* JavaScriptのコード */
-</script>
-JavaScript
-titleを 地図アプリ に設定します．
-methodsオプションの内容を削除しておきます．'><meta name=twitter:image content="https://i.gyazo.com/88c07063266ce169f6532d3e90c9b3be.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
-<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>Monacaアプリの開発④ Leafletの利用</h1><div class=post-line></div><p><a href=https://gyazo.com/88c07063266ce169f6532d3e90c9b3be><img src=https://i.gyazo.com/88c07063266ce169f6532d3e90c9b3be.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Leaflet</h1><p><a href=https://leafletjs.com/>Leaflet</a>は，ウェブ地図を表示するためのオープンソースのJavaScriptライブラリです．
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Monacaアプリの開発④ Leafletの利用 | えむラボ</title><meta name=description content="椙山女学園大学 文化情報学部 向研究室のブログです．女子大教員の不思議な日常を４コマ漫画でお伝えします．"><link rel=stylesheet href=/css/main.css><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Kiwi+Maru:wght@700&family=M+PLUS+1p:wght@700;800&display=swap" rel=stylesheet><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></head><body><header class=site-header><div class=site-header-inner><div class=site-brand><a href=/ class=site-title>えむラボ</a>
+<span class=site-subtitle>椙山女学園大学 向研究室</span></div><nav class=site-nav><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav><label class=hamburger for=nav-toggle><span></span><span></span><span></span>
+</label><input type=checkbox id=nav-toggle class=nav-toggle></div><nav class=site-nav-mobile><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav></header><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>Monacaアプリの開発④ Leafletの利用</h1><time class=content-date>2021年11月28日</time><div class=content-body><p><a href=https://gyazo.com/88c07063266ce169f6532d3e90c9b3be><img src=https://i.gyazo.com/88c07063266ce169f6532d3e90c9b3be.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Leaflet</h1><p><a href=https://leafletjs.com/>Leaflet</a>は，ウェブ地図を表示するためのオープンソースのJavaScriptライブラリです．
 <a href=https://openstreetmap.jp/>OpenStreetMap</a>や<a href=https://www.mapbox.jp/>Mapbox</a>のタイル地図を表示させることができます．
 Monacaで利用するには，<strong>JS/CSSコンポーネント</strong>をクリックして，Leafletのライブラリをプロジェクトに追加します．
 このとき，次の2つのファイルを選択してインストールします（CDNで設定しても構いません）．</p><ul><li>JavaScript: <strong>components/Leaflet/dist/leaflet.js</strong></li><li>CSS: <strong>components/Leaflet/dist/leaflet.css</strong></li></ul><p><a href=https://gyazo.com/4c627856275473787d7e3206f2b49ee6><img src=https://i.gyazo.com/4c627856275473787d7e3206f2b49ee6.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>プロジェクトの作成</h1><p>新規にプロジェクトを作成します．
@@ -276,9 +179,5 @@ filterメソッドでは，<code>checked_list</code>の状態に応じて，対�
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><h3 id=実行結果-4>実行結果</h3><p><a href=https://gyazo.com/ddc6077aca963d196744a1bf2aa1a9f5><img src=https://i.gyazo.com/ddc6077aca963d196744a1bf2aa1a9f5.gif alt="Image from Gyazo" width=400></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>アプリが完成したら，次の課題に挑戦してみよう！</p><ul><li>マーカーの色や形を変える</li><li>マーカーのポップアップに情報を追加する</li><li>他の<a href=https://www.city.nisshin.lg.jp/opendata/index.html>日進市のオープンデータ</a>を利用する</li></ul><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>プロジェクトのソースコード</h1><ul><li><a href=https://github.com/naoto-github/graduation_preperation_4>GitHubレポジトリ</a></li><li><a href="https://monaca.mobi/ja/directimport?pid=61a5b562e788857b0ffdb565">Monacaの公開URL</a></li></ul><div class=pagination><a href=/><span>Top</span></a>
-<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-この公式サイトでは，授業で使用している教材を公開すると共に，
-ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>
+</span></span></code></pre></div><h3 id=実行結果-4>実行結果</h3><p><a href=https://gyazo.com/ddc6077aca963d196744a1bf2aa1a9f5><img src=https://i.gyazo.com/ddc6077aca963d196744a1bf2aa1a9f5.gif alt="Image from Gyazo" width=400></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>アプリが完成したら，次の課題に挑戦してみよう！</p><ul><li>マーカーの色や形を変える</li><li>マーカーのポップアップに情報を追加する</li><li>他の<a href=https://www.city.nisshin.lg.jp/opendata/index.html>日進市のオープンデータ</a>を利用する</li></ul><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>プロジェクトのソースコード</h1><ul><li><a href=https://github.com/naoto-github/graduation_preperation_4>GitHubレポジトリ</a></li><li><a href="https://monaca.mobi/ja/directimport?pid=61a5b562e788857b0ffdb565">Monacaの公開URL</a></li></ul></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
+<a href=/ class=btn>🏠 トップ</a></nav></div></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>

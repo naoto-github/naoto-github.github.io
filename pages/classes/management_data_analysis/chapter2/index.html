@@ -1,143 +1,14 @@
-<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Pythonを利用した統計処理①・相関係数 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
-    MathJax.Hub.Config({
-	     tex2jax: {
-	        inlineMath: [['$','$']]
-        }
-    });
-  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="Pythonを利用した統計処理①・相関係数"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter2/"><meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
-  相関係数
-
-
-相関係数とは2つの変数XとYのの関係性を表す指標です．
-例として，X=気温とY=アイスクリームの売上数を考えてみましょう．
-気温が高い夏にアイスクリームの売上数は増加し，
-逆に気温が低い冬にアイスクリームの売上数は減少すると考えられます．
-このような関係を 正の相関 と呼びます．
-同様に，X=気温とY=おでんの売上数を考えてみましょう．
-気温が高い夏におでんの売上数は減少し，
-逆に気温が低い冬におでんの売上数は増加すると考えられます．
-このような関係を 負の相関 と呼びます．
-この関係性を定量的に表す方法が 相関係数 です．
-相関係数の公式を確認しておきましょう．
-$X=\{x_1, x2, \cdots, x_n\}$，$Y=\{y_1,y_2,\cdots,y_n\}$とします．
-このとき，$X$と$Y$の相関係数は次の式で求められます．
-$$
-XとYの相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2} \cdot \sqrt{\sum (y_i - \bar{y})^2}}
-$$
-算出された相関係数は-1から1の範囲となり，1に近いほど強い正の相関，-1に近いほど強い負の相関となります．
-また，相関係数が-0.2から0.2の範囲のときは，相関なしとみなすことが一般的です．
-
-  
-      
-          相関係数
-          相関の強さ
-      
-  
-  
-      
-          0.7～1.0
-          強い正の相関
-      
-      
-          0.4～0.7
-          正の相関
-      
-      
-          0.2～0.4
-          弱い正の相関
-      
-      
-          -0.2～0.2
-          相関なし
-      
-      
-          -0.4～-0.2
-          弱い負の相関
-      
-      
-          -0.7～-0.4
-          負の相関
-      
-      
-          -1.0～-0.7
-          強い負の相関
-      
-  
-
-
-  データセット
-
-
-ここでは，次のCSV形式のデータセットを利用します．
-下記のURLからファイルをダウンロードしてください．
-生徒20人の5科目のテストの点数に関するデータです．"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="Pythonを利用した統計処理①・相関係数"><meta name=twitter:description content="
-  相関係数
-
-
-相関係数とは2つの変数XとYのの関係性を表す指標です．
-例として，X=気温とY=アイスクリームの売上数を考えてみましょう．
-気温が高い夏にアイスクリームの売上数は増加し，
-逆に気温が低い冬にアイスクリームの売上数は減少すると考えられます．
-このような関係を 正の相関 と呼びます．
-同様に，X=気温とY=おでんの売上数を考えてみましょう．
-気温が高い夏におでんの売上数は減少し，
-逆に気温が低い冬におでんの売上数は増加すると考えられます．
-このような関係を 負の相関 と呼びます．
-この関係性を定量的に表す方法が 相関係数 です．
-相関係数の公式を確認しておきましょう．
-$X=\{x_1, x2, \cdots, x_n\}$，$Y=\{y_1,y_2,\cdots,y_n\}$とします．
-このとき，$X$と$Y$の相関係数は次の式で求められます．
-$$
-XとYの相関係数=\frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2} \cdot \sqrt{\sum (y_i - \bar{y})^2}}
-$$
-算出された相関係数は-1から1の範囲となり，1に近いほど強い正の相関，-1に近いほど強い負の相関となります．
-また，相関係数が-0.2から0.2の範囲のときは，相関なしとみなすことが一般的です．
-
-  
-      
-          相関係数
-          相関の強さ
-      
-  
-  
-      
-          0.7～1.0
-          強い正の相関
-      
-      
-          0.4～0.7
-          正の相関
-      
-      
-          0.2～0.4
-          弱い正の相関
-      
-      
-          -0.2～0.2
-          相関なし
-      
-      
-          -0.4～-0.2
-          弱い負の相関
-      
-      
-          -0.7～-0.4
-          負の相関
-      
-      
-          -1.0～-0.7
-          強い負の相関
-      
-  
-
-
-  データセット
-
-
-ここでは，次のCSV形式のデータセットを利用します．
-下記のURLからファイルをダウンロードしてください．
-生徒20人の5科目のテストの点数に関するデータです．"><meta name=twitter:image content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
-<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>Pythonを利用した統計処理①・相関係数</h1><div class=post-line></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>相関係数</h1><p>相関係数とは2つの変数<code>X</code>と<code>Y</code>のの関係性を表す指標です．
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Pythonを利用した統計処理①・相関係数 | えむラボ</title><meta name=description content="椙山女学園大学 文化情報学部 向研究室のブログです．女子大教員の不思議な日常を４コマ漫画でお伝えします．"><link rel=stylesheet href=/css/main.css><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Kiwi+Maru:wght@700&family=M+PLUS+1p:wght@700;800&display=swap" rel=stylesheet><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></head><body><header class=site-header><div class=site-header-inner><div class=site-brand><a href=/ class=site-title>えむラボ</a>
+<span class=site-subtitle>椙山女学園大学 向研究室</span></div><nav class=site-nav><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav><label class=hamburger for=nav-toggle><span></span><span></span><span></span>
+</label><input type=checkbox id=nav-toggle class=nav-toggle></div><nav class=site-nav-mobile><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav></header><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>Pythonを利用した統計処理①・相関係数</h1><time class=content-date>2022年9月8日</time><div class=content-body><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>相関係数</h1><p>相関係数とは2つの変数<code>X</code>と<code>Y</code>のの関係性を表す指標です．
 例として，<code>X=気温</code>と<code>Y=アイスクリームの売上数</code>を考えてみましょう．
 気温が高い夏にアイスクリームの売上数は増加し，
 逆に気温が低い冬にアイスクリームの売上数は減少すると考えられます．
@@ -198,9 +69,5 @@ Exceで算出した結果と同じように，「数学と理科」の相関係�
 </span></span></code></pre></div><p><a href=https://gyazo.com/2bf2767b2ec315203ab88f0e679fc5d2><img src=https://i.gyazo.com/2bf2767b2ec315203ab88f0e679fc5d2.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>次の相関係数を調べなさい．
 また，<strong>マークダウン・セル</strong> を利用して，それぞれの相関の強さを記述してください．</p><ul><li>数学と国語の相関係数</li><li>英語と理科の相関係数</li><li>国語と英語の相関係数</li></ul><p><a href=https://gyazo.com/d5b920cee325a90746e69e5370b6181d><img src=https://i.gyazo.com/d5b920cee325a90746e69e5370b6181d.png alt="Image from Gyazo"></a></p><p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
 ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
-ノートブックのファイル名は <strong>chapter2.ipynb</strong> としてください．</p><div class=pagination><a href=/><span>Top</span></a>
-<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-この公式サイトでは，授業で使用している教材を公開すると共に，
-ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>
+ノートブックのファイル名は <strong>chapter2.ipynb</strong> としてください．</p></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
+<a href=/ class=btn>🏠 トップ</a></nav></div></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>

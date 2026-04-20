@@ -1,175 +1,14 @@
-<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>R言語の基本的な操作 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
-    MathJax.Hub.Config({
-	     tex2jax: {
-	        inlineMath: [['$','$']]
-        }
-    });
-  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="R言語の基本的な操作"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/advanced_studies_seminar_2/chapter1/"><meta property="og:image" content="https://i.gyazo.com/d9d5ba93ffba391fb05f386a7c29975e.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
-
-
-  R言語とは
-
-
-Rは，AT & Tベル研究所が開発したS言語を基本に開発された統計解析向けのプログラミング言語です．
-オープンソースとして開発されており，誰でも自由に利用，改変，再配布が可能なフリーソフトウェアです．
-統計用のソフトウェアには，マイクロソフトのExcelや，
-IBMのSPSSなどがありますが，
-R言語はプログラミング言語として統計処理が可能なことが大きな特徴となっています．
-一方でGUI（グラフィカル・ユーザ・インターフェイス）は弱く，文化系の学生には取っ付きにくい印象を与えるかもしれません．
-しかし，Rの基本を学べば，データマイニングなどの高度な統計解析手法を利用することが可能です．
-この授業ではRの基本から学び，多変量解析やデータマイニングなどの応用を学習することを目標とします．
-
-
-  R言語のインストール
-
-
-まずはRを公式サイトからダウンロードしてインストールしましょう．
-現在のところ公式サイトは英語表記しかないので注意してください．
-この資料では，2017年3月8日の時点の最新バージョンであるR 3.3.3を利用して説明していきます．
-Rをインストールするとデスクトップに32ビット版の「R i386 3.3.3」と
-64ビット版の「R x64 3.3.3」のショートカットが作成されます．
-各自のPC環境に合わせてプログラムを実行してください．
-実行すると下記のような「R console」というウィンドウが表示されます（ここでは64ビット版を使用）．
-
-Rによる統計処理は，この「R console」に命令文を入力することが基本となります．
-行頭の「>」はプロンプトと呼ばれ，この後にコマンド（命令）を入力して，
-エンターキーを押すとコマンドが実行されます．
-これを繰り返して，特定の処理を実現します．
-
-
-  四則演算
-
-
-まずは，加算，減算などの算術演算を実行してみましょう．
-Rでは，下記表の算術演算子が利用可能です．
-
-  
-      
-          演算
-          演算子
-          例
-      
-  
-  
-      
-          加算
-          +
-          2+3
-      
-      
-          減算
-          -
-          2-3
-      
-      
-          乗算
-          *
-          2*3
-      
-      
-          除算
-          /
-          2/3
-      
-      
-          べき乗
-          ^
-          2^3
-      
-      
-          剰余
-          %%
-          2%%3
-      
-  
-
-では，プロンプトの後に，「2 + 3」と入力してみましょう．
-すると下記のような加算の結果が得られます．
-ここで，[1]は出力される結果の1番目であることを意味しています．
-（今回は5のみが結果となるので，必然的に1番目になる）"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="R言語の基本的な操作"><meta name=twitter:description content="
-
-
-  R言語とは
-
-
-Rは，AT & Tベル研究所が開発したS言語を基本に開発された統計解析向けのプログラミング言語です．
-オープンソースとして開発されており，誰でも自由に利用，改変，再配布が可能なフリーソフトウェアです．
-統計用のソフトウェアには，マイクロソフトのExcelや，
-IBMのSPSSなどがありますが，
-R言語はプログラミング言語として統計処理が可能なことが大きな特徴となっています．
-一方でGUI（グラフィカル・ユーザ・インターフェイス）は弱く，文化系の学生には取っ付きにくい印象を与えるかもしれません．
-しかし，Rの基本を学べば，データマイニングなどの高度な統計解析手法を利用することが可能です．
-この授業ではRの基本から学び，多変量解析やデータマイニングなどの応用を学習することを目標とします．
-
-
-  R言語のインストール
-
-
-まずはRを公式サイトからダウンロードしてインストールしましょう．
-現在のところ公式サイトは英語表記しかないので注意してください．
-この資料では，2017年3月8日の時点の最新バージョンであるR 3.3.3を利用して説明していきます．
-Rをインストールするとデスクトップに32ビット版の「R i386 3.3.3」と
-64ビット版の「R x64 3.3.3」のショートカットが作成されます．
-各自のPC環境に合わせてプログラムを実行してください．
-実行すると下記のような「R console」というウィンドウが表示されます（ここでは64ビット版を使用）．
-
-Rによる統計処理は，この「R console」に命令文を入力することが基本となります．
-行頭の「>」はプロンプトと呼ばれ，この後にコマンド（命令）を入力して，
-エンターキーを押すとコマンドが実行されます．
-これを繰り返して，特定の処理を実現します．
-
-
-  四則演算
-
-
-まずは，加算，減算などの算術演算を実行してみましょう．
-Rでは，下記表の算術演算子が利用可能です．
-
-  
-      
-          演算
-          演算子
-          例
-      
-  
-  
-      
-          加算
-          +
-          2+3
-      
-      
-          減算
-          -
-          2-3
-      
-      
-          乗算
-          *
-          2*3
-      
-      
-          除算
-          /
-          2/3
-      
-      
-          べき乗
-          ^
-          2^3
-      
-      
-          剰余
-          %%
-          2%%3
-      
-  
-
-では，プロンプトの後に，「2 + 3」と入力してみましょう．
-すると下記のような加算の結果が得られます．
-ここで，[1]は出力される結果の1番目であることを意味しています．
-（今回は5のみが結果となるので，必然的に1番目になる）"><meta name=twitter:image content="https://i.gyazo.com/d9d5ba93ffba391fb05f386a7c29975e.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
-<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>R言語の基本的な操作</h1><div class=post-line></div><p><a href=https://gyazo.com/d9d5ba93ffba391fb05f386a7c29975e><img src=https://i.gyazo.com/d9d5ba93ffba391fb05f386a7c29975e.png alt=https://gyazo.com/d9d5ba93ffba391fb05f386a7c29975e></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>R言語とは</h1><p><a href=https://cran.r-project.org/>R</a>は，AT & Tベル研究所が開発したS言語を基本に開発された統計解析向けのプログラミング言語です．
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>R言語の基本的な操作 | えむラボ</title><meta name=description content="椙山女学園大学 文化情報学部 向研究室のブログです．女子大教員の不思議な日常を４コマ漫画でお伝えします．"><link rel=stylesheet href=/css/main.css><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Kiwi+Maru:wght@700&family=M+PLUS+1p:wght@700;800&display=swap" rel=stylesheet><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></head><body><header class=site-header><div class=site-header-inner><div class=site-brand><a href=/ class=site-title>えむラボ</a>
+<span class=site-subtitle>椙山女学園大学 向研究室</span></div><nav class=site-nav><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav><label class=hamburger for=nav-toggle><span></span><span></span><span></span>
+</label><input type=checkbox id=nav-toggle class=nav-toggle></div><nav class=site-nav-mobile><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav></header><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>R言語の基本的な操作</h1><time class=content-date>0001年1月1日</time><div class=content-body><p><a href=https://gyazo.com/d9d5ba93ffba391fb05f386a7c29975e><img src=https://i.gyazo.com/d9d5ba93ffba391fb05f386a7c29975e.png alt=https://gyazo.com/d9d5ba93ffba391fb05f386a7c29975e></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>R言語とは</h1><p><a href=https://cran.r-project.org/>R</a>は，AT & Tベル研究所が開発したS言語を基本に開発された統計解析向けのプログラミング言語です．
 オープンソースとして開発されており，誰でも自由に利用，改変，再配布が可能なフリーソフトウェアです．
 統計用のソフトウェアには，マイクロソフトの<a href=https://products.office.com/ja-jp/excel>Excel</a>や，
 IBMの<a href=https://www.ibm.com/analytics/jp/ja/technology/spss/>SPSS</a>などがありますが，
@@ -232,9 +71,5 @@ R言語はプログラミング言語として統計処理が可能なことが�
 </span></span><span style=display:flex><span>向直人
 </span></span></code></pre></div><p>このようにスクリプトに<strong>R</strong>の命令を複数記述しておき，
 <strong>source</strong>関数を利用して，読み込んで実行するという流れがスムーズです．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>作成した<strong>chapter1.R</strong>に，<strong>cat</strong>関数を利用して，本日の授業の感想を記述しなさい．
-また，コンソールの出力結果と，<strong>chapter1.R</strong>を提出すること．</p><div class=pagination><a href=/><span>Top</span></a>
-<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-この公式サイトでは，授業で使用している教材を公開すると共に，
-ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>
+また，コンソールの出力結果と，<strong>chapter1.R</strong>を提出すること．</p></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
+<a href=/ class=btn>🏠 トップ</a></nav></div></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>

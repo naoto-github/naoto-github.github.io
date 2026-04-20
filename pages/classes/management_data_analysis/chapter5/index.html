@@ -1,67 +1,14 @@
-<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>統計的仮説検定①・t検定 | mLAB</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700"><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/syntax.css><link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/favicon/apple-touch-icon.png><link href rel=alternate type=application/rss+xml title=mLAB><link rel=preconnect href=https://fonts.gstatic.com><link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Kosugi&display=swap" rel=stylesheet><script src=https://kit.fontawesome.com/0c97f11cd6.js crossorigin=anonymous></script><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel=stylesheet><script src=https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/jquery.slicknav.js></script><link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/SlickNav/1.0.10/slicknav.min.css><div id=fb-root></div><script async defer crossorigin=anonymous src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v9.0"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type=text/x-mathjax-config>
-    MathJax.Hub.Config({
-	     tex2jax: {
-	        inlineMath: [['$','$']]
-        }
-    });
-  </script><script src=https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js></script><meta property="og:title" content="統計的仮説検定①・t検定"><meta property="og:type" content="article"><meta property="og:url" content="https://mukai-lab.info/pages/classes/management_data_analysis/chapter5/"><meta property="og:image" content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"><meta property="og:site_name" content="mLAB"><meta property="og:description" content="
-  t検定
-
-
-統計的仮説検定 とは，母集団から抽出した標本を利用して，母集団に関する仮説を検証する方法です．
-例えば「母集団の平均（母平均）は $\mu$である」などの仮説が考えられます．
-この仮説を検証するために z検定 や t検定 などと呼ばれる方法が用いられます．
-
-まずは，z検定 について考えていきましょう．
-z検定は平均$\mu=0$，分散$\sigma^2=1$の正規分布（標準正規分布）を用いる手法です．
-平均$\mu$，分散$\sigma^2$の正規分布に従う母集団の分布$X$から，
-無作為に抽出した 標本の平均（標本平均） の分布も，正規分布に従うことが知られています．
-このとき，サンプルサイズ$n$の標本平均$\bar{X}$は，平均$\mu$，分散$\frac{\sigma^2}{n}$の正規分布になります（分散はサンプルサイズに合わせて小さくなることに注意）．
-$$
-\bar{X} \sim N\left( \mu, \frac{\sigma^2}{n} \right)
-$$
-
-これを標準化すると平均0，分散1の標準正規分布に従うことになり，これを検定統計量$Z$とします．
-この検定統計量$z$から，その標本が母集団から無作為抽出された標本かどうかを判断することができます．
-$$
-Z = \frac{\bar{X} - \mu}{\sqrt{\sigma^2 / n}} = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N\left( 0, 1 \right)
-$$
-
-次は，t検定 について考えていきましょう．
-t検定は母集団の分散$\sigma^2$が分からないときに採用する手法であり，標準正規分布ではなく 自由度を特徴とするt分布 を用います．
-一般に母集団の分散は不明であるため z検定 を採用することは稀で，常に t検定 を用いれば良いとされます．
-平均$\mu$の正規分布に従う母集団の分布$X$から，無作為に抽出した 標本の平均（標本平均） の分布を考えます．
-母集団の分散$\sigma^2$は不明であることから，標本から算出した不偏分散$\hat{\sigma}^2$を代わりに使用します（平方和を$n-1$で割った値）．
-このとき，サンプルサイズ$n$の標本平均$\bar{X}$は，平均$\mu$，分散$\frac{\hat{\sigma}^2}{n}$の正規分布に従います．"><meta name=twitter:card content="summary"><meta name=twitter:site content="@nmukai1978"><meta name=twitter:title content="統計的仮説検定①・t検定"><meta name=twitter:description content="
-  t検定
-
-
-統計的仮説検定 とは，母集団から抽出した標本を利用して，母集団に関する仮説を検証する方法です．
-例えば「母集団の平均（母平均）は $\mu$である」などの仮説が考えられます．
-この仮説を検証するために z検定 や t検定 などと呼ばれる方法が用いられます．
-
-まずは，z検定 について考えていきましょう．
-z検定は平均$\mu=0$，分散$\sigma^2=1$の正規分布（標準正規分布）を用いる手法です．
-平均$\mu$，分散$\sigma^2$の正規分布に従う母集団の分布$X$から，
-無作為に抽出した 標本の平均（標本平均） の分布も，正規分布に従うことが知られています．
-このとき，サンプルサイズ$n$の標本平均$\bar{X}$は，平均$\mu$，分散$\frac{\sigma^2}{n}$の正規分布になります（分散はサンプルサイズに合わせて小さくなることに注意）．
-$$
-\bar{X} \sim N\left( \mu, \frac{\sigma^2}{n} \right)
-$$
-
-これを標準化すると平均0，分散1の標準正規分布に従うことになり，これを検定統計量$Z$とします．
-この検定統計量$z$から，その標本が母集団から無作為抽出された標本かどうかを判断することができます．
-$$
-Z = \frac{\bar{X} - \mu}{\sqrt{\sigma^2 / n}} = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N\left( 0, 1 \right)
-$$
-
-次は，t検定 について考えていきましょう．
-t検定は母集団の分散$\sigma^2$が分からないときに採用する手法であり，標準正規分布ではなく 自由度を特徴とするt分布 を用います．
-一般に母集団の分散は不明であるため z検定 を採用することは稀で，常に t検定 を用いれば良いとされます．
-平均$\mu$の正規分布に従う母集団の分布$X$から，無作為に抽出した 標本の平均（標本平均） の分布を考えます．
-母集団の分散$\sigma^2$は不明であることから，標本から算出した不偏分散$\hat{\sigma}^2$を代わりに使用します（平方和を$n-1$で割った値）．
-このとき，サンプルサイズ$n$の標本平均$\bar{X}$は，平均$\mu$，分散$\frac{\hat{\sigma}^2}{n}$の正規分布に従います．"><meta name=twitter:image content="https://i.gyazo.com/620adf7e5d9b2cdc983a80d01b7e3367.png"></head><body><nav class=nav><div class=nav-container><a href=/><h2 class=nav-title><img src=https://mukai-lab.info/favicon/favicon-48x48.png align=top>
-<span>mLAB</span><ul id=menu><li><a href=/>Top</a></li><li><a href=/classes/>Classes</a></li><li><a href=/posts/>Comics</a></li></ul><script>$(function(){$("#menu").slicknav({label:"メニュー"})})</script></h2></a></div></nav><main><div class=post><h1 class=post-title>統計的仮説検定①・t検定</h1><div class=post-line></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>t検定</h1><p><strong>統計的仮説検定</strong> とは，母集団から抽出した標本を利用して，母集団に関する仮説を検証する方法です．
+<!doctype html><html lang=ja><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>統計的仮説検定①・t検定 | えむラボ</title><meta name=description content="椙山女学園大学 文化情報学部 向研究室のブログです．女子大教員の不思議な日常を４コマ漫画でお伝えします．"><link rel=stylesheet href=/css/main.css><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Kiwi+Maru:wght@700&family=M+PLUS+1p:wght@700;800&display=swap" rel=stylesheet><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></head><body><header class=site-header><div class=site-header-inner><div class=site-brand><a href=/ class=site-title>えむラボ</a>
+<span class=site-subtitle>椙山女学園大学 向研究室</span></div><nav class=site-nav><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav><label class=hamburger for=nav-toggle><span></span><span></span><span></span>
+</label><input type=checkbox id=nav-toggle class=nav-toggle></div><nav class=site-nav-mobile><a href=/classes/>授業資料</a>
+<a href=/tech/>技術記事</a>
+<a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
+<a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
+<a href=/contact/>CONTACT</a></nav></header><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>統計的仮説検定①・t検定</h1><time class=content-date>2022年10月2日</time><div class=content-body><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>t検定</h1><p><strong>統計的仮説検定</strong> とは，母集団から抽出した標本を利用して，母集団に関する仮説を検証する方法です．
 例えば「母集団の平均（母平均）は $\mu$である」などの仮説が考えられます．
 この仮説を検証するために <strong>z検定</strong> や <strong>t検定</strong> などと呼ばれる方法が用いられます．</p><p><a href=https://gyazo.com/bc312a46c565870fa1b4d66c491d2592><img src=https://i.gyazo.com/bc312a46c565870fa1b4d66c491d2592.png alt="Image from Gyazo"></a></p><p>まずは，<strong>z検定</strong> について考えていきましょう．
 z検定は平均$\mu=0$，分散$\sigma^2=1$の正規分布（標準正規分布）を用いる手法です．
@@ -165,9 +112,5 @@ t分布の確率密度は<code>t.pdf</code>関数で算出することができ�
 また，マークダウン・セルを利用して，<strong>算出したt値</strong> と <strong>検定の結果</strong> を記述してください．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>sample <span style=color:#f92672>=</span> [<span style=color:#ae81ff>27.11716496</span>, <span style=color:#ae81ff>25.89978737</span>, <span style=color:#ae81ff>26.56217535</span>, <span style=color:#ae81ff>29.82681149</span>, <span style=color:#ae81ff>24.5568172</span>, <span style=color:#ae81ff>22.88629043</span>, <span style=color:#ae81ff>17.13597224</span>, <span style=color:#ae81ff>29.64042239</span>, <span style=color:#ae81ff>25.15696187</span>, <span style=color:#ae81ff>26.1132949</span>]
 </span></span></code></pre></div><p>Jupyter Labで作成したノートブックを保存し，ダウンロードして提出してください．
 ノートブックをダウンロードするには，メニューから <strong>Download</strong> を選択します．
-ノートブックのファイル名は <strong>chapter5.ipynb</strong> としてください．</p><div class=pagination><a href=/><span>Top</span></a>
-<a href=javascript:history.back() style=margin-left:30px><span>Back</span></a></div></div><div><div style="margin-top:20px;border-top:solid 10px #007b50;border-bottom:solid 10px #007b50"><p>愛知県名古屋市にある椙山女学園大学 文化情報学部 向研究室の公式サイトです．
-専門は情報科学であり，人工知能やデータベースなどの技術要素を指導しています．
-この公式サイトでは，授業で使用している教材を公開すると共に，
-ベールに包まれた女子大教員のミステリアスな日常を４コマ漫画でお伝えしていきます．
-サイトに関するご意見やご質問は<a href=https://www.facebook.com/nmukai1978>Facebook</a>または<a href=https://twitter.com/nmukai1978>Twitter</a>でお問い合わせください．</p></div></div><script async src="https://www.googletagmanager.com/gtag/js?id=G-B708YQZY40"></script><script>var doNotTrack=!1,dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes";if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-B708YQZY40")}</script></main><footer><div><span>&copy; 2016 Naoto Mukai All Rights Reserved.</span></div></footer></body></html>
+ノートブックのファイル名は <strong>chapter5.ipynb</strong> としてください．</p></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
+<a href=/ class=btn>🏠 トップ</a></nav></div></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>
