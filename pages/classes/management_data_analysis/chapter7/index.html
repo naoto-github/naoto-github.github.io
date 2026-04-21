@@ -3,12 +3,12 @@
 <a href=/tech/>技術記事</a>
 <a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
 <a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
-<a href=/contact/>CONTACT</a></nav><label class=hamburger for=nav-toggle><span></span><span></span><span></span>
-</label><input type=checkbox id=nav-toggle class=nav-toggle></div><nav class=site-nav-mobile><a href=/classes/>授業資料</a>
+<a href=/contact/>CONTACT</a></nav><button class=hamburger id=hamburger-btn aria-label=メニュー>
+<span></span><span></span><span></span></button></div><nav class=site-nav-mobile id=mobile-nav><a href=/classes/>授業資料</a>
 <a href=/tech/>技術記事</a>
 <a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
 <a href="https://sites.google.com/g.sugiyama-u.ac.jp/mlab?pli=1&authuser=1" target=_blank rel=noopener>学内専用</a>
-<a href=/contact/>CONTACT</a></nav></header><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>統計的仮説検定③・ANOVA</h1><time class=content-date>2022年10月27日</time><div class=content-body><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>3群の平均値差の検定</h1><p>これまでに学習したt検定は，2群の平均値差の検定には有効ですが，3群以上の平均値差の検定に用いることができません．
+<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>統計的仮説検定③・ANOVA</h1><time class=content-date>2022年10月27日</time><div class=content-body><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>3群の平均値差の検定</h1><p>これまでに学習したt検定は，2群の平均値差の検定には有効ですが，3群以上の平均値差の検定に用いることができません．
 まずはこの理由から考えてみましょう．</p><h2 id=検定の多重性>検定の多重性</h2><p>例えば，3つの小学校の50メートル走のタイムを考えます．
 このとき，t検定を利用して，3つの小学校のタイムの平均値差を検定することを考えます．
 帰無仮説は$\mu_A = \mu_B = \mu_C$であり，有意水準は$\alpha=0.05$（5%）とします．</p><table><thead><tr><th>A小学校</th><th>B小学校</th><th>C小学校</th></tr></thead><tbody><tr><td>12.4</td><td>11.5</td><td>10.9</td></tr><tr><td>11.8</td><td>12.3</td><td>10.6</td></tr><tr><td>10.3</td><td>13.2</td><td>11.1</td></tr><tr><td>12.0</td><td>10.8</td><td>9.9</td></tr><tr><td>13.2</td><td>11.3</td><td>10.2</td></tr></tbody></table><p>t検定は2群の平均値差の検定のため，次の組み合わせで3回のt検定を適用しなくてはいけません．</p><ul><li>A小学校とB小学校（帰無仮説: $\mu_A = \mu_B$）</li><li>B小学校とC小学校（帰無仮説: $\mu_B = \mu_C$）</li><li>C小学校とA小学校（帰無仮説: $\mu_C = \mu_A$）</li></ul><p>この場合，<strong>検定の多重性</strong> という問題が生じます．
