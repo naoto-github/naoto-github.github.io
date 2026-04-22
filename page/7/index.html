@@ -17,4 +17,21 @@
 <span class=comic-card-views>👁 <span class=view-num>-</span></span></div></div></a><a href=https://mukai-lab.info/2016/03/18/comic_001/ class=comic-card data-id=2016-03-18-comic_001><img src=https://i.gyazo.com/154cd25f56bcf276b74abf72e717c697.png alt=履修登録規制のきょうふ loading=lazy><div class=comic-card-overlay><p class=comic-card-title>履修登録規制のきょうふ</p><div class=comic-card-meta><time class=comic-card-date>2016.03.18</time>
 <span class=comic-card-likes>♥ <span class=like-num>-</span></span>
 <span class=comic-card-views>👁 <span class=view-num>-</span></span></div></div></a></div><nav class=pagination><a href=/page/6/ class=pagination-btn>← NEW</a>
-<span class=pagination-info>7 / 7</span></nav><script type=module src=/js/like-counts.js></script><script type=module src=/js/view-counts.js></script></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>
+<span class=pagination-info>7 / 7</span></nav><script type=module src=/js/like-counts.js></script><script type=module>
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  const cfg = { apiKey:"AIzaSyAMUj23kl_gBm3OpGGN5cIX__ANPduhbJI", authDomain:"mlab-site-8cd43.firebaseapp.com", projectId:"mlab-site-8cd43", storageBucket:"mlab-site-8cd43.firebasestorage.app", messagingSenderId:"1028421037075", appId:"1:1028421037075:web:1365841ba85dd21c52e3e6" };
+  const app = getApps().length ? getApp() : initializeApp(cfg);
+  const db = getFirestore(app);
+  (async () => {
+    try {
+      const snap = await getDocs(collection(db, "views"));
+      const counts = {};
+      snap.forEach(d => { counts[d.id] = d.data().count || 0; });
+      document.querySelectorAll(".comic-card[data-id]").forEach(card => {
+        const el = card.querySelector(".view-num");
+        if (el) el.textContent = counts[card.dataset.id] ?? 0;
+      });
+    } catch(e) { console.error("[view-counts]", e.code, e.message); }
+  })();
+</script></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>

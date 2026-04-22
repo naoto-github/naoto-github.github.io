@@ -12,5 +12,29 @@
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5.0 00-7.78.0L12 5.67l-1.06-1.06a5.5 5.5.0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5.0 000-7.78z"/></svg>
 <span id=like-count>...</span></button><p class=like-note>気に入ったらハートを押してね</p></div><div class=view-box><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
 <span id=view-count data-id=2021-03-03-comic_144>...</span>
-<span class=view-label>人が読みました</span></div></div><script type=module src=/js/like.js></script><script type=module src=/js/views.js></script><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
+<span class=view-label>人が読みました</span></div></div><script type=module src=/js/like.js></script><script type=module>
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    const cfg = { apiKey:"AIzaSyAMUj23kl_gBm3OpGGN5cIX__ANPduhbJI", authDomain:"mlab-site-8cd43.firebaseapp.com", projectId:"mlab-site-8cd43", storageBucket:"mlab-site-8cd43.firebasestorage.app", messagingSenderId:"1028421037075", appId:"1:1028421037075:web:1365841ba85dd21c52e3e6" };
+    const app = getApps().length ? getApp() : initializeApp(cfg);
+    const db = getFirestore(app);
+    const el = document.getElementById("view-count");
+    const comicId = el ? el.dataset.id : null;
+    if (el && comicId) {
+      const sessionKey = "viewed_" + comicId;
+      const ref = doc(db, "views", comicId);
+      (async () => {
+        try {
+          const snap = await getDoc(ref);
+          let count = snap.exists() ? (snap.data().count || 0) : 0;
+          if (!sessionStorage.getItem(sessionKey)) {
+            sessionStorage.setItem(sessionKey, "1");
+            count += 1;
+            snap.exists() ? await updateDoc(ref, { count: increment(1) }) : await setDoc(ref, { count: 1 });
+          }
+          el.textContent = count;
+        } catch(e) { console.error("[views]", e.code, e.message); el.textContent = "-"; }
+      })();
+    }
+  </script><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
 <a href=/ class=btn>🏠 トップ</a></nav></div></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>
