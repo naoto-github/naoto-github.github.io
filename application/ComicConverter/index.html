@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comic Converter — えむラボ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=M+PLUS+1p:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-dark: #1e4d2b;
+      --green: #2a6b3c;
+      --burgundy: #7d2035;
+      --gold: #c9a84c;
+      --bg: #f5f3ef;
+      --text: #1a1a1a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--green-dark);
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    header h1 {
+      font-family: 'M PLUS 1p', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    header a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 13px;
+      margin-left: auto;
+    }
+
+    header a:hover { text-decoration: underline; }
+
+    .tartan-bar {
+      height: 6px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--gold) 0px, var(--gold) 12px,
+        var(--burgundy) 12px, var(--burgundy) 20px,
+        var(--green-dark) 20px, var(--green-dark) 28px,
+        var(--gold) 28px, var(--gold) 32px
+      );
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 32px;
+      line-height: 1.8;
+    }
+
+    .description strong { color: var(--green-dark); }
+
+    /* Drop zone */
+    .drop-zone {
+      border: 2px dashed var(--green);
+      border-radius: 12px;
+      background: #fff;
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 32px;
+    }
+
+    .drop-zone.dragover {
+      border-color: var(--gold);
+      background: #fdf9f0;
+    }
+
+    .drop-zone-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .drop-zone p {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .drop-zone small { font-size: 12px; color: #999; }
+
+    #file-input { display: none; }
+
+    /* Preview area */
+    .preview-area {
+      display: none;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .preview-area.visible { display: flex; }
+
+    @media (max-width: 600px) {
+      .preview-area { flex-direction: column; }
+    }
+
+    .preview-box {
+      flex: 1;
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .preview-box h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .preview-box img, .preview-box canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+    }
+
+    .preview-box .meta {
+      font-size: 12px;
+      color: #888;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    /* Padding color selector */
+    .options {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: none;
+    }
+
+    .options.visible { display: block; }
+
+    .options h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .color-options {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .color-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .color-btn:hover { transform: scale(1.1); }
+    .color-btn.selected { border-color: var(--gold); }
+
+    .color-label {
+      font-size: 12px;
+      color: #666;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    /* Buttons */
+    .actions {
+      display: none;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .actions.visible { display: flex; }
+
+    .btn {
+      padding: 12px 28px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Noto Sans JP', sans-serif;
+      cursor: pointer;
+      border: none;
+      border-bottom: 3px solid var(--gold);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--green-dark);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--green); transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: #e8e4dc;
+      color: var(--text);
+      border-bottom-color: #bbb;
+    }
+
+    .btn-secondary:hover { background: #ddd9d0; transform: translateY(-1px); }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px;
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📸 Comic Converter</h1>
+  <a href="https://mukai-lab.info/">← えむラボ</a>
+</header>
+<div class="tartan-bar"></div>
+
+<main>
+  <p class="description">
+    4コマ漫画をInstagram投稿用（<strong>4:5 / 1080×1350px</strong>）に変換します。<br>
+    コミック画像の左右に余白を追加して、上下が切れない縦長サイズに整えます。
+  </p>
+
+  <div class="drop-zone" id="drop-zone">
+    <div class="drop-zone-icon">🖼️</div>
+    <p>画像をドロップ、またはクリックして選択</p>
+    <small>PNG / JPG / GIF 対応</small>
+    <input type="file" id="file-input" accept="image/*">
+  </div>
+
+  <div class="options" id="options">
+    <h3>余白の色</h3>
+    <div class="color-options">
+      <label class="color-label">
+        <div class="color-btn selected" data-color="#ffffff" style="background:#ffffff; box-shadow: inset 0 0 0 1px #ddd;"></div>
+        白
+      </label>
+      <label class="color-label">
+        <div class="color-btn" data-color="#000000" style="background:#000000;"></div>
+        黒
+      </label>
+      <label class="color-label">
+        <div class="color-btn" data-color="#f5f3ef" style="background:#f5f3ef; box-shadow: inset 0 0 0 1px #ddd;"></div>
+        ベージュ
+      </label>
+      <label class="color-label">
+        <div class="color-btn" data-color="#1e4d2b" style="background:#1e4d2b;"></div>
+        グリーン
+      </label>
+      <label class="color-label">
+        <div class="color-btn" data-color="#7d2035" style="background:#7d2035;"></div>
+        バーガンディ
+      </label>
+      <label class="color-label" style="flex-direction:row; gap:8px; align-items:center;">
+        <input type="color" id="custom-color" value="#ffffff" style="width:36px;height:36px;border:none;cursor:pointer;padding:0;border-radius:50%;">
+        カスタム
+      </label>
+    </div>
+  </div>
+
+  <div class="preview-area" id="preview-area">
+    <div class="preview-box">
+      <h3>元画像</h3>
+      <img id="preview-original" alt="元画像">
+      <p class="meta" id="meta-original"></p>
+    </div>
+    <div class="preview-box">
+      <h3>変換後（Instagram用）</h3>
+      <canvas id="preview-converted"></canvas>
+      <p class="meta" id="meta-converted"></p>
+    </div>
+  </div>
+
+  <div class="actions" id="actions">
+    <button class="btn btn-primary" id="btn-download">⬇️ ダウンロード</button>
+    <button class="btn btn-secondary" id="btn-reset">別の画像を選ぶ</button>
+  </div>
+</main>
+
+<footer>© えむラボ — Sugiyama Jogakuen University</footer>
+
+<script>
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input');
+  const previewArea = document.getElementById('preview-area');
+  const options = document.getElementById('options');
+  const actions = document.getElementById('actions');
+  const previewOriginal = document.getElementById('preview-original');
+  const previewConverted = document.getElementById('preview-converted');
+  const metaOriginal = document.getElementById('meta-original');
+  const metaConverted = document.getElementById('meta-converted');
+  const btnDownload = document.getElementById('btn-download');
+  const btnReset = document.getElementById('btn-reset');
+  const customColor = document.getElementById('custom-color');
+
+  let currentFile = null;
+  let paddingColor = '#ffffff';
+
+  // Color buttons
+  document.querySelectorAll('.color-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      paddingColor = btn.dataset.color;
+      customColor.value = paddingColor;
+      if (currentFile) renderConverted(previewOriginal);
+    });
+  });
+
+  customColor.addEventListener('input', () => {
+    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('selected'));
+    paddingColor = customColor.value;
+    if (currentFile) renderConverted(previewOriginal);
+  });
+
+  // Drop zone
+  dropZone.addEventListener('click', () => fileInput.click());
+
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) loadFile(file);
+  });
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) loadFile(fileInput.files[0]);
+  });
+
+  function loadFile(file) {
+    currentFile = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+      previewOriginal.onload = () => {
+        const w = previewOriginal.naturalWidth;
+        const h = previewOriginal.naturalHeight;
+        metaOriginal.textContent = `${w} × ${h} px`;
+        renderConverted(previewOriginal);
+
+        dropZone.style.display = 'none';
+        previewArea.classList.add('visible');
+        options.classList.add('visible');
+        actions.classList.add('visible');
+      };
+      previewOriginal.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function renderConverted(img) {
+    const comicW = img.naturalWidth;
+    const comicH = img.naturalHeight;
+
+    // 4:5 canvas: widen to fit height, add left/right padding
+    const canvasW = Math.round(comicH * 4 / 5);
+    const canvasH = comicH;
+    const offsetX = Math.round((canvasW - comicW) / 2);
+
+    // Scale up to 1080px wide (Instagram recommended)
+    const scale = 1080 / canvasW;
+    const outW = 1080;
+    const outH = Math.round(canvasH * scale);
+
+    previewConverted.width = outW;
+    previewConverted.height = outH;
+
+    const ctx = previewConverted.getContext('2d');
+    ctx.fillStyle = paddingColor;
+    ctx.fillRect(0, 0, outW, outH);
+    ctx.drawImage(img, offsetX * scale, 0, comicW * scale, comicH * scale);
+
+    metaConverted.textContent = `${outW} × ${outH} px（4:5）`;
+  }
+
+  btnDownload.addEventListener('click', () => {
+    const dataUrl = previewConverted.toDataURL('image/png');
+    const a = document.createElement('a');
+    const baseName = currentFile ? currentFile.name.replace(/\.[^.]+$/, '') : 'comic';
+    a.href = dataUrl;
+    a.download = baseName + '_instagram.png';
+    a.click();
+  });
+
+  btnReset.addEventListener('click', () => {
+    currentFile = null;
+    fileInput.value = '';
+    previewOriginal.src = '';
+    dropZone.style.display = '';
+    previewArea.classList.remove('visible');
+    options.classList.remove('visible');
+    actions.classList.remove('visible');
+  });
+</script>
+
+</body>
+</html>
