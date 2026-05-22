@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Rolling Ball</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+}
+#game-wrap {
+  position: relative;
+  width: 1200px;
+  height: 800px;
+}
+canvas { display: block; }
+.btn {
+  position: absolute;
+  background: #222;
+  color: #fff;
+  border: 2px solid #aaa;
+  font-size: 26px;
+  font-style: italic;
+  font-family: Baskerville, Georgia, serif;
+  width: 400px;
+  height: 80px;
+  cursor: pointer;
+  display: none;
+  text-align: center;
+  line-height: 80px;
+}
+.btn:hover { background: #444; }
+#btn-start    { left: 150px; top: 500px; }
+#btn-original { left: 650px; top: 500px; }
+#btn-restart  { left: 400px; top: 580px; }
+</style>
+</head>
+<body>
+<div id="game-wrap">
+  <button class="btn" id="btn-start">START</button>
+  <button class="btn" id="btn-original">ORIGINAL</button>
+  <button class="btn" id="btn-restart">RESTART</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+<script>
+// ─── Stage Data ────────────────────────────────────────────────────────────
+const STAGE_DATA = {
+  1: {
+    author: "Naoto",
+    ball: { x: 100 },
+    goal: { x: 350, y: 650 },
+    slopes: [
+      { x: 400, y: 200, w: 700, h: 10 },
+      { x: 800, y: 400, w: 700, h: 10 }
+    ],
+    lifts: [], jumps: [], worps: []
+  },
+  2: {
+    author: "N.Mukai",
+    ball: { x: 210 },
+    goal: { x: 1009, y: 426 },
+    slopes: [
+      { x: 254, y: 465, w: 308, h: 27 },
+      { x: 737, y: 221, w: 384, h: 31 }
+    ],
+    lifts: [], jumps: [],
+    worps: [
+      { x: 453, y: 645 },
+      { x: 567, y: 50 }
+    ]
+  },
+  3: {
+    author: "Naoto",
+    ball: { x: 100 },
+    goal: { x: 1100, y: 700 },
+    slopes: [
+      { x: 200, y: 100, w: 300, h: 10 },
+      { x: 450, y: 250, w: 200, h: 10 },
+      { x: 700, y: 400, w: 300, h: 10 },
+      { x: 950, y: 550, w: 200, h: 10 }
+    ],
+    lifts: [], jumps: [], worps: []
+  },
+  4: {
+    author: "Naoto",
+    ball: { x: 100 },
+    goal: { x: 600, y: 750 },
+    slopes: [
+      { x: 350, y: 100, w: 600, h: 10 },
+      { x: 350, y: 600, w: 600, h: 10 }
+    ],
+    lifts: [
+      { x: 850, y: 350, w: 600, h: 10, l: 300, r: -0.2 }
+    ],
+    jumps: [], worps: []
+  },
+  5: {
+    author: "Naoto",
+    ball: { x: 100 },
+    goal: { x: 1100, y: 550 },
+    slopes: [
+      { x: 200, y: 200, w: 300, h: 10 },
+      { x: 700, y: 400, w: 300, h: 10 }
+    ],
+    lifts: [
+      { x: 450, y: 200, w: 170, h: 10, l: 200, r: 0.2 },
+      { x: 950, y: 400, w: 170, h: 10, l: 200, r: 0.2 }
+    ],
+    jumps: [], worps: []
+  },
+  6: {
+    author: "Naoto",
+    ball: { x: 100 },
+    goal: { x: 1000, y: 650 },
+    slopes: [
+      { x: 150, y: 300, w: 200, h: 10 },
+      { x: 500, y: 400, w: 200, h: 10 },
+      { x: 850, y: 500, w: 200, h: 10 }
+    ],
+    jumps: [
+      { x: 300, y: 450 },
+      { x: 650, y: 550 }
+    ],
+    lifts: [], worps: []
+  },
+  7: {
+    author: "N.Mukai",
+    ball: { x: 396 },
+    goal: { x: 1059, y: 566 },
+    slopes: [
+      { x: 437, y: 622, w: 810, h: 19 }
+    ],
+    lifts: [], jumps: [],
+    worps: [
+      { x: 194, y: 213 },
+      { x: 565, y: 575 },
+      { x: 743, y: 196 },
+      { x: 1059, y: 446 },
+      { x: 296, y: 405 }
+    ]
+  },
+  8: {
+    author: "Naoto",
+    ball: { x: 100 },
+    goal: { x: 1100, y: 600 },
+    slopes: [
+      { x: 150, y: 500, w: 250, h: 10 },
+      { x: 650, y: 450, w: 250, h: 10 }
+    ],
+    lifts: [
+      { x: 400, y: 550, w: 250, h: 50, l: 300, r: 0.01 },
+      { x: 900, y: 500, w: 250, h: 50, l: 300, r: 0.01 }
+    ],
+    jumps: [], worps: []
+  },
+  9: {
+    author: "Naoto",
+    ball: { x: 100 },
+    goal: { x: 1100, y: 600 },
+    slopes: [
+      { x: 400, y: 300, w: 700, h: 10 }
+    ],
+    jumps: [{ x: 900, y: 650 }],
+    lifts: [], worps: []
+  },
+  10: {
+    author: "N.Mukai",
+    ball: { x: 142 },
+    goal: { x: 1126, y: 542 },
+    slopes: [
+      { x: 295, y: 173, w: 398, h: 16 }
+    ],
+    jumps: [{ x: 987, y: 676 }],
+    lifts: [],
+    worps: [
+      { x: 574, y: 394 },
+      { x: 792, y: 92 }
+    ]
+  },
+  original: {
+    author: "N.Mukai",
+    ball: { x: 142 },
+    goal: { x: 1126, y: 542 },
+    slopes: [
+      { x: 295, y: 173, w: 398, h: 16 }
+    ],
+    jumps: [{ x: 987, y: 676 }],
+    lifts: [],
+    worps: [
+      { x: 574, y: 394 },
+      { x: 792, y: 92 }
+    ]
+  }
+};
+
+// ─── Constants ─────────────────────────────────────────────────────────────
+const STAGE_OPENING  = -1;
+const STAGE_ENDING   = -2;
+const STAGE_ORIGINAL = -3;
+const STAGE_RANK     = -4;
+const MAX_STAGE      = 10;
+const MAX_LIFE       = 10;
+const UNIT_ANGLE     = Math.PI / 180; // 1 degree
+const BALL_R         = 30;
+const GOAL_R         = 50;
+const JUMP_R         = 100;
+const WORP_HALF      = 20;
+const WORP_COOLDOWN  = 3000;
+const GRAVITY_BASE   = 1.0;
+const GRAVITY_STEP   = 0.5;
+
+const { Engine, Bodies, Body, Composite, Events } = Matter;
+
+// ─── Game State ────────────────────────────────────────────────────────────
+let engine, mWorld;
+let ballBody = null, goalBody = null;
+let slopes   = [];  // { body, w, h }
+let lifts    = [];  // { body, w, h, initX, initY, upper, lower, speed }
+let jumps    = [];  // { body }
+let worps    = [];  // { body, x, y }
+
+let currentStage = STAGE_OPENING;
+let life         = MAX_LIFE;
+let gravLevel    = GRAVITY_BASE;
+let startTime    = 0;
+let elapsedTime  = 0;
+let totalTime    = 0;
+let author       = "";
+
+let scoreLog  = null;
+let scoreList = loadScoreList();
+
+let worpContact = false;
+let worpTargetX = 0, worpTargetY = 0;
+let worpTime    = 0;
+let worpActive  = true;
+
+let failPending = false; // prevent double-fail
+
+// ─── Sound ─────────────────────────────────────────────────────────────────
+const SND = {};
+function loadSounds() {
+  ['fall','clear','fail','bgm','end','rank','worp'].forEach(n => {
+    const a = new Audio('RollingBall/sound/' + n + '.mp3');
+    a.preload = 'auto';
+    SND[n] = a;
+  });
+  SND.bgm.loop = true;
+  SND.bgm.volume = 0.3;
+}
+function playSound(n) {
+  const s = SND[n]; if (!s) return;
+  s.currentTime = 0;
+  s.play().catch(() => {});
+}
+
+// ─── Score ──────────────────────────────────────────────────────────────────
+function makeScore(stage, time, grav) {
+  return {
+    uuid:    (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2)),
+    stage,
+    time,
+    gravity: grav,
+    score:   stage * grav - Math.floor(time / 100)
+  };
+}
+function loadScoreList() {
+  try { return JSON.parse(localStorage.getItem('rb_scores') || '[]'); }
+  catch(e) { return []; }
+}
+function addScore(log) {
+  scoreList.push(log);
+  scoreList.sort((a, b) => b.score - a.score);
+  localStorage.setItem('rb_scores', JSON.stringify(scoreList));
+}
+function getRank(log) {
+  for (let i = 0; i < scoreList.length; i++)
+    if (scoreList[i].uuid === log.uuid) return i + 1;
+  return -1;
+}
+
+// ─── Buttons ───────────────────────────────────────────────────────────────
+function showButtons(...ids) {
+  ['btn-start','btn-original','btn-restart'].forEach(id => {
+    document.getElementById(id).style.display =
+      ids.includes(id) ? 'block' : 'none';
+  });
+}
+
+// ─── Physics ───────────────────────────────────────────────────────────────
+function createEngine() {
+  if (engine) Events.off(engine, 'collisionStart');
+  engine = Engine.create();
+  mWorld = engine.world;
+  engine.gravity.y     = gravLevel;
+  engine.gravity.scale = 0.001;
+  // Left / right walls only — ball enters from the top and falls off the bottom
+  const wo = { isStatic: true, label: 'wall', friction: 0, restitution: 0 };
+  Composite.add(mWorld, [
+    Bodies.rectangle(-25,  400,  50, 2000, wo),
+    Bodies.rectangle(1225, 400,  50, 2000, wo)
+  ]);
+}
+
+// ─── Stage ─────────────────────────────────────────────────────────────────
+function initStage() {
+  failPending  = false;
+  worpContact  = false;
+  worpActive   = true;
+
+  createEngine();
+  slopes = []; lifts = []; jumps = []; worps = [];
+  ballBody = null; goalBody = null;
+
+  if (currentStage === STAGE_OPENING) {
+    SND.bgm && SND.bgm.pause();
+    showButtons('btn-start','btn-original');
+    startTime = millis();
+    return;
+  }
+  if (currentStage === STAGE_ENDING) {
+    SND.bgm && SND.bgm.pause();
+    playSound('end');
+    showButtons('btn-restart');
+    startTime = millis();
+    return;
+  }
+  if (currentStage === STAGE_RANK) {
+    SND.bgm && SND.bgm.pause();
+    playSound('rank');
+    showButtons();
+    startTime = millis();
+    return;
+  }
+
+  showButtons();
+  SND.bgm && SND.bgm.play().catch(() => {});
+
+  const key  = currentStage === STAGE_ORIGINAL ? 'original' : currentStage;
+  const data = STAGE_DATA[key];
+  author     = data.author || '';
+  let ballInitX = data.ball.x;
+
+  // Slopes
+  (data.slopes || []).forEach(s => {
+    const b = Bodies.rectangle(s.x, s.y, s.w, s.h, {
+      isStatic: true, label: 'slope',
+      restitution: 0.4, friction: 0.05
+    });
+    Body.setAngle(b, UNIT_ANGLE);
+    Composite.add(mWorld, b);
+    slopes.push({ body: b, w: s.w, h: s.h });
+  });
+
+  // Lifts
+  (data.lifts || []).forEach(l => {
+    const b = Bodies.rectangle(l.x, l.y, l.w, l.h, {
+      isStatic: true, label: 'lift',
+      restitution: 0.4, friction: 0
+    });
+    Body.setAngle(b, l.r);
+    Composite.add(mWorld, b);
+    lifts.push({
+      body: b, w: l.w, h: l.h,
+      initX: l.x,
+      upper: l.y + l.l / 2,
+      lower: l.y - l.l / 2,
+      speed: 1
+    });
+  });
+
+  // Jumps
+  (data.jumps || []).forEach(j => {
+    const b = Bodies.circle(j.x, j.y, JUMP_R, {
+      isStatic: true, label: 'jump',
+      restitution: 2.8, friction: 0
+    });
+    Composite.add(mWorld, b);
+    jumps.push({ body: b });
+  });
+
+  // Worps
+  (data.worps || []).forEach(w => {
+    const b = Bodies.rectangle(w.x, w.y, WORP_HALF*2, WORP_HALF*2, {
+      isStatic: true, isSensor: true, label: 'worp'
+    });
+    Composite.add(mWorld, b);
+    worps.push({ body: b, x: w.x, y: w.y });
+  });
+
+  // Ball
+  ballBody = Bodies.circle(ballInitX, 0, BALL_R, {
+    label: 'ball',
+    restitution: 0.3, friction: 0, frictionAir: 0.001
+  });
+  ballBody._initX = ballInitX;
+  Composite.add(mWorld, ballBody);
+
+  // Goal
+  goalBody = Bodies.circle(data.goal.x, data.goal.y, GOAL_R, {
+    isStatic: true, isSensor: true, label: 'goal'
+  });
+  Composite.add(mWorld, goalBody);
+
+  // Collision handler
+  Events.on(engine, 'collisionStart', ev => {
+    for (const { bodyA, bodyB } of ev.pairs) {
+      const la = bodyA.label, lb = bodyB.label;
+      if ((la==='ball'&&lb==='goal') || (la==='goal'&&lb==='ball')) {
+        onClear();
+      }
+      if (worpActive && worps.length >= 2 &&
+          ((la==='ball'&&lb==='worp') || (la==='worp'&&lb==='ball'))) {
+        const worpBody = la==='worp' ? bodyA : bodyB;
+        const idx = worps.findIndex(w => w.body === worpBody);
+        if (idx >= 0) {
+          const others = worps.filter((_,i) => i !== idx);
+          const t = others[Math.floor(Math.random() * others.length)];
+          worpTargetX = t.x; worpTargetY = t.y;
+          worpContact = true;
+          playSound('worp');
+        }
+      }
+    }
+  });
+
+  playSound('fall');
+  startTime = millis();
+}
+
+// ─── Game Events ───────────────────────────────────────────────────────────
+function onClear() {
+  if (failPending) return;
+  playSound('clear');
+  failPending = true;
+  Composite.remove(mWorld, ballBody);
+  ballBody = null;
+  setTimeout(() => {
+    failPending = false;
+    nextStage();
+  }, 800);
+}
+
+function fail() {
+  if (failPending) return;
+  failPending = true;
+  playSound('fail');
+  life = Math.max(life - 1, 0);
+
+  setTimeout(() => {
+    failPending = false;
+    if (life === 0) {
+      if (currentStage === STAGE_ORIGINAL) {
+        currentStage = STAGE_OPENING;
+      } else {
+        scoreLog = makeScore(Math.max(currentStage - 1, 0), totalTime, gravLevel);
+        addScore(scoreLog);
+        currentStage = STAGE_RANK;
+      }
+      initStage();
+    } else {
+      // Reset slopes and ball
+      slopes.forEach(s => Body.setAngle(s.body, UNIT_ANGLE));
+      Body.setPosition(ballBody, { x: ballBody._initX, y: 0 });
+      Body.setVelocity(ballBody, { x: 0, y: 0 });
+      Body.setAngularVelocity(ballBody, 0);
+      playSound('fall');
+    }
+  }, 1000);
+}
+
+function nextStage() {
+  showButtons();
+  if (currentStage === MAX_STAGE) {
+    scoreLog = makeScore(currentStage, totalTime, gravLevel);
+    addScore(scoreLog);
+    currentStage = STAGE_ENDING;
+  } else if (currentStage === STAGE_OPENING) {
+    currentStage = 1;
+    life      = MAX_LIFE;
+    totalTime = 0;
+    gravLevel = GRAVITY_BASE;
+  } else if (currentStage === STAGE_ENDING) {
+    currentStage = 1;
+    life      = MAX_LIFE;
+    totalTime = 0;
+    gravLevel = Math.min(gravLevel + GRAVITY_STEP, 5);
+  } else if (currentStage === STAGE_RANK || currentStage === STAGE_ORIGINAL) {
+    currentStage = STAGE_OPENING;
+  } else {
+    totalTime += elapsedTime;
+    currentStage++;
+  }
+  initStage();
+}
+
+function originalStage() {
+  showButtons();
+  currentStage = STAGE_ORIGINAL;
+  life         = MAX_LIFE;
+  gravLevel    = GRAVITY_BASE;
+  initStage();
+}
+
+// ─── p5.js ─────────────────────────────────────────────────────────────────
+function setup() {
+  const cnv = createCanvas(1200, 800);
+  cnv.parent('game-wrap');
+  document.getElementById('btn-start').onclick    = nextStage;
+  document.getElementById('btn-original').onclick = originalStage;
+  document.getElementById('btn-restart').onclick  = nextStage;
+  loadSounds();
+  initStage();
+}
+
+function draw() {
+  elapsedTime = millis() - startTime;
+
+  if (currentStage === STAGE_OPENING) {
+    drawOpening();
+    return;
+  }
+  if (currentStage === STAGE_ENDING) {
+    drawEnding();
+    return;
+  }
+  if (currentStage === STAGE_RANK) {
+    drawRank();
+    if (elapsedTime > 5000) nextStage();
+    return;
+  }
+
+  // Active gameplay
+  if (!failPending) {
+    // Continuous key input for slope rotation
+    if (keyIsDown(LEFT_ARROW))  rotateSlopesBy(-UNIT_ANGLE);
+    if (keyIsDown(RIGHT_ARROW)) rotateSlopesBy(+UNIT_ANGLE);
+
+    updateLifts();
+    handleWorp();
+    if (ballBody && ballBody.position.y > 900) fail();
+  }
+  // Substeps: split each frame into 4 smaller steps to prevent ball tunneling
+  const SUB = 4;
+  for (let i = 0; i < SUB; i++) Engine.update(engine, 1000 / 60 / SUB);
+  drawGame();
+}
+
+// ─── Lift Update ───────────────────────────────────────────────────────────
+function updateLifts() {
+  lifts.forEach(l => {
+    const newY = l.body.position.y + l.speed;
+    Body.setPosition(l.body, { x: l.initX, y: newY });
+    if (newY >= l.upper) l.speed = -Math.abs(l.speed);
+    else if (newY <= l.lower) l.speed =  Math.abs(l.speed);
+  });
+}
+
+// ─── Worp ──────────────────────────────────────────────────────────────────
+function handleWorp() {
+  if (worpContact && ballBody) {
+    const vx = ballBody.velocity.x;
+    Body.setPosition(ballBody, { x: worpTargetX, y: worpTargetY });
+    Body.setVelocity(ballBody, { x: vx, y: 0 });
+    worpContact = false;
+    worpActive  = false;
+    worpTime    = millis();
+  }
+  if (!worpActive && millis() - worpTime > WORP_COOLDOWN) {
+    worpActive = true;
+  }
+}
+
+// ─── Draw ──────────────────────────────────────────────────────────────────
+function drawOpening() {
+  background(0);
+  textAlign(CENTER, CENTER);
+  fill(255);
+  textSize(100);
+  text('ROLLING BALL', width/2, height/2 - 80);
+  textSize(28);
+  fill(255, 255, 0);
+  text('Developed by mLab', width/2, height/2 - 10);
+  textAlign(LEFT, BASELINE);
+}
+
+function drawEnding() {
+  if (!scoreLog) return;
+  const rank = getRank(scoreLog);
+  background(0);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  fill(255, 255, 0); textSize(96);
+  text('GAME CLEAR', width/2, height/2 - 200);
+  textSize(56);
+  fill(255);  text('Your Stage:', width/2 - 120, height/2 - 60);
+  fill(255,255,0); text(scoreLog.stage, width/2 + 160, height/2 - 60);
+  fill(255);  text('Your Time: ', width/2 - 120, height/2 + 30);
+  fill(255,255,0); text((scoreLog.time/1000).toFixed(1) + ' s', width/2 + 160, height/2 + 30);
+  fill(255);  text('Your Rank: ', width/2 - 120, height/2 + 120);
+  fill(255,255,0); text(rank + ' / ' + scoreList.length, width/2 + 160, height/2 + 120);
+  textAlign(LEFT, BASELINE);
+}
+
+function drawRank() {
+  if (!scoreLog) return;
+  const rank = getRank(scoreLog);
+  background(0);
+  noStroke();
+  textAlign(CENTER, CENTER);
+  fill(255, 0, 0); textSize(96);
+  text('GAME OVER', width/2, height/2 - 200);
+  textSize(56);
+  fill(255);  text('Your Stage:', width/2 - 120, height/2 - 60);
+  fill(255,255,0); text(scoreLog.stage, width/2 + 160, height/2 - 60);
+  fill(255);  text('Your Time: ', width/2 - 120, height/2 + 30);
+  fill(255,255,0); text((scoreLog.time/1000).toFixed(1) + ' s', width/2 + 160, height/2 + 30);
+  fill(255);  text('Your Rank: ', width/2 - 120, height/2 + 120);
+  fill(255,255,0); text(rank + ' / ' + scoreList.length, width/2 + 160, height/2 + 120);
+  textAlign(LEFT, BASELINE);
+}
+
+function drawGame() {
+  background(0);
+  noStroke();
+
+  // Slopes
+  slopes.forEach(s => {
+    fill(255);
+    drawBox(s.body, s.w, s.h);
+  });
+
+  // Lifts
+  lifts.forEach(l => {
+    fill(30, 30, 220);
+    drawBox(l.body, l.w, l.h);
+  });
+
+  // Jumps
+  jumps.forEach(j => {
+    fill(0, 220, 0);
+    circle(j.body.position.x, j.body.position.y, JUMP_R * 2);
+  });
+
+  // Worps
+  worps.forEach(w => {
+    fill(worpActive ? color(0, 230, 230) : color(55, 55, 55));
+    rectMode(CENTER);
+    rect(w.body.position.x, w.body.position.y, WORP_HALF*2, WORP_HALF*2);
+    rectMode(CORNER);
+  });
+
+  // Goal
+  if (goalBody) {
+    fill(220, 30, 30);
+    circle(goalBody.position.x, goalBody.position.y, GOAL_R * 2);
+  }
+
+  // Ball
+  if (ballBody) {
+    fill(255, 230, 0);
+    circle(ballBody.position.x, ballBody.position.y, BALL_R * 2);
+  }
+
+  // HUD
+  const stageName = currentStage === STAGE_ORIGINAL ? 'original' : String(currentStage);
+  fill(255); textSize(18); textAlign(LEFT, BASELINE);
+  text('Author:  ' + author,                            width - 220, 45);
+  text('Stage:   ' + stageName,                         width - 220, 72);
+  text('Life:    ' + life,                              width - 220, 99);
+  text('Gravity: ' + gravLevel.toFixed(1),              width - 220, 126);
+  text('Time:    ' + (floor(elapsedTime/100)/10).toFixed(1) + ' sec', width - 220, 153);
+}
+
+function drawBox(body, w, h) {
+  push();
+  translate(body.position.x, body.position.y);
+  rotate(body.angle);
+  rectMode(CENTER);
+  rect(0, 0, w, h);
+  pop();
+}
+
+// ─── Input ──────────────────────────────────────────────────────────────────
+function keyPressed() {
+  if (currentStage > 0 || currentStage === STAGE_ORIGINAL) {
+    if (key === 'f') { fail(); return false; }
+    if (key === 'r') { life = 1; fail(); return false; }
+    if (key === 'n') { if (!failPending) nextStage(); return false; }
+    if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) return false; // handled in draw()
+  }
+}
+
+function mouseDragged() {
+  if (currentStage > 0 || currentStage === STAGE_ORIGINAL) {
+    rotateSlopesBy(pmouseX < mouseX ? +UNIT_ANGLE : -UNIT_ANGLE);
+  }
+}
+
+function rotateSlopesBy(delta) {
+  slopes.forEach(s => Body.setAngle(s.body, s.body.angle + delta));
+}
+</script>
+</body>
+</html>
