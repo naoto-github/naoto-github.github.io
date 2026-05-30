@@ -245,21 +245,101 @@ let worpActive  = true;
 
 let failPending = false; // prevent double-fail
 
-// ─── Sound ─────────────────────────────────────────────────────────────────
-const SND = {};
-function loadSounds() {
-  ['fall','clear','fail','bgm','end','rank','worp'].forEach(n => {
-    const a = new Audio('RollingBall/sound/' + n + '.mp3');
-    a.preload = 'auto';
-    SND[n] = a;
-  });
-  SND.bgm.loop = true;
-  SND.bgm.volume = 0.3;
+// ─── Sound (Web Audio API) ─────────────────────────────────────────────────
+let audioCtx = null;
+function getAC() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
 }
+
+// BGM – self-scheduling note sequencer
+let bgmOn = false, bgmTid = null, bgmStep = 0;
+const BGM = [
+  [392,0.3],[523,0.3],[659,0.3],[784,0.3],
+  [880,0.3],[784,0.3],[659,0.3],[523,0.3],
+  [659,0.3],[784,0.3],[880,0.3],[1046,0.3],
+  [880,0.3],[784,0.3],[659,0.3],[523,0.6],[null,0.3],
+  [523,0.3],[659,0.3],[587,0.3],[523,0.3],
+  [494,0.3],[440,0.3],[392,0.3],[330,0.3],
+  [392,0.3],[440,0.3],[494,0.3],[523,0.3],
+  [587,0.3],[659,0.3],[784,0.6],[null,0.6]
+];
+function startBGM() {
+  if (bgmOn) return;
+  bgmOn = true; bgmStep = 0; tickBGM();
+}
+function stopBGM() {
+  bgmOn = false;
+  if (bgmTid) { clearTimeout(bgmTid); bgmTid = null; }
+}
+function tickBGM() {
+  if (!bgmOn) return;
+  const ac = getAC();
+  const [f, d] = BGM[bgmStep % BGM.length];
+  if (f) {
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.type = 'triangle'; o.frequency.value = f;
+    g.gain.setValueAtTime(0.07, ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + d * 0.85);
+    o.start(); o.stop(ac.currentTime + d);
+  }
+  bgmStep++;
+  bgmTid = setTimeout(tickBGM, d * 1000);
+}
+
+function loadSounds() {} // Web Audio API – no files needed
+
 function playSound(n) {
-  const s = SND[n]; if (!s) return;
-  s.currentTime = 0;
-  s.play().catch(() => {});
+  const ac = getAC();
+  const t = ac.currentTime;
+  const mk = (type, freq, start, dur, vol) => {
+    const o = ac.createOscillator(), g = ac.createGain();
+    o.connect(g); g.connect(ac.destination);
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, t + start);
+    g.gain.exponentialRampToValueAtTime(0.001, t + start + dur);
+    o.start(t + start); o.stop(t + start + dur + 0.01);
+  };
+  switch (n) {
+    case 'bgm': startBGM(); break;
+    case 'fall': {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.connect(g); g.connect(ac.destination);
+      o.type = 'sawtooth';
+      o.frequency.setValueAtTime(700, t);
+      o.frequency.exponentialRampToValueAtTime(120, t + 0.45);
+      g.gain.setValueAtTime(0.25, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+      o.start(t); o.stop(t + 0.46);
+      break;
+    }
+    case 'clear':
+      [523, 659, 784, 1046].forEach((f, i) => mk('sine', f, i * 0.13, 0.28, 0.25));
+      break;
+    case 'fail':
+      [392, 330, 262, 196].forEach((f, i) => mk('triangle', f, i * 0.15, 0.22, 0.2));
+      break;
+    case 'end':
+      [262,330,392,523,659,523,659,784].forEach((f, i) => mk('square', f, i * 0.1, 0.18, 0.12));
+      break;
+    case 'rank':
+      [523, 415, 330, 262].forEach((f, i) => mk('sawtooth', f, i * 0.22, 0.3, 0.18));
+      break;
+    case 'worp': {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.connect(g); g.connect(ac.destination);
+      o.type = 'sine';
+      o.frequency.setValueAtTime(200, t);
+      o.frequency.exponentialRampToValueAtTime(2000, t + 0.15);
+      o.frequency.exponentialRampToValueAtTime(300, t + 0.3);
+      g.gain.setValueAtTime(0.3, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+      o.start(t); o.stop(t + 0.31);
+      break;
+    }
+  }
 }
 
 // ─── Score ──────────────────────────────────────────────────────────────────
@@ -302,12 +382,6 @@ function createEngine() {
   mWorld = engine.world;
   engine.gravity.y     = gravLevel;
   engine.gravity.scale = 0.001;
-  // Left / right walls only — ball enters from the top and falls off the bottom
-  const wo = { isStatic: true, label: 'wall', friction: 0, restitution: 0 };
-  Composite.add(mWorld, [
-    Bodies.rectangle(-25,  400,  50, 2000, wo),
-    Bodies.rectangle(1225, 400,  50, 2000, wo)
-  ]);
 }
 
 // ─── Stage ─────────────────────────────────────────────────────────────────
@@ -321,20 +395,20 @@ function initStage() {
   ballBody = null; goalBody = null;
 
   if (currentStage === STAGE_OPENING) {
-    SND.bgm && SND.bgm.pause();
+    stopBGM();
     showButtons('btn-start','btn-original');
     startTime = millis();
     return;
   }
   if (currentStage === STAGE_ENDING) {
-    SND.bgm && SND.bgm.pause();
+    stopBGM();
     playSound('end');
     showButtons('btn-restart');
     startTime = millis();
     return;
   }
   if (currentStage === STAGE_RANK) {
-    SND.bgm && SND.bgm.pause();
+    stopBGM();
     playSound('rank');
     showButtons();
     startTime = millis();
@@ -342,7 +416,7 @@ function initStage() {
   }
 
   showButtons();
-  SND.bgm && SND.bgm.play().catch(() => {});
+  playSound('bgm');
 
   const key  = currentStage === STAGE_ORIGINAL ? 'original' : currentStage;
   const data = STAGE_DATA[key];
@@ -546,7 +620,7 @@ function draw() {
 
     updateLifts();
     handleWorp();
-    if (ballBody && ballBody.position.y > 900) fail();
+    if (ballBody && (ballBody.position.y > 900 || ballBody.position.x < -BALL_R || ballBody.position.x > 1200 + BALL_R)) fail();
   }
   // Substeps: split each frame into 4 smaller steps to prevent ball tunneling
   const SUB = 4;
