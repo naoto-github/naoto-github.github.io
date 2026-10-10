@@ -10,18 +10,18 @@
 <a href=/game/>ゲーム開発</a>
 <a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
 <a href="https://accounts.google.com/AccountChooser?continue=https://sites.google.com/g.sugiyama-u.ac.jp/mlab" target=_blank rel=noopener>学内専用</a>
-<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>主成分分析</h1><time class=content-date>2026年4月22日</time><div class=content-body><p><a href=https://gyazo.com/df80cf969ca39ea997d0537b741f361f><img src=https://i.gyazo.com/df80cf969ca39ea997d0537b741f361f.png alt=https://gyazo.com/df80cf969ca39ea997d0537b741f361f></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>主成分分析とは</h1><p>展開演習２の<strong>多変量解析</strong>と呼ばれる手法を取り上げます．
+<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>主成分分析</h1><time class=content-date>2026年4月22日</time><div class=content-body><p><a href=https://gyazo.com/df80cf969ca39ea997d0537b741f361f><img src=https://i.gyazo.com/df80cf969ca39ea997d0537b741f361f.png alt=https://gyazo.com/df80cf969ca39ea997d0537b741f361f></a></p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>主成分分析とは</h1><p>展開演習２の<strong>多変量解析</strong>と呼ばれる手法を取り上げます．
 その名が示すように複数の変数を対象に相関や共通性を見つけることが目的となります．
 今回は，その中でも，複数の変数を合成して，次元（要素数）を圧縮する<strong>主成分分析</strong>に注目します．
 主成分分析を完全に理解するには数学的な知識が必要となりますが，ここではR言語を利用して直観的に理解することを目指します．
 このような分析手法は，<strong>理解</strong> も重要ですが，<strong>使える</strong> ことが最も重要です．
 対象のデータとして，算数と理科の<a href=/classes/advanced_studies_seminar_2/score2.csv>成績のデータ（CSV形式）</a>を使用するので，事前にダウンロードしておきましょう．</p><script src=https://gist.github.com/naoto-github/74b7f9f7f797bdfba201cb0818562196.js></script><p>ファイルをダウンロードしたら，<strong>read.csv</strong>関数を利用して，
 変数scoreにデータフレームとして読み込んでおきましょう．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-r data-lang=r><span style=display:flex><span>score <span style=color:#f92672>&lt;-</span> <span style=color:#a6e22e>read.csv</span>(<span style=color:#e6db74>&#34;score2.csv&#34;</span>)
-</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>スクリプトの作成</h1><p>コードを入力し保存するための<strong>スクリプト</strong>を作成しましょう．
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>スクリプトの作成</h1><p>コードを入力し保存するための<strong>スクリプト</strong>を作成しましょう．
 [ファイル]-[新しいスクリプト]をクリックし，<strong>Rエディタ</strong>を表示します．
 次に，[ファイル]-[保存]をクリックして，スクリプトを保存します．
 このとき，ファイル名は<strong>chapter13</strong>としてください．
-また，ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>合成変数</h1><p>主成分分析では，分散を最大化するような合成変数を求めることが目的となります．
+また，ファイルの保存場所と作業ディレクトリを<strong>デスクトップ</strong>に変更しておきます．</p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>合成変数</h1><p>主成分分析では，分散を最大化するような合成変数を求めることが目的となります．
 合成変数<script type=math/tex>f(X)</script>は，算数の得点を<script type=math/tex>x_1</script>，
 理科の得点を<script type=math/tex>x_2</script>とすると，
 下記の式で与えられます．</p><p style=text-align:center><script type=math/tex>
@@ -114,7 +114,7 @@
 </span></span></code></pre></div><p><a href=https://gyazo.com/d3418231ab9604fb281e00d2d82c1c1d><img src=https://i.gyazo.com/d3418231ab9604fb281e00d2d82c1c1d.jpg alt=https://gyazo.com/d3418231ab9604fb281e00d2d82c1c1d></a></p><p>ベクトル<script type=math/tex>\vec{w_3}</script>との内積の分散は約398となり，
 他と比べて最も適した回転であることが分かります．
 主成分分析は，上記のように軸を回転させて，最も分散が大きくなるベクトル（<strong>主成分</strong>）を探します．
-また，その内積（合成）した値を<strong>主成分得点</strong>と呼び，対象のデータの特徴を表す新しい軸とみなします．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>関数を利用した主成分分析</h1><p>それでは主成分分析を，<strong>prcomp</strong> 関数を利用して行なってみましょう．
+また，その内積（合成）した値を<strong>主成分得点</strong>と呼び，対象のデータの特徴を表す新しい軸とみなします．</p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>関数を利用した主成分分析</h1><p>それでは主成分分析を，<strong>prcomp</strong> 関数を利用して行なってみましょう．
 この関数を利用すると，対象のデータを標準化（中心を座標(0,0)に移動）することに注意してください．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-r data-lang=r><span style=display:flex><span><span style=color:#f92672>&gt;</span> result<span style=color:#f92672>&lt;-</span><span style=color:#a6e22e>prcomp</span>(x)
 </span></span><span style=display:flex><span><span style=color:#f92672>&gt;</span> result
 </span></span><span style=display:flex><span>Standard deviations<span style=color:#f92672>:</span>
@@ -167,7 +167,7 @@
 </span></span></code></pre></div><p><a href=https://gyazo.com/9ee0bd4d2c193286f60fa0db9cbf71fd><img src=https://i.gyazo.com/9ee0bd4d2c193286f60fa0db9cbf71fd.jpg alt=https://gyazo.com/9ee0bd4d2c193286f60fa0db9cbf71fd></a></p><p>この結果から，<strong>第一主成分</strong> と <strong>第二主成分</strong> の意味を考えてみましょう．
 <strong>第一主成分</strong> は，算数と理科の合計が高い人が左，低い人が右に配置されていることから，<strong>２科目の総合度</strong> を表していると考えられます．
 一方で，<strong>第二主成分</strong> は，算数に比べ理科が得意な人が下，算数と理科にあまり差がない人が上に配置されていることから，<strong>科目の特化度</strong> を表していると考えられます．
-このように，主成分分析を適用することで，対象のデータを新たな側面から分析することが可能になります．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>2016年度の<a href=doragons.csv>中日ドラゴンズの打撃成績のデータ（CSV形式）</a>を対象に主成分分析を適用しなさい．
+このように，主成分分析を適用することで，対象のデータを新たな側面から分析することが可能になります．</p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>課題</h1><p>2016年度の<a href=doragons.csv>中日ドラゴンズの打撃成績のデータ（CSV形式）</a>を対象に主成分分析を適用しなさい．
 また，第一主成分を横軸，第二主成分を縦軸として主成分得点の散布図を描き，第一主成分と第二主成分の意味を考察すること．
 ソースは<strong>chapter13.R</strong>に記述し，グラフ（散布図）の画像ファイルと，chapter13.R提出すること．</p><p><a href=https://gyazo.com/19dfde0862f77799cb40526530999831><img src=https://i.gyazo.com/19dfde0862f77799cb40526530999831.png alt=https://gyazo.com/19dfde0862f77799cb40526530999831></a></p></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
 <a href=/ class=btn>🏠 トップ</a></nav></div></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>

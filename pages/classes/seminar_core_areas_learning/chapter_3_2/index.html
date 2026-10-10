@@ -10,18 +10,18 @@
 <a href=/game/>ゲーム開発</a>
 <a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
 <a href="https://accounts.google.com/AccountChooser?continue=https://sites.google.com/g.sugiyama-u.ac.jp/mlab" target=_blank rel=noopener>学内専用</a>
-<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>Pythonの基礎・制御構文で図形を描いてみよう</h1><time class=content-date>2021年9月4日</time><div class=content-body><p><a href=https://gyazo.com/6dab31f6529791ab715cfbe4ff4924cf><img src=https://i.gyazo.com/6dab31f6529791ab715cfbe4ff4924cf.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>制御構文とは</h1><p>プログラムの実装には 「繰り返し」や「条件分岐」と呼ばれる制御が用いられ，
+<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>Pythonの基礎・制御構文で図形を描いてみよう</h1><time class=content-date>2021年9月4日</time><div class=content-body><p><a href=https://gyazo.com/6dab31f6529791ab715cfbe4ff4924cf><img src=https://i.gyazo.com/6dab31f6529791ab715cfbe4ff4924cf.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>制御構文とは</h1><p>プログラムの実装には 「繰り返し」や「条件分岐」と呼ばれる制御が用いられ，
 これらを記述するための命令文が <strong>制御構文</strong> です．
 Pythonでは，「繰り返し」を記述するための命令文が <strong>for文</strong>であり，
 「条件分岐」を記述するための命令文が <strong>if文</strong> です．
 Turtleグラフィックスに制御構文を組み合わせることで，
 より複雑な図形を描画することが可能です．
-ここでは，渦巻状の図形や円の描画に挑戦してみましょう．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Google Colaboratory</h1><p>下記のリンクをクリックして，Colabにアクセスしましょう．</p><p><a href=https://colab.research.google.com/><i class="fas fa-external-link-square-alt"></i> Google Colaboratory</a></p><p>Colabにアクセスしたら，大学のGmailアカウント（@g.sugiyama-u.ac.jp）でログインしていることを確認してください．
+ここでは，渦巻状の図形や円の描画に挑戦してみましょう．</p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>Google Colaboratory</h1><p>下記のリンクをクリックして，Colabにアクセスしましょう．</p><p><a href=https://colab.research.google.com/><i class="fas fa-external-link-square-alt"></i> Google Colaboratory</a></p><p>Colabにアクセスしたら，大学のGmailアカウント（@g.sugiyama-u.ac.jp）でログインしていることを確認してください．
 次に，ノートブック（ファイル）を新規作成し，ノートブックの名前を <strong>chapter2.ipynb</strong> に変更しましょう．</p><p><a href=https://gyazo.com/af20318449c772b9a53e589e179c1f21><img src=https://i.gyazo.com/af20318449c772b9a53e589e179c1f21.png alt="Image from Gyazo"></a></p><p>加えて，前回と同様に，ColabTurtleとインストールしておきます．
 このとき，算術計算のためのライブラリである <strong>math</strong> も追加しておきます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>!</span>pip install ColabTurtle
 </span></span><span style=display:flex><span><span style=color:#f92672>from</span> ColabTurtle.Turtle <span style=color:#f92672>import</span> <span style=color:#f92672>*</span>
 </span></span><span style=display:flex><span><span style=color:#f92672>import</span> math
-</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>for文で繰り返し</h1><h2 id=for文の記述方法>for文の記述方法</h2><p><strong>for文</strong>は特定の処理を指定した回数だけ繰り返したいときに用います．
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>for文で繰り返し</h1><h2 id=for文の記述方法>for文の記述方法</h2><p><strong>for文</strong>は特定の処理を指定した回数だけ繰り返したいときに用います．
 このとき，繰り返しの対象となる処理は，<code>for</code>の位置から，<strong>字下げ</strong> する必要があります．
 Colabで字下げするには，キーボードの <strong>Tabキー</strong> を押します．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(繰り返す回数):
 </span></span><span style=display:flex><span>	繰り返す対象となる処理
@@ -104,7 +104,7 @@ Pythonでは，角度はラジアン角で表すため，次の式で変換し�
 </span></span><span style=display:flex><span>  pendown()
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>penup()
-</span></span></code></pre></div><p><a href=https://gyazo.com/37bf07f6257e263f6888cdc87fe5cdef><img src=https://i.gyazo.com/37bf07f6257e263f6888cdc87fe5cdef.gif alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>if文で条件分岐</h1><h2 id=if文の記述方法>if文の記述方法</h2><p><strong>if文</strong>は条件に応じて，実行したい処理を選択するときに用います．
+</span></span></code></pre></div><p><a href=https://gyazo.com/37bf07f6257e263f6888cdc87fe5cdef><img src=https://i.gyazo.com/37bf07f6257e263f6888cdc87fe5cdef.gif alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>if文で条件分岐</h1><h2 id=if文の記述方法>if文の記述方法</h2><p><strong>if文</strong>は条件に応じて，実行したい処理を選択するときに用います．
 条件は，次の表に示す比較演算子と呼ばれる記号を用いて <strong>条件式</strong>と呼ばれる形式で記述します．
 条件式の結果は，必ず<code>True</code>（真）または<code>False</code>（偽）のいずれかの値となります．</p><table><thead><tr><th>比較演算子</th><th>意味</th><th>例</th></tr></thead><tbody><tr><td>$A==B$</td><td>AとBは等しい</td><td>$x==3$</td></tr><tr><td>$A!=B$</td><td>AとBは等しくない</td><td>$x!=3$</td></tr><tr><td>$A>B$</td><td>AはBより大きい</td><td>$x>3$</td></tr><tr><td>$A>=B$</td><td>AはB以上</td><td>$x>=3$</td></tr><tr><td>$A&lt;B$</td><td>AはBより小さい</td><td>$x&lt;3$</td></tr><tr><td>$A&lt;=B$</td><td>AはB以下</td><td>$x&lt;=3$</td></tr></tbody></table><p>if文は条件式を用いて次のように記述します．
 条件式が<code>True</code>のときだけ，対象となる処理は実行されます．
@@ -191,7 +191,7 @@ $x$座標が$400$より小さいときは青色で描画しています．</p><d
 </span></span><span style=display:flex><span>  right(<span style=color:#ae81ff>90</span>)
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>penup()
-</span></span></code></pre></div><p><a href=https://gyazo.com/435ce6c4276a0f2abfe584aa93240ac4><img src=https://i.gyazo.com/435ce6c4276a0f2abfe584aa93240ac4.gif alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>下図を参考に渦巻状の三角形の図形を描いてください．
+</span></span></code></pre></div><p><a href=https://gyazo.com/435ce6c4276a0f2abfe584aa93240ac4><img src=https://i.gyazo.com/435ce6c4276a0f2abfe584aa93240ac4.gif alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>課題</h1><p>下図を参考に渦巻状の三角形の図形を描いてください．
 また，進行方向を条件に赤色，青色，緑色に直線を塗り分けてください．</p><p><a href=https://gyazo.com/3854139a3bcbf1ca8f22bd2041609221><img src=https://i.gyazo.com/3854139a3bcbf1ca8f22bd2041609221.gif alt="Image from Gyazo"></a></p><p>課題が完成したら，Google Colaboratoryで作成した <strong>chapter2.ipynb</strong> を保存し，
 <strong>共有用のリンク</strong> と <strong>ノートブック（.ipynb）</strong> をダウンロードして提出してください．
 提出の前に必ず下記の設定を行ってください．</p><ul><li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li><li>ノートブックの変更内容を保存して固定</li><li>共有設定で「学校法人椙山女学園大学」を「閲覧者」に設定</li></ul></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>

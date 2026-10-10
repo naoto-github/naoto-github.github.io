@@ -10,7 +10,7 @@
 <a href=/game/>ゲーム開発</a>
 <a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
 <a href="https://accounts.google.com/AccountChooser?continue=https://sites.google.com/g.sugiyama-u.ac.jp/mlab" target=_blank rel=noopener>学内専用</a>
-<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>強化学習・TD学習</h1><time class=content-date>2020年3月9日</time><div class=content-body><p><a href=https://gyazo.com/f5b64cf98161c3aee3d50e7a033fbda7><img src=https://i.gyazo.com/f5b64cf98161c3aee3d50e7a033fbda7.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>TD学習</h1><p><strong>TD学習（Temporal Difference Learning）</strong> は，強化学習の手法の一つであり，
+<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>強化学習・TD学習</h1><time class=content-date>2020年3月9日</time><div class=content-body><p><a href=https://gyazo.com/f5b64cf98161c3aee3d50e7a033fbda7><img src=https://i.gyazo.com/f5b64cf98161c3aee3d50e7a033fbda7.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>TD学習</h1><p><strong>TD学習（Temporal Difference Learning）</strong> は，強化学習の手法の一つであり，
 前回紹介した「状態$s_x$における価値$V(s_x)$」の更新式を一般化したものです．</p><p>前回の更新式を振り返りましょう．
 次の式は，状態$s_x$で報酬$r$を得られたときの更新式です．
 この式は状態の遷移を考慮していません．
@@ -26,15 +26,15 @@ $$</p><p>一方，<strong>TD学習</strong> は次の式で定義されます．
 ここで，$\gamma$ は割引率と呼ばれ，将来に得られる価値を割り引いて加算するために用いられます（将来得られる価値は確実ではないため）．
 この式は，$s_x \rightarrow s_y \rightarrow, \cdots, \rightarrow s_z$のように状態遷移が繰り返されるときに適用します．</p><p>$$
 V&rsquo;(s_x) = (1 - \alpha) \cdot V(s_x) + \alpha (r + \gamma \cdot V(s_y))
-$$</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>ノートブックの作成</h1><p><strong>Google Colaboratory</strong> を起動し，新規にノートブックを作成してください．
+$$</p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>ノートブックの作成</h1><p><strong>Google Colaboratory</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-13</strong> とします．
 ノートブックの作成方法は<a href=https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/>第1回の資料</a>を参照してください．</p><p>ネットワーク分析のためのライブラリ<a href=https://networkx.org/documentation/stable/index.html>NetworkX</a>をインストールします．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>!</span>pip install network
-</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>宝探しゲーム</h1><p>宝探しゲームを題材に， <strong>TD学習</strong> の振る舞いを確認します．</p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:#060>宝探しゲーム</h3><p>エージェントが迷路の中で宝探しをする．
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>宝探しゲーム</h1><p>宝探しゲームを題材に， <strong>TD学習</strong> の振る舞いを確認します．</p><div style="border:3px solid #000;border-radius:10px;padding-left:10px;padding-right:10px;margin-bottom:20px"><h3 style=color:#060>宝探しゲーム</h3><p>エージェントが迷路の中で宝探しをする．
 状態$s_A$からスタートし，遷移可能な状態を辿る．
 エージェントは，元の状態に戻ることはせず，遷移可能な状態がなければ状態$s_A$に戻る．
 状態$s_H$に到着すると報酬$+100$，状態$s_F$に到着すると報酬$+30$を獲得する．
 このとき，各状態の価値（報酬の期待値）を求めよ．
-<a href=https://gyazo.com/f3a91fcaef4118c28d115fd62c5ff272><img src=https://i.gyazo.com/f3a91fcaef4118c28d115fd62c5ff272.png alt="Image from Gyazo" width=446></a></p></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>実装</h1><p>ネットワーク（グラフ）を分析する<code>networkx</code>と，乱数を生成する<code>random</code>をインポートします．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> networkx <span style=color:#66d9ef>as</span> nx
+<a href=https://gyazo.com/f3a91fcaef4118c28d115fd62c5ff272><img src=https://i.gyazo.com/f3a91fcaef4118c28d115fd62c5ff272.png alt="Image from Gyazo" width=446></a></p></div><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>実装</h1><p>ネットワーク（グラフ）を分析する<code>networkx</code>と，乱数を生成する<code>random</code>をインポートします．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> networkx <span style=color:#66d9ef>as</span> nx
 </span></span><span style=display:flex><span><span style=color:#f92672>import</span> random
 </span></span></code></pre></div><p>対象のネットワーク（グラフ）を作成します．
 ノードは状態を表し$s_A, s_B, \cdots, s_J$の10種類が存在します．
@@ -162,7 +162,7 @@ $$</p><p>このように，TD学習で状態の価値を定めることで，エ
 </span></span><span style=display:flex><span>state<span style=color:#f92672>=</span>H value<span style=color:#f92672>=</span><span style=color:#ae81ff>96.97275395867995</span>
 </span></span><span style=display:flex><span>state<span style=color:#f92672>=</span>I value<span style=color:#f92672>=</span><span style=color:#ae81ff>0.0</span>
 </span></span><span style=display:flex><span>state<span style=color:#f92672>=</span>J value<span style=color:#f92672>=</span><span style=color:#ae81ff>0.0</span>
-</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>状態$s_H$の報酬（ペナルティ）を$-100$に設定する．
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>課題</h1><p>状態$s_H$の報酬（ペナルティ）を$-100$に設定する．
 このとき，$V(s_x)$はどのような値になるか示せ．</p><p>Google Colaboratoryで作成した <strong>AI-13.ipynb</strong> を保存し，
 <strong>ノートブック（.ipynb）</strong> をダウンロードして提出しなさい．
 提出の前に必ず下記の設定を行うこと．</p><ul><li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li><li>ノートブックの変更内容を保存して固定</li></ul></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>

@@ -10,7 +10,7 @@
 <a href=/game/>ゲーム開発</a>
 <a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
 <a href="https://accounts.google.com/AccountChooser?continue=https://sites.google.com/g.sugiyama-u.ac.jp/mlab" target=_blank rel=noopener>学内専用</a>
-<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>オープンストリートマップを利用したオープンデータの可視化②・Leaflet</h1><time class=content-date>2026年4月22日</time><div class=content-body><p><a href=https://gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe><img src=https://i.gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe.png alt=https://gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Leafletとは</h1><p>前回は<a href=http://umap.openstreetmap.fr/ja/>uMAP</a>というサービスを利用して，
+<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>オープンストリートマップを利用したオープンデータの可視化②・Leaflet</h1><time class=content-date>2026年4月22日</time><div class=content-body><p><a href=https://gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe><img src=https://i.gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe.png alt=https://gyazo.com/c06db3990e6a6ab4c4e476c84e829cbe></a></p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>Leafletとは</h1><p>前回は<a href=http://umap.openstreetmap.fr/ja/>uMAP</a>というサービスを利用して，
 日進市のオープンデータをオープンストリートマップに重ねて表示しました．
 uMAPを用いると，ブラウザ上で手軽にオリジナルの地図を作成することができますが，
 作成された地図は静的で，ユーザとのインタラクションに応じて動的に変化させることはできません．
@@ -21,7 +21,7 @@ Leafletは，「りーふれっと」と読み，プログラミング言語で�
 Leafletを用いると，デスクトップPCやモバイル環境に適したオンライン地図を表示することができます．
 JavaScriptで制御可能であるため，ユーザとのインタラクションに応じて動的に地図を変更することが可能です．
 もちろん，前回紹介した<strong>GeoJSON</strong>形式のデータの取り込みも可能です．
-今回は，このLeafletを用いて日進市の観光マップを作成します．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>オープンデータの準備</h1><p><a href=http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/index.html>日進市のオープンデータミュージアム</a>にある
+今回は，このLeafletを用いて日進市の観光マップを作成します．</p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>オープンデータの準備</h1><p><a href=http://www.city.nisshin.lg.jp/department/kikaku/kikaku/4/2/index.html>日進市のオープンデータミュージアム</a>にある
 <strong>観光情報</strong>データを利用します．
 ここでは，<strong>名称</strong>と<strong>緯度・経度</strong>の情報を利用することにします．
 下記はCSV形式で表現されたデータです．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csv data-lang=csv><span style=display:flex><span><span style=color:#e6db74>名称</span>,<span style=color:#e6db74>緯度</span>,<span style=color:#e6db74>経度</span>
@@ -112,7 +112,7 @@ JavaScriptで制御可能であるため，ユーザとのインタラクショ�
 </span></span></code></pre></div><p>特定の住所やランドマークの緯度・経度を知りたい場合は，
 ジオコーディングのサービス<a href=https://www.geocoding.jp/>Geocoding</a>を利用すると良いです．
 例えば， <strong>椙山女学園大学</strong> で検索すると，
-<strong>緯度:35.15937</strong>，<strong>経度: 136.987185</strong>であることが分かります．</p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Leafletでオンライン地図</h1><p>それでは，Leafletを利用して，上記のGeoJSON形式の観光情報を表示するオンライン地図を作成していきましょう．
+<strong>緯度:35.15937</strong>，<strong>経度: 136.987185</strong>であることが分かります．</p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>Leafletでオンライン地図</h1><p>それでは，Leafletを利用して，上記のGeoJSON形式の観光情報を表示するオンライン地図を作成していきましょう．
 LeafletはJavaScriptのライブラリであるため，HTMLファイルを作成し，JavaScriptで内部に地図を埋め込む形になります．
 まずは，<strong>index.html</strong>を作成します．
 このとき，index.htmlと同じフォルダに，上記の5つの画像ファイルを配置してください．

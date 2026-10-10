@@ -10,7 +10,7 @@
 <a href=/game/>ゲーム開発</a>
 <a href=https://sites.google.com/g.sugiyama-u.ac.jp/yelltech/ target=_blank rel=noopener>YELLTECH</a>
 <a href="https://accounts.google.com/AccountChooser?continue=https://sites.google.com/g.sugiyama-u.ac.jp/mlab" target=_blank rel=noopener>学内専用</a>
-<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>強化学習・タクシーゲーム</h1><time class=content-date>2020年3月12日</time><div class=content-body><p><a href=https://gyazo.com/72fa98336ec675d6370409ed92649992><img src=https://i.gyazo.com/72fa98336ec675d6370409ed92649992.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>ノートブックの作成</h1><p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
+<a href=/contact/>CONTACT</a></nav></header><script>const btn=document.getElementById("hamburger-btn"),nav=document.getElementById("mobile-nav");btn.addEventListener("click",function(){const e=nav.classList.toggle("open");btn.classList.toggle("open",e)})</script><div class=tartan-bar></div><main><div class=content-page><h1 class=content-title>強化学習・タクシーゲーム</h1><time class=content-date>2020年3月12日</time><div class=content-body><p><a href=https://gyazo.com/72fa98336ec675d6370409ed92649992><img src=https://i.gyazo.com/72fa98336ec675d6370409ed92649992.png alt="Image from Gyazo"></a></p><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>ノートブックの作成</h1><p><strong>Jupyter Notebook</strong> を起動し，新規にノートブックを作成してください．
 ノートブックのタイトルは <strong>AI-16</strong> とします．
 ノートブックの作成方法は<a href=https://mukai-lab.info/pages/classes/artificial_intelligence/chapter1/>第1回の資料</a>を参照してください．</p><p>最初に<strong>OpenAI Gym</strong> をインストールします．
 セルで下記のコマンドを実行してください．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-txt data-lang=txt><span style=display:flex><span>&gt; !pip install gym
@@ -20,7 +20,7 @@
 </span></span><span style=display:flex><span><span style=color:#f92672>import</span> time
 </span></span><span style=display:flex><span><span style=color:#f92672>from</span> google.colab <span style=color:#f92672>import</span> output
 </span></span><span style=display:flex><span><span style=color:#f92672>from</span> tqdm.notebook <span style=color:#f92672>import</span> tqdm
-</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>タクシーゲーム（Taxi）</h1><p><a href=https://gym.openai.com/envs/Taxi-v3/>タクシーゲーム（Taxi）</a>は，乗車地まで移動し，お客を乗せて（Pickup），降車地まで移動し，お客を降ろす（Drop off）ことを目的としたゲームです．</p><p>環境は下記のように$5\times5$で表されます．
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>タクシーゲーム（Taxi）</h1><p><a href=https://gym.openai.com/envs/Taxi-v3/>タクシーゲーム（Taxi）</a>は，乗車地まで移動し，お客を乗せて（Pickup），降車地まで移動し，お客を降ろす（Drop off）ことを目的としたゲームです．</p><p>環境は下記のように$5\times5$で表されます．
 <strong>R(Red)</strong> ，<strong>G(Green)</strong> ，<strong>Y(Yellow)</strong> ，<strong>B(Blue)</strong> は，
 お客の乗車地，または，降車地です．
 また，<strong>|</strong> は壁であり，タクシーが通過することはできません．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-text data-lang=text><span style=display:flex><span>+---------+
@@ -32,7 +32,7 @@
 </span></span><span style=display:flex><span>+---------+
 </span></span></code></pre></div><p>タクシーが観測できる情報は，タクシーの位置座標<code>taxi_row</code>，<code>taxi_col</code>，お客の乗車位置（状態）<code>pass_loc</code>，お客の降車位置<code>dest_idx</code>です．</p><p>タクシーの位置座標は，行列の番号で表され，$5\times5=25$パターンがあります．
 お客の乗車位置（状態）は下記の$5$パターンがあります．
-<strong>Taxi(4)</strong> は，お客がタクシーに乗車している状態を表します．</p><ul><li>Red(0)</li><li>Green(1)</li><li>Yellow(2)</li><li>Blue(3)</li><li>Taxi(4)</li></ul><p>お客の降車位置は下記の$4$パターンがあります．</p><ul><li>Red(0)</li><li>Green(1)</li><li>Yellow(2)</li><li>Blue(3)</li></ul><p>よって，タクシーゲームにおける状態の組み合わせは$25 \times 5 \times 4 = 500$パターンです．</p><p>また，タクシーは下記のいずれかの行動をとることが出来ます．</p><ul><li>South(0): 南に移動</li><li>North(1): 北に移動</li><li>East(2): 東に移動</li><li>West(3): 西に移動</li><li>Pickup(4): 乗車</li><li>Drop-off(5): 降車</li></ul><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>実装</h1><h2 id=環境の初期化>環境の初期化</h2><p>最初に対象とする環境を作成します．
+<strong>Taxi(4)</strong> は，お客がタクシーに乗車している状態を表します．</p><ul><li>Red(0)</li><li>Green(1)</li><li>Yellow(2)</li><li>Blue(3)</li><li>Taxi(4)</li></ul><p>お客の降車位置は下記の$4$パターンがあります．</p><ul><li>Red(0)</li><li>Green(1)</li><li>Yellow(2)</li><li>Blue(3)</li></ul><p>よって，タクシーゲームにおける状態の組み合わせは$25 \times 5 \times 4 = 500$パターンです．</p><p>また，タクシーは下記のいずれかの行動をとることが出来ます．</p><ul><li>South(0): 南に移動</li><li>North(1): 北に移動</li><li>East(2): 東に移動</li><li>West(3): 西に移動</li><li>Pickup(4): 乗車</li><li>Drop-off(5): 降車</li></ul><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>実装</h1><h2 id=環境の初期化>環境の初期化</h2><p>最初に対象とする環境を作成します．
 ここでは，タクシーゲーム（Taxi-v3）を指定します．
 このゲームの <strong>行動</strong> は6種類の離散値，
 また，<strong>状態空間</strong> は500種類の離散値であることが確認できます．</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-python data-lang=python><span style=display:flex><span>env <span style=color:#f92672>=</span> gym<span style=color:#f92672>.</span>make(<span style=color:#e6db74>&#39;Taxi-v3&#39;</span>) <span style=color:#75715e># 環境の初期化</span>
@@ -132,7 +132,7 @@
 </span></span><span style=display:flex><span>taxi_row=4 taxi_col=2 pass_loc=Green dest_idex=Blue
 </span></span><span style=display:flex><span>reward=-1
 </span></span><span style=display:flex><span>done=False
-</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>Q学習</h1><h3 id=qテーブル>Qテーブル</h3><p>価値$Q(s,a)$を記録するための辞書を作成します．
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>Q学習</h1><h3 id=qテーブル>Qテーブル</h3><p>価値$Q(s,a)$を記録するための辞書を作成します．
 $s$は，<code>taxi_row</code>，<code>taxi_col</code>，<code>pass_loc</code>，<code>dest_idx</code>のタプルで表現され．500パターンが存在します．
 $a$は$0,1,2,3,4,5$の6パターンが存在します．
 よって，$500 \times 6 = 3000$パターンの$Q$を記録する必要があります．
@@ -220,7 +220,7 @@ $\epsilon$を<code>0</code>に設定し，常に$Q$が最大の行動を選択�
 </span></span><span style=display:flex><span>taxi_row=0 taxi_col=4 pass_loc=Green dest_idex=Green
 </span></span><span style=display:flex><span>reward=20
 </span></span><span style=display:flex><span>done=True
-</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(http://mukai-lab.info/logo/logo.png)no-repeat>課題</h1><p>Google Colaboratoryで作成した <strong>AI-16.ipynb</strong> を保存し，
+</span></span></code></pre></div><h1 style=padding-left:40px;line-height:30px;background:url(/logo/logo.png)no-repeat>課題</h1><p>Google Colaboratoryで作成した <strong>AI-16.ipynb</strong> を保存し，
 <strong>ノートブック（.ipynb）</strong> をダウンロードして提出しなさい．
 提出の前に必ず下記の設定を行うこと．</p><ul><li>ノートブックの設定で「セルの出力を除外する」のチェックを外す</li><li>ノートブックの変更内容を保存して固定</li></ul></div><nav class=content-nav><a href=javascript:history.back() class=btn>← 戻る</a>
 <a href=/ class=btn>🏠 トップ</a></nav></div></main><footer class=site-footer><span>© 2016 Naoto Mukai, Sugiyama Jogakuen University</span></footer></body></html>
